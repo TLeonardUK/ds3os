@@ -1,0 +1,248 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% OMAC2 Test Vectors for AES-128 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+L   7df76b0c1ab899b33e42f047b91b546f
+
+Lu  fbeed618357133667c85e08f7236a8de
+
+Lu- befbb5860d5c4cd99f217823dc8daa74
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[empty string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 2b7e151628aed2a6abf7158809cf4f3c
+Msg <empty string>
+
+InE 3efbb5860d5c4cd99f217823dc8daa74
+
+Tag f6bc6a41f4f84593809e59b719299cfe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[16-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 2b7e151628aed2a6abf7158809cf4f3c
+Msg 6bc1bee22e409f96e93d7e117393172a
+
+InE 902f68fa1b31acf095b89e9e01a5bff4
+
+Tag 070a16b46b4d4144f79bdd9dd04a287c
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[40-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 2b7e151628aed2a6abf7158809cf4f3c
+Msg 6bc1bee22e409f96e93d7e117393172a
+    ae2d8a571e03ac9c9eb76fac45af8e51
+    30c81c46a35ce411
+
+InE 6bc1bee22e409f96e93d7e117393172a
+
+OuE 3ad77bb40d7a3660a89ecaf32466ef97
+
+InE 94faf1e313799afc3629a55f61c961c6
+
+OuE b148c17f309ee692287ae57cf12add49
+
+InE 3f7b68bf9e9e4e5a375b9d5f2da7773d
+
+Tag 23fdaa0831cd314491ce4b25acb6023b
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[64-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 2b7e151628aed2a6abf7158809cf4f3c
+Msg 6bc1bee22e409f96e93d7e117393172a
+    ae2d8a571e03ac9c9eb76fac45af8e51
+    30c81c46a35ce411e5fbc1191a0a52ef
+    f69f2445df4f9b17ad2b417be66c3710
+
+InE 6bc1bee22e409f96e93d7e117393172a
+
+OuE 3ad77bb40d7a3660a89ecaf32466ef97
+
+InE 94faf1e313799afc3629a55f61c961c6
+
+OuE b148c17f309ee692287ae57cf12add49
+
+InE 8180dd3993c20283cd812465eb208fa6
+
+OuE c93d11bfaf08c5dc4d90b37b4dee002b
+
+InE c44ce3e245366dad9c3e128fd9b49fe5
+
+Tag 51f0bebf7e3b9d92fc49741779363cfe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% OMAC2 Test Vectors for AES-192 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+L   22452d8e49a8a5939f7321ceea6d514b
+
+Lu  448a5b1c93514b273ee6439dd4daa296
+
+Lu- 912296c724d452c9cfb990e77536a8e6
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[empty string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 8e73b0f7da0e6452c810f32b809079e5
+    62f8ead2522c6b7b
+Msg <empty string>
+
+InE 112296c724d452c9cfb990e77536a8e6
+
+Tag 149f579df2129d45a69266898f55aeb2
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[16-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 8e73b0f7da0e6452c810f32b809079e5
+    62f8ead2522c6b7b
+Msg 6bc1bee22e409f96e93d7e117393172a
+
+InE 2f4be5febd11d4b1d7db3d8ca749b5bc
+
+Tag 9e99a7bf31e710900662f65e617c5184
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[40-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 8e73b0f7da0e6452c810f32b809079e5
+    62f8ead2522c6b7b
+Msg 6bc1bee22e409f96e93d7e117393172a
+    ae2d8a571e03ac9c9eb76fac45af8e51
+    30c81c46a35ce411
+
+InE 6bc1bee22e409f96e93d7e117393172a
+
+OuE bd334f1d6e45f25ff712a214571fa5cc
+
+InE 131ec54a70465ec369a5cdb812b02b9d
+
+OuE 0f771e2a4f0fbe323cb4146a0d1b86d9
+
+InE ae9d94abc88708ea730d848d782d2e3f
+
+Tag b35e2d1b73aed49b78bdbdfe61f646df
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[64-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 8e73b0f7da0e6452c810f32b809079e5
+    62f8ead2522c6b7b
+Msg 6bc1bee22e409f96e93d7e117393172a
+    ae2d8a571e03ac9c9eb76fac45af8e51
+    30c81c46a35ce411e5fbc1191a0a52ef
+    f69f2445df4f9b17ad2b417be66c3710
+
+InE 6bc1bee22e409f96e93d7e117393172a
+
+OuE bd334f1d6e45f25ff712a214571fa5cc
+
+InE 131ec54a70465ec369a5cdb812b02b9d
+
+OuE 0f771e2a4f0fbe323cb4146a0d1b86d9
+
+InE 3fbf026cec535a23d94fd5731711d436
+
+OuE 7a163de1bb451e2f1b15cc1f0b8c2b6d
+
+InE c80342b8f75bce1f88d8cef9393abeeb
+
+Tag a1d5df0eed790f794d77589659f39a11
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% OMAC2 Test Vectors for AES-256 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+L   e568f68194cf76d6174d4cc04310a854
+
+Lu  cad1ed03299eedac2e9a99808621502f
+
+Lu- 72b47b40ca67bb6b0ba6a6602188542a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[empty string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 603deb1015ca71be2b73aef0857d7781
+    1f352c073b6108d72d9810a30914dff4
+Msg <empty string>
+
+InE f2b47b40ca67bb6b0ba6a6602188542a
+
+Tag 47fbde71866eae6080355b5fc7ff704c
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[16-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 603deb1015ca71be2b73aef0857d7781
+    1f352c073b6108d72d9810a30914dff4
+Msg 6bc1bee22e409f96e93d7e117393172a
+
+InE a11053e107de723ac7a7e791f5b24705
+
+Tag 28a7023f452e8f82bd4bf28d8c37c35c
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[40-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 603deb1015ca71be2b73aef0857d7781
+    1f352c073b6108d72d9810a30914dff4
+Msg 6bc1bee22e409f96e93d7e117393172a
+    ae2d8a571e03ac9c9eb76fac45af8e51
+    30c81c46a35ce411
+
+InE 6bc1bee22e409f96e93d7e117393172a
+
+OuE f3eed1bdb5d2a03c064b5a7e3db181f8
+
+InE 5dc35beaabd10ca098fc35d2781e0fa9
+
+OuE e3c48b48365cfb14dc9aaa37b1abc15c
+
+InE a1b8ec4e5f67a46e573c0c5790239576
+
+Tag f018e6053611b34bc872d6b7ff24749f
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[64-byte string] 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Key 603deb1015ca71be2b73aef0857d7781
+    1f352c073b6108d72d9810a30914dff4
+Msg 6bc1bee22e409f96e93d7e117393172a
+    ae2d8a571e03ac9c9eb76fac45af8e51
+    30c81c46a35ce411e5fbc1191a0a52ef
+    f69f2445df4f9b17ad2b417be66c3710
+
+InE 6bc1bee22e409f96e93d7e117393172a
+
+OuE f3eed1bdb5d2a03c064b5a7e3db181f8
+
+InE 5dc35beaabd10ca098fc35d2781e0fa9
+
+OuE e3c48b48365cfb14dc9aaa37b1abc15c
+
+InE d30c970e95001f0539616b2eaba193b3
+
+OuE 8f6d7e85d8a2ce79c29fe1a4d17e2f9f
+
+InE b323b7c32e73b8c2412e395fb13348a0
+
+Tag e1992190549f6ed5696a2c056c315410
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%       end of data        %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,8 @@
+
+MODE EME2
+VEC #1
+
+KEY (40)
+ADT  (9)
+PTX (#17,#16,#127,3)
+CTX ?

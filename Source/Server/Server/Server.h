@@ -1,0 +1,63 @@
+// Dark Souls 3 - Open Server
+
+#pragma once
+
+#include "Platform/Platform.h"
+
+#include <memory>
+#include <vector>
+#include <filesystem>
+
+#include "Core/Crypto/RSAKeyPair.h"
+
+#include "Config/RuntimeConfig.h"
+
+// Core of this application, manages all the 
+// network services that ds3 uses. 
+
+class Service;
+
+class Server
+{
+public:
+    Server();
+    ~Server();
+
+    bool Init();
+    bool Term();
+    void RunUntilQuit();
+
+    const RuntimeConfig& GetConfig() { return Config; }
+
+    template <typename T>
+    std::shared_ptr<T> GetService()
+    {
+        for (auto Service : Services)
+        {
+            if (std::shared_ptr<T> Result = std::dynamic_pointer_cast<T>(Service))
+            {
+                return Result;
+            }
+        }
+
+        return nullptr;
+    }
+
+private:
+
+    bool QuitRecieved = false;
+
+    PlatformEvents::CtrlSignalEvent::DelegatePtr CtrlSignalHandle = nullptr;
+
+    RuntimeConfig Config;
+
+    std::vector<std::shared_ptr<Service>> Services;
+
+    std::filesystem::path SavedPath;
+    std::filesystem::path PrivateKeyPath;
+    std::filesystem::path PublicKeyPath;
+    std::filesystem::path Ds3osconfigPath;
+
+    RSAKeyPair PrimaryKeyPair;
+
+};

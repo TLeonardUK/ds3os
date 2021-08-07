@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{ca912937-c10c-4d86-9e02-4d818c0b2dd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Network">
+      <UniqueIdentifier>{399de498-5e6d-4267-ae01-c68635ee4b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{095c2c83-c8bb-4248-8810-4589ef955f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{826dabc1-9c9e-4152-986e-cdded82c93ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Win32">
+      <UniqueIdentifier>{1ffd69d6-b9e8-4c79-9247-e9726e8b0261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Utils">
+      <UniqueIdentifier>{b00413cd-5e1e-4d03-acab-fa2432e95fb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Crypto">
+      <UniqueIdentifier>{d19a779f-ddc2-4002-9def-e70cf4e9a395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{dc98e43a-b050-436d-893c-947c331a94e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\LoginService">
+      <UniqueIdentifier>{0ec53e4b-1020-4d30-99bb-0dae1a61450f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\AuthService">
+      <UniqueIdentifier>{d008a333-47a5-4e27-8841-5d814396df06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService">
+      <UniqueIdentifier>{d7917eac-952e-4a69-9941-c3ccfc3289ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Streams">
+      <UniqueIdentifier>{5ff7cd9d-218d-49ec-9e06-4ac1e14891a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protobuf">
+      <UniqueIdentifier>{c126690f-a736-4e1a-a7da-29fc33d42365}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Server\Server.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Platform.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\Event.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\Logging.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Network\NetConnection.h">
+      <Filter>Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Network\NetConnectionTCP.h">
+      <Filter>Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Network\NetConnectionUDP.h">
+      <Filter>Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\BuildConfig.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Service.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\LoginService\LoginService.h">
+      <Filter>Server\LoginService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2MessageStream.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2PacketStream.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\LoginService\LoginClient.h">
+      <Filter>Server\LoginService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2Packet.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\Endian.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2Message.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\File.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Crypto\RSAKeyPair.h">
+      <Filter>Core\Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h">
+      <Filter>Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\Frpg2PlayerData.pb.h">
+      <Filter>Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\RuntimeConfig.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\AuthService\AuthClient.h">
+      <Filter>Server\AuthService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\AuthService\AuthService.h">
+      <Filter>Server\AuthService</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Crypto\Cipher.h">
+      <Filter>Core\Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Crypto\RSACipher.h">
+      <Filter>Core\Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Crypto\CWCCipher.h">
+      <Filter>Core\Crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\Random.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameClient.h">
+      <Filter>Server\GameService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameService.h">
+      <Filter>Server\GameService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2UdpPacket.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Server\Server.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Entry.cpp" />
+    <ClCompile Include="Platform\Win32\Win32Platform.cpp">
+      <Filter>Platform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\Logging.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\LoginService\LoginService.cpp">
+      <Filter>Server\LoginService</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Network\NetConnectionTCP.cpp">
+      <Filter>Core\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Streams\Frpg2MessageStream.cpp">
+      <Filter>Server\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Streams\Frpg2PacketStream.cpp">
+      <Filter>Server\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\LoginService\LoginClient.cpp">
+      <Filter>Server\LoginService</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\File.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Crypto\RSAKeyPair.cpp">
+      <Filter>Core\Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\Frpg2RequestMessage.pb.cc">
+      <Filter>Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\Frpg2PlayerData.pb.cc">
+      <Filter>Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\AuthService\AuthClient.cpp">
+      <Filter>Server\AuthService</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\AuthService\AuthService.cpp">
+      <Filter>Server\AuthService</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Crypto\CWCCipher.cpp">
+      <Filter>Core\Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Crypto\RSACipher.cpp">
+      <Filter>Core\Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\Random.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameClient.cpp">
+      <Filter>Server\GameService</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameService.cpp">
+      <Filter>Server\GameService</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Network\NetConnectionUDP.cpp">
+      <Filter>Core\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp">
+      <Filter>Server\Streams</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Directory.Build.props" />
+    <None Include="Directory.Build.Cpp.props" />
+    <None Include="vcpkg.json" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+// Dark Souls 3 - Open Server
+
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+package Frpg2PlayerData;
+
+message DateTime {
+  required uint32 year = 1;
+  required uint32 month = 2;
+  required uint32 day = 3;
+  required uint32 hours = 4;
+  required uint32 minutes = 5;
+  required uint32 seconds = 6;
+  required uint32 tzdiff = 7; 
+}

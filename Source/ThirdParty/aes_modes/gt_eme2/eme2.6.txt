@@ -1,0 +1,53 @@
+
+MODE EME2
+VEC #1
+
+KEY (#64)
+ADT (#0)
+PTX (#16)
+CTX ?
+
+KEY (#48)
+ADT (#20)
+PTX (#16)
+CTX ?
+
+KEY (#48)
+ADT (#16)
+PTX (#16)
+CTX ?
+
+KEY (#48)
+ADT (#16)
+PTX (#17)
+CTX ?
+
+KEY (#48)
+ADT (#16,0)
+PTX (#20)
+CTX ?
+
+KEY (#48)
+ADT (#16)
+PTX (#32,0)
+CTX ?
+
+KEY (#48)
+ADT (#16)
+PTX (#512)
+CTX ?
+
+KEY (#48)
+ADT (#16)
+PTX (#520,0,1)
+CTX ?
+
+KEY (#48)
+ADT (#16)
+PTX (#2064)
+CTX ?
+
+KEY (#48)
+ADT (#16)
+PTX (#2065)
+CTX ?

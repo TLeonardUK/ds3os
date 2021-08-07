@@ -1,0 +1,83 @@
+
+MDE CMAC
+REM Produced by GENTEST on Fri Jan 24 18:05:49 2014
+
+REM All inputs and outputs are arrays of 8-bit bytes (octets) with bytes being
+REM represented by consecutive pairs of hexadecimal digits (the pair 'ab', for
+REM example, yields the byte value 0xab in C). The index positions of bytes in
+REM arrays increase by 1 from left to right for each pair of digits and arrays
+REM on consecutive lines with the same initial designators are concatenated so
+REM that bytes on later lines have higher array indexes.  Numeric significance
+REM is undefined except between the two digits that form each individual byte.
+
+REM KEY = The CMAC key
+REM MSG = The message
+REM TAG = The authentication tag
+
+VEC 1
+KEY 2b7e151628aed2a6abf7158809cf4f3c
+MSG
+TAG bb1d6929e95937287fa37d129b756746
+
+VEC 2
+KEY 2b7e151628aed2a6abf7158809cf4f3c
+MSG 6bc1bee22e409f96e93d7e117393172a
+TAG 070a16b46b4d4144f79bdd9dd04a287c
+
+VEC 3
+KEY 2b7e151628aed2a6abf7158809cf4f3c
+MSG 6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51
+MSG 30c81c46a35ce411
+TAG dfa66747de9ae63030ca32611497c827
+
+VEC 4
+KEY 2b7e151628aed2a6abf7158809cf4f3c
+MSG 6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51
+MSG 30c81c46a35ce411e5fbc1191a0a52eff69f2445df4f9b17ad2b417be66c3710
+TAG 51f0bebf7e3b9d92fc49741779363cfe
+
+VEC 5
+KEY 8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b
+MSG
+TAG d17ddf46adaacde531cac483de7a9367
+
+VEC 6
+KEY 8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b
+MSG 6bc1bee22e409f96e93d7e117393172a
+TAG 9e99a7bf31e710900662f65e617c5184
+
+VEC 7
+KEY 8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b
+MSG 6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51
+MSG 30c81c46a35ce411
+TAG 8a1de5be2eb31aad089a82e6ee908b0e
+
+VEC 8
+KEY 8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b
+MSG 6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51
+MSG 30c81c46a35ce411e5fbc1191a0a52eff69f2445df4f9b17ad2b417be66c3710
+TAG a1d5df0eed790f794d77589659f39a11
+
+VEC 9
+KEY 603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4
+MSG
+TAG 028962f61b7bf89efc6b551f4667d983
+
+VEC 10
+KEY 603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4
+MSG 6bc1bee22e409f96e93d7e117393172a
+TAG 28a7023f452e8f82bd4bf28d8c37c35c
+
+VEC 11
+KEY 603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4
+MSG 6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51
+MSG 30c81c46a35ce411
+TAG aaf3d8f1de5640c232f5b169b9c911e6
+
+VEC 12
+KEY 603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4
+MSG 6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51
+MSG 30c81c46a35ce411e5fbc1191a0a52eff69f2445df4f9b17ad2b417be66c3710
+TAG e1992190549f6ed5696a2c056c315410
+
+END

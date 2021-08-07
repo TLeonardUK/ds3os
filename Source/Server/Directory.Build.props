@@ -1,0 +1,7 @@
+﻿<Project>
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <ForceImportAfterCppProps>$(SolutionDir)\Server\Directory.Build.Cpp.props</ForceImportAfterCppProps >
+  </PropertyGroup>
+</Project>

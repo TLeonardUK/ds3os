@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{7dc0d5d3-2b30-4f1a-8eff-54432296bca4}</ProjectGuid>
+    <RootNamespace>Server</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Config\BuildConfig.h" />
+    <ClInclude Include="Config\RuntimeConfig.h" />
+    <ClInclude Include="Core\Crypto\Cipher.h" />
+    <ClInclude Include="Core\Crypto\CWCCipher.h" />
+    <ClInclude Include="Core\Crypto\RSACipher.h" />
+    <ClInclude Include="Core\Crypto\RSAKeyPair.h" />
+    <ClInclude Include="Core\Network\NetConnection.h" />
+    <ClInclude Include="Core\Network\NetConnectionTCP.h" />
+    <ClInclude Include="Core\Network\NetConnectionUDP.h" />
+    <ClInclude Include="Core\Utils\Endian.h" />
+    <ClInclude Include="Core\Utils\Event.h" />
+    <ClInclude Include="Core\Utils\File.h" />
+    <ClInclude Include="Core\Utils\Logging.h" />
+    <ClInclude Include="Core\Utils\Random.h" />
+    <ClInclude Include="Platform\Platform.h" />
+    <ClInclude Include="Protobuf\Frpg2PlayerData.pb.h" />
+    <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h" />
+    <ClInclude Include="Server\AuthService\AuthClient.h" />
+    <ClInclude Include="Server\AuthService\AuthService.h" />
+    <ClInclude Include="Server\GameService\GameClient.h" />
+    <ClInclude Include="Server\GameService\GameService.h" />
+    <ClInclude Include="Server\LoginService\LoginClient.h" />
+    <ClInclude Include="Server\LoginService\LoginService.h" />
+    <ClInclude Include="Server\Service.h" />
+    <ClInclude Include="Server\Server.h" />
+    <ClInclude Include="Server\Streams\Frpg2Message.h" />
+    <ClInclude Include="Server\Streams\Frpg2MessageStream.h" />
+    <ClInclude Include="Server\Streams\Frpg2Packet.h" />
+    <ClInclude Include="Server\Streams\Frpg2PacketStream.h" />
+    <ClInclude Include="Server\Streams\Frpg2UdpPacket.h" />
+    <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\Crypto\CWCCipher.cpp" />
+    <ClCompile Include="Core\Crypto\RSACipher.cpp" />
+    <ClCompile Include="Core\Crypto\RSAKeyPair.cpp" />
+    <ClCompile Include="Core\Network\NetConnectionTCP.cpp" />
+    <ClCompile Include="Core\Network\NetConnectionUDP.cpp" />
+    <ClCompile Include="Core\Utils\File.cpp" />
+    <ClCompile Include="Core\Utils\Logging.cpp" />
+    <ClCompile Include="Core\Utils\Random.cpp" />
+    <ClCompile Include="Entry.cpp" />
+    <ClCompile Include="Platform\Win32\Win32Platform.cpp" />
+    <ClCompile Include="Protobuf\Frpg2PlayerData.pb.cc" />
+    <ClCompile Include="Protobuf\Frpg2RequestMessage.pb.cc" />
+    <ClCompile Include="Server\AuthService\AuthClient.cpp" />
+    <ClCompile Include="Server\AuthService\AuthService.cpp" />
+    <ClCompile Include="Server\GameService\GameClient.cpp" />
+    <ClCompile Include="Server\GameService\GameService.cpp" />
+    <ClCompile Include="Server\LoginService\LoginClient.cpp" />
+    <ClCompile Include="Server\LoginService\LoginService.cpp" />
+    <ClCompile Include="Server\Server.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2MessageStream.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2PacketStream.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Directory.Build.Cpp.props" />
+    <None Include="Directory.Build.props" />
+    <None Include="vcpkg.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdParty\aes\lib_generic_c\lib_generic_c.vcxproj">
+      <Project>{1b43e5f7-d447-4fcf-ac9b-4767ab47db8b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\aes_modes\aes_modes.vcxproj">
+      <Project>{c52e07d5-7560-4b7a-8365-be3f6ae4eecb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\protobuf-2.6.1rc1\vsprojects\libprotobuf-lite.vcxproj">
+      <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

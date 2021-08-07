@@ -1,0 +1,198 @@
+
+The Use of AES Combined Encryption and Authentication Modes
+===========================================================
+
+This file   describes the   use of   the routines   that implement the AES
+combined encryption  and autheication  modes.  The  modes implemented  are
+CCM, GCM,  EAX  and CWC although  the latter is  no longer being  actively
+supported.  In   what  follows  'xxx' wil   stand for  one  of the strings
+'ccm', 'gcm', 'eax' or 'cwc'
+
+A context for mode operation is declared in one of the two styles:
+
+    xxx_ctx ctx[1];		-- used in routine calls as 'ctx'
+    xxx_ctx    ctx;		-- used in routine calls as '&ctx'
+
+All routines return a  result code in the  type ret_type defined in  their
+respective header files.  The main return codes are:
+
+    RETURN_WARN     a possible error condition
+    RETURN_GOOD     normal error free return value
+    RETURN_ERROR    an error has occurred
+
+CCM offers more detailed codes as given in its header file.
+
+1. INITIALISATION, KEYING AND COMPLETION
+
+The first routine:
+
+ret_type xxx_init_and_key(              /* initialise mode and set key  */
+            const unsigned char key[],  /* the key value                */
+            unsigned long key_len,      /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+initialises the mode  and sets up   the AES encryption  key that will   be
+used. This routine  does not need  to be called  for each new  message but
+only once when a new context is declared.
+
+The call:
+
+ret_type xxx_end(                       /* clean up and end operation   */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+is used to end a sequence of message encryption or decryption  operations.
+t does not need to be called between individual message operations.
+
+2. COMPLETE MESSAGE OPERATIONS
+
+The call:
+
+ret_type xxx_encrypt_message(           /* encrypt an entire message    */
+            const unsigned char iv[],   /* the initialisation vector    */
+            unsigned long iv_len,       /* and its length in bytes      */
+            const unsigned char hdr[],  /* the header buffer            */
+            unsigned long hdr_len,      /* and its length in bytes      */
+            unsigned char msg[],        /* the message buffer           */
+            unsigned long msg_len,      /* and its length in bytes      */
+            unsigned char tag[],        /* the buffer for the tag       */
+            unsigned long tag_len,      /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+is used to encrypt and  authenticate an entire message and  its header  in
+a  single call.  The encryption  occurs 'in  place' (the  input and output
+buffers are the same)  and the authentication tag is  output in tag[];
+
+The call:
+
+ret_type xxx_decrypt_message(           /* decrypt an entire message    */
+            const unsigned char iv[],   /* the initialisation vector    */
+            unsigned long iv_len,       /* and its length in bytes      */
+            const unsigned char hdr[],  /* the header buffer            */
+            unsigned long  hdr_len,     /* and its length in bytes      */
+            unsigned char msg[],        /* the message buffer           */
+            unsigned long msg_len,      /* and its length in bytes      */
+            const unsigned char tag[],  /* the buffer for the tag       */
+            unsigned long tag_len,      /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+is used to decrypt and verify an entire mesage and  its header in a single
+call.   The decryption occurs 'in place' (the input and output buffers are
+the same).    After decryption the authentication tag is computed and then
+compared  with the input in tag[];  if this  matches,  the return value is 
+RETURN_GOOD, if not it is RETURN_ERROR.
+
+3. INCREMENTAL HEADER AND MESSAGE PROCESSING
+
+The  following  five  calls are used for  messages that are too long to be 
+processed in one step.
+
+For all modes except CCM, the call:
+
+ret_type xxx_init_message(              /* initialise a new message     */
+            const unsigned char iv[],   /* the initialisation vector    */
+            unsigned long iv_len,       /* and its length in bytes      */
+            xxx_ctx ctx[1])             /* the mode context             */
+
+is used to initialise the mode for a new message operation.    For CCM the
+header  and  message lengths  need to be  known in  advance so the calling
+interface is different:
+
+ret_type xxx_init_message(              /* initialise a new message     */
+            const unsigned char iv[],   /* the initialisation vector    */
+            unsigned long iv_len,       /* the nonce length             */
+            length_t hdr_len,           /* the associated data length   */
+            length_t msg_len,           /* message data length          */
+            unsigned long tag_len,      /* authentication field length  */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+The call:
+
+ret_type xxx_auth_header(               /* authenticate message header  */
+            const unsigned char hdr[],  /* the header buffer            */
+            unsigned long hdr_len,      /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+is used to authenticate the header data for the message.  It can be called 
+as many times as is necessary  for long  headers or headers that have more
+than one piece.  This call can be omitted if there is no message header.
+
+The call:
+
+ret_type xxx_encrypt(                   /* encrypt & authenticate data  */
+            unsigned char data[],       /* the data buffer              */
+            unsigned long data_len,     /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+is used to encrypt and authenticate message data. It can be called as many 
+times as is  necessary for long  messages or  messages that have more than 
+one piece.
+
+ret_type xxx_decrypt(                   /* authenticate & decrypt data  */
+            unsigned char data[],       /* the data buffer              */
+            unsigned long data_len,     /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+is used to decrypt and verify the authenticity of message data. It can  be
+called as many times as is  necessary for long messages or  messages  that
+have more than one piece.
+
+The call:
+
+ret_type xxx_compute_tag(                /* compute authentication  tag */ 
+unsigned  char tag[],                    /* the  buffer for  the tag    */
+unsigned long tag_len,                  /* and its length in bytes      */ 
+xxx_ctx ctx[1]);                        /* the mode context             */
+
+is used to compute  the authentication  tag for a message after  the above 
+calls have been completed. It returns RETURN_GOOD if the  total lengths of
+the data processed by the previous encryption and authentication calls are
+the same,  RETURN_WARN if there has been authentication but no  encryption
+or decryption operations, and RETURN_ERROR otherwise.
+
+4. SEPARATE INCREMENTAL AUTHENTICATION, ENCRYPTION AND DECRYPTION
+
+The use of  the  following calls  should be  avoided  if at all   possible
+because  their   use requires   a  very  good  understanding   of the  way
+encryption modes work and the  way in which this code  implements them  in
+order to use it correctly.
+
+In CCM   mode plaintext   data is   authenticated so   authentciation with
+ccm_auth_data()  preceeds calls   to ccm_crypt_data()  on  encryption  and
+follows such   calls on   decryption.  In   contrast, GCM   and EAX  modes
+authenticate ciphertext   so calls   to xxx_auth_data()   follow those  to
+xxx_crypt_data() on  encryption and  preceed them  on decryption.  For GCM
+and  EAX  it  is  hence possible  to  authenticate  the  ciphertext before
+decrypting it whereas this is not possible for CCM mode.
+
+If these  calls  are  used it   is up  to  the  user to  ensure that these
+routines are called  in the correct  order and that  the correct data   is
+passed to them.
+
+When  xxx_compute_tag   is  called   it is   assumed  that   an  error has
+occurred   if  encryption  (decryption)  and   authentication have   taken
+place but   the total   lengths of   the message   data authenticated  and
+encrypted (decrypted)  are  not  the same.   If authentication  has  taken
+place but   there has   been no   corresponding encryption   or decryption
+(that is,  none  at  all) only   a warning  is  issued  since this   might
+possibly be intentional.
+
+In practice this warning should  be treated as an error  on encryption for
+both GCM  and EAX since   authentication follows encryption  and a  length
+mismatch     implies    either    that    some     ciphertext   was    not
+authenticated  or   that  some   of  the   authenticated  data   was   not
+ciphertext.   For   CCM,  since   it  is   possible  to   authenticate the
+plaintext prior to encryption, this warning message might not indicate  an
+error although this is most likely to be the case. For GCM and  EAX  modes
+this  warning  message  might  not  indicate  an  error  during decryption
+since   it is   possible  with  these  modes   to authenticate  ciphertext
+without necessarily decrypting it.  
+
+ret_type xxx_auth_data(                 /* authenticate plaintext data  */
+            const unsigned char data[], /* the data buffer              */
+            unsigned long data_len,     /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */
+
+ret_type xxx_crypt_data(                /* encrypt or decrypt data      */
+            unsigned char data[],       /* the data buffer              */
+            unsigned long data_len,     /* and its length in bytes      */
+            xxx_ctx ctx[1]);            /* the mode context             */

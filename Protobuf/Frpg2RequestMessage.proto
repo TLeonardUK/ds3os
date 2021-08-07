@@ -1,0 +1,51 @@
+// Dark Souls 3 - Open Server
+
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+package Frpg2RequestMessage;
+
+import "Frpg2PlayerData.proto";
+
+// ------------------------------------------------------------------------------------------------------------
+// Login Server Messages
+// ------------------------------------------------------------------------------------------------------------
+
+message RequestQueryLoginServerInfo {
+  required string steam_id = 1;
+  optional string f2 = 2;
+  required uint64 network_protocol = 3;   // Guessing a bit here, but a network protocol version would be wise to route to the right servers during updates.
+}
+
+message RequestQueryLoginServerInfoResponse {
+  required int64 port = 1;
+  required string server_ip = 2;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Auth Server Messages
+// ------------------------------------------------------------------------------------------------------------
+
+message RequestHandshake {
+  required bytes aes_cwc_key = 1;
+}
+
+message RequestHandshakeResponse {
+}
+
+message GetServiceStatus {
+  required int64 id = 1;
+  required string steam_id = 2;
+  optional string unknown_1 = 3;
+  required int64 network_protocol = 4;
+}
+
+message GetServiceStatusResponse {
+  required int64 id = 1;
+  required string steam_id = 2;
+  required int64 unknown_1 = 3;
+  required int64 network_protocol = 4;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages
+// ------------------------------------------------------------------------------------------------------------

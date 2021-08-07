@@ -1,0 +1,23 @@
+This README describes the Python bindings for Brian Gladman's AES module.
+
+These bindings are compatible with Python 2.7+ (including Python 3).
+
+You can build a binary distribution like this:
+    $ python setup.py bdist
+
+Or, for development work:
+    $ python setup.py build_ext --inplace
+
+Usage is fairly straightforward; see demo.py for an example.
+
+The included test suite is not intended to be a complete implementation of
+the NIST test vectors.  Rather, it is used to verify the correctness of the
+Python wrappers around the AES function calls.
+
+To build the binding in Visual Studio it is necessary to set this line:
+
+    <PYTHON_VERSION>37</PYTHON_VERSION>
+
+in the python_version.props file (in the aes\python_binding directory) to
+identify the Python version for the build (the first two digits of the
+version number without the decimal point, i.e. 37 identifies Python 3.7).
