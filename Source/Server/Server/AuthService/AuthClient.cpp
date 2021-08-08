@@ -12,6 +12,7 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Random.h"
+#include "Core/Utils/Strings.h"
 #include "Core/Network/NetConnection.h"
 
 #include "Config/BuildConfig.h"
@@ -75,13 +76,13 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                Log("[%s] Recieved handshake request.", GetName().c_str());
-
                 // Covert the CWC key to a byte buffer.
                 std::string string = Request.aes_cwc_key();
                 uint8_t* string_ptr = reinterpret_cast<uint8_t*>(string.data());
 
                 CwcKey.assign(string_ptr, string_ptr + string.length());
+
+                Log("[%s] Recieved handshake request, Key=%s", GetName().c_str(), BytesToHex(CwcKey).c_str());
 
                 // Disable cipher while we send this "hardcoded" message.
                 MessageStream->SetCipher(nullptr, nullptr);
@@ -157,18 +158,20 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                Log("[%s] Recieved key exchange bytes.", GetName().c_str());
+                // This is our authentication key for the game session.
+                Frpg2Message KeyResponse;
+                KeyResponse.Payload.resize(16);
+                // Lower 8 bytes are what the client sent, upper 8 bytes are random data we fill in.
+                FillRandomBytes(KeyResponse.Payload); 
+                memcpy(KeyResponse.Payload.data(), Message.Payload.data(), 8);
 
-                // Response is the 8 bytes the client sent us plus another random 8 bytes?
-                // This I think is our authentication key for the game session..
-                Frpg2Message Response;
-                Response.Payload.resize(16);
-                FillRandomBytes(Response.Payload);
-                memcpy(Response.Payload.data(), Message.Payload.data(), 8);
+                Log("[%s] Recieved key exchange bytes, game session key = %s", GetName().c_str(), BytesToHex(KeyResponse.Payload).c_str());
 
-                GameCwcKey = Response.Payload;
+                // Note: Supposedly the "normal" cwc key should work for the game session - it doesn't seem to though.
+                //       This key however does output plaintext, but with a message tag failure. Huuum
+                GameCwcKey = KeyResponse.Payload;
 
-                if (!MessageStream->Send(Response, Message.Header.request_index))
+                if (!MessageStream->Send(KeyResponse, Message.Header.request_index))
                 {
                     Warning("[%s] Disconnecting client as failed to send key exchange.", GetName().c_str());
                     return true;

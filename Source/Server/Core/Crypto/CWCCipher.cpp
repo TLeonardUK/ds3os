@@ -4,6 +4,8 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Random.h"
+#include "Core/Utils/Endian.h"
+#include "Core/Utils/Strings.h"
 
 CWCCipher::CWCCipher(const std::vector<uint8_t>& InKey)
     : Key(InKey)
@@ -13,12 +15,11 @@ CWCCipher::CWCCipher(const std::vector<uint8_t>& InKey)
 
 bool CWCCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
 {
-    std::vector<uint8_t> IV(12, 0);
-    std::vector<uint8_t> Tag(17, 0);
+    std::vector<uint8_t> IV(11, 0);
+    std::vector<uint8_t> Tag(16, 0);
     std::vector<uint8_t> Payload = Input;
 
     FillRandomBytes(IV);
-    IV[11] = '\0';
 
     if (cwc_encrypt_message(IV.data(), 11, IV.data(), 11, (unsigned char*)Payload.data(), Payload.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
     {
@@ -36,9 +37,9 @@ bool CWCCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 
 bool CWCCipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
 {
-    std::vector<uint8_t> IV(12);
-    std::vector<uint8_t> Tag(17);
-
+    std::vector<uint8_t> IV(11);
+    std::vector<uint8_t> Tag(16);
+    
     // Actually enough data for any data?
     if (Input.size() < 11 + 16 + 1)
     {

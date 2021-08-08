@@ -135,6 +135,12 @@
     <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h">
       <Filter>Server\Streams</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Utils\Strings.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Crypto\CWCUDPCipher.h">
+      <Filter>Core\Crypto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -200,6 +206,12 @@
     </ClCompile>
     <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp">
       <Filter>Server\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\Strings.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Crypto\CWCUDPCipher.cpp">
+      <Filter>Core\Crypto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

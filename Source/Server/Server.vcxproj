@@ -91,6 +91,7 @@
     <ClInclude Include="Config\RuntimeConfig.h" />
     <ClInclude Include="Core\Crypto\Cipher.h" />
     <ClInclude Include="Core\Crypto\CWCCipher.h" />
+    <ClInclude Include="Core\Crypto\CWCUDPCipher.h" />
     <ClInclude Include="Core\Crypto\RSACipher.h" />
     <ClInclude Include="Core\Crypto\RSAKeyPair.h" />
     <ClInclude Include="Core\Network\NetConnection.h" />
@@ -101,6 +102,7 @@
     <ClInclude Include="Core\Utils\File.h" />
     <ClInclude Include="Core\Utils\Logging.h" />
     <ClInclude Include="Core\Utils\Random.h" />
+    <ClInclude Include="Core\Utils\Strings.h" />
     <ClInclude Include="Platform\Platform.h" />
     <ClInclude Include="Protobuf\Frpg2PlayerData.pb.h" />
     <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h" />
@@ -121,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Crypto\CWCCipher.cpp" />
+    <ClCompile Include="Core\Crypto\CWCUDPCipher.cpp" />
     <ClCompile Include="Core\Crypto\RSACipher.cpp" />
     <ClCompile Include="Core\Crypto\RSAKeyPair.cpp" />
     <ClCompile Include="Core\Network\NetConnectionTCP.cpp" />
@@ -128,6 +131,7 @@
     <ClCompile Include="Core\Utils\File.cpp" />
     <ClCompile Include="Core\Utils\Logging.cpp" />
     <ClCompile Include="Core\Utils\Random.cpp" />
+    <ClCompile Include="Core\Utils\Strings.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Platform\Win32\Win32Platform.cpp" />
     <ClCompile Include="Protobuf\Frpg2PlayerData.pb.cc" />

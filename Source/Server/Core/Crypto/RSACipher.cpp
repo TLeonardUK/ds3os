@@ -30,7 +30,7 @@ bool RSACipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 	}
 
 	int EncryptedLength = RSA_private_encrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
-	if (!EncryptedLength)
+	if (EncryptedLength < 0)
 	{
 		std::vector<char> buffer;
 		buffer.resize(1024);
@@ -66,7 +66,7 @@ bool RSACipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 	}
 
 	int DecryptedLength = RSA_private_decrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
-	if (!DecryptedLength)
+	if (DecryptedLength < 0)
 	{
 		std::vector<char> buffer;
 		buffer.resize(1024);

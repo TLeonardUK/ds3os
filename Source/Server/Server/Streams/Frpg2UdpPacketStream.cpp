@@ -7,15 +7,17 @@
 
 #include "Core/Utils/Logging.h"
 
-#include "Core/Crypto/CWCCipher.h"
+#include "Core/Crypto/CWCUDPCipher.h"
 
 Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& InCwcKey, uint64_t InAuthToken)
     : Connection(InConnection)
     , CwcKey(InCwcKey)
     , AuthToken(InAuthToken)
 {
-    EncryptionCipher = std::make_shared<CWCCipher>(InCwcKey);
-    DecryptionCipher = std::make_shared<CWCCipher>(InCwcKey);
+    // Udp cwc cipher seems to leave one byte padding between the iv/tag and the payload.
+    // TODO: This is a hacky fix, do this a better way.
+    EncryptionCipher = std::make_shared<CWCUDPCipher>(InCwcKey, AuthToken);
+    DecryptionCipher = std::make_shared<CWCUDPCipher>(InCwcKey, AuthToken);
 
     RecieveBuffer.resize(64 * 1024);
 }
@@ -62,7 +64,9 @@ bool Frpg2UdpPacketStream::Pump()
 
             if (DecryptionCipher)
             {
+                // TODO: Hum we are getting -something- that looks like plaintext, but tags are wrong?               
                 std::vector<uint8_t> EncryptedBuffer = Packet.Payload;
+
                 if (!DecryptionCipher->Decrypt(EncryptedBuffer, Packet.Payload))
                 {
                     Warning("[%s] Failed to decrypt packet payload.", Connection->GetName().c_str());

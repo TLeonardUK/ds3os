@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Log CWC tags to disk"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+local output_folder_dialog = createSelectDirectoryDialog()
+output_folder_dialog.execute()
+
+local output_folder = output_folder_dialog.FileName
+local cwc_compute_tag_start_hook = 0x1422adb50
+local cwc_compute_tag_end_hook = 0x1422add97
+local cwc_auth_header_hook = 0x1422ad9c0
+local message_counter = 0
+local current_tag_addr = 0
+local current_ctx_addr = 0
+local auth_header_counter = 0
+
+function string.fromhex(str)
+    return (str:gsub('..', function (cc)
+        return string.char(tonumber(cc, 16))
+    end))
+end
+
+function string.tohex(str)
+    return (str:gsub('.', function (c)
+        return string.format('%02X', string.byte(c))
+    end))
+end
+
+function on_cwc_compute_tag_start()
+    current_tag_addr = RCX
+    current_ctx_addr = R8
+    print("Called: on_cwc_compute_tag_start")
+    debug_continueFromBreakpoint(co_run)    
+end
+
+function on_cwc_compute_tag_end()
+    print("Called: on_cwc_compute_tag_end")
+
+    local hdr_cnt = readInteger(current_ctx_addr + 340)
+    local txt_ccnt = readInteger(current_ctx_addr + 344)
+    local txt_acnt = readInteger(current_ctx_addr + 348)
+
+    local tag_bytes = readBytes(current_tag_addr, 16, true)
+    local tag_string = string.char(unpack(tag_bytes)):tohex()
+
+    local name = string.format("cwc_tag_%06d.bin", message_counter)
+    print("Writing new tag to: " .. name);
+
+    local file, err = io.open(output_folder .. "/" .. name, "wb")
+
+    if (err) then
+        print(err)
+        return
+    end
+
+    file:write("hdr_cnt:" .. hdr_cnt .. "\n")
+    file:write("txt_ccnt:" .. txt_ccnt .. "\n")
+    file:write("txt_acnt:" .. txt_acnt .. "\n")    
+
+    file:write("Tag:")
+    file:write(tag_string)
+    file:write("\n")
+
+    file:close()
+
+    message_counter = message_counter + 1
+    auth_header_counter = 0
+    debug_continueFromBreakpoint(co_run)
+end
+
+function on_cwc_auth_header()
+    print("Called: on_cwc_auth_header")
+
+    local hdr_len = EDX
+    local hdr_bytes = readBytes(RCX, hdr_len, true)
+    local hdr_string = string.char(unpack(hdr_bytes)):tohex()
+
+    local name = string.format("cwc_auth_header_%06d_%06d.bin", message_counter, auth_header_counter)
+    print("Writing new auth header to: " .. name);
+
+    local file, err = io.open(output_folder .. "/" .. name, "wb")
+
+    if (err) then
+        print(err)
+        return
+    end
+
+    file:write("hdr_len:" .. hdr_len .. "\n")
+    file:write("hdr:" .. hdr_string .. "\n")
+
+    file:close()
+
+    auth_header_counter = auth_header_counter + 1
+    debug_continueFromBreakpoint(co_run)
+end
+
+debug_setBreakpoint(cwc_compute_tag_start_hook, "on_cwc_compute_tag_start")
+debug_setBreakpoint(cwc_compute_tag_end_hook, "on_cwc_compute_tag_end")
+debug_setBreakpoint(cwc_auth_header_hook, "on_cwc_auth_header")
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+
+debug_removeBreakpoint(cwc_compute_tag_start_hook)
+debug_removeBreakpoint(cwc_compute_tag_end_hook)
+debug_removeBreakpoint(cwc_auth_header_hook)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

@@ -8,6 +8,7 @@
 #include "Core/Network/NetConnection.h"
 #include "Core/Network/NetConnectionUDP.h"
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
@@ -109,6 +110,9 @@ void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientCo
     }
 
     GameClientAuthenticationState& AuthState = (*AuthStateIter).second;
+
+
+    Log("[%s] Client will use cipher key %s", ClientConnection->GetName().c_str(), BytesToHex(AuthState.CwcKey).c_str());
 
     std::shared_ptr<GameClient> Client = std::make_shared<GameClient>(this, ClientConnection, AuthState.CwcKey, AuthState.AuthToken);
     Clients.push_back(Client);

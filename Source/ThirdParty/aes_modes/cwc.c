@@ -233,9 +233,18 @@ void do_cwc(uint32_t in[], cwc_ctx ctx[1])
     /* in truncate to zero mode                     */
     set_FPU;
 
-    data[2] = bswap_32(in[2]);
-    data[1] = bswap_32(in[1]);
-    data[0] = bswap_32(in[0]);
+    if (PLATFORM_BYTE_ORDER == IS_BIG_ENDIAN)
+    {
+        data[2] = bswap_32(in[2]);
+        data[1] = bswap_32(in[1]);
+        data[0] = bswap_32(in[0]);
+    }
+    else
+    {
+        data[2] = in[2];
+        data[1] = in[1];
+        data[0] = in[0];
+    }
 
     /* split input data into 24 bit double values   */
     a[0] =  data[2] & 0x00ffffff;
@@ -334,9 +343,18 @@ void do_cwc(uint32_t in[], cwc_ctx ctx[1])
     /* in truncate to zero mode                     */
     set_FPU;
 
-    data[2] = bswap_32(in[2]);
-    data[1] = bswap_32(in[1]);
-    data[0] = bswap_32(in[0]);
+    if (PLATFORM_BYTE_ORDER == IS_BIG_ENDIAN)
+    {
+        data[2] = bswap_32(in[2]);
+        data[1] = bswap_32(in[1]);
+        data[0] = bswap_32(in[0]);
+    }
+    else
+    {
+        data[2] = in[2];
+        data[1] = in[1];
+        data[0] = in[0];
+    }
 
     /* split input data into 24 bit double values   */
     a[0] =  data[2] & 0x00ffffff;
@@ -961,6 +979,24 @@ ret_type cwc_decrypt_message(               /* decrypt an entire message    */
     cwc_auth_header(hdr, hdr_len, ctx);
     cwc_decrypt(msg, msg_len, ctx);
     rr = cwc_compute_tag(local_tag, tag_len, ctx);
+    /*
+    printf("expected_tag=");
+    for (int i = 0; i < CBLK_LEN; i++)
+    {
+        printf("%02x", local_tag[i]);
+    }
+    printf("\n");
+    printf("input_tag   =");
+    for (int i = 0; i < tag_len; i++)
+    {
+        printf("%02x", tag[i]);
+    }
+    printf("\n");
+    printf("hdr_cnt=%i\n", ctx->hdr_cnt);
+    printf("txt_acnt=%i\n", ctx->txt_acnt);
+    printf("txt_ccnt=%i\n", ctx->txt_ccnt);
+    printf("\n");
+    */
     return (rr != RETURN_GOOD || memcmp(tag, local_tag, tag_len)) ? RETURN_ERROR : RETURN_GOOD;
 }
 
