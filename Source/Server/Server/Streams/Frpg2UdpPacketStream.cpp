@@ -7,17 +7,16 @@
 
 #include "Core/Utils/Logging.h"
 
-#include "Core/Crypto/CWCUDPCipher.h"
+#include "Core/Crypto/CWCServerUDPCipher.h"
+#include "Core/Crypto/CWCClientUDPCipher.h"
 
 Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& InCwcKey, uint64_t InAuthToken)
     : Connection(InConnection)
     , CwcKey(InCwcKey)
     , AuthToken(InAuthToken)
 {
-    // Udp cwc cipher seems to leave one byte padding between the iv/tag and the payload.
-    // TODO: This is a hacky fix, do this a better way.
-    EncryptionCipher = std::make_shared<CWCUDPCipher>(InCwcKey, AuthToken);
-    DecryptionCipher = std::make_shared<CWCUDPCipher>(InCwcKey, AuthToken);
+    EncryptionCipher = std::make_shared<CWCServerUDPCipher>(InCwcKey, AuthToken);
+    DecryptionCipher = std::make_shared<CWCClientUDPCipher>(InCwcKey, AuthToken);
 
     RecieveBuffer.resize(64 * 1024);
 }
@@ -55,18 +54,9 @@ bool Frpg2UdpPacketStream::Pump()
                 return true;
             }
 
-            if (Packet.Header.auth_token != AuthToken)
-            {
-                Warning("[%s] Recieved packet with missmatching auth token, expected 0x%016llx got 0x%016llx.", Connection->GetName().c_str(), AuthToken, Packet.Header.auth_token);
-                InErrorState = true;
-                return true;
-            }
-
             if (DecryptionCipher)
-            {
-                // TODO: Hum we are getting -something- that looks like plaintext, but tags are wrong?               
+            {        
                 std::vector<uint8_t> EncryptedBuffer = Packet.Payload;
-
                 if (!DecryptionCipher->Decrypt(EncryptedBuffer, Packet.Payload))
                 {
                     Warning("[%s] Failed to decrypt packet payload.", Connection->GetName().c_str());
@@ -134,21 +124,19 @@ bool Frpg2UdpPacketStream::Recieve(Frpg2UdpPacket* OutputPacket)
 
 bool Frpg2UdpPacketStream::BytesToPacket(const std::vector<uint8_t>& Buffer, Frpg2UdpPacket& Packet)
 {
-    int PayloadSize = Buffer.size() - sizeof(Packet.Header);
+    int PayloadSize = Buffer.size();
 
-    memcpy(&Packet.Header, Buffer.data(), sizeof(Packet.Header));
     Packet.Payload.resize(PayloadSize);
-    memcpy(Packet.Payload.data(), Buffer.data() + sizeof(Packet.Header), PayloadSize);
+    memcpy(Packet.Payload.data(), Buffer.data(), PayloadSize);
 
     return true;
 }
 
 bool Frpg2UdpPacketStream::PacketToBytes(const Frpg2UdpPacket& Packet, std::vector<uint8_t>& Buffer)
 {
-    Buffer.resize(sizeof(Packet.Header) + Packet.Payload.size());
+    Buffer.resize(Packet.Payload.size());
 
-    memcpy(Buffer.data(), &Packet.Header, sizeof(Packet.Header));
-    memcpy(Buffer.data() + sizeof(Packet.Header), Packet.Payload.data(), Packet.Payload.size());
+    memcpy(Buffer.data(), Packet.Payload.data(), Packet.Payload.size());
 
     return true;
 }

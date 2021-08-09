@@ -2,8 +2,8 @@
 
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
-#include "Server/Streams/Frpg2UdpPacketStream.h"
-#include "Server/Streams/Frpg2UdpPacket.h"
+#include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
+#include "Server/Streams/Frpg2ReliableUdpPacket.h"
 
 #include "Server/Server.h"
 
@@ -17,13 +17,14 @@
 
 #include "Protobuf/Frpg2RequestMessage.pb.h"
 
-GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken)
+GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& CwcKey, uint64_t InAuthToken)
     : Service(OwningService)
     , Connection(InConnection)
+    , AuthToken(InAuthToken)
 {
     LastMessageRecievedTime = GetSeconds();
 
-    MessageStream = std::make_shared<Frpg2UdpPacketStream>(InConnection, CwcKey, AuthToken);
+    MessageStream = std::make_shared<Frpg2ReliableUdpPacketStream>(InConnection, CwcKey, AuthToken);
 }
 
 bool GameClient::Poll()
@@ -56,11 +57,11 @@ bool GameClient::Poll()
     }
 
     // Process all packets.
-    Frpg2UdpPacket Packet;
+    Frpg2ReliableUdpPacket Packet;
     while (MessageStream->Recieve(&Packet))
     {
-        // TODO: Refresh authentication state each time a packet is recieved.
-        Service->RefreshAuthToken(Packet.Header.auth_token);
+        // Keep authentication token alive while recieving packets.
+        Service->RefreshAuthToken(AuthToken);
     }
 
     return false;

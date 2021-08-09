@@ -8,7 +8,7 @@
 
 class GameService;
 class NetConnection;
-class Frpg2UdpPacketStream;
+class Frpg2ReliableUdpPacketStream;
 class RSAKeyPair;
 class Cipher;
 
@@ -28,7 +28,9 @@ private:
     GameService* Service;
 
     std::shared_ptr<NetConnection> Connection;
-    std::shared_ptr<Frpg2UdpPacketStream> MessageStream;
+    std::shared_ptr<Frpg2ReliableUdpPacketStream> MessageStream;
+
+    uint64_t AuthToken;
 
     double LastMessageRecievedTime = 0.0;
 

@@ -5,7 +5,8 @@
 #include <vector>
 #include <memory>
 
-struct Frpg2UdpPacket;
+#include "Server/Streams/Frpg2UdpPacket.h"
+
 class Cipher;
 class NetConnection;
 

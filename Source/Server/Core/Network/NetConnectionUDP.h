@@ -33,7 +33,7 @@ public:
 #endif
 
 public:
-    NetConnectionUDP(sockaddr_in DestinationIP, const std::string& InName);
+    NetConnectionUDP(SocketType ParentSocket, sockaddr_in DestinationIP, const std::string& InName);
     NetConnectionUDP(const std::string& InName);
     virtual ~NetConnectionUDP();
 

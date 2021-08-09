@@ -50,7 +50,7 @@ bool Frpg2MessageStream::Send(const Frpg2Message& Message, uint32_t ResponseToRe
 
     if (!Frpg2PacketStream::Send(Packet))
     {
-        Warning("[%s] Failed to encrypt message payload.", Connection->GetName().c_str());
+        Warning("[%s] Failed to send.", Connection->GetName().c_str());
         return false;
     }
 

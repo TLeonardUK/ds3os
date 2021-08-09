@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Log CWC plaintext before/after encryption to disk"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+local output_folder_dialog = createSelectDirectoryDialog()
+output_folder_dialog.execute()
+
+local output_folder = output_folder_dialog.FileName
+local cwc_encrypt_hook = 0x1422ae020
+local cwc_decrypt_start_hook = 0x1422adfe0
+local cwc_decrypt_end_hook = 0x1422ae01a
+local message_counter = 0
+
+local current_decrypt_len = 0
+local current_decrypt_addr = 0
+
+function string.tohex(str)
+    return (str:gsub('.', function (c)
+        return string.format('%02X', string.byte(c))
+    end))
+end
+
+function on_cwc_encrypt()
+    print("Called: on_cwc_encrypt")
+
+    local data_len = EDX;
+    local data_bytes = readBytes(RCX, data_len, true)
+    local data_string = string.char(unpack(data_bytes))
+
+    local name = string.format("%06d.encrypt.bin", message_counter)
+
+    local file, err = io.open(output_folder .. "/" .. name, "wb")
+
+    if (err) then
+        print(err)
+        return
+    end
+
+    file:write(data_string)
+    file:close()
+
+    message_counter = message_counter + 1
+    debug_continueFromBreakpoint(co_run)
+end
+
+function on_cwc_decrypt_start()
+    current_decrypt_len = EDX;
+    current_decrypt_addr = RCX
+end
+
+function on_cwc_decrypt_end()
+    print("Called: on_cwc_decrypt_end")
+
+    local data_bytes = readBytes(current_decrypt_addr, current_decrypt_len, true)
+    local data_string = string.char(unpack(data_bytes))
+
+    local name = string.format("%06d.decrypt.bin", message_counter)
+
+    local file, err = io.open(output_folder .. "/" .. name, "wb")
+
+    if (err) then
+        print(err)
+        return
+    end
+
+    file:write(data_string)
+    file:close()
+
+    message_counter = message_counter + 1
+    debug_continueFromBreakpoint(co_run)
+end
+
+debug_setBreakpoint(cwc_encrypt_hook, "on_cwc_encrypt")
+debug_setBreakpoint(cwc_decrypt_start_hook, "on_cwc_decrypt_start")
+debug_setBreakpoint(cwc_decrypt_end_hook, "on_cwc_decrypt_end")
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+
+debug_removeBreakpoint(cwc_encrypt_hook)
+debug_removeBreakpoint(cwc_decrypt_start_hook)
+debug_removeBreakpoint(cwc_decrypt_end_hook)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

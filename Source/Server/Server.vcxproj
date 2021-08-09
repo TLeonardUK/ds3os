@@ -91,7 +91,8 @@
     <ClInclude Include="Config\RuntimeConfig.h" />
     <ClInclude Include="Core\Crypto\Cipher.h" />
     <ClInclude Include="Core\Crypto\CWCCipher.h" />
-    <ClInclude Include="Core\Crypto\CWCUDPCipher.h" />
+    <ClInclude Include="Core\Crypto\CWCClientUDPCipher.h" />
+    <ClInclude Include="Core\Crypto\CWCServerUDPCipher.h" />
     <ClInclude Include="Core\Crypto\RSACipher.h" />
     <ClInclude Include="Core\Crypto\RSAKeyPair.h" />
     <ClInclude Include="Core\Network\NetConnection.h" />
@@ -118,12 +119,15 @@
     <ClInclude Include="Server\Streams\Frpg2MessageStream.h" />
     <ClInclude Include="Server\Streams\Frpg2Packet.h" />
     <ClInclude Include="Server\Streams\Frpg2PacketStream.h" />
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpPacket.h" />
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpPacketStream.h" />
     <ClInclude Include="Server\Streams\Frpg2UdpPacket.h" />
     <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Crypto\CWCCipher.cpp" />
-    <ClCompile Include="Core\Crypto\CWCUDPCipher.cpp" />
+    <ClCompile Include="Core\Crypto\CWCClientUDPCipher.cpp" />
+    <ClCompile Include="Core\Crypto\CWCServerUDPCipher.cpp" />
     <ClCompile Include="Core\Crypto\RSACipher.cpp" />
     <ClCompile Include="Core\Crypto\RSAKeyPair.cpp" />
     <ClCompile Include="Core\Network\NetConnectionTCP.cpp" />
@@ -145,6 +149,7 @@
     <ClCompile Include="Server\Server.cpp" />
     <ClCompile Include="Server\Streams\Frpg2MessageStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2PacketStream.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacketStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp" />
   </ItemGroup>
   <ItemGroup>

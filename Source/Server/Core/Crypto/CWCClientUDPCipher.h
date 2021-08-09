@@ -8,12 +8,12 @@
 
 #include <vector>
 
-class CWCUDPCipher
+class CWCClientUDPCipher
     : public Cipher
 {
 public:
 
-    CWCUDPCipher(const std::vector<uint8_t>& key, uint64_t AuthToken);
+    CWCClientUDPCipher(const std::vector<uint8_t>& key, uint64_t AuthToken);
 
     bool Encrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output) override;
     bool Decrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output) override;

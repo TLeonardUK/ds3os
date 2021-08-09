@@ -1,13 +1,15 @@
 // Dark Souls 3 - Open Server
 
-#include "Core/Crypto/CWCUDPCipher.h"
+#include "Core/Crypto/CWCClientUDPCipher.h"
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Random.h"
 #include "Core/Utils/Endian.h"
 #include "Core/Utils/Strings.h"
 
-CWCUDPCipher::CWCUDPCipher(const std::vector<uint8_t>& InKey, uint64_t InAuthToken)
+// Basically the same as CWCCipher except we include a packet-type and auth token.
+
+CWCClientUDPCipher::CWCClientUDPCipher(const std::vector<uint8_t>& InKey, uint64_t InAuthToken)
     : Key(InKey)
     , AuthToken(InAuthToken)
 {
@@ -18,8 +20,9 @@ CWCUDPCipher::CWCUDPCipher(const std::vector<uint8_t>& InKey, uint64_t InAuthTok
     AuthTokenHeaderBytes.assign(InAuthTokenBytes, InAuthTokenBytes + 8);
 }
 
-bool CWCUDPCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
+bool CWCClientUDPCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
 {
+    std::vector<uint8_t> AuthToken = AuthTokenHeaderBytes;
     std::vector<uint8_t> IV(11, 0);
     std::vector<uint8_t> Tag(16, 0);
     std::vector<uint8_t> Payload = Input;
@@ -32,7 +35,7 @@ bool CWCUDPCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_
     std::vector<uint8_t> Header;
     Header.resize(20);
     memcpy(Header.data(), IV.data(), 11);
-    memcpy(Header.data() + 11, AuthTokenHeaderBytes.data(), 8);
+    memcpy(Header.data() + 11, AuthToken.data(), 8);
     memcpy(Header.data() + 19, PacketType.data(), 1);
 
     if (cwc_encrypt_message(IV.data(), 11, Header.data(), Header.size(), (unsigned char*)Payload.data(), Payload.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
@@ -40,44 +43,47 @@ bool CWCUDPCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_
         return false;
     }
 
-    Output.resize(Payload.size() + 11 + 16 + 1);
+    Output.resize(Payload.size() + 8 + 11 + 16 + 1);
 
-    memcpy(Output.data(), IV.data(), 11);
-    memcpy(Output.data() + 11, Tag.data(), 16);
-    memcpy(Output.data() + 11 + 16, PacketType.data(), 1);
-    memcpy(Output.data() + 11 + 16 + 1, Payload.data(), Payload.size());
+    memcpy(Output.data(), AuthToken.data(), 8);
+    memcpy(Output.data() + 8, IV.data(), 11);
+    memcpy(Output.data() + 8 + 11, Tag.data(), 16);
+    memcpy(Output.data() + 8 + 11 + 16, PacketType.data(), 1);
+    memcpy(Output.data() + 8 + 11 + 16 + 1, Payload.data(), Payload.size());
 
-    Log("Encrypt: PayloadSize=%i IV=%s Tag=%s Header=%s", Payload.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str());
+    //Log("EncryptClient: PayloadSize=%i IV=%s Tag=%s Header=%s", Payload.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str());
 
     return true;
 }
 
-bool CWCUDPCipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
+bool CWCClientUDPCipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
 {
+    std::vector<uint8_t> AuthToken(8);
     std::vector<uint8_t> IV(11);
     std::vector<uint8_t> Tag(16);
     std::vector<uint8_t> PacketType(1);
 
     // Actually enough data for any data?
-    if (Input.size() < 11 + 16 + 1 + 1)
+    if (Input.size() < 8 + 11 + 16 + 1 + 1)
     {
         return false;
     }
 
-    Output.resize(Input.size() - 11 - 16 - 1);
+    Output.resize(Input.size() - 8 - 11 - 16 - 1);
 
-    memcpy(IV.data(), Input.data(), 11);
-    memcpy(Tag.data(), Input.data() + 11, 16);
-    memcpy(PacketType.data(), Input.data() + 11 + 16, 1);
-    memcpy(Output.data(), Input.data() + 11 + 16 + 1, Output.size());
+    memcpy(AuthToken.data(), Input.data(), 8);
+    memcpy(IV.data(), Input.data() + 8, 11);
+    memcpy(Tag.data(), Input.data() + 8 + 11, 16);
+    memcpy(PacketType.data(), Input.data() + 8 + 11 + 16, 1);
+    memcpy(Output.data(), Input.data() + 8 + 11 + 16 + 1, Output.size());
 
     std::vector<uint8_t> Header;
     Header.resize(20);
     memcpy(Header.data(), IV.data(), 11);
-    memcpy(Header.data() + 11, AuthTokenHeaderBytes.data(), 8);
+    memcpy(Header.data() + 11, AuthToken.data(), 8);
     memcpy(Header.data() + 19, PacketType.data(), 1);
 
-    Log("Decrypt: PayloadSize=%i IV=%s Tag=%s Header=%s", Output.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str());
+    //Log("DecryptClient: PayloadSize=%i IV=%s Tag=%s Header=%s", Output.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str());
 
     if (cwc_decrypt_message(IV.data(), 11, Header.data(), Header.size(), (unsigned char*)Output.data(), Output.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
     {
