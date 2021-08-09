@@ -69,7 +69,7 @@ protected:
 
     bool IsOpcodeSequenced(Frpg2ReliableUdpOpCode Opcode);
 
-    void Reset();
+    virtual void Reset();
 
 protected:
 

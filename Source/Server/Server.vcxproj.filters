@@ -150,6 +150,12 @@
     <ClInclude Include="Core\Crypto\CWCClientUDPCipher.h">
       <Filter>Core\Crypto</Filter>
     </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessage.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessageStream.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -227,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="Core\Crypto\CWCClientUDPCipher.cpp">
       <Filter>Core\Crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpMessageStream.cpp">
+      <Filter>Server\Streams</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

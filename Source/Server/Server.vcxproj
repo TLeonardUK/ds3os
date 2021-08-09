@@ -119,6 +119,8 @@
     <ClInclude Include="Server\Streams\Frpg2MessageStream.h" />
     <ClInclude Include="Server\Streams\Frpg2Packet.h" />
     <ClInclude Include="Server\Streams\Frpg2PacketStream.h" />
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessage.h" />
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessageStream.h" />
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpPacket.h" />
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpPacketStream.h" />
     <ClInclude Include="Server\Streams\Frpg2UdpPacket.h" />
@@ -149,6 +151,7 @@
     <ClCompile Include="Server\Server.cpp" />
     <ClCompile Include="Server\Streams\Frpg2MessageStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2PacketStream.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpMessageStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacketStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp" />
   </ItemGroup>

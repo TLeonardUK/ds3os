@@ -1,5 +1,7 @@
 // Dark Souls 3 - Open Server
 
+// Credit: A lot of information here has been derived from the protobufs of AmirBohd's ModEngine2.
+
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
 package Frpg2RequestMessage;
@@ -47,5 +49,258 @@ message GetServiceStatusResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
-// Game Server Messages
+// Game Server Messages - Initialization
 // ------------------------------------------------------------------------------------------------------------
+
+message RequestWaitForUserLogin {
+  required string steam_id = 1;
+  required uint32 unknown_1 = 2;  // 1
+  required uint32 unknown_2 = 3;  // 0
+  required uint32 unknown_3 = 4;  // 1
+  required uint32 unknown_4 = 5;  // 2
+}
+
+message RequestWaitForUserLoginResponse {
+  required string steam_id = 1;
+  required uint32 unknown_1 = 1; // 6872049
+}
+
+message PlayerInfoUploadConfigPushMessage {
+  // todo
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Announcements
+// ------------------------------------------------------------------------------------------------------------
+
+message AnnounceMessageData {
+  required uint32 unk01 = 1;
+  required uint32 order = 2;
+  required uint32 unk03 = 3;
+  required string header = 4;
+  required string message = 5;
+  required Frpg2PlayerData.DateTime datetime = 6;
+}
+
+message AnnounceMessageDataList {
+  repeated AnnounceMessageData items = 1;
+}
+
+message RequestGetAnnounceMessageListResponse {
+  required AnnounceMessageDataList changes = 1;
+  required AnnounceMessageDataList notices = 2;
+}
+
+message RequestUpdatePlayerStatus {
+  required Frpg2PlayerData.AllStatus all_status = 1;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Summon Signs
+// ------------------------------------------------------------------------------------------------------------
+
+message SummonSignMessage {
+  required uint32 online_area_id = 1;
+  required uint32 unknown_id_2 = 2;
+  required SignInfo sign_info = 3;
+  required string player_struct = 4;
+}
+
+message GetSignResult {
+  optional SignInfo sign_info = 1;
+  repeated SignData sign_data = 2;
+}
+
+message SignInfo {
+  required uint32 player_id = 1;
+  required uint32 sign_info = 2;
+}
+
+message SignData {
+  required SignInfo sign_info = 1;
+  required uint32 online_area_id = 2;
+  required MatchingParameter matching_parameter = 3;
+  required string player_struct = 4;
+  required string steam_id = 5;
+  required uint32 unknown_id_6 = 6; //1
+}
+
+message MatchingParameter {
+  required uint32 unknown_id_1 = 1;                     //1350000
+  required uint32 unknown_id_2 = 2;                     //2
+  required uint32 unknown_id_3 = 3;                     //0
+  required uint32 unknown_id_4 = 4;                     //1
+  required uint32 unknown_id_5 = 5;                     //0
+  required uint32 soul_level = 6;
+  required uint32 total_get_soul = 7;
+  optional string unknown_string = 8;
+  required uint32 unknown_id_9 = 9;                     //0, 1, 7
+  required string password = 10;
+  required uint32 covenant = 11;
+  required uint32 weaponlevel = 14;
+}
+
+message SignGetFlags {
+  required uint32 unknown_id_1 = 1;                     //1
+  required uint32 unknown_id_2 = 2;                     //1
+  required uint32 unknown_id_3 = 3;                     //0
+}
+
+message SignDomainGetInfo {
+  required uint32 unknown_field_1 = 1;                  //32
+  required uint32 online_area_id = 2;
+}
+
+message RequestGetSignList {
+  required uint32 unknown_id_1 = 1;                       // 0
+  repeated SignDomainGetInfo sign_domain_get_info = 2;
+  required uint32 online_area_id = 3;                     //Seems to be related to online area
+  required MatchingParameter matching_parameter = 4;
+  required SignGetFlags sign_get_flags = 5;
+}
+
+message RequestGetSignListResponse {
+  required GetSignResult get_sign_result = 1;
+}
+
+message RequestNotifyCreateSignResult {
+  required Frpg2PlayerData.AllStatus all_status = 1;
+  required uint32 online_area_id_lower = 2;
+  required uint32 online_area_id_upper = 3;
+  required Frpg2PlayerData.Vector vector = 4;
+  required uint32 sign_unique_number = 5;              //528745087
+  required uint32 unknown_2 = 6;                       //0
+  required uint32 unknown_3 = 7;                       //3
+  required uint32 unknown_4 = 8;                       //2
+}
+
+message RequestCreateSign {
+  required uint32 online_area_id_lower = 1;
+  required uint32 online_area_id_upper = 2;
+  required MatchingParameter matching_parameter = 3;
+  required uint32 unknown = 4;
+  required string player_struct = 5;
+}
+
+message RequestCreateSignResponse {
+  required uint32 sign_unique_number = 1;
+}
+
+message RequestSummonSign {
+  required uint32 online_area_id_lower = 1;
+  required uint32 online_area_id_upper = 2;
+  required SignInfo sign_info = 3;
+  required string player_struct = 4;
+}
+
+message PushRequestRemoveSign {
+  required uint32 sign_unique_number = 1;
+  required SignInfo sign_info = 2;
+}
+
+message PushRequestSummonSign {
+  required uint32 sign_unique_number = 1;
+  required SummonSignMessage summon_sign_message = 2;
+}
+
+message RequestRemoveSign {
+  required uint32 sign_unique_number = 1;
+}
+
+message RequestCreateGhostData {
+  required uint32 online_area_id = 1;
+  required string ghost_data = 2;
+}
+
+message RequestGetRightMatchingArea {
+  required MatchingParameter matching_parameter = 1;
+  required uint32 unknown = 2;
+}
+
+message RequestGetRightMatchingAreaResponse {
+  repeated RequestGetRightMatchingAreaResponse_Area_info area_info = 1;
+}
+
+message RequestGetRightMatchingAreaResponse_Area_info {
+  required uint32 online_area_id = 1;
+  required uint32 unknown = 2;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Break In Messages
+// ------------------------------------------------------------------------------------------------------------
+
+message BreakInTargetData {
+  required uint32 player_id = 1;
+  required string steam_id = 2;
+}
+
+message PartyMemberInfo {
+  required uint32 player_id = 1;
+  required uint32 char_id = 2;
+  required uint32 unknown_2 = 3;
+  required uint32 unknown_4 = 4;
+  required uint32 unknown_5 = 5;
+  required uint32 unknown_6 = 6;
+}
+
+// Sent by invader looking for worlds to invade
+message RequestGetBreakInTargetList { 
+  required uint32 online_area_id_lower = 1;
+  required uint32 online_area_id_upper = 2;
+  required uint32 unknown_1 = 3;
+  required MatchingParameter matching_parameter = 4;
+  required uint32 unknown_2 = 5;
+}
+
+// Received by invader looking for worlds to invade
+message RequestGetBreakInTargetListResponse { 
+  required uint32 online_area_id_lower = 1;
+  required uint32 online_area_id_upper = 2;
+  repeated BreakInTargetData break_in_target_data = 3;
+}
+
+// Received by host, after PushRequestBreakInTarget. Sent by invader
+message PushRequestAllowBreakInTarget { 
+  required uint32 unknown_1 = 1; //935
+  required uint32 player_id = 2; //Host playerid
+  required string data = 3;
+  required uint32 unknown_2 = 4;
+}
+
+// Sent by host sometimes, after PushRequestAllowBreakInTarget
+message RequestSendMessageToPlayers { 
+  required uint32 player_id = 1; //Invading playerid
+  required PushRequestAllowBreakInTarget push_request_allow_break_in_target = 2;
+}
+
+// Received by host
+message PushRequestBreakInTarget { 
+  required uint32 unknown_1 = 1; ///Same as PushRequestAllowBreakInTarget
+  required uint32 player_id = 2; //Invading playerid
+  required string steam_id = 3;
+  required uint32 unknown_2 = 4; //Same as PushRequestAllowBreakInTarget
+  required uint32 online_area_id_lower = 5;
+  required uint32 online_area_id_upper = 6;
+}
+
+// Sent on creation of online session
+message RequestNotifyJoinMultiplay { 
+  required Frpg2PlayerData.AllStatus all_status = 1;
+  required uint32 online_area_id_lower = 2;
+  required uint32 online_area_id_upper = 3;
+  required uint32 unknown_2 = 4;
+  required uint32 unknown_3 = 5;
+  repeated PartyMemberInfo party_member_info = 6;
+}
+
+// Sent on leaving online session
+message RequestNotifyLeaveMultiplay {  
+  required Frpg2PlayerData.AllStatus all_status = 1;
+  required uint32 online_area_id_lower = 2;
+  required uint32 online_area_id_upper = 3;
+  required uint32 unknown_2 = 4;
+  required uint32 unknown_3 = 5;
+  required uint32 unknown_4 = 6;
+  repeated PartyMemberInfo party_member_info = 7;
+}

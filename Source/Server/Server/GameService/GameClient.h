@@ -8,7 +8,8 @@
 
 class GameService;
 class NetConnection;
-class Frpg2ReliableUdpPacketStream;
+class Frpg2ReliableUdpMessageStream;
+class Frpg2ReliableUdpMessage;
 class RSAKeyPair;
 class Cipher;
 
@@ -24,11 +25,17 @@ public:
 
     std::string GetName();
 
+protected:
+
+    //std::shared_ptr<MessageHandlerToken> RegisterMessageHandler(uint32_t MessageHandler, MessageHandlerCallback Callback);
+
+    bool HandleMessage(const Frpg2ReliableUdpMessage& Message);
+
 private:    
     GameService* Service;
 
     std::shared_ptr<NetConnection> Connection;
-    std::shared_ptr<Frpg2ReliableUdpPacketStream> MessageStream;
+    std::shared_ptr<Frpg2ReliableUdpMessageStream> MessageStream;
 
     uint64_t AuthToken;
 

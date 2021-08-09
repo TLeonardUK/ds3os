@@ -92,10 +92,10 @@ bool Frpg2ReliableUdpPacketStream::DecodeReliablePacket(const Frpg2UdpPacket& In
         Ensure(Input.Payload[HeaderOffset] == 0xF5 && Input.Payload[HeaderOffset] == 0x02);
     }
 
-    Output.Payload.reserve(PayloadSize);
+    Output.Payload.resize(PayloadSize);
 
     memcpy(&Output.Header, Input.Payload.data() + HeaderOffset, sizeof(Frpg2ReliableUdpPacketHeader));
-    memcpy(Output.Payload.data(), Output.Payload.data() + PayloadOffset, PayloadSize);
+    memcpy(Output.Payload.data(), Input.Payload.data() + PayloadOffset, PayloadSize);
 
     //Output.Header.SwapEndian();
 
@@ -237,7 +237,6 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
         {   
             // Send an ACK, its possible that the remote is retransmitting packets as
             // a previously sent ACK has dropped.
-            // TODO: Rate limit this.
             Send_ACK(RemoteSequenceIndexAcked);
 
             return;

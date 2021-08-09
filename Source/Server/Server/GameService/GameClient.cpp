@@ -2,8 +2,8 @@
 
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
-#include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
-#include "Server/Streams/Frpg2ReliableUdpPacket.h"
+#include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/Frpg2ReliableUdpMessage.h"
 
 #include "Server/Server.h"
 
@@ -24,7 +24,7 @@ GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection
 {
     LastMessageRecievedTime = GetSeconds();
 
-    MessageStream = std::make_shared<Frpg2ReliableUdpPacketStream>(InConnection, CwcKey, AuthToken);
+    MessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(InConnection, CwcKey, AuthToken);
 }
 
 bool GameClient::Poll()
@@ -57,14 +57,25 @@ bool GameClient::Poll()
     }
 
     // Process all packets.
-    Frpg2ReliableUdpPacket Packet;
-    while (MessageStream->Recieve(&Packet))
+    Frpg2ReliableUdpMessage Message;
+    while (MessageStream->Recieve(&Message))
     {
-        // Keep authentication token alive while recieving packets.
-        Service->RefreshAuthToken(AuthToken);
+        if (HandleMessage(Message))
+        {
+            Warning("[%s] Disconnecting client as failed to handle message.", GetName().c_str());
+            return true;
+        }
     }
 
+    // Keep authentication token alive while client is..
+    Service->RefreshAuthToken(AuthToken);
+
     return false;
+}
+
+bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
+{
+    return true;
 }
 
 std::string GameClient::GetName()

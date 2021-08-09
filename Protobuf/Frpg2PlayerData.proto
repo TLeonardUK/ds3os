@@ -13,3 +13,179 @@ message DateTime {
   required uint32 seconds = 6;
   required uint32 tzdiff = 7; 
 }
+
+message AllStatus{
+  optional PlayerLocation playerlocation = 1;
+  optional LogInfo loginfo = 2;
+  optional PlayerStatus playerstatus = 3;
+  optional PlayData playdata = 4;
+  optional StatsInfo statsinfo = 5;
+  optional Equipment equipment = 6;
+  optional string steamid = 7;
+}
+
+message PlayerStatus{
+  optional int32 soullevel = 4; 
+  repeated int32 recentonlinearea = 17;
+  repeated uint32 unknown2 = 18; //0 or 1
+  optional int32 hp = 23;
+  optional int32 maxhp = 24;
+  optional int32 basemaxhp = 25;
+  optional int32 fp = 26;
+  optional int32 maxfp = 27;
+  optional int32 basemaxfp = 28;
+  optional int32 stamina = 29;
+  optional int32 maxstamina = 30;
+  optional int32 basemaxstamina = 31;
+  optional string name = 38;
+  optional int32 vigor = 40;
+  optional int32 attunement = 41;
+  optional int32 endurance = 42;
+  optional int32 vitality = 43;
+  optional int32 strength = 44;
+  optional int32 dexterity = 45;
+  optional int32 intelligence = 46;
+  optional int32 faith = 47;
+  optional int32 luck = 48;
+  optional DefenseInfo defenseinfo = 58;
+  optional CutRateInfo cutrateinfo = 59;
+  optional ResistanceInfo armorresistanceinfo = 60;
+  optional ResistanceInfo baseresistanceinfo = 61;
+}
+
+message PlayData{
+  required uint32 unknown1 = 1; //144680
+  required uint32 unknown2 = 4; //0
+  required uint32 unknown3 = 5; //0
+  required uint32 unknown4 = 6; //5
+  required uint32 unknown5 = 7; //11
+  repeated BonfireInfo bonfireinfo = 8;
+}
+
+message LogInfo{
+  required uint32 unknown1 = 1; //144680
+  required uint32 unknown2 = 6; //24
+  required uint32 unknown3 = 7; //404
+  required uint32 unknown4 = 8; //0
+  required uint32 unknown5 = 9; //3
+  required uint32 unknown6 = 10; //78
+}
+
+message StatsInfo{
+  required uint32 unknown1 = 1;
+  required uint32 unknown2 = 2;
+  required uint32 unknown3 = 3;
+  required uint32 unknown4 = 4;
+  required uint32 unknown5 = 5;
+  required uint32 unknown6 = 6;
+  required DateTime datetime1 = 7;
+  required DateTime datetime2 = 8;
+}
+
+message Equipment{
+  required int32 leftweapon1 = 1;
+  required int32 leftweapon2 = 2;
+  required int32 leftweapon3 = 3;
+  required int32 rightweapon1 = 4;
+  required int32 rightweapon2 = 5;
+  required int32 rightweapon3 = 6;
+  required int32 head = 7;
+  required int32 chest = 8;
+  required int32 hands = 9;
+  required int32 legs = 10;
+  required int32 ring1 = 11;
+  required int32 ring2 = 12;
+  required int32 ring3 = 13;
+  required int32 ring4 = 14;
+  required int32 quickitem1 = 15;
+  required int32 quickitem2 = 16;
+  required int32 quickitem3 = 17;
+  required int32 quickitem4 = 18;
+  required int32 quickitem5 = 19;
+  required int32 quickitem6 = 20;
+  required int32 quickitem7 = 21;
+  required int32 quickitem8 = 22;
+  required int32 quickitem9 = 23;
+  required int32 quickitem10 = 24;
+  required int32 toolbelt1 = 25;
+  required int32 toolbelt2 = 26;
+  required int32 toolbelt3 = 27;
+  required int32 toolbelt4 = 28;
+  required int32 toolbelt5 = 29;
+  required int32 arrow1 = 30;
+  required int32 arrow2 = 31;
+  required int32 bolt1 = 32;
+  required int32 bolt2 = 33;
+  required int32 spell1 = 34;
+  required int32 spell2 = 35;
+  required int32 spell3 = 36;
+  required int32 spell4 = 37;
+  required int32 spell5 = 38;
+  required int32 spell6 = 39;
+  required int32 spell7 = 40;
+  required int32 spell8 = 41;
+  required int32 spell9 = 42;
+  required int32 spell10 = 43;
+  required int32 spell11 = 44;
+  required int32 spell12 = 45;
+  required int32 spell13 = 46;
+  required int32 spell14 = 47;
+  required int32 unknown0 = 48;
+  required int32 unknown1 = 49;
+  required int32 unknown2 = 50;
+  required int32 unknown3 = 51;
+  required int32 unknown4 = 52;
+  required int32 unknown5 = 53;
+  required int32 unknown6 = 54;
+  required int32 unknown7 = 55;
+  required int32 unknown8 = 56;
+  required int32 unknown9 = 57;
+  required int32 unknown10 = 58;
+  required int32 unknown11 = 59;
+  required int32 unknown12 = 60;
+}
+
+message PlayerLocation{
+  required uint32 onlineareaidlower = 1;
+  required uint32 onlineareaidupper = 2;
+}
+
+message DefenseInfo{
+  required uint32 physical = 1;
+  required uint32 strike = 2;
+  required uint32 slash = 3;
+  required uint32 thrust = 4;
+  required uint32 magic = 5;
+  required uint32 fire = 6;
+  required uint32 lightning = 7;
+  required uint32 dark = 8;
+}
+
+message CutRateInfo{
+  required float physical = 1;
+  required float strike = 2;
+  required float slash = 3;
+  required float thrust = 4;
+  required float magic = 5;
+  required float fire = 6;
+  required float lightning = 7;
+  required float dark = 8;
+}
+
+message ResistanceInfo{
+  required uint32 bleed = 1;
+  required uint32 poison = 2;
+  required uint32 frost = 3;
+  required uint32 curse = 4;
+}
+
+message Vector{
+  required float x = 1;
+  required float y = 2;
+  required float z = 3;
+}
+
+message BonfireInfo{
+  required uint32 bonfireid = 1;
+  required uint32 hasbeenlit = 2;
+}
