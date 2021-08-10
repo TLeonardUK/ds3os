@@ -143,21 +143,25 @@ bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
         Frpg2RequestMessage::AnnounceMessageDataList* Notices = Response.mutable_notices();
 
         Frpg2RequestMessage::AnnounceMessageDataList* Changes = Response.mutable_changes();
-        Frpg2RequestMessage::AnnounceMessageData* Data = Changes->add_items();
-        Data->set_unknown_1(20);
-        Data->set_order(1);
-        Data->set_unknown_2(1);
-        Data->set_header("Hello World");
-        Data->set_message("Connected to Dark Souls 3 Open server.\nhttp://github.com/tleonarduk/ds3os");
 
-        Frpg2PlayerData::DateTime* DateTime = Data->mutable_datetime();
-        DateTime->set_year(2021);
-        DateTime->set_month(8);
-        DateTime->set_day(10);
-        DateTime->set_hours(18);
-        DateTime->set_minutes(30);
-        DateTime->set_seconds(0);
-        DateTime->set_tzdiff(1);
+        for (int i = 0; i < 200; i++)
+        {
+            Frpg2RequestMessage::AnnounceMessageData* Data = Changes->add_items();
+            Data->set_unknown_1(20);
+            Data->set_order(1);
+            Data->set_unknown_2(1);
+            Data->set_header("Hello World");
+            Data->set_message("Connected to Dark Souls 3 Open server.\nhttp://github.com/tleonarduk/ds3os");
+
+            Frpg2PlayerData::DateTime* DateTime = Data->mutable_datetime();
+            DateTime->set_year(2021);
+            DateTime->set_month(8);
+            DateTime->set_day(10);
+            DateTime->set_hours(18);
+            DateTime->set_minutes(30);
+            DateTime->set_seconds(0);
+            DateTime->set_tzdiff(1);
+        }
 
         if (!MessageStream->Send(&Response, &Message))
         {

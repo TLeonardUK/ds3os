@@ -20,7 +20,7 @@ Frpg2ReliableUdpFragmentStream::Frpg2ReliableUdpFragmentStream(std::shared_ptr<N
 bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragment)
 {
     std::vector<uint8_t> Payload = Fragment.Payload;
-    bool bCompressed = (Fragment.Payload.size() >= MIN_SIZE_FOR_COMPRESSION);
+    bool bCompressed = false;//(Fragment.Payload.size() >= MIN_SIZE_FOR_COMPRESSION);
     uint32_t UncompressedSize = Payload.size();
 
     if (bCompressed)
@@ -44,14 +44,16 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
 
         Frpg2ReliableUdpFragment SendFragment;
         SendFragment.Header.compress_flag = bCompressed;
-        SendFragment.Header.fragment_index = 0;
+        SendFragment.Header.fragment_index = i;
         SendFragment.Header.fragment_length = FragmentLength;
         SendFragment.Header.total_payload_length = Payload.size();
-        SendFragment.Header.packet_counter = SentFragmentCounter++;
+        SendFragment.Header.packet_counter = SentFragmentCounter;
         SendFragment.PayloadDecompressedLength = UncompressedSize;
         SendFragment.Payload.resize(FragmentLength);
 
         memcpy(SendFragment.Payload.data(), Payload.data() + FragmentOffset, FragmentLength);
+
+//        Warning("[%s] Sending fragment: index=%i length=%i total=%i.", Connection->GetName().c_str());
 
         Frpg2ReliableUdpPacket SendPacket;
         if (!EncodeFragment(SendFragment, SendPacket))
@@ -74,6 +76,8 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
             return false;
         }
     }
+
+    SentFragmentCounter++;
 
     return false;
 }
@@ -183,6 +187,9 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
     {
         return true;
     }
+
+    // TODO: I have the horrible feeling the client multiplex's fragments from different packets.
+    //       If this is the case we need to check the packet_counter when defragmenting packets and keep them together.
 
     Frpg2ReliableUdpFragment Fragment;
     while (RecieveInternal(&Fragment))
