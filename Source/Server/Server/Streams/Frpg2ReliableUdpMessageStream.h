@@ -2,47 +2,48 @@
 
 #pragma once
 
-#include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
+#include "Server/Streams/Frpg2ReliableUdpFragmentStream.h"
+#include "Server/Streams/Frpg2ReliableUdpMessage.h"
 
 #include "Protobuf/Frpg2RequestMessage.pb.h"
 
-struct Frpg2ReliableUdpMessage;
-class RSAKeyPair;
+#include <unordered_map>
+
 class Cipher;
 
 class Frpg2ReliableUdpMessageStream
-    : public Frpg2ReliableUdpPacketStream
+    : public Frpg2ReliableUdpFragmentStream
 {
 public:
     Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken);
 
-    // Returns true if send was successful, if false is returned the send queue
-    // is likely saturated or the packet is invalid.
-    virtual bool Send(const Frpg2ReliableUdpMessage& Message);
+    // Short hand version of Send for protobufs, takes care of constructing the wrapper message.
+    virtual bool Send(google::protobuf::MessageLite* Message, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
 
     // Returns true if a packet was recieved and stores packet in OutputPacket.
     virtual bool Recieve(Frpg2ReliableUdpMessage* Message);
 
-    // Overridden so we can do package retransmission/general management.
-    virtual bool Pump() override;
-
 protected:
 
-    virtual bool RecieveInternal(Frpg2ReliableUdpMessage* Message);
+    // Returns true if send was successful, if false is returned the send queue
+    // is likely saturated or the packet is invalid.
+    virtual bool SendInternal(const Frpg2ReliableUdpMessage& Message, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
 
-    bool DecodeMessage(const Frpg2ReliableUdpPacket& Packet, Frpg2ReliableUdpMessage& Message);
-    bool EncodeMessage(const Frpg2ReliableUdpMessage& Message, Frpg2ReliableUdpPacket& Packet);
+    bool DecodeMessage(const Frpg2ReliableUdpFragment& Packet, Frpg2ReliableUdpMessage& Message);
+    bool EncodeMessage(const Frpg2ReliableUdpMessage& Message, Frpg2ReliableUdpFragment& Packet);
 
     virtual void Reset() override;
 
 private:
 
-    std::vector<Frpg2ReliableUdpMessage> Fragments;
-    uint32_t RecievedFragmentLength = 0;
+    struct MessageHistoryEntry
+    {
+        uint32_t MessageIndex;
+        Frpg2ReliableUdpMessageType MessageType;
+    };
 
-    std::vector<Frpg2ReliableUdpMessage> RecieveQueue;
-    
-    // Includes header + compressed payload
-    const int MAX_FRAGMENT_MESSAGE_LENGTH = 1024;
+    std::unordered_map<uint32_t, Frpg2ReliableUdpMessageType> OutstandingResponses;
+
+    uint32_t SentMessageCounter = 0;
 
 };

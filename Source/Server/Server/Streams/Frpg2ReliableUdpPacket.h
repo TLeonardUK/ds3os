@@ -5,11 +5,14 @@
 #include "Core/Utils/Endian.h"
 
 #include <vector>
+#include <string>
 
 // Every packet can perform one of the below operations. This is basically
 // just a crude reimplementation of most of the TCP operations.
 enum class Frpg2ReliableUdpOpCode : uint8_t
 {
+    Unset           = 0x00,
+
     // Used to establish connection and sync sequence numbers.
     SYN             = 0x02,    
 
@@ -49,6 +52,8 @@ enum class Frpg2ReliableUdpOpCode : uint8_t
     PT_DAT_FRAG_ACK = 0x38 
 };
 
+std::string ToString(Frpg2ReliableUdpOpCode OpCode);
+
 // What part of the packet transmission flow the stream is in.
 // We only implement the server side of this protocol, we can't
 // currently establish outgoing streams.
@@ -57,6 +62,7 @@ enum class Frpg2ReliableUdpStreamState
     Listening,
     SynRecieved,
     Established,
+    Closing,
     Closed
 };
 
@@ -68,9 +74,9 @@ struct Frpg2ReliableUdpPacketHeader
 public:
 
     uint16_t                magic_number = 0x02F5;
-    uint8_t                 ack_counters[3];        // Not using a bitfield for these as msvc really doesn't seem to want to pack them right.
-    Frpg2ReliableUdpOpCode  opcode;
-    uint8_t                 unknown_1 = 0xFF;       // Possible congestion control. I think we can ignore this for right now.
+    uint8_t                 ack_counters[3] = { 0, 0, 0 };          // Not using a bitfield for these as msvc really doesn't seem to want to pack them right.
+    Frpg2ReliableUdpOpCode  opcode = Frpg2ReliableUdpOpCode::Unset;
+    uint8_t                 unknown_1 = 0xFF;                       // Possible congestion control. I think we can ignore this for right now.
 
     void GetAckCounters(uint32_t& local, uint32_t& remote) const
     {

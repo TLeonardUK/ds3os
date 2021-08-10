@@ -5,6 +5,8 @@
 #include "Server/Streams/Frpg2UdpPacketStream.h"
 #include "Server/Streams/Frpg2ReliableUdpPacket.h"
 
+#include <unordered_set>
+
 struct Frpg2ReliableUdpPacket;
 class RSAKeyPair;
 class Cipher;
@@ -24,6 +26,7 @@ public:
     // is likely saturated or the packet is invalid.
     virtual bool Send(const Frpg2ReliableUdpPacket& Packet);
 
+/*
     // Sends a packet replying to a previous packet.
     // For each Recieve either SendReply or SendAck should be called for it.
     virtual bool SendReply(const Frpg2ReliableUdpPacket& Response, const Frpg2ReliableUdpPacket& ReplyingTo);
@@ -31,6 +34,12 @@ public:
     // Sends a packet acknowledging reciept of a packet.
     // For each Recieve either SendReply or SendAck should be called for it.
     virtual bool SendAck(const Frpg2ReliableUdpPacket& ReplyingTo);
+*/
+
+    // Notices us that a packet has been handled and if a reply has been sent or not. This
+    // allows us to know if we can now send an ACK for it or not. This is janky and only required
+    // because of the stupid difference between ACK and DAT_ACK.
+    void HandledPacket(uint32_t AckSequence);
 
     // Returns true if a packet was recieved and stores packet in OutputPacket.
     virtual bool Recieve(Frpg2ReliableUdpPacket* Packet);
@@ -61,13 +70,16 @@ protected:
 
     void Send_SYN_ACK(uint32_t RemoteIndex);
     void Send_ACK(uint32_t RemoteIndex);
-    void Send_DAT_ACK(const Frpg2ReliableUdpPacket& Response, uint32_t RemoteIndex);
+    void Send_FIN_ACK(uint32_t RemoteIndex);
+    //void Send_DAT_ACK(const Frpg2ReliableUdpPacket& Response, uint32_t RemoteIndex);
     void Send_HBT();
 
     int GetPacketIndexByLocalSequence(const std::vector<Frpg2ReliableUdpPacket>& Queue, uint32_t SequenceIndex);
     void InsertPacketByLocalSequence(std::vector<Frpg2ReliableUdpPacket>& Queue, const Frpg2ReliableUdpPacket& Packet, uint32_t SequenceIndex);
 
     bool IsOpcodeSequenced(Frpg2ReliableUdpOpCode Opcode);
+
+    void EmitDebugInfo(bool Incoming, const Frpg2ReliableUdpPacket& Packet);
 
     virtual void Reset();
 
@@ -77,6 +89,10 @@ protected:
 
     double LastPacketRecievedTime = 0.0;
     double LastAckSendTime = 0.0;
+
+    // Ack sequences that we have sent replies with DAT_ACK, used to determine
+    // what we need to send back in HandledPacket();
+    std::unordered_set<uint32_t> DatAckResponses;
 
     // TODO: Need to handle these rolling over. They have 12 bits so 
     //       it shouldn't happen for a while, but still needs fixing.

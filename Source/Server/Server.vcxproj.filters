@@ -150,6 +150,15 @@
     <ClInclude Include="Core\Crypto\CWCClientUDPCipher.h">
       <Filter>Core\Crypto</Filter>
     </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpFragment.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpFragmentStream.h">
+      <Filter>Server\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\Compression.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessage.h">
       <Filter>Server\Streams</Filter>
     </ClInclude>
@@ -234,7 +243,19 @@
     <ClCompile Include="Core\Crypto\CWCClientUDPCipher.cpp">
       <Filter>Core\Crypto</Filter>
     </ClCompile>
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpFragmentStream.cpp">
+      <Filter>Server\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\Compression.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Server\Streams\Frpg2ReliableUdpMessageStream.cpp">
+      <Filter>Server\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpMessage.cpp">
+      <Filter>Server\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacket.cpp">
       <Filter>Server\Streams</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,5 +263,13 @@
     <None Include="Directory.Build.props" />
     <None Include="Directory.Build.Cpp.props" />
     <None Include="vcpkg.json" />
+    <None Include="Server\Streams\Frpg2ReliableUdpMessageTypes.inc">
+      <Filter>Server\Streams</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Server\Streams\ReadMe.txt">
+      <Filter>Server\Streams</Filter>
+    </Text>
   </ItemGroup>
 </Project>

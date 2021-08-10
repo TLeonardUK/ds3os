@@ -39,6 +39,8 @@ private:
 
     uint64_t AuthToken;
 
+    std::string SteamId;
+
     double LastMessageRecievedTime = 0.0;
 
 };

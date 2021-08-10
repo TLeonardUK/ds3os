@@ -1,5 +1,7 @@
 // Dark Souls 3 - Open Server
 
+// Credit: A lot of information here has been derived from the protobufs of AmirBohd's ModEngine2.
+
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
 package Frpg2PlayerData;

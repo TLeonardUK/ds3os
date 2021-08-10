@@ -63,8 +63,15 @@
     <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
   </PropertyGroup>

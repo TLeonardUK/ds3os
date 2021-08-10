@@ -98,6 +98,7 @@
     <ClInclude Include="Core\Network\NetConnection.h" />
     <ClInclude Include="Core\Network\NetConnectionTCP.h" />
     <ClInclude Include="Core\Network\NetConnectionUDP.h" />
+    <ClInclude Include="Core\Utils\Compression.h" />
     <ClInclude Include="Core\Utils\Endian.h" />
     <ClInclude Include="Core\Utils\Event.h" />
     <ClInclude Include="Core\Utils\File.h" />
@@ -119,6 +120,8 @@
     <ClInclude Include="Server\Streams\Frpg2MessageStream.h" />
     <ClInclude Include="Server\Streams\Frpg2Packet.h" />
     <ClInclude Include="Server\Streams\Frpg2PacketStream.h" />
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpFragment.h" />
+    <ClInclude Include="Server\Streams\Frpg2ReliableUdpFragmentStream.h" />
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessage.h" />
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessageStream.h" />
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpPacket.h" />
@@ -134,6 +137,7 @@
     <ClCompile Include="Core\Crypto\RSAKeyPair.cpp" />
     <ClCompile Include="Core\Network\NetConnectionTCP.cpp" />
     <ClCompile Include="Core\Network\NetConnectionUDP.cpp" />
+    <ClCompile Include="Core\Utils\Compression.cpp" />
     <ClCompile Include="Core\Utils\File.cpp" />
     <ClCompile Include="Core\Utils\Logging.cpp" />
     <ClCompile Include="Core\Utils\Random.cpp" />
@@ -151,13 +155,17 @@
     <ClCompile Include="Server\Server.cpp" />
     <ClCompile Include="Server\Streams\Frpg2MessageStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2PacketStream.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpFragmentStream.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpMessage.cpp" />
     <ClCompile Include="Server\Streams\Frpg2ReliableUdpMessageStream.cpp" />
+    <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacket.cpp" />
     <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacketStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.Cpp.props" />
     <None Include="Directory.Build.props" />
+    <None Include="Server\Streams\Frpg2ReliableUdpMessageTypes.inc" />
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +178,12 @@
     <ProjectReference Include="..\ThirdParty\protobuf-2.6.1rc1\vsprojects\libprotobuf-lite.vcxproj">
       <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\zlib\zlib.vcxproj">
+      <Project>{cf5b60db-4966-40c6-b777-1b9fdf965296}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Server\Streams\ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

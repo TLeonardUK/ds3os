@@ -62,11 +62,20 @@ message RequestWaitForUserLogin {
 
 message RequestWaitForUserLoginResponse {
   required string steam_id = 1;
-  required uint32 unknown_1 = 1; // 6872049
+  required uint32 unknown_1 = 2; // 6872049
 }
 
+message PlayerInfoUploadConfigPushMessageList {
+  repeated uint32 unknown_1 = 1; // Almost sequential count up from 2 to 1059.
+  required uint32 unknown_2 = 2; // 5
+}
+
+// I'm guessing this is used to configure how often the user uploads their info, and in what locations.
 message PlayerInfoUploadConfigPushMessage {
-  // todo
+  required uint32 unknown_1 = 1;  // 908
+  required PlayerInfoUploadConfigPushMessageList unknown_2 = 2;  // massive list
+  required uint32 unknown_3 = 3;  // 600 - 10 minutes
+  required uint32 unknown_4 = 4;  // 300 - 5 minutes
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -74,9 +83,9 @@ message PlayerInfoUploadConfigPushMessage {
 // ------------------------------------------------------------------------------------------------------------
 
 message AnnounceMessageData {
-  required uint32 unk01 = 1;
+  required uint32 unknown_1 = 1;
   required uint32 order = 2;
-  required uint32 unk03 = 3;
+  required uint32 unknown_2 = 3;
   required string header = 4;
   required string message = 5;
   required Frpg2PlayerData.DateTime datetime = 6;
@@ -84,6 +93,10 @@ message AnnounceMessageData {
 
 message AnnounceMessageDataList {
   repeated AnnounceMessageData items = 1;
+}
+
+message RequestGetAnnounceMessageList {
+  required uint32 max_entries = 1; // Guessing this is what the value is, seems to be constant of 100. 
 }
 
 message RequestGetAnnounceMessageListResponse {

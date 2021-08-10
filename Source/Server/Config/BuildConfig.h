@@ -13,7 +13,7 @@ public:
     BuildConfig() = delete;
 
     // How many seconds without messages causes a client to timeout.
-    inline static const double CLIENT_TIMEOUT = 30.0;
+    inline static const double CLIENT_TIMEOUT = 60.0;
 
     // How many seconds without refresh before an authentication ticket expires.
     inline static const double AUTH_TICKET_TIMEOUT = 30.0;

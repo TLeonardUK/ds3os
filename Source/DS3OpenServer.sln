@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aes_modes", "ThirdParty\aes
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lib_generic_c", "ThirdParty\aes\lib_generic_c\lib_generic_c.vcxproj", "{1B43E5F7-D447-4FCF-AC9B-4767AB47DB8B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "ThirdParty\zlib\zlib.vcxproj", "{CF5B60DB-4966-40C6-B777-1B9FDF965296}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -66,6 +68,14 @@ Global
 		{1B43E5F7-D447-4FCF-AC9B-4767AB47DB8B}.Release|x64.Build.0 = Release|x64
 		{1B43E5F7-D447-4FCF-AC9B-4767AB47DB8B}.Release|x86.ActiveCfg = Release|Win32
 		{1B43E5F7-D447-4FCF-AC9B-4767AB47DB8B}.Release|x86.Build.0 = Release|Win32
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Debug|x64.ActiveCfg = Debug|x64
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Debug|x64.Build.0 = Debug|x64
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Debug|x86.ActiveCfg = Debug|Win32
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Debug|x86.Build.0 = Debug|Win32
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Release|x64.ActiveCfg = Release|x64
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Release|x64.Build.0 = Release|x64
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Release|x86.ActiveCfg = Release|Win32
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +84,7 @@ Global
 		{49EA010D-706F-4BE2-A397-77854B72A040} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
 		{C52E07D5-7560-4B7A-8365-BE3F6AE4EECB} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
 		{1B43E5F7-D447-4FCF-AC9B-4767AB47DB8B} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
+		{CF5B60DB-4966-40C6-B777-1B9FDF965296} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19CD1652-43B0-4E11-A1A4-A2D1A2D19477}

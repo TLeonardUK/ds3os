@@ -5,60 +5,55 @@
 #include "Core/Utils/Endian.h"
 
 #include <vector>
+#include <memory>
 
-// See ds3server_packet.bt for commentry on what each of these
-// fields appears to represent.
-#pragma pack(push,1)
+#include "Protobuf/Frpg2RequestMessage.pb.h"
+
+// All the id's of message type we can recieve.
+enum class Frpg2ReliableUdpMessageType
+{
+    Reply = 0x0,
+
+#define DEFINE_REQUEST_RESPONSE(OpCode, Type, ProtobufClass, ResponseProtobufClass)         Type = OpCode,
+#define DEFINE_MESSAGE(OpCode, Type, ProtobufClass)                                         Type = OpCode,
+#include "Server/Streams/Frpg2ReliableUdpMessageTypes.inc"
+#undef DEFINE_MESSAGE
+#undef DEFINE_REQUEST_RESPONSE
+};
+
+#pragma pack(push, 1)
 struct Frpg2ReliableUdpMessageHeader
 {
 public:
-    uint16_t packet_counter       = 0;
-    uint8_t  compress_flag        = 0;               
-    uint8_t  unknown_1            = 0;
-    uint8_t  unknown_2            = 0;               
-    uint8_t  unknown_3            = 0;
-    uint16_t total_payload_length = 0;
-    uint8_t  unknown_4            = 0;
-    uint8_t  fragment_index       = 0;
-    uint16_t fragment_length      = 0;
+    uint32_t                    header_size     = 0x0C;                                   
+    Frpg2ReliableUdpMessageType msg_type        = Frpg2ReliableUdpMessageType::Reply;     // Will be 0 for message replies, the reponse type is derived by matching up the message_index to the request.
+    uint32_t                    msg_index       = 0;                                      // Feels like flags. Seen 00 08 10 0A as values.
 
     void SwapEndian()
     {
-        total_payload_length = BigEndianToHostOrder(total_payload_length);
-        fragment_length = BigEndianToHostOrder(fragment_length);
-    }
-};
-
-struct Frpg2ReliableUdpPayloadHeader
-{
-public:
-    uint32_t packet_id = 0; // TODO: Not sure about this at all, just testing. Adjust as we see more headers.
-    uint32_t unknown_2 = 0;
-    uint32_t unknown_3 = 0;
-    uint8_t  unknown_4 = 0;
-
-    void SwapEndian()
-    {
+        header_size = BigEndianToHostOrder(header_size);
+        msg_type    = BigEndianToHostOrder(msg_type);
+        msg_index   = LittleEndianToHostOrder(msg_index); // Message index remains in little endian for whatever reason.
     }
 };
 #pragma pack(pop)
 
-static_assert(sizeof(Frpg2ReliableUdpPayloadHeader) == 13, "Message payload header is not expected size.");
+static_assert(sizeof(Frpg2ReliableUdpMessageHeader) == 12, "Message header is not expected size.");
 
 struct Frpg2ReliableUdpMessage
 {
 public:
     Frpg2ReliableUdpMessageHeader Header;
 
-    // Only used if fragment_index == 0
-    uint32_t PayloadDecompressedLength = 0;
-   
-    // Header thats starts the compressed payload and describes
-    // the protobuf that follows it in the true payload.
-    Frpg2ReliableUdpPayloadHeader PayloadHeader;
+    // Gross: This breaks our abstraction, but I can't see any particularly nice
+    // way of passing this around so we can send the appropriate DAT/DAT_ACK codes.
+    uint32_t AckSequenceIndex = 0;
 
-    // Length of this payload should be the same
-    // as the value stored in Header.payload_length
+    std::shared_ptr<google::protobuf::MessageLite> Protobuf;
+
     std::vector<uint8_t> Payload;
-
 };
+
+bool Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output);
+bool ReliableUdpMessageType_To_Protobuf(Frpg2ReliableUdpMessageType Type, bool IsResponse, std::shared_ptr<google::protobuf::MessageLite>& Output);
+bool ReliableUdpMessageType_Expects_Response(Frpg2ReliableUdpMessageType Type);

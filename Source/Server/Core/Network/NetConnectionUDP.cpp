@@ -188,7 +188,7 @@ bool NetConnectionUDP::Send(const std::vector<uint8_t>& Buffer, int Offset, int 
         return false;
     }
 
-    Log(">> %i", Result);
+   // Log(">> %i", Result);
 
     return true;
 }
@@ -296,7 +296,7 @@ bool NetConnectionUDP::Pump()
                 RecieveQueue.push_back(Packet);
             }
 
-            Log("<< %i", Result);
+            //Log("<< %i", Result);
         }
     }
 

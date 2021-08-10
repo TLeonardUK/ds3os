@@ -2,40 +2,99 @@
 
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
+#include "Server/Streams/Frpg2ReliableUdpFragment.h"
 
 #include "Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 
-#include "Core/Crypto/RSAKeyPair.h"
-#include "Core/Crypto/RSACipher.h"
+#include "Protobuf/Frpg2RequestMessage.pb.h"
 
 Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken)
-    : Frpg2ReliableUdpPacketStream(Connection, CwcKey, AuthToken)
+    : Frpg2ReliableUdpFragmentStream(Connection, CwcKey, AuthToken)
 {
 }
 
-bool Frpg2ReliableUdpMessageStream::Send(const Frpg2ReliableUdpMessage& Message)
+bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& Message, const Frpg2ReliableUdpMessage* ResponseTo)
 {
-    // TODO
-    // TODO: Fragment
-    // TODO: Compress
+    Frpg2ReliableUdpMessage SendMessage;
+    if (ResponseTo != nullptr)
+    {
+        SendMessage.Header.msg_index = ResponseTo->Header.msg_index;
+        SendMessage.Header.msg_type = Frpg2ReliableUdpMessageType::Reply;
+    }
+    else
+    {
+        SendMessage.Header.msg_index = SentMessageCounter++;
+    }
 
-    return false;
+    Frpg2ReliableUdpFragment Packet;
+    if (!EncodeMessage(SendMessage, Packet))
+    {
+        Warning("[%s] Failed to convert message to packet.", Connection->GetName().c_str());
+        return false;
+    }
+
+    // TODO: Remove when we have a better way to handle this without breaking abstraction.
+    if (ResponseTo != nullptr)
+    {
+        Packet.AckSequenceIndex = ResponseTo->AckSequenceIndex;
+    }
+
+    if (!Frpg2ReliableUdpFragmentStream::Send(Packet))
+    {
+        return false;
+    }
+
+    if (SendMessage.Header.msg_type != Frpg2ReliableUdpMessageType::Reply)
+    {
+        if (ReliableUdpMessageType_Expects_Response(SendMessage.Header.msg_type))
+        {
+            OutstandingResponses.insert({ SendMessage.Header.msg_index, SendMessage.Header.msg_type });
+        }
+    }
+
+    return true;
+}
+
+bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message, const Frpg2ReliableUdpMessage* ResponseTo)
+{
+    Frpg2ReliableUdpMessage ResponseMessage;
+    ResponseMessage.Payload.resize(Message->ByteSize());
+
+    if (ResponseTo == nullptr)
+    {
+        if (!Protobuf_To_ReliableUdpMessageType(Message, ResponseMessage.Header.msg_type))
+        {
+            Warning("[%s] Failed to determine message type by protobuf.", Connection->GetName().c_str());
+            return false;
+        }
+    }
+    else
+    {
+        // TODO: Remove when we have a better way to handle this without breaking abstraction.
+        ResponseMessage.AckSequenceIndex = ResponseTo->AckSequenceIndex;
+    }
+
+    if (!Message->SerializeToArray(ResponseMessage.Payload.data(), ResponseMessage.Payload.size()))
+    {
+        Warning("[%s] Failed to serialize protobuf payload.", Connection->GetName().c_str());
+        return false;
+    }
+
+    if (!SendInternal(ResponseMessage, ResponseTo))
+    {
+        return true;
+    }
+
+    return true;
 }
 
 bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
 {
-    // TODO
-
-    return false;
-}
-
-bool Frpg2ReliableUdpMessageStream::RecieveInternal(Frpg2ReliableUdpMessage* Message)
-{
-    Frpg2ReliableUdpPacket Packet;
-    if (!Frpg2ReliableUdpPacketStream::Recieve(&Packet))
+    Frpg2ReliableUdpFragment Packet;
+    if (!Frpg2ReliableUdpFragmentStream::Recieve(&Packet))
     {
         return false;
     }
@@ -46,10 +105,47 @@ bool Frpg2ReliableUdpMessageStream::RecieveInternal(Frpg2ReliableUdpMessage* Mes
         return false;
     }
 
+    // TODO: Remove when we have a better way to handle this without breaking abstraction.
+    Message->AckSequenceIndex = Packet.AckSequenceIndex;
+
+    // Create protobuf based on the type provided.
+    Frpg2ReliableUdpMessageType MessageType = Message->Header.msg_type;
+    bool IsResponse = false;
+    if (Message->Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    {
+        // Find message being replied to.
+        if (auto iter = OutstandingResponses.find(Message->Header.msg_index); iter != OutstandingResponses.end())
+        {
+            MessageType = iter->second;
+            OutstandingResponses.erase(iter);
+        }
+        else
+        {
+            Warning("[%s] Recieved unexpected response for message, dropping: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+            return false;
+        }
+
+        IsResponse = true;
+    }
+
+    if (!ReliableUdpMessageType_To_Protobuf(MessageType, IsResponse, Message->Protobuf))
+    {
+        Warning("[%s] Failed to create protobuf instance for message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+        return false;
+    }
+
+    if (!Message->Protobuf->ParseFromArray(Message->Payload.data(), Message->Payload.size()))
+    {
+        Warning("[%s] Failed to deserialize protobuf instance for message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+        return true;
+    }
+
+    Log("[%s] Recieving message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), Message->Header.msg_type, Message->Header.msg_index)
+
     return true;
 }
 
-bool Frpg2ReliableUdpMessageStream::DecodeMessage(const Frpg2ReliableUdpPacket& Packet, Frpg2ReliableUdpMessage& Message)
+bool Frpg2ReliableUdpMessageStream::DecodeMessage(const Frpg2ReliableUdpFragment& Packet, Frpg2ReliableUdpMessage& Message)
 {
     if (Packet.Payload.size() < sizeof(Frpg2ReliableUdpMessageHeader))
     {
@@ -63,54 +159,22 @@ bool Frpg2ReliableUdpMessageStream::DecodeMessage(const Frpg2ReliableUdpPacket& 
     size_t PayloadOffset = sizeof(Frpg2ReliableUdpMessageHeader);
     size_t PayloadLength = Packet.Payload.size() - PayloadOffset;
 
-    if (Message.Header.compress_flag && Message.Header.fragment_index == 0)
-    {
-        memcpy(&Message.PayloadDecompressedLength, Packet.Payload.data() + PayloadOffset, 4);
-        Message.PayloadDecompressedLength = BigEndianToHostOrder(Message.PayloadDecompressedLength);
-
-        PayloadOffset += 4;
-        PayloadLength -= 4;
-    }
-
-    memcpy(&Message.PayloadHeader, Packet.Payload.data() + PayloadOffset, sizeof(Frpg2ReliableUdpPayloadHeader));
-    Message.PayloadHeader.SwapEndian();
-    PayloadOffset += sizeof(Frpg2ReliableUdpPayloadHeader);
-    PayloadLength -= sizeof(Frpg2ReliableUdpPayloadHeader);
-
     Message.Payload.resize(PayloadLength);
     memcpy(Message.Payload.data(), Packet.Payload.data() + PayloadOffset, PayloadLength);
 
     return true;
 }
 
-bool Frpg2ReliableUdpMessageStream::EncodeMessage(const Frpg2ReliableUdpMessage& Message, Frpg2ReliableUdpPacket& Packet)
+bool Frpg2ReliableUdpMessageStream::EncodeMessage(const Frpg2ReliableUdpMessage& Message, Frpg2ReliableUdpFragment& Packet)
 {
     Frpg2ReliableUdpMessage ByteSwappedMessage = Message;
     ByteSwappedMessage.Header.SwapEndian();
-    ByteSwappedMessage.PayloadHeader.SwapEndian();
-    ByteSwappedMessage.PayloadDecompressedLength = HostOrderToBigEndian(ByteSwappedMessage.PayloadDecompressedLength);
 
-    size_t PayloadSize = sizeof(Frpg2ReliableUdpMessage) + sizeof(Frpg2ReliableUdpPayloadHeader) + ByteSwappedMessage.Payload.size();
-    if (ByteSwappedMessage.Header.compress_flag && ByteSwappedMessage.Header.fragment_index == 0)
-    {
-        PayloadSize += 4;
-    }
-
+    size_t PayloadSize = sizeof(Frpg2ReliableUdpMessage) + ByteSwappedMessage.Payload.size();
     Packet.Payload.resize(PayloadSize);
 
     memcpy(Packet.Payload.data(), &ByteSwappedMessage.Header, sizeof(Frpg2ReliableUdpMessage));
-
-    size_t WriteOffset = sizeof(Frpg2ReliableUdpMessageHeader);
-    if (ByteSwappedMessage.Header.compress_flag && ByteSwappedMessage.Header.fragment_index == 0)
-    {
-        memcpy(Packet.Payload.data() + WriteOffset, &ByteSwappedMessage.PayloadDecompressedLength, 4);
-        WriteOffset += 4;
-    }
-
-    memcpy(Packet.Payload.data() + WriteOffset, &ByteSwappedMessage.PayloadHeader, sizeof(Frpg2ReliableUdpPayloadHeader));
-    WriteOffset += sizeof(Frpg2ReliableUdpPayloadHeader);
-
-    memcpy(Packet.Payload.data() + WriteOffset, ByteSwappedMessage.Payload.data(), ByteSwappedMessage.Payload.size());
+    memcpy(Packet.Payload.data() + sizeof(Frpg2ReliableUdpMessageHeader), ByteSwappedMessage.Payload.data(), ByteSwappedMessage.Payload.size());
 
     return true;
 }
@@ -119,80 +183,6 @@ void Frpg2ReliableUdpMessageStream::Reset()
 {
     Frpg2ReliableUdpPacketStream::Reset();
 
-    Fragments.clear();
-    RecieveQueue.clear();
-    RecievedFragmentLength = 0;
-}
-
-bool Frpg2ReliableUdpMessageStream::Pump()
-{
-    if (Frpg2ReliableUdpPacketStream::Pump())
-    {
-        return true;
-    }
-
-    Frpg2ReliableUdpMessage Message;
-    while (RecieveInternal(&Message))
-    {
-        RecievedFragmentLength += Message.Header.total_payload_length;
-        if (RecievedFragmentLength >= Message.Header.fragment_length)
-        {
-            // Compact all payloads together into one combined packet.
-            if (Fragments.size() > 0)
-            {
-                Frpg2ReliableUdpMessage CombinedMessage = Fragments[0];
-                CombinedMessage.Header.fragment_index = 0;
-                CombinedMessage.Header.fragment_length = Message.Header.total_payload_length;
-
-                CombinedMessage.Payload.resize(CombinedMessage.Header.total_payload_length);
-                int Offset = Fragments[0].Header.fragment_length;
-                for (int i = 1; i < Fragments.size(); i++)
-                {
-                    const Frpg2ReliableUdpMessage& Fragment = Fragments[i];
-                    memcpy(CombinedMessage.Payload.data() + Offset, Fragment.Payload.data(), Fragment.Payload.size());
-                    Offset += Fragment.Payload.size();
-                }
-
-                memcpy(CombinedMessage.Payload.data() + Offset, Message.Payload.data(), Message.Payload.size());
-
-                Message = CombinedMessage;
-            }
-
-            // Decompress data if required.
-            if (Message.Header.compress_flag)
-            {
-                Message.Header.compress_flag = false;
-
-                // TODO
-            }
-
-            Log("[%s] Recieved Message: unknown_1=%i unknown_2=%i unknown_3=%i unknown_4=%i", Connection->GetName().c_str(),
-                Message.PayloadHeader.packet_id,
-                Message.PayloadHeader.unknown_2,
-                Message.PayloadHeader.unknown_3,
-                Message.PayloadHeader.unknown_4);
-
-            // DEBUG DEBUG DEBUG
-            /*
-            std::vector<uint8_t> PayloadAndHeader;
-            PayloadAndHeader.resize(Message.Payload.size() + sizeof(Frpg2ReliableUdpPayloadHeader));
-            
-            Frpg2ReliableUdpPayloadHeader SwappedHeader = Message.PayloadHeader;
-            SwappedHeader.SwapEndian();
-            memcpy(PayloadAndHeader.data(), &SwappedHeader, sizeof(Frpg2ReliableUdpPayloadHeader));
-            memcpy(PayloadAndHeader.data() + sizeof(Frpg2ReliableUdpPayloadHeader), Message.Payload.data(), Message.Payload.size());
-
-            static int Counter = 0;
-            char filename[256];
-            sprintf_s(filename, "Z:\\ds3os\\Protobuf\\Dumps\\RawCaptures\\recieve_%i.bin", Counter++);
-            WriteBytesToFile(filename, PayloadAndHeader);
-            */
-            // DEBUG DEBUG DEBUG
-
-            RecieveQueue.push_back(Message);
-            RecievedFragmentLength = 0;
-        }
-    }
-
-    return false;
+    SentMessageCounter = 0;
+    OutstandingResponses.clear();
 }
