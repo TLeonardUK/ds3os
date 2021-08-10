@@ -6,6 +6,7 @@
 #include "Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
+#include "Platform/Platform.h"
 
 #include "Core/Crypto/CWCServerUDPCipher.h"
 #include "Core/Crypto/CWCClientUDPCipher.h"
@@ -19,6 +20,8 @@ Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConn
     DecryptionCipher = std::make_shared<CWCClientUDPCipher>(InCwcKey, AuthToken);
 
     RecieveBuffer.resize(64 * 1024);
+
+    LastActivityTime = GetSeconds();
 }
 
 bool Frpg2UdpPacketStream::Pump()
@@ -44,6 +47,8 @@ bool Frpg2UdpPacketStream::Pump()
 
         if (BytesRecieved > 0)
         {
+            LastActivityTime = GetSeconds();
+
             RecieveBuffer.resize(BytesRecieved);
 
             Frpg2UdpPacket Packet;

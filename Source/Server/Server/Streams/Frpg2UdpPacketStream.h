@@ -22,6 +22,9 @@ public:
     // Returns true if a packet was recieved and stores packet in OutputPacket.
     bool Recieve(Frpg2UdpPacket* Packet);
 
+    // Gets the last timestamp where we recieved packets from the remote system, can be used for timeouts etc.
+    float GetLastActivityTime() { return LastActivityTime; }
+
     // Sends and recieves packets in this stream. If this function
     // returns true the stream is considered to be in an error state
     // and the client this stream goes to should be disconnected.
@@ -42,6 +45,8 @@ protected:
 private:
     
     bool InErrorState = false;
+
+    float LastActivityTime;
 
     std::vector<Frpg2UdpPacket> RecieveQueue;
 

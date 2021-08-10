@@ -146,7 +146,7 @@ bool Frpg2ReliableUdpFragmentStream::EncodeFragment(const Frpg2ReliableUdpFragme
     ByteSwappedFragment.Header.SwapEndian();
     ByteSwappedFragment.PayloadDecompressedLength = HostOrderToBigEndian(ByteSwappedFragment.PayloadDecompressedLength);
 
-    size_t PayloadSize = sizeof(Frpg2ReliableUdpFragment) + ByteSwappedFragment.Payload.size();
+    size_t PayloadSize = sizeof(Frpg2ReliableUdpFragmentHeader) + ByteSwappedFragment.Payload.size();
     if (ByteSwappedFragment.Header.compress_flag && ByteSwappedFragment.Header.fragment_index == 0)
     {
         PayloadSize += 4;
@@ -154,7 +154,7 @@ bool Frpg2ReliableUdpFragmentStream::EncodeFragment(const Frpg2ReliableUdpFragme
 
     Packet.Payload.resize(PayloadSize);
 
-    memcpy(Packet.Payload.data(), &ByteSwappedFragment.Header, sizeof(Frpg2ReliableUdpFragment));
+    memcpy(Packet.Payload.data(), &ByteSwappedFragment.Header, sizeof(Frpg2ReliableUdpFragmentHeader));
 
     size_t WriteOffset = sizeof(Frpg2ReliableUdpFragmentHeader);
     if (ByteSwappedFragment.Header.compress_flag && ByteSwappedFragment.Header.fragment_index == 0)

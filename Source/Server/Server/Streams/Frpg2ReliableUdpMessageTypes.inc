@@ -9,7 +9,7 @@
 // DEFINE_MESSAGE(uint32_t OpCode, Frpg2ReliableUdpMessageType Type, Frpg2RequestMessage::* Class)
 
 DEFINE_REQUEST_RESPONSE(0x0386, RequestWaitForUserLogin, RequestWaitForUserLogin, RequestWaitForUserLoginResponse)
-DEFINE_REQUEST_RESPONSE(0x0388, RequestGetAnnounceMessageList, RequestGetAnnounceMessageList, RequestGetAnnounceMessageListResponse)
+DEFINE_REQUEST_RESPONSE(0x03C6, RequestGetAnnounceMessageList, RequestGetAnnounceMessageList, RequestGetAnnounceMessageListResponse)
 
 DEFINE_MESSAGE(0x0320, PlayerInfoUploadConfigPushMessage, PlayerInfoUploadConfigPushMessage)
 

@@ -18,7 +18,7 @@ Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<Net
 
 bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& Message, const Frpg2ReliableUdpMessage* ResponseTo)
 {
-    Frpg2ReliableUdpMessage SendMessage;
+    Frpg2ReliableUdpMessage SendMessage = Message;
     if (ResponseTo != nullptr)
     {
         SendMessage.Header.msg_index = ResponseTo->Header.msg_index;
@@ -153,14 +153,21 @@ bool Frpg2ReliableUdpMessageStream::DecodeMessage(const Frpg2ReliableUdpFragment
         return false;
     }
 
+    int ReadOffset = 0;
     memcpy(&Message.Header, Packet.Payload.data(), sizeof(Frpg2ReliableUdpMessageHeader));
+    ReadOffset += sizeof(Frpg2ReliableUdpMessageHeader);
     Message.Header.SwapEndian();
 
-    size_t PayloadOffset = sizeof(Frpg2ReliableUdpMessageHeader);
-    size_t PayloadLength = Packet.Payload.size() - PayloadOffset;
+    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    {
+        memcpy(&Message.ResponseHeader, Packet.Payload.data() + ReadOffset, sizeof(Frpg2ReliableUdpMessageResponseHeader));
+        ReadOffset += sizeof(Frpg2ReliableUdpMessageResponseHeader);
+    }
+
+    size_t PayloadLength = Packet.Payload.size() - ReadOffset;
 
     Message.Payload.resize(PayloadLength);
-    memcpy(Message.Payload.data(), Packet.Payload.data() + PayloadOffset, PayloadLength);
+    memcpy(Message.Payload.data(), Packet.Payload.data() + ReadOffset, PayloadLength);
 
     return true;
 }
@@ -169,12 +176,27 @@ bool Frpg2ReliableUdpMessageStream::EncodeMessage(const Frpg2ReliableUdpMessage&
 {
     Frpg2ReliableUdpMessage ByteSwappedMessage = Message;
     ByteSwappedMessage.Header.SwapEndian();
+    ByteSwappedMessage.ResponseHeader.SwapEndian();
 
-    size_t PayloadSize = sizeof(Frpg2ReliableUdpMessage) + ByteSwappedMessage.Payload.size();
+    size_t PayloadSize = sizeof(Frpg2ReliableUdpMessageHeader) + ByteSwappedMessage.Payload.size();
+    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    {
+        PayloadSize += sizeof(Frpg2ReliableUdpMessageResponseHeader);
+    }
+
     Packet.Payload.resize(PayloadSize);
 
-    memcpy(Packet.Payload.data(), &ByteSwappedMessage.Header, sizeof(Frpg2ReliableUdpMessage));
-    memcpy(Packet.Payload.data() + sizeof(Frpg2ReliableUdpMessageHeader), ByteSwappedMessage.Payload.data(), ByteSwappedMessage.Payload.size());
+    int WriteOffset = 0;
+    memcpy(Packet.Payload.data() + WriteOffset, &ByteSwappedMessage.Header, sizeof(Frpg2ReliableUdpMessageHeader));
+    WriteOffset += sizeof(Frpg2ReliableUdpMessageHeader);
+
+    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    {
+        memcpy(Packet.Payload.data() + WriteOffset, &ByteSwappedMessage.ResponseHeader, sizeof(Frpg2ReliableUdpMessageResponseHeader));
+        WriteOffset += sizeof(Frpg2ReliableUdpMessageResponseHeader);
+    }
+
+    memcpy(Packet.Payload.data() + WriteOffset, ByteSwappedMessage.Payload.data(), ByteSwappedMessage.Payload.size());
 
     return true;
 }

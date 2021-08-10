@@ -36,14 +36,31 @@ public:
         msg_index   = LittleEndianToHostOrder(msg_index); // Message index remains in little endian for whatever reason.
     }
 };
+static_assert(sizeof(Frpg2ReliableUdpMessageHeader) == 12, "Message header is not expected size.");
+
+struct Frpg2ReliableUdpMessageResponseHeader
+{
+public:
+    uint32_t unknown_1 = 0x0;
+    uint32_t unknown_2 = 0x1;
+    uint32_t unknown_3 = 0x0;
+    uint32_t unknown_4 = 0x0;
+
+    void SwapEndian()
+    {
+    }
+};
+static_assert(sizeof(Frpg2ReliableUdpMessageResponseHeader) == 16, "Message header is not expected size.");
 #pragma pack(pop)
 
-static_assert(sizeof(Frpg2ReliableUdpMessageHeader) == 12, "Message header is not expected size.");
 
 struct Frpg2ReliableUdpMessage
 {
 public:
     Frpg2ReliableUdpMessageHeader Header;
+
+    // Header only exists if we are a reply message (Header.msg_type == 0).
+    Frpg2ReliableUdpMessageResponseHeader ResponseHeader;
 
     // Gross: This breaks our abstraction, but I can't see any particularly nice
     // way of passing this around so we can send the appropriate DAT/DAT_ACK codes.

@@ -43,8 +43,7 @@ private:
     uint32_t SentFragmentCounter = 0;
 
     // Includes header + compressed payload
-    const int MAX_FRAGMENT_LENGTH = 1024;
-
-    const int MIN_SIZE_FOR_COMPRESSION = 256;
+    const int MAX_FRAGMENT_LENGTH = 950;
+    const int MIN_SIZE_FOR_COMPRESSION = 950;
 
 };

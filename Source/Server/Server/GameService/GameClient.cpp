@@ -60,8 +60,6 @@ bool GameClient::Poll()
     Frpg2ReliableUdpMessage Message;
     while (MessageStream->Recieve(&Message))
     {
-        LastMessageRecievedTime = GetSeconds();
-
         if (HandleMessage(Message))
         {
             Warning("[%s] Disconnecting client as failed to handle message.", GetName().c_str());
@@ -71,6 +69,9 @@ bool GameClient::Poll()
         // TODO: Find a better way to do this that doesn't break our abstraction.
         MessageStream->HandledPacket(Message.AckSequenceIndex);
     }
+
+    // Update lat recieved time.
+    LastMessageRecievedTime = MessageStream->GetLastActivityTime();
 
     // Keep authentication token alive while client is..
     Service->RefreshAuthToken(AuthToken);
@@ -95,9 +96,8 @@ bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
             Warning("[%s] Disconnecting client as failed to send RequestWaitForUserLoginResponse response.", GetName().c_str());
             return true;
         }
-
-        // This happens right after RequestWaitForUserLoginResponse and the client
-        // won't proceed without it. I'm guessing this is configuring how often the 
+        // This happens right after RequestWaitForUserLoginResponse.
+        // I'm guessing this is configuring how often the 
         // player writes their info the server in different situations.
         // TODO: Figure out what these values actually do.
         static std::vector<uint32_t> UploadInfoConfigValues = { 
@@ -140,7 +140,7 @@ bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
 
         Frpg2RequestMessage::RequestGetAnnounceMessageListResponse Response;
 
-        Frpg2RequestMessage::AnnounceMessageDataList* Notices = Response.mutable_changes();
+        Frpg2RequestMessage::AnnounceMessageDataList* Notices = Response.mutable_notices();
 
         Frpg2RequestMessage::AnnounceMessageDataList* Changes = Response.mutable_changes();
         Frpg2RequestMessage::AnnounceMessageData* Data = Changes->add_items();
