@@ -1,4 +1,11 @@
-// Dark Souls 3 - Open Server
+/*
+ * Dark Souls 3 - Open Server
+ * Copyright (C) 2021 Tim Leonard
+ *
+ * This program is free software; licensed under the MIT license. 
+ * You should have received a copy of the license along with this program. 
+ * If not, see <https://opensource.org/licenses/MIT>.
+ */
 
 // Credit: A lot of information here has been derived from the protobufs of AmirBohd's ModEngine2.
 
@@ -16,7 +23,7 @@ message DateTime {
   required uint32 tzdiff = 7; 
 }
 
-message AllStatus{
+message AllStatus {
   optional PlayerLocation playerlocation = 1;
   optional LogInfo loginfo = 2;
   optional PlayerStatus playerstatus = 3;
@@ -26,7 +33,7 @@ message AllStatus{
   optional string steamid = 7;
 }
 
-message PlayerStatus{
+message PlayerStatus {
   optional int32 soullevel = 4; 
   repeated int32 recentonlinearea = 17;
   repeated uint32 unknown2 = 18; //0 or 1
@@ -55,7 +62,7 @@ message PlayerStatus{
   optional ResistanceInfo baseresistanceinfo = 61;
 }
 
-message PlayData{
+message PlayData {
   required uint32 unknown1 = 1; //144680
   required uint32 unknown2 = 4; //0
   required uint32 unknown3 = 5; //0
@@ -64,7 +71,7 @@ message PlayData{
   repeated BonfireInfo bonfireinfo = 8;
 }
 
-message LogInfo{
+message LogInfo {
   required uint32 unknown1 = 1; //144680
   required uint32 unknown2 = 6; //24
   required uint32 unknown3 = 7; //404
@@ -73,7 +80,7 @@ message LogInfo{
   required uint32 unknown6 = 10; //78
 }
 
-message StatsInfo{
+message StatsInfo {
   required uint32 unknown1 = 1;
   required uint32 unknown2 = 2;
   required uint32 unknown3 = 3;
@@ -84,7 +91,7 @@ message StatsInfo{
   required DateTime datetime2 = 8;
 }
 
-message Equipment{
+message Equipment {
   required int32 leftweapon1 = 1;
   required int32 leftweapon2 = 2;
   required int32 leftweapon3 = 3;
@@ -147,12 +154,12 @@ message Equipment{
   required int32 unknown12 = 60;
 }
 
-message PlayerLocation{
+message PlayerLocation {
   required uint32 onlineareaidlower = 1;
   required uint32 onlineareaidupper = 2;
 }
 
-message DefenseInfo{
+message DefenseInfo {
   required uint32 physical = 1;
   required uint32 strike = 2;
   required uint32 slash = 3;
@@ -163,7 +170,7 @@ message DefenseInfo{
   required uint32 dark = 8;
 }
 
-message CutRateInfo{
+message CutRateInfo {
   required float physical = 1;
   required float strike = 2;
   required float slash = 3;
@@ -174,20 +181,20 @@ message CutRateInfo{
   required float dark = 8;
 }
 
-message ResistanceInfo{
+message ResistanceInfo {
   required uint32 bleed = 1;
   required uint32 poison = 2;
   required uint32 frost = 3;
   required uint32 curse = 4;
 }
 
-message Vector{
+message Vector {
   required float x = 1;
   required float y = 2;
   required float z = 3;
 }
 
-message BonfireInfo{
+message BonfireInfo {
   required uint32 bonfireid = 1;
   required uint32 hasbeenlit = 2;
 }

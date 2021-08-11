@@ -1,4 +1,11 @@
-// Dark Souls 3 - Open Server
+/*
+ * Dark Souls 3 - Open Server
+ * Copyright (C) 2021 Tim Leonard
+ *
+ * This program is free software; licensed under the MIT license.
+ * You should have received a copy of the license along with this program.
+ * If not, see <https://opensource.org/licenses/MIT>.
+ */
 
 #include "Server/Streams/Frpg2ReliableUdpFragmentStream.h"
 #include "Server/Streams/Frpg2ReliableUdpFragment.h"
@@ -20,7 +27,7 @@ Frpg2ReliableUdpFragmentStream::Frpg2ReliableUdpFragmentStream(std::shared_ptr<N
 bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragment)
 {
     std::vector<uint8_t> Payload = Fragment.Payload;
-    bool bCompressed = false;//(Fragment.Payload.size() >= MIN_SIZE_FOR_COMPRESSION);
+    bool bCompressed = (Fragment.Payload.size() >= MIN_SIZE_FOR_COMPRESSION);
     uint32_t UncompressedSize = Payload.size();
 
     if (bCompressed)
