@@ -46,29 +46,42 @@ bool WriteTextToFile(const std::filesystem::path& path, const std::string& Input
 
 bool ReadBytesFromFile(const std::filesystem::path& path, std::vector<uint8_t>& Output)
 {
-    std::ifstream file(path.c_str());
-    if (!file.is_open())
+    FILE* file = fopen(path.string().c_str(), "rb");
+    if (!file)
     {
         return false;
     }
 
-    std::stringstream buffer;
-    Output.resize(file.tellg());
-    file.read((char*)Output.data(), Output.size());
+    fseek(file, 0, SEEK_END);
+    Output.resize(ftell(file));
+    fseek(file, 0, SEEK_SET);
+
+    size_t BytesRead = 0;
+    while (BytesRead < Output.size())
+    {
+        BytesRead += fread((char*)Output.data() + BytesRead, 1, Output.size() - BytesRead, file);
+    }
+
+    fclose(file);
 
     return true;
 }
 
 bool WriteBytesToFile(const std::filesystem::path& path, const std::vector<uint8_t>& Input)
 {
-    std::ofstream file(path.c_str());
-    if (!file.is_open())
+    FILE* file = fopen(path.string().c_str(), "wb");
+    if (!file)
     {
         return false;
     }
 
-    file.write((const char*)Input.data(), Input.size());
-    file.close();
+    size_t BytesWritten = 0;
+    while (BytesWritten < Input.size())
+    {
+        BytesWritten += fwrite((char*)Input.data() + BytesWritten, 1, Input.size() - BytesWritten, file);
+    }
+
+    fclose(file);
 
     return true;
 }

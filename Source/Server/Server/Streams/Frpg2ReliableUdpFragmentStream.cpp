@@ -40,13 +40,13 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         }
     }
 
-    int FragmentCount = (Fragment.Payload.size() + (MAX_FRAGMENT_LENGTH - 1)) / MAX_FRAGMENT_LENGTH;
+    int FragmentCount = (Payload.size() + (MAX_FRAGMENT_LENGTH - 1)) / MAX_FRAGMENT_LENGTH;
 
     // Fragment up if payload is larger than max payload size.
     for (int i = 0; i < FragmentCount; i++)
     {
         int FragmentOffset = i * MAX_FRAGMENT_LENGTH;
-        int BytesRemaining = Fragment.Payload.size() - FragmentOffset;
+        int BytesRemaining = Payload.size() - FragmentOffset;
         int FragmentLength = std::min(MAX_FRAGMENT_LENGTH, BytesRemaining);
 
         Frpg2ReliableUdpFragment SendFragment;
@@ -59,8 +59,6 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         SendFragment.Payload.resize(FragmentLength);
 
         memcpy(SendFragment.Payload.data(), Payload.data() + FragmentOffset, FragmentLength);
-
-//        Warning("[%s] Sending fragment: index=%i length=%i total=%i.", Connection->GetName().c_str());
 
         Frpg2ReliableUdpPacket SendPacket;
         if (!EncodeFragment(SendFragment, SendPacket))

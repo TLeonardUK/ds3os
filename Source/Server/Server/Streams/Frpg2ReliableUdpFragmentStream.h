@@ -49,8 +49,9 @@ private:
     
     uint32_t SentFragmentCounter = 0;
 
-    // Includes header + compressed payload
-    const int MAX_FRAGMENT_LENGTH = 950;
-    const int MIN_SIZE_FOR_COMPRESSION = 950;
+    // Includes header + compressed payload.
+    // The main game seems to allow up to 1024, so we can boost this a bit if needed.
+    const int MAX_FRAGMENT_LENGTH = 900;
+    const int MIN_SIZE_FOR_COMPRESSION = 512;
 
 };

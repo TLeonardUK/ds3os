@@ -13,16 +13,35 @@
 
 bool Compress(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
 {
-    Output.resize(compressBound(Input.size()));
-
     uLongf DestinationLength = Output.size();
 
-    if (compress(Output.data(), &DestinationLength, Input.data(), Input.size()) != Z_OK)
+    Output.resize(compressBound(Input.size()));
+
+    z_stream defstream;
+    defstream.zalloc = Z_NULL;
+    defstream.zfree = Z_NULL;
+    defstream.opaque = Z_NULL;
+    defstream.avail_in = Input.size();
+    defstream.next_in = (Bytef*)Input.data();
+    defstream.avail_out = Output.size();
+    defstream.next_out = (Bytef*)Output.data();
+
+    // Match these settings EXACTLY or ds3 has a fit. I think its doing a hard-check on the header
+    // generated which changes based on the settings.
+    if (deflateInit2(&defstream, 7, Z_DEFLATED, 13, 9, Z_DEFAULT_STRATEGY) != Z_OK)
+    {
+        return false;
+    }
+    if (deflate(&defstream, Z_FINISH) != Z_STREAM_END)
+    {
+        return false;
+    }
+    if (deflateEnd(&defstream) != Z_OK)
     {
         return false;
     }
 
-    Output.resize(DestinationLength);
+    Output.resize(defstream.total_out);
 
     return true;
 }
@@ -32,13 +51,12 @@ bool Decompress(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output,
     Output.resize(DecompressedSize);
 
     uLongf DestinationLength = Output.size();
+    uLongf SourceLength = Input.size();
 
-    if (uncompress(Output.data(), &DestinationLength, Input.data(), Input.size()) != Z_OK)
+    if (uncompress2(Output.data(), &DestinationLength, Input.data(), &SourceLength) != Z_OK)
     {
         return false;
     }
 
     Output.resize(DestinationLength);
-
-    return true;
 }
