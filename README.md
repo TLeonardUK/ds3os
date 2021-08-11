@@ -48,6 +48,9 @@ A lot of the information needed to produce this implementation has been figured 
 Especially the members of the ?ServerName? souls modding discord.
 
 The following 3 repositories have provided a lot of information used in this implementation:
+
 https://github.com/garyttierney/ds3-open-re
+
 https://github.com/Jellybaby34/DkS3-Server-Emulator-Rust-Edition
+
 https://github.com/AmirBohd/ModEngine2
