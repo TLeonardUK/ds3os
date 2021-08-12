@@ -39,7 +39,7 @@ bool AuthService::Init()
         return false;
     }
 
-    Success("Auth service is now listening on port %i.", Port);
+    Log("Auth service is now listening on port %i.", Port);
 
     return true;
 }

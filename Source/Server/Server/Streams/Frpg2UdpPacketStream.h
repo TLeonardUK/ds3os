@@ -49,10 +49,10 @@ protected:
     std::vector<uint8_t> CwcKey;
     uint64_t AuthToken;
 
-private:
-    
     bool InErrorState = false;
 
+private:
+    
     float LastActivityTime;
 
     std::vector<Frpg2UdpPacket> RecieveQueue;

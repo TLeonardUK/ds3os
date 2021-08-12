@@ -33,17 +33,7 @@ public:
     // is likely saturated or the packet is invalid.
     virtual bool Send(const Frpg2ReliableUdpPacket& Packet);
 
-/*
-    // Sends a packet replying to a previous packet.
-    // For each Recieve either SendReply or SendAck should be called for it.
-    virtual bool SendReply(const Frpg2ReliableUdpPacket& Response, const Frpg2ReliableUdpPacket& ReplyingTo);
-
-    // Sends a packet acknowledging reciept of a packet.
-    // For each Recieve either SendReply or SendAck should be called for it.
-    virtual bool SendAck(const Frpg2ReliableUdpPacket& ReplyingTo);
-*/
-
-    // Notices us that a packet has been handled and if a reply has been sent or not. This
+    // Notifies us that a packet has been handled and if a reply has been sent or not. This
     // allows us to know if we can now send an ACK for it or not. This is janky and only required
     // because of the stupid difference between ACK and DAT_ACK.
     void HandledPacket(uint32_t AckSequence);
@@ -53,6 +43,12 @@ public:
 
     // Overridden so we can do package retransmission/general management.
     virtual bool Pump() override;
+
+    // Gets the current connection state of this message stream.
+    Frpg2ReliableUdpStreamState GetState() { return State; }
+
+    // Attempts to do a graceful disconnect so the remote end doesn't send us messages in future.
+    void Disconnect();
 
 protected:
 
@@ -78,7 +74,7 @@ protected:
     void Send_SYN_ACK(uint32_t RemoteIndex);
     void Send_ACK(uint32_t RemoteIndex);
     void Send_FIN_ACK(uint32_t RemoteIndex);
-    //void Send_DAT_ACK(const Frpg2ReliableUdpPacket& Response, uint32_t RemoteIndex);
+    void Send_FIN();
     void Send_HBT();
 
     int GetPacketIndexByLocalSequence(const std::vector<Frpg2ReliableUdpPacket>& Queue, uint32_t SequenceIndex);
@@ -137,5 +133,11 @@ protected:
     const float RETRANSMIT_INTERVAL = 0.5;
 
     const double MIN_TIME_BETWEEN_RESEND_ACK = 0.1;
+
+    // How many seconds to wait for a graceful disconnection.
+    const double CONNECTION_CLOSE_TIMEOUT = 3.0;
+
+    float CloseTimer = 0.0f;
+
 
 };

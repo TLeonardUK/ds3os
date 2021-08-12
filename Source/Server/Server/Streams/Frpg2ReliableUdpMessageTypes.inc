@@ -15,9 +15,20 @@
 // DEFINE_REQUEST_RESPONSE(uint32_t OpCode, Frpg2ReliableUdpMessageType Type, Frpg2RequestMessage::* Class, Frpg2RequestMessage::* ResponseClass)
 // DEFINE_MESSAGE(uint32_t OpCode, Frpg2ReliableUdpMessageType Type, Frpg2RequestMessage::* Class)
 
-DEFINE_REQUEST_RESPONSE(0x0386, RequestWaitForUserLogin, RequestWaitForUserLogin, RequestWaitForUserLoginResponse)
-DEFINE_REQUEST_RESPONSE(0x03C6, RequestGetAnnounceMessageList, RequestGetAnnounceMessageList, RequestGetAnnounceMessageListResponse)
+// Boot
+DEFINE_REQUEST_RESPONSE(0x0386, RequestWaitForUserLogin,            RequestWaitForUserLogin,            RequestWaitForUserLoginResponse)
+DEFINE_REQUEST_RESPONSE(0x03C6, RequestGetAnnounceMessageList,      RequestGetAnnounceMessageList,      RequestGetAnnounceMessageListResponse)
+DEFINE_MESSAGE         (0x0320, PlayerInfoUploadConfigPushMessage,  PlayerInfoUploadConfigPushMessage)
 
-DEFINE_MESSAGE(0x0320, PlayerInfoUploadConfigPushMessage, PlayerInfoUploadConfigPushMessage)
+// Player Data
+DEFINE_REQUEST_RESPONSE(0x03A2, RequestUpdateLoginPlayerCharacter,  RequestUpdateLoginPlayerCharacter,  RequestUpdateLoginPlayerCharacterResponse)
+DEFINE_REQUEST_RESPONSE(0x03A4, RequestUpdatePlayerStatus,          RequestUpdatePlayerStatus,          RequestUpdatePlayerStatusResponse)
+DEFINE_REQUEST_RESPONSE(0x0394, RequestUpdatePlayerCharacter,       RequestUpdatePlayerCharacter,       RequestUpdatePlayerCharacterResponse)
+
+// Blood Messages
+DEFINE_REQUEST_RESPONSE(0x0399, RequestReentryBloodMessage,         RequestReentryBloodMessage,         RequestReentryBloodMessageResponse)
+
+// Logging
+DEFINE_MESSAGE         (0x03D8, RequestNotifyProtoBufLog,           RequestNotifyProtoBufLog)
 
 

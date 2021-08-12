@@ -61,6 +61,7 @@ private:
     std::vector<std::shared_ptr<Service>> Services;
 
     std::filesystem::path SavedPath;
+    std::filesystem::path ConfigPath;
     std::filesystem::path PrivateKeyPath;
     std::filesystem::path PublicKeyPath;
     std::filesystem::path Ds3osconfigPath;

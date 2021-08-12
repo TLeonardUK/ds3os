@@ -10,9 +10,37 @@
 #include "Core/Utils/Logging.h"
 #include "Platform/Platform.h"
 
+#include <ctime>
 #include <cstdarg>
 
-void WriteLog(ConsoleColor Color, const char* Format, ...)
+void WriteLogStatic(ConsoleColor Color, const char* Level, const char* Log)
+{
+    char buffer[256];
+    char* buffer_to_use = buffer;
+
+    time_t current_time = time(0);
+    struct tm current_time_tstruct = *localtime(&current_time);
+
+    char time_buffer[32];
+    strftime(time_buffer, sizeof(time_buffer), "%Y-%m-%d %X", &current_time_tstruct);
+
+    int ret = snprintf(buffer_to_use, 256, "%s \u00B3 %-7s \u00B3 %s\n", time_buffer, Level, Log);
+    if (ret >= 256)
+    {
+        buffer_to_use = new char[ret + 1];
+        snprintf(buffer_to_use, 256, "%s \u00B3 %-7s \u00B3 %s\n", time_buffer, Level, Log);
+        buffer_to_use[ret] = '\0';
+    }
+
+    WriteToConsole(Color, buffer_to_use);
+
+    if (buffer_to_use != buffer)
+    {
+        delete[] buffer_to_use;
+    }
+}
+
+void WriteLog(ConsoleColor Color, const char* Level, const char* Format, ...)
 {
     char buffer[256];
     char* buffer_to_use = buffer;
@@ -20,7 +48,7 @@ void WriteLog(ConsoleColor Color, const char* Format, ...)
     va_list list;
     va_start(list, Format);
 
-    int ret = vsnprintf(buffer_to_use, 1024, Format, list);
+    int ret = vsnprintf(buffer_to_use, 256, Format, list);
     if (ret >= 256)
     {
         buffer_to_use = new char[ret + 1];
@@ -28,7 +56,7 @@ void WriteLog(ConsoleColor Color, const char* Format, ...)
         buffer_to_use[ret] = '\0';
     }
 
-    WriteToConsole(Color, buffer_to_use);
+    WriteLogStatic(Color, Level, buffer_to_use);
 
     if (buffer_to_use != buffer)
     {

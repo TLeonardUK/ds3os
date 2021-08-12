@@ -1,0 +1,149 @@
+/*
+ * Dark Souls 3 - Open Server
+ * Copyright (C) 2021 Tim Leonard
+ *
+ * This program is free software; licensed under the MIT license. 
+ * You should have received a copy of the license along with this program. 
+ * If not, see <https://opensource.org/licenses/MIT>.
+ */
+
+// Credit: A lot of information here has been derived from the protobufs of AmirBohd's ModEngine2.
+
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+package FpdLogMessage;
+
+message Vector {
+}
+
+// ID: 5001
+message GlobalEventLog {
+  repeated uint32 values = 1;
+}
+
+// ID: 8001
+message SystemOptionLog {
+  message Game_option_setting {
+    required uint32 unknown_1 = 2;
+    required uint32 unknown_2 = 3;
+    required uint32 unknown_3 = 4;
+    required uint32 unknown_4 = 5;
+    required uint32 unknown_5 = 6;
+  }
+  message Network_setting {
+    required uint32 unknown_1 = 8;
+    required uint32 unknown_2 = 9;
+    required uint32 unknown_3 = 10;
+    required uint32 unknown_4 = 11;
+    required uint32 unknown_5 = 12;
+    required uint32 unknown_6 = 13;
+  }
+  required Game_option_setting game_settings = 1;
+  required Network_setting network_settings = 7;
+}
+
+// ID: 3000
+message UseItemLog {
+  message Use_item_info_list {
+  }
+}
+
+// ID: 3002
+message GetItemLog {
+  message Get_item_info_list {
+  }
+}
+
+// ID: 2021
+message ActGestureLog {
+  message Use_gesture_info_list {
+  }
+}
+
+// ID: ???
+message LevelUpLog {
+}
+
+// ID: ???
+message UseMagicLog {
+  message Use_magic_info_list {
+  }
+}
+
+// ID: ???
+message BrokenEquipmentLog {
+}
+
+// ID: ???
+message PurchaseItemLog {
+  message Purchase_item_info_list {
+  }
+}
+
+// ID: ???
+message DropItemLog {
+  message Throw_away_item_list {
+  }
+}
+
+// ID: ???
+message LeaveItemLog {
+  message Set_item_info_list {
+  }
+}
+
+// ID: ???
+message SaleItemLog {
+  message Sale_item_info_list {
+  }
+}
+
+// ID: ???
+message AccessWarehouseLog {
+  message Access_warehouse_info_list {
+  }
+}
+
+// ID: ???
+message StrengthenWeaponLog {
+  message Strengthen_weapon_info_list {
+  }
+}
+
+// ID: ???
+message RepairEquipmentLog {
+  message Repair_equipment_info_list {
+  }
+}
+
+// ID: ???
+message EquipMagicLog {
+}
+
+// ID: ???
+message ChaneEstusFlaskNumLog {
+}
+
+// ID: ???
+message CreateBloodMessageLog {
+}
+
+// ID: ???
+message EvaluateBloodMessageLog {
+}
+
+// ID: ???
+message VisitResultLog {
+}
+
+// ID: ???
+message QuickMatchResultLog {
+}
+
+// ID: ???
+message QuickMatchEndLog {
+}
+
+// ID: ???
+message ConvertSaveDataLog {
+}

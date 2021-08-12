@@ -36,6 +36,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         if (!Compress(UncompressPayload, Payload))
         {
             Warning("[%s] Failed to compress packet data.", Connection->GetName().c_str());
+            InErrorState = true;
             return false;
         }
     }
@@ -64,6 +65,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         if (!EncodeFragment(SendFragment, SendPacket))
         {
             Warning("[%s] Failed to encode fragment to packet.", Connection->GetName().c_str());
+            InErrorState = true;
             return false;
         }
 
@@ -78,6 +80,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         if (!Frpg2ReliableUdpPacketStream::Send(SendPacket))
         {
             Warning("[%s] Failed to send fragment packet.", Connection->GetName().c_str());
+            InErrorState = true;
             return false;
         }
     }
@@ -110,6 +113,7 @@ bool Frpg2ReliableUdpFragmentStream::RecieveInternal(Frpg2ReliableUdpFragment* F
     if (!DecodeFragment(Packet, *Fragment))
     {
         Warning("[%s] Failed to convert packet payload to Fragment.", Connection->GetName().c_str());
+        InErrorState = true;
         return false;
     }
 
@@ -125,6 +129,7 @@ bool Frpg2ReliableUdpFragmentStream::DecodeFragment(const Frpg2ReliableUdpPacket
     if (Packet.Payload.size() < sizeof(Frpg2ReliableUdpFragmentHeader))
     {
         Warning("[%s] Packet payload is less than the minimum size of a Fragment, failed to deserialize.", Connection->GetName().c_str());
+        InErrorState = true;
         return false;
     }
 
@@ -230,6 +235,7 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
                 if (!Decompress(UncompressPayload, Fragment.Payload, Fragment.PayloadDecompressedLength))
                 {
                     Warning("[%s] Failed to decompress packet data.", Connection->GetName().c_str());
+                    InErrorState = true;
                     return true;
                 }
 

@@ -10,6 +10,17 @@
 #pragma once
 
 #include <string>
+#include <filesystem>
+#include <nlohmann/json.hpp>
+
+// Wraps up the values for an announcement show to the user when they join the game.
+struct RuntimeConfigAnnouncement
+{
+    std::string Header;
+    std::string Body;
+
+    bool Serialize(nlohmann::json& Json, bool Loading);
+};
 
 // Configuration saved and loaded at runtime by the server from a configuration file.
 class RuntimeConfig
@@ -38,5 +49,16 @@ public:
 
     // Network port the game server listens for connections on.
     int GameServerPort = 50010;
+
+    // Announcements that show up when a user joins the game.
+    std::vector<RuntimeConfigAnnouncement> Announcements = {
+        { "Welcome to DS3OS", "\nYou have connected to an unofficial, work-in-progress, Dark Souls III server. Stability is not guaranteed, but welcome!\n\nMore information on this project is available here:\nhttps://github.com/tleonarduk/ds3os" }
+    };
+
+public:
+
+    bool Save(const std::filesystem::path& Path);
+    bool Load(const std::filesystem::path& Path);
+    bool Serialize(nlohmann::json& Json, bool Loading);
 
 };

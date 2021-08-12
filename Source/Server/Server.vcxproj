@@ -106,11 +106,18 @@
     <ClInclude Include="Core\Utils\Random.h" />
     <ClInclude Include="Core\Utils\Strings.h" />
     <ClInclude Include="Platform\Platform.h" />
+    <ClInclude Include="Protobuf\FpdLogMessage.pb.h" />
     <ClInclude Include="Protobuf\Frpg2PlayerData.pb.h" />
     <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h" />
     <ClInclude Include="Server\AuthService\AuthClient.h" />
     <ClInclude Include="Server\AuthService\AuthService.h" />
     <ClInclude Include="Server\GameService\GameClient.h" />
+    <ClInclude Include="Server\GameService\GameManager.h" />
+    <ClInclude Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.h" />
+    <ClInclude Include="Server\GameService\GameManagers\Boot\BootManager.h" />
+    <ClInclude Include="Server\GameService\GameManagers\Logging\LoggingManager.h" />
+    <ClInclude Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.h" />
+    <ClInclude Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.h" />
     <ClInclude Include="Server\GameService\GameService.h" />
     <ClInclude Include="Server\LoginService\LoginClient.h" />
     <ClInclude Include="Server\LoginService\LoginService.h" />
@@ -130,6 +137,7 @@
     <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Config\RuntimeConfig.cpp" />
     <ClCompile Include="Core\Crypto\CWCCipher.cpp" />
     <ClCompile Include="Core\Crypto\CWCClientUDPCipher.cpp" />
     <ClCompile Include="Core\Crypto\CWCServerUDPCipher.cpp" />
@@ -144,11 +152,16 @@
     <ClCompile Include="Core\Utils\Strings.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Platform\Win32\Win32Platform.cpp" />
+    <ClCompile Include="Protobuf\FpdLogMessage.pb.cc" />
     <ClCompile Include="Protobuf\Frpg2PlayerData.pb.cc" />
     <ClCompile Include="Protobuf\Frpg2RequestMessage.pb.cc" />
     <ClCompile Include="Server\AuthService\AuthClient.cpp" />
     <ClCompile Include="Server\AuthService\AuthService.cpp" />
     <ClCompile Include="Server\GameService\GameClient.cpp" />
+    <ClCompile Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.cpp" />
+    <ClCompile Include="Server\GameService\GameManagers\Boot\BootManager.cpp" />
+    <ClCompile Include="Server\GameService\GameManagers\Logging\LoggingManager.cpp" />
+    <ClCompile Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.cpp" />
     <ClCompile Include="Server\GameService\GameService.cpp" />
     <ClCompile Include="Server\LoginService\LoginClient.cpp" />
     <ClCompile Include="Server\LoginService\LoginService.cpp" />

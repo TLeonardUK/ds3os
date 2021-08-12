@@ -74,7 +74,8 @@ bool LoginClient::Poll()
             return true;
         }
 
-        Log("[%s] Recieved RequestQueryLoginServerInfo, client is on steam account %s.", GetName().c_str(), Request.steam_id().c_str());
+        //Log("[%s] Recieved RequestQueryLoginServerInfo, client is on steam account %s.", GetName().c_str(), Request.steam_id().c_str());
+
         Frpg2RequestMessage::RequestQueryLoginServerInfoResponse Response;
         // TODO: If on same subnet as servers private ip, return the private ip not the external one.
         const RuntimeConfig& Config = Service->GetServer()->GetConfig();

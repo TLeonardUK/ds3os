@@ -77,22 +77,14 @@ message PlayerInfoUploadConfigPushMessageList {
   required uint32 unknown_2 = 2; // 5
 }
 
-// I'm guessing this is used to configure how often the user uploads their info, and in what locations.
-message PlayerInfoUploadConfigPushMessage {
-  required uint32 unknown_1 = 1;  // 908
-  required PlayerInfoUploadConfigPushMessageList unknown_2 = 2;  // massive list
-  required uint32 unknown_3 = 3;  // 600 - 10 minutes
-  required uint32 unknown_4 = 4;  // 300 - 5 minutes
-}
-
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Announcements
 // ------------------------------------------------------------------------------------------------------------
 
 message AnnounceMessageData {
-  required uint32 unknown_1 = 1;
-  required uint32 order = 2;
-  required uint32 unknown_2 = 3;
+  required uint32 unknown_1 = 1;  // Seen as 20,104,24, changing it makes no visual difference.
+  required uint32 index = 2;
+  required uint32 unknown_2 = 3;  // always 1
   required string header = 4;
   required string message = 5;
   required Frpg2PlayerData.DateTime datetime = 6;
@@ -111,8 +103,118 @@ message RequestGetAnnounceMessageListResponse {
   required AnnounceMessageDataList notices = 2;
 }
 
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Character Info Uploading
+// ------------------------------------------------------------------------------------------------------------
+
+// I'm guessing this is used to configure how often the user uploads their info, and in what locations.
+message PlayerInfoUploadConfigPushMessage {
+  required uint32 unknown_1 = 1;  // 908
+  required PlayerInfoUploadConfigPushMessageList unknown_2 = 2;  // massive list
+  required uint32 unknown_3 = 3;  // 600 - 10 minutes
+  required uint32 unknown_4 = 4;  // 300 - 5 minutes
+}
+
+message RequestUpdateLoginPlayerCharacter {
+  required uint32 unknown_1 = 1; // Always seems to be 1
+  required uint32 unknown_2 = 2; // Always seems to be 1
+}
+
+message RequestUpdateLoginPlayerCharacterResponseData {
+  required uint32 unknown_1 = 1; // Always seems to be 0
+  required uint32 unknown_2 = 2; // Always seems to be 0
+}
+
+message RequestUpdateLoginPlayerCharacterResponse {
+  required uint32 unknown_1 = 1; // Always seems to be 1
+  required RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;
+  required RequestUpdateLoginPlayerCharacterResponseData unknown_3 = 3;
+}
+
 message RequestUpdatePlayerStatus {
-  required Frpg2PlayerData.AllStatus all_status = 1;
+  required Frpg2PlayerData.AllStatus status = 1;
+}
+
+message RequestUpdatePlayerStatusResponse {
+  // Seemingly unused, never seen it returned by server.
+}
+
+message PlayerCharacterData { 
+}
+
+message RequestUpdatePlayerCharacter {
+  required uint32 unknown_1 = 1; // Always seems to be 1.
+  required bytes unknown_2 = 2; // Looks like raw serialized data.
+}
+
+message RequestUpdatePlayerCharacterResponse {
+  // Seemingly unused, never seen it returned by server.
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Blood Messages
+// ------------------------------------------------------------------------------------------------------------
+
+message RequestReentryBloodMessage {
+  required uint32 unknown_2 = 2; // Always seems to be 1.
+}
+
+message RequestReentryBloodMessageResponse {
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Logging
+// ------------------------------------------------------------------------------------------------------------
+
+message RequestNotifyProtoBufLog {
+  message HeaderValues1 {
+    required uint32 unknown_1 = 34; // 0, 1, 2
+    required uint32 unknown_2 = 37; // 0, 1
+  }
+  message HeaderValues2 {
+    required uint32 unknown_1 = 1; // 3576692768
+    required string timestamp = 2; // "202108092109340005938762"
+    required uint32 unknown_3 = 3; 
+  }
+  message Header {
+    required HeaderValues1 unknown_1 = 3;
+    required HeaderValues2 unknown_2 = 7;
+  }
+
+  enum LogType
+  {
+    SystemOptionLog = 8001;
+    GlobalEventLog = 5001;
+    UseItemLog = 3000;
+    GetItemLog = 3002;
+    ActGestureLog = 2021;
+    // LevelUpLog = 0;
+    // UseMagicLog = 0;
+    // BrokenEquipmentLog = 0;
+    // PurchaseItemLog = 0;
+    // DropItemLog = 0;
+    // LeaveItemLog = 0;
+    // SaleItemLog = 0;
+    // AccessWarehouseLog = 0;
+    // StrengthenWeaponLog = 0;
+    // RepairEquipmentLog = 0;
+    // EquipMagicLog = 0;
+    // ChaneEstusFlaskNumLog = 0;
+    // CreateBloodMessageLog = 0;
+    // EvaluateBloodMessageLog = 0;
+    // VisitResultLog = 0;
+    // QuickMatchResultLog = 0;
+    // QuickMatchEndLog = 0;
+    // ConvertSaveDataLog = 0;
+  }
+
+  required LogType type = 1; 
+
+  required Header header = 2;
+
+  // This is an embedded protobuf, its one of the *Log protobufs
+  // in the FpdLogMessage.proto file.
+  required bytes data = 3;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -411,9 +513,6 @@ message BloodstainInfo
 message RequestGetBloodstainListResponse
 message RequestGetDeadingGhost
 message RequestGetDeadingGhostResponse
-message PlayerCharacterData
-message RequestUpdatePlayerCharacter
-message RequestUpdatePlayerCharacterResponse
 message RequestGetPlayerCharacter
 message RequestGetPlayerCharacterResponse
 message RequestGetLoginPlayerCharacter

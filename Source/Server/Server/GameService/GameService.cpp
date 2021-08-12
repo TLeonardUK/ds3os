@@ -9,8 +9,14 @@
 
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
+#include "Server/GameService/GameManagers/Boot/BootManager.h"
+#include "Server/GameService/GameManagers/Logging/LoggingManager.h"
+#include "Server/GameService/GameManagers/PlayerData/PlayerDataManager.h"
+#include "Server/GameService/GameManagers/BloodMessage/BloodMessageManager.h"
 
 #include "Server/Server.h"
+#include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
+#include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
 
 #include "Core/Network/NetConnection.h"
 #include "Core/Network/NetConnectionUDP.h"
@@ -24,6 +30,12 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     : ServerInstance(OwningServer)
     , ServerRSAKey(InServerRSAKey)
 {
+    // This list of managers are what actually do the grunt work of the server
+    // they recieve and response to messages.
+    Managers.push_back(std::make_shared<BootManager>(ServerInstance));
+    Managers.push_back(std::make_shared<LoggingManager>(ServerInstance));
+    Managers.push_back(std::make_shared<PlayerDataManager>(ServerInstance));
+    Managers.push_back(std::make_shared<BloodMessageManager>(ServerInstance));
 }
 
 GameService::~GameService()
@@ -40,19 +52,42 @@ bool GameService::Init()
         return false;
     }
 
-    Success("Game service is now listening on port %i.", Port);
+    Log("Game service is now listening on port %i.", Port);
+
+    for (auto& Manager : Managers)
+    {
+        if (!Manager->Init())
+        {
+            Error("Failed to initialize game manager '%s'", Manager->GetName().c_str());
+            return false;
+        }
+    }
 
     return true;
 }
 
 bool GameService::Term()
 {
+    for (auto& Manager : Managers)
+    {
+        if (!Manager->Init())
+        {
+            Error("Failed to terminate game manager '%s'", Manager->GetName().c_str());
+            return false;
+        }
+    }
+
     return false;
 }
 
 void GameService::Poll()
 {
     Connection->Pump();
+
+    for (auto& Manager : Managers)
+    {
+        Manager->Init();
+    }
 
     while (std::shared_ptr<NetConnection> ClientConnection = Connection->Accept())
     {
@@ -65,6 +100,37 @@ void GameService::Poll()
 
         if (Client->Poll())
         {
+            Log("[%s] Disconnecting client connection.", Client->GetName().c_str());
+            DisconnectingClients.push_back(Client);
+
+            Client->MessageStream->Disconnect();
+
+            iter = Clients.erase(iter);
+        }
+        else
+        {
+            iter++;
+        }
+    }
+    
+    for (auto iter = DisconnectingClients.begin(); iter != DisconnectingClients.end(); /* empty */)
+    {
+        std::shared_ptr<GameClient> Client = *iter;
+
+        Client->Connection->Pump();
+        Client->MessageStream->Pump();
+
+        if (Client->MessageStream->GetState() == Frpg2ReliableUdpStreamState::Closed)
+        {
+            Log("[%s] Client disconnected.", Client->GetName().c_str());
+
+            // Let all managers know this client has been disconnected, they
+            // may need to clean things up.
+            for (auto& Manager : Managers)
+            {
+                Manager->OnClientDisconnected(Client.get());
+            }
+
             iter = Clients.erase(iter);
         }
         else
@@ -106,7 +172,7 @@ void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientCo
 
     AuthToken = *reinterpret_cast<uint64_t*>(Buffer.data());
 
-    Log("[%s] Client connected with authentication token 0x%016llx.", ClientConnection->GetName().c_str(), AuthToken);
+    Log("[%s] Client connected.", ClientConnection->GetName().c_str());
 
     // Check we have an authentication state for this client.
     auto AuthStateIter = AuthenticationStates.find(AuthToken);
@@ -118,11 +184,16 @@ void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientCo
 
     GameClientAuthenticationState& AuthState = (*AuthStateIter).second;
 
-
-    Log("[%s] Client will use cipher key %s", ClientConnection->GetName().c_str(), BytesToHex(AuthState.CwcKey).c_str());
+    //Log("[%s] Client will use cipher key %s", ClientConnection->GetName().c_str(), BytesToHex(AuthState.CwcKey).c_str());
 
     std::shared_ptr<GameClient> Client = std::make_shared<GameClient>(this, ClientConnection, AuthState.CwcKey, AuthState.AuthToken);
     Clients.push_back(Client);
+
+    // Let all managers know this client connected.
+    for (auto& Manager : Managers)
+    {
+        Manager->OnClientConnected(Client.get());
+    }
 }
 
 std::string GameService::GetName()
@@ -132,7 +203,7 @@ std::string GameService::GetName()
 
 void GameService::CreateAuthToken(uint64_t AuthToken, const std::vector<uint8_t>& CwcKey)
 {
-    Log("[%s] Created authentication token 0x%016llx", Connection->GetName().c_str(), AuthToken);
+    //Log("[%s] Created authentication token 0x%016llx", Connection->GetName().c_str(), AuthToken);
 
     GameClientAuthenticationState AuthState;
     AuthState.AuthToken = AuthToken;

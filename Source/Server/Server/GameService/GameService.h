@@ -17,6 +17,7 @@
 
 class Server;
 class GameClient;
+class GameManager;
 class NetConnection;
 class NetConnectionUDP;
 class RSAKeyPair;
@@ -54,6 +55,8 @@ public:
     void CreateAuthToken(uint64_t AuthToken, const std::vector<uint8_t>& CwcKey);
     void RefreshAuthToken(uint64_t AuthToken);
 
+    const std::vector<std::shared_ptr<GameManager>>& GetManagers() { return Managers; }
+
 protected:
 
     void HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection);
@@ -64,6 +67,9 @@ private:
     std::shared_ptr<NetConnectionUDP> Connection;
 
     std::vector<std::shared_ptr<GameClient>> Clients;
+    std::vector<std::shared_ptr<GameClient>> DisconnectingClients;
+
+    std::vector<std::shared_ptr<GameManager>> Managers;
 
     std::unordered_map<uint64_t, GameClientAuthenticationState> AuthenticationStates;
 

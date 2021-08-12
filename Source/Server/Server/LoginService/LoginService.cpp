@@ -39,7 +39,7 @@ bool LoginService::Init()
         return false;
     }
 
-    Success("Login service is now listening on port %i.", Port);
+    Log("Login service is now listening on port %i.", Port);
 
     return true;
 }

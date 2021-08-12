@@ -89,7 +89,7 @@ bool AuthClient::Poll()
 
                 CwcKey.assign(string_ptr, string_ptr + string.length());
 
-                Log("[%s] Recieved handshake request, Key=%s", GetName().c_str(), BytesToHex(CwcKey).c_str());
+                //Log("[%s] Recieved handshake request, Key=%s", GetName().c_str(), BytesToHex(CwcKey).c_str());
 
                 // Disable cipher while we send this "hardcoded" message.
                 MessageStream->SetCipher(nullptr, nullptr);
@@ -131,7 +131,7 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                Log("[%s] Recieved service status request.", GetName().c_str());
+                //Log("[%s] Recieved service status request.", GetName().c_str());
 
                 Frpg2RequestMessage::GetServiceStatusResponse Response;
                 Response.set_id(2);
@@ -172,7 +172,7 @@ bool AuthClient::Poll()
                 FillRandomBytes(KeyResponse.Payload); 
                 memcpy(KeyResponse.Payload.data(), Message.Payload.data(), 8);
 
-                Log("[%s] Recieved key exchange bytes, game session key = %s", GetName().c_str(), BytesToHex(KeyResponse.Payload).c_str());
+                //Log("[%s] Recieved key exchange bytes, game session key = %s", GetName().c_str(), BytesToHex(KeyResponse.Payload).c_str());
 
                 // Note: Supposedly the "normal" cwc key should work for the game session - it doesn't seem to though.
                 //       This key however does output plaintext, but with a message tag failure. Huuum
@@ -196,7 +196,7 @@ bool AuthClient::Poll()
             Frpg2Message Message;
             if (MessageStream->Recieve(&Message))
             {
-                Log("[%s] Recieved steam session ticket.", GetName().c_str());
+                //Log("[%s] Recieved steam session ticket.", GetName().c_str());
 
                 // TODO: Could actually link to the steamapi libs and authenticate this ticket? 
                 //       Not really a big issue tho.
@@ -226,6 +226,8 @@ bool AuthClient::Poll()
                 GameServiceInstance->CreateAuthToken(GameInfo.auth_token, GameCwcKey);
 
                 LastMessageRecievedTime = GetSeconds();
+
+                Log("[%s] Authentication complete.", GetName().c_str());
                 State = AuthClientState::Complete;
             }
             break;

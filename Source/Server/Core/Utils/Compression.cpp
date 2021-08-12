@@ -59,4 +59,6 @@ bool Decompress(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output,
     }
 
     Output.resize(DestinationLength);
+
+    return true;
 }

@@ -40,6 +40,24 @@
     <Filter Include="Protobuf">
       <UniqueIdentifier>{c126690f-a736-4e1a-a7da-29fc33d42365}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Server\GameService\GameManagers">
+      <UniqueIdentifier>{61aa88ad-9a08-485d-9be2-300135c80e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\PlayerData">
+      <UniqueIdentifier>{45287f97-243f-466c-848c-3e2078480df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Matchmaking">
+      <UniqueIdentifier>{5960c79e-dab1-496f-ba83-8111df873efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Boot">
+      <UniqueIdentifier>{bf360d9c-477d-4fcc-9804-af5b2e46d0f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Logging">
+      <UniqueIdentifier>{459c5433-61c5-4737-8b93-432055db31f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\BloodMessage">
+      <UniqueIdentifier>{5df1e9ef-f2c7-47ff-90d7-b82f458c3750}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server\Server.h">
@@ -165,6 +183,27 @@
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpMessageStream.h">
       <Filter>Server\Streams</Filter>
     </ClInclude>
+    <ClInclude Include="Server\GameService\GameManager.h">
+      <Filter>Server\GameService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.h">
+      <Filter>Server\GameService\GameManagers\PlayerData</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.h">
+      <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Boot\BootManager.h">
+      <Filter>Server\GameService\GameManagers\Boot</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Logging\LoggingManager.h">
+      <Filter>Server\GameService\GameManagers\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\FpdLogMessage.pb.h">
+      <Filter>Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.h">
+      <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -257,6 +296,24 @@
     </ClCompile>
     <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacket.cpp">
       <Filter>Server\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Config\RuntimeConfig.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.cpp">
+      <Filter>Server\GameService\GameManagers\PlayerData</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Boot\BootManager.cpp">
+      <Filter>Server\GameService\GameManagers\Boot</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Logging\LoggingManager.cpp">
+      <Filter>Server\GameService\GameManagers\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\FpdLogMessage.pb.cc">
+      <Filter>Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.cpp">
+      <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

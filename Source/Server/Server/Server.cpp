@@ -31,6 +31,7 @@ Server::Server()
     PrivateKeyPath = SavedPath / std::filesystem::path("private.key");
     PublicKeyPath = SavedPath / std::filesystem::path("public.key");
     Ds3osconfigPath = SavedPath / std::filesystem::path("server.ds3osconfig");
+    ConfigPath = SavedPath / std::filesystem::path("config.json");
 
     // Register for Ctrl+C notifications, its the only way the server shuts down right now.
     CtrlSignalHandle = PlatformEvents::OnCtrlSignal.Register([=]() {
@@ -64,7 +65,22 @@ bool Server::Init()
     }
 
     // Load configuration if it exists.
-    // TODO
+    if (std::filesystem::exists(ConfigPath))
+    {
+        if (!Config.Load(ConfigPath))
+        {
+            Error("Failed to load configuration file: %s", ConfigPath.string().c_str());
+            return false;
+        }
+    }
+    else
+    {
+        if (!Config.Save(ConfigPath))
+        {
+            Error("Failed to save configuration file: %s", ConfigPath.string().c_str());
+            return false;
+        }
+    }
 
     // Generate server encryption keypair if it doesn't already exists.
     if (!std::filesystem::exists(PrivateKeyPath) ||
@@ -82,7 +98,7 @@ bool Server::Init()
             return false;
         }
 
-        Success("Generated rsa key pair successfully.");
+        Log("Generated rsa key pair successfully.");
     }
     else
     {
@@ -92,7 +108,7 @@ bool Server::Init()
             return false;
         }
 
-        Success("Loaded rsa key pair successfully.");
+        Log("Loaded rsa key pair successfully.");
     }
 
     // Write out the server import file with the latest configuration.
@@ -139,7 +155,7 @@ bool Server::Term()
 
 void Server::RunUntilQuit()
 {
-    Log("Server is now running.");
+    Success("Server is now running.");
 
     // We should really do this event driven ...
     // This suffices for now.
