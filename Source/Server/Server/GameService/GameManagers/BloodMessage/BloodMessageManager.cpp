@@ -33,8 +33,6 @@ bool BloodMessageManager::OnMessageRecieved(GameClient* Client, const Frpg2Relia
 
 bool BloodMessageManager::Handle_RequestReentryBloodMessage(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Log("[%s] RequestReentryBloodMessage from client.", Client->GetName().c_str());
-
     Frpg2RequestMessage::RequestReentryBloodMessage* Request = (Frpg2RequestMessage::RequestReentryBloodMessage*)Message.Protobuf.get();
     Ensure(Request->unknown_2() == 1);
 

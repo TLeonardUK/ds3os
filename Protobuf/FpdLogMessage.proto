@@ -60,41 +60,39 @@ message ActGestureLog {
   }
 }
 
-// ID: ???
-message LevelUpLog {
-}
-
-// ID: ???
+// ID: 2020
 message UseMagicLog {
   message Use_magic_info_list {
   }
 }
 
-// ID: ???
-message BrokenEquipmentLog {
-}
-
-// ID: ???
+// ID: 3001
 message PurchaseItemLog {
   message Purchase_item_info_list {
   }
 }
 
-// ID: ???
+// ID: 3003
 message DropItemLog {
   message Throw_away_item_list {
   }
 }
 
-// ID: ???
+// ID: 3004
 message LeaveItemLog {
   message Set_item_info_list {
   }
 }
 
-// ID: ???
+// ID: 3005
 message SaleItemLog {
   message Sale_item_info_list {
+  }
+}
+
+// ID: 3010
+message StrengthenWeaponLog {
+  message Strengthen_weapon_info_list {
   }
 }
 
@@ -105,15 +103,17 @@ message AccessWarehouseLog {
 }
 
 // ID: ???
-message StrengthenWeaponLog {
-  message Strengthen_weapon_info_list {
+message RepairEquipmentLog {
+  message Repair_equipment_info_list {
   }
 }
 
 // ID: ???
-message RepairEquipmentLog {
-  message Repair_equipment_info_list {
-  }
+message LevelUpLog {
+}
+
+// ID: ???
+message BrokenEquipmentLog {
 }
 
 // ID: ???

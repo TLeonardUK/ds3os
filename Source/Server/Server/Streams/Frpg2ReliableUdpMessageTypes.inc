@@ -28,6 +28,15 @@ DEFINE_REQUEST_RESPONSE(0x0394, RequestUpdatePlayerCharacter,       RequestUpdat
 // Blood Messages
 DEFINE_REQUEST_RESPONSE(0x0399, RequestReentryBloodMessage,         RequestReentryBloodMessage,         RequestReentryBloodMessageResponse)
 
+// Matchmaking
+DEFINE_REQUEST_RESPONSE(0x0459, RequestGetSignList,                 RequestGetSignList,                 RequestGetSignListResponse)
+DEFINE_REQUEST_RESPONSE(0x0456, RequestCreateSign,                  RequestCreateSign,                  RequestCreateSignResponse)
+DEFINE_REQUEST_RESPONSE(0x03D5, RequestRemoveSign,                  RequestRemoveSign,                  RequestRemoveSignResponse)
+
+//DEFINE_REQUEST_RESPONSE(0x, RequestSummonSign,                  RequestSummonSign,                  RequestSummonSignResponse)
+//DEFINE_REQUEST_RESPONSE(0x, RequestUpdateSign,                  RequestUpdateSign,                  RequestUpdateSignResponse)
+//DEFINE_REQUEST_RESPONSE(0x, RequestRejectSign,                  RequestRejectSign,                  RequestRejectSignResponse)
+
 // Logging
 DEFINE_MESSAGE         (0x03D8, RequestNotifyProtoBufLog,           RequestNotifyProtoBufLog)
 

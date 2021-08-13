@@ -58,6 +58,9 @@
     <Filter Include="Server\GameService\GameManagers\BloodMessage">
       <UniqueIdentifier>{5df1e9ef-f2c7-47ff-90d7-b82f458c3750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Server\GameService\Utils">
+      <UniqueIdentifier>{2b02bc3a-41d7-4bfe-b371-e78fb2037f85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server\Server.h">
@@ -204,6 +207,18 @@
     <ClInclude Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.h">
       <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
     </ClInclude>
+    <ClInclude Include="Server\GameService\Utils\OnlineAreaId.h">
+      <Filter>Server\GameService\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\Utils\CovenantId.h">
+      <Filter>Server\GameService\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\Utils\ItemId.h">
+      <Filter>Server\GameService\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Matchmaking\SummonSign.h">
+      <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -314,6 +329,9 @@
     </ClCompile>
     <ClCompile Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.cpp">
       <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.cpp">
+      <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

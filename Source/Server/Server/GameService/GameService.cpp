@@ -13,6 +13,7 @@
 #include "Server/GameService/GameManagers/Logging/LoggingManager.h"
 #include "Server/GameService/GameManagers/PlayerData/PlayerDataManager.h"
 #include "Server/GameService/GameManagers/BloodMessage/BloodMessageManager.h"
+#include "Server/GameService/GameManagers/Matchmaking/MatchmakingManager.h"
 
 #include "Server/Server.h"
 #include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
@@ -36,6 +37,7 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<LoggingManager>(ServerInstance));
     Managers.push_back(std::make_shared<PlayerDataManager>(ServerInstance));
     Managers.push_back(std::make_shared<BloodMessageManager>(ServerInstance));
+    Managers.push_back(std::make_shared<MatchmakingManager>(ServerInstance));
 }
 
 GameService::~GameService()

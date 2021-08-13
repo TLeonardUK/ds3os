@@ -132,7 +132,7 @@ message RequestUpdateLoginPlayerCharacterResponse {
 }
 
 message RequestUpdatePlayerStatus {
-  required Frpg2PlayerData.AllStatus status = 1;
+  required Frpg2PlayerData.UpdateAllDelta status = 1;
 }
 
 message RequestUpdatePlayerStatusResponse {
@@ -183,20 +183,20 @@ message RequestNotifyProtoBufLog {
 
   enum LogType
   {
-    SystemOptionLog = 8001;
-    GlobalEventLog = 5001;
-    UseItemLog = 3000;
-    GetItemLog = 3002;
+    UseMagicLog = 2020;
     ActGestureLog = 2021;
+    UseItemLog = 3000;
+    PurchaseItemLog = 3001;
+    GetItemLog = 3002;
+    DropItemLog = 3003;
+    LeaveItemLog = 3004;
+    SaleItemLog = 3005;
+    StrengthenWeaponLog = 3010;
+    GlobalEventLog = 5001;
+    SystemOptionLog = 8001;
     // LevelUpLog = 0;
-    // UseMagicLog = 0;
     // BrokenEquipmentLog = 0;
-    // PurchaseItemLog = 0;
-    // DropItemLog = 0;
-    // LeaveItemLog = 0;
-    // SaleItemLog = 0;
     // AccessWarehouseLog = 0;
-    // StrengthenWeaponLog = 0;
     // RepairEquipmentLog = 0;
     // EquipMagicLog = 0;
     // ChaneEstusFlaskNumLog = 0;
@@ -223,7 +223,7 @@ message RequestNotifyProtoBufLog {
 
 message SummonSignMessage {
   required uint32 online_area_id = 1;
-  required uint32 unknown_id_2 = 2;
+  required string steam_id = 2;
   required SignInfo sign_info = 3;
   required string player_struct = 4;
 }
@@ -242,41 +242,41 @@ message SignData {
   required SignInfo sign_info = 1;
   required uint32 online_area_id = 2;
   required MatchingParameter matching_parameter = 3;
-  required string player_struct = 4;
-  required string steam_id = 5;
-  required uint32 unknown_id_6 = 6; //1
+  required bytes player_struct = 4;
+  required string steam_id = 5;                       // sometimes a steamid, sometimes a 3 value substruct
+  required uint32 unknown_id_6 = 6;                   // 0
 }
 
 message MatchingParameter {
-  required uint32 unknown_id_1 = 1;                     //1350000
-  required uint32 unknown_id_2 = 2;                     //2
-  required uint32 unknown_id_3 = 3;                     //0
-  required uint32 unknown_id_4 = 4;                     //1
-  required uint32 unknown_id_5 = 5;                     //0
+  required uint32 unknown_id_1 = 1;                     // 1350000
+  required uint32 unknown_id_2 = 2;                     // 2
+  required uint32 unknown_id_3 = 3;                     // 1,0
+  required uint32 unknown_id_4 = 4;                     // 1
+  required uint32 unknown_id_5 = 5;                     // 0
   required uint32 soul_level = 6;
   required uint32 total_get_soul = 7;
   optional string unknown_string = 8;
-  required uint32 unknown_id_9 = 9;                     //0, 1, 7
+  required uint32 unknown_id_9 = 9;                     // 0, 1, 7
   required string password = 10;
   required uint32 covenant = 11;
-  required uint32 weaponlevel = 14;
+  required uint32 weapon_level = 14;
 }
 
 message SignGetFlags {
-  required uint32 unknown_id_1 = 1;                     //1
-  required uint32 unknown_id_2 = 2;                     //1
-  required uint32 unknown_id_3 = 3;                     //0
+  required uint32 unknown_id_1 = 1;                     // 1
+  required uint32 unknown_id_2 = 2;                     // 1
+  required uint32 unknown_id_3 = 3;                     // 0
 }
 
 message SignDomainGetInfo {
-  required uint32 unknown_field_1 = 1;                  //32
+  required uint32 unknown_field_1 = 1;                  // 32
   required uint32 online_area_id = 2;
 }
 
 message RequestGetSignList {
   required uint32 unknown_id_1 = 1;                       // 0
   repeated SignDomainGetInfo sign_domain_get_info = 2;
-  required uint32 online_area_id = 3;                     //Seems to be related to online area
+  required uint32 online_area_id = 3;                     // Seems to be related to online area
   required MatchingParameter matching_parameter = 4;
   required SignGetFlags sign_get_flags = 5;
 }
@@ -290,10 +290,10 @@ message RequestNotifyCreateSignResult {
   required uint32 online_area_id_lower = 2;
   required uint32 online_area_id_upper = 3;
   required Frpg2PlayerData.Vector vector = 4;
-  required uint32 sign_unique_number = 5;              //528745087
-  required uint32 unknown_2 = 6;                       //0
-  required uint32 unknown_3 = 7;                       //3
-  required uint32 unknown_4 = 8;                       //2
+  required uint32 sign_unique_number = 5;              // 528745087
+  required uint32 unknown_2 = 6;                       // 0
+  required uint32 unknown_3 = 7;                       // 3
+  required uint32 unknown_4 = 8;                       // 2
 }
 
 message RequestCreateSign {
@@ -301,7 +301,7 @@ message RequestCreateSign {
   required uint32 online_area_id_upper = 2;
   required MatchingParameter matching_parameter = 3;
   required uint32 unknown = 4;
-  required string player_struct = 5;
+  required bytes player_struct = 5;
 }
 
 message RequestCreateSignResponse {
@@ -315,6 +315,60 @@ message RequestSummonSign {
   required string player_struct = 4;
 }
 
+message RequestSummonSignResponse {
+  // Never gets sent?
+}
+
+message RequestRemoveSign {
+  required uint32 online_area_id_lower = 1;
+  required uint32 online_area_id_upper = 2;
+  required uint32 sign_unique_number = 3;
+}
+
+message RequestRemoveSignResponse {
+  // Never gets sent?
+}
+
+message RequestUpdateSign {
+  required uint32 online_area_id_lower = 1;
+  required uint32 online_area_id_upper = 2;
+  required uint32 sign_unique_number = 3;
+}
+
+message RequestUpdateSignResponse {
+  // Never gets sent?
+}
+
+message RequestRejectSign {
+  // Unknown
+}
+
+message RequestRejectSignResponse {
+  // Unknown
+}
+
+message RequestCreateGhostData {
+  required uint32 online_area_id = 1;
+  required bytes ghost_data = 2;
+}
+
+message RequestCreateGhostDataResponse {
+  // Never gets sent?
+}
+
+message RequestGetRightMatchingArea {
+  required MatchingParameter matching_parameter = 1;
+  required uint32 unknown = 2;
+}
+
+message RequestGetRightMatchingAreaResponse {  
+  message Area_info {
+    required uint32 online_area_id = 1;
+    required uint32 population = 2; // Seems to be on a scale of 1-5.
+  }
+  repeated Area_info area_info = 1;
+}
+
 message PushRequestRemoveSign {
   required uint32 sign_unique_number = 1;
   required SignInfo sign_info = 2;
@@ -325,27 +379,8 @@ message PushRequestSummonSign {
   required SummonSignMessage summon_sign_message = 2;
 }
 
-message RequestRemoveSign {
-  required uint32 sign_unique_number = 1;
-}
-
-message RequestCreateGhostData {
-  required uint32 online_area_id = 1;
-  required string ghost_data = 2;
-}
-
-message RequestGetRightMatchingArea {
-  required MatchingParameter matching_parameter = 1;
-  required uint32 unknown = 2;
-}
-
-message RequestGetRightMatchingAreaResponse {
-  repeated RequestGetRightMatchingAreaResponse_Area_info area_info = 1;
-}
-
-message RequestGetRightMatchingAreaResponse_Area_info {
-  required uint32 online_area_id = 1;
-  required uint32 unknown = 2;
+message PushRequestRejectSign {
+  // Unknown
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -432,22 +467,13 @@ message RequestNotifyLeaveMultiplay {
 // ------------------------------------------------------------------------------------------------------------
 
 /* 
-// All messages in the exe.
-message RequestQueryLoginServerInfo 
+// Unimplemented messages
 message RequestQueryLoginServerInfoForXboxOne
-message RequestQueryLoginServerInfoResponse
-message RequestHandshake
-message RequestHandshakeResponse
-message GetServiceStatus
 message GetServiceStatusForXboxOne
-message GetServiceStatusResponse
 message LoginForXboxOne
 message SocketOptionSetting
 message GetConnectGameServerPortIdResponse
 message UserLogout
-message RequestWaitForUserLogin
-message RequestWaitForUserLoginResponse
-message DateTime
 message ManagementTextMessage
 message NRLogUploadRequest
 message NRLoggingMessage
@@ -482,18 +508,12 @@ message RequestDisconnectAllUser
 message RequestSendMessageToPushClient
 message PushRequestHeader
 message RangedLimit
-message MatchingParameter
 message PlayerUserIDPair
 message QuickMatchData
 message QuickMatchSearchResult
 message AcceptQuickMatchMessage
 message RejectQuickMatchMessage
 message RemoveQuickMatchMessage
-message SignInfo
-message SignData
-message GetSignResult
-message SignDomainGetInfo
-message SignGetFlags
 message RemoveSignMessage
 message SummonSignMessage
 message RejectSignMessage
@@ -526,8 +546,6 @@ message RequestReCreateBloodMessageListResponse
 message RequestRemoveBloodMessage
 message RequestRemoveBloodMessageResponse
 message LocatedBloodMessage
-message RequestReentryBloodMessage
-message RequestReentryBloodMessageResponse
 message BloodMessageDomainLimitData
 message RequestGetBloodMessageList
 message RequestGetBloodMessageListResponse
@@ -537,8 +555,6 @@ message RequestGetBloodMessageEvaluation
 message BloodMessageEvaluationData
 message RequestGetBloodMessageEvaluationResponse
 message PushRequestEvaluateBloodMessage
-message RequestCreateGhostData
-message RequestCreateGhostDataResponse
 message RequestGetGhostDataList
 message GhostData
 message RequestGetGhostDataListResponse
@@ -549,16 +565,10 @@ message RegulationFileMessage
 message RegulationFileDiffData
 message RegulationFileUpdateMessage
 message RegulationFileUpdatePushMessage
-message AnnounceMessageData
-message AnnounceMessageDataList
 message RequestGetPlayerCharacterList
 message RequestGetPlayerCharacterListResponse
-message RequestUpdateLoginPlayerCharacter
-message RequestUpdateLoginPlayerCharacterResponse
 message RequestBenchmarkThroughput
 message RequestBenchmarkThroughputResponse
-message RequestUpdatePlayerStatus
-message RequestUpdatePlayerStatusResponse
 message RequestGetBreakInTargetList
 message BreakInTargetData
 message RequestGetBreakInTargetListResponse
@@ -585,10 +595,7 @@ message PushRequestNotifyRingBell
 message RequestNotifyDisconnectSession
 message RequestNotifyDisconnectSessionResponse
 message RequestGetServerSidePlayerStatus
-message RequestGetAnnounceMessageList
-message RequestGetAnnounceMessageListResponse
 message PlayerStatusUploadConfig
-message PlayerInfoUploadConfigPushMessage
 message LoginClientInfo
 message RankingData
 message RankingRotationID
@@ -622,21 +629,6 @@ message RequestRejectQuickMatchResponse
 message PushRequestJoinQuickMatch
 message PushRequestAcceptQuickMatch
 message PushRequestRejectQuickMatch
-message RequestCreateSign
-message RequestCreateSignResponse
-message RequestUpdateSign
-message RequestUpdateSignResponse
-message RequestRemoveSign
-message RequestRemoveSignResponse
-message RequestGetSignList
-message RequestGetSignListResponse
-message RequestSummonSign
-message RequestSummonSignResponse
-message RequestRejectSign
-message RequestRejectSignResponse
-message PushRequestRemoveSign
-message PushRequestSummonSign
-message PushRequestRejectSign
 message RequestCreateMark
 message RequestCreateMarkResponse
 message RequestRemoveMark
@@ -657,10 +649,6 @@ message RequestNotifyLeaveMultiplay
 message RequestNotifyCreateSignResult
 message RequestNotifySummonSignResult
 message RequestNotifyBreakInResult
-message RequestNotifyProtoBufLog
-message RequestGetRightMatchingArea
-message RequestGetRightMatchingAreaResponse.Area_info
-message RequestGetRightMatchingAreaResponse
 message RequestGetCurrentRank
 message RequestGetCurrentRankResponse
 message RequestSendQuickMatchStart.Session_member_list

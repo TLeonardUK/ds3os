@@ -33,8 +33,6 @@ bool PlayerDataManager::OnMessageRecieved(GameClient* Client, const Frpg2Reliabl
 
 bool PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Log("[%s] RequestUpdateLoginPlayerCharacter from client.", Client->GetName().c_str());
-
     // TODO: Do this in a better way.
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
@@ -63,8 +61,6 @@ bool PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(GameClient* Cli
 
 bool PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Log("[%s] RequestUpdatePlayerStatus from client.", Client->GetName().c_str());
-
     Frpg2RequestMessage::RequestUpdatePlayerStatus* Request = (Frpg2RequestMessage::RequestUpdatePlayerStatus*)Message.Protobuf.get();
 
     // TODO: Do something with this data?
@@ -82,8 +78,6 @@ bool PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClient* Client, con
 
 bool PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Log("[%s] RequestUpdatePlayerCharacter from client.", Client->GetName().c_str());
-
     Frpg2RequestMessage::RequestUpdatePlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdatePlayerCharacter*)Message.Protobuf.get();
 
     // TODO: Do something with this data?

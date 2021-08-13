@@ -117,8 +117,12 @@
     <ClInclude Include="Server\GameService\GameManagers\Boot\BootManager.h" />
     <ClInclude Include="Server\GameService\GameManagers\Logging\LoggingManager.h" />
     <ClInclude Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.h" />
+    <ClInclude Include="Server\GameService\GameManagers\Matchmaking\SummonSign.h" />
     <ClInclude Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.h" />
     <ClInclude Include="Server\GameService\GameService.h" />
+    <ClInclude Include="Server\GameService\Utils\CovenantId.h" />
+    <ClInclude Include="Server\GameService\Utils\ItemId.h" />
+    <ClInclude Include="Server\GameService\Utils\OnlineAreaId.h" />
     <ClInclude Include="Server\LoginService\LoginClient.h" />
     <ClInclude Include="Server\LoginService\LoginService.h" />
     <ClInclude Include="Server\Service.h" />
@@ -161,6 +165,7 @@
     <ClCompile Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.cpp" />
     <ClCompile Include="Server\GameService\GameManagers\Boot\BootManager.cpp" />
     <ClCompile Include="Server\GameService\GameManagers\Logging\LoggingManager.cpp" />
+    <ClCompile Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.cpp" />
     <ClCompile Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.cpp" />
     <ClCompile Include="Server\GameService\GameService.cpp" />
     <ClCompile Include="Server\LoginService\LoginClient.cpp" />

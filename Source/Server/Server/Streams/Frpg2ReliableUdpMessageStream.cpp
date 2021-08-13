@@ -18,6 +18,15 @@
 
 #include "Protobuf/Frpg2RequestMessage.pb.h"
 
+#include <google/protobuf/unknown_field_set.h>
+
+// Any protobufs that fail to deserialize will be written to disk to be
+// looked into later.
+#define DUMP_FAILED_PACKETS_TO_DISK
+
+// Path that failed packets will be written to
+#define DUMP_PATH "Z:\\ds3os\\Temp\\FailedDeserialize"
+
 Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken)
     : Frpg2ReliableUdpFragmentStream(Connection, CwcKey, AuthToken)
 {
@@ -143,6 +152,13 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
     if (!ReliableUdpMessageType_To_Protobuf(MessageType, IsResponse, Message->Protobuf))
     {
         Warning("[%s] Failed to create protobuf instance for message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+
+#if defined(DUMP_FAILED_PACKETS_TO_DISK)
+        char buffer[128];
+        snprintf(buffer, 128, DUMP_PATH "\\0x%04x.no_handler.bin", (int)MessageType);
+        WriteBytesToFile(buffer, Message->Payload);
+#endif
+
         InErrorState = true;
         return false;
     }
@@ -150,9 +166,18 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
     if (!Message->Protobuf->ParseFromArray(Message->Payload.data(), Message->Payload.size()))
     {
         Warning("[%s] Failed to deserialize protobuf instance for message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+
+#if defined(DUMP_FAILED_PACKETS_TO_DISK)
+        char buffer[128];
+        snprintf(buffer, 128, DUMP_PATH "\\0x%04x.failed_deserialization.bin", (int)MessageType);
+        WriteBytesToFile(buffer, Message->Payload);
+#endif
+
         InErrorState = true;
         return false;
     }
+
+    Log("[%s] Recieved '%s' from client.", Connection->GetName().c_str(), Message->Protobuf->GetTypeName().c_str());
 
     //Log("[%s] Recieving message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), Message->Header.msg_type, Message->Header.msg_index)
 
