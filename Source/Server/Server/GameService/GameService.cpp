@@ -133,7 +133,7 @@ void GameService::Poll()
                 Manager->OnClientDisconnected(Client.get());
             }
 
-            iter = Clients.erase(iter);
+            iter = DisconnectingClients.erase(iter);
         }
         else
         {

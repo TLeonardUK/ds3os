@@ -27,10 +27,8 @@ void protobuf_ShutdownFile_FpdLogMessage_2eproto() {
   delete GetItemLog_Get_item_info_list::default_instance_;
   delete ActGestureLog::default_instance_;
   delete ActGestureLog_Use_gesture_info_list::default_instance_;
-  delete LevelUpLog::default_instance_;
   delete UseMagicLog::default_instance_;
   delete UseMagicLog_Use_magic_info_list::default_instance_;
-  delete BrokenEquipmentLog::default_instance_;
   delete PurchaseItemLog::default_instance_;
   delete PurchaseItemLog_Purchase_item_info_list::default_instance_;
   delete DropItemLog::default_instance_;
@@ -39,12 +37,14 @@ void protobuf_ShutdownFile_FpdLogMessage_2eproto() {
   delete LeaveItemLog_Set_item_info_list::default_instance_;
   delete SaleItemLog::default_instance_;
   delete SaleItemLog_Sale_item_info_list::default_instance_;
-  delete AccessWarehouseLog::default_instance_;
-  delete AccessWarehouseLog_Access_warehouse_info_list::default_instance_;
   delete StrengthenWeaponLog::default_instance_;
   delete StrengthenWeaponLog_Strengthen_weapon_info_list::default_instance_;
+  delete AccessWarehouseLog::default_instance_;
+  delete AccessWarehouseLog_Access_warehouse_info_list::default_instance_;
   delete RepairEquipmentLog::default_instance_;
   delete RepairEquipmentLog_Repair_equipment_info_list::default_instance_;
+  delete LevelUpLog::default_instance_;
+  delete BrokenEquipmentLog::default_instance_;
   delete EquipMagicLog::default_instance_;
   delete ChaneEstusFlaskNumLog::default_instance_;
   delete CreateBloodMessageLog::default_instance_;
@@ -78,10 +78,8 @@ void protobuf_AddDesc_FpdLogMessage_2eproto() {
   GetItemLog_Get_item_info_list::default_instance_ = new GetItemLog_Get_item_info_list();
   ActGestureLog::default_instance_ = new ActGestureLog();
   ActGestureLog_Use_gesture_info_list::default_instance_ = new ActGestureLog_Use_gesture_info_list();
-  LevelUpLog::default_instance_ = new LevelUpLog();
   UseMagicLog::default_instance_ = new UseMagicLog();
   UseMagicLog_Use_magic_info_list::default_instance_ = new UseMagicLog_Use_magic_info_list();
-  BrokenEquipmentLog::default_instance_ = new BrokenEquipmentLog();
   PurchaseItemLog::default_instance_ = new PurchaseItemLog();
   PurchaseItemLog_Purchase_item_info_list::default_instance_ = new PurchaseItemLog_Purchase_item_info_list();
   DropItemLog::default_instance_ = new DropItemLog();
@@ -90,12 +88,14 @@ void protobuf_AddDesc_FpdLogMessage_2eproto() {
   LeaveItemLog_Set_item_info_list::default_instance_ = new LeaveItemLog_Set_item_info_list();
   SaleItemLog::default_instance_ = new SaleItemLog();
   SaleItemLog_Sale_item_info_list::default_instance_ = new SaleItemLog_Sale_item_info_list();
-  AccessWarehouseLog::default_instance_ = new AccessWarehouseLog();
-  AccessWarehouseLog_Access_warehouse_info_list::default_instance_ = new AccessWarehouseLog_Access_warehouse_info_list();
   StrengthenWeaponLog::default_instance_ = new StrengthenWeaponLog();
   StrengthenWeaponLog_Strengthen_weapon_info_list::default_instance_ = new StrengthenWeaponLog_Strengthen_weapon_info_list();
+  AccessWarehouseLog::default_instance_ = new AccessWarehouseLog();
+  AccessWarehouseLog_Access_warehouse_info_list::default_instance_ = new AccessWarehouseLog_Access_warehouse_info_list();
   RepairEquipmentLog::default_instance_ = new RepairEquipmentLog();
   RepairEquipmentLog_Repair_equipment_info_list::default_instance_ = new RepairEquipmentLog_Repair_equipment_info_list();
+  LevelUpLog::default_instance_ = new LevelUpLog();
+  BrokenEquipmentLog::default_instance_ = new BrokenEquipmentLog();
   EquipMagicLog::default_instance_ = new EquipMagicLog();
   ChaneEstusFlaskNumLog::default_instance_ = new ChaneEstusFlaskNumLog();
   CreateBloodMessageLog::default_instance_ = new CreateBloodMessageLog();
@@ -115,10 +115,8 @@ void protobuf_AddDesc_FpdLogMessage_2eproto() {
   GetItemLog_Get_item_info_list::default_instance_->InitAsDefaultInstance();
   ActGestureLog::default_instance_->InitAsDefaultInstance();
   ActGestureLog_Use_gesture_info_list::default_instance_->InitAsDefaultInstance();
-  LevelUpLog::default_instance_->InitAsDefaultInstance();
   UseMagicLog::default_instance_->InitAsDefaultInstance();
   UseMagicLog_Use_magic_info_list::default_instance_->InitAsDefaultInstance();
-  BrokenEquipmentLog::default_instance_->InitAsDefaultInstance();
   PurchaseItemLog::default_instance_->InitAsDefaultInstance();
   PurchaseItemLog_Purchase_item_info_list::default_instance_->InitAsDefaultInstance();
   DropItemLog::default_instance_->InitAsDefaultInstance();
@@ -127,12 +125,14 @@ void protobuf_AddDesc_FpdLogMessage_2eproto() {
   LeaveItemLog_Set_item_info_list::default_instance_->InitAsDefaultInstance();
   SaleItemLog::default_instance_->InitAsDefaultInstance();
   SaleItemLog_Sale_item_info_list::default_instance_->InitAsDefaultInstance();
-  AccessWarehouseLog::default_instance_->InitAsDefaultInstance();
-  AccessWarehouseLog_Access_warehouse_info_list::default_instance_->InitAsDefaultInstance();
   StrengthenWeaponLog::default_instance_->InitAsDefaultInstance();
   StrengthenWeaponLog_Strengthen_weapon_info_list::default_instance_->InitAsDefaultInstance();
+  AccessWarehouseLog::default_instance_->InitAsDefaultInstance();
+  AccessWarehouseLog_Access_warehouse_info_list::default_instance_->InitAsDefaultInstance();
   RepairEquipmentLog::default_instance_->InitAsDefaultInstance();
   RepairEquipmentLog_Repair_equipment_info_list::default_instance_->InitAsDefaultInstance();
+  LevelUpLog::default_instance_->InitAsDefaultInstance();
+  BrokenEquipmentLog::default_instance_->InitAsDefaultInstance();
   EquipMagicLog::default_instance_->InitAsDefaultInstance();
   ChaneEstusFlaskNumLog::default_instance_->InitAsDefaultInstance();
   CreateBloodMessageLog::default_instance_->InitAsDefaultInstance();
@@ -2356,154 +2356,6 @@ void ActGestureLog::Swap(ActGestureLog* other) {
 #ifndef _MSC_VER
 #endif  // !_MSC_VER
 
-LevelUpLog::LevelUpLog()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:FpdLogMessage.LevelUpLog)
-}
-
-void LevelUpLog::InitAsDefaultInstance() {
-}
-
-LevelUpLog::LevelUpLog(const LevelUpLog& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.LevelUpLog)
-}
-
-void LevelUpLog::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-LevelUpLog::~LevelUpLog() {
-  // @@protoc_insertion_point(destructor:FpdLogMessage.LevelUpLog)
-  SharedDtor();
-}
-
-void LevelUpLog::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void LevelUpLog::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const LevelUpLog& LevelUpLog::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_FpdLogMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-LevelUpLog* LevelUpLog::default_instance_ = NULL;
-
-LevelUpLog* LevelUpLog::New() const {
-  return new LevelUpLog;
-}
-
-void LevelUpLog::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool LevelUpLog::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:FpdLogMessage.LevelUpLog)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:FpdLogMessage.LevelUpLog)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:FpdLogMessage.LevelUpLog)
-  return false;
-#undef DO_
-}
-
-void LevelUpLog::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:FpdLogMessage.LevelUpLog)
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:FpdLogMessage.LevelUpLog)
-}
-
-int LevelUpLog::ByteSize() const {
-  int total_size = 0;
-
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void LevelUpLog::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const LevelUpLog*>(&from));
-}
-
-void LevelUpLog::MergeFrom(const LevelUpLog& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void LevelUpLog::CopyFrom(const LevelUpLog& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool LevelUpLog::IsInitialized() const {
-
-  return true;
-}
-
-void LevelUpLog::Swap(LevelUpLog* other) {
-  if (other != this) {
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string LevelUpLog::GetTypeName() const {
-  return "FpdLogMessage.LevelUpLog";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-#endif  // !_MSC_VER
-
 UseMagicLog_Use_magic_info_list::UseMagicLog_Use_magic_info_list()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
@@ -2792,154 +2644,6 @@ void UseMagicLog::Swap(UseMagicLog* other) {
 
 ::std::string UseMagicLog::GetTypeName() const {
   return "FpdLogMessage.UseMagicLog";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-#endif  // !_MSC_VER
-
-BrokenEquipmentLog::BrokenEquipmentLog()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:FpdLogMessage.BrokenEquipmentLog)
-}
-
-void BrokenEquipmentLog::InitAsDefaultInstance() {
-}
-
-BrokenEquipmentLog::BrokenEquipmentLog(const BrokenEquipmentLog& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.BrokenEquipmentLog)
-}
-
-void BrokenEquipmentLog::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-BrokenEquipmentLog::~BrokenEquipmentLog() {
-  // @@protoc_insertion_point(destructor:FpdLogMessage.BrokenEquipmentLog)
-  SharedDtor();
-}
-
-void BrokenEquipmentLog::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void BrokenEquipmentLog::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const BrokenEquipmentLog& BrokenEquipmentLog::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_FpdLogMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-BrokenEquipmentLog* BrokenEquipmentLog::default_instance_ = NULL;
-
-BrokenEquipmentLog* BrokenEquipmentLog::New() const {
-  return new BrokenEquipmentLog;
-}
-
-void BrokenEquipmentLog::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool BrokenEquipmentLog::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:FpdLogMessage.BrokenEquipmentLog)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:FpdLogMessage.BrokenEquipmentLog)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:FpdLogMessage.BrokenEquipmentLog)
-  return false;
-#undef DO_
-}
-
-void BrokenEquipmentLog::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:FpdLogMessage.BrokenEquipmentLog)
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:FpdLogMessage.BrokenEquipmentLog)
-}
-
-int BrokenEquipmentLog::ByteSize() const {
-  int total_size = 0;
-
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void BrokenEquipmentLog::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const BrokenEquipmentLog*>(&from));
-}
-
-void BrokenEquipmentLog::MergeFrom(const BrokenEquipmentLog& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void BrokenEquipmentLog::CopyFrom(const BrokenEquipmentLog& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool BrokenEquipmentLog::IsInitialized() const {
-
-  return true;
-}
-
-void BrokenEquipmentLog::Swap(BrokenEquipmentLog* other) {
-  if (other != this) {
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string BrokenEquipmentLog::GetTypeName() const {
-  return "FpdLogMessage.BrokenEquipmentLog";
 }
 
 
@@ -4132,302 +3836,6 @@ void SaleItemLog::Swap(SaleItemLog* other) {
 #ifndef _MSC_VER
 #endif  // !_MSC_VER
 
-AccessWarehouseLog_Access_warehouse_info_list::AccessWarehouseLog_Access_warehouse_info_list()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::InitAsDefaultInstance() {
-}
-
-AccessWarehouseLog_Access_warehouse_info_list::AccessWarehouseLog_Access_warehouse_info_list(const AccessWarehouseLog_Access_warehouse_info_list& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-AccessWarehouseLog_Access_warehouse_info_list::~AccessWarehouseLog_Access_warehouse_info_list() {
-  // @@protoc_insertion_point(destructor:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-  SharedDtor();
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const AccessWarehouseLog_Access_warehouse_info_list& AccessWarehouseLog_Access_warehouse_info_list::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_FpdLogMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-AccessWarehouseLog_Access_warehouse_info_list* AccessWarehouseLog_Access_warehouse_info_list::default_instance_ = NULL;
-
-AccessWarehouseLog_Access_warehouse_info_list* AccessWarehouseLog_Access_warehouse_info_list::New() const {
-  return new AccessWarehouseLog_Access_warehouse_info_list;
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool AccessWarehouseLog_Access_warehouse_info_list::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-  return false;
-#undef DO_
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
-}
-
-int AccessWarehouseLog_Access_warehouse_info_list::ByteSize() const {
-  int total_size = 0;
-
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const AccessWarehouseLog_Access_warehouse_info_list*>(&from));
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::MergeFrom(const AccessWarehouseLog_Access_warehouse_info_list& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::CopyFrom(const AccessWarehouseLog_Access_warehouse_info_list& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool AccessWarehouseLog_Access_warehouse_info_list::IsInitialized() const {
-
-  return true;
-}
-
-void AccessWarehouseLog_Access_warehouse_info_list::Swap(AccessWarehouseLog_Access_warehouse_info_list* other) {
-  if (other != this) {
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string AccessWarehouseLog_Access_warehouse_info_list::GetTypeName() const {
-  return "FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list";
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
-#endif  // !_MSC_VER
-
-AccessWarehouseLog::AccessWarehouseLog()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:FpdLogMessage.AccessWarehouseLog)
-}
-
-void AccessWarehouseLog::InitAsDefaultInstance() {
-}
-
-AccessWarehouseLog::AccessWarehouseLog(const AccessWarehouseLog& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.AccessWarehouseLog)
-}
-
-void AccessWarehouseLog::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-AccessWarehouseLog::~AccessWarehouseLog() {
-  // @@protoc_insertion_point(destructor:FpdLogMessage.AccessWarehouseLog)
-  SharedDtor();
-}
-
-void AccessWarehouseLog::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void AccessWarehouseLog::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const AccessWarehouseLog& AccessWarehouseLog::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_FpdLogMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-AccessWarehouseLog* AccessWarehouseLog::default_instance_ = NULL;
-
-AccessWarehouseLog* AccessWarehouseLog::New() const {
-  return new AccessWarehouseLog;
-}
-
-void AccessWarehouseLog::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool AccessWarehouseLog::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:FpdLogMessage.AccessWarehouseLog)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:FpdLogMessage.AccessWarehouseLog)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:FpdLogMessage.AccessWarehouseLog)
-  return false;
-#undef DO_
-}
-
-void AccessWarehouseLog::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:FpdLogMessage.AccessWarehouseLog)
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:FpdLogMessage.AccessWarehouseLog)
-}
-
-int AccessWarehouseLog::ByteSize() const {
-  int total_size = 0;
-
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void AccessWarehouseLog::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const AccessWarehouseLog*>(&from));
-}
-
-void AccessWarehouseLog::MergeFrom(const AccessWarehouseLog& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void AccessWarehouseLog::CopyFrom(const AccessWarehouseLog& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool AccessWarehouseLog::IsInitialized() const {
-
-  return true;
-}
-
-void AccessWarehouseLog::Swap(AccessWarehouseLog* other) {
-  if (other != this) {
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string AccessWarehouseLog::GetTypeName() const {
-  return "FpdLogMessage.AccessWarehouseLog";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-#endif  // !_MSC_VER
-
 StrengthenWeaponLog_Strengthen_weapon_info_list::StrengthenWeaponLog_Strengthen_weapon_info_list()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
@@ -4724,6 +4132,302 @@ void StrengthenWeaponLog::Swap(StrengthenWeaponLog* other) {
 #ifndef _MSC_VER
 #endif  // !_MSC_VER
 
+AccessWarehouseLog_Access_warehouse_info_list::AccessWarehouseLog_Access_warehouse_info_list()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::InitAsDefaultInstance() {
+}
+
+AccessWarehouseLog_Access_warehouse_info_list::AccessWarehouseLog_Access_warehouse_info_list(const AccessWarehouseLog_Access_warehouse_info_list& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+AccessWarehouseLog_Access_warehouse_info_list::~AccessWarehouseLog_Access_warehouse_info_list() {
+  // @@protoc_insertion_point(destructor:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+  SharedDtor();
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const AccessWarehouseLog_Access_warehouse_info_list& AccessWarehouseLog_Access_warehouse_info_list::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_FpdLogMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+AccessWarehouseLog_Access_warehouse_info_list* AccessWarehouseLog_Access_warehouse_info_list::default_instance_ = NULL;
+
+AccessWarehouseLog_Access_warehouse_info_list* AccessWarehouseLog_Access_warehouse_info_list::New() const {
+  return new AccessWarehouseLog_Access_warehouse_info_list;
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool AccessWarehouseLog_Access_warehouse_info_list::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+  return false;
+#undef DO_
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+}
+
+int AccessWarehouseLog_Access_warehouse_info_list::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const AccessWarehouseLog_Access_warehouse_info_list*>(&from));
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::MergeFrom(const AccessWarehouseLog_Access_warehouse_info_list& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::CopyFrom(const AccessWarehouseLog_Access_warehouse_info_list& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AccessWarehouseLog_Access_warehouse_info_list::IsInitialized() const {
+
+  return true;
+}
+
+void AccessWarehouseLog_Access_warehouse_info_list::Swap(AccessWarehouseLog_Access_warehouse_info_list* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string AccessWarehouseLog_Access_warehouse_info_list::GetTypeName() const {
+  return "FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list";
+}
+
+
+// -------------------------------------------------------------------
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+AccessWarehouseLog::AccessWarehouseLog()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:FpdLogMessage.AccessWarehouseLog)
+}
+
+void AccessWarehouseLog::InitAsDefaultInstance() {
+}
+
+AccessWarehouseLog::AccessWarehouseLog(const AccessWarehouseLog& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.AccessWarehouseLog)
+}
+
+void AccessWarehouseLog::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+AccessWarehouseLog::~AccessWarehouseLog() {
+  // @@protoc_insertion_point(destructor:FpdLogMessage.AccessWarehouseLog)
+  SharedDtor();
+}
+
+void AccessWarehouseLog::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void AccessWarehouseLog::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const AccessWarehouseLog& AccessWarehouseLog::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_FpdLogMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+AccessWarehouseLog* AccessWarehouseLog::default_instance_ = NULL;
+
+AccessWarehouseLog* AccessWarehouseLog::New() const {
+  return new AccessWarehouseLog;
+}
+
+void AccessWarehouseLog::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool AccessWarehouseLog::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:FpdLogMessage.AccessWarehouseLog)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:FpdLogMessage.AccessWarehouseLog)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:FpdLogMessage.AccessWarehouseLog)
+  return false;
+#undef DO_
+}
+
+void AccessWarehouseLog::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:FpdLogMessage.AccessWarehouseLog)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:FpdLogMessage.AccessWarehouseLog)
+}
+
+int AccessWarehouseLog::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void AccessWarehouseLog::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const AccessWarehouseLog*>(&from));
+}
+
+void AccessWarehouseLog::MergeFrom(const AccessWarehouseLog& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void AccessWarehouseLog::CopyFrom(const AccessWarehouseLog& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AccessWarehouseLog::IsInitialized() const {
+
+  return true;
+}
+
+void AccessWarehouseLog::Swap(AccessWarehouseLog* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string AccessWarehouseLog::GetTypeName() const {
+  return "FpdLogMessage.AccessWarehouseLog";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
 RepairEquipmentLog_Repair_equipment_info_list::RepairEquipmentLog_Repair_equipment_info_list()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
@@ -5012,6 +4716,302 @@ void RepairEquipmentLog::Swap(RepairEquipmentLog* other) {
 
 ::std::string RepairEquipmentLog::GetTypeName() const {
   return "FpdLogMessage.RepairEquipmentLog";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+LevelUpLog::LevelUpLog()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:FpdLogMessage.LevelUpLog)
+}
+
+void LevelUpLog::InitAsDefaultInstance() {
+}
+
+LevelUpLog::LevelUpLog(const LevelUpLog& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.LevelUpLog)
+}
+
+void LevelUpLog::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+LevelUpLog::~LevelUpLog() {
+  // @@protoc_insertion_point(destructor:FpdLogMessage.LevelUpLog)
+  SharedDtor();
+}
+
+void LevelUpLog::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void LevelUpLog::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const LevelUpLog& LevelUpLog::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_FpdLogMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+LevelUpLog* LevelUpLog::default_instance_ = NULL;
+
+LevelUpLog* LevelUpLog::New() const {
+  return new LevelUpLog;
+}
+
+void LevelUpLog::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool LevelUpLog::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:FpdLogMessage.LevelUpLog)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:FpdLogMessage.LevelUpLog)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:FpdLogMessage.LevelUpLog)
+  return false;
+#undef DO_
+}
+
+void LevelUpLog::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:FpdLogMessage.LevelUpLog)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:FpdLogMessage.LevelUpLog)
+}
+
+int LevelUpLog::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void LevelUpLog::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const LevelUpLog*>(&from));
+}
+
+void LevelUpLog::MergeFrom(const LevelUpLog& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void LevelUpLog::CopyFrom(const LevelUpLog& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool LevelUpLog::IsInitialized() const {
+
+  return true;
+}
+
+void LevelUpLog::Swap(LevelUpLog* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string LevelUpLog::GetTypeName() const {
+  return "FpdLogMessage.LevelUpLog";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+BrokenEquipmentLog::BrokenEquipmentLog()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:FpdLogMessage.BrokenEquipmentLog)
+}
+
+void BrokenEquipmentLog::InitAsDefaultInstance() {
+}
+
+BrokenEquipmentLog::BrokenEquipmentLog(const BrokenEquipmentLog& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:FpdLogMessage.BrokenEquipmentLog)
+}
+
+void BrokenEquipmentLog::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+BrokenEquipmentLog::~BrokenEquipmentLog() {
+  // @@protoc_insertion_point(destructor:FpdLogMessage.BrokenEquipmentLog)
+  SharedDtor();
+}
+
+void BrokenEquipmentLog::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void BrokenEquipmentLog::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const BrokenEquipmentLog& BrokenEquipmentLog::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_FpdLogMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_FpdLogMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+BrokenEquipmentLog* BrokenEquipmentLog::default_instance_ = NULL;
+
+BrokenEquipmentLog* BrokenEquipmentLog::New() const {
+  return new BrokenEquipmentLog;
+}
+
+void BrokenEquipmentLog::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool BrokenEquipmentLog::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:FpdLogMessage.BrokenEquipmentLog)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:FpdLogMessage.BrokenEquipmentLog)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:FpdLogMessage.BrokenEquipmentLog)
+  return false;
+#undef DO_
+}
+
+void BrokenEquipmentLog::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:FpdLogMessage.BrokenEquipmentLog)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:FpdLogMessage.BrokenEquipmentLog)
+}
+
+int BrokenEquipmentLog::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void BrokenEquipmentLog::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const BrokenEquipmentLog*>(&from));
+}
+
+void BrokenEquipmentLog::MergeFrom(const BrokenEquipmentLog& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void BrokenEquipmentLog::CopyFrom(const BrokenEquipmentLog& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool BrokenEquipmentLog::IsInitialized() const {
+
+  return true;
+}
+
+void BrokenEquipmentLog::Swap(BrokenEquipmentLog* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string BrokenEquipmentLog::GetTypeName() const {
+  return "FpdLogMessage.BrokenEquipmentLog";
 }
 
 

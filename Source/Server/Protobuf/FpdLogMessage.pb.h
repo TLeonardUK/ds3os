@@ -43,10 +43,8 @@ class GetItemLog;
 class GetItemLog_Get_item_info_list;
 class ActGestureLog;
 class ActGestureLog_Use_gesture_info_list;
-class LevelUpLog;
 class UseMagicLog;
 class UseMagicLog_Use_magic_info_list;
-class BrokenEquipmentLog;
 class PurchaseItemLog;
 class PurchaseItemLog_Purchase_item_info_list;
 class DropItemLog;
@@ -55,12 +53,14 @@ class LeaveItemLog;
 class LeaveItemLog_Set_item_info_list;
 class SaleItemLog;
 class SaleItemLog_Sale_item_info_list;
-class AccessWarehouseLog;
-class AccessWarehouseLog_Access_warehouse_info_list;
 class StrengthenWeaponLog;
 class StrengthenWeaponLog_Strengthen_weapon_info_list;
+class AccessWarehouseLog;
+class AccessWarehouseLog_Access_warehouse_info_list;
 class RepairEquipmentLog;
 class RepairEquipmentLog_Repair_equipment_info_list;
+class LevelUpLog;
+class BrokenEquipmentLog;
 class EquipMagicLog;
 class ChaneEstusFlaskNumLog;
 class CreateBloodMessageLog;
@@ -1119,87 +1119,6 @@ class ActGestureLog : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class LevelUpLog : public ::google::protobuf::MessageLite {
- public:
-  LevelUpLog();
-  virtual ~LevelUpLog();
-
-  LevelUpLog(const LevelUpLog& from);
-
-  inline LevelUpLog& operator=(const LevelUpLog& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const LevelUpLog& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const LevelUpLog* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(LevelUpLog* other);
-
-  // implements Message ----------------------------------------------
-
-  LevelUpLog* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const LevelUpLog& from);
-  void MergeFrom(const LevelUpLog& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.LevelUpLog)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static LevelUpLog* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class UseMagicLog_Use_magic_info_list : public ::google::protobuf::MessageLite {
  public:
   UseMagicLog_Use_magic_info_list();
@@ -1361,87 +1280,6 @@ class UseMagicLog : public ::google::protobuf::MessageLite {
 
   void InitAsDefaultInstance();
   static UseMagicLog* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class BrokenEquipmentLog : public ::google::protobuf::MessageLite {
- public:
-  BrokenEquipmentLog();
-  virtual ~BrokenEquipmentLog();
-
-  BrokenEquipmentLog(const BrokenEquipmentLog& from);
-
-  inline BrokenEquipmentLog& operator=(const BrokenEquipmentLog& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const BrokenEquipmentLog& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const BrokenEquipmentLog* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(BrokenEquipmentLog* other);
-
-  // implements Message ----------------------------------------------
-
-  BrokenEquipmentLog* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const BrokenEquipmentLog& from);
-  void MergeFrom(const BrokenEquipmentLog& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.BrokenEquipmentLog)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static BrokenEquipmentLog* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2101,170 +1939,6 @@ class SaleItemLog : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class AccessWarehouseLog_Access_warehouse_info_list : public ::google::protobuf::MessageLite {
- public:
-  AccessWarehouseLog_Access_warehouse_info_list();
-  virtual ~AccessWarehouseLog_Access_warehouse_info_list();
-
-  AccessWarehouseLog_Access_warehouse_info_list(const AccessWarehouseLog_Access_warehouse_info_list& from);
-
-  inline AccessWarehouseLog_Access_warehouse_info_list& operator=(const AccessWarehouseLog_Access_warehouse_info_list& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const AccessWarehouseLog_Access_warehouse_info_list& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const AccessWarehouseLog_Access_warehouse_info_list* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(AccessWarehouseLog_Access_warehouse_info_list* other);
-
-  // implements Message ----------------------------------------------
-
-  AccessWarehouseLog_Access_warehouse_info_list* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const AccessWarehouseLog_Access_warehouse_info_list& from);
-  void MergeFrom(const AccessWarehouseLog_Access_warehouse_info_list& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static AccessWarehouseLog_Access_warehouse_info_list* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class AccessWarehouseLog : public ::google::protobuf::MessageLite {
- public:
-  AccessWarehouseLog();
-  virtual ~AccessWarehouseLog();
-
-  AccessWarehouseLog(const AccessWarehouseLog& from);
-
-  inline AccessWarehouseLog& operator=(const AccessWarehouseLog& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const AccessWarehouseLog& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const AccessWarehouseLog* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(AccessWarehouseLog* other);
-
-  // implements Message ----------------------------------------------
-
-  AccessWarehouseLog* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const AccessWarehouseLog& from);
-  void MergeFrom(const AccessWarehouseLog& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  typedef AccessWarehouseLog_Access_warehouse_info_list Access_warehouse_info_list;
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.AccessWarehouseLog)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static AccessWarehouseLog* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class StrengthenWeaponLog_Strengthen_weapon_info_list : public ::google::protobuf::MessageLite {
  public:
   StrengthenWeaponLog_Strengthen_weapon_info_list();
@@ -2429,6 +2103,170 @@ class StrengthenWeaponLog : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
+class AccessWarehouseLog_Access_warehouse_info_list : public ::google::protobuf::MessageLite {
+ public:
+  AccessWarehouseLog_Access_warehouse_info_list();
+  virtual ~AccessWarehouseLog_Access_warehouse_info_list();
+
+  AccessWarehouseLog_Access_warehouse_info_list(const AccessWarehouseLog_Access_warehouse_info_list& from);
+
+  inline AccessWarehouseLog_Access_warehouse_info_list& operator=(const AccessWarehouseLog_Access_warehouse_info_list& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const AccessWarehouseLog_Access_warehouse_info_list& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const AccessWarehouseLog_Access_warehouse_info_list* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(AccessWarehouseLog_Access_warehouse_info_list* other);
+
+  // implements Message ----------------------------------------------
+
+  AccessWarehouseLog_Access_warehouse_info_list* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const AccessWarehouseLog_Access_warehouse_info_list& from);
+  void MergeFrom(const AccessWarehouseLog_Access_warehouse_info_list& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.AccessWarehouseLog.Access_warehouse_info_list)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static AccessWarehouseLog_Access_warehouse_info_list* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class AccessWarehouseLog : public ::google::protobuf::MessageLite {
+ public:
+  AccessWarehouseLog();
+  virtual ~AccessWarehouseLog();
+
+  AccessWarehouseLog(const AccessWarehouseLog& from);
+
+  inline AccessWarehouseLog& operator=(const AccessWarehouseLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const AccessWarehouseLog& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const AccessWarehouseLog* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(AccessWarehouseLog* other);
+
+  // implements Message ----------------------------------------------
+
+  AccessWarehouseLog* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const AccessWarehouseLog& from);
+  void MergeFrom(const AccessWarehouseLog& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef AccessWarehouseLog_Access_warehouse_info_list Access_warehouse_info_list;
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.AccessWarehouseLog)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static AccessWarehouseLog* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class RepairEquipmentLog_Repair_equipment_info_list : public ::google::protobuf::MessageLite {
  public:
   RepairEquipmentLog_Repair_equipment_info_list();
@@ -2590,6 +2428,168 @@ class RepairEquipmentLog : public ::google::protobuf::MessageLite {
 
   void InitAsDefaultInstance();
   static RepairEquipmentLog* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class LevelUpLog : public ::google::protobuf::MessageLite {
+ public:
+  LevelUpLog();
+  virtual ~LevelUpLog();
+
+  LevelUpLog(const LevelUpLog& from);
+
+  inline LevelUpLog& operator=(const LevelUpLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const LevelUpLog& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const LevelUpLog* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(LevelUpLog* other);
+
+  // implements Message ----------------------------------------------
+
+  LevelUpLog* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const LevelUpLog& from);
+  void MergeFrom(const LevelUpLog& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.LevelUpLog)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static LevelUpLog* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class BrokenEquipmentLog : public ::google::protobuf::MessageLite {
+ public:
+  BrokenEquipmentLog();
+  virtual ~BrokenEquipmentLog();
+
+  BrokenEquipmentLog(const BrokenEquipmentLog& from);
+
+  inline BrokenEquipmentLog& operator=(const BrokenEquipmentLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const BrokenEquipmentLog& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const BrokenEquipmentLog* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(BrokenEquipmentLog* other);
+
+  // implements Message ----------------------------------------------
+
+  BrokenEquipmentLog* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const BrokenEquipmentLog& from);
+  void MergeFrom(const BrokenEquipmentLog& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.BrokenEquipmentLog)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static BrokenEquipmentLog* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3672,19 +3672,11 @@ inline void SystemOptionLog::set_allocated_network_settings(::FpdLogMessage::Sys
 
 // -------------------------------------------------------------------
 
-// LevelUpLog
-
-// -------------------------------------------------------------------
-
 // UseMagicLog_Use_magic_info_list
 
 // -------------------------------------------------------------------
 
 // UseMagicLog
-
-// -------------------------------------------------------------------
-
-// BrokenEquipmentLog
 
 // -------------------------------------------------------------------
 
@@ -3720,14 +3712,6 @@ inline void SystemOptionLog::set_allocated_network_settings(::FpdLogMessage::Sys
 
 // -------------------------------------------------------------------
 
-// AccessWarehouseLog_Access_warehouse_info_list
-
-// -------------------------------------------------------------------
-
-// AccessWarehouseLog
-
-// -------------------------------------------------------------------
-
 // StrengthenWeaponLog_Strengthen_weapon_info_list
 
 // -------------------------------------------------------------------
@@ -3736,11 +3720,27 @@ inline void SystemOptionLog::set_allocated_network_settings(::FpdLogMessage::Sys
 
 // -------------------------------------------------------------------
 
+// AccessWarehouseLog_Access_warehouse_info_list
+
+// -------------------------------------------------------------------
+
+// AccessWarehouseLog
+
+// -------------------------------------------------------------------
+
 // RepairEquipmentLog_Repair_equipment_info_list
 
 // -------------------------------------------------------------------
 
 // RepairEquipmentLog
+
+// -------------------------------------------------------------------
+
+// LevelUpLog
+
+// -------------------------------------------------------------------
+
+// BrokenEquipmentLog
 
 // -------------------------------------------------------------------
 
