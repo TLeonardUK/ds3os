@@ -27,6 +27,8 @@
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
 
+#include "Server/GameService/Utils/GameIds.h"
+
 GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     : ServerInstance(OwningServer)
     , ServerRSAKey(InServerRSAKey)

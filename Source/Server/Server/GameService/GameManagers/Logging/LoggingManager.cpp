@@ -22,23 +22,24 @@ LoggingManager::LoggingManager(Server* InServerInstance)
 {
 }
 
-bool LoggingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult LoggingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyProtoBufLog)
     {
         return Handle_RequestNotifyProtoBufLog(Client, Message);
     }
-    return false;
+
+    return MessageHandleResult::Unhandled;
 }
 
-bool LoggingManager::Handle_RequestNotifyProtoBufLog(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult LoggingManager::Handle_RequestNotifyProtoBufLog(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestNotifyProtoBufLog* Request = (Frpg2RequestMessage::RequestNotifyProtoBufLog*)Message.Protobuf.get();
 
     // TODO: Not sure what we want to do with this information really, its not really very useful for us.
     Log("[%s] Recieved protobuf log from client of type 0x%08x", Client->GetName().c_str(), Request->type());
 
-    return false;
+    return MessageHandleResult::Handled;
 }
 
 std::string LoggingManager::GetName()

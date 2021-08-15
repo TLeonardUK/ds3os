@@ -61,6 +61,9 @@
     <Filter Include="Server\GameService\Utils">
       <UniqueIdentifier>{2b02bc3a-41d7-4bfe-b371-e78fb2037f85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Server\Database">
+      <UniqueIdentifier>{c73e71a7-bdc3-4e5b-8b95-5776140a3f78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server\Server.h">
@@ -207,17 +210,23 @@
     <ClInclude Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.h">
       <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
     </ClInclude>
-    <ClInclude Include="Server\GameService\Utils\OnlineAreaId.h">
-      <Filter>Server\GameService\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Server\GameService\Utils\CovenantId.h">
-      <Filter>Server\GameService\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Server\GameService\Utils\ItemId.h">
+    <ClInclude Include="Server\GameService\Utils\GameIds.h">
       <Filter>Server\GameService\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Server\GameService\GameManagers\Matchmaking\SummonSign.h">
       <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\Enum.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\Utils\TeamTypeId.inc">
+      <Filter>Server\GameService\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\PlayerState.h">
+      <Filter>Server\GameService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Database\ServerDatabase.h">
+      <Filter>Server\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +342,9 @@
     <ClCompile Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.cpp">
       <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
     </ClCompile>
+    <ClCompile Include="Server\Database\ServerDatabase.cpp">
+      <Filter>Server\Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.props" />
@@ -340,6 +352,30 @@
     <None Include="vcpkg.json" />
     <None Include="Server\Streams\Frpg2ReliableUdpMessageTypes.inc">
       <Filter>Server\Streams</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\OnlineAreaId.inc">
+      <Filter>Server\GameService\Utils</Filter>
+    </None>
+    <None Include="Core\Utils\EnumDef.inc">
+      <Filter>Core\Utils</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\ItemId.inc">
+      <Filter>Server\GameService\Utils</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\CovenantId.inc">
+      <Filter>Server\GameService\Utils</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\BonfireId.inc">
+      <Filter>Server\GameService\Utils</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\CharacterTypeId.inc">
+      <Filter>Server\GameService\Utils</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\InvasionTypeId.inc">
+      <Filter>Server\GameService\Utils</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\GestureId.inc">
+      <Filter>Server\GameService\Utils</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

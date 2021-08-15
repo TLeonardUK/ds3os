@@ -43,5 +43,6 @@ public:
     virtual bool IsConnected() = 0;
 
     virtual std::string GetName() = 0;
+    virtual void Rename(const std::string& Name) = 0;
 
 };

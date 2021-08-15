@@ -259,6 +259,11 @@ std::string NetConnectionTCP::GetName()
     return Name;
 }
 
+void NetConnectionTCP::Rename(const std::string& InName)
+{
+    Name = InName;
+}
+
 bool NetConnectionTCP::IsConnected()
 {
     int error_code;

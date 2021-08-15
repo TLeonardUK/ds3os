@@ -92,12 +92,22 @@ bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
     const std::vector<std::shared_ptr<GameManager>>& Managers = Service->GetManagers();
     for (auto& Manager : Managers)
     {
-        if (Manager->OnMessageRecieved(this, Message))
+        MessageHandleResult Result = Manager->OnMessageRecieved(this, Message);
+        if (Result == MessageHandleResult::Error)
         {
             return true;
         }
+        else if (Result == MessageHandleResult::Handled)
+        {
+            return false;
+        }
+        else if (Result == MessageHandleResult::Unhandled)
+        {
+            // Continue;
+        }
     }
-    return false;
+
+    return true;
 }
 
 std::string GameClient::GetName()

@@ -221,6 +221,11 @@ std::string NetConnectionUDP::GetName()
     return Name;
 }
 
+void NetConnectionUDP::Rename(const std::string& InName)
+{
+    Name = InName;
+}
+
 bool NetConnectionUDP::IsConnected()
 {
     // No way of telling with UDP, assume yes.

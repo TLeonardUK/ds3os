@@ -204,8 +204,8 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
     Frpg2ReliableUdpFragment Fragment;
     while (RecieveInternal(&Fragment))
     {
-        RecievedFragmentLength += Fragment.Header.total_payload_length;
-        if (RecievedFragmentLength >= Fragment.Header.fragment_length)
+        RecievedFragmentLength += Fragment.Header.fragment_length;
+        if (RecievedFragmentLength >= Fragment.Header.total_payload_length)
         {
             // Compact all payloads together into one combined packet.
             if (Fragments.size() > 0)
@@ -243,7 +243,13 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
             }
 
             RecieveQueue.push_back(Fragment);
+
+            Fragments.clear();
             RecievedFragmentLength = 0;
+        }
+        else
+        {
+            Fragments.push_back(Fragment);
         }
     }
 

@@ -23,12 +23,12 @@ class LoggingManager
 public:    
     LoggingManager(Server* InServerInstance);
 
-    virtual bool OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
+    virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
 
 protected:
-    bool Handle_RequestNotifyProtoBufLog(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestNotifyProtoBufLog(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;

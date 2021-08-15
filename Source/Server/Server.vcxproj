@@ -100,6 +100,7 @@
     <ClInclude Include="Core\Network\NetConnectionUDP.h" />
     <ClInclude Include="Core\Utils\Compression.h" />
     <ClInclude Include="Core\Utils\Endian.h" />
+    <ClInclude Include="Core\Utils\Enum.h" />
     <ClInclude Include="Core\Utils\Event.h" />
     <ClInclude Include="Core\Utils\File.h" />
     <ClInclude Include="Core\Utils\Logging.h" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h" />
     <ClInclude Include="Server\AuthService\AuthClient.h" />
     <ClInclude Include="Server\AuthService\AuthService.h" />
+    <ClInclude Include="Server\Database\ServerDatabase.h" />
     <ClInclude Include="Server\GameService\GameClient.h" />
     <ClInclude Include="Server\GameService\GameManager.h" />
     <ClInclude Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.h" />
@@ -120,9 +122,9 @@
     <ClInclude Include="Server\GameService\GameManagers\Matchmaking\SummonSign.h" />
     <ClInclude Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.h" />
     <ClInclude Include="Server\GameService\GameService.h" />
-    <ClInclude Include="Server\GameService\Utils\CovenantId.h" />
-    <ClInclude Include="Server\GameService\Utils\ItemId.h" />
-    <ClInclude Include="Server\GameService\Utils\OnlineAreaId.h" />
+    <ClInclude Include="Server\GameService\PlayerState.h" />
+    <ClInclude Include="Server\GameService\Utils\GameIds.h" />
+    <ClInclude Include="Server\GameService\Utils\TeamTypeId.inc" />
     <ClInclude Include="Server\LoginService\LoginClient.h" />
     <ClInclude Include="Server\LoginService\LoginService.h" />
     <ClInclude Include="Server\Service.h" />
@@ -161,6 +163,7 @@
     <ClCompile Include="Protobuf\Frpg2RequestMessage.pb.cc" />
     <ClCompile Include="Server\AuthService\AuthClient.cpp" />
     <ClCompile Include="Server\AuthService\AuthService.cpp" />
+    <ClCompile Include="Server\Database\ServerDatabase.cpp" />
     <ClCompile Include="Server\GameService\GameClient.cpp" />
     <ClCompile Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.cpp" />
     <ClCompile Include="Server\GameService\GameManagers\Boot\BootManager.cpp" />
@@ -181,8 +184,16 @@
     <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Core\Utils\EnumDef.inc" />
     <None Include="Directory.Build.Cpp.props" />
     <None Include="Directory.Build.props" />
+    <None Include="Server\GameService\Utils\BonfireId.inc" />
+    <None Include="Server\GameService\Utils\CharacterTypeId.inc" />
+    <None Include="Server\GameService\Utils\CovenantId.inc" />
+    <None Include="Server\GameService\Utils\GestureId.inc" />
+    <None Include="Server\GameService\Utils\InvasionTypeId.inc" />
+    <None Include="Server\GameService\Utils\ItemId.inc" />
+    <None Include="Server\GameService\Utils\OnlineAreaId.inc" />
     <None Include="Server\Streams\Frpg2ReliableUdpMessageTypes.inc" />
     <None Include="vcpkg.json" />
   </ItemGroup>

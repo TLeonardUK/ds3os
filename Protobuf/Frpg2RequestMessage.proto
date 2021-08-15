@@ -59,7 +59,7 @@ message GetServiceStatus {
     required int64 id = 1;
     required string steam_id = 2;
     optional string unknown_1 = 3;
-    required int64 network_protocol = 4;
+    required int64 app_version = 4;     // 1.15 = 114 (zero indexed)
 }
 
 // Same as above but probably has an xbox one id rather than steam_id.
@@ -74,7 +74,7 @@ message GetServiceStatusResponse {
     required int64 id = 1;
     required string steam_id = 2;
     required int64 unknown_1 = 3;
-    required int64 network_protocol = 4;
+    required int64 app_version = 4;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ message RequestWaitForUserLogin {
 
 message RequestWaitForUserLoginResponse {
     required string steam_id = 1;
-    required uint32 unknown_1 = 2; // 6872049
+    required uint32 player_id = 2; 
 }
 
 message PlayerInfoUploadConfigPushMessageList {
@@ -1139,6 +1139,10 @@ message RejectQuickMatchMessage {
 }
 
 message RemoveQuickMatchMessage {
+    // Unknown
+}
+
+message JoinQuickMatchMessage {
     // Unknown
 }
 

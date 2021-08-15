@@ -8,6 +8,7 @@
  */
 
 #include "Server/Server.h"
+#include "Server/Database/ServerDatabase.h"
 #include "Server/Service.h"
 #include "Server/LoginService/LoginService.h"
 #include "Server/AuthService/AuthService.h"
@@ -32,6 +33,7 @@ Server::Server()
     PublicKeyPath = SavedPath / std::filesystem::path("public.key");
     Ds3osconfigPath = SavedPath / std::filesystem::path("server.ds3osconfig");
     ConfigPath = SavedPath / std::filesystem::path("config.json");
+    DatabasePath = SavedPath / std::filesystem::path("database.sqlite");
 
     // Register for Ctrl+C notifications, its the only way the server shuts down right now.
     CtrlSignalHandle = PlatformEvents::OnCtrlSignal.Register([=]() {
@@ -124,6 +126,13 @@ bool Server::Init()
         return false;
     }
 
+    // Open connection to our database.
+    if (!Database.Open(DatabasePath))
+    {
+        Error("Failed to open database at '%s'.", DatabasePath.string().c_str());
+        return false;
+    }
+
     // Initialize all our services.
     for (auto& Service : Services)
     {
@@ -148,6 +157,12 @@ bool Server::Term()
             Error("Failed to terminate '%s' service.", Service->GetName().c_str());
             return false;
         }
+    }
+
+    if (!Database.Close())
+    {
+        Error("Failed to close database.");
+        return false;
     }
 
     return true;

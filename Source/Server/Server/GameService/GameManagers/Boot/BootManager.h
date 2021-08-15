@@ -23,13 +23,13 @@ class BootManager
 public:    
     BootManager(Server* InServerInstance);
 
-    virtual bool OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
+    virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
 
 protected:
-    bool Handle_RequestWaitForUserLogin(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    bool Handle_RequestGetAnnounceMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestWaitForUserLogin(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestGetAnnounceMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;

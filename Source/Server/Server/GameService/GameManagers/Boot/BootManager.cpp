@@ -22,7 +22,7 @@ BootManager::BootManager(Server* InServerInstance)
 {
 }
 
-bool BootManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult BootManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestWaitForUserLogin)
     {
@@ -32,22 +32,34 @@ bool BootManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMe
     {
         return Handle_RequestGetAnnounceMessageList(Client, Message);
     }
-    return false;
+
+    return MessageHandleResult::Unhandled;
 }
 
-bool BootManager::Handle_RequestWaitForUserLogin(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    PlayerState& State = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestWaitForUserLogin* Request = (Frpg2RequestMessage::RequestWaitForUserLogin*)Message.Protobuf.get();
-    Client->SteamId = Request->steam_id();
+    State.SteamId = Request->steam_id();
 
+    // Resolve steam id to player id. If no player recorded with it, create a new one.
+    if (!ServerInstance->GetDatabase().FindOrCreatePlayer(State.SteamId, State.PlayerId))
+    {
+        Warning("[%s] Failed to find or create player with steam id '%s' in database.", Client->GetName().c_str(), State.SteamId.c_str());
+        return MessageHandleResult::Error;
+    }
+
+    Log("[%s] Steam id '%s' has logged in as player %i.", Client->GetName().c_str(), State.SteamId.c_str(), State.PlayerId);
+
+    // Send back response with our new player id.
     Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;
-    Response.set_steam_id(Client->SteamId);
-    Response.set_unknown_1(6872049); // TODO: Find out what this value is meant to be.
-
+    Response.set_steam_id(State.SteamId);
+    Response.set_player_id(State.PlayerId); 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestWaitForUserLoginResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestWaitForUserLoginResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
     // This happens right after RequestWaitForUserLoginResponse.
@@ -82,14 +94,14 @@ bool BootManager::Handle_RequestWaitForUserLogin(GameClient* Client, const Frpg2
 
     if (!Client->MessageStream->Send(&UploadInfoPushMessage))
     {
-        Warning("[%s] Disconnecting client as failed to send UploadInfoPushMessage response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send UploadInfoPushMessage response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
-    return false;
+    return MessageHandleResult::Handled;
 }
 
-bool BootManager::Handle_RequestGetAnnounceMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestGetAnnounceMessageList* Request = (Frpg2RequestMessage::RequestGetAnnounceMessageList*)Message.Protobuf.get();
     Ensure(Request->max_entries() == 100);
@@ -122,11 +134,11 @@ bool BootManager::Handle_RequestGetAnnounceMessageList(GameClient* Client, const
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestWaitForUserLoginResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestWaitForUserLoginResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
-    return false;
+    return MessageHandleResult::Handled;
 }
 
 std::string BootManager::GetName()

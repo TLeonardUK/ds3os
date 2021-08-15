@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "Server/Database/ServerDatabase.h"
+
 #include "Platform/Platform.h"
 
 #include <memory>
@@ -35,6 +37,7 @@ public:
     void RunUntilQuit();
 
     const RuntimeConfig& GetConfig() { return Config; }
+    ServerDatabase& GetDatabase() { return Database; }
 
     template <typename T>
     std::shared_ptr<T> GetService()
@@ -60,11 +63,14 @@ private:
 
     std::vector<std::shared_ptr<Service>> Services;
 
+    ServerDatabase Database;
+
     std::filesystem::path SavedPath;
     std::filesystem::path ConfigPath;
     std::filesystem::path PrivateKeyPath;
     std::filesystem::path PublicKeyPath;
     std::filesystem::path Ds3osconfigPath;
+    std::filesystem::path DatabasePath;
 
     RSAKeyPair PrimaryKeyPair;
 

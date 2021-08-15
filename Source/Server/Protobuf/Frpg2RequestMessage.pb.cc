@@ -232,6 +232,7 @@ void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto() {
   delete AcceptQuickMatchMessage::default_instance_;
   delete RejectQuickMatchMessage::default_instance_;
   delete RemoveQuickMatchMessage::default_instance_;
+  delete JoinQuickMatchMessage::default_instance_;
   delete QuickMatchRank::default_instance_;
   delete RequestSearchQuickMatch::default_instance_;
   delete RequestSearchQuickMatch_Map_id_list::default_instance_;
@@ -490,6 +491,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   AcceptQuickMatchMessage::default_instance_ = new AcceptQuickMatchMessage();
   RejectQuickMatchMessage::default_instance_ = new RejectQuickMatchMessage();
   RemoveQuickMatchMessage::default_instance_ = new RemoveQuickMatchMessage();
+  JoinQuickMatchMessage::default_instance_ = new JoinQuickMatchMessage();
   QuickMatchRank::default_instance_ = new QuickMatchRank();
   RequestSearchQuickMatch::default_instance_ = new RequestSearchQuickMatch();
   RequestSearchQuickMatch_Map_id_list::default_instance_ = new RequestSearchQuickMatch_Map_id_list();
@@ -733,6 +735,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   AcceptQuickMatchMessage::default_instance_->InitAsDefaultInstance();
   RejectQuickMatchMessage::default_instance_->InitAsDefaultInstance();
   RemoveQuickMatchMessage::default_instance_->InitAsDefaultInstance();
+  JoinQuickMatchMessage::default_instance_->InitAsDefaultInstance();
   QuickMatchRank::default_instance_->InitAsDefaultInstance();
   RequestSearchQuickMatch::default_instance_->InitAsDefaultInstance();
   RequestSearchQuickMatch_Map_id_list::default_instance_->InitAsDefaultInstance();
@@ -1808,7 +1811,7 @@ void RequestHandshakeResponse::Swap(RequestHandshakeResponse* other) {
 const int GetServiceStatus::kIdFieldNumber;
 const int GetServiceStatus::kSteamIdFieldNumber;
 const int GetServiceStatus::kUnknown1FieldNumber;
-const int GetServiceStatus::kNetworkProtocolFieldNumber;
+const int GetServiceStatus::kAppVersionFieldNumber;
 #endif  // !_MSC_VER
 
 GetServiceStatus::GetServiceStatus()
@@ -1833,7 +1836,7 @@ void GetServiceStatus::SharedCtor() {
   id_ = GOOGLE_LONGLONG(0);
   steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   unknown_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  network_protocol_ = GOOGLE_LONGLONG(0);
+  app_version_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1890,7 +1893,7 @@ void GetServiceStatus::Clear() {
         unknown_1_->clear();
       }
     }
-    network_protocol_ = GOOGLE_LONGLONG(0);
+    app_version_ = GOOGLE_LONGLONG(0);
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -1946,18 +1949,18 @@ bool GetServiceStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_network_protocol;
+        if (input->ExpectTag(32)) goto parse_app_version;
         break;
       }
 
-      // required int64 network_protocol = 4;
+      // required int64 app_version = 4;
       case 4: {
         if (tag == 32) {
-         parse_network_protocol:
+         parse_app_version:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &network_protocol_)));
-          set_has_network_protocol();
+                 input, &app_version_)));
+          set_has_app_version();
         } else {
           goto handle_unusual;
         }
@@ -2007,9 +2010,9 @@ void GetServiceStatus::SerializeWithCachedSizes(
       3, this->unknown_1(), output);
   }
 
-  // required int64 network_protocol = 4;
-  if (has_network_protocol()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->network_protocol(), output);
+  // required int64 app_version = 4;
+  if (has_app_version()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->app_version(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -2042,11 +2045,11 @@ int GetServiceStatus::ByteSize() const {
           this->unknown_1());
     }
 
-    // required int64 network_protocol = 4;
-    if (has_network_protocol()) {
+    // required int64 app_version = 4;
+    if (has_app_version()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->network_protocol());
+          this->app_version());
     }
 
   }
@@ -2075,8 +2078,8 @@ void GetServiceStatus::MergeFrom(const GetServiceStatus& from) {
     if (from.has_unknown_1()) {
       set_unknown_1(from.unknown_1());
     }
-    if (from.has_network_protocol()) {
-      set_network_protocol(from.network_protocol());
+    if (from.has_app_version()) {
+      set_app_version(from.app_version());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -2099,7 +2102,7 @@ void GetServiceStatus::Swap(GetServiceStatus* other) {
     std::swap(id_, other->id_);
     std::swap(steam_id_, other->steam_id_);
     std::swap(unknown_1_, other->unknown_1_);
-    std::swap(network_protocol_, other->network_protocol_);
+    std::swap(app_version_, other->app_version_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -2265,7 +2268,7 @@ void GetServiceStatusForXboxOne::Swap(GetServiceStatusForXboxOne* other) {
 const int GetServiceStatusResponse::kIdFieldNumber;
 const int GetServiceStatusResponse::kSteamIdFieldNumber;
 const int GetServiceStatusResponse::kUnknown1FieldNumber;
-const int GetServiceStatusResponse::kNetworkProtocolFieldNumber;
+const int GetServiceStatusResponse::kAppVersionFieldNumber;
 #endif  // !_MSC_VER
 
 GetServiceStatusResponse::GetServiceStatusResponse()
@@ -2290,7 +2293,7 @@ void GetServiceStatusResponse::SharedCtor() {
   id_ = GOOGLE_LONGLONG(0);
   steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   unknown_1_ = GOOGLE_LONGLONG(0);
-  network_protocol_ = GOOGLE_LONGLONG(0);
+  app_version_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2343,7 +2346,7 @@ void GetServiceStatusResponse::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 15) {
-    ZR_(unknown_1_, network_protocol_);
+    ZR_(unknown_1_, app_version_);
     id_ = GOOGLE_LONGLONG(0);
     if (has_steam_id()) {
       if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -2411,18 +2414,18 @@ bool GetServiceStatusResponse::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_network_protocol;
+        if (input->ExpectTag(32)) goto parse_app_version;
         break;
       }
 
-      // required int64 network_protocol = 4;
+      // required int64 app_version = 4;
       case 4: {
         if (tag == 32) {
-         parse_network_protocol:
+         parse_app_version:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &network_protocol_)));
-          set_has_network_protocol();
+                 input, &app_version_)));
+          set_has_app_version();
         } else {
           goto handle_unusual;
         }
@@ -2471,9 +2474,9 @@ void GetServiceStatusResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->unknown_1(), output);
   }
 
-  // required int64 network_protocol = 4;
-  if (has_network_protocol()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->network_protocol(), output);
+  // required int64 app_version = 4;
+  if (has_app_version()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->app_version(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -2506,11 +2509,11 @@ int GetServiceStatusResponse::ByteSize() const {
           this->unknown_1());
     }
 
-    // required int64 network_protocol = 4;
-    if (has_network_protocol()) {
+    // required int64 app_version = 4;
+    if (has_app_version()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->network_protocol());
+          this->app_version());
     }
 
   }
@@ -2539,8 +2542,8 @@ void GetServiceStatusResponse::MergeFrom(const GetServiceStatusResponse& from) {
     if (from.has_unknown_1()) {
       set_unknown_1(from.unknown_1());
     }
-    if (from.has_network_protocol()) {
-      set_network_protocol(from.network_protocol());
+    if (from.has_app_version()) {
+      set_app_version(from.app_version());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -2563,7 +2566,7 @@ void GetServiceStatusResponse::Swap(GetServiceStatusResponse* other) {
     std::swap(id_, other->id_);
     std::swap(steam_id_, other->steam_id_);
     std::swap(unknown_1_, other->unknown_1_);
-    std::swap(network_protocol_, other->network_protocol_);
+    std::swap(app_version_, other->app_version_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -2927,7 +2930,7 @@ void RequestWaitForUserLogin::Swap(RequestWaitForUserLogin* other) {
 
 #ifndef _MSC_VER
 const int RequestWaitForUserLoginResponse::kSteamIdFieldNumber;
-const int RequestWaitForUserLoginResponse::kUnknown1FieldNumber;
+const int RequestWaitForUserLoginResponse::kPlayerIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestWaitForUserLoginResponse::RequestWaitForUserLoginResponse()
@@ -2950,7 +2953,7 @@ void RequestWaitForUserLoginResponse::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  unknown_1_ = 0u;
+  player_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2998,7 +3001,7 @@ void RequestWaitForUserLoginResponse::Clear() {
         steam_id_->clear();
       }
     }
-    unknown_1_ = 0u;
+    player_id_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -3026,18 +3029,18 @@ bool RequestWaitForUserLoginResponse::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_1;
+        if (input->ExpectTag(16)) goto parse_player_id;
         break;
       }
 
-      // required uint32 unknown_1 = 2;
+      // required uint32 player_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_1:
+         parse_player_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
@@ -3076,9 +3079,9 @@ void RequestWaitForUserLoginResponse::SerializeWithCachedSizes(
       1, this->steam_id(), output);
   }
 
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->player_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3097,11 +3100,11 @@ int RequestWaitForUserLoginResponse::ByteSize() const {
           this->steam_id());
     }
 
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 player_id = 2;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->player_id());
     }
 
   }
@@ -3124,8 +3127,8 @@ void RequestWaitForUserLoginResponse::MergeFrom(const RequestWaitForUserLoginRes
     if (from.has_steam_id()) {
       set_steam_id(from.steam_id());
     }
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -3146,7 +3149,7 @@ bool RequestWaitForUserLoginResponse::IsInitialized() const {
 void RequestWaitForUserLoginResponse::Swap(RequestWaitForUserLoginResponse* other) {
   if (other != this) {
     std::swap(steam_id_, other->steam_id_);
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(player_id_, other->player_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -39984,6 +39987,154 @@ void RemoveQuickMatchMessage::Swap(RemoveQuickMatchMessage* other) {
 
 ::std::string RemoveQuickMatchMessage::GetTypeName() const {
   return "Frpg2RequestMessage.RemoveQuickMatchMessage";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+JoinQuickMatchMessage::JoinQuickMatchMessage()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.JoinQuickMatchMessage)
+}
+
+void JoinQuickMatchMessage::InitAsDefaultInstance() {
+}
+
+JoinQuickMatchMessage::JoinQuickMatchMessage(const JoinQuickMatchMessage& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.JoinQuickMatchMessage)
+}
+
+void JoinQuickMatchMessage::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+JoinQuickMatchMessage::~JoinQuickMatchMessage() {
+  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.JoinQuickMatchMessage)
+  SharedDtor();
+}
+
+void JoinQuickMatchMessage::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void JoinQuickMatchMessage::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const JoinQuickMatchMessage& JoinQuickMatchMessage::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+JoinQuickMatchMessage* JoinQuickMatchMessage::default_instance_ = NULL;
+
+JoinQuickMatchMessage* JoinQuickMatchMessage::New() const {
+  return new JoinQuickMatchMessage;
+}
+
+void JoinQuickMatchMessage::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool JoinQuickMatchMessage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.JoinQuickMatchMessage)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.JoinQuickMatchMessage)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.JoinQuickMatchMessage)
+  return false;
+#undef DO_
+}
+
+void JoinQuickMatchMessage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.JoinQuickMatchMessage)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.JoinQuickMatchMessage)
+}
+
+int JoinQuickMatchMessage::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void JoinQuickMatchMessage::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const JoinQuickMatchMessage*>(&from));
+}
+
+void JoinQuickMatchMessage::MergeFrom(const JoinQuickMatchMessage& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void JoinQuickMatchMessage::CopyFrom(const JoinQuickMatchMessage& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool JoinQuickMatchMessage::IsInitialized() const {
+
+  return true;
+}
+
+void JoinQuickMatchMessage::Swap(JoinQuickMatchMessage* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string JoinQuickMatchMessage::GetTypeName() const {
+  return "Frpg2RequestMessage.JoinQuickMatchMessage";
 }
 
 

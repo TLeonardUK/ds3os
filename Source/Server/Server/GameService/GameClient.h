@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "Server/GameService/PlayerState.h"
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -32,11 +34,12 @@ public:
 
     std::string GetName();
 
+    PlayerState& GetPlayerState() { return State; }
+
 public:
 
     std::shared_ptr<NetConnection> Connection;
     std::shared_ptr<Frpg2ReliableUdpMessageStream> MessageStream;
-    std::string SteamId;
 
 protected:
 
@@ -52,5 +55,7 @@ private:
     bool IsDisconnecting = false;
 
     double LastMessageRecievedTime = 0.0;
+
+    PlayerState State;
 
 };

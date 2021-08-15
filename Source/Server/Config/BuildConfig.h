@@ -32,4 +32,8 @@ public:
     // packets beyond this will result in disconnect.
     inline static const int MAX_SEND_QUEUE_SIZE = 256 * 1024;
 
+    // What application version we support (this is the app version shown on the menu without the dot and -1).
+    // So 1.15 = 114
+    inline static const int APP_VERSION = 144;
+
 };

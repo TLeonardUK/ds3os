@@ -22,25 +22,39 @@ DEFINE_MESSAGE         (0x0320, PlayerInfoUploadConfigPushMessage,  PlayerInfoUp
 DEFINE_REQUEST_RESPONSE(0x0386, RequestWaitForUserLogin,            RequestWaitForUserLogin,            RequestWaitForUserLoginResponse)
 DEFINE_REQUEST_RESPONSE(0x03C6, RequestGetAnnounceMessageList,      RequestGetAnnounceMessageList,      RequestGetAnnounceMessageListResponse)
 
+// Can't find registration in code.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestCheckLogin,                  RequestCheckLogin,                  RequestCheckLoginResponse)
+
+// Can't find registration in code.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestGetPlayerConnectGameServer,  RequestGetPlayerConnectGameServer,  RequestGetPlayerConnectGameServerResponse)
+
+// Can't find registration in code.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestGetServerConnectTime,        RequestGetServerConnectTime,        RequestGetServerConnectTimeResponse)
+
+// Code for registration seems to be ofuscated.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestGetConnectionCount,          RequestGetConnectionCount,          RequestGetConnectionCountResponse)
+
+// Can't find registration in code.
 //DEFINE_MESSAGE         (0x,   RequestSendMessageToPushClient,     RequestSendMessageToPushClient)
+// 
+// Can't find registration in code.
 //DEFINE_MESSAGE         (0x,   RequestGetServerSidePlayerStatus,   RequestGetServerSidePlayerStatus)
+// 
+// Can't find registration in code.
 //DEFINE_MESSAGE         (0x,   RequestDisconnectUser,              RequestDisconnectUser)
+// 
+// Can't find registration in code.
 //DEFINE_MESSAGE         (0x,   RequestDisconnectAllUser,           RequestDisconnectAllUser)
 
 // -----------------------------------------------------------------------------------------------
 // Player Data
 // -----------------------------------------------------------------------------------------------
 DEFINE_REQUEST_RESPONSE(0x0394, RequestUpdatePlayerCharacter,       RequestUpdatePlayerCharacter,       RequestUpdatePlayerCharacterResponse)
+DEFINE_REQUEST_RESPONSE(0x0395, RequestGetPlayerCharacter,          RequestGetPlayerCharacter,          RequestGetPlayerCharacterResponse)
+DEFINE_REQUEST_RESPONSE(0x039F, RequestGetLoginPlayerCharacter,     RequestGetLoginPlayerCharacter,     RequestGetLoginPlayerCharacterResponse)
+DEFINE_REQUEST_RESPONSE(0x03A1, RequestGetPlayerCharacterList,      RequestGetPlayerCharacterList,      RequestGetPlayerCharacterListResponse)
 DEFINE_REQUEST_RESPONSE(0x03A2, RequestUpdateLoginPlayerCharacter,  RequestUpdateLoginPlayerCharacter,  RequestUpdateLoginPlayerCharacterResponse)
 DEFINE_REQUEST_RESPONSE(0x03A4, RequestUpdatePlayerStatus,          RequestUpdatePlayerStatus,          RequestUpdatePlayerStatusResponse)
-
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetPlayerCharacter,          RequestGetPlayerCharacter,          RequestGetPlayerCharacterResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetLoginPlayerCharacter,     RequestGetLoginPlayerCharacter,     RequestGetLoginPlayerCharacterResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetPlayerCharacterList,      RequestGetPlayerCharacterList,      RequestGetPlayerCharacterListResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Blood Messages (user left messages)
@@ -48,35 +62,34 @@ DEFINE_REQUEST_RESPONSE(0x03A4, RequestUpdatePlayerStatus,          RequestUpdat
 DEFINE_REQUEST_RESPONSE(0x0397, RequestCreateBloodMessage,          RequestCreateBloodMessage,          RequestCreateBloodMessageResponse)
 DEFINE_REQUEST_RESPONSE(0x0398, RequestRemoveBloodMessage,          RequestRemoveBloodMessage,          RequestRemoveBloodMessageResponse)
 DEFINE_REQUEST_RESPONSE(0x0399, RequestReentryBloodMessage,         RequestReentryBloodMessage,         RequestReentryBloodMessageResponse)
+DEFINE_REQUEST_RESPONSE(0x039A, RequestGetBloodMessageList,         RequestGetBloodMessageList,         RequestGetBloodMessageListResponse)
 DEFINE_REQUEST_RESPONSE(0x039B, RequestEvaluateBloodMessage,        RequestEvaluateBloodMessage,        RequestEvaluateBloodMessageResponse)
 DEFINE_REQUEST_RESPONSE(0x039C, RequestGetBloodMessageEvaluation,   RequestGetBloodMessageEvaluation,   RequestGetBloodMessageEvaluationResponse)
-DEFINE_REQUEST_RESPONSE(0x03D8, RequestGetBloodMessageList,         RequestGetBloodMessageList,         RequestGetBloodMessageListResponse)
+DEFINE_REQUEST_RESPONSE(0x03DA, RequestReCreateBloodMessageList,    RequestReCreateBloodMessageList,    RequestReCreateBloodMessageListResponse)
 
-//DEFINE_REQUEST_RESPONSE(0x,   RequestReCreateBloodMessageList,    RequestReCreateBloodMessageList,    RequestReCreateBloodMessageListResponse)
+// Can't find registration in code.
+//DEFINE_MESSAGE       (0x,     PushRequestEvaluateBloodMessage,    PushRequestEvaluateBloodMessage)
 
 // -----------------------------------------------------------------------------------------------
 // Blood stains (blood puddles with ghosts)
 // -----------------------------------------------------------------------------------------------
 DEFINE_MESSAGE         (0x0391, RequestCreateBloodstain,            RequestCreateBloodstain)
-DEFINE_REQUEST_RESPONSE(0x039A, RequestGetBloodstainList,           RequestGetBloodstainList,           RequestGetBloodstainListResponse)
-
-//DEFINE_MESSAGE       (0x,     PushRequestEvaluateBloodMessage,    PushRequestEvaluateBloodMessage)
+DEFINE_REQUEST_RESPONSE(0x0392, RequestGetBloodstainList,           RequestGetBloodstainList,           RequestGetBloodstainListResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Summon Signs
 // -----------------------------------------------------------------------------------------------
 DEFINE_REQUEST_RESPONSE(0x0456, RequestCreateSign,                  RequestCreateSign,                  RequestCreateSignResponse)
 DEFINE_REQUEST_RESPONSE(0x0457, RequestUpdateSign,                  RequestUpdateSign,                  RequestUpdateSignResponse)
+DEFINE_REQUEST_RESPONSE(0x0458, RequestRemoveSign,                  RequestRemoveSign,                  RequestRemoveSignResponse)
 DEFINE_REQUEST_RESPONSE(0x0459, RequestGetSignList,                 RequestGetSignList,                 RequestGetSignListResponse)
-DEFINE_REQUEST_RESPONSE(0x03D5, RequestRemoveSign,                  RequestRemoveSign,                  RequestRemoveSignResponse)
+DEFINE_REQUEST_RESPONSE(0x045A, RequestSummonSign,                  RequestSummonSign,                  RequestSummonSignResponse)
+DEFINE_REQUEST_RESPONSE(0x045B, RequestRejectSign,                  RequestRejectSign,                  RequestRejectSignResponse)
 DEFINE_REQUEST_RESPONSE(0x03D9, RequestGetRightMatchingArea,        RequestGetRightMatchingArea,        RequestGetRightMatchingAreaResponse)
 
-//DEFINE_REQUEST_RESPONSE(0x,   RequestSummonSign,                  RequestSummonSign,                  RequestSummonSignResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestRejectSign,                  RequestRejectSign,                  RequestRejectSignResponse)
-
-//DEFINE_MESSAGE         (0x,   PushRequestRemoveSign,              PushRequestRemoveSign)
-//DEFINE_MESSAGE         (0x,   PushRequestSummonSign,              PushRequestSummonSign)
-//DEFINE_MESSAGE         (0x,   PushRequestRejectSign,              PushRequestRejectSign)
+DEFINE_MESSAGE         (0x033D, PushRequestRemoveSign,              PushRequestRemoveSign)
+DEFINE_MESSAGE         (0x033E, PushRequestSummonSign,              PushRequestSummonSign)
+DEFINE_MESSAGE         (0x033F, PushRequestRejectSign,              PushRequestRejectSign)
 
 // -----------------------------------------------------------------------------------------------
 // Ghosts
@@ -89,6 +102,7 @@ DEFINE_REQUEST_RESPONSE(0x039E, RequestGetGhostDataList,            RequestGetGh
 // Logging
 // -----------------------------------------------------------------------------------------------
 DEFINE_MESSAGE         (0x03CD, RequestNotifyKillEnemy,             RequestNotifyKillEnemy)
+DEFINE_MESSAGE         (0x03CF, RequestNotifyDisconnectSession,     RequestNotifyDisconnectSession)
 DEFINE_MESSAGE         (0x03D0, RequestNotifyRegisterCharacter,     RequestNotifyRegisterCharacter)
 DEFINE_MESSAGE         (0x03D1, RequestNotifyDie,                   RequestNotifyDie)
 DEFINE_MESSAGE         (0x03D2, RequestNotifyKillBoss,              RequestNotifyKillBoss)
@@ -97,101 +111,122 @@ DEFINE_MESSAGE         (0x03D4, RequestNotifyLeaveMultiplay,        RequestNotif
 DEFINE_MESSAGE         (0x03D6, RequestNotifySummonSignResult,      RequestNotifySummonSignResult)
 DEFINE_MESSAGE         (0x03D8, RequestNotifyProtoBufLog,           RequestNotifyProtoBufLog)
 
-
+// Code for registration seems to be ofuscated.
 //DEFINE_MESSAGE       (0x,     RequestNotifyCreateSignResult,      RequestNotifyCreateSignResult)
+// 
+// Code for registration seems to be ofuscated.
 //DEFINE_MESSAGE       (0x,     RequestNotifyBreakInResult,         RequestNotifyBreakInResult)
-//DEFINE_MESSAGE       (0x,     RequestNotifyDisconnectSession,     RequestNotifyDisconnectSession)
-
-// -----------------------------------------------------------------------------------------------
-// Multiplayer
-// -----------------------------------------------------------------------------------------------
-DEFINE_REQUEST_RESPONSE(0x0320, RequestSendMessageToPlayers,        RequestSendMessageToPlayers,        RequestSendMessageToPlayersResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Ranking
 // -----------------------------------------------------------------------------------------------
-//DEFINE_REQUEST_RESPONSE(0x,   RequestRegisterRankingData,         RequestRegisterRankingData,         RequestRegisterRankingDataResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetRankingData,              RequestGetRankingData,              RequestGetRankingDataResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetCharacterRankingData,     RequestGetCharacterRankingData,     RequestGetCharacterRankingDataResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestCountRankingData,            RequestCountRankingData,            RequestCountRankingDataResponse)
+DEFINE_REQUEST_RESPONSE(0x03E8, RequestRegisterRankingData,         RequestRegisterRankingData,         RequestRegisterRankingDataResponse)
+DEFINE_REQUEST_RESPONSE(0x03E9, RequestGetRankingData,              RequestGetRankingData,              RequestGetRankingDataResponse)
+DEFINE_REQUEST_RESPONSE(0x03EA, RequestGetCharacterRankingData,     RequestGetCharacterRankingData,     RequestGetCharacterRankingDataResponse)
+DEFINE_REQUEST_RESPONSE(0x03EB, RequestCountRankingData,            RequestCountRankingData,            RequestCountRankingDataResponse)
+
+// Can't find registration in code.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestGetCurrentRank,              RequestGetCurrentRank,              RequestGetCurrentRankResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Quick Match
 // -----------------------------------------------------------------------------------------------
-//DEFINE_MESSAGE         (0x, PushRequestJoinQuickMatch,            PushRequestJoinQuickMatch)
-//DEFINE_MESSAGE         (0x, PushRequestAcceptQuickMatch,          PushRequestAcceptQuickMatch)
-//DEFINE_MESSAGE         (0x, PushRequestRejectQuickMatch,          PushRequestRejectQuickMatch)
 
-//DEFINE_REQUEST_RESPONSE(0x,   RequestSearchQuickMatch,            RequestSearchQuickMatch,            RequestSearchQuickMatchResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestRegisterQuickMatch,          RequestRegisterQuickMatch,          RequestRegisterQuickMatchResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestUnregisterQuickMatch,        RequestUnregisterQuickMatch,        RequestUnregisterQuickMatchResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestUpdateQuickMatch,            RequestUpdateQuickMatch,            RequestUpdateQuickMatchResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestJoinQuickMatch,              RequestJoinQuickMatch,              RequestJoinQuickMatchResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestAcceptQuickMatch,            RequestAcceptQuickMatch,            RequestAcceptQuickMatchResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestRejectQuickMatch,            RequestRejectQuickMatch,            RequestRejectQuickMatchResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestSendQuickMatchStart,         RequestSendQuickMatchStart,         RequestSendQuickMatchStartResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestSendQuickMatchResult,        RequestSendQuickMatchResult,        RequestSendQuickMatchResultResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestPushSendQuickMatchStart,     RequestPushSendQuickMatchStart,     RequestPushSendQuickMatchStartResponse)
+// Looking in the code all the following match this: 0x0340,  0x0343, 0x0346,  0x0349,  0x034c,  0x034f,  0x0352,  0x0355 - We will only use one though.
+DEFINE_MESSAGE         (0x0340,   PushRequestJoinQuickMatch,        PushRequestJoinQuickMatch)
+// Looking in the code all the following match this: 0x0341, 0x0344, 0x0347, 0x034a, 0x034d, 0x0350, 0x0353, 0x0356 - We will only use one though.
+DEFINE_MESSAGE         (0x0341,   PushRequestAcceptQuickMatch,      PushRequestAcceptQuickMatch)
+// Looking in the code all the following match this: 0x0342, 0x0345, 0x0348, 0x034b, 0x034e, 0x0351, 0x0354, 0x0357 - We will only use one though.
+DEFINE_MESSAGE         (0x0342,   PushRequestRejectQuickMatch,      PushRequestRejectQuickMatch)
+
+DEFINE_REQUEST_RESPONSE(0x044C,   RequestSearchQuickMatch,          RequestSearchQuickMatch,            RequestSearchQuickMatchResponse)
+DEFINE_REQUEST_RESPONSE(0x044D,   RequestUnregisterQuickMatch,      RequestUnregisterQuickMatch,        RequestUnregisterQuickMatchResponse)
+DEFINE_REQUEST_RESPONSE(0x044E,   RequestUpdateQuickMatch,          RequestUpdateQuickMatch,            RequestUpdateQuickMatchResponse)
+DEFINE_REQUEST_RESPONSE(0x044F,   RequestJoinQuickMatch,            RequestJoinQuickMatch,              RequestJoinQuickMatchResponse)
+DEFINE_REQUEST_RESPONSE(0x0450,   RequestAcceptQuickMatch,          RequestAcceptQuickMatch,            RequestAcceptQuickMatchResponse)
+DEFINE_REQUEST_RESPONSE(0x0451,   RequestRejectQuickMatch,          RequestRejectQuickMatch,            RequestRejectQuickMatchResponse)
+DEFINE_MESSAGE         (0x0452,   RequestRegisterQuickMatch,        RequestRegisterQuickMatch)
+DEFINE_MESSAGE         (0x0454,   RequestSendQuickMatchStart,       RequestSendQuickMatchStart)
+DEFINE_REQUEST_RESPONSE(0x0455,   RequestSendQuickMatchResult,      RequestSendQuickMatchResult,        RequestSendQuickMatchResultResponse)
+
+// Can't find registration in code.
+//DEFINE_REQUEST_RESPONSE(0x,     RequestPushSendQuickMatchStart,   RequestPushSendQuickMatchStart,     RequestPushSendQuickMatchStartResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Archedragon Peak Bell
 // -----------------------------------------------------------------------------------------------
-//DEFINE_MESSAGE         (0x,   PushRequestNotifyRingBell,          PushRequestNotifyRingBell)
 
-//DEFINE_REQUEST_RESPONSE(0x,   RequestNotifyRingBell,              RequestNotifyRingBell,              RequestNotifyRingBellResponse)
+// Can't find registration in code.
+//DEFINE_MESSAGE         (0x,     PushRequestNotifyRingBell,        PushRequestNotifyRingBell)
+
+DEFINE_REQUEST_RESPONSE(0x03C8,   RequestNotifyRingBell,            RequestNotifyRingBell,              RequestNotifyRingBellResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Break In (Invaders)
 // -----------------------------------------------------------------------------------------------
+DEFINE_MESSAGE         (0x03A5,   PushRequestBreakInTarget,         PushRequestBreakInTarget)             
+DEFINE_MESSAGE         (0x03A6,   PushRequestRejectBreakInTarget,   PushRequestRejectBreakInTarget)
+DEFINE_MESSAGE         (0x03A7,   PushRequestAllowBreakInTarget,    PushRequestAllowBreakInTarget)
+
+DEFINE_REQUEST_RESPONSE(0x03B1,   RequestGetBreakInTargetList,      RequestGetBreakInTargetList,        RequestGetBreakInTargetListResponse)
+DEFINE_REQUEST_RESPONSE(0x03B2,   RequestBreakInTarget,             RequestBreakInTarget,               RequestBreakInTargetResponse)
+DEFINE_REQUEST_RESPONSE(0x03B3,   RequestRejectBreakInTarget,       RequestRejectBreakInTarget,         RequestRejectBreakInTargetResponse)
+
+// Can't find registration in code.
 //DEFINE_MESSAGE         (0x,   PushRequestRemoveBreakInTarget,     PushRequestRemoveBreakInTarget)
-//DEFINE_MESSAGE         (0x,   PushRequestBreakInTarget,           PushRequestBreakInTarget)
-//DEFINE_MESSAGE         (0x,   PushRequestRejectBreakInTarget,     PushRequestRejectBreakInTarget)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetBreakInTargetList,        RequestGetBreakInTargetList,        RequestGetBreakInTargetListResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestBreakInTarget,               RequestBreakInTarget,               RequestBreakInTargetResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestRejectBreakInTarget,         RequestRejectBreakInTarget,         RequestRejectBreakInTargetResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Vistors (Join via covenenant I think)
 // -----------------------------------------------------------------------------------------------
 DEFINE_REQUEST_RESPONSE  (0x03B4, RequestGetVisitorList,            RequestGetVisitorList,              RequestGetVisitorListResponse)
 DEFINE_REQUEST_RESPONSE  (0x03B5, RequestVisit,                     RequestVisit,                       RequestVisitResponse)
-//DEFINE_REQUEST_RESPONSE(0x,     RequestRejectVisit,               RequestRejectVisit,                 RequestRejectVisitResponse)
+DEFINE_REQUEST_RESPONSE  (0x03B6, RequestRejectVisit,               RequestRejectVisit,                 RequestRejectVisitResponse)
 
-//DEFINE_MESSAGE         (0x, PushRequestRemoveVisitor,             PushRequestRemoveVisitor)
-//DEFINE_MESSAGE         (0x, PushRequestVisit,                     PushRequestVisit)
-//DEFINE_MESSAGE         (0x, PushRequestRejectVisit,               PushRequestRejectVisit)
+// Looking in the code all the following match this: 0x03b7, 0x03ba, 0x03bd, 0x03c0, 0x03c3 - We will only use one though.
+DEFINE_MESSAGE           (0x03B7, PushRequestVisit,                 PushRequestVisit)
+// Looking in the code all the following match this: 0x03b8, 0x03bb, 0x03be, 0x03c1, 0x03c4 - We will only use one though.
+DEFINE_MESSAGE           (0x03B8, PushRequestRejectVisit,           PushRequestRejectVisit)
+// Looking in the code all the following match this: 0x03b9, 0x03bc, 0x03bf, 0x03c2, 0x03c5 - We will only use one though.
+DEFINE_MESSAGE           (0x03B9, PushRequestRemoveVisitor,         PushRequestRemoveVisitor)
 
 // -----------------------------------------------------------------------------------------------
 // Networking
 // -----------------------------------------------------------------------------------------------
-//DEFINE_REQUEST_RESPONSE(0x,   RequestMeasureUploadBandwidth,              RequestMeasureUploadBandwidth,                  RequestMeasureUploadBandwidthResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestMeasureDownloadBandwidth,            RequestMeasureDownloadBandwidth,                RequestMeasureDownloadBandwidthResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestSendMessageToPlayers,                RequestSendMessageToPlayers,                    RequestSendMessageToPlayersResponse)
+DEFINE_REQUEST_RESPONSE(0x0320,   RequestSendMessageToPlayers,      RequestSendMessageToPlayers,        RequestSendMessageToPlayersResponse)
+DEFINE_REQUEST_RESPONSE(0x038E,   RequestMeasureUploadBandwidth,    RequestMeasureUploadBandwidth,      RequestMeasureUploadBandwidthResponse)
+DEFINE_REQUEST_RESPONSE(0x038F,   RequestMeasureDownloadBandwidth,  RequestMeasureDownloadBandwidth,    RequestMeasureDownloadBandwidthResponse)
+
+// Can't find registration in code.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestSendMessageToSelectLanguagePlayers,  RequestSendMessageToSelectLanguagePlayers,      RequestSendMessageToSelectLanguagePlayersResponse)
+
+// Can't find registration in code.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestSendMessageToAllPlayers,             RequestSendMessageToAllPlayers,                 RequestSendMessageToAllPlayersResponse)
+
+// Can't find registration in code.
 //DEFINE_REQUEST_RESPONSE(0x,   RequestSendPlayerList,                      RequestSendPlayerList,                          RequestSendPlayerListResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Online Shop
 // -----------------------------------------------------------------------------------------------
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetOnlineShopItemList,               RequestGetOnlineShopItemList,                   RequestGetOnlineShopItemListResponse)
+DEFINE_REQUEST_RESPONSE(0x03DB,   RequestGetOnlineShopItemList,     RequestGetOnlineShopItemList,       RequestGetOnlineShopItemListResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Regulation Files
 // -----------------------------------------------------------------------------------------------
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetRegulationFile,                   RequestGetRegulationFile,                       RequestGetRegulationFileResponse)
+
+// Can't find registration in code.
+//DEFINE_REQUEST_RESPONSE(0x,   RequestGetRegulationFile,           RequestGetRegulationFile,           RequestGetRegulationFileResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Ritual Marks (No idea what this is, probably cut content).
 // -----------------------------------------------------------------------------------------------
-//DEFINE_REQUEST_RESPONSE(0x,   RequestCreateMark,                          RequestCreateMark,                              RequestCreateMarkResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestRemoveMark,                          RequestRemoveMark,                              RequestRemoveMarkResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestReentryMark,                         RequestReentryMark,                             RequestReentryMarkResponse)
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetMarkList,                         RequestGetMarkList,                             RequestGetMarkListResponse)
+DEFINE_REQUEST_RESPONSE(0x0460,   RequestCreateMark,                RequestCreateMark,                  RequestCreateMarkResponse)
+DEFINE_REQUEST_RESPONSE(0x0461,   RequestRemoveMark,                RequestRemoveMark,                  RequestRemoveMarkResponse)
+DEFINE_REQUEST_RESPONSE(0x0462,   RequestReentryMark,               RequestReentryMark,                 RequestReentryMarkResponse)
+DEFINE_REQUEST_RESPONSE(0x0463,   RequestGetMarkList,               RequestGetMarkList,                 RequestGetMarkListResponse)
 
 // -----------------------------------------------------------------------------------------------
 // Misc
 // -----------------------------------------------------------------------------------------------
-//DEFINE_REQUEST_RESPONSE(0x,   RequestBenchmarkThroughput,                 RequestBenchmarkThroughput,                     RequestBenchmarkThroughputResponse)
+DEFINE_REQUEST_RESPONSE(0x03A3,   RequestBenchmarkThroughput,       RequestBenchmarkThroughput,         RequestBenchmarkThroughputResponse)
 

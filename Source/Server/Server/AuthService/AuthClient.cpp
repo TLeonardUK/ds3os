@@ -137,7 +137,7 @@ bool AuthClient::Poll()
                 Response.set_id(2);
                 Response.set_steam_id("\0");
                 Response.set_unknown_1(0);
-                Response.set_network_protocol(0);
+                Response.set_app_version(BuildConfig::APP_VERSION);
 
                 if (!MessageStream->Send(&Response, Message.Header.request_index))
                 {

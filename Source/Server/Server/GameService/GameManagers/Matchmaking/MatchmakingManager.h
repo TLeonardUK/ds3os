@@ -23,14 +23,14 @@ class MatchmakingManager
 public:    
     MatchmakingManager(Server* InServerInstance);
 
-    virtual bool OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
+    virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
 
 protected:
-    bool Handle_RequestGetSignList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    bool Handle_RequestCreateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    bool Handle_RequestRemoveSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);    
+    MessageHandleResult Handle_RequestGetSignList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestCreateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestRemoveSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;

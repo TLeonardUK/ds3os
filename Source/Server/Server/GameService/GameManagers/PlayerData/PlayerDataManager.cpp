@@ -16,22 +16,34 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
+
+#include "Core/Network/NetConnection.h"
 
 PlayerDataManager::PlayerDataManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)
 {
 }
 
-bool PlayerDataManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult PlayerDataManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestUpdateLoginPlayerCharacter)
     {
         return Handle_RequestUpdateLoginPlayerCharacter(Client, Message);
     }
-    return false;
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestUpdatePlayerStatus)
+    {
+        return Handle_RequestUpdatePlayerStatus(Client, Message);
+    }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestUpdatePlayerCharacter)
+    {
+        return Handle_RequestUpdatePlayerCharacter(Client, Message);
+    }
+
+    return MessageHandleResult::Unhandled;
 }
 
-bool PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     // TODO: Do this in a better way.
 
@@ -52,16 +64,35 @@ bool PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(GameClient* Cli
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestUpdateLoginPlayerCharacterResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestUpdateLoginPlayerCharacterResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
     
-    return false;
+    return MessageHandleResult::Handled;
 }
 
-bool PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestUpdatePlayerStatus* Request = (Frpg2RequestMessage::RequestUpdatePlayerStatus*)Message.Protobuf.get();
+
+    // Keep track of the players character name, useful for logging.
+    if (Request->status().has_player_status() && Request->status().player_status().has_name())
+    {
+        PlayerState& State = Client->GetPlayerState();
+
+        std::string NewCharacterName = Request->status().player_status().name();
+        if (State.CharacterName != NewCharacterName)
+        {
+            State.CharacterName = NewCharacterName;
+
+            std::string NewConnectionName = StringFormat("%i:%s", State.PlayerId, State.CharacterName.c_str());
+
+            Log("[%s] Renaming connection to '%s'.", Client->GetName().c_str(), NewConnectionName.c_str());
+
+            // Rename connection after this point as it easier to keep track of than ip:port pairs.
+            Client->Connection->Rename(NewConnectionName);
+        }
+    }
 
     // TODO: Do something with this data?
 
@@ -69,14 +100,14 @@ bool PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClient* Client, con
     Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestUpdatePlayerStatusResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestUpdatePlayerStatusResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
-    return false;
+    return MessageHandleResult::Handled;
 }
 
-bool PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestUpdatePlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdatePlayerCharacter*)Message.Protobuf.get();
 
@@ -86,11 +117,11 @@ bool PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameClient* Client, 
     Frpg2RequestMessage::RequestUpdatePlayerCharacterResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestUpdatePlayerCharacterResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestUpdatePlayerCharacterResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
-    return false;
+    return MessageHandleResult::Handled;
 }
 
 std::string PlayerDataManager::GetName()

@@ -14,6 +14,13 @@
 class GameClient;
 struct Frpg2ReliableUdpMessage;
 
+enum class MessageHandleResult
+{
+    Unhandled,
+    Handled,
+    Error
+};
+
  // Base class for all managers that handle specific areas
  // of functionality for the game service - matchmaking, bloodstains 
  // and alike.
@@ -35,7 +42,7 @@ public:
 
     // Called when a game client recieves a message.
     // Returns true if an error occured and the client should be disconnected.
-    virtual bool OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) { return false; }
+    virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) { return MessageHandleResult::Unhandled; }
 
     // Returns a general descriptive name of the manager for logging.
     virtual std::string GetName() = 0;

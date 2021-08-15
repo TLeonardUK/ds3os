@@ -61,6 +61,7 @@ public:
     virtual bool IsConnected() override;
 
     virtual std::string GetName() override;
+    virtual void Rename(const std::string& Name) override;
 
 private:
     std::string Name;

@@ -22,30 +22,53 @@ BloodMessageManager::BloodMessageManager(Server* InServerInstance)
 {
 }
 
-bool BloodMessageManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult BloodMessageManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestReentryBloodMessage)
     {
         return Handle_RequestReentryBloodMessage(Client, Message);
     }
-    return false;
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestGetBloodMessageEvaluation)
+    {
+        return Handle_RequestGetBloodMessageEvaluation(Client, Message);
+    }
+
+    return MessageHandleResult::Unhandled;
 }
 
-bool BloodMessageManager::Handle_RequestReentryBloodMessage(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult BloodMessageManager::Handle_RequestReentryBloodMessage(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestReentryBloodMessage* Request = (Frpg2RequestMessage::RequestReentryBloodMessage*)Message.Protobuf.get();
     Ensure(Request->unknown_2() == 1);
 
     // TODO: Actually do something!
+    // I think the purpose of this message is to re-enter the users stored messages into the "live pool". 
 
     Frpg2RequestMessage::RequestReentryBloodMessageResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestReentryBloodMessageResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestReentryBloodMessageResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
     
-    return false;
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageEvaluation(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestGetBloodMessageEvaluation* Request = (Frpg2RequestMessage::RequestGetBloodMessageEvaluation*)Message.Protobuf.get();
+
+    // TODO: Actually do something!
+    // Gets the current evaluations for a set of messages.
+
+    Frpg2RequestMessage::RequestGetBloodMessageEvaluationResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestGetBloodMessageEvaluationResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
+
+    return MessageHandleResult::Handled;
 }
 
 std::string BloodMessageManager::GetName()

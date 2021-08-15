@@ -22,7 +22,7 @@ MatchmakingManager::MatchmakingManager(Server* InServerInstance)
 {
 }
 
-bool MatchmakingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult MatchmakingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestGetSignList)
     {
@@ -36,10 +36,11 @@ bool MatchmakingManager::OnMessageRecieved(GameClient* Client, const Frpg2Reliab
     {
         return Handle_RequestRemoveSign(Client, Message);
     }
-    return false;
+
+    return MessageHandleResult::Unhandled;
 }
 
-bool MatchmakingManager::Handle_RequestGetSignList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult MatchmakingManager::Handle_RequestGetSignList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestGetSignList* Request = (Frpg2RequestMessage::RequestGetSignList*)Message.Protobuf.get();
 
@@ -55,14 +56,14 @@ bool MatchmakingManager::Handle_RequestGetSignList(GameClient* Client, const Frp
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetSignListResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestGetSignListResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
     
-    return false;
+    return MessageHandleResult::Handled;
 }
 
-bool MatchmakingManager::Handle_RequestCreateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult MatchmakingManager::Handle_RequestCreateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestCreateSign* Request = (Frpg2RequestMessage::RequestCreateSign*)Message.Protobuf.get();
 
@@ -73,14 +74,14 @@ bool MatchmakingManager::Handle_RequestCreateSign(GameClient* Client, const Frpg
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetSignListResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestGetSignListResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
-    return false;
+    return MessageHandleResult::Handled;
 }
 
-bool MatchmakingManager::Handle_RequestRemoveSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult MatchmakingManager::Handle_RequestRemoveSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestCreateSign* Request = (Frpg2RequestMessage::RequestCreateSign*)Message.Protobuf.get();
 
@@ -90,11 +91,11 @@ bool MatchmakingManager::Handle_RequestRemoveSign(GameClient* Client, const Frpg
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRemoveSignResponse response.", GetName().c_str());
-        return true;
+        Warning("[%s] Disconnecting client as failed to send RequestRemoveSignResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
-    return false;
+    return MessageHandleResult::Handled;
 }
 
 std::string MatchmakingManager::GetName()

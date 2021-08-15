@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Log protobuf messages to disk"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+local output_folder_dialog = createSelectDirectoryDialog()
+output_folder_dialog.execute()
+
+local output_folder = output_folder_dialog.FileName
+local create_message_hook = 0x141b16a3b
+local message_counter = 0
+local message_type = "";
+
+local function log_message_to_disk(packet_id, payload_addr, payload_length)
+    local data = ""
+
+    if payload_length &gt; 0 then    
+        data = string.char(unpack(readBytes(payload_addr, payload_length, true)))        
+    end
+
+    local name = string.format("%06d_%04x_%s.dat", message_counter, packet_id, string.gsub(message_type, "::", "__"))
+    local file, err = io.open(output_folder .. "/" .. name, "wb")
+
+    if (err) then
+        print(err)
+        return
+    end
+
+    file:write(data)
+    file:close()
+
+    message_counter = message_counter + 1
+end
+
+function on_serialize()
+    -- This isn't guaranteed to the same type name as the next header set, but its 
+    -- almost guaranteed, so good enough for debugging.
+    message_type = getRTTIClassName(RBX)
+
+    debug_continueFromBreakpoint(co_run)
+end
+
+function on_create_message_hook()
+    local message_addr = R9
+    local message_id = R12
+
+    local message_type = getRTTIClassName(message_addr)
+
+    print(string.format("on_create_message_hook addr=%08d message_id=%04x message_type=%s", message_addr, message_id, message_type))
+
+    debug_continueFromBreakpoint(co_run)
+end
+
+debug_setBreakpoint(create_message_hook, "on_create_message_hook")
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+
+debug_removeBreakpoint(create_message_hook)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

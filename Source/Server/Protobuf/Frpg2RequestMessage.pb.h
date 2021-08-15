@@ -249,6 +249,7 @@ class QuickMatchSearchResult;
 class AcceptQuickMatchMessage;
 class RejectQuickMatchMessage;
 class RemoveQuickMatchMessage;
+class JoinQuickMatchMessage;
 class QuickMatchRank;
 class RequestSearchQuickMatch;
 class RequestSearchQuickMatch_Map_id_list;
@@ -874,12 +875,12 @@ class GetServiceStatus : public ::google::protobuf::MessageLite {
   inline ::std::string* release_unknown_1();
   inline void set_allocated_unknown_1(::std::string* unknown_1);
 
-  // required int64 network_protocol = 4;
-  inline bool has_network_protocol() const;
-  inline void clear_network_protocol();
-  static const int kNetworkProtocolFieldNumber = 4;
-  inline ::google::protobuf::int64 network_protocol() const;
-  inline void set_network_protocol(::google::protobuf::int64 value);
+  // required int64 app_version = 4;
+  inline bool has_app_version() const;
+  inline void clear_app_version();
+  static const int kAppVersionFieldNumber = 4;
+  inline ::google::protobuf::int64 app_version() const;
+  inline void set_app_version(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.GetServiceStatus)
  private:
@@ -889,8 +890,8 @@ class GetServiceStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_steam_id();
   inline void set_has_unknown_1();
   inline void clear_has_unknown_1();
-  inline void set_has_network_protocol();
-  inline void clear_has_network_protocol();
+  inline void set_has_app_version();
+  inline void clear_has_app_version();
 
   ::std::string _unknown_fields_;
 
@@ -899,7 +900,7 @@ class GetServiceStatus : public ::google::protobuf::MessageLite {
   ::google::protobuf::int64 id_;
   ::std::string* steam_id_;
   ::std::string* unknown_1_;
-  ::google::protobuf::int64 network_protocol_;
+  ::google::protobuf::int64 app_version_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -1081,12 +1082,12 @@ class GetServiceStatusResponse : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int64 unknown_1() const;
   inline void set_unknown_1(::google::protobuf::int64 value);
 
-  // required int64 network_protocol = 4;
-  inline bool has_network_protocol() const;
-  inline void clear_network_protocol();
-  static const int kNetworkProtocolFieldNumber = 4;
-  inline ::google::protobuf::int64 network_protocol() const;
-  inline void set_network_protocol(::google::protobuf::int64 value);
+  // required int64 app_version = 4;
+  inline bool has_app_version() const;
+  inline void clear_app_version();
+  static const int kAppVersionFieldNumber = 4;
+  inline ::google::protobuf::int64 app_version() const;
+  inline void set_app_version(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.GetServiceStatusResponse)
  private:
@@ -1096,8 +1097,8 @@ class GetServiceStatusResponse : public ::google::protobuf::MessageLite {
   inline void clear_has_steam_id();
   inline void set_has_unknown_1();
   inline void clear_has_unknown_1();
-  inline void set_has_network_protocol();
-  inline void clear_has_network_protocol();
+  inline void set_has_app_version();
+  inline void clear_has_app_version();
 
   ::std::string _unknown_fields_;
 
@@ -1106,7 +1107,7 @@ class GetServiceStatusResponse : public ::google::protobuf::MessageLite {
   ::google::protobuf::int64 id_;
   ::std::string* steam_id_;
   ::google::protobuf::int64 unknown_1_;
-  ::google::protobuf::int64 network_protocol_;
+  ::google::protobuf::int64 app_version_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -1329,26 +1330,26 @@ class RequestWaitForUserLoginResponse : public ::google::protobuf::MessageLite {
   inline ::std::string* release_steam_id();
   inline void set_allocated_steam_id(::std::string* steam_id);
 
-  // required uint32 unknown_1 = 2;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // required uint32 player_id = 2;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestWaitForUserLoginResponse)
  private:
   inline void set_has_steam_id();
   inline void clear_has_steam_id();
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* steam_id_;
-  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 player_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -19719,6 +19720,87 @@ class RemoveQuickMatchMessage : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
+class JoinQuickMatchMessage : public ::google::protobuf::MessageLite {
+ public:
+  JoinQuickMatchMessage();
+  virtual ~JoinQuickMatchMessage();
+
+  JoinQuickMatchMessage(const JoinQuickMatchMessage& from);
+
+  inline JoinQuickMatchMessage& operator=(const JoinQuickMatchMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const JoinQuickMatchMessage& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const JoinQuickMatchMessage* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(JoinQuickMatchMessage* other);
+
+  // implements Message ----------------------------------------------
+
+  JoinQuickMatchMessage* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const JoinQuickMatchMessage& from);
+  void MergeFrom(const JoinQuickMatchMessage& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.JoinQuickMatchMessage)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static JoinQuickMatchMessage* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class QuickMatchRank : public ::google::protobuf::MessageLite {
  public:
   QuickMatchRank();
@@ -22465,28 +22547,28 @@ inline void GetServiceStatus::set_allocated_unknown_1(::std::string* unknown_1) 
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.GetServiceStatus.unknown_1)
 }
 
-// required int64 network_protocol = 4;
-inline bool GetServiceStatus::has_network_protocol() const {
+// required int64 app_version = 4;
+inline bool GetServiceStatus::has_app_version() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void GetServiceStatus::set_has_network_protocol() {
+inline void GetServiceStatus::set_has_app_version() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void GetServiceStatus::clear_has_network_protocol() {
+inline void GetServiceStatus::clear_has_app_version() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void GetServiceStatus::clear_network_protocol() {
-  network_protocol_ = GOOGLE_LONGLONG(0);
-  clear_has_network_protocol();
+inline void GetServiceStatus::clear_app_version() {
+  app_version_ = GOOGLE_LONGLONG(0);
+  clear_has_app_version();
 }
-inline ::google::protobuf::int64 GetServiceStatus::network_protocol() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GetServiceStatus.network_protocol)
-  return network_protocol_;
+inline ::google::protobuf::int64 GetServiceStatus::app_version() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GetServiceStatus.app_version)
+  return app_version_;
 }
-inline void GetServiceStatus::set_network_protocol(::google::protobuf::int64 value) {
-  set_has_network_protocol();
-  network_protocol_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GetServiceStatus.network_protocol)
+inline void GetServiceStatus::set_app_version(::google::protobuf::int64 value) {
+  set_has_app_version();
+  app_version_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GetServiceStatus.app_version)
 }
 
 // -------------------------------------------------------------------
@@ -22621,28 +22703,28 @@ inline void GetServiceStatusResponse::set_unknown_1(::google::protobuf::int64 va
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GetServiceStatusResponse.unknown_1)
 }
 
-// required int64 network_protocol = 4;
-inline bool GetServiceStatusResponse::has_network_protocol() const {
+// required int64 app_version = 4;
+inline bool GetServiceStatusResponse::has_app_version() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void GetServiceStatusResponse::set_has_network_protocol() {
+inline void GetServiceStatusResponse::set_has_app_version() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void GetServiceStatusResponse::clear_has_network_protocol() {
+inline void GetServiceStatusResponse::clear_has_app_version() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void GetServiceStatusResponse::clear_network_protocol() {
-  network_protocol_ = GOOGLE_LONGLONG(0);
-  clear_has_network_protocol();
+inline void GetServiceStatusResponse::clear_app_version() {
+  app_version_ = GOOGLE_LONGLONG(0);
+  clear_has_app_version();
 }
-inline ::google::protobuf::int64 GetServiceStatusResponse::network_protocol() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GetServiceStatusResponse.network_protocol)
-  return network_protocol_;
+inline ::google::protobuf::int64 GetServiceStatusResponse::app_version() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GetServiceStatusResponse.app_version)
+  return app_version_;
 }
-inline void GetServiceStatusResponse::set_network_protocol(::google::protobuf::int64 value) {
-  set_has_network_protocol();
-  network_protocol_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GetServiceStatusResponse.network_protocol)
+inline void GetServiceStatusResponse::set_app_version(::google::protobuf::int64 value) {
+  set_has_app_version();
+  app_version_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GetServiceStatusResponse.app_version)
 }
 
 // -------------------------------------------------------------------
@@ -22901,28 +22983,28 @@ inline void RequestWaitForUserLoginResponse::set_allocated_steam_id(::std::strin
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestWaitForUserLoginResponse.steam_id)
 }
 
-// required uint32 unknown_1 = 2;
-inline bool RequestWaitForUserLoginResponse::has_unknown_1() const {
+// required uint32 player_id = 2;
+inline bool RequestWaitForUserLoginResponse::has_player_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RequestWaitForUserLoginResponse::set_has_unknown_1() {
+inline void RequestWaitForUserLoginResponse::set_has_player_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RequestWaitForUserLoginResponse::clear_has_unknown_1() {
+inline void RequestWaitForUserLoginResponse::clear_has_player_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RequestWaitForUserLoginResponse::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void RequestWaitForUserLoginResponse::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
 }
-inline ::google::protobuf::uint32 RequestWaitForUserLoginResponse::unknown_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestWaitForUserLoginResponse.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 RequestWaitForUserLoginResponse::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestWaitForUserLoginResponse.player_id)
+  return player_id_;
 }
-inline void RequestWaitForUserLoginResponse::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestWaitForUserLoginResponse.unknown_1)
+inline void RequestWaitForUserLoginResponse::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestWaitForUserLoginResponse.player_id)
 }
 
 // -------------------------------------------------------------------
@@ -28869,6 +28951,10 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 // -------------------------------------------------------------------
 
 // RemoveQuickMatchMessage
+
+// -------------------------------------------------------------------
+
+// JoinQuickMatchMessage
 
 // -------------------------------------------------------------------
 
