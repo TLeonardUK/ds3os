@@ -82,8 +82,8 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
 
     Frpg2RequestMessage::PlayerInfoUploadConfigPushMessage UploadInfoPushMessage;
     UploadInfoPushMessage.set_unknown_1(908);
-    UploadInfoPushMessage.set_unknown_3(10);//600);
-    UploadInfoPushMessage.set_unknown_4(5);//300);
+    UploadInfoPushMessage.set_unknown_3(600);
+    UploadInfoPushMessage.set_unknown_4(300);
 
     Frpg2RequestMessage::PlayerInfoUploadConfigPushMessageList* UploadInfoPushMessageList = UploadInfoPushMessage.mutable_unknown_2();
     for (uint32_t Value : UploadInfoConfigValues)

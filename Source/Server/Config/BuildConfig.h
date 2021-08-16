@@ -36,4 +36,12 @@ public:
     // So 1.15 = 114
     inline static const int APP_VERSION = 144;
 
+    // If true clients are disconnected if we are unable to handle the message they send.
+    // Be careful with this, if we don't reply to some messages the client will deadlock.
+#if defined(_DEBUG)
+    inline static const bool DISCONNECT_ON_UNHANDLED_MESSAGE = false;
+#else
+    inline static const bool DISCONNECT_ON_UNHANDLED_MESSAGE = true;
+#endif
+
 };

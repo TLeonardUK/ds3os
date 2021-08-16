@@ -17,9 +17,8 @@ namespace Frpg2PlayerData {
 
 void protobuf_ShutdownFile_Frpg2PlayerData_2eproto() {
   delete DateTime::default_instance_;
+  delete UnknownStruct1::default_instance_;
   delete AllStatus::default_instance_;
-  delete unknown_struct_1::default_instance_;
-  delete UpdateAllDelta::default_instance_;
   delete PlayerStatus::default_instance_;
   delete PlayData::default_instance_;
   delete LogInfo::default_instance_;
@@ -46,9 +45,8 @@ void protobuf_AddDesc_Frpg2PlayerData_2eproto() {
 
 #endif
   DateTime::default_instance_ = new DateTime();
+  UnknownStruct1::default_instance_ = new UnknownStruct1();
   AllStatus::default_instance_ = new AllStatus();
-  unknown_struct_1::default_instance_ = new unknown_struct_1();
-  UpdateAllDelta::default_instance_ = new UpdateAllDelta();
   PlayerStatus::default_instance_ = new PlayerStatus();
   PlayData::default_instance_ = new PlayData();
   LogInfo::default_instance_ = new LogInfo();
@@ -61,9 +59,8 @@ void protobuf_AddDesc_Frpg2PlayerData_2eproto() {
   Vector::default_instance_ = new Vector();
   BonfireInfo::default_instance_ = new BonfireInfo();
   DateTime::default_instance_->InitAsDefaultInstance();
+  UnknownStruct1::default_instance_->InitAsDefaultInstance();
   AllStatus::default_instance_->InitAsDefaultInstance();
-  unknown_struct_1::default_instance_->InitAsDefaultInstance();
-  UpdateAllDelta::default_instance_->InitAsDefaultInstance();
   PlayerStatus::default_instance_->InitAsDefaultInstance();
   PlayData::default_instance_->InitAsDefaultInstance();
   LogInfo::default_instance_->InitAsDefaultInstance();
@@ -502,13 +499,281 @@ void DateTime::Swap(DateTime* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int UnknownStruct1::kUnknown1FieldNumber;
+const int UnknownStruct1::kUnknown2FieldNumber;
+const int UnknownStruct1::kUnknown3FieldNumber;
+#endif  // !_MSC_VER
+
+UnknownStruct1::UnknownStruct1()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Frpg2PlayerData.UnknownStruct1)
+}
+
+void UnknownStruct1::InitAsDefaultInstance() {
+}
+
+UnknownStruct1::UnknownStruct1(const UnknownStruct1& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Frpg2PlayerData.UnknownStruct1)
+}
+
+void UnknownStruct1::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  unknown_1_ = GOOGLE_LONGLONG(0);
+  unknown_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  unknown_3_ = GOOGLE_LONGLONG(0);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+UnknownStruct1::~UnknownStruct1() {
+  // @@protoc_insertion_point(destructor:Frpg2PlayerData.UnknownStruct1)
+  SharedDtor();
+}
+
+void UnknownStruct1::SharedDtor() {
+  if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_2_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void UnknownStruct1::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const UnknownStruct1& UnknownStruct1::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Frpg2PlayerData_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2PlayerData_2eproto();
+#endif
+  return *default_instance_;
+}
+
+UnknownStruct1* UnknownStruct1::default_instance_ = NULL;
+
+UnknownStruct1* UnknownStruct1::New() const {
+  return new UnknownStruct1;
+}
+
+void UnknownStruct1::Clear() {
+  if (_has_bits_[0 / 32] & 7) {
+    unknown_1_ = GOOGLE_LONGLONG(0);
+    if (has_unknown_2()) {
+      if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        unknown_2_->clear();
+      }
+    }
+    unknown_3_ = GOOGLE_LONGLONG(0);
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool UnknownStruct1::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Frpg2PlayerData.UnknownStruct1)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int64 unknown_1 = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &unknown_1_)));
+          set_has_unknown_1();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_unknown_2;
+        break;
+      }
+
+      // optional string unknown_2 = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_unknown_2:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_unknown_2()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_unknown_3;
+        break;
+      }
+
+      // optional int64 unknown_3 = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_unknown_3:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &unknown_3_)));
+          set_has_unknown_3();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Frpg2PlayerData.UnknownStruct1)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Frpg2PlayerData.UnknownStruct1)
+  return false;
+#undef DO_
+}
+
+void UnknownStruct1::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Frpg2PlayerData.UnknownStruct1)
+  // optional int64 unknown_1 = 1;
+  if (has_unknown_1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->unknown_1(), output);
+  }
+
+  // optional string unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->unknown_2(), output);
+  }
+
+  // optional int64 unknown_3 = 3;
+  if (has_unknown_3()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->unknown_3(), output);
+  }
+
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Frpg2PlayerData.UnknownStruct1)
+}
+
+int UnknownStruct1::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional int64 unknown_1 = 1;
+    if (has_unknown_1()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->unknown_1());
+    }
+
+    // optional string unknown_2 = 2;
+    if (has_unknown_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->unknown_2());
+    }
+
+    // optional int64 unknown_3 = 3;
+    if (has_unknown_3()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->unknown_3());
+    }
+
+  }
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void UnknownStruct1::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const UnknownStruct1*>(&from));
+}
+
+void UnknownStruct1::MergeFrom(const UnknownStruct1& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_unknown_1()) {
+      set_unknown_1(from.unknown_1());
+    }
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
+    }
+    if (from.has_unknown_3()) {
+      set_unknown_3(from.unknown_3());
+    }
+  }
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void UnknownStruct1::CopyFrom(const UnknownStruct1& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UnknownStruct1::IsInitialized() const {
+
+  return true;
+}
+
+void UnknownStruct1::Swap(UnknownStruct1* other) {
+  if (other != this) {
+    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string UnknownStruct1::GetTypeName() const {
+  return "Frpg2PlayerData.UnknownStruct1";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int AllStatus::kPlayerLocationFieldNumber;
 const int AllStatus::kLogInfoFieldNumber;
 const int AllStatus::kPlayerStatusFieldNumber;
 const int AllStatus::kPlayDataFieldNumber;
 const int AllStatus::kStatsInfoFieldNumber;
 const int AllStatus::kEquipmentFieldNumber;
-const int AllStatus::kSteamIdFieldNumber;
+const int AllStatus::kUnknown1FieldNumber;
 #endif  // !_MSC_VER
 
 AllStatus::AllStatus()
@@ -554,6 +819,12 @@ void AllStatus::InitAsDefaultInstance() {
 #else
   equipment_ = const_cast< ::Frpg2PlayerData::Equipment*>(&::Frpg2PlayerData::Equipment::default_instance());
 #endif
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  unknown_1_ = const_cast< ::Frpg2PlayerData::UnknownStruct1*>(
+      ::Frpg2PlayerData::UnknownStruct1::internal_default_instance());
+#else
+  unknown_1_ = const_cast< ::Frpg2PlayerData::UnknownStruct1*>(&::Frpg2PlayerData::UnknownStruct1::default_instance());
+#endif
 }
 
 AllStatus::AllStatus(const AllStatus& from)
@@ -564,7 +835,6 @@ AllStatus::AllStatus(const AllStatus& from)
 }
 
 void AllStatus::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   player_location_ = NULL;
   log_info_ = NULL;
@@ -572,7 +842,7 @@ void AllStatus::SharedCtor() {
   play_data_ = NULL;
   stats_info_ = NULL;
   equipment_ = NULL;
-  steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  unknown_1_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -582,9 +852,6 @@ AllStatus::~AllStatus() {
 }
 
 void AllStatus::SharedDtor() {
-  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete steam_id_;
-  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -596,6 +863,7 @@ void AllStatus::SharedDtor() {
     delete play_data_;
     delete stats_info_;
     delete equipment_;
+    delete unknown_1_;
   }
 }
 
@@ -639,10 +907,8 @@ void AllStatus::Clear() {
     if (has_equipment()) {
       if (equipment_ != NULL) equipment_->::Frpg2PlayerData::Equipment::Clear();
     }
-    if (has_steam_id()) {
-      if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        steam_id_->clear();
-      }
+    if (has_unknown_1()) {
+      if (unknown_1_ != NULL) unknown_1_->::Frpg2PlayerData::UnknownStruct1::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -736,16 +1002,16 @@ bool AllStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_steam_id;
+        if (input->ExpectTag(58)) goto parse_unknown_1;
         break;
       }
 
-      // optional string steam_id = 7;
+      // optional .Frpg2PlayerData.UnknownStruct1 unknown_1 = 7;
       case 7: {
         if (tag == 58) {
-         parse_steam_id:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_steam_id()));
+         parse_unknown_1:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_unknown_1()));
         } else {
           goto handle_unusual;
         }
@@ -814,10 +1080,10 @@ void AllStatus::SerializeWithCachedSizes(
       6, this->equipment(), output);
   }
 
-  // optional string steam_id = 7;
-  if (has_steam_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      7, this->steam_id(), output);
+  // optional .Frpg2PlayerData.UnknownStruct1 unknown_1 = 7;
+  if (has_unknown_1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      7, this->unknown_1(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -871,11 +1137,11 @@ int AllStatus::ByteSize() const {
           this->equipment());
     }
 
-    // optional string steam_id = 7;
-    if (has_steam_id()) {
+    // optional .Frpg2PlayerData.UnknownStruct1 unknown_1 = 7;
+    if (has_unknown_1()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->steam_id());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->unknown_1());
     }
 
   }
@@ -913,8 +1179,8 @@ void AllStatus::MergeFrom(const AllStatus& from) {
     if (from.has_equipment()) {
       mutable_equipment()->::Frpg2PlayerData::Equipment::MergeFrom(from.equipment());
     }
-    if (from.has_steam_id()) {
-      set_steam_id(from.steam_id());
+    if (from.has_unknown_1()) {
+      mutable_unknown_1()->::Frpg2PlayerData::UnknownStruct1::MergeFrom(from.unknown_1());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -945,7 +1211,7 @@ void AllStatus::Swap(AllStatus* other) {
     std::swap(play_data_, other->play_data_);
     std::swap(stats_info_, other->stats_info_);
     std::swap(equipment_, other->equipment_);
-    std::swap(steam_id_, other->steam_id_);
+    std::swap(unknown_1_, other->unknown_1_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -954,733 +1220,6 @@ void AllStatus::Swap(AllStatus* other) {
 
 ::std::string AllStatus::GetTypeName() const {
   return "Frpg2PlayerData.AllStatus";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int unknown_struct_1::kUnknown1FieldNumber;
-const int unknown_struct_1::kUnknown2FieldNumber;
-const int unknown_struct_1::kUnknown3FieldNumber;
-#endif  // !_MSC_VER
-
-unknown_struct_1::unknown_struct_1()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:Frpg2PlayerData.unknown_struct_1)
-}
-
-void unknown_struct_1::InitAsDefaultInstance() {
-}
-
-unknown_struct_1::unknown_struct_1(const unknown_struct_1& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Frpg2PlayerData.unknown_struct_1)
-}
-
-void unknown_struct_1::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
-  _cached_size_ = 0;
-  unknown_1_ = GOOGLE_LONGLONG(0);
-  unknown_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  unknown_3_ = GOOGLE_LONGLONG(0);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-unknown_struct_1::~unknown_struct_1() {
-  // @@protoc_insertion_point(destructor:Frpg2PlayerData.unknown_struct_1)
-  SharedDtor();
-}
-
-void unknown_struct_1::SharedDtor() {
-  if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete unknown_2_;
-  }
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void unknown_struct_1::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const unknown_struct_1& unknown_struct_1::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_Frpg2PlayerData_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2PlayerData_2eproto();
-#endif
-  return *default_instance_;
-}
-
-unknown_struct_1* unknown_struct_1::default_instance_ = NULL;
-
-unknown_struct_1* unknown_struct_1::New() const {
-  return new unknown_struct_1;
-}
-
-void unknown_struct_1::Clear() {
-  if (_has_bits_[0 / 32] & 7) {
-    unknown_1_ = GOOGLE_LONGLONG(0);
-    if (has_unknown_2()) {
-      if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        unknown_2_->clear();
-      }
-    }
-    unknown_3_ = GOOGLE_LONGLONG(0);
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool unknown_struct_1::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:Frpg2PlayerData.unknown_struct_1)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int64 unknown_1 = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(18)) goto parse_unknown_2;
-        break;
-      }
-
-      // optional string unknown_2 = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_unknown_2:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_unknown_2()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
-        break;
-      }
-
-      // optional int64 unknown_3 = 3;
-      case 3: {
-        if (tag == 24) {
-         parse_unknown_3:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-            input, tag, &unknown_fields_stream));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:Frpg2PlayerData.unknown_struct_1)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:Frpg2PlayerData.unknown_struct_1)
-  return false;
-#undef DO_
-}
-
-void unknown_struct_1::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Frpg2PlayerData.unknown_struct_1)
-  // optional int64 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->unknown_1(), output);
-  }
-
-  // optional string unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->unknown_2(), output);
-  }
-
-  // optional int64 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->unknown_3(), output);
-  }
-
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:Frpg2PlayerData.unknown_struct_1)
-}
-
-int unknown_struct_1::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int64 unknown_1 = 1;
-    if (has_unknown_1()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->unknown_1());
-    }
-
-    // optional string unknown_2 = 2;
-    if (has_unknown_2()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->unknown_2());
-    }
-
-    // optional int64 unknown_3 = 3;
-    if (has_unknown_3()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->unknown_3());
-    }
-
-  }
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void unknown_struct_1::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const unknown_struct_1*>(&from));
-}
-
-void unknown_struct_1::MergeFrom(const unknown_struct_1& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
-    }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
-    }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
-    }
-  }
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void unknown_struct_1::CopyFrom(const unknown_struct_1& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool unknown_struct_1::IsInitialized() const {
-
-  return true;
-}
-
-void unknown_struct_1::Swap(unknown_struct_1* other) {
-  if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
-    std::swap(unknown_2_, other->unknown_2_);
-    std::swap(unknown_3_, other->unknown_3_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string unknown_struct_1::GetTypeName() const {
-  return "Frpg2PlayerData.unknown_struct_1";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int UpdateAllDelta::kPlayerLocationFieldNumber;
-const int UpdateAllDelta::kLogInfoFieldNumber;
-const int UpdateAllDelta::kPlayerStatusFieldNumber;
-const int UpdateAllDelta::kPlayDataFieldNumber;
-const int UpdateAllDelta::kStatsInfoFieldNumber;
-const int UpdateAllDelta::kEquipmentFieldNumber;
-const int UpdateAllDelta::kUnknown1FieldNumber;
-#endif  // !_MSC_VER
-
-UpdateAllDelta::UpdateAllDelta()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:Frpg2PlayerData.UpdateAllDelta)
-}
-
-void UpdateAllDelta::InitAsDefaultInstance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  player_location_ = const_cast< ::Frpg2PlayerData::PlayerLocation*>(
-      ::Frpg2PlayerData::PlayerLocation::internal_default_instance());
-#else
-  player_location_ = const_cast< ::Frpg2PlayerData::PlayerLocation*>(&::Frpg2PlayerData::PlayerLocation::default_instance());
-#endif
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  log_info_ = const_cast< ::Frpg2PlayerData::LogInfo*>(
-      ::Frpg2PlayerData::LogInfo::internal_default_instance());
-#else
-  log_info_ = const_cast< ::Frpg2PlayerData::LogInfo*>(&::Frpg2PlayerData::LogInfo::default_instance());
-#endif
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  player_status_ = const_cast< ::Frpg2PlayerData::PlayerStatus*>(
-      ::Frpg2PlayerData::PlayerStatus::internal_default_instance());
-#else
-  player_status_ = const_cast< ::Frpg2PlayerData::PlayerStatus*>(&::Frpg2PlayerData::PlayerStatus::default_instance());
-#endif
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  play_data_ = const_cast< ::Frpg2PlayerData::PlayData*>(
-      ::Frpg2PlayerData::PlayData::internal_default_instance());
-#else
-  play_data_ = const_cast< ::Frpg2PlayerData::PlayData*>(&::Frpg2PlayerData::PlayData::default_instance());
-#endif
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  stats_info_ = const_cast< ::Frpg2PlayerData::StatsInfo*>(
-      ::Frpg2PlayerData::StatsInfo::internal_default_instance());
-#else
-  stats_info_ = const_cast< ::Frpg2PlayerData::StatsInfo*>(&::Frpg2PlayerData::StatsInfo::default_instance());
-#endif
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  equipment_ = const_cast< ::Frpg2PlayerData::Equipment*>(
-      ::Frpg2PlayerData::Equipment::internal_default_instance());
-#else
-  equipment_ = const_cast< ::Frpg2PlayerData::Equipment*>(&::Frpg2PlayerData::Equipment::default_instance());
-#endif
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  unknown_1_ = const_cast< ::Frpg2PlayerData::unknown_struct_1*>(
-      ::Frpg2PlayerData::unknown_struct_1::internal_default_instance());
-#else
-  unknown_1_ = const_cast< ::Frpg2PlayerData::unknown_struct_1*>(&::Frpg2PlayerData::unknown_struct_1::default_instance());
-#endif
-}
-
-UpdateAllDelta::UpdateAllDelta(const UpdateAllDelta& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Frpg2PlayerData.UpdateAllDelta)
-}
-
-void UpdateAllDelta::SharedCtor() {
-  _cached_size_ = 0;
-  player_location_ = NULL;
-  log_info_ = NULL;
-  player_status_ = NULL;
-  play_data_ = NULL;
-  stats_info_ = NULL;
-  equipment_ = NULL;
-  unknown_1_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-UpdateAllDelta::~UpdateAllDelta() {
-  // @@protoc_insertion_point(destructor:Frpg2PlayerData.UpdateAllDelta)
-  SharedDtor();
-}
-
-void UpdateAllDelta::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-    delete player_location_;
-    delete log_info_;
-    delete player_status_;
-    delete play_data_;
-    delete stats_info_;
-    delete equipment_;
-    delete unknown_1_;
-  }
-}
-
-void UpdateAllDelta::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const UpdateAllDelta& UpdateAllDelta::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_Frpg2PlayerData_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2PlayerData_2eproto();
-#endif
-  return *default_instance_;
-}
-
-UpdateAllDelta* UpdateAllDelta::default_instance_ = NULL;
-
-UpdateAllDelta* UpdateAllDelta::New() const {
-  return new UpdateAllDelta;
-}
-
-void UpdateAllDelta::Clear() {
-  if (_has_bits_[0 / 32] & 127) {
-    if (has_player_location()) {
-      if (player_location_ != NULL) player_location_->::Frpg2PlayerData::PlayerLocation::Clear();
-    }
-    if (has_log_info()) {
-      if (log_info_ != NULL) log_info_->::Frpg2PlayerData::LogInfo::Clear();
-    }
-    if (has_player_status()) {
-      if (player_status_ != NULL) player_status_->::Frpg2PlayerData::PlayerStatus::Clear();
-    }
-    if (has_play_data()) {
-      if (play_data_ != NULL) play_data_->::Frpg2PlayerData::PlayData::Clear();
-    }
-    if (has_stats_info()) {
-      if (stats_info_ != NULL) stats_info_->::Frpg2PlayerData::StatsInfo::Clear();
-    }
-    if (has_equipment()) {
-      if (equipment_ != NULL) equipment_->::Frpg2PlayerData::Equipment::Clear();
-    }
-    if (has_unknown_1()) {
-      if (unknown_1_ != NULL) unknown_1_->::Frpg2PlayerData::unknown_struct_1::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool UpdateAllDelta::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:Frpg2PlayerData.UpdateAllDelta)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Frpg2PlayerData.PlayerLocation player_location = 1;
-      case 1: {
-        if (tag == 10) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_player_location()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(18)) goto parse_log_info;
-        break;
-      }
-
-      // optional .Frpg2PlayerData.LogInfo log_info = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_log_info:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_log_info()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(26)) goto parse_player_status;
-        break;
-      }
-
-      // optional .Frpg2PlayerData.PlayerStatus player_status = 3;
-      case 3: {
-        if (tag == 26) {
-         parse_player_status:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_player_status()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(34)) goto parse_play_data;
-        break;
-      }
-
-      // optional .Frpg2PlayerData.PlayData play_data = 4;
-      case 4: {
-        if (tag == 34) {
-         parse_play_data:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_play_data()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(42)) goto parse_stats_info;
-        break;
-      }
-
-      // optional .Frpg2PlayerData.StatsInfo stats_info = 5;
-      case 5: {
-        if (tag == 42) {
-         parse_stats_info:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_stats_info()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(50)) goto parse_equipment;
-        break;
-      }
-
-      // optional .Frpg2PlayerData.Equipment equipment = 6;
-      case 6: {
-        if (tag == 50) {
-         parse_equipment:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_equipment()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(58)) goto parse_unknown_1;
-        break;
-      }
-
-      // optional .Frpg2PlayerData.unknown_struct_1 unknown_1 = 7;
-      case 7: {
-        if (tag == 58) {
-         parse_unknown_1:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_unknown_1()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-            input, tag, &unknown_fields_stream));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:Frpg2PlayerData.UpdateAllDelta)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:Frpg2PlayerData.UpdateAllDelta)
-  return false;
-#undef DO_
-}
-
-void UpdateAllDelta::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Frpg2PlayerData.UpdateAllDelta)
-  // optional .Frpg2PlayerData.PlayerLocation player_location = 1;
-  if (has_player_location()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->player_location(), output);
-  }
-
-  // optional .Frpg2PlayerData.LogInfo log_info = 2;
-  if (has_log_info()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, this->log_info(), output);
-  }
-
-  // optional .Frpg2PlayerData.PlayerStatus player_status = 3;
-  if (has_player_status()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->player_status(), output);
-  }
-
-  // optional .Frpg2PlayerData.PlayData play_data = 4;
-  if (has_play_data()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      4, this->play_data(), output);
-  }
-
-  // optional .Frpg2PlayerData.StatsInfo stats_info = 5;
-  if (has_stats_info()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      5, this->stats_info(), output);
-  }
-
-  // optional .Frpg2PlayerData.Equipment equipment = 6;
-  if (has_equipment()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      6, this->equipment(), output);
-  }
-
-  // optional .Frpg2PlayerData.unknown_struct_1 unknown_1 = 7;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      7, this->unknown_1(), output);
-  }
-
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:Frpg2PlayerData.UpdateAllDelta)
-}
-
-int UpdateAllDelta::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Frpg2PlayerData.PlayerLocation player_location = 1;
-    if (has_player_location()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->player_location());
-    }
-
-    // optional .Frpg2PlayerData.LogInfo log_info = 2;
-    if (has_log_info()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->log_info());
-    }
-
-    // optional .Frpg2PlayerData.PlayerStatus player_status = 3;
-    if (has_player_status()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->player_status());
-    }
-
-    // optional .Frpg2PlayerData.PlayData play_data = 4;
-    if (has_play_data()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->play_data());
-    }
-
-    // optional .Frpg2PlayerData.StatsInfo stats_info = 5;
-    if (has_stats_info()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->stats_info());
-    }
-
-    // optional .Frpg2PlayerData.Equipment equipment = 6;
-    if (has_equipment()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->equipment());
-    }
-
-    // optional .Frpg2PlayerData.unknown_struct_1 unknown_1 = 7;
-    if (has_unknown_1()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->unknown_1());
-    }
-
-  }
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void UpdateAllDelta::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const UpdateAllDelta*>(&from));
-}
-
-void UpdateAllDelta::MergeFrom(const UpdateAllDelta& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_player_location()) {
-      mutable_player_location()->::Frpg2PlayerData::PlayerLocation::MergeFrom(from.player_location());
-    }
-    if (from.has_log_info()) {
-      mutable_log_info()->::Frpg2PlayerData::LogInfo::MergeFrom(from.log_info());
-    }
-    if (from.has_player_status()) {
-      mutable_player_status()->::Frpg2PlayerData::PlayerStatus::MergeFrom(from.player_status());
-    }
-    if (from.has_play_data()) {
-      mutable_play_data()->::Frpg2PlayerData::PlayData::MergeFrom(from.play_data());
-    }
-    if (from.has_stats_info()) {
-      mutable_stats_info()->::Frpg2PlayerData::StatsInfo::MergeFrom(from.stats_info());
-    }
-    if (from.has_equipment()) {
-      mutable_equipment()->::Frpg2PlayerData::Equipment::MergeFrom(from.equipment());
-    }
-    if (from.has_unknown_1()) {
-      mutable_unknown_1()->::Frpg2PlayerData::unknown_struct_1::MergeFrom(from.unknown_1());
-    }
-  }
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void UpdateAllDelta::CopyFrom(const UpdateAllDelta& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool UpdateAllDelta::IsInitialized() const {
-
-  if (has_play_data()) {
-    if (!this->play_data().IsInitialized()) return false;
-  }
-  if (has_stats_info()) {
-    if (!this->stats_info().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void UpdateAllDelta::Swap(UpdateAllDelta* other) {
-  if (other != this) {
-    std::swap(player_location_, other->player_location_);
-    std::swap(log_info_, other->log_info_);
-    std::swap(player_status_, other->player_status_);
-    std::swap(play_data_, other->play_data_);
-    std::swap(stats_info_, other->stats_info_);
-    std::swap(equipment_, other->equipment_);
-    std::swap(unknown_1_, other->unknown_1_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string UpdateAllDelta::GetTypeName() const {
-  return "Frpg2PlayerData.UpdateAllDelta";
 }
 
 

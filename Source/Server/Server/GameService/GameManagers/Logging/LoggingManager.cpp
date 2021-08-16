@@ -28,6 +28,10 @@ MessageHandleResult LoggingManager::OnMessageRecieved(GameClient* Client, const 
     {
         return Handle_RequestNotifyProtoBufLog(Client, Message);
     }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyKillEnemy)
+    {
+        return Handle_RequestNotifyProtoBufLog(Client, Message);
+    }
 
     return MessageHandleResult::Unhandled;
 }
@@ -36,8 +40,79 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyProtoBufLog(GameClient* 
 {
     Frpg2RequestMessage::RequestNotifyProtoBufLog* Request = (Frpg2RequestMessage::RequestNotifyProtoBufLog*)Message.Protobuf.get();
 
-    // TODO: Not sure what we want to do with this information really, its not really very useful for us.
-    Log("[%s] Recieved protobuf log from client of type 0x%08x", Client->GetName().c_str(), Request->type());
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyKillEnemy(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifyKillEnemy* Request = (Frpg2RequestMessage::RequestNotifyKillEnemy*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyDisconnectSession(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifyDisconnectSession* Request = (Frpg2RequestMessage::RequestNotifyDisconnectSession*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyRegisterCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifyRegisterCharacter* Request = (Frpg2RequestMessage::RequestNotifyRegisterCharacter*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyDie(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifyDie* Request = (Frpg2RequestMessage::RequestNotifyDie*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyKillBoss(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifyKillBoss* Request = (Frpg2RequestMessage::RequestNotifyKillBoss*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyJoinMultiplay(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifyJoinMultiplay* Request = (Frpg2RequestMessage::RequestNotifyJoinMultiplay*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyLeaveMultiplay(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifyLeaveMultiplay* Request = (Frpg2RequestMessage::RequestNotifyLeaveMultiplay*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifySummonSignResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifySummonSignResult* Request = (Frpg2RequestMessage::RequestNotifySummonSignResult*)Message.Protobuf.get();
+
+    // TODO: Implement
 
     return MessageHandleResult::Handled;
 }

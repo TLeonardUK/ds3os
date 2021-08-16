@@ -23,6 +23,12 @@ message DateTime {
     required uint32 tzdiff = 7; 
 }
 
+message UnknownStruct1 {
+    optional int64 unknown_1 = 1;   // Always seems to be 3576692768, wondering if this is an offline id of some description?
+    optional string unknown_2 = 2;  // Mostly unused, when this is filled in it looks like a timestamp followed by the player id. eg. 202108092109340005938762
+    optional int64 unknown_3 = 3;   // Always seems to be either -1 or 0
+}
+
 message AllStatus {
     optional PlayerLocation player_location = 1;
     optional LogInfo log_info = 2;
@@ -30,25 +36,7 @@ message AllStatus {
     optional PlayData play_data = 4;
     optional StatsInfo stats_info = 5;
     optional Equipment equipment = 6;
-    optional string steam_id = 7;
-}
-
-message unknown_struct_1 {
-    optional int64 unknown_1 = 1;
-    optional string unknown_2 = 2; // When this is filled in it looks like a timestamp. eg. 202108092109340005938762
-    optional int64 unknown_3 = 3;
-}
-
-// Everything in this needs to be marked as optional as it seems to be a delta, only fields that
-// have changed since the last call are set. The first call at the start of the game seems to keep everything.
-message UpdateAllDelta {
-    optional PlayerLocation player_location = 1;
-    optional LogInfo log_info = 2;
-    optional PlayerStatus player_status = 3;
-    optional PlayData play_data = 4;
-    optional StatsInfo stats_info = 5;
-    optional Equipment equipment = 6;
-    optional unknown_struct_1 unknown_1 = 7;
+    optional UnknownStruct1 unknown_1 = 7;
 }
 
 message PlayerStatus {

@@ -254,16 +254,16 @@ message RequestGetAnnounceMessageListResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 // I'm guessing this is used to configure how often the user uploads their info, and in what locations.
-message PlayerInfoUploadConfigPushMessage {
+message PlayerInfoUploadConfigPushMessage { 
     required uint32 unknown_1 = 1;  // 908
     required PlayerInfoUploadConfigPushMessageList unknown_2 = 2;  // massive list
-    required uint32 unknown_3 = 3;  // 600 - 10 minutes
-    required uint32 unknown_4 = 4;  // 300 - 5 minutes
+    required uint32 unknown_3 = 3;  // Looks like interval - 600 - 10 minutes
+    required uint32 unknown_4 = 4;  // Looks like interval - 300 = 5 minutes
 }
 
 message RequestUpdateLoginPlayerCharacter {
     required uint32 unknown_1 = 1; // Always seems to be 1
-    required uint32 unknown_2 = 2; // Always seems to be 1
+    repeated uint32 unknown_2 = 2; // Always seems to be 1
 }
 
 message RequestUpdateLoginPlayerCharacterResponseData {
@@ -278,7 +278,7 @@ message RequestUpdateLoginPlayerCharacterResponse {
 }
 
 message RequestUpdatePlayerStatus {
-    required Frpg2PlayerData.UpdateAllDelta status = 1;
+    required Frpg2PlayerData.AllStatus status = 1;
 }
 
 message RequestUpdatePlayerStatusResponse {
@@ -330,82 +330,112 @@ message RequestGetPlayerCharacterListResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message BloodMessageData {
-    // Unknown
+    required uint32 player_id = 1;
+    required uint32 unknown_1 = 2;                      // No idea, seems to be 1, 2, 3, 4, 13, 61, 5, 8  Doesn't seem to be character id. Huuum
+    required uint32 message_id = 3; 
+    required uint32 good = 4;         
+    required bytes  message_data = 5;
+    required uint32 player_steam_id = 6;
+    required uint32 online_area_id = 7;
+    required uint32 poor = 8;                   
+}
+
+message LocatedBloodMessage {
+    required uint32 online_area_id = 1;
+    required uint32 message_id = 2;
+}
+
+message BloodMessageDomainLimitData {
+    required uint32 online_area_id = 1;
+    required uint32 max_type_1 = 2;                     // Unknown differentiation 
+    required uint32 max_type_2 = 3;                     // Maximum messages to return in an area seems to be sum of both these?
+                                                        // I wonder if this is a split between "online" and "offline" users?
 }
 
 message RequestReentryBloodMessage {
-    required uint32 unknown_2 = 2; // Always seems to be 1.
+    repeated LocatedBloodMessage messages = 1;
+    required uint32 unknown_2 = 2;                      // Always seems to be 1.
 }
 
 message RequestReentryBloodMessageResponse {
-    // Unknown
+    // Seems to be a list of ids that need their data sent to the server again. 
+    // If anything is returned RequestReCreateBloodMessageList gets returned after. 
+    repeated uint32 recreate_message_ids = 1;       
 }
 
 message RequestCreateBloodMessage {
-    // Unknown
+    required uint32 online_area_id = 1;
+    required uint32 unknown_1 = 2;                      // Always seems to be 1.
+    required bytes  message_data = 3;
 }
 
 message RequestCreateBloodMessageResponse {
-    // Unknown
+    required uint32 message_id = 1;
 }
 
 message RequestReCreateBloodMessageList {
     message Blood_message_info_list {
-        // Unknown
+        required uint32 online_area_id = 1;
+        required bytes  message_data = 2;
+        required uint32 unknown_1 = 3;                  // Seem 0, 2, 1
+        required uint32 unknown_2 = 4;                  // Always seems to be 0
     }
-    // Unknown
+    required uint32 unknown_1 = 2;                      // Always seems to be 1.
+    repeated Blood_message_info_list messages = 3;
 }
 
 message RequestReCreateBloodMessageListResponse {
-    // Unknown
+    repeated uint32 message_ids = 1;
 }
 
 message RequestRemoveBloodMessage {
-    // Unknown
+    required uint32 online_area_id = 1;
+    required uint32 message_id = 2;
 }
 
 message RequestRemoveBloodMessageResponse {
-    // Unknown
-}
-
-message LocatedBloodMessage {
-    // Unknown
-}
-
-message BloodMessageDomainLimitData {
-    // Unknown
+    // Never sent by server it appears.
 }
 
 message RequestGetBloodMessageList {
-    // Unknown
+    required uint32 max_messages = 1;                   // Always seems to be 40.
+    repeated BloodMessageDomainLimitData search_areas = 2;
 }
 
 message RequestGetBloodMessageListResponse {
-    // Unknown
+    repeated BloodMessageData messages = 1;
 }
 
 message RequestEvaluateBloodMessage {
-    // Unknown
+    required uint32 online_area_id = 1;
+    required uint32 message_id = 2;
+    required bool was_poor = 3;
 }
 
 message RequestEvaluateBloodMessageResponse {
-    // Unknown
+    // Never sent by server it appears.
 }
 
 message RequestGetBloodMessageEvaluation {
-    // Unknown
+    repeated LocatedBloodMessage messages = 1;
 }
 
 message BloodMessageEvaluationData {
-    // Unknown
+    required uint32 message_id = 1;
+    required uint32 good = 2;
+    required uint32 poor = 3;
 }
 
 message RequestGetBloodMessageEvaluationResponse {
-    // Unknown
+    repeated BloodMessageEvaluationData messages = 1;
 }
 
 message PushRequestEvaluateBloodMessage {
-    // Unknown
+    required uint32 unknown_1 = 1; // 918
+    required uint32 player_id = 2; 
+    required uint32 message_id = 3;
+    required uint32 player_steam_id = 4; 
+    required bool was_poor = 5; 
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -439,18 +469,10 @@ message LogCommonInfo_1 {
     required uint32 unknown_2 = 37; // 0, 1
 }
 
-// New for this protobuf, its not defined in DS3, we should fine out what struct
-// it actually maps to.
-message LogCommonInfo_2 {
-    required uint32 unknown_1 = 1; // 3576692768
-    required string timestamp = 2; // "202108092109340005938762"
-    required uint32 unknown_3 = 3; 
-}
-
 // Wraps common information about a log message sent to the server.
 message LogCommonInfo {
     required LogCommonInfo_1 unknown_1 = 3;
-    required LogCommonInfo_2 unknown_2 = 7;
+    required Frpg2PlayerData.UnknownStruct1 unknown_2 = 7;
 }
 
 // Sent in RequestNotifyProtoBufLog and used to determine which protobuf
@@ -513,8 +535,8 @@ message RequestNotifyKillBoss {
 // Sent when user joins another users game, or someone else joins their game.
 message RequestNotifyJoinMultiplay { 
     required Frpg2PlayerData.AllStatus all_status = 1;
-    required uint32 online_area_id_lower = 2;
-    required uint32 online_area_id_upper = 3;
+    required uint32 map_id = 2;
+    required uint32 online_area_id = 3;
     required uint32 unknown_2 = 4;
     required uint32 unknown_3 = 5;
     repeated PartyMemberInfo party_member_info = 6;
@@ -523,8 +545,8 @@ message RequestNotifyJoinMultiplay {
 // Sent when user is in a game with no other users connected.
 message RequestNotifyLeaveMultiplay {  
     required Frpg2PlayerData.AllStatus all_status = 1;
-    required uint32 online_area_id_lower = 2;
-    required uint32 online_area_id_upper = 3;
+    required uint32 map_id = 2;
+    required uint32 online_area_id = 3;
     required uint32 unknown_2 = 4;
     required uint32 unknown_3 = 5;
     required uint32 unknown_4 = 6;
@@ -534,8 +556,8 @@ message RequestNotifyLeaveMultiplay {
 // Sent when the user has created a sign (not sure why this is needed - server already knows this).
 message RequestNotifyCreateSignResult {
     required Frpg2PlayerData.AllStatus all_status = 1;
-    required uint32 online_area_id_lower = 2;
-    required uint32 online_area_id_upper = 3;
+    required uint32 map_id = 2;
+    required uint32 online_area_id = 3;
     required Frpg2PlayerData.Vector vector = 4;
     required uint32 sign_unique_number = 5;              // 528745087
     required uint32 unknown_2 = 6;                       // 0
@@ -669,8 +691,8 @@ message RequestGetSignListResponse {
 }
 
 message RequestCreateSign {
-    required uint32 online_area_id_lower = 1;
-    required uint32 online_area_id_upper = 2;
+    required uint32 map_id = 1;
+    required uint32 online_area_id = 2;
     required MatchingParameter matching_parameter = 3;
     required uint32 unknown = 4;
     required bytes player_struct = 5;
@@ -681,8 +703,8 @@ message RequestCreateSignResponse {
 }
 
 message RequestSummonSign {
-    required uint32 online_area_id_lower = 1;
-    required uint32 online_area_id_upper = 2;
+    required uint32 map_id = 1;
+    required uint32 online_area_id = 2;
     required SignInfo sign_info = 3;
     required string player_struct = 4;
 }
@@ -692,8 +714,8 @@ message RequestSummonSignResponse {
 }
 
 message RequestRemoveSign {
-    required uint32 online_area_id_lower = 1;
-    required uint32 online_area_id_upper = 2;
+    required uint32 map_id = 1;
+    required uint32 online_area_id = 2;
     required uint32 sign_unique_number = 3;
 }
 
@@ -702,8 +724,8 @@ message RequestRemoveSignResponse {
 }
 
 message RequestUpdateSign {
-    required uint32 online_area_id_lower = 1;
-    required uint32 online_area_id_upper = 2;
+    required uint32 map_id = 1;
+    required uint32 online_area_id = 2;
     required uint32 sign_unique_number = 3;
 }
 
@@ -766,17 +788,17 @@ message BreakInTargetData {
 
 // Sent by invader looking for worlds to invade
 message RequestGetBreakInTargetList { 
-    required uint32 online_area_id_lower = 1;
-    required uint32 online_area_id_upper = 2;
+    required uint32 map_id = 1;
+    required uint32 online_area_id = 2;
     required uint32 unknown_1 = 3;
     required MatchingParameter matching_parameter = 4;
     required uint32 unknown_2 = 5;
 }
 
 // Received by invader looking for worlds to invade
-message RequestGetBreakInTargetListResponse { 
-    required uint32 online_area_id_lower = 1;
-    required uint32 online_area_id_upper = 2;
+message RequestGetBreakInTargetListResponse {
+    required uint32 map_id = 1;
+    required uint32 online_area_id = 2;
     repeated BreakInTargetData break_in_target_data = 3;
 }
 
@@ -794,8 +816,8 @@ message PushRequestBreakInTarget {
     required uint32 player_id = 2; //Invading playerid
     required string steam_id = 3;
     required uint32 unknown_2 = 4; //Same as PushRequestAllowBreakInTarget
-    required uint32 online_area_id_lower = 5;
-    required uint32 online_area_id_upper = 6;
+    required uint32 map_id = 5;
+    required uint32 online_area_id = 6;
 }
 
 message PushRequestRemoveBreakInTarget {

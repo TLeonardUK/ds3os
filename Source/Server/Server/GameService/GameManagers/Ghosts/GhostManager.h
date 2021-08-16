@@ -14,27 +14,26 @@
 struct Frpg2ReliableUdpMessage;
 class Server;
 
-// Handles all client requests to do with matchmaking
-// Which basically means signs, invasions, summoning, etc.
+// Handles client requests relating to leaving
+// and replaying ghosts in the world. These are the ones that
+// appear when you are near things like bonfires.
 
-class MatchmakingManager
+class GhostManager
     : public GameManager
 {
 public:    
-    MatchmakingManager(Server* InServerInstance);
+    GhostManager(Server* InServerInstance);
 
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
 
 protected:
-    MessageHandleResult Handle_RequestGetSignList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    MessageHandleResult Handle_RequestCreateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    MessageHandleResult Handle_RequestRemoveSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestGetDeadingGhost(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestCreateGhostData(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestGetGhostDataList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;
-
-    //std::unordered_map<OnlineAreaId, SummonSign> SignList;
 
 };

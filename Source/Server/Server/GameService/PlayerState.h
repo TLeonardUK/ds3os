@@ -11,6 +11,10 @@
 
 #include <string>
 
+#include "Protobuf/Frpg2PlayerData.pb.h"
+
+#include "Server/GameService/Utils/GameIds.h"
+
 // Represents the in-game state of a player. Each game client owns an instance of this class.
 
 struct PlayerState
@@ -25,4 +29,11 @@ struct PlayerState
     // The name of the character the player is currently playing with. Will be empty
     // until the first RequestUpdatePlayerStatus is invoked.
     std::string CharacterName;
+
+    // Current online matching area the player is in.
+    OnlineAreaId CurrentArea;
+
+    // Information the player sends and periodically patches with 
+    // RequestUpdatePlayerStatus requests.
+    Frpg2PlayerData::AllStatus PlayerStatus;
 };

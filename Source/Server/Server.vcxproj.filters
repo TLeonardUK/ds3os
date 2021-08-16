@@ -46,9 +46,6 @@
     <Filter Include="Server\GameService\GameManagers\PlayerData">
       <UniqueIdentifier>{45287f97-243f-466c-848c-3e2078480df8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Server\GameService\GameManagers\Matchmaking">
-      <UniqueIdentifier>{5960c79e-dab1-496f-ba83-8111df873efc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Server\GameService\GameManagers\Boot">
       <UniqueIdentifier>{bf360d9c-477d-4fcc-9804-af5b2e46d0f6}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,33 @@
     </Filter>
     <Filter Include="Server\Database">
       <UniqueIdentifier>{c73e71a7-bdc3-4e5b-8b95-5776140a3f78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Bloodstain">
+      <UniqueIdentifier>{a9f320c7-4d2c-4f27-9e07-8e5eea3cfb86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Signs">
+      <UniqueIdentifier>{5960c79e-dab1-496f-ba83-8111df873efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Ghosts">
+      <UniqueIdentifier>{0cd08b36-f9c4-467a-8361-403f3c084f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Ranking">
+      <UniqueIdentifier>{83ea9aa4-edfd-4242-86bc-4614b335197f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\QuickMatch">
+      <UniqueIdentifier>{c9e35c07-e1e7-4ee1-a68f-e75ffd610a95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\BreakIn">
+      <UniqueIdentifier>{8b90a78f-66db-49a2-bb22-edd9b47a3464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Visitor">
+      <UniqueIdentifier>{9237e08f-1d35-4515-a278-6d193770a8a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Mark">
+      <UniqueIdentifier>{3f44fe2a-6d39-4867-8583-d70e883d4752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameService\GameManagers\Misc">
+      <UniqueIdentifier>{146bbd3b-10d0-4341-9bfc-21feda6115f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +219,6 @@
     <ClInclude Include="Server\GameService\GameManagers\PlayerData\PlayerDataManager.h">
       <Filter>Server\GameService\GameManagers\PlayerData</Filter>
     </ClInclude>
-    <ClInclude Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.h">
-      <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
-    </ClInclude>
     <ClInclude Include="Server\GameService\GameManagers\Boot\BootManager.h">
       <Filter>Server\GameService\GameManagers\Boot</Filter>
     </ClInclude>
@@ -213,9 +234,6 @@
     <ClInclude Include="Server\GameService\Utils\GameIds.h">
       <Filter>Server\GameService\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Server\GameService\GameManagers\Matchmaking\SummonSign.h">
-      <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Utils\Enum.h">
       <Filter>Core\Utils</Filter>
     </ClInclude>
@@ -227,6 +245,36 @@
     </ClInclude>
     <ClInclude Include="Server\Database\ServerDatabase.h">
       <Filter>Server\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Bloodstain\BloodstainManager.h">
+      <Filter>Server\GameService\GameManagers\Bloodstain</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Signs\SignManager.h">
+      <Filter>Server\GameService\GameManagers\Signs</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Signs\SummonSign.h">
+      <Filter>Server\GameService\GameManagers\Signs</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Ghosts\GhostManager.h">
+      <Filter>Server\GameService\GameManagers\Ghosts</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Ranking\RankingManager.h">
+      <Filter>Server\GameService\GameManagers\Ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\QuickMatch\QuickMatchManager.h">
+      <Filter>Server\GameService\GameManagers\QuickMatch</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\BreakIn\BreakInManager.h">
+      <Filter>Server\GameService\GameManagers\BreakIn</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Visitor\VisitorManager.h">
+      <Filter>Server\GameService\GameManagers\Visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Mark\MarkManager.h">
+      <Filter>Server\GameService\GameManagers\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\GameManagers\Misc\MiscManager.h">
+      <Filter>Server\GameService\GameManagers\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -339,11 +387,35 @@
     <ClCompile Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.cpp">
       <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
     </ClCompile>
-    <ClCompile Include="Server\GameService\GameManagers\Matchmaking\MatchmakingManager.cpp">
-      <Filter>Server\GameService\GameManagers\Matchmaking</Filter>
-    </ClCompile>
     <ClCompile Include="Server\Database\ServerDatabase.cpp">
       <Filter>Server\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Bloodstain\BloodstainManager.cpp">
+      <Filter>Server\GameService\GameManagers\Bloodstain</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Signs\SignManager.cpp">
+      <Filter>Server\GameService\GameManagers\Signs</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Ghosts\GhostManager.cpp">
+      <Filter>Server\GameService\GameManagers\Ghosts</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Ranking\RankingManager.cpp">
+      <Filter>Server\GameService\GameManagers\Ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\QuickMatch\QuickMatchManager.cpp">
+      <Filter>Server\GameService\GameManagers\QuickMatch</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\BreakIn\BreakInManager.cpp">
+      <Filter>Server\GameService\GameManagers\BreakIn</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Visitor\VisitorManager.cpp">
+      <Filter>Server\GameService\GameManagers\Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Mark\MarkManager.cpp">
+      <Filter>Server\GameService\GameManagers\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GameService\GameManagers\Misc\MiscManager.cpp">
+      <Filter>Server\GameService\GameManagers\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

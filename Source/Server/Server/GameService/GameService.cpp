@@ -13,7 +13,15 @@
 #include "Server/GameService/GameManagers/Logging/LoggingManager.h"
 #include "Server/GameService/GameManagers/PlayerData/PlayerDataManager.h"
 #include "Server/GameService/GameManagers/BloodMessage/BloodMessageManager.h"
-#include "Server/GameService/GameManagers/Matchmaking/MatchmakingManager.h"
+#include "Server/GameService/GameManagers/Bloodstain/BloodstainManager.h"
+#include "Server/GameService/GameManagers/Ghosts/GhostManager.h"
+#include "Server/GameService/GameManagers/Signs/SignManager.h"
+#include "Server/GameService/GameManagers/Ranking/RankingManager.h"
+#include "Server/GameService/GameManagers/QuickMatch/QuickMatchManager.h"
+#include "Server/GameService/GameManagers/BreakIn/BreakInManager.h"
+#include "Server/GameService/GameManagers/Visitor/VisitorManager.h"
+#include "Server/GameService/GameManagers/Mark/MarkManager.h"
+#include "Server/GameService/GameManagers/Misc/MiscManager.h"
 
 #include "Server/Server.h"
 #include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
@@ -39,7 +47,15 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<LoggingManager>(ServerInstance));
     Managers.push_back(std::make_shared<PlayerDataManager>(ServerInstance));
     Managers.push_back(std::make_shared<BloodMessageManager>(ServerInstance));
-    Managers.push_back(std::make_shared<MatchmakingManager>(ServerInstance));
+    Managers.push_back(std::make_shared<BloodstainManager>(ServerInstance));
+    Managers.push_back(std::make_shared<SignManager>(ServerInstance));
+    Managers.push_back(std::make_shared<GhostManager>(ServerInstance));
+    Managers.push_back(std::make_shared<RankingManager>(ServerInstance));
+    Managers.push_back(std::make_shared<QuickMatchManager>(ServerInstance));
+    Managers.push_back(std::make_shared<BreakInManager>(ServerInstance));
+    Managers.push_back(std::make_shared<VisitorManager>(ServerInstance));
+    Managers.push_back(std::make_shared<MarkManager>(ServerInstance));
+    Managers.push_back(std::make_shared<MiscManager>(ServerInstance));
 }
 
 GameService::~GameService()

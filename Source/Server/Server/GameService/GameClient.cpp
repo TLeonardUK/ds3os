@@ -70,8 +70,15 @@ bool GameClient::Poll()
     {
         if (HandleMessage(Message))
         {
-            Warning("[%s] Disconnecting client as failed to handle message.", GetName().c_str());
-            return true;
+            if (BuildConfig::DISCONNECT_ON_UNHANDLED_MESSAGE)
+            {
+                Warning("[%s] Disconnecting client as failed to handle message.", GetName().c_str());
+                return true;
+            }
+            else
+            {
+                Warning("[%s] Failed to handle message, ignoring and hoping nothing breaks ...", GetName().c_str());
+            }
         }
 
         // TODO: Find a better way to do this that doesn't break our abstraction.
