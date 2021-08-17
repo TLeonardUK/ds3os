@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------------------------
 // Boot
 // -----------------------------------------------------------------------------------------------
-DEFINE_MESSAGE         (0x0320, PlayerInfoUploadConfigPushMessage,  PlayerInfoUploadConfigPushMessage)
+DEFINE_MESSAGE         (0x0320, PlayerInfoUploadConfigPushMessage,  PlayerInfoUploadConfigPushMessage)                                                  // Conflict
 DEFINE_REQUEST_RESPONSE(0x0386, RequestWaitForUserLogin,            RequestWaitForUserLogin,            RequestWaitForUserLoginResponse)
 DEFINE_REQUEST_RESPONSE(0x03C6, RequestGetAnnounceMessageList,      RequestGetAnnounceMessageList,      RequestGetAnnounceMessageListResponse)
 
@@ -157,7 +157,7 @@ DEFINE_REQUEST_RESPONSE(0x0455,   RequestSendQuickMatchResult,      RequestSendQ
 // -----------------------------------------------------------------------------------------------
 
 // Can't find registration in code.
-//DEFINE_MESSAGE         (0x,     PushRequestNotifyRingBell,        PushRequestNotifyRingBell)
+DEFINE_MESSAGE         (0x0320,   PushRequestNotifyRingBell,        PushRequestNotifyRingBell)                                                    // Conflict - Definitely correct
 
 DEFINE_REQUEST_RESPONSE(0x03C8,   RequestNotifyRingBell,            RequestNotifyRingBell,              RequestNotifyRingBellResponse)
 
@@ -192,7 +192,7 @@ DEFINE_MESSAGE           (0x03B9, PushRequestRemoveVisitor,         PushRequestR
 // -----------------------------------------------------------------------------------------------
 // Networking
 // -----------------------------------------------------------------------------------------------
-DEFINE_REQUEST_RESPONSE(0x0320,   RequestSendMessageToPlayers,      RequestSendMessageToPlayers,        RequestSendMessageToPlayersResponse)
+DEFINE_REQUEST_RESPONSE(0x0320,   RequestSendMessageToPlayers,      RequestSendMessageToPlayers,        RequestSendMessageToPlayersResponse)                            // Conflict
 DEFINE_REQUEST_RESPONSE(0x038E,   RequestMeasureUploadBandwidth,    RequestMeasureUploadBandwidth,      RequestMeasureUploadBandwidthResponse)
 DEFINE_REQUEST_RESPONSE(0x038F,   RequestMeasureDownloadBandwidth,  RequestMeasureDownloadBandwidth,    RequestMeasureDownloadBandwidthResponse)
 

@@ -133,13 +133,43 @@ class Vector : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required float x = 1;
+  inline bool has_x() const;
+  inline void clear_x();
+  static const int kXFieldNumber = 1;
+  inline float x() const;
+  inline void set_x(float value);
+
+  // required float y = 2;
+  inline bool has_y() const;
+  inline void clear_y();
+  static const int kYFieldNumber = 2;
+  inline float y() const;
+  inline void set_y(float value);
+
+  // required float z = 3;
+  inline bool has_z() const;
+  inline void clear_z();
+  static const int kZFieldNumber = 3;
+  inline float z() const;
+  inline void set_z(float value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.Vector)
  private:
+  inline void set_has_x();
+  inline void clear_has_x();
+  inline void set_has_y();
+  inline void clear_has_y();
+  inline void set_has_z();
+  inline void clear_has_z();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  float x_;
+  float y_;
+  float z_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2978,13 +3008,65 @@ class VisitResultLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 2;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 2;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
+  // required uint32 online_area_id_source = 3;
+  inline bool has_online_area_id_source() const;
+  inline void clear_online_area_id_source();
+  static const int kOnlineAreaIdSourceFieldNumber = 3;
+  inline ::google::protobuf::uint32 online_area_id_source() const;
+  inline void set_online_area_id_source(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id_destination = 4;
+  inline bool has_online_area_id_destination() const;
+  inline void clear_online_area_id_destination();
+  static const int kOnlineAreaIdDestinationFieldNumber = 4;
+  inline ::google::protobuf::uint32 online_area_id_destination() const;
+  inline void set_online_area_id_destination(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 5;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.VisitResultLog)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_location();
+  inline void clear_has_location();
+  inline void set_has_online_area_id_source();
+  inline void clear_has_online_area_id_source();
+  inline void set_has_online_area_id_destination();
+  inline void clear_has_online_area_id_destination();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 online_area_id_source_;
+  ::google::protobuf::uint32 online_area_id_destination_;
+  ::google::protobuf::uint32 unknown_2_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -3059,13 +3141,103 @@ class QuickMatchResultLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline ::google::protobuf::uint32 unknown_6() const;
+  inline void set_unknown_6(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_7 = 7;
+  inline bool has_unknown_7() const;
+  inline void clear_unknown_7();
+  static const int kUnknown7FieldNumber = 7;
+  inline ::google::protobuf::uint32 unknown_7() const;
+  inline void set_unknown_7(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_8 = 8;
+  inline bool has_unknown_8() const;
+  inline void clear_unknown_8();
+  static const int kUnknown8FieldNumber = 8;
+  inline ::google::protobuf::uint32 unknown_8() const;
+  inline void set_unknown_8(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_9 = 9;
+  inline bool has_unknown_9() const;
+  inline void clear_unknown_9();
+  static const int kUnknown9FieldNumber = 9;
+  inline ::google::protobuf::uint32 unknown_9() const;
+  inline void set_unknown_9(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.QuickMatchResultLog)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
+  inline void set_has_unknown_7();
+  inline void clear_has_unknown_7();
+  inline void set_has_unknown_8();
+  inline void clear_has_unknown_8();
+  inline void set_has_unknown_9();
+  inline void clear_has_unknown_9();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 unknown_7_;
+  ::google::protobuf::uint32 unknown_8_;
+  ::google::protobuf::uint32 unknown_9_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -3140,13 +3312,73 @@ class QuickMatchEndLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline ::google::protobuf::uint32 unknown_6() const;
+  inline void set_unknown_6(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.QuickMatchEndLog)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 unknown_6_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -3245,6 +3477,78 @@ class ConvertSaveDataLog : public ::google::protobuf::MessageLite {
 // ===================================================================
 
 // Vector
+
+// required float x = 1;
+inline bool Vector::has_x() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Vector::set_has_x() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Vector::clear_has_x() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Vector::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline float Vector::x() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.Vector.x)
+  return x_;
+}
+inline void Vector::set_x(float value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.Vector.x)
+}
+
+// required float y = 2;
+inline bool Vector::has_y() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Vector::set_has_y() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Vector::clear_has_y() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Vector::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+inline float Vector::y() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.Vector.y)
+  return y_;
+}
+inline void Vector::set_y(float value) {
+  set_has_y();
+  y_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.Vector.y)
+}
+
+// required float z = 3;
+inline bool Vector::has_z() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Vector::set_has_z() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Vector::clear_has_z() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Vector::clear_z() {
+  z_ = 0;
+  clear_has_z();
+}
+inline float Vector::z() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.Vector.z)
+  return z_;
+}
+inline void Vector::set_z(float value) {
+  set_has_z();
+  z_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.Vector.z)
+}
 
 // -------------------------------------------------------------------
 
@@ -3762,13 +4066,514 @@ inline void SystemOptionLog::set_allocated_network_settings(::FpdLogMessage::Sys
 
 // VisitResultLog
 
+// required uint32 unknown_1 = 1;
+inline bool VisitResultLog::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void VisitResultLog::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void VisitResultLog::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void VisitResultLog::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 VisitResultLog::unknown_1() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.VisitResultLog.unknown_1)
+  return unknown_1_;
+}
+inline void VisitResultLog::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.VisitResultLog.unknown_1)
+}
+
+// required .FpdLogMessage.Vector location = 2;
+inline bool VisitResultLog::has_location() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void VisitResultLog::set_has_location() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void VisitResultLog::clear_has_location() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void VisitResultLog::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& VisitResultLog::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.VisitResultLog.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* VisitResultLog::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.VisitResultLog.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* VisitResultLog::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void VisitResultLog::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.VisitResultLog.location)
+}
+
+// required uint32 online_area_id_source = 3;
+inline bool VisitResultLog::has_online_area_id_source() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void VisitResultLog::set_has_online_area_id_source() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void VisitResultLog::clear_has_online_area_id_source() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void VisitResultLog::clear_online_area_id_source() {
+  online_area_id_source_ = 0u;
+  clear_has_online_area_id_source();
+}
+inline ::google::protobuf::uint32 VisitResultLog::online_area_id_source() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.VisitResultLog.online_area_id_source)
+  return online_area_id_source_;
+}
+inline void VisitResultLog::set_online_area_id_source(::google::protobuf::uint32 value) {
+  set_has_online_area_id_source();
+  online_area_id_source_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.VisitResultLog.online_area_id_source)
+}
+
+// required uint32 online_area_id_destination = 4;
+inline bool VisitResultLog::has_online_area_id_destination() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void VisitResultLog::set_has_online_area_id_destination() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void VisitResultLog::clear_has_online_area_id_destination() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void VisitResultLog::clear_online_area_id_destination() {
+  online_area_id_destination_ = 0u;
+  clear_has_online_area_id_destination();
+}
+inline ::google::protobuf::uint32 VisitResultLog::online_area_id_destination() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.VisitResultLog.online_area_id_destination)
+  return online_area_id_destination_;
+}
+inline void VisitResultLog::set_online_area_id_destination(::google::protobuf::uint32 value) {
+  set_has_online_area_id_destination();
+  online_area_id_destination_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.VisitResultLog.online_area_id_destination)
+}
+
+// required uint32 unknown_2 = 5;
+inline bool VisitResultLog::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void VisitResultLog::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void VisitResultLog::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void VisitResultLog::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 VisitResultLog::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.VisitResultLog.unknown_2)
+  return unknown_2_;
+}
+inline void VisitResultLog::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.VisitResultLog.unknown_2)
+}
+
 // -------------------------------------------------------------------
 
 // QuickMatchResultLog
 
+// required uint32 unknown_1 = 1;
+inline bool QuickMatchResultLog::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void QuickMatchResultLog::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_1() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_1)
+  return unknown_1_;
+}
+inline void QuickMatchResultLog::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_1)
+}
+
+// required uint32 unknown_2 = 2;
+inline bool QuickMatchResultLog::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void QuickMatchResultLog::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_2)
+  return unknown_2_;
+}
+inline void QuickMatchResultLog::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_2)
+}
+
+// required uint32 unknown_3 = 3;
+inline bool QuickMatchResultLog::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void QuickMatchResultLog::clear_unknown_3() {
+  unknown_3_ = 0u;
+  clear_has_unknown_3();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_3() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_3)
+  return unknown_3_;
+}
+inline void QuickMatchResultLog::set_unknown_3(::google::protobuf::uint32 value) {
+  set_has_unknown_3();
+  unknown_3_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_3)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool QuickMatchResultLog::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void QuickMatchResultLog::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_4)
+  return unknown_4_;
+}
+inline void QuickMatchResultLog::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_4)
+}
+
+// required uint32 unknown_5 = 5;
+inline bool QuickMatchResultLog::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void QuickMatchResultLog::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_5() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_5)
+  return unknown_5_;
+}
+inline void QuickMatchResultLog::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_5)
+}
+
+// required uint32 unknown_6 = 6;
+inline bool QuickMatchResultLog::has_unknown_6() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_6() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_6() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void QuickMatchResultLog::clear_unknown_6() {
+  unknown_6_ = 0u;
+  clear_has_unknown_6();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_6() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_6)
+  return unknown_6_;
+}
+inline void QuickMatchResultLog::set_unknown_6(::google::protobuf::uint32 value) {
+  set_has_unknown_6();
+  unknown_6_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_6)
+}
+
+// required uint32 unknown_7 = 7;
+inline bool QuickMatchResultLog::has_unknown_7() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_7() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_7() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void QuickMatchResultLog::clear_unknown_7() {
+  unknown_7_ = 0u;
+  clear_has_unknown_7();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_7() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_7)
+  return unknown_7_;
+}
+inline void QuickMatchResultLog::set_unknown_7(::google::protobuf::uint32 value) {
+  set_has_unknown_7();
+  unknown_7_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_7)
+}
+
+// required uint32 unknown_8 = 8;
+inline bool QuickMatchResultLog::has_unknown_8() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_8() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_8() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void QuickMatchResultLog::clear_unknown_8() {
+  unknown_8_ = 0u;
+  clear_has_unknown_8();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_8() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_8)
+  return unknown_8_;
+}
+inline void QuickMatchResultLog::set_unknown_8(::google::protobuf::uint32 value) {
+  set_has_unknown_8();
+  unknown_8_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_8)
+}
+
+// required uint32 unknown_9 = 9;
+inline bool QuickMatchResultLog::has_unknown_9() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void QuickMatchResultLog::set_has_unknown_9() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void QuickMatchResultLog::clear_has_unknown_9() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void QuickMatchResultLog::clear_unknown_9() {
+  unknown_9_ = 0u;
+  clear_has_unknown_9();
+}
+inline ::google::protobuf::uint32 QuickMatchResultLog::unknown_9() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchResultLog.unknown_9)
+  return unknown_9_;
+}
+inline void QuickMatchResultLog::set_unknown_9(::google::protobuf::uint32 value) {
+  set_has_unknown_9();
+  unknown_9_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchResultLog.unknown_9)
+}
+
 // -------------------------------------------------------------------
 
 // QuickMatchEndLog
+
+// required uint32 unknown_1 = 1;
+inline bool QuickMatchEndLog::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void QuickMatchEndLog::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void QuickMatchEndLog::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void QuickMatchEndLog::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 QuickMatchEndLog::unknown_1() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchEndLog.unknown_1)
+  return unknown_1_;
+}
+inline void QuickMatchEndLog::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchEndLog.unknown_1)
+}
+
+// required uint32 unknown_2 = 2;
+inline bool QuickMatchEndLog::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void QuickMatchEndLog::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void QuickMatchEndLog::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void QuickMatchEndLog::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 QuickMatchEndLog::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchEndLog.unknown_2)
+  return unknown_2_;
+}
+inline void QuickMatchEndLog::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchEndLog.unknown_2)
+}
+
+// required uint32 unknown_3 = 3;
+inline bool QuickMatchEndLog::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void QuickMatchEndLog::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void QuickMatchEndLog::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void QuickMatchEndLog::clear_unknown_3() {
+  unknown_3_ = 0u;
+  clear_has_unknown_3();
+}
+inline ::google::protobuf::uint32 QuickMatchEndLog::unknown_3() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchEndLog.unknown_3)
+  return unknown_3_;
+}
+inline void QuickMatchEndLog::set_unknown_3(::google::protobuf::uint32 value) {
+  set_has_unknown_3();
+  unknown_3_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchEndLog.unknown_3)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool QuickMatchEndLog::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void QuickMatchEndLog::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void QuickMatchEndLog::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void QuickMatchEndLog::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 QuickMatchEndLog::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchEndLog.unknown_4)
+  return unknown_4_;
+}
+inline void QuickMatchEndLog::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchEndLog.unknown_4)
+}
+
+// required uint32 unknown_5 = 5;
+inline bool QuickMatchEndLog::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void QuickMatchEndLog::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void QuickMatchEndLog::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void QuickMatchEndLog::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 QuickMatchEndLog::unknown_5() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchEndLog.unknown_5)
+  return unknown_5_;
+}
+inline void QuickMatchEndLog::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchEndLog.unknown_5)
+}
+
+// required uint32 unknown_6 = 6;
+inline bool QuickMatchEndLog::has_unknown_6() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void QuickMatchEndLog::set_has_unknown_6() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void QuickMatchEndLog::clear_has_unknown_6() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void QuickMatchEndLog::clear_unknown_6() {
+  unknown_6_ = 0u;
+  clear_has_unknown_6();
+}
+inline ::google::protobuf::uint32 QuickMatchEndLog::unknown_6() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.QuickMatchEndLog.unknown_6)
+  return unknown_6_;
+}
+inline void QuickMatchEndLog::set_unknown_6(::google::protobuf::uint32 value) {
+  set_has_unknown_6();
+  unknown_6_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.QuickMatchEndLog.unknown_6)
+}
 
 // -------------------------------------------------------------------
 

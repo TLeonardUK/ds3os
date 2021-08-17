@@ -159,8 +159,6 @@ class RequestUpdateSign;
 class RequestUpdateSignResponse;
 class RequestRejectSign;
 class RequestRejectSignResponse;
-class RequestCreateGhostData;
-class RequestCreateGhostDataResponse;
 class RequestGetRightMatchingArea;
 class RequestGetRightMatchingAreaResponse;
 class RequestGetRightMatchingAreaResponse_Area_info;
@@ -171,17 +169,19 @@ class BreakInTargetData;
 class RequestGetBreakInTargetList;
 class RequestGetBreakInTargetListResponse;
 class PushRequestAllowBreakInTarget;
+class PushRequestRejectBreakInTarget;
 class PushRequestBreakInTarget;
 class PushRequestRemoveBreakInTarget;
 class RequestBreakInTarget;
 class RequestBreakInTargetResponse;
 class RequestRejectBreakInTarget;
 class RequestRejectBreakInTargetResponse;
-class PushRequestRejectBreakInTarget;
 class RequestGetDeadingGhost;
 class RequestGetDeadingGhostResponse;
 class RequestGetGhostDataList;
 class GhostData;
+class RequestCreateGhostData;
+class RequestCreateGhostDataResponse;
 class RequestGetGhostDataListResponse;
 class RequestGetVisitorList;
 class VisitorData;
@@ -243,13 +243,20 @@ class RequestGetMarkListResponse;
 class RequestGetOnlineShopItemList;
 class RequestGetOnlineShopItemListResponse;
 class RequestGetOnlineShopItemListResponse_Lineup;
+class QuickMatchRank;
+class QuickMatchRankCache;
+class QuickMatchSession;
+class QuickMatchSession_Result_list;
+class QuickMatchApologyPoint;
 class QuickMatchData;
 class QuickMatchSearchResult;
 class AcceptQuickMatchMessage;
 class RejectQuickMatchMessage;
 class RemoveQuickMatchMessage;
 class JoinQuickMatchMessage;
-class QuickMatchRank;
+class PushRequestJoinQuickMatch;
+class PushRequestAcceptQuickMatch;
+class PushRequestRejectQuickMatch;
 class RequestSearchQuickMatch;
 class RequestSearchQuickMatch_Map_id_list;
 class RequestSearchQuickMatchResponse;
@@ -264,18 +271,11 @@ class RequestAcceptQuickMatch;
 class RequestAcceptQuickMatchResponse;
 class RequestRejectQuickMatch;
 class RequestRejectQuickMatchResponse;
-class PushRequestJoinQuickMatch;
-class PushRequestAcceptQuickMatch;
-class PushRequestRejectQuickMatch;
 class RequestSendQuickMatchStart;
 class RequestSendQuickMatchStart_Session_member_list;
 class RequestSendQuickMatchResult;
 class RequestSendQuickMatchResultResponse;
-class QuickMatchRankCache;
 class RequestPushSendQuickMatchStart;
-class QuickMatchSession;
-class QuickMatchSession_Result_list;
-class QuickMatchApologyPoint;
 
 enum LogType {
   UseMagicLog = 2020,
@@ -288,12 +288,29 @@ enum LogType {
   SaleItemLog = 3005,
   StrengthenWeaponLog = 3010,
   GlobalEventLog = 5001,
-  SystemOptionLog = 8001
+  SystemOptionLog = 8001,
+  QuickMatchResultLog = 7050,
+  QuickMatchEndLog = 7060
 };
 bool LogType_IsValid(int value);
 const LogType LogType_MIN = UseMagicLog;
 const LogType LogType_MAX = SystemOptionLog;
 const int LogType_ARRAYSIZE = LogType_MAX + 1;
+
+enum QuickMatchGameMode {
+  Duel = 0,
+  TwoPlayerBrawl = 1,
+  FourPlayerBrawl = 2,
+  SixPlayerBrawl = 3,
+  TwoVersusTwo = 4,
+  ThreeVersusThree = 5,
+  TwoVersusTwo_Team = 6,
+  ThreeVersusThree_Team = 7
+};
+bool QuickMatchGameMode_IsValid(int value);
+const QuickMatchGameMode QuickMatchGameMode_MIN = Duel;
+const QuickMatchGameMode QuickMatchGameMode_MAX = ThreeVersusThree_Team;
+const int QuickMatchGameMode_ARRAYSIZE = QuickMatchGameMode_MAX + 1;
 
 // ===================================================================
 
@@ -5186,30 +5203,30 @@ class RequestUpdatePlayerCharacter : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_1() const;
   inline void set_unknown_1(::google::protobuf::uint32 value);
 
-  // required bytes unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline const ::std::string& unknown_2() const;
-  inline void set_unknown_2(const ::std::string& value);
-  inline void set_unknown_2(const char* value);
-  inline void set_unknown_2(const void* value, size_t size);
-  inline ::std::string* mutable_unknown_2();
-  inline ::std::string* release_unknown_2();
-  inline void set_allocated_unknown_2(::std::string* unknown_2);
+  // required bytes character_data = 2;
+  inline bool has_character_data() const;
+  inline void clear_character_data();
+  static const int kCharacterDataFieldNumber = 2;
+  inline const ::std::string& character_data() const;
+  inline void set_character_data(const ::std::string& value);
+  inline void set_character_data(const char* value);
+  inline void set_character_data(const void* value, size_t size);
+  inline ::std::string* mutable_character_data();
+  inline ::std::string* release_character_data();
+  inline void set_allocated_character_data(::std::string* character_data);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestUpdatePlayerCharacter)
  private:
   inline void set_has_unknown_1();
   inline void clear_has_unknown_1();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
+  inline void set_has_character_data();
+  inline void clear_has_character_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* unknown_2_;
+  ::std::string* character_data_;
   ::google::protobuf::uint32 unknown_1_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -5447,13 +5464,33 @@ class RequestGetPlayerCharacter : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 player_id = 1;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_1 = 2;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetPlayerCharacter)
  private:
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 player_id_;
+  ::google::protobuf::uint32 unknown_1_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -5528,13 +5565,48 @@ class RequestGetPlayerCharacterResponse : public ::google::protobuf::MessageLite
 
   // accessors -------------------------------------------------------
 
+  // required uint32 player_id = 1;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_1 = 2;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required bytes character_data = 3;
+  inline bool has_character_data() const;
+  inline void clear_character_data();
+  static const int kCharacterDataFieldNumber = 3;
+  inline const ::std::string& character_data() const;
+  inline void set_character_data(const ::std::string& value);
+  inline void set_character_data(const char* value);
+  inline void set_character_data(const void* value, size_t size);
+  inline ::std::string* mutable_character_data();
+  inline ::std::string* release_character_data();
+  inline void set_allocated_character_data(::std::string* character_data);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetPlayerCharacterResponse)
  private:
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_character_data();
+  inline void clear_has_character_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 player_id_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::std::string* character_data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -8044,13 +8116,48 @@ class BloodstainInfo : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 bloodstain_id = 2;
+  inline bool has_bloodstain_id() const;
+  inline void clear_bloodstain_id();
+  static const int kBloodstainIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 bloodstain_id() const;
+  inline void set_bloodstain_id(::google::protobuf::uint32 value);
+
+  // required bytes data_block = 3;
+  inline bool has_data_block() const;
+  inline void clear_data_block();
+  static const int kDataBlockFieldNumber = 3;
+  inline const ::std::string& data_block() const;
+  inline void set_data_block(const ::std::string& value);
+  inline void set_data_block(const char* value);
+  inline void set_data_block(const void* value, size_t size);
+  inline ::std::string* mutable_data_block();
+  inline ::std::string* release_data_block();
+  inline void set_allocated_data_block(::std::string* data_block);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.BloodstainInfo)
  private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_bloodstain_id();
+  inline void clear_has_bloodstain_id();
+  inline void set_has_data_block();
+  inline void clear_has_data_block();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 bloodstain_id_;
+  ::std::string* data_block_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -8125,13 +8232,53 @@ class RequestCreateBloodstain : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required bytes data_block_1 = 2;
+  inline bool has_data_block_1() const;
+  inline void clear_data_block_1();
+  static const int kDataBlock1FieldNumber = 2;
+  inline const ::std::string& data_block_1() const;
+  inline void set_data_block_1(const ::std::string& value);
+  inline void set_data_block_1(const char* value);
+  inline void set_data_block_1(const void* value, size_t size);
+  inline ::std::string* mutable_data_block_1();
+  inline ::std::string* release_data_block_1();
+  inline void set_allocated_data_block_1(::std::string* data_block_1);
+
+  // required bytes data_block_2 = 3;
+  inline bool has_data_block_2() const;
+  inline void clear_data_block_2();
+  static const int kDataBlock2FieldNumber = 3;
+  inline const ::std::string& data_block_2() const;
+  inline void set_data_block_2(const ::std::string& value);
+  inline void set_data_block_2(const char* value);
+  inline void set_data_block_2(const void* value, size_t size);
+  inline ::std::string* mutable_data_block_2();
+  inline ::std::string* release_data_block_2();
+  inline void set_allocated_data_block_2(::std::string* data_block_2);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateBloodstain)
  private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_data_block_1();
+  inline void clear_has_data_block_1();
+  inline void set_has_data_block_2();
+  inline void clear_has_data_block_2();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* data_block_1_;
+  ::std::string* data_block_2_;
+  ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -8206,13 +8353,36 @@ class RequestGetBloodstainList : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 max_stains = 1;
+  inline bool has_max_stains() const;
+  inline void clear_max_stains();
+  static const int kMaxStainsFieldNumber = 1;
+  inline ::google::protobuf::uint32 max_stains() const;
+  inline void set_max_stains(::google::protobuf::uint32 value);
+
+  // repeated .Frpg2RequestMessage.DomainLimitData search_areas = 2;
+  inline int search_areas_size() const;
+  inline void clear_search_areas();
+  static const int kSearchAreasFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::DomainLimitData& search_areas(int index) const;
+  inline ::Frpg2RequestMessage::DomainLimitData* mutable_search_areas(int index);
+  inline ::Frpg2RequestMessage::DomainLimitData* add_search_areas();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >&
+      search_areas() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >*
+      mutable_search_areas();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetBloodstainList)
  private:
+  inline void set_has_max_stains();
+  inline void clear_has_max_stains();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData > search_areas_;
+  ::google::protobuf::uint32 max_stains_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -8287,6 +8457,18 @@ class RequestGetBloodstainListResponse : public ::google::protobuf::MessageLite 
 
   // accessors -------------------------------------------------------
 
+  // repeated .Frpg2RequestMessage.BloodstainInfo bloodstains = 1;
+  inline int bloodstains_size() const;
+  inline void clear_bloodstains();
+  static const int kBloodstainsFieldNumber = 1;
+  inline const ::Frpg2RequestMessage::BloodstainInfo& bloodstains(int index) const;
+  inline ::Frpg2RequestMessage::BloodstainInfo* mutable_bloodstains(int index);
+  inline ::Frpg2RequestMessage::BloodstainInfo* add_bloodstains();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::BloodstainInfo >&
+      bloodstains() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::BloodstainInfo >*
+      mutable_bloodstains();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetBloodstainListResponse)
  private:
 
@@ -8294,6 +8476,7 @@ class RequestGetBloodstainListResponse : public ::google::protobuf::MessageLite 
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::BloodstainInfo > bloodstains_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -9807,13 +9990,33 @@ class DomainLimitData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 max_items = 2;
+  inline bool has_max_items() const;
+  inline void clear_max_items();
+  static const int kMaxItemsFieldNumber = 2;
+  inline ::google::protobuf::uint32 max_items() const;
+  inline void set_max_items(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.DomainLimitData)
  private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_max_items();
+  inline void clear_has_max_items();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 max_items_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -10823,12 +11026,12 @@ class SignData : public ::google::protobuf::MessageLite {
   inline ::std::string* release_steam_id();
   inline void set_allocated_steam_id(::std::string* steam_id);
 
-  // required uint32 unknown_id_6 = 6;
-  inline bool has_unknown_id_6() const;
-  inline void clear_unknown_id_6();
-  static const int kUnknownId6FieldNumber = 6;
-  inline ::google::protobuf::uint32 unknown_id_6() const;
-  inline void set_unknown_id_6(::google::protobuf::uint32 value);
+  // required uint32 is_red_sign = 6;
+  inline bool has_is_red_sign() const;
+  inline void clear_is_red_sign();
+  static const int kIsRedSignFieldNumber = 6;
+  inline ::google::protobuf::uint32 is_red_sign() const;
+  inline void set_is_red_sign(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.SignData)
  private:
@@ -10842,8 +11045,8 @@ class SignData : public ::google::protobuf::MessageLite {
   inline void clear_has_player_struct();
   inline void set_has_steam_id();
   inline void clear_has_steam_id();
-  inline void set_has_unknown_id_6();
-  inline void clear_has_unknown_id_6();
+  inline void set_has_is_red_sign();
+  inline void clear_has_is_red_sign();
 
   ::std::string _unknown_fields_;
 
@@ -10853,7 +11056,7 @@ class SignData : public ::google::protobuf::MessageLite {
   ::Frpg2RequestMessage::MatchingParameter* matching_parameter_;
   ::std::string* player_struct_;
   ::google::protobuf::uint32 online_area_id_;
-  ::google::protobuf::uint32 unknown_id_6_;
+  ::google::protobuf::uint32 is_red_sign_;
   ::std::string* steam_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -10971,12 +11174,12 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 soul_level() const;
   inline void set_soul_level(::google::protobuf::uint32 value);
 
-  // required uint32 total_get_soul = 7;
-  inline bool has_total_get_soul() const;
-  inline void clear_total_get_soul();
-  static const int kTotalGetSoulFieldNumber = 7;
-  inline ::google::protobuf::uint32 total_get_soul() const;
-  inline void set_total_get_soul(::google::protobuf::uint32 value);
+  // required uint32 soul_memory = 7;
+  inline bool has_soul_memory() const;
+  inline void clear_soul_memory();
+  static const int kSoulMemoryFieldNumber = 7;
+  inline ::google::protobuf::uint32 soul_memory() const;
+  inline void set_soul_memory(::google::protobuf::uint32 value);
 
   // optional string unknown_string = 8;
   inline bool has_unknown_string() const;
@@ -11037,8 +11240,8 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_id_5();
   inline void set_has_soul_level();
   inline void clear_has_soul_level();
-  inline void set_has_total_get_soul();
-  inline void clear_has_total_get_soul();
+  inline void set_has_soul_memory();
+  inline void clear_has_soul_memory();
   inline void set_has_unknown_string();
   inline void clear_has_unknown_string();
   inline void set_has_unknown_id_9();
@@ -11061,7 +11264,7 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 unknown_id_5_;
   ::google::protobuf::uint32 soul_level_;
   ::std::string* unknown_string_;
-  ::google::protobuf::uint32 total_get_soul_;
+  ::google::protobuf::uint32 soul_memory_;
   ::google::protobuf::uint32 unknown_id_9_;
   ::std::string* password_;
   ::google::protobuf::uint32 covenant_;
@@ -11606,12 +11809,12 @@ class RequestCreateSign : public ::google::protobuf::MessageLite {
   inline ::Frpg2RequestMessage::MatchingParameter* release_matching_parameter();
   inline void set_allocated_matching_parameter(::Frpg2RequestMessage::MatchingParameter* matching_parameter);
 
-  // required uint32 unknown = 4;
-  inline bool has_unknown() const;
-  inline void clear_unknown();
-  static const int kUnknownFieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown() const;
-  inline void set_unknown(::google::protobuf::uint32 value);
+  // required bool is_red_sign = 4;
+  inline bool has_is_red_sign() const;
+  inline void clear_is_red_sign();
+  static const int kIsRedSignFieldNumber = 4;
+  inline bool is_red_sign() const;
+  inline void set_is_red_sign(bool value);
 
   // required bytes player_struct = 5;
   inline bool has_player_struct() const;
@@ -11633,8 +11836,8 @@ class RequestCreateSign : public ::google::protobuf::MessageLite {
   inline void clear_has_online_area_id();
   inline void set_has_matching_parameter();
   inline void clear_has_matching_parameter();
-  inline void set_has_unknown();
-  inline void clear_has_unknown();
+  inline void set_has_is_red_sign();
+  inline void clear_has_is_red_sign();
   inline void set_has_player_struct();
   inline void clear_has_player_struct();
 
@@ -11646,7 +11849,7 @@ class RequestCreateSign : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 online_area_id_;
   ::Frpg2RequestMessage::MatchingParameter* matching_parameter_;
   ::std::string* player_struct_;
-  ::google::protobuf::uint32 unknown_;
+  bool is_red_sign_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -12503,193 +12706,6 @@ class RequestRejectSignResponse : public ::google::protobuf::MessageLite {
 
   void InitAsDefaultInstance();
   static RequestRejectSignResponse* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class RequestCreateGhostData : public ::google::protobuf::MessageLite {
- public:
-  RequestCreateGhostData();
-  virtual ~RequestCreateGhostData();
-
-  RequestCreateGhostData(const RequestCreateGhostData& from);
-
-  inline RequestCreateGhostData& operator=(const RequestCreateGhostData& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const RequestCreateGhostData& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const RequestCreateGhostData* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(RequestCreateGhostData* other);
-
-  // implements Message ----------------------------------------------
-
-  RequestCreateGhostData* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const RequestCreateGhostData& from);
-  void MergeFrom(const RequestCreateGhostData& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 online_area_id = 1;
-  inline bool has_online_area_id() const;
-  inline void clear_online_area_id();
-  static const int kOnlineAreaIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 online_area_id() const;
-  inline void set_online_area_id(::google::protobuf::uint32 value);
-
-  // required bytes ghost_data = 2;
-  inline bool has_ghost_data() const;
-  inline void clear_ghost_data();
-  static const int kGhostDataFieldNumber = 2;
-  inline const ::std::string& ghost_data() const;
-  inline void set_ghost_data(const ::std::string& value);
-  inline void set_ghost_data(const char* value);
-  inline void set_ghost_data(const void* value, size_t size);
-  inline ::std::string* mutable_ghost_data();
-  inline ::std::string* release_ghost_data();
-  inline void set_allocated_ghost_data(::std::string* ghost_data);
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateGhostData)
- private:
-  inline void set_has_online_area_id();
-  inline void clear_has_online_area_id();
-  inline void set_has_ghost_data();
-  inline void clear_has_ghost_data();
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::std::string* ghost_data_;
-  ::google::protobuf::uint32 online_area_id_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static RequestCreateGhostData* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class RequestCreateGhostDataResponse : public ::google::protobuf::MessageLite {
- public:
-  RequestCreateGhostDataResponse();
-  virtual ~RequestCreateGhostDataResponse();
-
-  RequestCreateGhostDataResponse(const RequestCreateGhostDataResponse& from);
-
-  inline RequestCreateGhostDataResponse& operator=(const RequestCreateGhostDataResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const RequestCreateGhostDataResponse& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const RequestCreateGhostDataResponse* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(RequestCreateGhostDataResponse* other);
-
-  // implements Message ----------------------------------------------
-
-  RequestCreateGhostDataResponse* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const RequestCreateGhostDataResponse& from);
-  void MergeFrom(const RequestCreateGhostDataResponse& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateGhostDataResponse)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static RequestCreateGhostDataResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -13759,6 +13775,87 @@ class PushRequestAllowBreakInTarget : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
+class PushRequestRejectBreakInTarget : public ::google::protobuf::MessageLite {
+ public:
+  PushRequestRejectBreakInTarget();
+  virtual ~PushRequestRejectBreakInTarget();
+
+  PushRequestRejectBreakInTarget(const PushRequestRejectBreakInTarget& from);
+
+  inline PushRequestRejectBreakInTarget& operator=(const PushRequestRejectBreakInTarget& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const PushRequestRejectBreakInTarget& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const PushRequestRejectBreakInTarget* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(PushRequestRejectBreakInTarget* other);
+
+  // implements Message ----------------------------------------------
+
+  PushRequestRejectBreakInTarget* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const PushRequestRejectBreakInTarget& from);
+  void MergeFrom(const PushRequestRejectBreakInTarget& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestRejectBreakInTarget)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PushRequestRejectBreakInTarget* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class PushRequestBreakInTarget : public ::google::protobuf::MessageLite {
  public:
   PushRequestBreakInTarget();
@@ -14047,13 +14144,53 @@ class RequestBreakInTarget : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 map_id = 1;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id = 2;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 player_id = 3;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 3;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_1 = 4;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestBreakInTarget)
  private:
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 map_id_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 player_id_;
+  ::google::protobuf::uint32 unknown_1_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -14310,87 +14447,6 @@ class RequestRejectBreakInTargetResponse : public ::google::protobuf::MessageLit
 };
 // -------------------------------------------------------------------
 
-class PushRequestRejectBreakInTarget : public ::google::protobuf::MessageLite {
- public:
-  PushRequestRejectBreakInTarget();
-  virtual ~PushRequestRejectBreakInTarget();
-
-  PushRequestRejectBreakInTarget(const PushRequestRejectBreakInTarget& from);
-
-  inline PushRequestRejectBreakInTarget& operator=(const PushRequestRejectBreakInTarget& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const PushRequestRejectBreakInTarget& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const PushRequestRejectBreakInTarget* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(PushRequestRejectBreakInTarget* other);
-
-  // implements Message ----------------------------------------------
-
-  PushRequestRejectBreakInTarget* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const PushRequestRejectBreakInTarget& from);
-  void MergeFrom(const PushRequestRejectBreakInTarget& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestRejectBreakInTarget)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PushRequestRejectBreakInTarget* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class RequestGetDeadingGhost : public ::google::protobuf::MessageLite {
  public:
   RequestGetDeadingGhost();
@@ -14452,13 +14508,33 @@ class RequestGetDeadingGhost : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 bloodstain_id = 2;
+  inline bool has_bloodstain_id() const;
+  inline void clear_bloodstain_id();
+  static const int kBloodstainIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 bloodstain_id() const;
+  inline void set_bloodstain_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetDeadingGhost)
  private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_bloodstain_id();
+  inline void clear_has_bloodstain_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 bloodstain_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -14533,13 +14609,48 @@ class RequestGetDeadingGhostResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 bloodstain_id = 2;
+  inline bool has_bloodstain_id() const;
+  inline void clear_bloodstain_id();
+  static const int kBloodstainIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 bloodstain_id() const;
+  inline void set_bloodstain_id(::google::protobuf::uint32 value);
+
+  // required bytes data = 3;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 3;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetDeadingGhostResponse)
  private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_bloodstain_id();
+  inline void clear_has_bloodstain_id();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 bloodstain_id_;
+  ::std::string* data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -14614,13 +14725,36 @@ class RequestGetGhostDataList : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 max_ghosts = 1;
+  inline bool has_max_ghosts() const;
+  inline void clear_max_ghosts();
+  static const int kMaxGhostsFieldNumber = 1;
+  inline ::google::protobuf::uint32 max_ghosts() const;
+  inline void set_max_ghosts(::google::protobuf::uint32 value);
+
+  // repeated .Frpg2RequestMessage.DomainLimitData search_areas = 2;
+  inline int search_areas_size() const;
+  inline void clear_search_areas();
+  static const int kSearchAreasFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::DomainLimitData& search_areas(int index) const;
+  inline ::Frpg2RequestMessage::DomainLimitData* mutable_search_areas(int index);
+  inline ::Frpg2RequestMessage::DomainLimitData* add_search_areas();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >&
+      search_areas() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >*
+      mutable_search_areas();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetGhostDataList)
  private:
+  inline void set_has_max_ghosts();
+  inline void clear_has_max_ghosts();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData > search_areas_;
+  ::google::protobuf::uint32 max_ghosts_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -14695,7 +14829,229 @@ class GhostData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 ghost_id = 2;
+  inline bool has_ghost_id() const;
+  inline void clear_ghost_id();
+  static const int kGhostIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 ghost_id() const;
+  inline void set_ghost_id(::google::protobuf::uint32 value);
+
+  // required bytes data = 3;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 3;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.GhostData)
+ private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_ghost_id();
+  inline void clear_has_ghost_id();
+  inline void set_has_data();
+  inline void clear_has_data();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 ghost_id_;
+  ::std::string* data_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static GhostData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestCreateGhostData : public ::google::protobuf::MessageLite {
+ public:
+  RequestCreateGhostData();
+  virtual ~RequestCreateGhostData();
+
+  RequestCreateGhostData(const RequestCreateGhostData& from);
+
+  inline RequestCreateGhostData& operator=(const RequestCreateGhostData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestCreateGhostData& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestCreateGhostData* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestCreateGhostData* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestCreateGhostData* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestCreateGhostData& from);
+  void MergeFrom(const RequestCreateGhostData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required bytes ghost_data = 2;
+  inline bool has_ghost_data() const;
+  inline void clear_ghost_data();
+  static const int kGhostDataFieldNumber = 2;
+  inline const ::std::string& ghost_data() const;
+  inline void set_ghost_data(const ::std::string& value);
+  inline void set_ghost_data(const char* value);
+  inline void set_ghost_data(const void* value, size_t size);
+  inline ::std::string* mutable_ghost_data();
+  inline ::std::string* release_ghost_data();
+  inline void set_allocated_ghost_data(::std::string* ghost_data);
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateGhostData)
+ private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_ghost_data();
+  inline void clear_has_ghost_data();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* ghost_data_;
+  ::google::protobuf::uint32 online_area_id_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestCreateGhostData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestCreateGhostDataResponse : public ::google::protobuf::MessageLite {
+ public:
+  RequestCreateGhostDataResponse();
+  virtual ~RequestCreateGhostDataResponse();
+
+  RequestCreateGhostDataResponse(const RequestCreateGhostDataResponse& from);
+
+  inline RequestCreateGhostDataResponse& operator=(const RequestCreateGhostDataResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestCreateGhostDataResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestCreateGhostDataResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestCreateGhostDataResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestCreateGhostDataResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestCreateGhostDataResponse& from);
+  void MergeFrom(const RequestCreateGhostDataResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateGhostDataResponse)
  private:
 
   ::std::string _unknown_fields_;
@@ -14711,7 +15067,7 @@ class GhostData : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static GhostData* default_instance_;
+  static RequestCreateGhostDataResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -14776,6 +15132,18 @@ class RequestGetGhostDataListResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .Frpg2RequestMessage.GhostData ghosts = 1;
+  inline int ghosts_size() const;
+  inline void clear_ghosts();
+  static const int kGhostsFieldNumber = 1;
+  inline const ::Frpg2RequestMessage::GhostData& ghosts(int index) const;
+  inline ::Frpg2RequestMessage::GhostData* mutable_ghosts(int index);
+  inline ::Frpg2RequestMessage::GhostData* add_ghosts();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::GhostData >&
+      ghosts() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::GhostData >*
+      mutable_ghosts();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetGhostDataListResponse)
  private:
 
@@ -14783,6 +15151,7 @@ class RequestGetGhostDataListResponse : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::GhostData > ghosts_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -15343,13 +15712,93 @@ class PushRequestVisit : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 player_id = 2;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required string player_steam_id = 3;
+  inline bool has_player_steam_id() const;
+  inline void clear_player_steam_id();
+  static const int kPlayerSteamIdFieldNumber = 3;
+  inline const ::std::string& player_steam_id() const;
+  inline void set_player_steam_id(const ::std::string& value);
+  inline void set_player_steam_id(const char* value);
+  inline void set_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_player_steam_id();
+  inline ::std::string* release_player_steam_id();
+  inline void set_allocated_player_steam_id(::std::string* player_steam_id);
+
+  // required bytes data = 4;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 4;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
+  // required uint32 unknown_2 = 5;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required uint32 map_id = 6;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 6;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
+
+  // required uint32 online_map_id = 7;
+  inline bool has_online_map_id() const;
+  inline void clear_online_map_id();
+  static const int kOnlineMapIdFieldNumber = 7;
+  inline ::google::protobuf::uint32 online_map_id() const;
+  inline void set_online_map_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestVisit)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_player_steam_id();
+  inline void clear_has_player_steam_id();
+  inline void set_has_data();
+  inline void clear_has_data();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_online_map_id();
+  inline void clear_has_online_map_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 player_id_;
+  ::std::string* player_steam_id_;
+  ::std::string* data_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 map_id_;
+  ::google::protobuf::uint32 online_map_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -15667,13 +16116,38 @@ class RequestNotifyRingBell : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required bytes metadata = 2;
+  inline bool has_metadata() const;
+  inline void clear_metadata();
+  static const int kMetadataFieldNumber = 2;
+  inline const ::std::string& metadata() const;
+  inline void set_metadata(const ::std::string& value);
+  inline void set_metadata(const char* value);
+  inline void set_metadata(const void* value, size_t size);
+  inline ::std::string* mutable_metadata();
+  inline ::std::string* release_metadata();
+  inline void set_allocated_metadata(::std::string* metadata);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestNotifyRingBell)
  private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_metadata();
+  inline void clear_has_metadata();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* metadata_;
+  ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -15829,13 +16303,58 @@ class PushRequestNotifyRingBell : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 player_id = 2;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id = 3;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 3;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required bytes metadata = 4;
+  inline bool has_metadata() const;
+  inline void clear_metadata();
+  static const int kMetadataFieldNumber = 4;
+  inline const ::std::string& metadata() const;
+  inline void set_metadata(const ::std::string& value);
+  inline void set_metadata(const char* value);
+  inline void set_metadata(const void* value, size_t size);
+  inline ::std::string* mutable_metadata();
+  inline ::std::string* release_metadata();
+  inline void set_allocated_metadata(::std::string* metadata);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestNotifyRingBell)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_metadata();
+  inline void clear_has_metadata();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 player_id_;
+  ::std::string* metadata_;
+  ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -17471,13 +17990,78 @@ class RankingData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 player_id = 1;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_1 = 2;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 serial_rank = 3;
+  inline bool has_serial_rank() const;
+  inline void clear_serial_rank();
+  static const int kSerialRankFieldNumber = 3;
+  inline ::google::protobuf::uint32 serial_rank() const;
+  inline void set_serial_rank(::google::protobuf::uint32 value);
+
+  // required uint32 rank = 4;
+  inline bool has_rank() const;
+  inline void clear_rank();
+  static const int kRankFieldNumber = 4;
+  inline ::google::protobuf::uint32 rank() const;
+  inline void set_rank(::google::protobuf::uint32 value);
+
+  // required uint32 score = 5;
+  inline bool has_score() const;
+  inline void clear_score();
+  static const int kScoreFieldNumber = 5;
+  inline ::google::protobuf::uint32 score() const;
+  inline void set_score(::google::protobuf::uint32 value);
+
+  // required bytes data = 6;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 6;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RankingData)
  private:
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_serial_rank();
+  inline void clear_has_serial_rank();
+  inline void set_has_rank();
+  inline void clear_has_rank();
+  inline void set_has_score();
+  inline void clear_has_score();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 player_id_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 serial_rank_;
+  ::google::protobuf::uint32 rank_;
+  ::std::string* data_;
+  ::google::protobuf::uint32 score_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -17795,13 +18379,53 @@ class RequestRegisterRankingData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 board_id = 1;
+  inline bool has_board_id() const;
+  inline void clear_board_id();
+  static const int kBoardIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 board_id() const;
+  inline void set_board_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_1 = 2;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 score = 3;
+  inline bool has_score() const;
+  inline void clear_score();
+  static const int kScoreFieldNumber = 3;
+  inline ::google::protobuf::uint32 score() const;
+  inline void set_score(::google::protobuf::uint32 value);
+
+  // required uint32 data = 4;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 4;
+  inline ::google::protobuf::uint32 data() const;
+  inline void set_data(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestRegisterRankingData)
  private:
+  inline void set_has_board_id();
+  inline void clear_has_board_id();
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_score();
+  inline void clear_has_score();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 board_id_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 score_;
+  ::google::protobuf::uint32 data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -17957,13 +18581,43 @@ class RequestGetRankingData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 board_id = 1;
+  inline bool has_board_id() const;
+  inline void clear_board_id();
+  static const int kBoardIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 board_id() const;
+  inline void set_board_id(::google::protobuf::uint32 value);
+
+  // required uint32 offset = 2;
+  inline bool has_offset() const;
+  inline void clear_offset();
+  static const int kOffsetFieldNumber = 2;
+  inline ::google::protobuf::uint32 offset() const;
+  inline void set_offset(::google::protobuf::uint32 value);
+
+  // required uint32 count = 3;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 3;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetRankingData)
  private:
+  inline void set_has_board_id();
+  inline void clear_has_board_id();
+  inline void set_has_offset();
+  inline void clear_has_offset();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 board_id_;
+  ::google::protobuf::uint32 offset_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -18038,6 +18692,18 @@ class RequestGetRankingDataResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .Frpg2RequestMessage.RankingData data = 1;
+  inline int data_size() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 1;
+  inline const ::Frpg2RequestMessage::RankingData& data(int index) const;
+  inline ::Frpg2RequestMessage::RankingData* mutable_data(int index);
+  inline ::Frpg2RequestMessage::RankingData* add_data();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >&
+      data() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >*
+      mutable_data();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetRankingDataResponse)
  private:
 
@@ -18045,6 +18711,7 @@ class RequestGetRankingDataResponse : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData > data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -18119,13 +18786,33 @@ class RequestGetCharacterRankingData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 board_id = 1;
+  inline bool has_board_id() const;
+  inline void clear_board_id();
+  static const int kBoardIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 board_id() const;
+  inline void set_board_id(::google::protobuf::uint32 value);
+
+  // required uint32 player_id = 2;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetCharacterRankingData)
  private:
+  inline void set_has_board_id();
+  inline void clear_has_board_id();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 board_id_;
+  ::google::protobuf::uint32 player_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -18200,6 +18887,18 @@ class RequestGetCharacterRankingDataResponse : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
+  // repeated .Frpg2RequestMessage.RankingData data = 1;
+  inline int data_size() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 1;
+  inline const ::Frpg2RequestMessage::RankingData& data(int index) const;
+  inline ::Frpg2RequestMessage::RankingData* mutable_data(int index);
+  inline ::Frpg2RequestMessage::RankingData* add_data();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >&
+      data() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >*
+      mutable_data();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse)
  private:
 
@@ -18207,6 +18906,7 @@ class RequestGetCharacterRankingDataResponse : public ::google::protobuf::Messag
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData > data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -18281,13 +18981,23 @@ class RequestCountRankingData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 board_id = 1;
+  inline bool has_board_id() const;
+  inline void clear_board_id();
+  static const int kBoardIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 board_id() const;
+  inline void set_board_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCountRankingData)
  private:
+  inline void set_has_board_id();
+  inline void clear_has_board_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 board_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -18362,13 +19072,23 @@ class RequestCountRankingDataResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 count = 1;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 1;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCountRankingDataResponse)
  private:
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -19680,6 +20400,433 @@ class RequestGetOnlineShopItemListResponse : public ::google::protobuf::MessageL
 };
 // -------------------------------------------------------------------
 
+class QuickMatchRank : public ::google::protobuf::MessageLite {
+ public:
+  QuickMatchRank();
+  virtual ~QuickMatchRank();
+
+  QuickMatchRank(const QuickMatchRank& from);
+
+  inline QuickMatchRank& operator=(const QuickMatchRank& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const QuickMatchRank& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const QuickMatchRank* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(QuickMatchRank* other);
+
+  // implements Message ----------------------------------------------
+
+  QuickMatchRank* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const QuickMatchRank& from);
+  void MergeFrom(const QuickMatchRank& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 xp = 1;
+  inline bool has_xp() const;
+  inline void clear_xp();
+  static const int kXpFieldNumber = 1;
+  inline ::google::protobuf::uint32 xp() const;
+  inline void set_xp(::google::protobuf::uint32 value);
+
+  // optional uint32 rank = 2;
+  inline bool has_rank() const;
+  inline void clear_rank();
+  static const int kRankFieldNumber = 2;
+  inline ::google::protobuf::uint32 rank() const;
+  inline void set_rank(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchRank)
+ private:
+  inline void set_has_xp();
+  inline void clear_has_xp();
+  inline void set_has_rank();
+  inline void clear_has_rank();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 xp_;
+  ::google::protobuf::uint32 rank_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static QuickMatchRank* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class QuickMatchRankCache : public ::google::protobuf::MessageLite {
+ public:
+  QuickMatchRankCache();
+  virtual ~QuickMatchRankCache();
+
+  QuickMatchRankCache(const QuickMatchRankCache& from);
+
+  inline QuickMatchRankCache& operator=(const QuickMatchRankCache& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const QuickMatchRankCache& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const QuickMatchRankCache* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(QuickMatchRankCache* other);
+
+  // implements Message ----------------------------------------------
+
+  QuickMatchRankCache* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const QuickMatchRankCache& from);
+  void MergeFrom(const QuickMatchRankCache& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchRankCache)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static QuickMatchRankCache* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class QuickMatchSession_Result_list : public ::google::protobuf::MessageLite {
+ public:
+  QuickMatchSession_Result_list();
+  virtual ~QuickMatchSession_Result_list();
+
+  QuickMatchSession_Result_list(const QuickMatchSession_Result_list& from);
+
+  inline QuickMatchSession_Result_list& operator=(const QuickMatchSession_Result_list& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const QuickMatchSession_Result_list& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const QuickMatchSession_Result_list* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(QuickMatchSession_Result_list* other);
+
+  // implements Message ----------------------------------------------
+
+  QuickMatchSession_Result_list* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const QuickMatchSession_Result_list& from);
+  void MergeFrom(const QuickMatchSession_Result_list& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchSession.Result_list)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static QuickMatchSession_Result_list* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class QuickMatchSession : public ::google::protobuf::MessageLite {
+ public:
+  QuickMatchSession();
+  virtual ~QuickMatchSession();
+
+  QuickMatchSession(const QuickMatchSession& from);
+
+  inline QuickMatchSession& operator=(const QuickMatchSession& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const QuickMatchSession& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const QuickMatchSession* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(QuickMatchSession* other);
+
+  // implements Message ----------------------------------------------
+
+  QuickMatchSession* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const QuickMatchSession& from);
+  void MergeFrom(const QuickMatchSession& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef QuickMatchSession_Result_list Result_list;
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchSession)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static QuickMatchSession* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class QuickMatchApologyPoint : public ::google::protobuf::MessageLite {
+ public:
+  QuickMatchApologyPoint();
+  virtual ~QuickMatchApologyPoint();
+
+  QuickMatchApologyPoint(const QuickMatchApologyPoint& from);
+
+  inline QuickMatchApologyPoint& operator=(const QuickMatchApologyPoint& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const QuickMatchApologyPoint& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const QuickMatchApologyPoint* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(QuickMatchApologyPoint* other);
+
+  // implements Message ----------------------------------------------
+
+  QuickMatchApologyPoint* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const QuickMatchApologyPoint& from);
+  void MergeFrom(const QuickMatchApologyPoint& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchApologyPoint)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static QuickMatchApologyPoint* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class QuickMatchData : public ::google::protobuf::MessageLite {
  public:
   QuickMatchData();
@@ -19741,13 +20888,48 @@ class QuickMatchData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 host_player_id = 1;
+  inline bool has_host_player_id() const;
+  inline void clear_host_player_id();
+  static const int kHostPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 host_player_id() const;
+  inline void set_host_player_id(::google::protobuf::uint32 value);
+
+  // required string host_player_steam_id = 2;
+  inline bool has_host_player_steam_id() const;
+  inline void clear_host_player_steam_id();
+  static const int kHostPlayerSteamIdFieldNumber = 2;
+  inline const ::std::string& host_player_steam_id() const;
+  inline void set_host_player_steam_id(const ::std::string& value);
+  inline void set_host_player_steam_id(const char* value);
+  inline void set_host_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_host_player_steam_id();
+  inline ::std::string* release_host_player_steam_id();
+  inline void set_allocated_host_player_steam_id(::std::string* host_player_steam_id);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchData)
  private:
+  inline void set_has_host_player_id();
+  inline void clear_has_host_player_id();
+  inline void set_has_host_player_steam_id();
+  inline void clear_has_host_player_steam_id();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* host_player_steam_id_;
+  ::google::protobuf::uint32 host_player_id_;
+  ::google::protobuf::uint32 unknown_3_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -19822,13 +21004,45 @@ class QuickMatchSearchResult : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // optional .Frpg2RequestMessage.QuickMatchData data = 1;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 1;
+  inline const ::Frpg2RequestMessage::QuickMatchData& data() const;
+  inline ::Frpg2RequestMessage::QuickMatchData* mutable_data();
+  inline ::Frpg2RequestMessage::QuickMatchData* release_data();
+  inline void set_allocated_data(::Frpg2RequestMessage::QuickMatchData* data);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchSearchResult)
  private:
+  inline void set_has_data();
+  inline void clear_has_data();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::Frpg2RequestMessage::QuickMatchData* data_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -19903,13 +21117,53 @@ class AcceptQuickMatchMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 host_player_id = 1;
+  inline bool has_host_player_id() const;
+  inline void clear_host_player_id();
+  static const int kHostPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 host_player_id() const;
+  inline void set_host_player_id(::google::protobuf::uint32 value);
+
+  // required string host_player_steam_id = 2;
+  inline bool has_host_player_steam_id() const;
+  inline void clear_host_player_steam_id();
+  static const int kHostPlayerSteamIdFieldNumber = 2;
+  inline const ::std::string& host_player_steam_id() const;
+  inline void set_host_player_steam_id(const ::std::string& value);
+  inline void set_host_player_steam_id(const char* value);
+  inline void set_host_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_host_player_steam_id();
+  inline ::std::string* release_host_player_steam_id();
+  inline void set_allocated_host_player_steam_id(::std::string* host_player_steam_id);
+
+  // required bytes metadata = 3;
+  inline bool has_metadata() const;
+  inline void clear_metadata();
+  static const int kMetadataFieldNumber = 3;
+  inline const ::std::string& metadata() const;
+  inline void set_metadata(const ::std::string& value);
+  inline void set_metadata(const char* value);
+  inline void set_metadata(const void* value, size_t size);
+  inline ::std::string* mutable_metadata();
+  inline ::std::string* release_metadata();
+  inline void set_allocated_metadata(::std::string* metadata);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.AcceptQuickMatchMessage)
  private:
+  inline void set_has_host_player_id();
+  inline void clear_has_host_player_id();
+  inline void set_has_host_player_steam_id();
+  inline void clear_has_host_player_steam_id();
+  inline void set_has_metadata();
+  inline void clear_has_metadata();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* host_player_steam_id_;
+  ::std::string* metadata_;
+  ::google::protobuf::uint32 host_player_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20146,13 +21400,83 @@ class JoinQuickMatchMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 host_player_id = 1;
+  inline bool has_host_player_id() const;
+  inline void clear_host_player_id();
+  static const int kHostPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 host_player_id() const;
+  inline void set_host_player_id(::google::protobuf::uint32 value);
+
+  // required string host_player_steam_id = 2;
+  inline bool has_host_player_steam_id() const;
+  inline void clear_host_player_steam_id();
+  static const int kHostPlayerSteamIdFieldNumber = 2;
+  inline const ::std::string& host_player_steam_id() const;
+  inline void set_host_player_steam_id(const ::std::string& value);
+  inline void set_host_player_steam_id(const char* value);
+  inline void set_host_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_host_player_steam_id();
+  inline ::std::string* release_host_player_steam_id();
+  inline void set_allocated_host_player_steam_id(::std::string* host_player_steam_id);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required string unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline const ::std::string& unknown_6() const;
+  inline void set_unknown_6(const ::std::string& value);
+  inline void set_unknown_6(const char* value);
+  inline void set_unknown_6(const char* value, size_t size);
+  inline ::std::string* mutable_unknown_6();
+  inline ::std::string* release_unknown_6();
+  inline void set_allocated_unknown_6(::std::string* unknown_6);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.JoinQuickMatchMessage)
  private:
+  inline void set_has_host_player_id();
+  inline void clear_has_host_player_id();
+  inline void set_has_host_player_steam_id();
+  inline void clear_has_host_player_steam_id();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* host_player_steam_id_;
+  ::google::protobuf::uint32 host_player_id_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 unknown_5_;
+  ::std::string* unknown_6_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20166,14 +21490,14 @@ class JoinQuickMatchMessage : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class QuickMatchRank : public ::google::protobuf::MessageLite {
+class PushRequestJoinQuickMatch : public ::google::protobuf::MessageLite {
  public:
-  QuickMatchRank();
-  virtual ~QuickMatchRank();
+  PushRequestJoinQuickMatch();
+  virtual ~PushRequestJoinQuickMatch();
 
-  QuickMatchRank(const QuickMatchRank& from);
+  PushRequestJoinQuickMatch(const PushRequestJoinQuickMatch& from);
 
-  inline QuickMatchRank& operator=(const QuickMatchRank& from) {
+  inline PushRequestJoinQuickMatch& operator=(const PushRequestJoinQuickMatch& from) {
     CopyFrom(from);
     return *this;
   }
@@ -20186,26 +21510,26 @@ class QuickMatchRank : public ::google::protobuf::MessageLite {
     return &_unknown_fields_;
   }
 
-  static const QuickMatchRank& default_instance();
+  static const PushRequestJoinQuickMatch& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const QuickMatchRank* internal_default_instance() {
+  static inline const PushRequestJoinQuickMatch* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(QuickMatchRank* other);
+  void Swap(PushRequestJoinQuickMatch* other);
 
   // implements Message ----------------------------------------------
 
-  QuickMatchRank* New() const;
+  PushRequestJoinQuickMatch* New() const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const QuickMatchRank& from);
-  void MergeFrom(const QuickMatchRank& from);
+  void CopyFrom(const PushRequestJoinQuickMatch& from);
+  void MergeFrom(const PushRequestJoinQuickMatch& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -20227,7 +21551,213 @@ class QuickMatchRank : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchRank)
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required .Frpg2RequestMessage.JoinQuickMatchMessage message = 2;
+  inline bool has_message() const;
+  inline void clear_message();
+  static const int kMessageFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::JoinQuickMatchMessage& message() const;
+  inline ::Frpg2RequestMessage::JoinQuickMatchMessage* mutable_message();
+  inline ::Frpg2RequestMessage::JoinQuickMatchMessage* release_message();
+  inline void set_allocated_message(::Frpg2RequestMessage::JoinQuickMatchMessage* message);
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestJoinQuickMatch)
+ private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_message();
+  inline void clear_has_message();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::Frpg2RequestMessage::JoinQuickMatchMessage* message_;
+  ::google::protobuf::uint32 unknown_1_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PushRequestJoinQuickMatch* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class PushRequestAcceptQuickMatch : public ::google::protobuf::MessageLite {
+ public:
+  PushRequestAcceptQuickMatch();
+  virtual ~PushRequestAcceptQuickMatch();
+
+  PushRequestAcceptQuickMatch(const PushRequestAcceptQuickMatch& from);
+
+  inline PushRequestAcceptQuickMatch& operator=(const PushRequestAcceptQuickMatch& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const PushRequestAcceptQuickMatch& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const PushRequestAcceptQuickMatch* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(PushRequestAcceptQuickMatch* other);
+
+  // implements Message ----------------------------------------------
+
+  PushRequestAcceptQuickMatch* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const PushRequestAcceptQuickMatch& from);
+  void MergeFrom(const PushRequestAcceptQuickMatch& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required .Frpg2RequestMessage.AcceptQuickMatchMessage message = 2;
+  inline bool has_message() const;
+  inline void clear_message();
+  static const int kMessageFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::AcceptQuickMatchMessage& message() const;
+  inline ::Frpg2RequestMessage::AcceptQuickMatchMessage* mutable_message();
+  inline ::Frpg2RequestMessage::AcceptQuickMatchMessage* release_message();
+  inline void set_allocated_message(::Frpg2RequestMessage::AcceptQuickMatchMessage* message);
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestAcceptQuickMatch)
+ private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_message();
+  inline void clear_has_message();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::Frpg2RequestMessage::AcceptQuickMatchMessage* message_;
+  ::google::protobuf::uint32 unknown_1_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static PushRequestAcceptQuickMatch* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class PushRequestRejectQuickMatch : public ::google::protobuf::MessageLite {
+ public:
+  PushRequestRejectQuickMatch();
+  virtual ~PushRequestRejectQuickMatch();
+
+  PushRequestRejectQuickMatch(const PushRequestRejectQuickMatch& from);
+
+  inline PushRequestRejectQuickMatch& operator=(const PushRequestRejectQuickMatch& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const PushRequestRejectQuickMatch& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const PushRequestRejectQuickMatch* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(PushRequestRejectQuickMatch* other);
+
+  // implements Message ----------------------------------------------
+
+  PushRequestRejectQuickMatch* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const PushRequestRejectQuickMatch& from);
+  void MergeFrom(const PushRequestRejectQuickMatch& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestRejectQuickMatch)
  private:
 
   ::std::string _unknown_fields_;
@@ -20243,7 +21773,7 @@ class QuickMatchRank : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static QuickMatchRank* default_instance_;
+  static PushRequestRejectQuickMatch* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -20308,13 +21838,33 @@ class RequestSearchQuickMatch_Map_id_list : public ::google::protobuf::MessageLi
 
   // accessors -------------------------------------------------------
 
+  // required uint32 map_id = 1;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id = 2;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list)
  private:
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 map_id_;
+  ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20391,13 +21941,58 @@ class RequestSearchQuickMatch : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  inline bool has_mode() const;
+  inline void clear_mode();
+  static const int kModeFieldNumber = 1;
+  inline ::Frpg2RequestMessage::QuickMatchGameMode mode() const;
+  inline void set_mode(::Frpg2RequestMessage::QuickMatchGameMode value);
+
+  // repeated .Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list map_ids = 2;
+  inline int map_ids_size() const;
+  inline void clear_map_ids();
+  static const int kMapIdsFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list& map_ids(int index) const;
+  inline ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list* mutable_map_ids(int index);
+  inline ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list* add_map_ids();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list >&
+      map_ids() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list >*
+      mutable_map_ids();
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
+  inline bool has_matching_parameter() const;
+  inline void clear_matching_parameter();
+  static const int kMatchingParameterFieldNumber = 4;
+  inline const ::Frpg2RequestMessage::MatchingParameter& matching_parameter() const;
+  inline ::Frpg2RequestMessage::MatchingParameter* mutable_matching_parameter();
+  inline ::Frpg2RequestMessage::MatchingParameter* release_matching_parameter();
+  inline void set_allocated_matching_parameter(::Frpg2RequestMessage::MatchingParameter* matching_parameter);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSearchQuickMatch)
  private:
+  inline void set_has_mode();
+  inline void clear_has_mode();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_matching_parameter();
+  inline void clear_has_matching_parameter();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list > map_ids_;
+  int mode_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::Frpg2RequestMessage::MatchingParameter* matching_parameter_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20472,6 +22067,18 @@ class RequestSearchQuickMatchResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .Frpg2RequestMessage.QuickMatchSearchResult matches = 1;
+  inline int matches_size() const;
+  inline void clear_matches();
+  static const int kMatchesFieldNumber = 1;
+  inline const ::Frpg2RequestMessage::QuickMatchSearchResult& matches(int index) const;
+  inline ::Frpg2RequestMessage::QuickMatchSearchResult* mutable_matches(int index);
+  inline ::Frpg2RequestMessage::QuickMatchSearchResult* add_matches();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSearchResult >&
+      matches() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSearchResult >*
+      mutable_matches();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSearchQuickMatchResponse)
  private:
 
@@ -20479,6 +22086,7 @@ class RequestSearchQuickMatchResponse : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSearchResult > matches_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20553,13 +22161,65 @@ class RequestRegisterQuickMatch : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  inline bool has_mode() const;
+  inline void clear_mode();
+  static const int kModeFieldNumber = 1;
+  inline ::Frpg2RequestMessage::QuickMatchGameMode mode() const;
+  inline void set_mode(::Frpg2RequestMessage::QuickMatchGameMode value);
+
+  // required uint32 map_id = 2;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id = 3;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 3;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
+  inline bool has_matching_parameter() const;
+  inline void clear_matching_parameter();
+  static const int kMatchingParameterFieldNumber = 4;
+  inline const ::Frpg2RequestMessage::MatchingParameter& matching_parameter() const;
+  inline ::Frpg2RequestMessage::MatchingParameter* mutable_matching_parameter();
+  inline ::Frpg2RequestMessage::MatchingParameter* release_matching_parameter();
+  inline void set_allocated_matching_parameter(::Frpg2RequestMessage::MatchingParameter* matching_parameter);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestRegisterQuickMatch)
  private:
+  inline void set_has_mode();
+  inline void clear_has_mode();
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_matching_parameter();
+  inline void clear_has_matching_parameter();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  int mode_;
+  ::google::protobuf::uint32 map_id_;
+  ::Frpg2RequestMessage::MatchingParameter* matching_parameter_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 unknown_5_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20634,13 +22294,53 @@ class RequestUnregisterQuickMatch : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  inline bool has_mode() const;
+  inline void clear_mode();
+  static const int kModeFieldNumber = 1;
+  inline ::Frpg2RequestMessage::QuickMatchGameMode mode() const;
+  inline void set_mode(::Frpg2RequestMessage::QuickMatchGameMode value);
+
+  // required uint32 map_id = 2;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id = 3;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 3;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestUnregisterQuickMatch)
  private:
+  inline void set_has_mode();
+  inline void clear_has_mode();
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  int mode_;
+  ::google::protobuf::uint32 map_id_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20796,13 +22496,43 @@ class RequestUpdateQuickMatch : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  inline bool has_mode() const;
+  inline void clear_mode();
+  static const int kModeFieldNumber = 1;
+  inline ::Frpg2RequestMessage::QuickMatchGameMode mode() const;
+  inline void set_mode(::Frpg2RequestMessage::QuickMatchGameMode value);
+
+  // required uint32 map_id = 2;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id = 3;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 3;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestUpdateQuickMatch)
  private:
+  inline void set_has_mode();
+  inline void clear_has_mode();
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  int mode_;
+  ::google::protobuf::uint32 map_id_;
+  ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -20958,13 +22688,88 @@ class RequestJoinQuickMatch : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required uint32 host_player_id = 4;
+  inline bool has_host_player_id() const;
+  inline void clear_host_player_id();
+  static const int kHostPlayerIdFieldNumber = 4;
+  inline ::google::protobuf::uint32 host_player_id() const;
+  inline void set_host_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline ::google::protobuf::uint32 unknown_6() const;
+  inline void set_unknown_6(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_7 = 7;
+  inline bool has_unknown_7() const;
+  inline void clear_unknown_7();
+  static const int kUnknown7FieldNumber = 7;
+  inline ::google::protobuf::uint32 unknown_7() const;
+  inline void set_unknown_7(::google::protobuf::uint32 value);
+
+  // required string unknown_8 = 8;
+  inline bool has_unknown_8() const;
+  inline void clear_unknown_8();
+  static const int kUnknown8FieldNumber = 8;
+  inline const ::std::string& unknown_8() const;
+  inline void set_unknown_8(const ::std::string& value);
+  inline void set_unknown_8(const char* value);
+  inline void set_unknown_8(const char* value, size_t size);
+  inline ::std::string* mutable_unknown_8();
+  inline ::std::string* release_unknown_8();
+  inline void set_allocated_unknown_8(::std::string* unknown_8);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestJoinQuickMatch)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_host_player_id();
+  inline void clear_has_host_player_id();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
+  inline void set_has_unknown_7();
+  inline void clear_has_unknown_7();
+  inline void set_has_unknown_8();
+  inline void clear_has_unknown_8();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 host_player_id_;
+  ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 unknown_7_;
+  ::std::string* unknown_8_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -21120,13 +22925,48 @@ class RequestAcceptQuickMatch : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 host_player_id = 4;
+  inline bool has_host_player_id() const;
+  inline void clear_host_player_id();
+  static const int kHostPlayerIdFieldNumber = 4;
+  inline ::google::protobuf::uint32 host_player_id() const;
+  inline void set_host_player_id(::google::protobuf::uint32 value);
+
+  // required bytes data = 5;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 5;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestAcceptQuickMatch)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_host_player_id();
+  inline void clear_has_host_player_id();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 host_player_id_;
+  ::std::string* data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -21383,249 +23223,6 @@ class RequestRejectQuickMatchResponse : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class PushRequestJoinQuickMatch : public ::google::protobuf::MessageLite {
- public:
-  PushRequestJoinQuickMatch();
-  virtual ~PushRequestJoinQuickMatch();
-
-  PushRequestJoinQuickMatch(const PushRequestJoinQuickMatch& from);
-
-  inline PushRequestJoinQuickMatch& operator=(const PushRequestJoinQuickMatch& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const PushRequestJoinQuickMatch& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const PushRequestJoinQuickMatch* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(PushRequestJoinQuickMatch* other);
-
-  // implements Message ----------------------------------------------
-
-  PushRequestJoinQuickMatch* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const PushRequestJoinQuickMatch& from);
-  void MergeFrom(const PushRequestJoinQuickMatch& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestJoinQuickMatch)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PushRequestJoinQuickMatch* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class PushRequestAcceptQuickMatch : public ::google::protobuf::MessageLite {
- public:
-  PushRequestAcceptQuickMatch();
-  virtual ~PushRequestAcceptQuickMatch();
-
-  PushRequestAcceptQuickMatch(const PushRequestAcceptQuickMatch& from);
-
-  inline PushRequestAcceptQuickMatch& operator=(const PushRequestAcceptQuickMatch& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const PushRequestAcceptQuickMatch& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const PushRequestAcceptQuickMatch* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(PushRequestAcceptQuickMatch* other);
-
-  // implements Message ----------------------------------------------
-
-  PushRequestAcceptQuickMatch* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const PushRequestAcceptQuickMatch& from);
-  void MergeFrom(const PushRequestAcceptQuickMatch& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestAcceptQuickMatch)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PushRequestAcceptQuickMatch* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class PushRequestRejectQuickMatch : public ::google::protobuf::MessageLite {
- public:
-  PushRequestRejectQuickMatch();
-  virtual ~PushRequestRejectQuickMatch();
-
-  PushRequestRejectQuickMatch(const PushRequestRejectQuickMatch& from);
-
-  inline PushRequestRejectQuickMatch& operator=(const PushRequestRejectQuickMatch& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const PushRequestRejectQuickMatch& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const PushRequestRejectQuickMatch* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(PushRequestRejectQuickMatch* other);
-
-  // implements Message ----------------------------------------------
-
-  PushRequestRejectQuickMatch* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const PushRequestRejectQuickMatch& from);
-  void MergeFrom(const PushRequestRejectQuickMatch& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestRejectQuickMatch)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static PushRequestRejectQuickMatch* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class RequestSendQuickMatchStart_Session_member_list : public ::google::protobuf::MessageLite {
  public:
   RequestSendQuickMatchStart_Session_member_list();
@@ -21687,13 +23284,33 @@ class RequestSendQuickMatchStart_Session_member_list : public ::google::protobuf
 
   // accessors -------------------------------------------------------
 
+  // required uint32 player_id = 1;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list)
  private:
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 player_id_;
+  ::google::protobuf::uint32 unknown_2_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -21770,13 +23387,36 @@ class RequestSendQuickMatchStart : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // repeated .Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list members = 2;
+  inline int members_size() const;
+  inline void clear_members();
+  static const int kMembersFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list& members(int index) const;
+  inline ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list* mutable_members(int index);
+  inline ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list* add_members();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list >&
+      members() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list >*
+      mutable_members();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSendQuickMatchStart)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list > members_;
+  ::google::protobuf::uint32 unknown_1_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -21851,13 +23491,92 @@ class RequestSendQuickMatchResult : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required bool remote_won = 3;
+  inline bool has_remote_won() const;
+  inline void clear_remote_won();
+  static const int kRemoteWonFieldNumber = 3;
+  inline bool remote_won() const;
+  inline void set_remote_won(bool value);
+
+  // required bool local_won = 4;
+  inline bool has_local_won() const;
+  inline void clear_local_won();
+  static const int kLocalWonFieldNumber = 4;
+  inline bool local_won() const;
+  inline void set_local_won(bool value);
+
+  // required .Frpg2RequestMessage.QuickMatchRank remote_rank = 5;
+  inline bool has_remote_rank() const;
+  inline void clear_remote_rank();
+  static const int kRemoteRankFieldNumber = 5;
+  inline const ::Frpg2RequestMessage::QuickMatchRank& remote_rank() const;
+  inline ::Frpg2RequestMessage::QuickMatchRank* mutable_remote_rank();
+  inline ::Frpg2RequestMessage::QuickMatchRank* release_remote_rank();
+  inline void set_allocated_remote_rank(::Frpg2RequestMessage::QuickMatchRank* remote_rank);
+
+  // required .Frpg2RequestMessage.QuickMatchRank local_rank = 6;
+  inline bool has_local_rank() const;
+  inline void clear_local_rank();
+  static const int kLocalRankFieldNumber = 6;
+  inline const ::Frpg2RequestMessage::QuickMatchRank& local_rank() const;
+  inline ::Frpg2RequestMessage::QuickMatchRank* mutable_local_rank();
+  inline ::Frpg2RequestMessage::QuickMatchRank* release_local_rank();
+  inline void set_allocated_local_rank(::Frpg2RequestMessage::QuickMatchRank* local_rank);
+
+  // required string unknown_7 = 7;
+  inline bool has_unknown_7() const;
+  inline void clear_unknown_7();
+  static const int kUnknown7FieldNumber = 7;
+  inline const ::std::string& unknown_7() const;
+  inline void set_unknown_7(const ::std::string& value);
+  inline void set_unknown_7(const char* value);
+  inline void set_unknown_7(const char* value, size_t size);
+  inline ::std::string* mutable_unknown_7();
+  inline ::std::string* release_unknown_7();
+  inline void set_allocated_unknown_7(::std::string* unknown_7);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSendQuickMatchResult)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_remote_won();
+  inline void clear_has_remote_won();
+  inline void set_has_local_won();
+  inline void clear_has_local_won();
+  inline void set_has_remote_rank();
+  inline void clear_has_remote_rank();
+  inline void set_has_local_rank();
+  inline void clear_has_local_rank();
+  inline void set_has_unknown_7();
+  inline void clear_has_unknown_7();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::Frpg2RequestMessage::QuickMatchRank* remote_rank_;
+  ::Frpg2RequestMessage::QuickMatchRank* local_rank_;
+  ::std::string* unknown_7_;
+  bool remote_won_;
+  bool local_won_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -21932,13 +23651,35 @@ class RequestSendQuickMatchResultResponse : public ::google::protobuf::MessageLi
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required .Frpg2RequestMessage.QuickMatchRank new_local_rank = 2;
+  inline bool has_new_local_rank() const;
+  inline void clear_new_local_rank();
+  static const int kNewLocalRankFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::QuickMatchRank& new_local_rank() const;
+  inline ::Frpg2RequestMessage::QuickMatchRank* mutable_new_local_rank();
+  inline ::Frpg2RequestMessage::QuickMatchRank* release_new_local_rank();
+  inline void set_allocated_new_local_rank(::Frpg2RequestMessage::QuickMatchRank* new_local_rank);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSendQuickMatchResultResponse)
  private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_new_local_rank();
+  inline void clear_has_new_local_rank();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::Frpg2RequestMessage::QuickMatchRank* new_local_rank_;
+  ::google::protobuf::uint32 unknown_1_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -21949,87 +23690,6 @@ class RequestSendQuickMatchResultResponse : public ::google::protobuf::MessageLi
 
   void InitAsDefaultInstance();
   static RequestSendQuickMatchResultResponse* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class QuickMatchRankCache : public ::google::protobuf::MessageLite {
- public:
-  QuickMatchRankCache();
-  virtual ~QuickMatchRankCache();
-
-  QuickMatchRankCache(const QuickMatchRankCache& from);
-
-  inline QuickMatchRankCache& operator=(const QuickMatchRankCache& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const QuickMatchRankCache& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const QuickMatchRankCache* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(QuickMatchRankCache* other);
-
-  // implements Message ----------------------------------------------
-
-  QuickMatchRankCache* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const QuickMatchRankCache& from);
-  void MergeFrom(const QuickMatchRankCache& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchRankCache)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static QuickMatchRankCache* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -22111,251 +23771,6 @@ class RequestPushSendQuickMatchStart : public ::google::protobuf::MessageLite {
 
   void InitAsDefaultInstance();
   static RequestPushSendQuickMatchStart* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class QuickMatchSession_Result_list : public ::google::protobuf::MessageLite {
- public:
-  QuickMatchSession_Result_list();
-  virtual ~QuickMatchSession_Result_list();
-
-  QuickMatchSession_Result_list(const QuickMatchSession_Result_list& from);
-
-  inline QuickMatchSession_Result_list& operator=(const QuickMatchSession_Result_list& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const QuickMatchSession_Result_list& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const QuickMatchSession_Result_list* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(QuickMatchSession_Result_list* other);
-
-  // implements Message ----------------------------------------------
-
-  QuickMatchSession_Result_list* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const QuickMatchSession_Result_list& from);
-  void MergeFrom(const QuickMatchSession_Result_list& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchSession.Result_list)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static QuickMatchSession_Result_list* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class QuickMatchSession : public ::google::protobuf::MessageLite {
- public:
-  QuickMatchSession();
-  virtual ~QuickMatchSession();
-
-  QuickMatchSession(const QuickMatchSession& from);
-
-  inline QuickMatchSession& operator=(const QuickMatchSession& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const QuickMatchSession& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const QuickMatchSession* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(QuickMatchSession* other);
-
-  // implements Message ----------------------------------------------
-
-  QuickMatchSession* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const QuickMatchSession& from);
-  void MergeFrom(const QuickMatchSession& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  typedef QuickMatchSession_Result_list Result_list;
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchSession)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static QuickMatchSession* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class QuickMatchApologyPoint : public ::google::protobuf::MessageLite {
- public:
-  QuickMatchApologyPoint();
-  virtual ~QuickMatchApologyPoint();
-
-  QuickMatchApologyPoint(const QuickMatchApologyPoint& from);
-
-  inline QuickMatchApologyPoint& operator=(const QuickMatchApologyPoint& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const QuickMatchApologyPoint& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const QuickMatchApologyPoint* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(QuickMatchApologyPoint* other);
-
-  // implements Message ----------------------------------------------
-
-  QuickMatchApologyPoint* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const QuickMatchApologyPoint& from);
-  void MergeFrom(const QuickMatchApologyPoint& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchApologyPoint)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static QuickMatchApologyPoint* default_instance_;
 };
 // ===================================================================
 
@@ -24417,80 +25832,80 @@ inline void RequestUpdatePlayerCharacter::set_unknown_1(::google::protobuf::uint
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdatePlayerCharacter.unknown_1)
 }
 
-// required bytes unknown_2 = 2;
-inline bool RequestUpdatePlayerCharacter::has_unknown_2() const {
+// required bytes character_data = 2;
+inline bool RequestUpdatePlayerCharacter::has_character_data() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RequestUpdatePlayerCharacter::set_has_unknown_2() {
+inline void RequestUpdatePlayerCharacter::set_has_character_data() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RequestUpdatePlayerCharacter::clear_has_unknown_2() {
+inline void RequestUpdatePlayerCharacter::clear_has_character_data() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RequestUpdatePlayerCharacter::clear_unknown_2() {
-  if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_2_->clear();
+inline void RequestUpdatePlayerCharacter::clear_character_data() {
+  if (character_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_->clear();
   }
-  clear_has_unknown_2();
+  clear_has_character_data();
 }
-inline const ::std::string& RequestUpdatePlayerCharacter::unknown_2() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdatePlayerCharacter.unknown_2)
-  return *unknown_2_;
+inline const ::std::string& RequestUpdatePlayerCharacter::character_data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdatePlayerCharacter.character_data)
+  return *character_data_;
 }
-inline void RequestUpdatePlayerCharacter::set_unknown_2(const ::std::string& value) {
-  set_has_unknown_2();
-  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_2_ = new ::std::string;
+inline void RequestUpdatePlayerCharacter::set_character_data(const ::std::string& value) {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
   }
-  unknown_2_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdatePlayerCharacter.unknown_2)
+  character_data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdatePlayerCharacter.character_data)
 }
-inline void RequestUpdatePlayerCharacter::set_unknown_2(const char* value) {
-  set_has_unknown_2();
-  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_2_ = new ::std::string;
+inline void RequestUpdatePlayerCharacter::set_character_data(const char* value) {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
   }
-  unknown_2_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestUpdatePlayerCharacter.unknown_2)
+  character_data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestUpdatePlayerCharacter.character_data)
 }
-inline void RequestUpdatePlayerCharacter::set_unknown_2(const void* value, size_t size) {
-  set_has_unknown_2();
-  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_2_ = new ::std::string;
+inline void RequestUpdatePlayerCharacter::set_character_data(const void* value, size_t size) {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
   }
-  unknown_2_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestUpdatePlayerCharacter.unknown_2)
+  character_data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestUpdatePlayerCharacter.character_data)
 }
-inline ::std::string* RequestUpdatePlayerCharacter::mutable_unknown_2() {
-  set_has_unknown_2();
-  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_2_ = new ::std::string;
+inline ::std::string* RequestUpdatePlayerCharacter::mutable_character_data() {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestUpdatePlayerCharacter.unknown_2)
-  return unknown_2_;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestUpdatePlayerCharacter.character_data)
+  return character_data_;
 }
-inline ::std::string* RequestUpdatePlayerCharacter::release_unknown_2() {
-  clear_has_unknown_2();
-  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* RequestUpdatePlayerCharacter::release_character_data() {
+  clear_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = unknown_2_;
-    unknown_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = character_data_;
+    character_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void RequestUpdatePlayerCharacter::set_allocated_unknown_2(::std::string* unknown_2) {
-  if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete unknown_2_;
+inline void RequestUpdatePlayerCharacter::set_allocated_character_data(::std::string* character_data) {
+  if (character_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete character_data_;
   }
-  if (unknown_2) {
-    set_has_unknown_2();
-    unknown_2_ = unknown_2;
+  if (character_data) {
+    set_has_character_data();
+    character_data_ = character_data;
   } else {
-    clear_has_unknown_2();
-    unknown_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_character_data();
+    character_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestUpdatePlayerCharacter.unknown_2)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestUpdatePlayerCharacter.character_data)
 }
 
 // -------------------------------------------------------------------
@@ -24505,9 +25920,181 @@ inline void RequestUpdatePlayerCharacter::set_allocated_unknown_2(::std::string*
 
 // RequestGetPlayerCharacter
 
+// required uint32 player_id = 1;
+inline bool RequestGetPlayerCharacter::has_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetPlayerCharacter::set_has_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetPlayerCharacter::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetPlayerCharacter::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 RequestGetPlayerCharacter::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetPlayerCharacter.player_id)
+  return player_id_;
+}
+inline void RequestGetPlayerCharacter::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetPlayerCharacter.player_id)
+}
+
+// required uint32 unknown_1 = 2;
+inline bool RequestGetPlayerCharacter::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetPlayerCharacter::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetPlayerCharacter::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetPlayerCharacter::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestGetPlayerCharacter::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetPlayerCharacter.unknown_1)
+  return unknown_1_;
+}
+inline void RequestGetPlayerCharacter::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetPlayerCharacter.unknown_1)
+}
+
 // -------------------------------------------------------------------
 
 // RequestGetPlayerCharacterResponse
+
+// required uint32 player_id = 1;
+inline bool RequestGetPlayerCharacterResponse::has_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetPlayerCharacterResponse::set_has_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetPlayerCharacterResponse::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetPlayerCharacterResponse::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 RequestGetPlayerCharacterResponse::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.player_id)
+  return player_id_;
+}
+inline void RequestGetPlayerCharacterResponse::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.player_id)
+}
+
+// required uint32 unknown_1 = 2;
+inline bool RequestGetPlayerCharacterResponse::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetPlayerCharacterResponse::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetPlayerCharacterResponse::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetPlayerCharacterResponse::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestGetPlayerCharacterResponse::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.unknown_1)
+  return unknown_1_;
+}
+inline void RequestGetPlayerCharacterResponse::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.unknown_1)
+}
+
+// required bytes character_data = 3;
+inline bool RequestGetPlayerCharacterResponse::has_character_data() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestGetPlayerCharacterResponse::set_has_character_data() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestGetPlayerCharacterResponse::clear_has_character_data() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestGetPlayerCharacterResponse::clear_character_data() {
+  if (character_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_->clear();
+  }
+  clear_has_character_data();
+}
+inline const ::std::string& RequestGetPlayerCharacterResponse::character_data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.character_data)
+  return *character_data_;
+}
+inline void RequestGetPlayerCharacterResponse::set_character_data(const ::std::string& value) {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
+  }
+  character_data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.character_data)
+}
+inline void RequestGetPlayerCharacterResponse::set_character_data(const char* value) {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
+  }
+  character_data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.character_data)
+}
+inline void RequestGetPlayerCharacterResponse::set_character_data(const void* value, size_t size) {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
+  }
+  character_data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.character_data)
+}
+inline ::std::string* RequestGetPlayerCharacterResponse::mutable_character_data() {
+  set_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    character_data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.character_data)
+  return character_data_;
+}
+inline ::std::string* RequestGetPlayerCharacterResponse::release_character_data() {
+  clear_has_character_data();
+  if (character_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = character_data_;
+    character_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestGetPlayerCharacterResponse::set_allocated_character_data(::std::string* character_data) {
+  if (character_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete character_data_;
+  }
+  if (character_data) {
+    set_has_character_data();
+    character_data_ = character_data;
+  } else {
+    clear_has_character_data();
+    character_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestGetPlayerCharacterResponse.character_data)
+}
 
 // -------------------------------------------------------------------
 
@@ -25893,17 +27480,401 @@ inline void PushRequestEvaluateBloodMessage::set_was_poor(bool value) {
 
 // BloodstainInfo
 
+// required uint32 online_area_id = 1;
+inline bool BloodstainInfo::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void BloodstainInfo::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void BloodstainInfo::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void BloodstainInfo::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 BloodstainInfo::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.BloodstainInfo.online_area_id)
+  return online_area_id_;
+}
+inline void BloodstainInfo::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodstainInfo.online_area_id)
+}
+
+// required uint32 bloodstain_id = 2;
+inline bool BloodstainInfo::has_bloodstain_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void BloodstainInfo::set_has_bloodstain_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void BloodstainInfo::clear_has_bloodstain_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void BloodstainInfo::clear_bloodstain_id() {
+  bloodstain_id_ = 0u;
+  clear_has_bloodstain_id();
+}
+inline ::google::protobuf::uint32 BloodstainInfo::bloodstain_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.BloodstainInfo.bloodstain_id)
+  return bloodstain_id_;
+}
+inline void BloodstainInfo::set_bloodstain_id(::google::protobuf::uint32 value) {
+  set_has_bloodstain_id();
+  bloodstain_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodstainInfo.bloodstain_id)
+}
+
+// required bytes data_block = 3;
+inline bool BloodstainInfo::has_data_block() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void BloodstainInfo::set_has_data_block() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void BloodstainInfo::clear_has_data_block() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void BloodstainInfo::clear_data_block() {
+  if (data_block_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_->clear();
+  }
+  clear_has_data_block();
+}
+inline const ::std::string& BloodstainInfo::data_block() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.BloodstainInfo.data_block)
+  return *data_block_;
+}
+inline void BloodstainInfo::set_data_block(const ::std::string& value) {
+  set_has_data_block();
+  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_ = new ::std::string;
+  }
+  data_block_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodstainInfo.data_block)
+}
+inline void BloodstainInfo::set_data_block(const char* value) {
+  set_has_data_block();
+  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_ = new ::std::string;
+  }
+  data_block_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.BloodstainInfo.data_block)
+}
+inline void BloodstainInfo::set_data_block(const void* value, size_t size) {
+  set_has_data_block();
+  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_ = new ::std::string;
+  }
+  data_block_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.BloodstainInfo.data_block)
+}
+inline ::std::string* BloodstainInfo::mutable_data_block() {
+  set_has_data_block();
+  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.BloodstainInfo.data_block)
+  return data_block_;
+}
+inline ::std::string* BloodstainInfo::release_data_block() {
+  clear_has_data_block();
+  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_block_;
+    data_block_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void BloodstainInfo::set_allocated_data_block(::std::string* data_block) {
+  if (data_block_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_block_;
+  }
+  if (data_block) {
+    set_has_data_block();
+    data_block_ = data_block;
+  } else {
+    clear_has_data_block();
+    data_block_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.BloodstainInfo.data_block)
+}
+
 // -------------------------------------------------------------------
 
 // RequestCreateBloodstain
+
+// required uint32 online_area_id = 1;
+inline bool RequestCreateBloodstain::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestCreateBloodstain::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestCreateBloodstain::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestCreateBloodstain::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestCreateBloodstain::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateBloodstain.online_area_id)
+  return online_area_id_;
+}
+inline void RequestCreateBloodstain::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.online_area_id)
+}
+
+// required bytes data_block_1 = 2;
+inline bool RequestCreateBloodstain::has_data_block_1() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestCreateBloodstain::set_has_data_block_1() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestCreateBloodstain::clear_has_data_block_1() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestCreateBloodstain::clear_data_block_1() {
+  if (data_block_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_1_->clear();
+  }
+  clear_has_data_block_1();
+}
+inline const ::std::string& RequestCreateBloodstain::data_block_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+  return *data_block_1_;
+}
+inline void RequestCreateBloodstain::set_data_block_1(const ::std::string& value) {
+  set_has_data_block_1();
+  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_1_ = new ::std::string;
+  }
+  data_block_1_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+}
+inline void RequestCreateBloodstain::set_data_block_1(const char* value) {
+  set_has_data_block_1();
+  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_1_ = new ::std::string;
+  }
+  data_block_1_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+}
+inline void RequestCreateBloodstain::set_data_block_1(const void* value, size_t size) {
+  set_has_data_block_1();
+  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_1_ = new ::std::string;
+  }
+  data_block_1_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+}
+inline ::std::string* RequestCreateBloodstain::mutable_data_block_1() {
+  set_has_data_block_1();
+  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_1_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+  return data_block_1_;
+}
+inline ::std::string* RequestCreateBloodstain::release_data_block_1() {
+  clear_has_data_block_1();
+  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_block_1_;
+    data_block_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestCreateBloodstain::set_allocated_data_block_1(::std::string* data_block_1) {
+  if (data_block_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_block_1_;
+  }
+  if (data_block_1) {
+    set_has_data_block_1();
+    data_block_1_ = data_block_1;
+  } else {
+    clear_has_data_block_1();
+    data_block_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+}
+
+// required bytes data_block_2 = 3;
+inline bool RequestCreateBloodstain::has_data_block_2() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestCreateBloodstain::set_has_data_block_2() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestCreateBloodstain::clear_has_data_block_2() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestCreateBloodstain::clear_data_block_2() {
+  if (data_block_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_2_->clear();
+  }
+  clear_has_data_block_2();
+}
+inline const ::std::string& RequestCreateBloodstain::data_block_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+  return *data_block_2_;
+}
+inline void RequestCreateBloodstain::set_data_block_2(const ::std::string& value) {
+  set_has_data_block_2();
+  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_2_ = new ::std::string;
+  }
+  data_block_2_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+}
+inline void RequestCreateBloodstain::set_data_block_2(const char* value) {
+  set_has_data_block_2();
+  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_2_ = new ::std::string;
+  }
+  data_block_2_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+}
+inline void RequestCreateBloodstain::set_data_block_2(const void* value, size_t size) {
+  set_has_data_block_2();
+  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_2_ = new ::std::string;
+  }
+  data_block_2_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+}
+inline ::std::string* RequestCreateBloodstain::mutable_data_block_2() {
+  set_has_data_block_2();
+  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_block_2_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+  return data_block_2_;
+}
+inline ::std::string* RequestCreateBloodstain::release_data_block_2() {
+  clear_has_data_block_2();
+  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_block_2_;
+    data_block_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestCreateBloodstain::set_allocated_data_block_2(::std::string* data_block_2) {
+  if (data_block_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_block_2_;
+  }
+  if (data_block_2) {
+    set_has_data_block_2();
+    data_block_2_ = data_block_2;
+  } else {
+    clear_has_data_block_2();
+    data_block_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+}
 
 // -------------------------------------------------------------------
 
 // RequestGetBloodstainList
 
+// required uint32 max_stains = 1;
+inline bool RequestGetBloodstainList::has_max_stains() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetBloodstainList::set_has_max_stains() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetBloodstainList::clear_has_max_stains() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetBloodstainList::clear_max_stains() {
+  max_stains_ = 0u;
+  clear_has_max_stains();
+}
+inline ::google::protobuf::uint32 RequestGetBloodstainList::max_stains() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetBloodstainList.max_stains)
+  return max_stains_;
+}
+inline void RequestGetBloodstainList::set_max_stains(::google::protobuf::uint32 value) {
+  set_has_max_stains();
+  max_stains_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetBloodstainList.max_stains)
+}
+
+// repeated .Frpg2RequestMessage.DomainLimitData search_areas = 2;
+inline int RequestGetBloodstainList::search_areas_size() const {
+  return search_areas_.size();
+}
+inline void RequestGetBloodstainList::clear_search_areas() {
+  search_areas_.Clear();
+}
+inline const ::Frpg2RequestMessage::DomainLimitData& RequestGetBloodstainList::search_areas(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetBloodstainList.search_areas)
+  return search_areas_.Get(index);
+}
+inline ::Frpg2RequestMessage::DomainLimitData* RequestGetBloodstainList::mutable_search_areas(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetBloodstainList.search_areas)
+  return search_areas_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::DomainLimitData* RequestGetBloodstainList::add_search_areas() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetBloodstainList.search_areas)
+  return search_areas_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >&
+RequestGetBloodstainList::search_areas() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetBloodstainList.search_areas)
+  return search_areas_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >*
+RequestGetBloodstainList::mutable_search_areas() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetBloodstainList.search_areas)
+  return &search_areas_;
+}
+
 // -------------------------------------------------------------------
 
 // RequestGetBloodstainListResponse
+
+// repeated .Frpg2RequestMessage.BloodstainInfo bloodstains = 1;
+inline int RequestGetBloodstainListResponse::bloodstains_size() const {
+  return bloodstains_.size();
+}
+inline void RequestGetBloodstainListResponse::clear_bloodstains() {
+  bloodstains_.Clear();
+}
+inline const ::Frpg2RequestMessage::BloodstainInfo& RequestGetBloodstainListResponse::bloodstains(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetBloodstainListResponse.bloodstains)
+  return bloodstains_.Get(index);
+}
+inline ::Frpg2RequestMessage::BloodstainInfo* RequestGetBloodstainListResponse::mutable_bloodstains(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetBloodstainListResponse.bloodstains)
+  return bloodstains_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::BloodstainInfo* RequestGetBloodstainListResponse::add_bloodstains() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetBloodstainListResponse.bloodstains)
+  return bloodstains_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::BloodstainInfo >&
+RequestGetBloodstainListResponse::bloodstains() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetBloodstainListResponse.bloodstains)
+  return bloodstains_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::BloodstainInfo >*
+RequestGetBloodstainListResponse::mutable_bloodstains() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetBloodstainListResponse.bloodstains)
+  return &bloodstains_;
+}
 
 // -------------------------------------------------------------------
 
@@ -26849,6 +28820,54 @@ inline void RequestNotifyCreateSignResult::set_unknown_4(::google::protobuf::uin
 
 // DomainLimitData
 
+// required uint32 online_area_id = 1;
+inline bool DomainLimitData::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void DomainLimitData::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void DomainLimitData::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void DomainLimitData::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 DomainLimitData::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.DomainLimitData.online_area_id)
+  return online_area_id_;
+}
+inline void DomainLimitData::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.DomainLimitData.online_area_id)
+}
+
+// required uint32 max_items = 2;
+inline bool DomainLimitData::has_max_items() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void DomainLimitData::set_has_max_items() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void DomainLimitData::clear_has_max_items() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void DomainLimitData::clear_max_items() {
+  max_items_ = 0u;
+  clear_has_max_items();
+}
+inline ::google::protobuf::uint32 DomainLimitData::max_items() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.DomainLimitData.max_items)
+  return max_items_;
+}
+inline void DomainLimitData::set_max_items(::google::protobuf::uint32 value) {
+  set_has_max_items();
+  max_items_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.DomainLimitData.max_items)
+}
+
 // -------------------------------------------------------------------
 
 // KillerInfo
@@ -27643,28 +29662,28 @@ inline void SignData::set_allocated_steam_id(::std::string* steam_id) {
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.SignData.steam_id)
 }
 
-// required uint32 unknown_id_6 = 6;
-inline bool SignData::has_unknown_id_6() const {
+// required uint32 is_red_sign = 6;
+inline bool SignData::has_is_red_sign() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void SignData::set_has_unknown_id_6() {
+inline void SignData::set_has_is_red_sign() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void SignData::clear_has_unknown_id_6() {
+inline void SignData::clear_has_is_red_sign() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void SignData::clear_unknown_id_6() {
-  unknown_id_6_ = 0u;
-  clear_has_unknown_id_6();
+inline void SignData::clear_is_red_sign() {
+  is_red_sign_ = 0u;
+  clear_has_is_red_sign();
 }
-inline ::google::protobuf::uint32 SignData::unknown_id_6() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.SignData.unknown_id_6)
-  return unknown_id_6_;
+inline ::google::protobuf::uint32 SignData::is_red_sign() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.SignData.is_red_sign)
+  return is_red_sign_;
 }
-inline void SignData::set_unknown_id_6(::google::protobuf::uint32 value) {
-  set_has_unknown_id_6();
-  unknown_id_6_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.SignData.unknown_id_6)
+inline void SignData::set_is_red_sign(::google::protobuf::uint32 value) {
+  set_has_is_red_sign();
+  is_red_sign_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.SignData.is_red_sign)
 }
 
 // -------------------------------------------------------------------
@@ -27815,28 +29834,28 @@ inline void MatchingParameter::set_soul_level(::google::protobuf::uint32 value) 
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.soul_level)
 }
 
-// required uint32 total_get_soul = 7;
-inline bool MatchingParameter::has_total_get_soul() const {
+// required uint32 soul_memory = 7;
+inline bool MatchingParameter::has_soul_memory() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void MatchingParameter::set_has_total_get_soul() {
+inline void MatchingParameter::set_has_soul_memory() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void MatchingParameter::clear_has_total_get_soul() {
+inline void MatchingParameter::clear_has_soul_memory() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void MatchingParameter::clear_total_get_soul() {
-  total_get_soul_ = 0u;
-  clear_has_total_get_soul();
+inline void MatchingParameter::clear_soul_memory() {
+  soul_memory_ = 0u;
+  clear_has_soul_memory();
 }
-inline ::google::protobuf::uint32 MatchingParameter::total_get_soul() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.total_get_soul)
-  return total_get_soul_;
+inline ::google::protobuf::uint32 MatchingParameter::soul_memory() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.soul_memory)
+  return soul_memory_;
 }
-inline void MatchingParameter::set_total_get_soul(::google::protobuf::uint32 value) {
-  set_has_total_get_soul();
-  total_get_soul_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.total_get_soul)
+inline void MatchingParameter::set_soul_memory(::google::protobuf::uint32 value) {
+  set_has_soul_memory();
+  soul_memory_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.soul_memory)
 }
 
 // optional string unknown_string = 8;
@@ -28509,28 +30528,28 @@ inline void RequestCreateSign::set_allocated_matching_parameter(::Frpg2RequestMe
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateSign.matching_parameter)
 }
 
-// required uint32 unknown = 4;
-inline bool RequestCreateSign::has_unknown() const {
+// required bool is_red_sign = 4;
+inline bool RequestCreateSign::has_is_red_sign() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void RequestCreateSign::set_has_unknown() {
+inline void RequestCreateSign::set_has_is_red_sign() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void RequestCreateSign::clear_has_unknown() {
+inline void RequestCreateSign::clear_has_is_red_sign() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void RequestCreateSign::clear_unknown() {
-  unknown_ = 0u;
-  clear_has_unknown();
+inline void RequestCreateSign::clear_is_red_sign() {
+  is_red_sign_ = false;
+  clear_has_is_red_sign();
 }
-inline ::google::protobuf::uint32 RequestCreateSign::unknown() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateSign.unknown)
-  return unknown_;
+inline bool RequestCreateSign::is_red_sign() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateSign.is_red_sign)
+  return is_red_sign_;
 }
-inline void RequestCreateSign::set_unknown(::google::protobuf::uint32 value) {
-  set_has_unknown();
-  unknown_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateSign.unknown)
+inline void RequestCreateSign::set_is_red_sign(bool value) {
+  set_has_is_red_sign();
+  is_red_sign_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateSign.is_red_sign)
 }
 
 // required bytes player_struct = 5;
@@ -28981,114 +31000,6 @@ inline void RequestUpdateSign::set_sign_unique_number(::google::protobuf::uint32
 // -------------------------------------------------------------------
 
 // RequestRejectSignResponse
-
-// -------------------------------------------------------------------
-
-// RequestCreateGhostData
-
-// required uint32 online_area_id = 1;
-inline bool RequestCreateGhostData::has_online_area_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void RequestCreateGhostData::set_has_online_area_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void RequestCreateGhostData::clear_has_online_area_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void RequestCreateGhostData::clear_online_area_id() {
-  online_area_id_ = 0u;
-  clear_has_online_area_id();
-}
-inline ::google::protobuf::uint32 RequestCreateGhostData::online_area_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateGhostData.online_area_id)
-  return online_area_id_;
-}
-inline void RequestCreateGhostData::set_online_area_id(::google::protobuf::uint32 value) {
-  set_has_online_area_id();
-  online_area_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateGhostData.online_area_id)
-}
-
-// required bytes ghost_data = 2;
-inline bool RequestCreateGhostData::has_ghost_data() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void RequestCreateGhostData::set_has_ghost_data() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void RequestCreateGhostData::clear_has_ghost_data() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void RequestCreateGhostData::clear_ghost_data() {
-  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_->clear();
-  }
-  clear_has_ghost_data();
-}
-inline const ::std::string& RequestCreateGhostData::ghost_data() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-  return *ghost_data_;
-}
-inline void RequestCreateGhostData::set_ghost_data(const ::std::string& value) {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
-  }
-  ghost_data_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-}
-inline void RequestCreateGhostData::set_ghost_data(const char* value) {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
-  }
-  ghost_data_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-}
-inline void RequestCreateGhostData::set_ghost_data(const void* value, size_t size) {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
-  }
-  ghost_data_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-}
-inline ::std::string* RequestCreateGhostData::mutable_ghost_data() {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-  return ghost_data_;
-}
-inline ::std::string* RequestCreateGhostData::release_ghost_data() {
-  clear_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = ghost_data_;
-    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void RequestCreateGhostData::set_allocated_ghost_data(::std::string* ghost_data) {
-  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete ghost_data_;
-  }
-  if (ghost_data) {
-    set_has_ghost_data();
-    ghost_data_ = ghost_data;
-  } else {
-    clear_has_ghost_data();
-    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-}
-
-// -------------------------------------------------------------------
-
-// RequestCreateGhostDataResponse
 
 // -------------------------------------------------------------------
 
@@ -29884,6 +31795,10 @@ inline void PushRequestAllowBreakInTarget::set_unknown_2(::google::protobuf::uin
 
 // -------------------------------------------------------------------
 
+// PushRequestRejectBreakInTarget
+
+// -------------------------------------------------------------------
+
 // PushRequestBreakInTarget
 
 // required uint32 unknown_1 = 1;
@@ -30090,6 +32005,102 @@ inline void PushRequestBreakInTarget::set_online_area_id(::google::protobuf::uin
 
 // RequestBreakInTarget
 
+// required uint32 map_id = 1;
+inline bool RequestBreakInTarget::has_map_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestBreakInTarget::set_has_map_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestBreakInTarget::clear_has_map_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestBreakInTarget::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
+}
+inline ::google::protobuf::uint32 RequestBreakInTarget::map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestBreakInTarget.map_id)
+  return map_id_;
+}
+inline void RequestBreakInTarget::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestBreakInTarget.map_id)
+}
+
+// required uint32 online_area_id = 2;
+inline bool RequestBreakInTarget::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestBreakInTarget::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestBreakInTarget::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestBreakInTarget::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestBreakInTarget::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestBreakInTarget.online_area_id)
+  return online_area_id_;
+}
+inline void RequestBreakInTarget::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestBreakInTarget.online_area_id)
+}
+
+// required uint32 player_id = 3;
+inline bool RequestBreakInTarget::has_player_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestBreakInTarget::set_has_player_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestBreakInTarget::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestBreakInTarget::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 RequestBreakInTarget::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestBreakInTarget.player_id)
+  return player_id_;
+}
+inline void RequestBreakInTarget::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestBreakInTarget.player_id)
+}
+
+// required uint32 unknown_1 = 4;
+inline bool RequestBreakInTarget::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestBreakInTarget::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestBreakInTarget::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestBreakInTarget::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestBreakInTarget::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestBreakInTarget.unknown_1)
+  return unknown_1_;
+}
+inline void RequestBreakInTarget::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestBreakInTarget.unknown_1)
+}
+
 // -------------------------------------------------------------------
 
 // RequestBreakInTargetResponse
@@ -30104,27 +32115,511 @@ inline void PushRequestBreakInTarget::set_online_area_id(::google::protobuf::uin
 
 // -------------------------------------------------------------------
 
-// PushRequestRejectBreakInTarget
-
-// -------------------------------------------------------------------
-
 // RequestGetDeadingGhost
+
+// required uint32 online_area_id = 1;
+inline bool RequestGetDeadingGhost::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetDeadingGhost::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetDeadingGhost::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetDeadingGhost::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhost::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhost.online_area_id)
+  return online_area_id_;
+}
+inline void RequestGetDeadingGhost::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhost.online_area_id)
+}
+
+// required uint32 bloodstain_id = 2;
+inline bool RequestGetDeadingGhost::has_bloodstain_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetDeadingGhost::set_has_bloodstain_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetDeadingGhost::clear_has_bloodstain_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetDeadingGhost::clear_bloodstain_id() {
+  bloodstain_id_ = 0u;
+  clear_has_bloodstain_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhost::bloodstain_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhost.bloodstain_id)
+  return bloodstain_id_;
+}
+inline void RequestGetDeadingGhost::set_bloodstain_id(::google::protobuf::uint32 value) {
+  set_has_bloodstain_id();
+  bloodstain_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhost.bloodstain_id)
+}
 
 // -------------------------------------------------------------------
 
 // RequestGetDeadingGhostResponse
 
+// required uint32 online_area_id = 1;
+inline bool RequestGetDeadingGhostResponse::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetDeadingGhostResponse::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetDeadingGhostResponse::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetDeadingGhostResponse::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhostResponse::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.online_area_id)
+  return online_area_id_;
+}
+inline void RequestGetDeadingGhostResponse::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.online_area_id)
+}
+
+// required uint32 bloodstain_id = 2;
+inline bool RequestGetDeadingGhostResponse::has_bloodstain_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetDeadingGhostResponse::set_has_bloodstain_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetDeadingGhostResponse::clear_has_bloodstain_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetDeadingGhostResponse::clear_bloodstain_id() {
+  bloodstain_id_ = 0u;
+  clear_has_bloodstain_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhostResponse::bloodstain_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.bloodstain_id)
+  return bloodstain_id_;
+}
+inline void RequestGetDeadingGhostResponse::set_bloodstain_id(::google::protobuf::uint32 value) {
+  set_has_bloodstain_id();
+  bloodstain_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.bloodstain_id)
+}
+
+// required bytes data = 3;
+inline bool RequestGetDeadingGhostResponse::has_data() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestGetDeadingGhostResponse::set_has_data() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestGetDeadingGhostResponse::clear_has_data() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestGetDeadingGhostResponse::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& RequestGetDeadingGhostResponse::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+  return *data_;
+}
+inline void RequestGetDeadingGhostResponse::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+inline void RequestGetDeadingGhostResponse::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+inline void RequestGetDeadingGhostResponse::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+inline ::std::string* RequestGetDeadingGhostResponse::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+  return data_;
+}
+inline ::std::string* RequestGetDeadingGhostResponse::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestGetDeadingGhostResponse::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+
 // -------------------------------------------------------------------
 
 // RequestGetGhostDataList
+
+// required uint32 max_ghosts = 1;
+inline bool RequestGetGhostDataList::has_max_ghosts() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetGhostDataList::set_has_max_ghosts() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetGhostDataList::clear_has_max_ghosts() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetGhostDataList::clear_max_ghosts() {
+  max_ghosts_ = 0u;
+  clear_has_max_ghosts();
+}
+inline ::google::protobuf::uint32 RequestGetGhostDataList::max_ghosts() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetGhostDataList.max_ghosts)
+  return max_ghosts_;
+}
+inline void RequestGetGhostDataList::set_max_ghosts(::google::protobuf::uint32 value) {
+  set_has_max_ghosts();
+  max_ghosts_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetGhostDataList.max_ghosts)
+}
+
+// repeated .Frpg2RequestMessage.DomainLimitData search_areas = 2;
+inline int RequestGetGhostDataList::search_areas_size() const {
+  return search_areas_.size();
+}
+inline void RequestGetGhostDataList::clear_search_areas() {
+  search_areas_.Clear();
+}
+inline const ::Frpg2RequestMessage::DomainLimitData& RequestGetGhostDataList::search_areas(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetGhostDataList.search_areas)
+  return search_areas_.Get(index);
+}
+inline ::Frpg2RequestMessage::DomainLimitData* RequestGetGhostDataList::mutable_search_areas(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetGhostDataList.search_areas)
+  return search_areas_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::DomainLimitData* RequestGetGhostDataList::add_search_areas() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetGhostDataList.search_areas)
+  return search_areas_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >&
+RequestGetGhostDataList::search_areas() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetGhostDataList.search_areas)
+  return search_areas_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::DomainLimitData >*
+RequestGetGhostDataList::mutable_search_areas() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetGhostDataList.search_areas)
+  return &search_areas_;
+}
 
 // -------------------------------------------------------------------
 
 // GhostData
 
+// required uint32 unknown_1 = 1;
+inline bool GhostData::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GhostData::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GhostData::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GhostData::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 GhostData::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GhostData.unknown_1)
+  return unknown_1_;
+}
+inline void GhostData::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GhostData.unknown_1)
+}
+
+// required uint32 ghost_id = 2;
+inline bool GhostData::has_ghost_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GhostData::set_has_ghost_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GhostData::clear_has_ghost_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GhostData::clear_ghost_id() {
+  ghost_id_ = 0u;
+  clear_has_ghost_id();
+}
+inline ::google::protobuf::uint32 GhostData::ghost_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GhostData.ghost_id)
+  return ghost_id_;
+}
+inline void GhostData::set_ghost_id(::google::protobuf::uint32 value) {
+  set_has_ghost_id();
+  ghost_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GhostData.ghost_id)
+}
+
+// required bytes data = 3;
+inline bool GhostData::has_data() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GhostData::set_has_data() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GhostData::clear_has_data() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GhostData::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& GhostData::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GhostData.data)
+  return *data_;
+}
+inline void GhostData::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GhostData.data)
+}
+inline void GhostData::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.GhostData.data)
+}
+inline void GhostData::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.GhostData.data)
+}
+inline ::std::string* GhostData::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.GhostData.data)
+  return data_;
+}
+inline ::std::string* GhostData::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GhostData::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.GhostData.data)
+}
+
+// -------------------------------------------------------------------
+
+// RequestCreateGhostData
+
+// required uint32 online_area_id = 1;
+inline bool RequestCreateGhostData::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestCreateGhostData::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestCreateGhostData::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestCreateGhostData::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestCreateGhostData::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateGhostData.online_area_id)
+  return online_area_id_;
+}
+inline void RequestCreateGhostData::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateGhostData.online_area_id)
+}
+
+// required bytes ghost_data = 2;
+inline bool RequestCreateGhostData::has_ghost_data() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestCreateGhostData::set_has_ghost_data() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestCreateGhostData::clear_has_ghost_data() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestCreateGhostData::clear_ghost_data() {
+  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_->clear();
+  }
+  clear_has_ghost_data();
+}
+inline const ::std::string& RequestCreateGhostData::ghost_data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+  return *ghost_data_;
+}
+inline void RequestCreateGhostData::set_ghost_data(const ::std::string& value) {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
+  }
+  ghost_data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+}
+inline void RequestCreateGhostData::set_ghost_data(const char* value) {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
+  }
+  ghost_data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+}
+inline void RequestCreateGhostData::set_ghost_data(const void* value, size_t size) {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
+  }
+  ghost_data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+}
+inline ::std::string* RequestCreateGhostData::mutable_ghost_data() {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+  return ghost_data_;
+}
+inline ::std::string* RequestCreateGhostData::release_ghost_data() {
+  clear_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = ghost_data_;
+    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestCreateGhostData::set_allocated_ghost_data(::std::string* ghost_data) {
+  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete ghost_data_;
+  }
+  if (ghost_data) {
+    set_has_ghost_data();
+    ghost_data_ = ghost_data;
+  } else {
+    clear_has_ghost_data();
+    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+}
+
+// -------------------------------------------------------------------
+
+// RequestCreateGhostDataResponse
+
 // -------------------------------------------------------------------
 
 // RequestGetGhostDataListResponse
+
+// repeated .Frpg2RequestMessage.GhostData ghosts = 1;
+inline int RequestGetGhostDataListResponse::ghosts_size() const {
+  return ghosts_.size();
+}
+inline void RequestGetGhostDataListResponse::clear_ghosts() {
+  ghosts_.Clear();
+}
+inline const ::Frpg2RequestMessage::GhostData& RequestGetGhostDataListResponse::ghosts(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetGhostDataListResponse.ghosts)
+  return ghosts_.Get(index);
+}
+inline ::Frpg2RequestMessage::GhostData* RequestGetGhostDataListResponse::mutable_ghosts(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetGhostDataListResponse.ghosts)
+  return ghosts_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::GhostData* RequestGetGhostDataListResponse::add_ghosts() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetGhostDataListResponse.ghosts)
+  return ghosts_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::GhostData >&
+RequestGetGhostDataListResponse::ghosts() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetGhostDataListResponse.ghosts)
+  return ghosts_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::GhostData >*
+RequestGetGhostDataListResponse::mutable_ghosts() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetGhostDataListResponse.ghosts)
+  return &ghosts_;
+}
 
 // -------------------------------------------------------------------
 
@@ -30154,6 +32649,278 @@ inline void PushRequestBreakInTarget::set_online_area_id(::google::protobuf::uin
 
 // PushRequestVisit
 
+// required uint32 unknown_1 = 1;
+inline bool PushRequestVisit::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PushRequestVisit::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PushRequestVisit::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PushRequestVisit::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 PushRequestVisit::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestVisit.unknown_1)
+  return unknown_1_;
+}
+inline void PushRequestVisit::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestVisit.unknown_1)
+}
+
+// required uint32 player_id = 2;
+inline bool PushRequestVisit::has_player_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushRequestVisit::set_has_player_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushRequestVisit::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PushRequestVisit::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 PushRequestVisit::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestVisit.player_id)
+  return player_id_;
+}
+inline void PushRequestVisit::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestVisit.player_id)
+}
+
+// required string player_steam_id = 3;
+inline bool PushRequestVisit::has_player_steam_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PushRequestVisit::set_has_player_steam_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PushRequestVisit::clear_has_player_steam_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PushRequestVisit::clear_player_steam_id() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_->clear();
+  }
+  clear_has_player_steam_id();
+}
+inline const ::std::string& PushRequestVisit::player_steam_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestVisit.player_steam_id)
+  return *player_steam_id_;
+}
+inline void PushRequestVisit::set_player_steam_id(const ::std::string& value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestVisit.player_steam_id)
+}
+inline void PushRequestVisit::set_player_steam_id(const char* value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.PushRequestVisit.player_steam_id)
+}
+inline void PushRequestVisit::set_player_steam_id(const char* value, size_t size) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.PushRequestVisit.player_steam_id)
+}
+inline ::std::string* PushRequestVisit::mutable_player_steam_id() {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestVisit.player_steam_id)
+  return player_steam_id_;
+}
+inline ::std::string* PushRequestVisit::release_player_steam_id() {
+  clear_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_steam_id_;
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestVisit::set_allocated_player_steam_id(::std::string* player_steam_id) {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
+  if (player_steam_id) {
+    set_has_player_steam_id();
+    player_steam_id_ = player_steam_id;
+  } else {
+    clear_has_player_steam_id();
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestVisit.player_steam_id)
+}
+
+// required bytes data = 4;
+inline bool PushRequestVisit::has_data() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PushRequestVisit::set_has_data() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PushRequestVisit::clear_has_data() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PushRequestVisit::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& PushRequestVisit::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestVisit.data)
+  return *data_;
+}
+inline void PushRequestVisit::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestVisit.data)
+}
+inline void PushRequestVisit::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.PushRequestVisit.data)
+}
+inline void PushRequestVisit::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.PushRequestVisit.data)
+}
+inline ::std::string* PushRequestVisit::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestVisit.data)
+  return data_;
+}
+inline ::std::string* PushRequestVisit::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestVisit::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestVisit.data)
+}
+
+// required uint32 unknown_2 = 5;
+inline bool PushRequestVisit::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void PushRequestVisit::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void PushRequestVisit::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void PushRequestVisit::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 PushRequestVisit::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestVisit.unknown_2)
+  return unknown_2_;
+}
+inline void PushRequestVisit::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestVisit.unknown_2)
+}
+
+// required uint32 map_id = 6;
+inline bool PushRequestVisit::has_map_id() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void PushRequestVisit::set_has_map_id() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void PushRequestVisit::clear_has_map_id() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void PushRequestVisit::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
+}
+inline ::google::protobuf::uint32 PushRequestVisit::map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestVisit.map_id)
+  return map_id_;
+}
+inline void PushRequestVisit::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestVisit.map_id)
+}
+
+// required uint32 online_map_id = 7;
+inline bool PushRequestVisit::has_online_map_id() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PushRequestVisit::set_has_online_map_id() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PushRequestVisit::clear_has_online_map_id() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PushRequestVisit::clear_online_map_id() {
+  online_map_id_ = 0u;
+  clear_has_online_map_id();
+}
+inline ::google::protobuf::uint32 PushRequestVisit::online_map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestVisit.online_map_id)
+  return online_map_id_;
+}
+inline void PushRequestVisit::set_online_map_id(::google::protobuf::uint32 value) {
+  set_has_online_map_id();
+  online_map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestVisit.online_map_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestRejectVisit
@@ -30170,6 +32937,106 @@ inline void PushRequestBreakInTarget::set_online_area_id(::google::protobuf::uin
 
 // RequestNotifyRingBell
 
+// required uint32 online_area_id = 1;
+inline bool RequestNotifyRingBell::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestNotifyRingBell::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestNotifyRingBell::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestNotifyRingBell::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestNotifyRingBell::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRingBell.online_area_id)
+  return online_area_id_;
+}
+inline void RequestNotifyRingBell::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRingBell.online_area_id)
+}
+
+// required bytes metadata = 2;
+inline bool RequestNotifyRingBell::has_metadata() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestNotifyRingBell::set_has_metadata() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestNotifyRingBell::clear_has_metadata() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestNotifyRingBell::clear_metadata() {
+  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_->clear();
+  }
+  clear_has_metadata();
+}
+inline const ::std::string& RequestNotifyRingBell::metadata() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+  return *metadata_;
+}
+inline void RequestNotifyRingBell::set_metadata(const ::std::string& value) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+}
+inline void RequestNotifyRingBell::set_metadata(const char* value) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+}
+inline void RequestNotifyRingBell::set_metadata(const void* value, size_t size) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+}
+inline ::std::string* RequestNotifyRingBell::mutable_metadata() {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+  return metadata_;
+}
+inline ::std::string* RequestNotifyRingBell::release_metadata() {
+  clear_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = metadata_;
+    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestNotifyRingBell::set_allocated_metadata(::std::string* metadata) {
+  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete metadata_;
+  }
+  if (metadata) {
+    set_has_metadata();
+    metadata_ = metadata;
+  } else {
+    clear_has_metadata();
+    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+}
+
 // -------------------------------------------------------------------
 
 // RequestNotifyRingBellResponse
@@ -30177,6 +33044,154 @@ inline void PushRequestBreakInTarget::set_online_area_id(::google::protobuf::uin
 // -------------------------------------------------------------------
 
 // PushRequestNotifyRingBell
+
+// required uint32 unknown_1 = 1;
+inline bool PushRequestNotifyRingBell::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PushRequestNotifyRingBell::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PushRequestNotifyRingBell::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PushRequestNotifyRingBell::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 PushRequestNotifyRingBell::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestNotifyRingBell.unknown_1)
+  return unknown_1_;
+}
+inline void PushRequestNotifyRingBell::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestNotifyRingBell.unknown_1)
+}
+
+// required uint32 player_id = 2;
+inline bool PushRequestNotifyRingBell::has_player_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushRequestNotifyRingBell::set_has_player_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushRequestNotifyRingBell::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PushRequestNotifyRingBell::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 PushRequestNotifyRingBell::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestNotifyRingBell.player_id)
+  return player_id_;
+}
+inline void PushRequestNotifyRingBell::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestNotifyRingBell.player_id)
+}
+
+// required uint32 online_area_id = 3;
+inline bool PushRequestNotifyRingBell::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PushRequestNotifyRingBell::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PushRequestNotifyRingBell::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PushRequestNotifyRingBell::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 PushRequestNotifyRingBell::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestNotifyRingBell.online_area_id)
+  return online_area_id_;
+}
+inline void PushRequestNotifyRingBell::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestNotifyRingBell.online_area_id)
+}
+
+// required bytes metadata = 4;
+inline bool PushRequestNotifyRingBell::has_metadata() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PushRequestNotifyRingBell::set_has_metadata() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PushRequestNotifyRingBell::clear_has_metadata() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PushRequestNotifyRingBell::clear_metadata() {
+  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_->clear();
+  }
+  clear_has_metadata();
+}
+inline const ::std::string& PushRequestNotifyRingBell::metadata() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+  return *metadata_;
+}
+inline void PushRequestNotifyRingBell::set_metadata(const ::std::string& value) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+}
+inline void PushRequestNotifyRingBell::set_metadata(const char* value) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+}
+inline void PushRequestNotifyRingBell::set_metadata(const void* value, size_t size) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+}
+inline ::std::string* PushRequestNotifyRingBell::mutable_metadata() {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+  return metadata_;
+}
+inline ::std::string* PushRequestNotifyRingBell::release_metadata() {
+  clear_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = metadata_;
+    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestNotifyRingBell::set_allocated_metadata(::std::string* metadata) {
+  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete metadata_;
+  }
+  if (metadata) {
+    set_has_metadata();
+    metadata_ = metadata;
+  } else {
+    clear_has_metadata();
+    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+}
 
 // -------------------------------------------------------------------
 
@@ -30327,6 +33342,202 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // RankingData
 
+// required uint32 player_id = 1;
+inline bool RankingData::has_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RankingData::set_has_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RankingData::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RankingData::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 RankingData::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RankingData.player_id)
+  return player_id_;
+}
+inline void RankingData::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RankingData.player_id)
+}
+
+// required uint32 unknown_1 = 2;
+inline bool RankingData::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RankingData::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RankingData::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RankingData::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RankingData::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RankingData.unknown_1)
+  return unknown_1_;
+}
+inline void RankingData::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RankingData.unknown_1)
+}
+
+// required uint32 serial_rank = 3;
+inline bool RankingData::has_serial_rank() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RankingData::set_has_serial_rank() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RankingData::clear_has_serial_rank() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RankingData::clear_serial_rank() {
+  serial_rank_ = 0u;
+  clear_has_serial_rank();
+}
+inline ::google::protobuf::uint32 RankingData::serial_rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RankingData.serial_rank)
+  return serial_rank_;
+}
+inline void RankingData::set_serial_rank(::google::protobuf::uint32 value) {
+  set_has_serial_rank();
+  serial_rank_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RankingData.serial_rank)
+}
+
+// required uint32 rank = 4;
+inline bool RankingData::has_rank() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RankingData::set_has_rank() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RankingData::clear_has_rank() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RankingData::clear_rank() {
+  rank_ = 0u;
+  clear_has_rank();
+}
+inline ::google::protobuf::uint32 RankingData::rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RankingData.rank)
+  return rank_;
+}
+inline void RankingData::set_rank(::google::protobuf::uint32 value) {
+  set_has_rank();
+  rank_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RankingData.rank)
+}
+
+// required uint32 score = 5;
+inline bool RankingData::has_score() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void RankingData::set_has_score() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void RankingData::clear_has_score() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void RankingData::clear_score() {
+  score_ = 0u;
+  clear_has_score();
+}
+inline ::google::protobuf::uint32 RankingData::score() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RankingData.score)
+  return score_;
+}
+inline void RankingData::set_score(::google::protobuf::uint32 value) {
+  set_has_score();
+  score_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RankingData.score)
+}
+
+// required bytes data = 6;
+inline bool RankingData::has_data() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void RankingData::set_has_data() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void RankingData::clear_has_data() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void RankingData::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& RankingData::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RankingData.data)
+  return *data_;
+}
+inline void RankingData::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RankingData.data)
+}
+inline void RankingData::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RankingData.data)
+}
+inline void RankingData::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RankingData.data)
+}
+inline ::std::string* RankingData::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RankingData.data)
+  return data_;
+}
+inline ::std::string* RankingData::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RankingData::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RankingData.data)
+}
+
 // -------------------------------------------------------------------
 
 // RankingRotationID
@@ -30343,6 +33554,102 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // RequestRegisterRankingData
 
+// required uint32 board_id = 1;
+inline bool RequestRegisterRankingData::has_board_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestRegisterRankingData::set_has_board_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestRegisterRankingData::clear_has_board_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestRegisterRankingData::clear_board_id() {
+  board_id_ = 0u;
+  clear_has_board_id();
+}
+inline ::google::protobuf::uint32 RequestRegisterRankingData::board_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterRankingData.board_id)
+  return board_id_;
+}
+inline void RequestRegisterRankingData::set_board_id(::google::protobuf::uint32 value) {
+  set_has_board_id();
+  board_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterRankingData.board_id)
+}
+
+// required uint32 unknown_1 = 2;
+inline bool RequestRegisterRankingData::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestRegisterRankingData::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestRegisterRankingData::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestRegisterRankingData::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestRegisterRankingData::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterRankingData.unknown_1)
+  return unknown_1_;
+}
+inline void RequestRegisterRankingData::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterRankingData.unknown_1)
+}
+
+// required uint32 score = 3;
+inline bool RequestRegisterRankingData::has_score() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestRegisterRankingData::set_has_score() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestRegisterRankingData::clear_has_score() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestRegisterRankingData::clear_score() {
+  score_ = 0u;
+  clear_has_score();
+}
+inline ::google::protobuf::uint32 RequestRegisterRankingData::score() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterRankingData.score)
+  return score_;
+}
+inline void RequestRegisterRankingData::set_score(::google::protobuf::uint32 value) {
+  set_has_score();
+  score_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterRankingData.score)
+}
+
+// required uint32 data = 4;
+inline bool RequestRegisterRankingData::has_data() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestRegisterRankingData::set_has_data() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestRegisterRankingData::clear_has_data() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestRegisterRankingData::clear_data() {
+  data_ = 0u;
+  clear_has_data();
+}
+inline ::google::protobuf::uint32 RequestRegisterRankingData::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterRankingData.data)
+  return data_;
+}
+inline void RequestRegisterRankingData::set_data(::google::protobuf::uint32 value) {
+  set_has_data();
+  data_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterRankingData.data)
+}
+
 // -------------------------------------------------------------------
 
 // RequestRegisterRankingDataResponse
@@ -30351,25 +33658,253 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // RequestGetRankingData
 
+// required uint32 board_id = 1;
+inline bool RequestGetRankingData::has_board_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetRankingData::set_has_board_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetRankingData::clear_has_board_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetRankingData::clear_board_id() {
+  board_id_ = 0u;
+  clear_has_board_id();
+}
+inline ::google::protobuf::uint32 RequestGetRankingData::board_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetRankingData.board_id)
+  return board_id_;
+}
+inline void RequestGetRankingData::set_board_id(::google::protobuf::uint32 value) {
+  set_has_board_id();
+  board_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetRankingData.board_id)
+}
+
+// required uint32 offset = 2;
+inline bool RequestGetRankingData::has_offset() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetRankingData::set_has_offset() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetRankingData::clear_has_offset() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetRankingData::clear_offset() {
+  offset_ = 0u;
+  clear_has_offset();
+}
+inline ::google::protobuf::uint32 RequestGetRankingData::offset() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetRankingData.offset)
+  return offset_;
+}
+inline void RequestGetRankingData::set_offset(::google::protobuf::uint32 value) {
+  set_has_offset();
+  offset_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetRankingData.offset)
+}
+
+// required uint32 count = 3;
+inline bool RequestGetRankingData::has_count() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestGetRankingData::set_has_count() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestGetRankingData::clear_has_count() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestGetRankingData::clear_count() {
+  count_ = 0u;
+  clear_has_count();
+}
+inline ::google::protobuf::uint32 RequestGetRankingData::count() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetRankingData.count)
+  return count_;
+}
+inline void RequestGetRankingData::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetRankingData.count)
+}
+
 // -------------------------------------------------------------------
 
 // RequestGetRankingDataResponse
+
+// repeated .Frpg2RequestMessage.RankingData data = 1;
+inline int RequestGetRankingDataResponse::data_size() const {
+  return data_.size();
+}
+inline void RequestGetRankingDataResponse::clear_data() {
+  data_.Clear();
+}
+inline const ::Frpg2RequestMessage::RankingData& RequestGetRankingDataResponse::data(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetRankingDataResponse.data)
+  return data_.Get(index);
+}
+inline ::Frpg2RequestMessage::RankingData* RequestGetRankingDataResponse::mutable_data(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetRankingDataResponse.data)
+  return data_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::RankingData* RequestGetRankingDataResponse::add_data() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetRankingDataResponse.data)
+  return data_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >&
+RequestGetRankingDataResponse::data() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetRankingDataResponse.data)
+  return data_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >*
+RequestGetRankingDataResponse::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetRankingDataResponse.data)
+  return &data_;
+}
 
 // -------------------------------------------------------------------
 
 // RequestGetCharacterRankingData
 
+// required uint32 board_id = 1;
+inline bool RequestGetCharacterRankingData::has_board_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetCharacterRankingData::set_has_board_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetCharacterRankingData::clear_has_board_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetCharacterRankingData::clear_board_id() {
+  board_id_ = 0u;
+  clear_has_board_id();
+}
+inline ::google::protobuf::uint32 RequestGetCharacterRankingData::board_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetCharacterRankingData.board_id)
+  return board_id_;
+}
+inline void RequestGetCharacterRankingData::set_board_id(::google::protobuf::uint32 value) {
+  set_has_board_id();
+  board_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetCharacterRankingData.board_id)
+}
+
+// required uint32 player_id = 2;
+inline bool RequestGetCharacterRankingData::has_player_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetCharacterRankingData::set_has_player_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetCharacterRankingData::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetCharacterRankingData::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 RequestGetCharacterRankingData::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetCharacterRankingData.player_id)
+  return player_id_;
+}
+inline void RequestGetCharacterRankingData::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetCharacterRankingData.player_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestGetCharacterRankingDataResponse
+
+// repeated .Frpg2RequestMessage.RankingData data = 1;
+inline int RequestGetCharacterRankingDataResponse::data_size() const {
+  return data_.size();
+}
+inline void RequestGetCharacterRankingDataResponse::clear_data() {
+  data_.Clear();
+}
+inline const ::Frpg2RequestMessage::RankingData& RequestGetCharacterRankingDataResponse::data(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
+  return data_.Get(index);
+}
+inline ::Frpg2RequestMessage::RankingData* RequestGetCharacterRankingDataResponse::mutable_data(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
+  return data_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::RankingData* RequestGetCharacterRankingDataResponse::add_data() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
+  return data_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >&
+RequestGetCharacterRankingDataResponse::data() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
+  return data_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >*
+RequestGetCharacterRankingDataResponse::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
+  return &data_;
+}
 
 // -------------------------------------------------------------------
 
 // RequestCountRankingData
 
+// required uint32 board_id = 1;
+inline bool RequestCountRankingData::has_board_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestCountRankingData::set_has_board_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestCountRankingData::clear_has_board_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestCountRankingData::clear_board_id() {
+  board_id_ = 0u;
+  clear_has_board_id();
+}
+inline ::google::protobuf::uint32 RequestCountRankingData::board_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCountRankingData.board_id)
+  return board_id_;
+}
+inline void RequestCountRankingData::set_board_id(::google::protobuf::uint32 value) {
+  set_has_board_id();
+  board_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCountRankingData.board_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestCountRankingDataResponse
+
+// required uint32 count = 1;
+inline bool RequestCountRankingDataResponse::has_count() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestCountRankingDataResponse::set_has_count() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestCountRankingDataResponse::clear_has_count() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestCountRankingDataResponse::clear_count() {
+  count_ = 0u;
+  clear_has_count();
+}
+inline ::google::protobuf::uint32 RequestCountRankingDataResponse::count() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCountRankingDataResponse.count)
+  return count_;
+}
+inline void RequestCountRankingDataResponse::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCountRankingDataResponse.count)
+}
 
 // -------------------------------------------------------------------
 
@@ -30437,15 +33972,476 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // -------------------------------------------------------------------
 
+// QuickMatchRank
+
+// optional uint32 xp = 1;
+inline bool QuickMatchRank::has_xp() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void QuickMatchRank::set_has_xp() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void QuickMatchRank::clear_has_xp() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void QuickMatchRank::clear_xp() {
+  xp_ = 0u;
+  clear_has_xp();
+}
+inline ::google::protobuf::uint32 QuickMatchRank::xp() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchRank.xp)
+  return xp_;
+}
+inline void QuickMatchRank::set_xp(::google::protobuf::uint32 value) {
+  set_has_xp();
+  xp_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.QuickMatchRank.xp)
+}
+
+// optional uint32 rank = 2;
+inline bool QuickMatchRank::has_rank() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void QuickMatchRank::set_has_rank() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void QuickMatchRank::clear_has_rank() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void QuickMatchRank::clear_rank() {
+  rank_ = 0u;
+  clear_has_rank();
+}
+inline ::google::protobuf::uint32 QuickMatchRank::rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchRank.rank)
+  return rank_;
+}
+inline void QuickMatchRank::set_rank(::google::protobuf::uint32 value) {
+  set_has_rank();
+  rank_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.QuickMatchRank.rank)
+}
+
+// -------------------------------------------------------------------
+
+// QuickMatchRankCache
+
+// -------------------------------------------------------------------
+
+// QuickMatchSession_Result_list
+
+// -------------------------------------------------------------------
+
+// QuickMatchSession
+
+// -------------------------------------------------------------------
+
+// QuickMatchApologyPoint
+
+// -------------------------------------------------------------------
+
 // QuickMatchData
+
+// required uint32 host_player_id = 1;
+inline bool QuickMatchData::has_host_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void QuickMatchData::set_has_host_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void QuickMatchData::clear_has_host_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void QuickMatchData::clear_host_player_id() {
+  host_player_id_ = 0u;
+  clear_has_host_player_id();
+}
+inline ::google::protobuf::uint32 QuickMatchData::host_player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchData.host_player_id)
+  return host_player_id_;
+}
+inline void QuickMatchData::set_host_player_id(::google::protobuf::uint32 value) {
+  set_has_host_player_id();
+  host_player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.QuickMatchData.host_player_id)
+}
+
+// required string host_player_steam_id = 2;
+inline bool QuickMatchData::has_host_player_steam_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void QuickMatchData::set_has_host_player_steam_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void QuickMatchData::clear_has_host_player_steam_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void QuickMatchData::clear_host_player_steam_id() {
+  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_->clear();
+  }
+  clear_has_host_player_steam_id();
+}
+inline const ::std::string& QuickMatchData::host_player_steam_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchData.host_player_steam_id)
+  return *host_player_steam_id_;
+}
+inline void QuickMatchData::set_host_player_steam_id(const ::std::string& value) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.QuickMatchData.host_player_steam_id)
+}
+inline void QuickMatchData::set_host_player_steam_id(const char* value) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.QuickMatchData.host_player_steam_id)
+}
+inline void QuickMatchData::set_host_player_steam_id(const char* value, size_t size) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.QuickMatchData.host_player_steam_id)
+}
+inline ::std::string* QuickMatchData::mutable_host_player_steam_id() {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.QuickMatchData.host_player_steam_id)
+  return host_player_steam_id_;
+}
+inline ::std::string* QuickMatchData::release_host_player_steam_id() {
+  clear_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = host_player_steam_id_;
+    host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void QuickMatchData::set_allocated_host_player_steam_id(::std::string* host_player_steam_id) {
+  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete host_player_steam_id_;
+  }
+  if (host_player_steam_id) {
+    set_has_host_player_steam_id();
+    host_player_steam_id_ = host_player_steam_id;
+  } else {
+    clear_has_host_player_steam_id();
+    host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.QuickMatchData.host_player_steam_id)
+}
+
+// required uint32 unknown_3 = 3;
+inline bool QuickMatchData::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void QuickMatchData::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void QuickMatchData::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void QuickMatchData::clear_unknown_3() {
+  unknown_3_ = 0u;
+  clear_has_unknown_3();
+}
+inline ::google::protobuf::uint32 QuickMatchData::unknown_3() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchData.unknown_3)
+  return unknown_3_;
+}
+inline void QuickMatchData::set_unknown_3(::google::protobuf::uint32 value) {
+  set_has_unknown_3();
+  unknown_3_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.QuickMatchData.unknown_3)
+}
 
 // -------------------------------------------------------------------
 
 // QuickMatchSearchResult
 
+// optional .Frpg2RequestMessage.QuickMatchData data = 1;
+inline bool QuickMatchSearchResult::has_data() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void QuickMatchSearchResult::set_has_data() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void QuickMatchSearchResult::clear_has_data() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void QuickMatchSearchResult::clear_data() {
+  if (data_ != NULL) data_->::Frpg2RequestMessage::QuickMatchData::Clear();
+  clear_has_data();
+}
+inline const ::Frpg2RequestMessage::QuickMatchData& QuickMatchSearchResult::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchSearchResult.data)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return data_ != NULL ? *data_ : *default_instance().data_;
+#else
+  return data_ != NULL ? *data_ : *default_instance_->data_;
+#endif
+}
+inline ::Frpg2RequestMessage::QuickMatchData* QuickMatchSearchResult::mutable_data() {
+  set_has_data();
+  if (data_ == NULL) data_ = new ::Frpg2RequestMessage::QuickMatchData;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.QuickMatchSearchResult.data)
+  return data_;
+}
+inline ::Frpg2RequestMessage::QuickMatchData* QuickMatchSearchResult::release_data() {
+  clear_has_data();
+  ::Frpg2RequestMessage::QuickMatchData* temp = data_;
+  data_ = NULL;
+  return temp;
+}
+inline void QuickMatchSearchResult::set_allocated_data(::Frpg2RequestMessage::QuickMatchData* data) {
+  delete data_;
+  data_ = data;
+  if (data) {
+    set_has_data();
+  } else {
+    clear_has_data();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.QuickMatchSearchResult.data)
+}
+
+// required uint32 unknown_3 = 3;
+inline bool QuickMatchSearchResult::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void QuickMatchSearchResult::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void QuickMatchSearchResult::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void QuickMatchSearchResult::clear_unknown_3() {
+  unknown_3_ = 0u;
+  clear_has_unknown_3();
+}
+inline ::google::protobuf::uint32 QuickMatchSearchResult::unknown_3() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchSearchResult.unknown_3)
+  return unknown_3_;
+}
+inline void QuickMatchSearchResult::set_unknown_3(::google::protobuf::uint32 value) {
+  set_has_unknown_3();
+  unknown_3_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.QuickMatchSearchResult.unknown_3)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool QuickMatchSearchResult::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void QuickMatchSearchResult::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void QuickMatchSearchResult::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void QuickMatchSearchResult::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 QuickMatchSearchResult::unknown_4() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchSearchResult.unknown_4)
+  return unknown_4_;
+}
+inline void QuickMatchSearchResult::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.QuickMatchSearchResult.unknown_4)
+}
+
 // -------------------------------------------------------------------
 
 // AcceptQuickMatchMessage
+
+// required uint32 host_player_id = 1;
+inline bool AcceptQuickMatchMessage::has_host_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void AcceptQuickMatchMessage::set_has_host_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void AcceptQuickMatchMessage::clear_has_host_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void AcceptQuickMatchMessage::clear_host_player_id() {
+  host_player_id_ = 0u;
+  clear_has_host_player_id();
+}
+inline ::google::protobuf::uint32 AcceptQuickMatchMessage::host_player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_id)
+  return host_player_id_;
+}
+inline void AcceptQuickMatchMessage::set_host_player_id(::google::protobuf::uint32 value) {
+  set_has_host_player_id();
+  host_player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_id)
+}
+
+// required string host_player_steam_id = 2;
+inline bool AcceptQuickMatchMessage::has_host_player_steam_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void AcceptQuickMatchMessage::set_has_host_player_steam_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void AcceptQuickMatchMessage::clear_has_host_player_steam_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void AcceptQuickMatchMessage::clear_host_player_steam_id() {
+  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_->clear();
+  }
+  clear_has_host_player_steam_id();
+}
+inline const ::std::string& AcceptQuickMatchMessage::host_player_steam_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_steam_id)
+  return *host_player_steam_id_;
+}
+inline void AcceptQuickMatchMessage::set_host_player_steam_id(const ::std::string& value) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_steam_id)
+}
+inline void AcceptQuickMatchMessage::set_host_player_steam_id(const char* value) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_steam_id)
+}
+inline void AcceptQuickMatchMessage::set_host_player_steam_id(const char* value, size_t size) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_steam_id)
+}
+inline ::std::string* AcceptQuickMatchMessage::mutable_host_player_steam_id() {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_steam_id)
+  return host_player_steam_id_;
+}
+inline ::std::string* AcceptQuickMatchMessage::release_host_player_steam_id() {
+  clear_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = host_player_steam_id_;
+    host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AcceptQuickMatchMessage::set_allocated_host_player_steam_id(::std::string* host_player_steam_id) {
+  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete host_player_steam_id_;
+  }
+  if (host_player_steam_id) {
+    set_has_host_player_steam_id();
+    host_player_steam_id_ = host_player_steam_id;
+  } else {
+    clear_has_host_player_steam_id();
+    host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.AcceptQuickMatchMessage.host_player_steam_id)
+}
+
+// required bytes metadata = 3;
+inline bool AcceptQuickMatchMessage::has_metadata() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void AcceptQuickMatchMessage::set_has_metadata() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void AcceptQuickMatchMessage::clear_has_metadata() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void AcceptQuickMatchMessage::clear_metadata() {
+  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_->clear();
+  }
+  clear_has_metadata();
+}
+inline const ::std::string& AcceptQuickMatchMessage::metadata() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.AcceptQuickMatchMessage.metadata)
+  return *metadata_;
+}
+inline void AcceptQuickMatchMessage::set_metadata(const ::std::string& value) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.AcceptQuickMatchMessage.metadata)
+}
+inline void AcceptQuickMatchMessage::set_metadata(const char* value) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.AcceptQuickMatchMessage.metadata)
+}
+inline void AcceptQuickMatchMessage::set_metadata(const void* value, size_t size) {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  metadata_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.AcceptQuickMatchMessage.metadata)
+}
+inline ::std::string* AcceptQuickMatchMessage::mutable_metadata() {
+  set_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    metadata_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.AcceptQuickMatchMessage.metadata)
+  return metadata_;
+}
+inline ::std::string* AcceptQuickMatchMessage::release_metadata() {
+  clear_has_metadata();
+  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = metadata_;
+    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AcceptQuickMatchMessage::set_allocated_metadata(::std::string* metadata) {
+  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete metadata_;
+  }
+  if (metadata) {
+    set_has_metadata();
+    metadata_ = metadata;
+  } else {
+    clear_has_metadata();
+    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.AcceptQuickMatchMessage.metadata)
+}
 
 // -------------------------------------------------------------------
 
@@ -30459,29 +34455,864 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // JoinQuickMatchMessage
 
+// required uint32 host_player_id = 1;
+inline bool JoinQuickMatchMessage::has_host_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void JoinQuickMatchMessage::set_has_host_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void JoinQuickMatchMessage::clear_has_host_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void JoinQuickMatchMessage::clear_host_player_id() {
+  host_player_id_ = 0u;
+  clear_has_host_player_id();
+}
+inline ::google::protobuf::uint32 JoinQuickMatchMessage::host_player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_id)
+  return host_player_id_;
+}
+inline void JoinQuickMatchMessage::set_host_player_id(::google::protobuf::uint32 value) {
+  set_has_host_player_id();
+  host_player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_id)
+}
+
+// required string host_player_steam_id = 2;
+inline bool JoinQuickMatchMessage::has_host_player_steam_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void JoinQuickMatchMessage::set_has_host_player_steam_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void JoinQuickMatchMessage::clear_has_host_player_steam_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void JoinQuickMatchMessage::clear_host_player_steam_id() {
+  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_->clear();
+  }
+  clear_has_host_player_steam_id();
+}
+inline const ::std::string& JoinQuickMatchMessage::host_player_steam_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_steam_id)
+  return *host_player_steam_id_;
+}
+inline void JoinQuickMatchMessage::set_host_player_steam_id(const ::std::string& value) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_steam_id)
+}
+inline void JoinQuickMatchMessage::set_host_player_steam_id(const char* value) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_steam_id)
+}
+inline void JoinQuickMatchMessage::set_host_player_steam_id(const char* value, size_t size) {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  host_player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_steam_id)
+}
+inline ::std::string* JoinQuickMatchMessage::mutable_host_player_steam_id() {
+  set_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    host_player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_steam_id)
+  return host_player_steam_id_;
+}
+inline ::std::string* JoinQuickMatchMessage::release_host_player_steam_id() {
+  clear_has_host_player_steam_id();
+  if (host_player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = host_player_steam_id_;
+    host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void JoinQuickMatchMessage::set_allocated_host_player_steam_id(::std::string* host_player_steam_id) {
+  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete host_player_steam_id_;
+  }
+  if (host_player_steam_id) {
+    set_has_host_player_steam_id();
+    host_player_steam_id_ = host_player_steam_id;
+  } else {
+    clear_has_host_player_steam_id();
+    host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.JoinQuickMatchMessage.host_player_steam_id)
+}
+
+// required uint32 unknown_3 = 3;
+inline bool JoinQuickMatchMessage::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void JoinQuickMatchMessage::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void JoinQuickMatchMessage::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void JoinQuickMatchMessage::clear_unknown_3() {
+  unknown_3_ = 0u;
+  clear_has_unknown_3();
+}
+inline ::google::protobuf::uint32 JoinQuickMatchMessage::unknown_3() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_3)
+  return unknown_3_;
+}
+inline void JoinQuickMatchMessage::set_unknown_3(::google::protobuf::uint32 value) {
+  set_has_unknown_3();
+  unknown_3_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_3)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool JoinQuickMatchMessage::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void JoinQuickMatchMessage::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void JoinQuickMatchMessage::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void JoinQuickMatchMessage::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 JoinQuickMatchMessage::unknown_4() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_4)
+  return unknown_4_;
+}
+inline void JoinQuickMatchMessage::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_4)
+}
+
+// required uint32 unknown_5 = 5;
+inline bool JoinQuickMatchMessage::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void JoinQuickMatchMessage::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void JoinQuickMatchMessage::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void JoinQuickMatchMessage::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 JoinQuickMatchMessage::unknown_5() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_5)
+  return unknown_5_;
+}
+inline void JoinQuickMatchMessage::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_5)
+}
+
+// required string unknown_6 = 6;
+inline bool JoinQuickMatchMessage::has_unknown_6() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void JoinQuickMatchMessage::set_has_unknown_6() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void JoinQuickMatchMessage::clear_has_unknown_6() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void JoinQuickMatchMessage::clear_unknown_6() {
+  if (unknown_6_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_6_->clear();
+  }
+  clear_has_unknown_6();
+}
+inline const ::std::string& JoinQuickMatchMessage::unknown_6() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_6)
+  return *unknown_6_;
+}
+inline void JoinQuickMatchMessage::set_unknown_6(const ::std::string& value) {
+  set_has_unknown_6();
+  if (unknown_6_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_6_ = new ::std::string;
+  }
+  unknown_6_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_6)
+}
+inline void JoinQuickMatchMessage::set_unknown_6(const char* value) {
+  set_has_unknown_6();
+  if (unknown_6_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_6_ = new ::std::string;
+  }
+  unknown_6_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_6)
+}
+inline void JoinQuickMatchMessage::set_unknown_6(const char* value, size_t size) {
+  set_has_unknown_6();
+  if (unknown_6_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_6_ = new ::std::string;
+  }
+  unknown_6_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_6)
+}
+inline ::std::string* JoinQuickMatchMessage::mutable_unknown_6() {
+  set_has_unknown_6();
+  if (unknown_6_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_6_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_6)
+  return unknown_6_;
+}
+inline ::std::string* JoinQuickMatchMessage::release_unknown_6() {
+  clear_has_unknown_6();
+  if (unknown_6_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = unknown_6_;
+    unknown_6_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void JoinQuickMatchMessage::set_allocated_unknown_6(::std::string* unknown_6) {
+  if (unknown_6_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_6_;
+  }
+  if (unknown_6) {
+    set_has_unknown_6();
+    unknown_6_ = unknown_6;
+  } else {
+    clear_has_unknown_6();
+    unknown_6_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_6)
+}
+
 // -------------------------------------------------------------------
 
-// QuickMatchRank
+// PushRequestJoinQuickMatch
+
+// required uint32 unknown_1 = 1;
+inline bool PushRequestJoinQuickMatch::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PushRequestJoinQuickMatch::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PushRequestJoinQuickMatch::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PushRequestJoinQuickMatch::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 PushRequestJoinQuickMatch::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestJoinQuickMatch.unknown_1)
+  return unknown_1_;
+}
+inline void PushRequestJoinQuickMatch::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestJoinQuickMatch.unknown_1)
+}
+
+// required .Frpg2RequestMessage.JoinQuickMatchMessage message = 2;
+inline bool PushRequestJoinQuickMatch::has_message() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushRequestJoinQuickMatch::set_has_message() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushRequestJoinQuickMatch::clear_has_message() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PushRequestJoinQuickMatch::clear_message() {
+  if (message_ != NULL) message_->::Frpg2RequestMessage::JoinQuickMatchMessage::Clear();
+  clear_has_message();
+}
+inline const ::Frpg2RequestMessage::JoinQuickMatchMessage& PushRequestJoinQuickMatch::message() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestJoinQuickMatch.message)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return message_ != NULL ? *message_ : *default_instance().message_;
+#else
+  return message_ != NULL ? *message_ : *default_instance_->message_;
+#endif
+}
+inline ::Frpg2RequestMessage::JoinQuickMatchMessage* PushRequestJoinQuickMatch::mutable_message() {
+  set_has_message();
+  if (message_ == NULL) message_ = new ::Frpg2RequestMessage::JoinQuickMatchMessage;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestJoinQuickMatch.message)
+  return message_;
+}
+inline ::Frpg2RequestMessage::JoinQuickMatchMessage* PushRequestJoinQuickMatch::release_message() {
+  clear_has_message();
+  ::Frpg2RequestMessage::JoinQuickMatchMessage* temp = message_;
+  message_ = NULL;
+  return temp;
+}
+inline void PushRequestJoinQuickMatch::set_allocated_message(::Frpg2RequestMessage::JoinQuickMatchMessage* message) {
+  delete message_;
+  message_ = message;
+  if (message) {
+    set_has_message();
+  } else {
+    clear_has_message();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestJoinQuickMatch.message)
+}
+
+// -------------------------------------------------------------------
+
+// PushRequestAcceptQuickMatch
+
+// required uint32 unknown_1 = 1;
+inline bool PushRequestAcceptQuickMatch::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PushRequestAcceptQuickMatch::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PushRequestAcceptQuickMatch::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PushRequestAcceptQuickMatch::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 PushRequestAcceptQuickMatch::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestAcceptQuickMatch.unknown_1)
+  return unknown_1_;
+}
+inline void PushRequestAcceptQuickMatch::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestAcceptQuickMatch.unknown_1)
+}
+
+// required .Frpg2RequestMessage.AcceptQuickMatchMessage message = 2;
+inline bool PushRequestAcceptQuickMatch::has_message() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushRequestAcceptQuickMatch::set_has_message() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushRequestAcceptQuickMatch::clear_has_message() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PushRequestAcceptQuickMatch::clear_message() {
+  if (message_ != NULL) message_->::Frpg2RequestMessage::AcceptQuickMatchMessage::Clear();
+  clear_has_message();
+}
+inline const ::Frpg2RequestMessage::AcceptQuickMatchMessage& PushRequestAcceptQuickMatch::message() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestAcceptQuickMatch.message)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return message_ != NULL ? *message_ : *default_instance().message_;
+#else
+  return message_ != NULL ? *message_ : *default_instance_->message_;
+#endif
+}
+inline ::Frpg2RequestMessage::AcceptQuickMatchMessage* PushRequestAcceptQuickMatch::mutable_message() {
+  set_has_message();
+  if (message_ == NULL) message_ = new ::Frpg2RequestMessage::AcceptQuickMatchMessage;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestAcceptQuickMatch.message)
+  return message_;
+}
+inline ::Frpg2RequestMessage::AcceptQuickMatchMessage* PushRequestAcceptQuickMatch::release_message() {
+  clear_has_message();
+  ::Frpg2RequestMessage::AcceptQuickMatchMessage* temp = message_;
+  message_ = NULL;
+  return temp;
+}
+inline void PushRequestAcceptQuickMatch::set_allocated_message(::Frpg2RequestMessage::AcceptQuickMatchMessage* message) {
+  delete message_;
+  message_ = message;
+  if (message) {
+    set_has_message();
+  } else {
+    clear_has_message();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestAcceptQuickMatch.message)
+}
+
+// -------------------------------------------------------------------
+
+// PushRequestRejectQuickMatch
 
 // -------------------------------------------------------------------
 
 // RequestSearchQuickMatch_Map_id_list
 
+// required uint32 map_id = 1;
+inline bool RequestSearchQuickMatch_Map_id_list::has_map_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestSearchQuickMatch_Map_id_list::set_has_map_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestSearchQuickMatch_Map_id_list::clear_has_map_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestSearchQuickMatch_Map_id_list::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
+}
+inline ::google::protobuf::uint32 RequestSearchQuickMatch_Map_id_list::map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list.map_id)
+  return map_id_;
+}
+inline void RequestSearchQuickMatch_Map_id_list::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list.map_id)
+}
+
+// required uint32 online_area_id = 2;
+inline bool RequestSearchQuickMatch_Map_id_list::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestSearchQuickMatch_Map_id_list::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestSearchQuickMatch_Map_id_list::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestSearchQuickMatch_Map_id_list::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestSearchQuickMatch_Map_id_list::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list.online_area_id)
+  return online_area_id_;
+}
+inline void RequestSearchQuickMatch_Map_id_list::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list.online_area_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestSearchQuickMatch
+
+// required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+inline bool RequestSearchQuickMatch::has_mode() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestSearchQuickMatch::set_has_mode() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestSearchQuickMatch::clear_has_mode() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestSearchQuickMatch::clear_mode() {
+  mode_ = 0;
+  clear_has_mode();
+}
+inline ::Frpg2RequestMessage::QuickMatchGameMode RequestSearchQuickMatch::mode() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSearchQuickMatch.mode)
+  return static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(mode_);
+}
+inline void RequestSearchQuickMatch::set_mode(::Frpg2RequestMessage::QuickMatchGameMode value) {
+  assert(::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value));
+  set_has_mode();
+  mode_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSearchQuickMatch.mode)
+}
+
+// repeated .Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list map_ids = 2;
+inline int RequestSearchQuickMatch::map_ids_size() const {
+  return map_ids_.size();
+}
+inline void RequestSearchQuickMatch::clear_map_ids() {
+  map_ids_.Clear();
+}
+inline const ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list& RequestSearchQuickMatch::map_ids(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSearchQuickMatch.map_ids)
+  return map_ids_.Get(index);
+}
+inline ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list* RequestSearchQuickMatch::mutable_map_ids(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSearchQuickMatch.map_ids)
+  return map_ids_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list* RequestSearchQuickMatch::add_map_ids() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestSearchQuickMatch.map_ids)
+  return map_ids_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list >&
+RequestSearchQuickMatch::map_ids() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestSearchQuickMatch.map_ids)
+  return map_ids_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSearchQuickMatch_Map_id_list >*
+RequestSearchQuickMatch::mutable_map_ids() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestSearchQuickMatch.map_ids)
+  return &map_ids_;
+}
+
+// required uint32 unknown_3 = 3;
+inline bool RequestSearchQuickMatch::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestSearchQuickMatch::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestSearchQuickMatch::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestSearchQuickMatch::clear_unknown_3() {
+  unknown_3_ = 0u;
+  clear_has_unknown_3();
+}
+inline ::google::protobuf::uint32 RequestSearchQuickMatch::unknown_3() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSearchQuickMatch.unknown_3)
+  return unknown_3_;
+}
+inline void RequestSearchQuickMatch::set_unknown_3(::google::protobuf::uint32 value) {
+  set_has_unknown_3();
+  unknown_3_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSearchQuickMatch.unknown_3)
+}
+
+// required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
+inline bool RequestSearchQuickMatch::has_matching_parameter() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestSearchQuickMatch::set_has_matching_parameter() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestSearchQuickMatch::clear_has_matching_parameter() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestSearchQuickMatch::clear_matching_parameter() {
+  if (matching_parameter_ != NULL) matching_parameter_->::Frpg2RequestMessage::MatchingParameter::Clear();
+  clear_has_matching_parameter();
+}
+inline const ::Frpg2RequestMessage::MatchingParameter& RequestSearchQuickMatch::matching_parameter() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSearchQuickMatch.matching_parameter)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance().matching_parameter_;
+#else
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance_->matching_parameter_;
+#endif
+}
+inline ::Frpg2RequestMessage::MatchingParameter* RequestSearchQuickMatch::mutable_matching_parameter() {
+  set_has_matching_parameter();
+  if (matching_parameter_ == NULL) matching_parameter_ = new ::Frpg2RequestMessage::MatchingParameter;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSearchQuickMatch.matching_parameter)
+  return matching_parameter_;
+}
+inline ::Frpg2RequestMessage::MatchingParameter* RequestSearchQuickMatch::release_matching_parameter() {
+  clear_has_matching_parameter();
+  ::Frpg2RequestMessage::MatchingParameter* temp = matching_parameter_;
+  matching_parameter_ = NULL;
+  return temp;
+}
+inline void RequestSearchQuickMatch::set_allocated_matching_parameter(::Frpg2RequestMessage::MatchingParameter* matching_parameter) {
+  delete matching_parameter_;
+  matching_parameter_ = matching_parameter;
+  if (matching_parameter) {
+    set_has_matching_parameter();
+  } else {
+    clear_has_matching_parameter();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestSearchQuickMatch.matching_parameter)
+}
 
 // -------------------------------------------------------------------
 
 // RequestSearchQuickMatchResponse
 
+// repeated .Frpg2RequestMessage.QuickMatchSearchResult matches = 1;
+inline int RequestSearchQuickMatchResponse::matches_size() const {
+  return matches_.size();
+}
+inline void RequestSearchQuickMatchResponse::clear_matches() {
+  matches_.Clear();
+}
+inline const ::Frpg2RequestMessage::QuickMatchSearchResult& RequestSearchQuickMatchResponse::matches(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSearchQuickMatchResponse.matches)
+  return matches_.Get(index);
+}
+inline ::Frpg2RequestMessage::QuickMatchSearchResult* RequestSearchQuickMatchResponse::mutable_matches(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSearchQuickMatchResponse.matches)
+  return matches_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::QuickMatchSearchResult* RequestSearchQuickMatchResponse::add_matches() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestSearchQuickMatchResponse.matches)
+  return matches_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSearchResult >&
+RequestSearchQuickMatchResponse::matches() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestSearchQuickMatchResponse.matches)
+  return matches_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSearchResult >*
+RequestSearchQuickMatchResponse::mutable_matches() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestSearchQuickMatchResponse.matches)
+  return &matches_;
+}
+
 // -------------------------------------------------------------------
 
 // RequestRegisterQuickMatch
 
+// required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+inline bool RequestRegisterQuickMatch::has_mode() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestRegisterQuickMatch::set_has_mode() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestRegisterQuickMatch::clear_has_mode() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestRegisterQuickMatch::clear_mode() {
+  mode_ = 0;
+  clear_has_mode();
+}
+inline ::Frpg2RequestMessage::QuickMatchGameMode RequestRegisterQuickMatch::mode() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterQuickMatch.mode)
+  return static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(mode_);
+}
+inline void RequestRegisterQuickMatch::set_mode(::Frpg2RequestMessage::QuickMatchGameMode value) {
+  assert(::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value));
+  set_has_mode();
+  mode_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterQuickMatch.mode)
+}
+
+// required uint32 map_id = 2;
+inline bool RequestRegisterQuickMatch::has_map_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestRegisterQuickMatch::set_has_map_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestRegisterQuickMatch::clear_has_map_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestRegisterQuickMatch::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
+}
+inline ::google::protobuf::uint32 RequestRegisterQuickMatch::map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterQuickMatch.map_id)
+  return map_id_;
+}
+inline void RequestRegisterQuickMatch::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterQuickMatch.map_id)
+}
+
+// required uint32 online_area_id = 3;
+inline bool RequestRegisterQuickMatch::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestRegisterQuickMatch::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestRegisterQuickMatch::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestRegisterQuickMatch::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestRegisterQuickMatch::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterQuickMatch.online_area_id)
+  return online_area_id_;
+}
+inline void RequestRegisterQuickMatch::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterQuickMatch.online_area_id)
+}
+
+// required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
+inline bool RequestRegisterQuickMatch::has_matching_parameter() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestRegisterQuickMatch::set_has_matching_parameter() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestRegisterQuickMatch::clear_has_matching_parameter() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestRegisterQuickMatch::clear_matching_parameter() {
+  if (matching_parameter_ != NULL) matching_parameter_->::Frpg2RequestMessage::MatchingParameter::Clear();
+  clear_has_matching_parameter();
+}
+inline const ::Frpg2RequestMessage::MatchingParameter& RequestRegisterQuickMatch::matching_parameter() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterQuickMatch.matching_parameter)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance().matching_parameter_;
+#else
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance_->matching_parameter_;
+#endif
+}
+inline ::Frpg2RequestMessage::MatchingParameter* RequestRegisterQuickMatch::mutable_matching_parameter() {
+  set_has_matching_parameter();
+  if (matching_parameter_ == NULL) matching_parameter_ = new ::Frpg2RequestMessage::MatchingParameter;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestRegisterQuickMatch.matching_parameter)
+  return matching_parameter_;
+}
+inline ::Frpg2RequestMessage::MatchingParameter* RequestRegisterQuickMatch::release_matching_parameter() {
+  clear_has_matching_parameter();
+  ::Frpg2RequestMessage::MatchingParameter* temp = matching_parameter_;
+  matching_parameter_ = NULL;
+  return temp;
+}
+inline void RequestRegisterQuickMatch::set_allocated_matching_parameter(::Frpg2RequestMessage::MatchingParameter* matching_parameter) {
+  delete matching_parameter_;
+  matching_parameter_ = matching_parameter;
+  if (matching_parameter) {
+    set_has_matching_parameter();
+  } else {
+    clear_has_matching_parameter();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestRegisterQuickMatch.matching_parameter)
+}
+
+// required uint32 unknown_5 = 5;
+inline bool RequestRegisterQuickMatch::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void RequestRegisterQuickMatch::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void RequestRegisterQuickMatch::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void RequestRegisterQuickMatch::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 RequestRegisterQuickMatch::unknown_5() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestRegisterQuickMatch.unknown_5)
+  return unknown_5_;
+}
+inline void RequestRegisterQuickMatch::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRegisterQuickMatch.unknown_5)
+}
+
 // -------------------------------------------------------------------
 
 // RequestUnregisterQuickMatch
+
+// required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+inline bool RequestUnregisterQuickMatch::has_mode() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestUnregisterQuickMatch::set_has_mode() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestUnregisterQuickMatch::clear_has_mode() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestUnregisterQuickMatch::clear_mode() {
+  mode_ = 0;
+  clear_has_mode();
+}
+inline ::Frpg2RequestMessage::QuickMatchGameMode RequestUnregisterQuickMatch::mode() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUnregisterQuickMatch.mode)
+  return static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(mode_);
+}
+inline void RequestUnregisterQuickMatch::set_mode(::Frpg2RequestMessage::QuickMatchGameMode value) {
+  assert(::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value));
+  set_has_mode();
+  mode_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUnregisterQuickMatch.mode)
+}
+
+// required uint32 map_id = 2;
+inline bool RequestUnregisterQuickMatch::has_map_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestUnregisterQuickMatch::set_has_map_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestUnregisterQuickMatch::clear_has_map_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestUnregisterQuickMatch::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
+}
+inline ::google::protobuf::uint32 RequestUnregisterQuickMatch::map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUnregisterQuickMatch.map_id)
+  return map_id_;
+}
+inline void RequestUnregisterQuickMatch::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUnregisterQuickMatch.map_id)
+}
+
+// required uint32 online_area_id = 3;
+inline bool RequestUnregisterQuickMatch::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestUnregisterQuickMatch::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestUnregisterQuickMatch::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestUnregisterQuickMatch::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestUnregisterQuickMatch::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUnregisterQuickMatch.online_area_id)
+  return online_area_id_;
+}
+inline void RequestUnregisterQuickMatch::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUnregisterQuickMatch.online_area_id)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool RequestUnregisterQuickMatch::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestUnregisterQuickMatch::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestUnregisterQuickMatch::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestUnregisterQuickMatch::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 RequestUnregisterQuickMatch::unknown_4() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUnregisterQuickMatch.unknown_4)
+  return unknown_4_;
+}
+inline void RequestUnregisterQuickMatch::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUnregisterQuickMatch.unknown_4)
+}
 
 // -------------------------------------------------------------------
 
@@ -30491,6 +35322,79 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // RequestUpdateQuickMatch
 
+// required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+inline bool RequestUpdateQuickMatch::has_mode() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestUpdateQuickMatch::set_has_mode() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestUpdateQuickMatch::clear_has_mode() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestUpdateQuickMatch::clear_mode() {
+  mode_ = 0;
+  clear_has_mode();
+}
+inline ::Frpg2RequestMessage::QuickMatchGameMode RequestUpdateQuickMatch::mode() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateQuickMatch.mode)
+  return static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(mode_);
+}
+inline void RequestUpdateQuickMatch::set_mode(::Frpg2RequestMessage::QuickMatchGameMode value) {
+  assert(::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value));
+  set_has_mode();
+  mode_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdateQuickMatch.mode)
+}
+
+// required uint32 map_id = 2;
+inline bool RequestUpdateQuickMatch::has_map_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestUpdateQuickMatch::set_has_map_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestUpdateQuickMatch::clear_has_map_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestUpdateQuickMatch::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
+}
+inline ::google::protobuf::uint32 RequestUpdateQuickMatch::map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateQuickMatch.map_id)
+  return map_id_;
+}
+inline void RequestUpdateQuickMatch::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdateQuickMatch.map_id)
+}
+
+// required uint32 online_area_id = 3;
+inline bool RequestUpdateQuickMatch::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestUpdateQuickMatch::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestUpdateQuickMatch::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestUpdateQuickMatch::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestUpdateQuickMatch::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateQuickMatch.online_area_id)
+  return online_area_id_;
+}
+inline void RequestUpdateQuickMatch::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdateQuickMatch.online_area_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestUpdateQuickMatchResponse
@@ -30499,6 +35403,226 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // RequestJoinQuickMatch
 
+// required uint32 unknown_1 = 1;
+inline bool RequestJoinQuickMatch::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestJoinQuickMatch::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestJoinQuickMatch::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestJoinQuickMatch::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestJoinQuickMatch::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_1)
+  return unknown_1_;
+}
+inline void RequestJoinQuickMatch::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_1)
+}
+
+// required uint32 unknown_2 = 2;
+inline bool RequestJoinQuickMatch::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestJoinQuickMatch::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestJoinQuickMatch::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestJoinQuickMatch::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 RequestJoinQuickMatch::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_2)
+  return unknown_2_;
+}
+inline void RequestJoinQuickMatch::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_2)
+}
+
+// required uint32 host_player_id = 4;
+inline bool RequestJoinQuickMatch::has_host_player_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestJoinQuickMatch::set_has_host_player_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestJoinQuickMatch::clear_has_host_player_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestJoinQuickMatch::clear_host_player_id() {
+  host_player_id_ = 0u;
+  clear_has_host_player_id();
+}
+inline ::google::protobuf::uint32 RequestJoinQuickMatch::host_player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestJoinQuickMatch.host_player_id)
+  return host_player_id_;
+}
+inline void RequestJoinQuickMatch::set_host_player_id(::google::protobuf::uint32 value) {
+  set_has_host_player_id();
+  host_player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestJoinQuickMatch.host_player_id)
+}
+
+// required uint32 unknown_5 = 5;
+inline bool RequestJoinQuickMatch::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestJoinQuickMatch::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestJoinQuickMatch::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestJoinQuickMatch::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 RequestJoinQuickMatch::unknown_5() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_5)
+  return unknown_5_;
+}
+inline void RequestJoinQuickMatch::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_5)
+}
+
+// required uint32 unknown_6 = 6;
+inline bool RequestJoinQuickMatch::has_unknown_6() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void RequestJoinQuickMatch::set_has_unknown_6() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void RequestJoinQuickMatch::clear_has_unknown_6() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void RequestJoinQuickMatch::clear_unknown_6() {
+  unknown_6_ = 0u;
+  clear_has_unknown_6();
+}
+inline ::google::protobuf::uint32 RequestJoinQuickMatch::unknown_6() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_6)
+  return unknown_6_;
+}
+inline void RequestJoinQuickMatch::set_unknown_6(::google::protobuf::uint32 value) {
+  set_has_unknown_6();
+  unknown_6_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_6)
+}
+
+// required uint32 unknown_7 = 7;
+inline bool RequestJoinQuickMatch::has_unknown_7() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void RequestJoinQuickMatch::set_has_unknown_7() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void RequestJoinQuickMatch::clear_has_unknown_7() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void RequestJoinQuickMatch::clear_unknown_7() {
+  unknown_7_ = 0u;
+  clear_has_unknown_7();
+}
+inline ::google::protobuf::uint32 RequestJoinQuickMatch::unknown_7() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_7)
+  return unknown_7_;
+}
+inline void RequestJoinQuickMatch::set_unknown_7(::google::protobuf::uint32 value) {
+  set_has_unknown_7();
+  unknown_7_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_7)
+}
+
+// required string unknown_8 = 8;
+inline bool RequestJoinQuickMatch::has_unknown_8() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void RequestJoinQuickMatch::set_has_unknown_8() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void RequestJoinQuickMatch::clear_has_unknown_8() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void RequestJoinQuickMatch::clear_unknown_8() {
+  if (unknown_8_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_8_->clear();
+  }
+  clear_has_unknown_8();
+}
+inline const ::std::string& RequestJoinQuickMatch::unknown_8() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_8)
+  return *unknown_8_;
+}
+inline void RequestJoinQuickMatch::set_unknown_8(const ::std::string& value) {
+  set_has_unknown_8();
+  if (unknown_8_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_8_ = new ::std::string;
+  }
+  unknown_8_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_8)
+}
+inline void RequestJoinQuickMatch::set_unknown_8(const char* value) {
+  set_has_unknown_8();
+  if (unknown_8_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_8_ = new ::std::string;
+  }
+  unknown_8_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_8)
+}
+inline void RequestJoinQuickMatch::set_unknown_8(const char* value, size_t size) {
+  set_has_unknown_8();
+  if (unknown_8_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_8_ = new ::std::string;
+  }
+  unknown_8_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_8)
+}
+inline ::std::string* RequestJoinQuickMatch::mutable_unknown_8() {
+  set_has_unknown_8();
+  if (unknown_8_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_8_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_8)
+  return unknown_8_;
+}
+inline ::std::string* RequestJoinQuickMatch::release_unknown_8() {
+  clear_has_unknown_8();
+  if (unknown_8_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = unknown_8_;
+    unknown_8_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestJoinQuickMatch::set_allocated_unknown_8(::std::string* unknown_8) {
+  if (unknown_8_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_8_;
+  }
+  if (unknown_8) {
+    set_has_unknown_8();
+    unknown_8_ = unknown_8;
+  } else {
+    clear_has_unknown_8();
+    unknown_8_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestJoinQuickMatch.unknown_8)
+}
+
 // -------------------------------------------------------------------
 
 // RequestJoinQuickMatchResponse
@@ -30506,6 +35630,130 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 // -------------------------------------------------------------------
 
 // RequestAcceptQuickMatch
+
+// required uint32 unknown_1 = 1;
+inline bool RequestAcceptQuickMatch::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestAcceptQuickMatch::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestAcceptQuickMatch::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestAcceptQuickMatch::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestAcceptQuickMatch::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestAcceptQuickMatch.unknown_1)
+  return unknown_1_;
+}
+inline void RequestAcceptQuickMatch::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestAcceptQuickMatch.unknown_1)
+}
+
+// required uint32 host_player_id = 4;
+inline bool RequestAcceptQuickMatch::has_host_player_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestAcceptQuickMatch::set_has_host_player_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestAcceptQuickMatch::clear_has_host_player_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestAcceptQuickMatch::clear_host_player_id() {
+  host_player_id_ = 0u;
+  clear_has_host_player_id();
+}
+inline ::google::protobuf::uint32 RequestAcceptQuickMatch::host_player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestAcceptQuickMatch.host_player_id)
+  return host_player_id_;
+}
+inline void RequestAcceptQuickMatch::set_host_player_id(::google::protobuf::uint32 value) {
+  set_has_host_player_id();
+  host_player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestAcceptQuickMatch.host_player_id)
+}
+
+// required bytes data = 5;
+inline bool RequestAcceptQuickMatch::has_data() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestAcceptQuickMatch::set_has_data() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestAcceptQuickMatch::clear_has_data() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestAcceptQuickMatch::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& RequestAcceptQuickMatch::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestAcceptQuickMatch.data)
+  return *data_;
+}
+inline void RequestAcceptQuickMatch::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestAcceptQuickMatch.data)
+}
+inline void RequestAcceptQuickMatch::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestAcceptQuickMatch.data)
+}
+inline void RequestAcceptQuickMatch::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestAcceptQuickMatch.data)
+}
+inline ::std::string* RequestAcceptQuickMatch::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestAcceptQuickMatch.data)
+  return data_;
+}
+inline ::std::string* RequestAcceptQuickMatch::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestAcceptQuickMatch::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestAcceptQuickMatch.data)
+}
 
 // -------------------------------------------------------------------
 
@@ -30521,51 +35769,456 @@ inline void RequestSendMessageToPlayers::set_allocated_push_request_allow_break_
 
 // -------------------------------------------------------------------
 
-// PushRequestJoinQuickMatch
-
-// -------------------------------------------------------------------
-
-// PushRequestAcceptQuickMatch
-
-// -------------------------------------------------------------------
-
-// PushRequestRejectQuickMatch
-
-// -------------------------------------------------------------------
-
 // RequestSendQuickMatchStart_Session_member_list
+
+// required uint32 player_id = 1;
+inline bool RequestSendQuickMatchStart_Session_member_list::has_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::set_has_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 RequestSendQuickMatchStart_Session_member_list::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list.player_id)
+  return player_id_;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list.player_id)
+}
+
+// required uint32 unknown_2 = 2;
+inline bool RequestSendQuickMatchStart_Session_member_list::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 RequestSendQuickMatchStart_Session_member_list::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list.unknown_2)
+  return unknown_2_;
+}
+inline void RequestSendQuickMatchStart_Session_member_list::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list.unknown_2)
+}
 
 // -------------------------------------------------------------------
 
 // RequestSendQuickMatchStart
 
+// required uint32 unknown_1 = 1;
+inline bool RequestSendQuickMatchStart::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestSendQuickMatchStart::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestSendQuickMatchStart::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestSendQuickMatchStart::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestSendQuickMatchStart::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchStart.unknown_1)
+  return unknown_1_;
+}
+inline void RequestSendQuickMatchStart::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchStart.unknown_1)
+}
+
+// repeated .Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list members = 2;
+inline int RequestSendQuickMatchStart::members_size() const {
+  return members_.size();
+}
+inline void RequestSendQuickMatchStart::clear_members() {
+  members_.Clear();
+}
+inline const ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list& RequestSendQuickMatchStart::members(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchStart.members)
+  return members_.Get(index);
+}
+inline ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list* RequestSendQuickMatchStart::mutable_members(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSendQuickMatchStart.members)
+  return members_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list* RequestSendQuickMatchStart::add_members() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestSendQuickMatchStart.members)
+  return members_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list >&
+RequestSendQuickMatchStart::members() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestSendQuickMatchStart.members)
+  return members_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestSendQuickMatchStart_Session_member_list >*
+RequestSendQuickMatchStart::mutable_members() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestSendQuickMatchStart.members)
+  return &members_;
+}
+
 // -------------------------------------------------------------------
 
 // RequestSendQuickMatchResult
+
+// required uint32 unknown_1 = 1;
+inline bool RequestSendQuickMatchResult::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestSendQuickMatchResult::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestSendQuickMatchResult::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestSendQuickMatchResult::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestSendQuickMatchResult::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_1)
+  return unknown_1_;
+}
+inline void RequestSendQuickMatchResult::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_1)
+}
+
+// required uint32 unknown_2 = 2;
+inline bool RequestSendQuickMatchResult::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestSendQuickMatchResult::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestSendQuickMatchResult::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestSendQuickMatchResult::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 RequestSendQuickMatchResult::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_2)
+  return unknown_2_;
+}
+inline void RequestSendQuickMatchResult::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_2)
+}
+
+// required bool remote_won = 3;
+inline bool RequestSendQuickMatchResult::has_remote_won() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestSendQuickMatchResult::set_has_remote_won() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestSendQuickMatchResult::clear_has_remote_won() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestSendQuickMatchResult::clear_remote_won() {
+  remote_won_ = false;
+  clear_has_remote_won();
+}
+inline bool RequestSendQuickMatchResult::remote_won() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.remote_won)
+  return remote_won_;
+}
+inline void RequestSendQuickMatchResult::set_remote_won(bool value) {
+  set_has_remote_won();
+  remote_won_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResult.remote_won)
+}
+
+// required bool local_won = 4;
+inline bool RequestSendQuickMatchResult::has_local_won() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestSendQuickMatchResult::set_has_local_won() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestSendQuickMatchResult::clear_has_local_won() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestSendQuickMatchResult::clear_local_won() {
+  local_won_ = false;
+  clear_has_local_won();
+}
+inline bool RequestSendQuickMatchResult::local_won() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.local_won)
+  return local_won_;
+}
+inline void RequestSendQuickMatchResult::set_local_won(bool value) {
+  set_has_local_won();
+  local_won_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResult.local_won)
+}
+
+// required .Frpg2RequestMessage.QuickMatchRank remote_rank = 5;
+inline bool RequestSendQuickMatchResult::has_remote_rank() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void RequestSendQuickMatchResult::set_has_remote_rank() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void RequestSendQuickMatchResult::clear_has_remote_rank() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void RequestSendQuickMatchResult::clear_remote_rank() {
+  if (remote_rank_ != NULL) remote_rank_->::Frpg2RequestMessage::QuickMatchRank::Clear();
+  clear_has_remote_rank();
+}
+inline const ::Frpg2RequestMessage::QuickMatchRank& RequestSendQuickMatchResult::remote_rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.remote_rank)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return remote_rank_ != NULL ? *remote_rank_ : *default_instance().remote_rank_;
+#else
+  return remote_rank_ != NULL ? *remote_rank_ : *default_instance_->remote_rank_;
+#endif
+}
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestSendQuickMatchResult::mutable_remote_rank() {
+  set_has_remote_rank();
+  if (remote_rank_ == NULL) remote_rank_ = new ::Frpg2RequestMessage::QuickMatchRank;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSendQuickMatchResult.remote_rank)
+  return remote_rank_;
+}
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestSendQuickMatchResult::release_remote_rank() {
+  clear_has_remote_rank();
+  ::Frpg2RequestMessage::QuickMatchRank* temp = remote_rank_;
+  remote_rank_ = NULL;
+  return temp;
+}
+inline void RequestSendQuickMatchResult::set_allocated_remote_rank(::Frpg2RequestMessage::QuickMatchRank* remote_rank) {
+  delete remote_rank_;
+  remote_rank_ = remote_rank;
+  if (remote_rank) {
+    set_has_remote_rank();
+  } else {
+    clear_has_remote_rank();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestSendQuickMatchResult.remote_rank)
+}
+
+// required .Frpg2RequestMessage.QuickMatchRank local_rank = 6;
+inline bool RequestSendQuickMatchResult::has_local_rank() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void RequestSendQuickMatchResult::set_has_local_rank() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void RequestSendQuickMatchResult::clear_has_local_rank() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void RequestSendQuickMatchResult::clear_local_rank() {
+  if (local_rank_ != NULL) local_rank_->::Frpg2RequestMessage::QuickMatchRank::Clear();
+  clear_has_local_rank();
+}
+inline const ::Frpg2RequestMessage::QuickMatchRank& RequestSendQuickMatchResult::local_rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.local_rank)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return local_rank_ != NULL ? *local_rank_ : *default_instance().local_rank_;
+#else
+  return local_rank_ != NULL ? *local_rank_ : *default_instance_->local_rank_;
+#endif
+}
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestSendQuickMatchResult::mutable_local_rank() {
+  set_has_local_rank();
+  if (local_rank_ == NULL) local_rank_ = new ::Frpg2RequestMessage::QuickMatchRank;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSendQuickMatchResult.local_rank)
+  return local_rank_;
+}
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestSendQuickMatchResult::release_local_rank() {
+  clear_has_local_rank();
+  ::Frpg2RequestMessage::QuickMatchRank* temp = local_rank_;
+  local_rank_ = NULL;
+  return temp;
+}
+inline void RequestSendQuickMatchResult::set_allocated_local_rank(::Frpg2RequestMessage::QuickMatchRank* local_rank) {
+  delete local_rank_;
+  local_rank_ = local_rank;
+  if (local_rank) {
+    set_has_local_rank();
+  } else {
+    clear_has_local_rank();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestSendQuickMatchResult.local_rank)
+}
+
+// required string unknown_7 = 7;
+inline bool RequestSendQuickMatchResult::has_unknown_7() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void RequestSendQuickMatchResult::set_has_unknown_7() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void RequestSendQuickMatchResult::clear_has_unknown_7() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void RequestSendQuickMatchResult::clear_unknown_7() {
+  if (unknown_7_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_7_->clear();
+  }
+  clear_has_unknown_7();
+}
+inline const ::std::string& RequestSendQuickMatchResult::unknown_7() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_7)
+  return *unknown_7_;
+}
+inline void RequestSendQuickMatchResult::set_unknown_7(const ::std::string& value) {
+  set_has_unknown_7();
+  if (unknown_7_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_7_ = new ::std::string;
+  }
+  unknown_7_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_7)
+}
+inline void RequestSendQuickMatchResult::set_unknown_7(const char* value) {
+  set_has_unknown_7();
+  if (unknown_7_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_7_ = new ::std::string;
+  }
+  unknown_7_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_7)
+}
+inline void RequestSendQuickMatchResult::set_unknown_7(const char* value, size_t size) {
+  set_has_unknown_7();
+  if (unknown_7_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_7_ = new ::std::string;
+  }
+  unknown_7_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_7)
+}
+inline ::std::string* RequestSendQuickMatchResult::mutable_unknown_7() {
+  set_has_unknown_7();
+  if (unknown_7_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_7_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_7)
+  return unknown_7_;
+}
+inline ::std::string* RequestSendQuickMatchResult::release_unknown_7() {
+  clear_has_unknown_7();
+  if (unknown_7_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = unknown_7_;
+    unknown_7_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestSendQuickMatchResult::set_allocated_unknown_7(::std::string* unknown_7) {
+  if (unknown_7_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_7_;
+  }
+  if (unknown_7) {
+    set_has_unknown_7();
+    unknown_7_ = unknown_7;
+  } else {
+    clear_has_unknown_7();
+    unknown_7_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_7)
+}
 
 // -------------------------------------------------------------------
 
 // RequestSendQuickMatchResultResponse
 
-// -------------------------------------------------------------------
+// required uint32 unknown_1 = 1;
+inline bool RequestSendQuickMatchResultResponse::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestSendQuickMatchResultResponse::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestSendQuickMatchResultResponse::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestSendQuickMatchResultResponse::clear_unknown_1() {
+  unknown_1_ = 0u;
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::uint32 RequestSendQuickMatchResultResponse::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResultResponse.unknown_1)
+  return unknown_1_;
+}
+inline void RequestSendQuickMatchResultResponse::set_unknown_1(::google::protobuf::uint32 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResultResponse.unknown_1)
+}
 
-// QuickMatchRankCache
+// required .Frpg2RequestMessage.QuickMatchRank new_local_rank = 2;
+inline bool RequestSendQuickMatchResultResponse::has_new_local_rank() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestSendQuickMatchResultResponse::set_has_new_local_rank() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestSendQuickMatchResultResponse::clear_has_new_local_rank() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestSendQuickMatchResultResponse::clear_new_local_rank() {
+  if (new_local_rank_ != NULL) new_local_rank_->::Frpg2RequestMessage::QuickMatchRank::Clear();
+  clear_has_new_local_rank();
+}
+inline const ::Frpg2RequestMessage::QuickMatchRank& RequestSendQuickMatchResultResponse::new_local_rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResultResponse.new_local_rank)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return new_local_rank_ != NULL ? *new_local_rank_ : *default_instance().new_local_rank_;
+#else
+  return new_local_rank_ != NULL ? *new_local_rank_ : *default_instance_->new_local_rank_;
+#endif
+}
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestSendQuickMatchResultResponse::mutable_new_local_rank() {
+  set_has_new_local_rank();
+  if (new_local_rank_ == NULL) new_local_rank_ = new ::Frpg2RequestMessage::QuickMatchRank;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestSendQuickMatchResultResponse.new_local_rank)
+  return new_local_rank_;
+}
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestSendQuickMatchResultResponse::release_new_local_rank() {
+  clear_has_new_local_rank();
+  ::Frpg2RequestMessage::QuickMatchRank* temp = new_local_rank_;
+  new_local_rank_ = NULL;
+  return temp;
+}
+inline void RequestSendQuickMatchResultResponse::set_allocated_new_local_rank(::Frpg2RequestMessage::QuickMatchRank* new_local_rank) {
+  delete new_local_rank_;
+  new_local_rank_ = new_local_rank;
+  if (new_local_rank) {
+    set_has_new_local_rank();
+  } else {
+    clear_has_new_local_rank();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestSendQuickMatchResultResponse.new_local_rank)
+}
 
 // -------------------------------------------------------------------
 
 // RequestPushSendQuickMatchStart
-
-// -------------------------------------------------------------------
-
-// QuickMatchSession_Result_list
-
-// -------------------------------------------------------------------
-
-// QuickMatchSession
-
-// -------------------------------------------------------------------
-
-// QuickMatchApologyPoint
 
 
 // @@protoc_insertion_point(namespace_scope)

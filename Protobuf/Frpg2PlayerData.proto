@@ -40,9 +40,33 @@ message AllStatus {
 }
 
 message PlayerStatus {
+    optional uint32 unknown_1 = 1;                           // 135000
+    optional uint32 unknown_2 = 2;                           // 2
+
+    optional bool cross_region_matchmaking_disabled = 3;
     optional int32 soul_level = 4; 
-    repeated int32 recent_online_areas = 17;
-    repeated uint32 unknown2 = 18; //0 or 1
+
+    optional uint32 sinner_points = 5;
+    optional uint32 unknown_6 = 6;                           // 0
+    optional uint32 unknown_7 = 7;                           // 0
+    optional uint32 unknown_8 = 8;                           // 0
+    optional uint32 unknown_9 = 9;                           // 0
+    optional uint32 unknown_10 = 10;                         // 0
+    optional uint32 unknown_11 = 11;                         // 0
+    optional uint32 unknown_12 = 12;                         // 0
+    optional uint32 unknown_13 = 13;                         // 1
+    optional uint32 unknown_14 = 14;                         // 0
+    optional uint32 unknown_15 = 15;                         // 1
+    optional uint32 covenant = 16;                           
+
+    repeated uint32 played_areas = 17;
+
+    repeated uint32 unknown_18 = 18;                         // 0 or 1
+    optional uint32 embered = 19;                         
+    optional uint32 souls = 20;                              
+    optional uint32 soul_memory = 21;                        
+    optional uint32 archetype = 22;                        
+
     optional int32 hp = 23;
     optional int32 max_hp = 24;
     optional int32 base_max_hp = 25;
@@ -52,7 +76,17 @@ message PlayerStatus {
     optional int32 stamina = 29;
     optional int32 max_stamina = 30;
     optional int32 base_max_stamina = 31;
+
+    optional uint32 unknown_32 = 32;                         // 
+    optional uint32 unknown_33 = 33;                         // 
+    optional uint32 unknown_34 = 34;                         // 0
+    optional uint32 unknown_35 = 35;                         // 0
+    optional uint32 unknown_36 = 36;                         // 0
+    optional uint32 character_id = 37;                       
+
     optional string name = 38;
+    optional bool is_male = 39;
+
     optional int32 vigor = 40;
     optional int32 attunement = 41;
     optional int32 endurance = 42;
@@ -62,28 +96,60 @@ message PlayerStatus {
     optional int32 intelligence = 46;
     optional int32 faith = 47;
     optional int32 luck = 48;
+
+    optional float equip_load = 49;                         
+    optional float one_minus_poise_fraction = 50;           // This is kind wierd value. If the value is 0.737, you do (1-0.737), resulting in 0.263 which when multiplied by 100 gives you the poise show on the status screen (26.2)
+    optional int32 item_discovery = 51;                     
+    optional int32 attack_power_r_weapon_1  = 52;           
+    optional int32 attack_power_r_weapon_2 = 53;            
+    optional int32 attack_power_r_weapon_3 = 54;            
+    optional int32 attack_power_l_weapon_1 = 55;            
+    optional int32 attack_power_l_weapon_2 = 56;            
+    optional int32 attack_power_l_weapon_3 = 57;            
+
     optional DefenseInfo defense_info = 58;
     optional CutRateInfo cutrate_info = 59;
     optional ResistanceInfo armor_resistance_info = 60;
     optional ResistanceInfo base_resistance_info = 61;
+
+    repeated int32 unknown_62 = 62;                         // Whole range of values, no obvious pattern. Seems to go up then down in a triangle shape.
+
+    optional int32 unknown_63 = 63;                         // 98
+    optional int32 estus_flask_max = 64;                    
+    optional int32 ashen_estus_flask_max = 65;         
+    optional float max_equip_load = 66;                     
+    optional int32 blade_of_the_darkmoon_offerings = 67;    
+    optional int32 warrior_of_sunlight_offerings = 68;      
+    optional int32 mound_makers_offerings = 69;             
+    optional int32 rosarias_fingers_offerings = 70;         
+    optional int32 watchdogs_of_farron_offerings = 71;      
+    optional int32 aldrich_faithful_offerings = 72;         
+    optional int32 solo_breakin_point = 73;
+    optional int32 max_weapon_level = 74;                   
+    optional int32 unknown_75 = 75;                         // 0
+    optional int32 unknown_76 = 76;                         // 0
+    optional int32 spears_of_the_church_offerings = 77;     
+    optional int32 unknown_78 = 78;                         // 0
+    optional int32 unknown_79 = 79;                         // 0
+    optional int32 unknown_80 = 80;                         // 1    
 }
 
 message PlayData {
-    optional uint32 unknown_1 = 1; //144680
-    optional uint32 unknown_2 = 4; //0
-    optional uint32 unknown_3 = 5; //0
-    optional uint32 unknown_4 = 6; //5
-    optional uint32 unknown_5 = 7; //11
+    optional uint32 unknown_1 = 1;                          // 78286, 84689
+    optional uint32 is_hollow = 4;                          
+    optional uint32 hollow_level = 5;                          
+    optional uint32 unknown_4 = 6;                          // 0
+    optional uint32 unknown_5 = 7;                          // 6 - Bonfire level?
     optional BonfireInfo bonfire_info = 8;
 }
 
 message LogInfo {
-    optional uint32 unknown_1 = 1; //144680
-    optional uint32 unknown_2 = 6; //24
-    optional uint32 unknown_3 = 7; //404
-    optional uint32 unknown_4 = 8; //0
-    optional uint32 unknown_5 = 9; //3
-    optional uint32 unknown_6 = 10; //78
+    optional uint32 clear_count = 1;                        
+    optional uint32 death_count = 6;                        
+    optional uint32 multiplay_count = 7;
+    optional uint32 coop_success_count = 8; 
+    optional uint32 dark_spirit_defeat_count = 9;
+    optional uint32 host_defeat_count = 10; 
 }
 
 message StatsInfo {
@@ -92,7 +158,7 @@ message StatsInfo {
     optional uint32 unknown_3 = 3;
     optional uint32 unknown_4 = 4;
     optional uint32 unknown_5 = 5;
-    optional uint32 unknown6 = 6;
+    optional uint32 unknown_6 = 6;
     optional DateTime date_time_1 = 7;
     optional DateTime date_time_2 = 8;
 }
@@ -145,19 +211,20 @@ message Equipment {
     optional int32 spell_12 = 45;
     optional int32 spell_13 = 46;
     optional int32 spell_14 = 47;
-    optional int32 unknown_0 = 48;
-    optional int32 unknown_1 = 49;
-    optional int32 unknown_2 = 50;
-    optional int32 unknown_3 = 51;
-    optional int32 unknown_4 = 52;
-    optional int32 unknown_5 = 53;
-    optional int32 unknown_6 = 54;
-    optional int32 unknown_7 = 55;
-    optional int32 unknown_8 = 56;
-    optional int32 unknown_9 = 57;
-    optional int32 unknown_10 = 58;
-    optional int32 unknown_11 = 59;
-    optional int32 unknown_12 = 60;
+
+    optional int32 unknown_48 = 48;     // 10070
+    optional int32 unknown_49 = 49;     // 90
+    optional int32 unknown_50 = 50;     // 1
+    optional int32 unknown_51 = 51;     // 1
+    optional int32 unknown_52 = 52;     // 105
+    optional int32 unknown_53 = 53;     // 1
+    optional int32 unknown_54 = 54;     // 1
+    optional int32 unknown_55 = 55;     // 410
+    optional int32 unknown_56 = 56;     // 360
+    optional int32 unknown_57 = 57;     // 370
+    optional int32 unknown_58 = 58;     // 370
+    optional int32 unknown_59 = 59;     // 0
+    optional int32 unknown_60 = 60;     // 1
 }
 
 message PlayerLocation {
