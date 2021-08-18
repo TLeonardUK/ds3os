@@ -112,6 +112,7 @@
     <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h" />
     <ClInclude Include="Server\AuthService\AuthClient.h" />
     <ClInclude Include="Server\AuthService\AuthService.h" />
+    <ClInclude Include="Server\Database\DatabaseTypes.h" />
     <ClInclude Include="Server\Database\ServerDatabase.h" />
     <ClInclude Include="Server\GameService\GameClient.h" />
     <ClInclude Include="Server\GameService\GameManager.h" />
@@ -132,7 +133,7 @@
     <ClInclude Include="Server\GameService\GameService.h" />
     <ClInclude Include="Server\GameService\PlayerState.h" />
     <ClInclude Include="Server\GameService\Utils\GameIds.h" />
-    <ClInclude Include="Server\GameService\Utils\TeamTypeId.inc" />
+    <ClInclude Include="Server\GameService\Utils\OnlineAreaPool.h" />
     <ClInclude Include="Server\LoginService\LoginClient.h" />
     <ClInclude Include="Server\LoginService\LoginService.h" />
     <ClInclude Include="Server\Service.h" />
@@ -203,13 +204,14 @@
     <None Include="Core\Utils\EnumDef.inc" />
     <None Include="Directory.Build.Cpp.props" />
     <None Include="Directory.Build.props" />
-    <None Include="Server\GameService\Utils\BonfireId.inc" />
-    <None Include="Server\GameService\Utils\CharacterTypeId.inc" />
-    <None Include="Server\GameService\Utils\CovenantId.inc" />
-    <None Include="Server\GameService\Utils\GestureId.inc" />
-    <None Include="Server\GameService\Utils\InvasionTypeId.inc" />
-    <None Include="Server\GameService\Utils\ItemId.inc" />
-    <None Include="Server\GameService\Utils\OnlineAreaId.inc" />
+    <None Include="Server\GameService\Utils\Ids\BonfireId.inc" />
+    <None Include="Server\GameService\Utils\Ids\CharacterTypeId.inc" />
+    <None Include="Server\GameService\Utils\Ids\CovenantId.inc" />
+    <None Include="Server\GameService\Utils\Ids\GestureId.inc" />
+    <None Include="Server\GameService\Utils\Ids\InvasionTypeId.inc" />
+    <None Include="Server\GameService\Utils\Ids\ItemId.inc" />
+    <None Include="Server\GameService\Utils\Ids\OnlineAreaId.inc" />
+    <None Include="Server\GameService\Utils\Ids\TeamTypeId.inc" />
     <None Include="Server\Streams\Frpg2ReliableUdpMessageTypes.inc" />
     <None Include="vcpkg.json" />
   </ItemGroup>

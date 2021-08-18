@@ -4428,36 +4428,36 @@ class RequestReCreateBloodMessageList : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 2;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
 
-  // repeated .Frpg2RequestMessage.RequestReCreateBloodMessageList.Blood_message_info_list messages = 3;
-  inline int messages_size() const;
-  inline void clear_messages();
-  static const int kMessagesFieldNumber = 3;
-  inline const ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list& messages(int index) const;
-  inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* mutable_messages(int index);
-  inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* add_messages();
+  // repeated group Blood_message_info_list = 3 {
+  inline int blood_message_info_list_size() const;
+  inline void clear_blood_message_info_list();
+  static const int kBloodMessageInfoListFieldNumber = 3;
+  inline const ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list& blood_message_info_list(int index) const;
+  inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* mutable_blood_message_info_list(int index);
+  inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* add_blood_message_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list >&
-      messages() const;
+      blood_message_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list >*
-      mutable_messages();
+      mutable_blood_message_info_list();
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestReCreateBloodMessageList)
  private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list > messages_;
-  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list > blood_message_info_list_;
+  ::google::protobuf::uint32 unknown_2_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -27477,58 +27477,58 @@ inline void RequestReCreateBloodMessageList_Blood_message_info_list::set_unknown
 
 // RequestReCreateBloodMessageList
 
-// required uint32 unknown_1 = 2;
-inline bool RequestReCreateBloodMessageList::has_unknown_1() const {
+// required uint32 unknown_2 = 2;
+inline bool RequestReCreateBloodMessageList::has_unknown_2() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RequestReCreateBloodMessageList::set_has_unknown_1() {
+inline void RequestReCreateBloodMessageList::set_has_unknown_2() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RequestReCreateBloodMessageList::clear_has_unknown_1() {
+inline void RequestReCreateBloodMessageList::clear_has_unknown_2() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RequestReCreateBloodMessageList::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void RequestReCreateBloodMessageList::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
 }
-inline ::google::protobuf::uint32 RequestReCreateBloodMessageList::unknown_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestReCreateBloodMessageList.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 RequestReCreateBloodMessageList::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestReCreateBloodMessageList.unknown_2)
+  return unknown_2_;
 }
-inline void RequestReCreateBloodMessageList::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestReCreateBloodMessageList.unknown_1)
+inline void RequestReCreateBloodMessageList::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestReCreateBloodMessageList.unknown_2)
 }
 
-// repeated .Frpg2RequestMessage.RequestReCreateBloodMessageList.Blood_message_info_list messages = 3;
-inline int RequestReCreateBloodMessageList::messages_size() const {
-  return messages_.size();
+// repeated group Blood_message_info_list = 3 {
+inline int RequestReCreateBloodMessageList::blood_message_info_list_size() const {
+  return blood_message_info_list_.size();
 }
-inline void RequestReCreateBloodMessageList::clear_messages() {
-  messages_.Clear();
+inline void RequestReCreateBloodMessageList::clear_blood_message_info_list() {
+  blood_message_info_list_.Clear();
 }
-inline const ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list& RequestReCreateBloodMessageList::messages(int index) const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestReCreateBloodMessageList.messages)
-  return messages_.Get(index);
+inline const ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list& RequestReCreateBloodMessageList::blood_message_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestReCreateBloodMessageList.blood_message_info_list)
+  return blood_message_info_list_.Get(index);
 }
-inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* RequestReCreateBloodMessageList::mutable_messages(int index) {
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestReCreateBloodMessageList.messages)
-  return messages_.Mutable(index);
+inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* RequestReCreateBloodMessageList::mutable_blood_message_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestReCreateBloodMessageList.blood_message_info_list)
+  return blood_message_info_list_.Mutable(index);
 }
-inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* RequestReCreateBloodMessageList::add_messages() {
-  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestReCreateBloodMessageList.messages)
-  return messages_.Add();
+inline ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list* RequestReCreateBloodMessageList::add_blood_message_info_list() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestReCreateBloodMessageList.blood_message_info_list)
+  return blood_message_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list >&
-RequestReCreateBloodMessageList::messages() const {
-  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestReCreateBloodMessageList.messages)
-  return messages_;
+RequestReCreateBloodMessageList::blood_message_info_list() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestReCreateBloodMessageList.blood_message_info_list)
+  return blood_message_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list >*
-RequestReCreateBloodMessageList::mutable_messages() {
-  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestReCreateBloodMessageList.messages)
-  return &messages_;
+RequestReCreateBloodMessageList::mutable_blood_message_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestReCreateBloodMessageList.blood_message_info_list)
+  return &blood_message_info_list_;
 }
 
 // -------------------------------------------------------------------

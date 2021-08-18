@@ -28,7 +28,7 @@ void WriteLog(ConsoleColor Color, const char* Level, const char* Format, ...);
 
 // Some general purpose debugging/assert macros.
 #define Ensure(expr)                                \
-    if (!expr)                                      \
+    if (!(expr))                                    \
     {                                               \
         Error("Check Failed: " #expr);              \
         __debugbreak();                             \

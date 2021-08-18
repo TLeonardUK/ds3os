@@ -11,9 +11,12 @@
 
 #include <filesystem>
 #include <functional>
+#include <variant>
 
-class sqlite3;
-class sqlite3_stmt;
+#include "Server/Database/DatabaseTypes.h"
+
+struct sqlite3;
+struct sqlite3_stmt;
 
 // Interface to the sqlite database.
 
@@ -35,11 +38,24 @@ public:
     // Return value is the new player's id.
     bool FindOrCreatePlayer(const std::string& SteamId, uint32_t& PlayerId);
 
+    // ----------------------------------------------------------------
+    // Blood message interface
+    // ----------------------------------------------------------------
+
+    // Finds the blood message in the database, or returns nullptr if it
+    // doesn't exist.
+    std::shared_ptr<BloodMessage> FindBloodMessage(uint32_t MessageId);
+
+    // Creates a new blood message with the given data and returns a representation of it.
+    std::shared_ptr<BloodMessage> CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
+
 protected:
+
+    using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>>;
 
     typedef std::function<void(sqlite3_stmt* statement)> RowCallback;
 
-    bool RunStatement(const std::string& sql, const std::vector<std::string>& Values, RowCallback Callback);
+    bool RunStatement(const std::string& sql, const std::vector<DatabaseValue>& Values, RowCallback Callback);
 
     bool CreateTables();
 

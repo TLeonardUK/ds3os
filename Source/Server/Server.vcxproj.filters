@@ -88,6 +88,9 @@
     <Filter Include="Server\GameService\GameManagers\Misc">
       <UniqueIdentifier>{146bbd3b-10d0-4341-9bfc-21feda6115f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Server\GameService\Utils\Ids">
+      <UniqueIdentifier>{50746881-e082-419d-b0ab-6c2ce3984450}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server\Server.h">
@@ -237,9 +240,6 @@
     <ClInclude Include="Core\Utils\Enum.h">
       <Filter>Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Server\GameService\Utils\TeamTypeId.inc">
-      <Filter>Server\GameService\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Server\GameService\PlayerState.h">
       <Filter>Server\GameService</Filter>
     </ClInclude>
@@ -275,6 +275,12 @@
     </ClInclude>
     <ClInclude Include="Server\GameService\GameManagers\Misc\MiscManager.h">
       <Filter>Server\GameService\GameManagers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GameService\Utils\OnlineAreaPool.h">
+      <Filter>Server\GameService\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\Database\DatabaseTypes.h">
+      <Filter>Server\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -425,29 +431,32 @@
     <None Include="Server\Streams\Frpg2ReliableUdpMessageTypes.inc">
       <Filter>Server\Streams</Filter>
     </None>
-    <None Include="Server\GameService\Utils\OnlineAreaId.inc">
-      <Filter>Server\GameService\Utils</Filter>
-    </None>
     <None Include="Core\Utils\EnumDef.inc">
       <Filter>Core\Utils</Filter>
     </None>
-    <None Include="Server\GameService\Utils\ItemId.inc">
-      <Filter>Server\GameService\Utils</Filter>
+    <None Include="Server\GameService\Utils\Ids\BonfireId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
     </None>
-    <None Include="Server\GameService\Utils\CovenantId.inc">
-      <Filter>Server\GameService\Utils</Filter>
+    <None Include="Server\GameService\Utils\Ids\CharacterTypeId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
     </None>
-    <None Include="Server\GameService\Utils\BonfireId.inc">
-      <Filter>Server\GameService\Utils</Filter>
+    <None Include="Server\GameService\Utils\Ids\CovenantId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
     </None>
-    <None Include="Server\GameService\Utils\CharacterTypeId.inc">
-      <Filter>Server\GameService\Utils</Filter>
+    <None Include="Server\GameService\Utils\Ids\GestureId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
     </None>
-    <None Include="Server\GameService\Utils\InvasionTypeId.inc">
-      <Filter>Server\GameService\Utils</Filter>
+    <None Include="Server\GameService\Utils\Ids\InvasionTypeId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
     </None>
-    <None Include="Server\GameService\Utils\GestureId.inc">
-      <Filter>Server\GameService\Utils</Filter>
+    <None Include="Server\GameService\Utils\Ids\ItemId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\Ids\OnlineAreaId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
+    </None>
+    <None Include="Server\GameService\Utils\Ids\TeamTypeId.inc">
+      <Filter>Server\GameService\Utils\Ids</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

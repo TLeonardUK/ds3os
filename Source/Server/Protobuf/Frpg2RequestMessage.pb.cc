@@ -9855,8 +9855,8 @@ void RequestReCreateBloodMessageList_Blood_message_info_list::Swap(RequestReCrea
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int RequestReCreateBloodMessageList::kUnknown1FieldNumber;
-const int RequestReCreateBloodMessageList::kMessagesFieldNumber;
+const int RequestReCreateBloodMessageList::kUnknown2FieldNumber;
+const int RequestReCreateBloodMessageList::kBloodMessageInfoListFieldNumber;
 #endif  // !_MSC_VER
 
 RequestReCreateBloodMessageList::RequestReCreateBloodMessageList()
@@ -9877,7 +9877,7 @@ RequestReCreateBloodMessageList::RequestReCreateBloodMessageList(const RequestRe
 
 void RequestReCreateBloodMessageList::SharedCtor() {
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  unknown_2_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -9916,8 +9916,8 @@ RequestReCreateBloodMessageList* RequestReCreateBloodMessageList::New() const {
 }
 
 void RequestReCreateBloodMessageList::Clear() {
-  unknown_1_ = 0u;
-  messages_.Clear();
+  unknown_2_ = 0u;
+  blood_message_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -9936,30 +9936,30 @@ bool RequestReCreateBloodMessageList::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 2;
+      // required uint32 unknown_2 = 2;
       case 2: {
         if (tag == 16) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &unknown_2_)));
+          set_has_unknown_2();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_messages;
+        if (input->ExpectTag(27)) goto parse_blood_message_info_list;
         break;
       }
 
-      // repeated .Frpg2RequestMessage.RequestReCreateBloodMessageList.Blood_message_info_list messages = 3;
+      // repeated group Blood_message_info_list = 3 {
       case 3: {
-        if (tag == 26) {
-         parse_messages:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_messages()));
+        if (tag == 27) {
+         parse_blood_message_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                3, input, add_blood_message_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_messages;
+        if (input->ExpectTag(27)) goto parse_blood_message_info_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -9989,15 +9989,15 @@ failure:
 void RequestReCreateBloodMessageList::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestReCreateBloodMessageList)
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
   }
 
-  // repeated .Frpg2RequestMessage.RequestReCreateBloodMessageList.Blood_message_info_list messages = 3;
-  for (int i = 0; i < this->messages_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->messages(i), output);
+  // repeated group Blood_message_info_list = 3 {
+  for (int i = 0; i < this->blood_message_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      3, this->blood_message_info_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -10009,20 +10009,20 @@ int RequestReCreateBloodMessageList::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 unknown_2 = 2;
+    if (has_unknown_2()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->unknown_2());
     }
 
   }
-  // repeated .Frpg2RequestMessage.RequestReCreateBloodMessageList.Blood_message_info_list messages = 3;
-  total_size += 1 * this->messages_size();
-  for (int i = 0; i < this->messages_size(); i++) {
+  // repeated group Blood_message_info_list = 3 {
+  total_size += 2 * this->blood_message_info_list_size();
+  for (int i = 0; i < this->blood_message_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->messages(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->blood_message_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -10040,10 +10040,10 @@ void RequestReCreateBloodMessageList::CheckTypeAndMergeFrom(
 
 void RequestReCreateBloodMessageList::MergeFrom(const RequestReCreateBloodMessageList& from) {
   GOOGLE_CHECK_NE(&from, this);
-  messages_.MergeFrom(from.messages_);
+  blood_message_info_list_.MergeFrom(from.blood_message_info_list_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -10058,14 +10058,14 @@ void RequestReCreateBloodMessageList::CopyFrom(const RequestReCreateBloodMessage
 bool RequestReCreateBloodMessageList::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->messages())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->blood_message_info_list())) return false;
   return true;
 }
 
 void RequestReCreateBloodMessageList::Swap(RequestReCreateBloodMessageList* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
-    messages_.Swap(&other->messages_);
+    std::swap(unknown_2_, other->unknown_2_);
+    blood_message_info_list_.Swap(&other->blood_message_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

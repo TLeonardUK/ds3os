@@ -10,6 +10,8 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
+#include "Server/GameService/Utils/OnlineAreaPool.h"
+#include "Server/Database/DatabaseTypes.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
@@ -38,5 +40,7 @@ protected:
 
 private:
     Server* ServerInstance;
+
+    OnlineAreaPool<BloodMessage> LiveMessageCache;
 
 };

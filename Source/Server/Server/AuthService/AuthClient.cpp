@@ -77,7 +77,7 @@ bool AuthClient::Poll()
             {
                 // First request is always the handshake request. 
                 Frpg2RequestMessage::RequestHandshake Request;
-                if (!Request.ParseFromArray(Message.Payload.data(), Message.Payload.size()))
+                if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
                     Warning("[%s] Disconnecting client as recieved unexpected message, expecting RequestHandshake.", GetName().c_str());
                     return true;
@@ -125,7 +125,7 @@ bool AuthClient::Poll()
             if (MessageStream->Recieve(&Message))
             {
                 Frpg2RequestMessage::GetServiceStatus Request;
-                if (!Request.ParseFromArray(Message.Payload.data(), Message.Payload.size()))
+                if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
                     Warning("[%s] Disconnecting client as recieved unexpected message, expecting GetServiceStatus.", GetName().c_str());
                     return true;

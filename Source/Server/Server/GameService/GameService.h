@@ -31,7 +31,7 @@ struct GameClientAuthenticationState
 {
     uint64_t AuthToken;
     std::vector<uint8_t> CwcKey;
-    float LastRefreshTime;
+    double LastRefreshTime;
 };
 
 // The game server is responsible for responding to any requests that game clients make. 

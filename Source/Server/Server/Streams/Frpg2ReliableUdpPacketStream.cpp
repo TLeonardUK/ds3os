@@ -109,7 +109,7 @@ bool Frpg2ReliableUdpPacketStream::DecodeReliablePacket(const Frpg2UdpPacket& In
         HeaderOffset = Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader) - sizeof(Frpg2ReliableUdpPacketOpCodePayload_SYN);
         PayloadOffset = 0;
 
-        Ensure(Input.Payload[HeaderOffset] == 0xF5 && Input.Payload[HeaderOffset] == 0x02);
+        Ensure(Input.Payload[HeaderOffset] == 0xF5 && Input.Payload[HeaderOffset + 1] == 0x02);
     }
 
     Output.Payload.resize(PayloadSize);
@@ -173,6 +173,10 @@ void Frpg2ReliableUdpPacketStream::HandleIncoming()
       
             PendingRecieveQueue.erase(PendingRecieveQueue.begin());
             RemoteSequenceIndex++;
+        }
+        else
+        {
+            break;
         }
     }
 }

@@ -68,7 +68,7 @@ bool LoginClient::Poll()
         // Login server only accepts RequestQueryLoginServerInfo messages. 
         // Nice and straight forward!
         Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
-        if (!Request.ParseFromArray(Message.Payload.data(), Message.Payload.size()))
+        if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
         {
             Warning("[%s] Disconnecting client as recieved message that could not be parsed into expected format.", GetName().c_str());
             return true;

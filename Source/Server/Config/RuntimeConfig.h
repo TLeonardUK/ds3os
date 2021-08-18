@@ -55,6 +55,10 @@ public:
         { "Welcome to DS3OS", "\nYou have connected to an unofficial, work-in-progress, Dark Souls III server. Stability is not guaranteed, but welcome!\n\nMore information on this project is available here:\nhttps://github.com/tleonarduk/ds3os" }
     };
 
+    // Maximum number of blood messages to store per area in the cache.
+    // If greater than this value are added, the oldest will be removed.
+    int BloodMessageMaxLiveCacheEntriesPerArea = 1000;
+
 public:
 
     bool Save(const std::filesystem::path& Path);
