@@ -139,7 +139,7 @@ message PlayData {
     optional uint32 is_hollow = 4;                          
     optional uint32 hollow_level = 5;                          
     optional uint32 unknown_4 = 6;                          // 0
-    optional uint32 unknown_5 = 7;                          // 6 - Bonfire level?
+    optional uint32 bonfire_level = 7;                      
     optional BonfireInfo bonfire_info = 8;
 }
 

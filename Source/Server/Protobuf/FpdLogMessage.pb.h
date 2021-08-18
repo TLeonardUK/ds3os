@@ -55,6 +55,10 @@ class SaleItemLog;
 class SaleItemLog_Sale_item_info_list;
 class StrengthenWeaponLog;
 class StrengthenWeaponLog_Strengthen_weapon_info_list;
+class VisitResultLog;
+class QuickMatchResultLog;
+class QuickMatchEndLog;
+class ConvertSaveDataLog;
 class AccessWarehouseLog;
 class AccessWarehouseLog_Access_warehouse_info_list;
 class RepairEquipmentLog;
@@ -65,10 +69,6 @@ class EquipMagicLog;
 class ChaneEstusFlaskNumLog;
 class CreateBloodMessageLog;
 class EvaluateBloodMessageLog;
-class VisitResultLog;
-class QuickMatchResultLog;
-class QuickMatchEndLog;
-class ConvertSaveDataLog;
 
 // ===================================================================
 
@@ -338,63 +338,63 @@ class SystemOptionLog_Game_option_setting : public ::google::protobuf::MessageLi
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 2;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // required uint32 toggle_auto_lock_on = 2;
+  inline bool has_toggle_auto_lock_on() const;
+  inline void clear_toggle_auto_lock_on();
+  static const int kToggleAutoLockOnFieldNumber = 2;
+  inline ::google::protobuf::uint32 toggle_auto_lock_on() const;
+  inline void set_toggle_auto_lock_on(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_2 = 3;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 3;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
+  // required uint32 auto_target = 3;
+  inline bool has_auto_target() const;
+  inline void clear_auto_target();
+  static const int kAutoTargetFieldNumber = 3;
+  inline ::google::protobuf::uint32 auto_target() const;
+  inline void set_auto_target(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_3 = 4;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown_3() const;
-  inline void set_unknown_3(::google::protobuf::uint32 value);
+  // required uint32 manual_attack_aiming = 4;
+  inline bool has_manual_attack_aiming() const;
+  inline void clear_manual_attack_aiming();
+  static const int kManualAttackAimingFieldNumber = 4;
+  inline ::google::protobuf::uint32 manual_attack_aiming() const;
+  inline void set_manual_attack_aiming(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_4 = 5;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 5;
-  inline ::google::protobuf::uint32 unknown_4() const;
-  inline void set_unknown_4(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_5 = 6;
+  // required uint32 unknown_5 = 5;
   inline bool has_unknown_5() const;
   inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 6;
+  static const int kUnknown5FieldNumber = 5;
   inline ::google::protobuf::uint32 unknown_5() const;
   inline void set_unknown_5(::google::protobuf::uint32 value);
 
+  // required uint32 vibration_level = 6;
+  inline bool has_vibration_level() const;
+  inline void clear_vibration_level();
+  static const int kVibrationLevelFieldNumber = 6;
+  inline ::google::protobuf::uint32 vibration_level() const;
+  inline void set_vibration_level(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.SystemOptionLog.Game_option_setting)
  private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
+  inline void set_has_toggle_auto_lock_on();
+  inline void clear_has_toggle_auto_lock_on();
+  inline void set_has_auto_target();
+  inline void clear_has_auto_target();
+  inline void set_has_manual_attack_aiming();
+  inline void clear_has_manual_attack_aiming();
   inline void set_has_unknown_5();
   inline void clear_has_unknown_5();
+  inline void set_has_vibration_level();
+  inline void clear_has_vibration_level();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
-  ::google::protobuf::uint32 unknown_2_;
-  ::google::protobuf::uint32 unknown_3_;
-  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 toggle_auto_lock_on_;
+  ::google::protobuf::uint32 auto_target_;
+  ::google::protobuf::uint32 manual_attack_aiming_;
   ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 vibration_level_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -469,73 +469,73 @@ class SystemOptionLog_Network_setting : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 8;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 8;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // required uint32 allow_cross_region_play = 8;
+  inline bool has_allow_cross_region_play() const;
+  inline void clear_allow_cross_region_play();
+  static const int kAllowCrossRegionPlayFieldNumber = 8;
+  inline ::google::protobuf::uint32 allow_cross_region_play() const;
+  inline void set_allow_cross_region_play(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_2 = 9;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 9;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
+  // required uint32 has_password = 9;
+  inline bool has_has_password() const;
+  inline void clear_has_password();
+  static const int kHasPasswordFieldNumber = 9;
+  inline ::google::protobuf::uint32 has_password() const;
+  inline void set_has_password(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_3 = 10;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 10;
-  inline ::google::protobuf::uint32 unknown_3() const;
-  inline void set_unknown_3(::google::protobuf::uint32 value);
+  // required uint32 restrict_summon_sign_visibility = 10;
+  inline bool has_restrict_summon_sign_visibility() const;
+  inline void clear_restrict_summon_sign_visibility();
+  static const int kRestrictSummonSignVisibilityFieldNumber = 10;
+  inline ::google::protobuf::uint32 restrict_summon_sign_visibility() const;
+  inline void set_restrict_summon_sign_visibility(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_4 = 11;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 11;
-  inline ::google::protobuf::uint32 unknown_4() const;
-  inline void set_unknown_4(::google::protobuf::uint32 value);
+  // required uint32 allow_voice_chat = 11;
+  inline bool has_allow_voice_chat() const;
+  inline void clear_allow_voice_chat();
+  static const int kAllowVoiceChatFieldNumber = 11;
+  inline ::google::protobuf::uint32 allow_voice_chat() const;
+  inline void set_allow_voice_chat(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_5 = 12;
-  inline bool has_unknown_5() const;
-  inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 12;
-  inline ::google::protobuf::uint32 unknown_5() const;
-  inline void set_unknown_5(::google::protobuf::uint32 value);
+  // required uint32 unknown_12 = 12;
+  inline bool has_unknown_12() const;
+  inline void clear_unknown_12();
+  static const int kUnknown12FieldNumber = 12;
+  inline ::google::protobuf::uint32 unknown_12() const;
+  inline void set_unknown_12(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_6 = 13;
-  inline bool has_unknown_6() const;
-  inline void clear_unknown_6();
-  static const int kUnknown6FieldNumber = 13;
-  inline ::google::protobuf::uint32 unknown_6() const;
-  inline void set_unknown_6(::google::protobuf::uint32 value);
+  // required uint32 start_offline = 13;
+  inline bool has_start_offline() const;
+  inline void clear_start_offline();
+  static const int kStartOfflineFieldNumber = 13;
+  inline ::google::protobuf::uint32 start_offline() const;
+  inline void set_start_offline(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.SystemOptionLog.Network_setting)
  private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
-  inline void set_has_unknown_5();
-  inline void clear_has_unknown_5();
-  inline void set_has_unknown_6();
-  inline void clear_has_unknown_6();
+  inline void set_has_allow_cross_region_play();
+  inline void clear_has_allow_cross_region_play();
+  inline void set_has_has_password();
+  inline void clear_has_has_password();
+  inline void set_has_restrict_summon_sign_visibility();
+  inline void clear_has_restrict_summon_sign_visibility();
+  inline void set_has_allow_voice_chat();
+  inline void clear_has_allow_voice_chat();
+  inline void set_has_unknown_12();
+  inline void clear_has_unknown_12();
+  inline void set_has_start_offline();
+  inline void clear_has_start_offline();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
-  ::google::protobuf::uint32 unknown_2_;
-  ::google::protobuf::uint32 unknown_3_;
-  ::google::protobuf::uint32 unknown_4_;
-  ::google::protobuf::uint32 unknown_5_;
-  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 allow_cross_region_play_;
+  ::google::protobuf::uint32 has_password_;
+  ::google::protobuf::uint32 restrict_summon_sign_visibility_;
+  ::google::protobuf::uint32 allow_voice_chat_;
+  ::google::protobuf::uint32 unknown_12_;
+  ::google::protobuf::uint32 start_offline_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -718,13 +718,43 @@ class UseItemLog_Use_item_info_list : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 item_id = 2;
+  inline bool has_item_id() const;
+  inline void clear_item_id();
+  static const int kItemIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 item_id() const;
+  inline void set_item_id(::google::protobuf::uint32 value);
+
+  // required uint32 quantity = 3;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 3;
+  inline ::google::protobuf::uint32 quantity() const;
+  inline void set_quantity(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.UseItemLog.Use_item_info_list)
  private:
+  inline void set_has_item_id();
+  inline void clear_has_item_id();
+  inline void set_has_quantity();
+  inline void clear_has_quantity();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 item_id_;
+  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -801,13 +831,48 @@ class UseItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.UseItemLog.Use_item_info_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::UseItemLog_Use_item_info_list& items(int index) const;
+  inline ::FpdLogMessage::UseItemLog_Use_item_info_list* mutable_items(int index);
+  inline ::FpdLogMessage::UseItemLog_Use_item_info_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >*
+      mutable_items();
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 6;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 6;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.UseItemLog)
  private:
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_location();
+  inline void clear_has_location();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list > items_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_5_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -882,13 +947,95 @@ class GetItemLog_Get_item_info_list : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 3;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 3;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 item_id = 5;
+  inline bool has_item_id() const;
+  inline void clear_item_id();
+  static const int kItemIdFieldNumber = 5;
+  inline ::google::protobuf::uint32 item_id() const;
+  inline void set_item_id(::google::protobuf::uint32 value);
+
+  // required uint32 quantity = 6;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 6;
+  inline ::google::protobuf::uint32 quantity() const;
+  inline void set_quantity(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_7 = 7;
+  inline bool has_unknown_7() const;
+  inline void clear_unknown_7();
+  static const int kUnknown7FieldNumber = 7;
+  inline ::google::protobuf::uint32 unknown_7() const;
+  inline void set_unknown_7(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_8 = 8;
+  inline bool has_unknown_8() const;
+  inline void clear_unknown_8();
+  static const int kUnknown8FieldNumber = 8;
+  inline ::google::protobuf::uint32 unknown_8() const;
+  inline void set_unknown_8(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_9 = 9;
+  inline bool has_unknown_9() const;
+  inline void clear_unknown_9();
+  static const int kUnknown9FieldNumber = 9;
+  inline ::google::protobuf::uint32 unknown_9() const;
+  inline void set_unknown_9(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.GetItemLog.Get_item_info_list)
  private:
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_location();
+  inline void clear_has_location();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_item_id();
+  inline void clear_has_item_id();
+  inline void set_has_quantity();
+  inline void clear_has_quantity();
+  inline void set_has_unknown_7();
+  inline void clear_has_unknown_7();
+  inline void set_has_unknown_8();
+  inline void clear_has_unknown_8();
+  inline void set_has_unknown_9();
+  inline void clear_has_unknown_9();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 item_id_;
+  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 unknown_7_;
+  ::google::protobuf::uint32 unknown_8_;
+  ::google::protobuf::uint32 unknown_9_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -965,6 +1112,18 @@ class GetItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.GetItemLog.Get_item_info_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::GetItemLog_Get_item_info_list& items(int index) const;
+  inline ::FpdLogMessage::GetItemLog_Get_item_info_list* mutable_items(int index);
+  inline ::FpdLogMessage::GetItemLog_Get_item_info_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >*
+      mutable_items();
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.GetItemLog)
  private:
 
@@ -972,6 +1131,7 @@ class GetItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list > items_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1046,13 +1206,33 @@ class ActGestureLog_Use_gesture_info_list : public ::google::protobuf::MessageLi
 
   // accessors -------------------------------------------------------
 
+  // required uint32 guesture_id = 2;
+  inline bool has_guesture_id() const;
+  inline void clear_guesture_id();
+  static const int kGuestureIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 guesture_id() const;
+  inline void set_guesture_id(::google::protobuf::uint32 value);
+
+  // required uint32 count = 3;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 3;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.ActGestureLog.Use_gesture_info_list)
  private:
+  inline void set_has_guesture_id();
+  inline void clear_has_guesture_id();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 guesture_id_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1129,13 +1309,48 @@ class ActGestureLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.ActGestureLog.Use_gesture_info_list gestures = 1;
+  inline int gestures_size() const;
+  inline void clear_gestures();
+  static const int kGesturesFieldNumber = 1;
+  inline const ::FpdLogMessage::ActGestureLog_Use_gesture_info_list& gestures(int index) const;
+  inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* mutable_gestures(int index);
+  inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* add_gestures();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >&
+      gestures() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >*
+      mutable_gestures();
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline const ::FpdLogMessage::Vector& unknown_5() const;
+  inline ::FpdLogMessage::Vector* mutable_unknown_5();
+  inline ::FpdLogMessage::Vector* release_unknown_5();
+  inline void set_allocated_unknown_5(::FpdLogMessage::Vector* unknown_5);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.ActGestureLog)
  private:
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list > gestures_;
+  ::FpdLogMessage::Vector* unknown_5_;
+  ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1210,13 +1425,33 @@ class UseMagicLog_Use_magic_info_list : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 spell_id = 2;
+  inline bool has_spell_id() const;
+  inline void clear_spell_id();
+  static const int kSpellIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 spell_id() const;
+  inline void set_spell_id(::google::protobuf::uint32 value);
+
+  // required uint32 count = 3;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 3;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.UseMagicLog.Use_magic_info_list)
  private:
+  inline void set_has_spell_id();
+  inline void clear_has_spell_id();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 spell_id_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1293,13 +1528,48 @@ class UseMagicLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.UseMagicLog.Use_magic_info_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::UseMagicLog_Use_magic_info_list& items(int index) const;
+  inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* mutable_items(int index);
+  inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >*
+      mutable_items();
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 5;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 5;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.UseMagicLog)
  private:
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_location();
+  inline void clear_has_location();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list > items_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1374,13 +1644,65 @@ class PurchaseItemLog_Purchase_item_info_list : public ::google::protobuf::Messa
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 3;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 3;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
+  // required uint32 item_id = 5;
+  inline bool has_item_id() const;
+  inline void clear_item_id();
+  static const int kItemIdFieldNumber = 5;
+  inline ::google::protobuf::uint32 item_id() const;
+  inline void set_item_id(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline ::google::protobuf::uint32 unknown_6() const;
+  inline void set_unknown_6(::google::protobuf::uint32 value);
+
+  // required uint32 quantity = 7;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 7;
+  inline ::google::protobuf::uint32 quantity() const;
+  inline void set_quantity(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list)
  private:
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_location();
+  inline void clear_has_location();
+  inline void set_has_item_id();
+  inline void clear_has_item_id();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
+  inline void set_has_quantity();
+  inline void clear_has_quantity();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 item_id_;
+  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 quantity_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1457,6 +1779,18 @@ class PurchaseItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.PurchaseItemLog.Purchase_item_info_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& items(int index) const;
+  inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* mutable_items(int index);
+  inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >*
+      mutable_items();
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.PurchaseItemLog)
  private:
 
@@ -1464,6 +1798,7 @@ class PurchaseItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list > items_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1538,13 +1873,65 @@ class DropItemLog_Throw_away_item_list : public ::google::protobuf::MessageLite 
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 3;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 3;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 item_id = 5;
+  inline bool has_item_id() const;
+  inline void clear_item_id();
+  static const int kItemIdFieldNumber = 5;
+  inline ::google::protobuf::uint32 item_id() const;
+  inline void set_item_id(::google::protobuf::uint32 value);
+
+  // required uint32 quantity = 6;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 6;
+  inline ::google::protobuf::uint32 quantity() const;
+  inline void set_quantity(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.DropItemLog.Throw_away_item_list)
  private:
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_location();
+  inline void clear_has_location();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_item_id();
+  inline void clear_has_item_id();
+  inline void set_has_quantity();
+  inline void clear_has_quantity();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 item_id_;
+  ::google::protobuf::uint32 quantity_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1621,6 +2008,18 @@ class DropItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.DropItemLog.Throw_away_item_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::DropItemLog_Throw_away_item_list& items(int index) const;
+  inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* mutable_items(int index);
+  inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >*
+      mutable_items();
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.DropItemLog)
  private:
 
@@ -1628,6 +2027,7 @@ class DropItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list > items_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1702,13 +2102,65 @@ class LeaveItemLog_Set_item_info_list : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 3;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 3;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 item_id = 5;
+  inline bool has_item_id() const;
+  inline void clear_item_id();
+  static const int kItemIdFieldNumber = 5;
+  inline ::google::protobuf::uint32 item_id() const;
+  inline void set_item_id(::google::protobuf::uint32 value);
+
+  // required uint32 quantity = 6;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 6;
+  inline ::google::protobuf::uint32 quantity() const;
+  inline void set_quantity(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.LeaveItemLog.Set_item_info_list)
  private:
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_location();
+  inline void clear_has_location();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_item_id();
+  inline void clear_has_item_id();
+  inline void set_has_quantity();
+  inline void clear_has_quantity();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 item_id_;
+  ::google::protobuf::uint32 quantity_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1785,6 +2237,18 @@ class LeaveItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.LeaveItemLog.Set_item_info_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::LeaveItemLog_Set_item_info_list& items(int index) const;
+  inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* mutable_items(int index);
+  inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >*
+      mutable_items();
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.LeaveItemLog)
  private:
 
@@ -1792,6 +2256,7 @@ class LeaveItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list > items_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1866,13 +2331,65 @@ class SaleItemLog_Sale_item_info_list : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 3;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 3;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 item_id = 5;
+  inline bool has_item_id() const;
+  inline void clear_item_id();
+  static const int kItemIdFieldNumber = 5;
+  inline ::google::protobuf::uint32 item_id() const;
+  inline void set_item_id(::google::protobuf::uint32 value);
+
+  // required uint32 quantity = 6;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 6;
+  inline ::google::protobuf::uint32 quantity() const;
+  inline void set_quantity(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.SaleItemLog.Sale_item_info_list)
  private:
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_location();
+  inline void clear_has_location();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_item_id();
+  inline void clear_has_item_id();
+  inline void set_has_quantity();
+  inline void clear_has_quantity();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 item_id_;
+  ::google::protobuf::uint32 quantity_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1949,6 +2466,18 @@ class SaleItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.SaleItemLog.Sale_item_info_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::SaleItemLog_Sale_item_info_list& items(int index) const;
+  inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* mutable_items(int index);
+  inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >*
+      mutable_items();
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.SaleItemLog)
  private:
 
@@ -1956,6 +2485,7 @@ class SaleItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list > items_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2030,13 +2560,33 @@ class StrengthenWeaponLog_Strengthen_weapon_info_list : public ::google::protobu
 
   // accessors -------------------------------------------------------
 
+  // required uint32 from_item_id = 2;
+  inline bool has_from_item_id() const;
+  inline void clear_from_item_id();
+  static const int kFromItemIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 from_item_id() const;
+  inline void set_from_item_id(::google::protobuf::uint32 value);
+
+  // required uint32 to_item_id = 3;
+  inline bool has_to_item_id() const;
+  inline void clear_to_item_id();
+  static const int kToItemIdFieldNumber = 3;
+  inline ::google::protobuf::uint32 to_item_id() const;
+  inline void set_to_item_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list)
  private:
+  inline void set_has_from_item_id();
+  inline void clear_has_from_item_id();
+  inline void set_has_to_item_id();
+  inline void clear_has_to_item_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 from_item_id_;
+  ::google::protobuf::uint32 to_item_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2113,7 +2663,546 @@ class StrengthenWeaponLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated .FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list items = 1;
+  inline int items_size() const;
+  inline void clear_items();
+  static const int kItemsFieldNumber = 1;
+  inline const ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& items(int index) const;
+  inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* mutable_items(int index);
+  inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* add_items();
+  inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >&
+      items() const;
+  inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >*
+      mutable_items();
+
   // @@protoc_insertion_point(class_scope:FpdLogMessage.StrengthenWeaponLog)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list > items_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static StrengthenWeaponLog* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class VisitResultLog : public ::google::protobuf::MessageLite {
+ public:
+  VisitResultLog();
+  virtual ~VisitResultLog();
+
+  VisitResultLog(const VisitResultLog& from);
+
+  inline VisitResultLog& operator=(const VisitResultLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const VisitResultLog& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const VisitResultLog* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(VisitResultLog* other);
+
+  // implements Message ----------------------------------------------
+
+  VisitResultLog* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const VisitResultLog& from);
+  void MergeFrom(const VisitResultLog& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 map_id = 1;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
+
+  // required .FpdLogMessage.Vector location = 2;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 2;
+  inline const ::FpdLogMessage::Vector& location() const;
+  inline ::FpdLogMessage::Vector* mutable_location();
+  inline ::FpdLogMessage::Vector* release_location();
+  inline void set_allocated_location(::FpdLogMessage::Vector* location);
+
+  // required uint32 online_area_id_source = 3;
+  inline bool has_online_area_id_source() const;
+  inline void clear_online_area_id_source();
+  static const int kOnlineAreaIdSourceFieldNumber = 3;
+  inline ::google::protobuf::uint32 online_area_id_source() const;
+  inline void set_online_area_id_source(::google::protobuf::uint32 value);
+
+  // required uint32 online_area_id_destination = 4;
+  inline bool has_online_area_id_destination() const;
+  inline void clear_online_area_id_destination();
+  static const int kOnlineAreaIdDestinationFieldNumber = 4;
+  inline ::google::protobuf::uint32 online_area_id_destination() const;
+  inline void set_online_area_id_destination(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 5;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.VisitResultLog)
+ private:
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_location();
+  inline void clear_has_location();
+  inline void set_has_online_area_id_source();
+  inline void clear_has_online_area_id_source();
+  inline void set_has_online_area_id_destination();
+  inline void clear_has_online_area_id_destination();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::FpdLogMessage::Vector* location_;
+  ::google::protobuf::uint32 map_id_;
+  ::google::protobuf::uint32 online_area_id_source_;
+  ::google::protobuf::uint32 online_area_id_destination_;
+  ::google::protobuf::uint32 unknown_2_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static VisitResultLog* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class QuickMatchResultLog : public ::google::protobuf::MessageLite {
+ public:
+  QuickMatchResultLog();
+  virtual ~QuickMatchResultLog();
+
+  QuickMatchResultLog(const QuickMatchResultLog& from);
+
+  inline QuickMatchResultLog& operator=(const QuickMatchResultLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const QuickMatchResultLog& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const QuickMatchResultLog* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(QuickMatchResultLog* other);
+
+  // implements Message ----------------------------------------------
+
+  QuickMatchResultLog* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const QuickMatchResultLog& from);
+  void MergeFrom(const QuickMatchResultLog& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline ::google::protobuf::uint32 unknown_6() const;
+  inline void set_unknown_6(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_7 = 7;
+  inline bool has_unknown_7() const;
+  inline void clear_unknown_7();
+  static const int kUnknown7FieldNumber = 7;
+  inline ::google::protobuf::uint32 unknown_7() const;
+  inline void set_unknown_7(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_8 = 8;
+  inline bool has_unknown_8() const;
+  inline void clear_unknown_8();
+  static const int kUnknown8FieldNumber = 8;
+  inline ::google::protobuf::uint32 unknown_8() const;
+  inline void set_unknown_8(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_9 = 9;
+  inline bool has_unknown_9() const;
+  inline void clear_unknown_9();
+  static const int kUnknown9FieldNumber = 9;
+  inline ::google::protobuf::uint32 unknown_9() const;
+  inline void set_unknown_9(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.QuickMatchResultLog)
+ private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
+  inline void set_has_unknown_7();
+  inline void clear_has_unknown_7();
+  inline void set_has_unknown_8();
+  inline void clear_has_unknown_8();
+  inline void set_has_unknown_9();
+  inline void clear_has_unknown_9();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 unknown_7_;
+  ::google::protobuf::uint32 unknown_8_;
+  ::google::protobuf::uint32 unknown_9_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static QuickMatchResultLog* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class QuickMatchEndLog : public ::google::protobuf::MessageLite {
+ public:
+  QuickMatchEndLog();
+  virtual ~QuickMatchEndLog();
+
+  QuickMatchEndLog(const QuickMatchEndLog& from);
+
+  inline QuickMatchEndLog& operator=(const QuickMatchEndLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const QuickMatchEndLog& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const QuickMatchEndLog* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(QuickMatchEndLog* other);
+
+  // implements Message ----------------------------------------------
+
+  QuickMatchEndLog* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const QuickMatchEndLog& from);
+  void MergeFrom(const QuickMatchEndLog& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 unknown_1 = 1;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 1;
+  inline ::google::protobuf::uint32 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline ::google::protobuf::uint32 unknown_6() const;
+  inline void set_unknown_6(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.QuickMatchEndLog)
+ private:
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 unknown_6_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
+  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static QuickMatchEndLog* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ConvertSaveDataLog : public ::google::protobuf::MessageLite {
+ public:
+  ConvertSaveDataLog();
+  virtual ~ConvertSaveDataLog();
+
+  ConvertSaveDataLog(const ConvertSaveDataLog& from);
+
+  inline ConvertSaveDataLog& operator=(const ConvertSaveDataLog& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ConvertSaveDataLog& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const ConvertSaveDataLog* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(ConvertSaveDataLog* other);
+
+  // implements Message ----------------------------------------------
+
+  ConvertSaveDataLog* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const ConvertSaveDataLog& from);
+  void MergeFrom(const ConvertSaveDataLog& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:FpdLogMessage.ConvertSaveDataLog)
  private:
 
   ::std::string _unknown_fields_;
@@ -2129,7 +3218,7 @@ class StrengthenWeaponLog : public ::google::protobuf::MessageLite {
   friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static StrengthenWeaponLog* default_instance_;
+  static ConvertSaveDataLog* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2945,532 +4034,6 @@ class EvaluateBloodMessageLog : public ::google::protobuf::MessageLite {
   void InitAsDefaultInstance();
   static EvaluateBloodMessageLog* default_instance_;
 };
-// -------------------------------------------------------------------
-
-class VisitResultLog : public ::google::protobuf::MessageLite {
- public:
-  VisitResultLog();
-  virtual ~VisitResultLog();
-
-  VisitResultLog(const VisitResultLog& from);
-
-  inline VisitResultLog& operator=(const VisitResultLog& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const VisitResultLog& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const VisitResultLog* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(VisitResultLog* other);
-
-  // implements Message ----------------------------------------------
-
-  VisitResultLog* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const VisitResultLog& from);
-  void MergeFrom(const VisitResultLog& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
-
-  // required .FpdLogMessage.Vector location = 2;
-  inline bool has_location() const;
-  inline void clear_location();
-  static const int kLocationFieldNumber = 2;
-  inline const ::FpdLogMessage::Vector& location() const;
-  inline ::FpdLogMessage::Vector* mutable_location();
-  inline ::FpdLogMessage::Vector* release_location();
-  inline void set_allocated_location(::FpdLogMessage::Vector* location);
-
-  // required uint32 online_area_id_source = 3;
-  inline bool has_online_area_id_source() const;
-  inline void clear_online_area_id_source();
-  static const int kOnlineAreaIdSourceFieldNumber = 3;
-  inline ::google::protobuf::uint32 online_area_id_source() const;
-  inline void set_online_area_id_source(::google::protobuf::uint32 value);
-
-  // required uint32 online_area_id_destination = 4;
-  inline bool has_online_area_id_destination() const;
-  inline void clear_online_area_id_destination();
-  static const int kOnlineAreaIdDestinationFieldNumber = 4;
-  inline ::google::protobuf::uint32 online_area_id_destination() const;
-  inline void set_online_area_id_destination(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_2 = 5;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 5;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.VisitResultLog)
- private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
-  inline void set_has_location();
-  inline void clear_has_location();
-  inline void set_has_online_area_id_source();
-  inline void clear_has_online_area_id_source();
-  inline void set_has_online_area_id_destination();
-  inline void clear_has_online_area_id_destination();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::FpdLogMessage::Vector* location_;
-  ::google::protobuf::uint32 unknown_1_;
-  ::google::protobuf::uint32 online_area_id_source_;
-  ::google::protobuf::uint32 online_area_id_destination_;
-  ::google::protobuf::uint32 unknown_2_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static VisitResultLog* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class QuickMatchResultLog : public ::google::protobuf::MessageLite {
- public:
-  QuickMatchResultLog();
-  virtual ~QuickMatchResultLog();
-
-  QuickMatchResultLog(const QuickMatchResultLog& from);
-
-  inline QuickMatchResultLog& operator=(const QuickMatchResultLog& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const QuickMatchResultLog& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const QuickMatchResultLog* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(QuickMatchResultLog* other);
-
-  // implements Message ----------------------------------------------
-
-  QuickMatchResultLog* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const QuickMatchResultLog& from);
-  void MergeFrom(const QuickMatchResultLog& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_3 = 3;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 3;
-  inline ::google::protobuf::uint32 unknown_3() const;
-  inline void set_unknown_3(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_4 = 4;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown_4() const;
-  inline void set_unknown_4(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_5 = 5;
-  inline bool has_unknown_5() const;
-  inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 5;
-  inline ::google::protobuf::uint32 unknown_5() const;
-  inline void set_unknown_5(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_6 = 6;
-  inline bool has_unknown_6() const;
-  inline void clear_unknown_6();
-  static const int kUnknown6FieldNumber = 6;
-  inline ::google::protobuf::uint32 unknown_6() const;
-  inline void set_unknown_6(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_7 = 7;
-  inline bool has_unknown_7() const;
-  inline void clear_unknown_7();
-  static const int kUnknown7FieldNumber = 7;
-  inline ::google::protobuf::uint32 unknown_7() const;
-  inline void set_unknown_7(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_8 = 8;
-  inline bool has_unknown_8() const;
-  inline void clear_unknown_8();
-  static const int kUnknown8FieldNumber = 8;
-  inline ::google::protobuf::uint32 unknown_8() const;
-  inline void set_unknown_8(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_9 = 9;
-  inline bool has_unknown_9() const;
-  inline void clear_unknown_9();
-  static const int kUnknown9FieldNumber = 9;
-  inline ::google::protobuf::uint32 unknown_9() const;
-  inline void set_unknown_9(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.QuickMatchResultLog)
- private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
-  inline void set_has_unknown_5();
-  inline void clear_has_unknown_5();
-  inline void set_has_unknown_6();
-  inline void clear_has_unknown_6();
-  inline void set_has_unknown_7();
-  inline void clear_has_unknown_7();
-  inline void set_has_unknown_8();
-  inline void clear_has_unknown_8();
-  inline void set_has_unknown_9();
-  inline void clear_has_unknown_9();
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
-  ::google::protobuf::uint32 unknown_2_;
-  ::google::protobuf::uint32 unknown_3_;
-  ::google::protobuf::uint32 unknown_4_;
-  ::google::protobuf::uint32 unknown_5_;
-  ::google::protobuf::uint32 unknown_6_;
-  ::google::protobuf::uint32 unknown_7_;
-  ::google::protobuf::uint32 unknown_8_;
-  ::google::protobuf::uint32 unknown_9_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static QuickMatchResultLog* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class QuickMatchEndLog : public ::google::protobuf::MessageLite {
- public:
-  QuickMatchEndLog();
-  virtual ~QuickMatchEndLog();
-
-  QuickMatchEndLog(const QuickMatchEndLog& from);
-
-  inline QuickMatchEndLog& operator=(const QuickMatchEndLog& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const QuickMatchEndLog& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const QuickMatchEndLog* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(QuickMatchEndLog* other);
-
-  // implements Message ----------------------------------------------
-
-  QuickMatchEndLog* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const QuickMatchEndLog& from);
-  void MergeFrom(const QuickMatchEndLog& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_3 = 3;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 3;
-  inline ::google::protobuf::uint32 unknown_3() const;
-  inline void set_unknown_3(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_4 = 4;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown_4() const;
-  inline void set_unknown_4(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_5 = 5;
-  inline bool has_unknown_5() const;
-  inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 5;
-  inline ::google::protobuf::uint32 unknown_5() const;
-  inline void set_unknown_5(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_6 = 6;
-  inline bool has_unknown_6() const;
-  inline void clear_unknown_6();
-  static const int kUnknown6FieldNumber = 6;
-  inline ::google::protobuf::uint32 unknown_6() const;
-  inline void set_unknown_6(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.QuickMatchEndLog)
- private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
-  inline void set_has_unknown_5();
-  inline void clear_has_unknown_5();
-  inline void set_has_unknown_6();
-  inline void clear_has_unknown_6();
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
-  ::google::protobuf::uint32 unknown_2_;
-  ::google::protobuf::uint32 unknown_3_;
-  ::google::protobuf::uint32 unknown_4_;
-  ::google::protobuf::uint32 unknown_5_;
-  ::google::protobuf::uint32 unknown_6_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static QuickMatchEndLog* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class ConvertSaveDataLog : public ::google::protobuf::MessageLite {
- public:
-  ConvertSaveDataLog();
-  virtual ~ConvertSaveDataLog();
-
-  ConvertSaveDataLog(const ConvertSaveDataLog& from);
-
-  inline ConvertSaveDataLog& operator=(const ConvertSaveDataLog& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ConvertSaveDataLog& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const ConvertSaveDataLog* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(ConvertSaveDataLog* other);
-
-  // implements Message ----------------------------------------------
-
-  ConvertSaveDataLog* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const ConvertSaveDataLog& from);
-  void MergeFrom(const ConvertSaveDataLog& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:FpdLogMessage.ConvertSaveDataLog)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_FpdLogMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_FpdLogMessage_2eproto();
-  friend void protobuf_ShutdownFile_FpdLogMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static ConvertSaveDataLog* default_instance_;
-};
 // ===================================================================
 
 
@@ -3588,111 +4151,87 @@ GlobalEventLog::mutable_values() {
 
 // SystemOptionLog_Game_option_setting
 
-// required uint32 unknown_1 = 2;
-inline bool SystemOptionLog_Game_option_setting::has_unknown_1() const {
+// required uint32 toggle_auto_lock_on = 2;
+inline bool SystemOptionLog_Game_option_setting::has_toggle_auto_lock_on() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemOptionLog_Game_option_setting::set_has_unknown_1() {
+inline void SystemOptionLog_Game_option_setting::set_has_toggle_auto_lock_on() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemOptionLog_Game_option_setting::clear_has_unknown_1() {
+inline void SystemOptionLog_Game_option_setting::clear_has_toggle_auto_lock_on() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemOptionLog_Game_option_setting::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void SystemOptionLog_Game_option_setting::clear_toggle_auto_lock_on() {
+  toggle_auto_lock_on_ = 0u;
+  clear_has_toggle_auto_lock_on();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::unknown_1() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::toggle_auto_lock_on() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.toggle_auto_lock_on)
+  return toggle_auto_lock_on_;
 }
-inline void SystemOptionLog_Game_option_setting::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_1)
+inline void SystemOptionLog_Game_option_setting::set_toggle_auto_lock_on(::google::protobuf::uint32 value) {
+  set_has_toggle_auto_lock_on();
+  toggle_auto_lock_on_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.toggle_auto_lock_on)
 }
 
-// required uint32 unknown_2 = 3;
-inline bool SystemOptionLog_Game_option_setting::has_unknown_2() const {
+// required uint32 auto_target = 3;
+inline bool SystemOptionLog_Game_option_setting::has_auto_target() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void SystemOptionLog_Game_option_setting::set_has_unknown_2() {
+inline void SystemOptionLog_Game_option_setting::set_has_auto_target() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void SystemOptionLog_Game_option_setting::clear_has_unknown_2() {
+inline void SystemOptionLog_Game_option_setting::clear_has_auto_target() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void SystemOptionLog_Game_option_setting::clear_unknown_2() {
-  unknown_2_ = 0u;
-  clear_has_unknown_2();
+inline void SystemOptionLog_Game_option_setting::clear_auto_target() {
+  auto_target_ = 0u;
+  clear_has_auto_target();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::unknown_2() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_2)
-  return unknown_2_;
+inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::auto_target() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.auto_target)
+  return auto_target_;
 }
-inline void SystemOptionLog_Game_option_setting::set_unknown_2(::google::protobuf::uint32 value) {
-  set_has_unknown_2();
-  unknown_2_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_2)
+inline void SystemOptionLog_Game_option_setting::set_auto_target(::google::protobuf::uint32 value) {
+  set_has_auto_target();
+  auto_target_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.auto_target)
 }
 
-// required uint32 unknown_3 = 4;
-inline bool SystemOptionLog_Game_option_setting::has_unknown_3() const {
+// required uint32 manual_attack_aiming = 4;
+inline bool SystemOptionLog_Game_option_setting::has_manual_attack_aiming() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void SystemOptionLog_Game_option_setting::set_has_unknown_3() {
+inline void SystemOptionLog_Game_option_setting::set_has_manual_attack_aiming() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void SystemOptionLog_Game_option_setting::clear_has_unknown_3() {
+inline void SystemOptionLog_Game_option_setting::clear_has_manual_attack_aiming() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void SystemOptionLog_Game_option_setting::clear_unknown_3() {
-  unknown_3_ = 0u;
-  clear_has_unknown_3();
+inline void SystemOptionLog_Game_option_setting::clear_manual_attack_aiming() {
+  manual_attack_aiming_ = 0u;
+  clear_has_manual_attack_aiming();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::unknown_3() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_3)
-  return unknown_3_;
+inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::manual_attack_aiming() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.manual_attack_aiming)
+  return manual_attack_aiming_;
 }
-inline void SystemOptionLog_Game_option_setting::set_unknown_3(::google::protobuf::uint32 value) {
-  set_has_unknown_3();
-  unknown_3_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_3)
+inline void SystemOptionLog_Game_option_setting::set_manual_attack_aiming(::google::protobuf::uint32 value) {
+  set_has_manual_attack_aiming();
+  manual_attack_aiming_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.manual_attack_aiming)
 }
 
-// required uint32 unknown_4 = 5;
-inline bool SystemOptionLog_Game_option_setting::has_unknown_4() const {
+// required uint32 unknown_5 = 5;
+inline bool SystemOptionLog_Game_option_setting::has_unknown_5() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void SystemOptionLog_Game_option_setting::set_has_unknown_4() {
+inline void SystemOptionLog_Game_option_setting::set_has_unknown_5() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void SystemOptionLog_Game_option_setting::clear_has_unknown_4() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void SystemOptionLog_Game_option_setting::clear_unknown_4() {
-  unknown_4_ = 0u;
-  clear_has_unknown_4();
-}
-inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::unknown_4() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_4)
-  return unknown_4_;
-}
-inline void SystemOptionLog_Game_option_setting::set_unknown_4(::google::protobuf::uint32 value) {
-  set_has_unknown_4();
-  unknown_4_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_4)
-}
-
-// required uint32 unknown_5 = 6;
-inline bool SystemOptionLog_Game_option_setting::has_unknown_5() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void SystemOptionLog_Game_option_setting::set_has_unknown_5() {
-  _has_bits_[0] |= 0x00000010u;
-}
 inline void SystemOptionLog_Game_option_setting::clear_has_unknown_5() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void SystemOptionLog_Game_option_setting::clear_unknown_5() {
   unknown_5_ = 0u;
@@ -3708,152 +4247,176 @@ inline void SystemOptionLog_Game_option_setting::set_unknown_5(::google::protobu
   // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.unknown_5)
 }
 
+// required uint32 vibration_level = 6;
+inline bool SystemOptionLog_Game_option_setting::has_vibration_level() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void SystemOptionLog_Game_option_setting::set_has_vibration_level() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void SystemOptionLog_Game_option_setting::clear_has_vibration_level() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void SystemOptionLog_Game_option_setting::clear_vibration_level() {
+  vibration_level_ = 0u;
+  clear_has_vibration_level();
+}
+inline ::google::protobuf::uint32 SystemOptionLog_Game_option_setting::vibration_level() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Game_option_setting.vibration_level)
+  return vibration_level_;
+}
+inline void SystemOptionLog_Game_option_setting::set_vibration_level(::google::protobuf::uint32 value) {
+  set_has_vibration_level();
+  vibration_level_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Game_option_setting.vibration_level)
+}
+
 // -------------------------------------------------------------------
 
 // SystemOptionLog_Network_setting
 
-// required uint32 unknown_1 = 8;
-inline bool SystemOptionLog_Network_setting::has_unknown_1() const {
+// required uint32 allow_cross_region_play = 8;
+inline bool SystemOptionLog_Network_setting::has_allow_cross_region_play() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemOptionLog_Network_setting::set_has_unknown_1() {
+inline void SystemOptionLog_Network_setting::set_has_allow_cross_region_play() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemOptionLog_Network_setting::clear_has_unknown_1() {
+inline void SystemOptionLog_Network_setting::clear_has_allow_cross_region_play() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemOptionLog_Network_setting::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void SystemOptionLog_Network_setting::clear_allow_cross_region_play() {
+  allow_cross_region_play_ = 0u;
+  clear_has_allow_cross_region_play();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::unknown_1() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::allow_cross_region_play() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.allow_cross_region_play)
+  return allow_cross_region_play_;
 }
-inline void SystemOptionLog_Network_setting::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.unknown_1)
+inline void SystemOptionLog_Network_setting::set_allow_cross_region_play(::google::protobuf::uint32 value) {
+  set_has_allow_cross_region_play();
+  allow_cross_region_play_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.allow_cross_region_play)
 }
 
-// required uint32 unknown_2 = 9;
-inline bool SystemOptionLog_Network_setting::has_unknown_2() const {
+// required uint32 has_password = 9;
+inline bool SystemOptionLog_Network_setting::has_has_password() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void SystemOptionLog_Network_setting::set_has_unknown_2() {
+inline void SystemOptionLog_Network_setting::set_has_has_password() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void SystemOptionLog_Network_setting::clear_has_unknown_2() {
+inline void SystemOptionLog_Network_setting::clear_has_has_password() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void SystemOptionLog_Network_setting::clear_unknown_2() {
-  unknown_2_ = 0u;
-  clear_has_unknown_2();
+inline void SystemOptionLog_Network_setting::clear_has_password() {
+  has_password_ = 0u;
+  clear_has_has_password();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::unknown_2() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.unknown_2)
-  return unknown_2_;
+inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::has_password() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.has_password)
+  return has_password_;
 }
-inline void SystemOptionLog_Network_setting::set_unknown_2(::google::protobuf::uint32 value) {
-  set_has_unknown_2();
-  unknown_2_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.unknown_2)
+inline void SystemOptionLog_Network_setting::set_has_password(::google::protobuf::uint32 value) {
+  set_has_has_password();
+  has_password_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.has_password)
 }
 
-// required uint32 unknown_3 = 10;
-inline bool SystemOptionLog_Network_setting::has_unknown_3() const {
+// required uint32 restrict_summon_sign_visibility = 10;
+inline bool SystemOptionLog_Network_setting::has_restrict_summon_sign_visibility() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void SystemOptionLog_Network_setting::set_has_unknown_3() {
+inline void SystemOptionLog_Network_setting::set_has_restrict_summon_sign_visibility() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void SystemOptionLog_Network_setting::clear_has_unknown_3() {
+inline void SystemOptionLog_Network_setting::clear_has_restrict_summon_sign_visibility() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void SystemOptionLog_Network_setting::clear_unknown_3() {
-  unknown_3_ = 0u;
-  clear_has_unknown_3();
+inline void SystemOptionLog_Network_setting::clear_restrict_summon_sign_visibility() {
+  restrict_summon_sign_visibility_ = 0u;
+  clear_has_restrict_summon_sign_visibility();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::unknown_3() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.unknown_3)
-  return unknown_3_;
+inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::restrict_summon_sign_visibility() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.restrict_summon_sign_visibility)
+  return restrict_summon_sign_visibility_;
 }
-inline void SystemOptionLog_Network_setting::set_unknown_3(::google::protobuf::uint32 value) {
-  set_has_unknown_3();
-  unknown_3_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.unknown_3)
+inline void SystemOptionLog_Network_setting::set_restrict_summon_sign_visibility(::google::protobuf::uint32 value) {
+  set_has_restrict_summon_sign_visibility();
+  restrict_summon_sign_visibility_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.restrict_summon_sign_visibility)
 }
 
-// required uint32 unknown_4 = 11;
-inline bool SystemOptionLog_Network_setting::has_unknown_4() const {
+// required uint32 allow_voice_chat = 11;
+inline bool SystemOptionLog_Network_setting::has_allow_voice_chat() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void SystemOptionLog_Network_setting::set_has_unknown_4() {
+inline void SystemOptionLog_Network_setting::set_has_allow_voice_chat() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void SystemOptionLog_Network_setting::clear_has_unknown_4() {
+inline void SystemOptionLog_Network_setting::clear_has_allow_voice_chat() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void SystemOptionLog_Network_setting::clear_unknown_4() {
-  unknown_4_ = 0u;
-  clear_has_unknown_4();
+inline void SystemOptionLog_Network_setting::clear_allow_voice_chat() {
+  allow_voice_chat_ = 0u;
+  clear_has_allow_voice_chat();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::unknown_4() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.unknown_4)
-  return unknown_4_;
+inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::allow_voice_chat() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.allow_voice_chat)
+  return allow_voice_chat_;
 }
-inline void SystemOptionLog_Network_setting::set_unknown_4(::google::protobuf::uint32 value) {
-  set_has_unknown_4();
-  unknown_4_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.unknown_4)
+inline void SystemOptionLog_Network_setting::set_allow_voice_chat(::google::protobuf::uint32 value) {
+  set_has_allow_voice_chat();
+  allow_voice_chat_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.allow_voice_chat)
 }
 
-// required uint32 unknown_5 = 12;
-inline bool SystemOptionLog_Network_setting::has_unknown_5() const {
+// required uint32 unknown_12 = 12;
+inline bool SystemOptionLog_Network_setting::has_unknown_12() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void SystemOptionLog_Network_setting::set_has_unknown_5() {
+inline void SystemOptionLog_Network_setting::set_has_unknown_12() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void SystemOptionLog_Network_setting::clear_has_unknown_5() {
+inline void SystemOptionLog_Network_setting::clear_has_unknown_12() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void SystemOptionLog_Network_setting::clear_unknown_5() {
-  unknown_5_ = 0u;
-  clear_has_unknown_5();
+inline void SystemOptionLog_Network_setting::clear_unknown_12() {
+  unknown_12_ = 0u;
+  clear_has_unknown_12();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::unknown_5() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.unknown_5)
-  return unknown_5_;
+inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::unknown_12() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.unknown_12)
+  return unknown_12_;
 }
-inline void SystemOptionLog_Network_setting::set_unknown_5(::google::protobuf::uint32 value) {
-  set_has_unknown_5();
-  unknown_5_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.unknown_5)
+inline void SystemOptionLog_Network_setting::set_unknown_12(::google::protobuf::uint32 value) {
+  set_has_unknown_12();
+  unknown_12_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.unknown_12)
 }
 
-// required uint32 unknown_6 = 13;
-inline bool SystemOptionLog_Network_setting::has_unknown_6() const {
+// required uint32 start_offline = 13;
+inline bool SystemOptionLog_Network_setting::has_start_offline() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void SystemOptionLog_Network_setting::set_has_unknown_6() {
+inline void SystemOptionLog_Network_setting::set_has_start_offline() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void SystemOptionLog_Network_setting::clear_has_unknown_6() {
+inline void SystemOptionLog_Network_setting::clear_has_start_offline() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void SystemOptionLog_Network_setting::clear_unknown_6() {
-  unknown_6_ = 0u;
-  clear_has_unknown_6();
+inline void SystemOptionLog_Network_setting::clear_start_offline() {
+  start_offline_ = 0u;
+  clear_has_start_offline();
 }
-inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::unknown_6() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.unknown_6)
-  return unknown_6_;
+inline ::google::protobuf::uint32 SystemOptionLog_Network_setting::start_offline() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SystemOptionLog.Network_setting.start_offline)
+  return start_offline_;
 }
-inline void SystemOptionLog_Network_setting::set_unknown_6(::google::protobuf::uint32 value) {
-  set_has_unknown_6();
-  unknown_6_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.unknown_6)
+inline void SystemOptionLog_Network_setting::set_start_offline(::google::protobuf::uint32 value) {
+  set_has_start_offline();
+  start_offline_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SystemOptionLog.Network_setting.start_offline)
 }
 
 // -------------------------------------------------------------------
@@ -3954,140 +4517,1570 @@ inline void SystemOptionLog::set_allocated_network_settings(::FpdLogMessage::Sys
 
 // UseItemLog_Use_item_info_list
 
+// required uint32 item_id = 2;
+inline bool UseItemLog_Use_item_info_list::has_item_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UseItemLog_Use_item_info_list::set_has_item_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UseItemLog_Use_item_info_list::clear_has_item_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UseItemLog_Use_item_info_list::clear_item_id() {
+  item_id_ = 0u;
+  clear_has_item_id();
+}
+inline ::google::protobuf::uint32 UseItemLog_Use_item_info_list::item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.Use_item_info_list.item_id)
+  return item_id_;
+}
+inline void UseItemLog_Use_item_info_list::set_item_id(::google::protobuf::uint32 value) {
+  set_has_item_id();
+  item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseItemLog.Use_item_info_list.item_id)
+}
+
+// required uint32 quantity = 3;
+inline bool UseItemLog_Use_item_info_list::has_quantity() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void UseItemLog_Use_item_info_list::set_has_quantity() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void UseItemLog_Use_item_info_list::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void UseItemLog_Use_item_info_list::clear_quantity() {
+  quantity_ = 0u;
+  clear_has_quantity();
+}
+inline ::google::protobuf::uint32 UseItemLog_Use_item_info_list::quantity() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.Use_item_info_list.quantity)
+  return quantity_;
+}
+inline void UseItemLog_Use_item_info_list::set_quantity(::google::protobuf::uint32 value) {
+  set_has_quantity();
+  quantity_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseItemLog.Use_item_info_list.quantity)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool UseItemLog_Use_item_info_list::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void UseItemLog_Use_item_info_list::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void UseItemLog_Use_item_info_list::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void UseItemLog_Use_item_info_list::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 UseItemLog_Use_item_info_list::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.Use_item_info_list.unknown_4)
+  return unknown_4_;
+}
+inline void UseItemLog_Use_item_info_list::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseItemLog.Use_item_info_list.unknown_4)
+}
+
 // -------------------------------------------------------------------
 
 // UseItemLog
+
+// repeated .FpdLogMessage.UseItemLog.Use_item_info_list items = 1;
+inline int UseItemLog::items_size() const {
+  return items_.size();
+}
+inline void UseItemLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::UseItemLog_Use_item_info_list& UseItemLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::UseItemLog_Use_item_info_list* UseItemLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseItemLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::UseItemLog_Use_item_info_list* UseItemLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.UseItemLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >&
+UseItemLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.UseItemLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >*
+UseItemLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.UseItemLog.items)
+  return &items_;
+}
+
+// required uint32 unknown_5 = 5;
+inline bool UseItemLog::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void UseItemLog::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void UseItemLog::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void UseItemLog::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 UseItemLog::unknown_5() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.unknown_5)
+  return unknown_5_;
+}
+inline void UseItemLog::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseItemLog.unknown_5)
+}
+
+// required .FpdLogMessage.Vector location = 6;
+inline bool UseItemLog::has_location() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void UseItemLog::set_has_location() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void UseItemLog::clear_has_location() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void UseItemLog::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& UseItemLog::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* UseItemLog::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseItemLog.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* UseItemLog::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void UseItemLog::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.UseItemLog.location)
+}
 
 // -------------------------------------------------------------------
 
 // GetItemLog_Get_item_info_list
 
+// required uint32 unknown_2 = 2;
+inline bool GetItemLog_Get_item_info_list::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetItemLog_Get_item_info_list::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_2)
+  return unknown_2_;
+}
+inline void GetItemLog_Get_item_info_list::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_2)
+}
+
+// required .FpdLogMessage.Vector location = 3;
+inline bool GetItemLog_Get_item_info_list::has_location() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_location() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_location() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GetItemLog_Get_item_info_list::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& GetItemLog_Get_item_info_list::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* GetItemLog_Get_item_info_list::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.GetItemLog.Get_item_info_list.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* GetItemLog_Get_item_info_list::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void GetItemLog_Get_item_info_list::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.GetItemLog.Get_item_info_list.location)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool GetItemLog_Get_item_info_list::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GetItemLog_Get_item_info_list::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_4)
+  return unknown_4_;
+}
+inline void GetItemLog_Get_item_info_list::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_4)
+}
+
+// required uint32 item_id = 5;
+inline bool GetItemLog_Get_item_info_list::has_item_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_item_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_item_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GetItemLog_Get_item_info_list::clear_item_id() {
+  item_id_ = 0u;
+  clear_has_item_id();
+}
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.item_id)
+  return item_id_;
+}
+inline void GetItemLog_Get_item_info_list::set_item_id(::google::protobuf::uint32 value) {
+  set_has_item_id();
+  item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.item_id)
+}
+
+// required uint32 quantity = 6;
+inline bool GetItemLog_Get_item_info_list::has_quantity() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_quantity() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void GetItemLog_Get_item_info_list::clear_quantity() {
+  quantity_ = 0u;
+  clear_has_quantity();
+}
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::quantity() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.quantity)
+  return quantity_;
+}
+inline void GetItemLog_Get_item_info_list::set_quantity(::google::protobuf::uint32 value) {
+  set_has_quantity();
+  quantity_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.quantity)
+}
+
+// required uint32 unknown_7 = 7;
+inline bool GetItemLog_Get_item_info_list::has_unknown_7() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_unknown_7() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_unknown_7() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void GetItemLog_Get_item_info_list::clear_unknown_7() {
+  unknown_7_ = 0u;
+  clear_has_unknown_7();
+}
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::unknown_7() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_7)
+  return unknown_7_;
+}
+inline void GetItemLog_Get_item_info_list::set_unknown_7(::google::protobuf::uint32 value) {
+  set_has_unknown_7();
+  unknown_7_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_7)
+}
+
+// required uint32 unknown_8 = 8;
+inline bool GetItemLog_Get_item_info_list::has_unknown_8() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_unknown_8() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_unknown_8() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void GetItemLog_Get_item_info_list::clear_unknown_8() {
+  unknown_8_ = 0u;
+  clear_has_unknown_8();
+}
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::unknown_8() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_8)
+  return unknown_8_;
+}
+inline void GetItemLog_Get_item_info_list::set_unknown_8(::google::protobuf::uint32 value) {
+  set_has_unknown_8();
+  unknown_8_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_8)
+}
+
+// required uint32 unknown_9 = 9;
+inline bool GetItemLog_Get_item_info_list::has_unknown_9() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void GetItemLog_Get_item_info_list::set_has_unknown_9() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void GetItemLog_Get_item_info_list::clear_has_unknown_9() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void GetItemLog_Get_item_info_list::clear_unknown_9() {
+  unknown_9_ = 0u;
+  clear_has_unknown_9();
+}
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::unknown_9() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_9)
+  return unknown_9_;
+}
+inline void GetItemLog_Get_item_info_list::set_unknown_9(::google::protobuf::uint32 value) {
+  set_has_unknown_9();
+  unknown_9_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.unknown_9)
+}
+
 // -------------------------------------------------------------------
 
 // GetItemLog
+
+// repeated .FpdLogMessage.GetItemLog.Get_item_info_list items = 1;
+inline int GetItemLog::items_size() const {
+  return items_.size();
+}
+inline void GetItemLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::GetItemLog_Get_item_info_list& GetItemLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::GetItemLog_Get_item_info_list* GetItemLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.GetItemLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::GetItemLog_Get_item_info_list* GetItemLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.GetItemLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >&
+GetItemLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.GetItemLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >*
+GetItemLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.GetItemLog.items)
+  return &items_;
+}
 
 // -------------------------------------------------------------------
 
 // ActGestureLog_Use_gesture_info_list
 
+// required uint32 guesture_id = 2;
+inline bool ActGestureLog_Use_gesture_info_list::has_guesture_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ActGestureLog_Use_gesture_info_list::set_has_guesture_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ActGestureLog_Use_gesture_info_list::clear_has_guesture_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ActGestureLog_Use_gesture_info_list::clear_guesture_id() {
+  guesture_id_ = 0u;
+  clear_has_guesture_id();
+}
+inline ::google::protobuf::uint32 ActGestureLog_Use_gesture_info_list::guesture_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.ActGestureLog.Use_gesture_info_list.guesture_id)
+  return guesture_id_;
+}
+inline void ActGestureLog_Use_gesture_info_list::set_guesture_id(::google::protobuf::uint32 value) {
+  set_has_guesture_id();
+  guesture_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.ActGestureLog.Use_gesture_info_list.guesture_id)
+}
+
+// required uint32 count = 3;
+inline bool ActGestureLog_Use_gesture_info_list::has_count() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ActGestureLog_Use_gesture_info_list::set_has_count() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ActGestureLog_Use_gesture_info_list::clear_has_count() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ActGestureLog_Use_gesture_info_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
+}
+inline ::google::protobuf::uint32 ActGestureLog_Use_gesture_info_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.ActGestureLog.Use_gesture_info_list.count)
+  return count_;
+}
+inline void ActGestureLog_Use_gesture_info_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.ActGestureLog.Use_gesture_info_list.count)
+}
+
 // -------------------------------------------------------------------
 
 // ActGestureLog
+
+// repeated .FpdLogMessage.ActGestureLog.Use_gesture_info_list gestures = 1;
+inline int ActGestureLog::gestures_size() const {
+  return gestures_.size();
+}
+inline void ActGestureLog::clear_gestures() {
+  gestures_.Clear();
+}
+inline const ::FpdLogMessage::ActGestureLog_Use_gesture_info_list& ActGestureLog::gestures(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.ActGestureLog.gestures)
+  return gestures_.Get(index);
+}
+inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* ActGestureLog::mutable_gestures(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.ActGestureLog.gestures)
+  return gestures_.Mutable(index);
+}
+inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* ActGestureLog::add_gestures() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.ActGestureLog.gestures)
+  return gestures_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >&
+ActGestureLog::gestures() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.ActGestureLog.gestures)
+  return gestures_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >*
+ActGestureLog::mutable_gestures() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.ActGestureLog.gestures)
+  return &gestures_;
+}
+
+// required uint32 unknown_4 = 4;
+inline bool ActGestureLog::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ActGestureLog::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ActGestureLog::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ActGestureLog::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 ActGestureLog::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.ActGestureLog.unknown_4)
+  return unknown_4_;
+}
+inline void ActGestureLog::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.ActGestureLog.unknown_4)
+}
+
+// required .FpdLogMessage.Vector unknown_5 = 5;
+inline bool ActGestureLog::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ActGestureLog::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ActGestureLog::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ActGestureLog::clear_unknown_5() {
+  if (unknown_5_ != NULL) unknown_5_->::FpdLogMessage::Vector::Clear();
+  clear_has_unknown_5();
+}
+inline const ::FpdLogMessage::Vector& ActGestureLog::unknown_5() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.ActGestureLog.unknown_5)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return unknown_5_ != NULL ? *unknown_5_ : *default_instance().unknown_5_;
+#else
+  return unknown_5_ != NULL ? *unknown_5_ : *default_instance_->unknown_5_;
+#endif
+}
+inline ::FpdLogMessage::Vector* ActGestureLog::mutable_unknown_5() {
+  set_has_unknown_5();
+  if (unknown_5_ == NULL) unknown_5_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.ActGestureLog.unknown_5)
+  return unknown_5_;
+}
+inline ::FpdLogMessage::Vector* ActGestureLog::release_unknown_5() {
+  clear_has_unknown_5();
+  ::FpdLogMessage::Vector* temp = unknown_5_;
+  unknown_5_ = NULL;
+  return temp;
+}
+inline void ActGestureLog::set_allocated_unknown_5(::FpdLogMessage::Vector* unknown_5) {
+  delete unknown_5_;
+  unknown_5_ = unknown_5;
+  if (unknown_5) {
+    set_has_unknown_5();
+  } else {
+    clear_has_unknown_5();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.ActGestureLog.unknown_5)
+}
 
 // -------------------------------------------------------------------
 
 // UseMagicLog_Use_magic_info_list
 
+// required uint32 spell_id = 2;
+inline bool UseMagicLog_Use_magic_info_list::has_spell_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UseMagicLog_Use_magic_info_list::set_has_spell_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UseMagicLog_Use_magic_info_list::clear_has_spell_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UseMagicLog_Use_magic_info_list::clear_spell_id() {
+  spell_id_ = 0u;
+  clear_has_spell_id();
+}
+inline ::google::protobuf::uint32 UseMagicLog_Use_magic_info_list::spell_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseMagicLog.Use_magic_info_list.spell_id)
+  return spell_id_;
+}
+inline void UseMagicLog_Use_magic_info_list::set_spell_id(::google::protobuf::uint32 value) {
+  set_has_spell_id();
+  spell_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseMagicLog.Use_magic_info_list.spell_id)
+}
+
+// required uint32 count = 3;
+inline bool UseMagicLog_Use_magic_info_list::has_count() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void UseMagicLog_Use_magic_info_list::set_has_count() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void UseMagicLog_Use_magic_info_list::clear_has_count() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void UseMagicLog_Use_magic_info_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
+}
+inline ::google::protobuf::uint32 UseMagicLog_Use_magic_info_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseMagicLog.Use_magic_info_list.count)
+  return count_;
+}
+inline void UseMagicLog_Use_magic_info_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseMagicLog.Use_magic_info_list.count)
+}
+
 // -------------------------------------------------------------------
 
 // UseMagicLog
+
+// repeated .FpdLogMessage.UseMagicLog.Use_magic_info_list items = 1;
+inline int UseMagicLog::items_size() const {
+  return items_.size();
+}
+inline void UseMagicLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::UseMagicLog_Use_magic_info_list& UseMagicLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseMagicLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* UseMagicLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseMagicLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* UseMagicLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.UseMagicLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >&
+UseMagicLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.UseMagicLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >*
+UseMagicLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.UseMagicLog.items)
+  return &items_;
+}
+
+// required uint32 unknown_4 = 4;
+inline bool UseMagicLog::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void UseMagicLog::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void UseMagicLog::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void UseMagicLog::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 UseMagicLog::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseMagicLog.unknown_4)
+  return unknown_4_;
+}
+inline void UseMagicLog::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseMagicLog.unknown_4)
+}
+
+// required .FpdLogMessage.Vector location = 5;
+inline bool UseMagicLog::has_location() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void UseMagicLog::set_has_location() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void UseMagicLog::clear_has_location() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void UseMagicLog::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& UseMagicLog::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseMagicLog.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* UseMagicLog::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseMagicLog.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* UseMagicLog::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void UseMagicLog::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.UseMagicLog.location)
+}
 
 // -------------------------------------------------------------------
 
 // PurchaseItemLog_Purchase_item_info_list
 
+// required uint32 unknown_2 = 2;
+inline bool PurchaseItemLog_Purchase_item_info_list::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 PurchaseItemLog_Purchase_item_info_list::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.unknown_2)
+  return unknown_2_;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.unknown_2)
+}
+
+// required .FpdLogMessage.Vector location = 3;
+inline bool PurchaseItemLog_Purchase_item_info_list::has_location() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_has_location() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_has_location() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& PurchaseItemLog_Purchase_item_info_list::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* PurchaseItemLog_Purchase_item_info_list::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* PurchaseItemLog_Purchase_item_info_list::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.location)
+}
+
+// required uint32 item_id = 5;
+inline bool PurchaseItemLog_Purchase_item_info_list::has_item_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_has_item_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_has_item_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_item_id() {
+  item_id_ = 0u;
+  clear_has_item_id();
+}
+inline ::google::protobuf::uint32 PurchaseItemLog_Purchase_item_info_list::item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.item_id)
+  return item_id_;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_item_id(::google::protobuf::uint32 value) {
+  set_has_item_id();
+  item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.item_id)
+}
+
+// required uint32 unknown_6 = 6;
+inline bool PurchaseItemLog_Purchase_item_info_list::has_unknown_6() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_has_unknown_6() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_has_unknown_6() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_unknown_6() {
+  unknown_6_ = 0u;
+  clear_has_unknown_6();
+}
+inline ::google::protobuf::uint32 PurchaseItemLog_Purchase_item_info_list::unknown_6() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.unknown_6)
+  return unknown_6_;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_unknown_6(::google::protobuf::uint32 value) {
+  set_has_unknown_6();
+  unknown_6_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.unknown_6)
+}
+
+// required uint32 quantity = 7;
+inline bool PurchaseItemLog_Purchase_item_info_list::has_quantity() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_has_quantity() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::clear_quantity() {
+  quantity_ = 0u;
+  clear_has_quantity();
+}
+inline ::google::protobuf::uint32 PurchaseItemLog_Purchase_item_info_list::quantity() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.quantity)
+  return quantity_;
+}
+inline void PurchaseItemLog_Purchase_item_info_list::set_quantity(::google::protobuf::uint32 value) {
+  set_has_quantity();
+  quantity_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.quantity)
+}
+
 // -------------------------------------------------------------------
 
 // PurchaseItemLog
+
+// repeated .FpdLogMessage.PurchaseItemLog.Purchase_item_info_list items = 1;
+inline int PurchaseItemLog::items_size() const {
+  return items_.size();
+}
+inline void PurchaseItemLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& PurchaseItemLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* PurchaseItemLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.PurchaseItemLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* PurchaseItemLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.PurchaseItemLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >&
+PurchaseItemLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.PurchaseItemLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >*
+PurchaseItemLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.PurchaseItemLog.items)
+  return &items_;
+}
 
 // -------------------------------------------------------------------
 
 // DropItemLog_Throw_away_item_list
 
+// required uint32 unknown_2 = 2;
+inline bool DropItemLog_Throw_away_item_list::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void DropItemLog_Throw_away_item_list::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 DropItemLog_Throw_away_item_list::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.Throw_away_item_list.unknown_2)
+  return unknown_2_;
+}
+inline void DropItemLog_Throw_away_item_list::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.DropItemLog.Throw_away_item_list.unknown_2)
+}
+
+// required .FpdLogMessage.Vector location = 3;
+inline bool DropItemLog_Throw_away_item_list::has_location() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void DropItemLog_Throw_away_item_list::set_has_location() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_has_location() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& DropItemLog_Throw_away_item_list::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.Throw_away_item_list.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* DropItemLog_Throw_away_item_list::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.DropItemLog.Throw_away_item_list.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* DropItemLog_Throw_away_item_list::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void DropItemLog_Throw_away_item_list::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.DropItemLog.Throw_away_item_list.location)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool DropItemLog_Throw_away_item_list::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void DropItemLog_Throw_away_item_list::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 DropItemLog_Throw_away_item_list::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.Throw_away_item_list.unknown_4)
+  return unknown_4_;
+}
+inline void DropItemLog_Throw_away_item_list::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.DropItemLog.Throw_away_item_list.unknown_4)
+}
+
+// required uint32 item_id = 5;
+inline bool DropItemLog_Throw_away_item_list::has_item_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void DropItemLog_Throw_away_item_list::set_has_item_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_has_item_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_item_id() {
+  item_id_ = 0u;
+  clear_has_item_id();
+}
+inline ::google::protobuf::uint32 DropItemLog_Throw_away_item_list::item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.Throw_away_item_list.item_id)
+  return item_id_;
+}
+inline void DropItemLog_Throw_away_item_list::set_item_id(::google::protobuf::uint32 value) {
+  set_has_item_id();
+  item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.DropItemLog.Throw_away_item_list.item_id)
+}
+
+// required uint32 quantity = 6;
+inline bool DropItemLog_Throw_away_item_list::has_quantity() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void DropItemLog_Throw_away_item_list::set_has_quantity() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void DropItemLog_Throw_away_item_list::clear_quantity() {
+  quantity_ = 0u;
+  clear_has_quantity();
+}
+inline ::google::protobuf::uint32 DropItemLog_Throw_away_item_list::quantity() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.Throw_away_item_list.quantity)
+  return quantity_;
+}
+inline void DropItemLog_Throw_away_item_list::set_quantity(::google::protobuf::uint32 value) {
+  set_has_quantity();
+  quantity_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.DropItemLog.Throw_away_item_list.quantity)
+}
+
 // -------------------------------------------------------------------
 
 // DropItemLog
+
+// repeated .FpdLogMessage.DropItemLog.Throw_away_item_list items = 1;
+inline int DropItemLog::items_size() const {
+  return items_.size();
+}
+inline void DropItemLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::DropItemLog_Throw_away_item_list& DropItemLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* DropItemLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.DropItemLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* DropItemLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.DropItemLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >&
+DropItemLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.DropItemLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >*
+DropItemLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.DropItemLog.items)
+  return &items_;
+}
 
 // -------------------------------------------------------------------
 
 // LeaveItemLog_Set_item_info_list
 
+// required uint32 unknown_2 = 2;
+inline bool LeaveItemLog_Set_item_info_list::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void LeaveItemLog_Set_item_info_list::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 LeaveItemLog_Set_item_info_list::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.Set_item_info_list.unknown_2)
+  return unknown_2_;
+}
+inline void LeaveItemLog_Set_item_info_list::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.LeaveItemLog.Set_item_info_list.unknown_2)
+}
+
+// required .FpdLogMessage.Vector location = 3;
+inline bool LeaveItemLog_Set_item_info_list::has_location() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void LeaveItemLog_Set_item_info_list::set_has_location() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_has_location() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& LeaveItemLog_Set_item_info_list::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.Set_item_info_list.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* LeaveItemLog_Set_item_info_list::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.LeaveItemLog.Set_item_info_list.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* LeaveItemLog_Set_item_info_list::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void LeaveItemLog_Set_item_info_list::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.LeaveItemLog.Set_item_info_list.location)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool LeaveItemLog_Set_item_info_list::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void LeaveItemLog_Set_item_info_list::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 LeaveItemLog_Set_item_info_list::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.Set_item_info_list.unknown_4)
+  return unknown_4_;
+}
+inline void LeaveItemLog_Set_item_info_list::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.LeaveItemLog.Set_item_info_list.unknown_4)
+}
+
+// required uint32 item_id = 5;
+inline bool LeaveItemLog_Set_item_info_list::has_item_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void LeaveItemLog_Set_item_info_list::set_has_item_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_has_item_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_item_id() {
+  item_id_ = 0u;
+  clear_has_item_id();
+}
+inline ::google::protobuf::uint32 LeaveItemLog_Set_item_info_list::item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.Set_item_info_list.item_id)
+  return item_id_;
+}
+inline void LeaveItemLog_Set_item_info_list::set_item_id(::google::protobuf::uint32 value) {
+  set_has_item_id();
+  item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.LeaveItemLog.Set_item_info_list.item_id)
+}
+
+// required uint32 quantity = 6;
+inline bool LeaveItemLog_Set_item_info_list::has_quantity() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void LeaveItemLog_Set_item_info_list::set_has_quantity() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void LeaveItemLog_Set_item_info_list::clear_quantity() {
+  quantity_ = 0u;
+  clear_has_quantity();
+}
+inline ::google::protobuf::uint32 LeaveItemLog_Set_item_info_list::quantity() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.Set_item_info_list.quantity)
+  return quantity_;
+}
+inline void LeaveItemLog_Set_item_info_list::set_quantity(::google::protobuf::uint32 value) {
+  set_has_quantity();
+  quantity_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.LeaveItemLog.Set_item_info_list.quantity)
+}
+
 // -------------------------------------------------------------------
 
 // LeaveItemLog
+
+// repeated .FpdLogMessage.LeaveItemLog.Set_item_info_list items = 1;
+inline int LeaveItemLog::items_size() const {
+  return items_.size();
+}
+inline void LeaveItemLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::LeaveItemLog_Set_item_info_list& LeaveItemLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* LeaveItemLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.LeaveItemLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* LeaveItemLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.LeaveItemLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >&
+LeaveItemLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.LeaveItemLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >*
+LeaveItemLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.LeaveItemLog.items)
+  return &items_;
+}
 
 // -------------------------------------------------------------------
 
 // SaleItemLog_Sale_item_info_list
 
+// required uint32 unknown_2 = 2;
+inline bool SaleItemLog_Sale_item_info_list::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void SaleItemLog_Sale_item_info_list::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 SaleItemLog_Sale_item_info_list::unknown_2() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.Sale_item_info_list.unknown_2)
+  return unknown_2_;
+}
+inline void SaleItemLog_Sale_item_info_list::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SaleItemLog.Sale_item_info_list.unknown_2)
+}
+
+// required .FpdLogMessage.Vector location = 3;
+inline bool SaleItemLog_Sale_item_info_list::has_location() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void SaleItemLog_Sale_item_info_list::set_has_location() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_has_location() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_location() {
+  if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
+  clear_has_location();
+}
+inline const ::FpdLogMessage::Vector& SaleItemLog_Sale_item_info_list::location() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.Sale_item_info_list.location)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return location_ != NULL ? *location_ : *default_instance().location_;
+#else
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+#endif
+}
+inline ::FpdLogMessage::Vector* SaleItemLog_Sale_item_info_list::mutable_location() {
+  set_has_location();
+  if (location_ == NULL) location_ = new ::FpdLogMessage::Vector;
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.SaleItemLog.Sale_item_info_list.location)
+  return location_;
+}
+inline ::FpdLogMessage::Vector* SaleItemLog_Sale_item_info_list::release_location() {
+  clear_has_location();
+  ::FpdLogMessage::Vector* temp = location_;
+  location_ = NULL;
+  return temp;
+}
+inline void SaleItemLog_Sale_item_info_list::set_allocated_location(::FpdLogMessage::Vector* location) {
+  delete location_;
+  location_ = location;
+  if (location) {
+    set_has_location();
+  } else {
+    clear_has_location();
+  }
+  // @@protoc_insertion_point(field_set_allocated:FpdLogMessage.SaleItemLog.Sale_item_info_list.location)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool SaleItemLog_Sale_item_info_list::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void SaleItemLog_Sale_item_info_list::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 SaleItemLog_Sale_item_info_list::unknown_4() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.Sale_item_info_list.unknown_4)
+  return unknown_4_;
+}
+inline void SaleItemLog_Sale_item_info_list::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SaleItemLog.Sale_item_info_list.unknown_4)
+}
+
+// required uint32 item_id = 5;
+inline bool SaleItemLog_Sale_item_info_list::has_item_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void SaleItemLog_Sale_item_info_list::set_has_item_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_has_item_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_item_id() {
+  item_id_ = 0u;
+  clear_has_item_id();
+}
+inline ::google::protobuf::uint32 SaleItemLog_Sale_item_info_list::item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.Sale_item_info_list.item_id)
+  return item_id_;
+}
+inline void SaleItemLog_Sale_item_info_list::set_item_id(::google::protobuf::uint32 value) {
+  set_has_item_id();
+  item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SaleItemLog.Sale_item_info_list.item_id)
+}
+
+// required uint32 quantity = 6;
+inline bool SaleItemLog_Sale_item_info_list::has_quantity() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void SaleItemLog_Sale_item_info_list::set_has_quantity() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void SaleItemLog_Sale_item_info_list::clear_quantity() {
+  quantity_ = 0u;
+  clear_has_quantity();
+}
+inline ::google::protobuf::uint32 SaleItemLog_Sale_item_info_list::quantity() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.Sale_item_info_list.quantity)
+  return quantity_;
+}
+inline void SaleItemLog_Sale_item_info_list::set_quantity(::google::protobuf::uint32 value) {
+  set_has_quantity();
+  quantity_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SaleItemLog.Sale_item_info_list.quantity)
+}
+
 // -------------------------------------------------------------------
 
 // SaleItemLog
+
+// repeated .FpdLogMessage.SaleItemLog.Sale_item_info_list items = 1;
+inline int SaleItemLog::items_size() const {
+  return items_.size();
+}
+inline void SaleItemLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::SaleItemLog_Sale_item_info_list& SaleItemLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* SaleItemLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.SaleItemLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* SaleItemLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.SaleItemLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >&
+SaleItemLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.SaleItemLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >*
+SaleItemLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.SaleItemLog.items)
+  return &items_;
+}
 
 // -------------------------------------------------------------------
 
 // StrengthenWeaponLog_Strengthen_weapon_info_list
 
+// required uint32 from_item_id = 2;
+inline bool StrengthenWeaponLog_Strengthen_weapon_info_list::has_from_item_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::set_has_from_item_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::clear_has_from_item_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::clear_from_item_id() {
+  from_item_id_ = 0u;
+  clear_has_from_item_id();
+}
+inline ::google::protobuf::uint32 StrengthenWeaponLog_Strengthen_weapon_info_list::from_item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list.from_item_id)
+  return from_item_id_;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::set_from_item_id(::google::protobuf::uint32 value) {
+  set_has_from_item_id();
+  from_item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list.from_item_id)
+}
+
+// required uint32 to_item_id = 3;
+inline bool StrengthenWeaponLog_Strengthen_weapon_info_list::has_to_item_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::set_has_to_item_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::clear_has_to_item_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::clear_to_item_id() {
+  to_item_id_ = 0u;
+  clear_has_to_item_id();
+}
+inline ::google::protobuf::uint32 StrengthenWeaponLog_Strengthen_weapon_info_list::to_item_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list.to_item_id)
+  return to_item_id_;
+}
+inline void StrengthenWeaponLog_Strengthen_weapon_info_list::set_to_item_id(::google::protobuf::uint32 value) {
+  set_has_to_item_id();
+  to_item_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list.to_item_id)
+}
+
 // -------------------------------------------------------------------
 
 // StrengthenWeaponLog
 
-// -------------------------------------------------------------------
-
-// AccessWarehouseLog_Access_warehouse_info_list
-
-// -------------------------------------------------------------------
-
-// AccessWarehouseLog
-
-// -------------------------------------------------------------------
-
-// RepairEquipmentLog_Repair_equipment_info_list
-
-// -------------------------------------------------------------------
-
-// RepairEquipmentLog
-
-// -------------------------------------------------------------------
-
-// LevelUpLog
-
-// -------------------------------------------------------------------
-
-// BrokenEquipmentLog
-
-// -------------------------------------------------------------------
-
-// EquipMagicLog
-
-// -------------------------------------------------------------------
-
-// ChaneEstusFlaskNumLog
-
-// -------------------------------------------------------------------
-
-// CreateBloodMessageLog
-
-// -------------------------------------------------------------------
-
-// EvaluateBloodMessageLog
+// repeated .FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list items = 1;
+inline int StrengthenWeaponLog::items_size() const {
+  return items_.size();
+}
+inline void StrengthenWeaponLog::clear_items() {
+  items_.Clear();
+}
+inline const ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& StrengthenWeaponLog::items(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.StrengthenWeaponLog.items)
+  return items_.Get(index);
+}
+inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* StrengthenWeaponLog::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.StrengthenWeaponLog.items)
+  return items_.Mutable(index);
+}
+inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* StrengthenWeaponLog::add_items() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.StrengthenWeaponLog.items)
+  return items_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >&
+StrengthenWeaponLog::items() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.StrengthenWeaponLog.items)
+  return items_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >*
+StrengthenWeaponLog::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.StrengthenWeaponLog.items)
+  return &items_;
+}
 
 // -------------------------------------------------------------------
 
 // VisitResultLog
 
-// required uint32 unknown_1 = 1;
-inline bool VisitResultLog::has_unknown_1() const {
+// required uint32 map_id = 1;
+inline bool VisitResultLog::has_map_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void VisitResultLog::set_has_unknown_1() {
+inline void VisitResultLog::set_has_map_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void VisitResultLog::clear_has_unknown_1() {
+inline void VisitResultLog::clear_has_map_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void VisitResultLog::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void VisitResultLog::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
 }
-inline ::google::protobuf::uint32 VisitResultLog::unknown_1() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.VisitResultLog.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 VisitResultLog::map_id() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.VisitResultLog.map_id)
+  return map_id_;
 }
-inline void VisitResultLog::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.VisitResultLog.unknown_1)
+inline void VisitResultLog::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.VisitResultLog.map_id)
 }
 
 // required .FpdLogMessage.Vector location = 2;
@@ -4578,6 +6571,46 @@ inline void QuickMatchEndLog::set_unknown_6(::google::protobuf::uint32 value) {
 // -------------------------------------------------------------------
 
 // ConvertSaveDataLog
+
+// -------------------------------------------------------------------
+
+// AccessWarehouseLog_Access_warehouse_info_list
+
+// -------------------------------------------------------------------
+
+// AccessWarehouseLog
+
+// -------------------------------------------------------------------
+
+// RepairEquipmentLog_Repair_equipment_info_list
+
+// -------------------------------------------------------------------
+
+// RepairEquipmentLog
+
+// -------------------------------------------------------------------
+
+// LevelUpLog
+
+// -------------------------------------------------------------------
+
+// BrokenEquipmentLog
+
+// -------------------------------------------------------------------
+
+// EquipMagicLog
+
+// -------------------------------------------------------------------
+
+// ChaneEstusFlaskNumLog
+
+// -------------------------------------------------------------------
+
+// CreateBloodMessageLog
+
+// -------------------------------------------------------------------
+
+// EvaluateBloodMessageLog
 
 
 // @@protoc_insertion_point(namespace_scope)

@@ -1473,12 +1473,12 @@ class PlayData : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_4() const;
   inline void set_unknown_4(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_5 = 7;
-  inline bool has_unknown_5() const;
-  inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 7;
-  inline ::google::protobuf::uint32 unknown_5() const;
-  inline void set_unknown_5(::google::protobuf::uint32 value);
+  // optional uint32 bonfire_level = 7;
+  inline bool has_bonfire_level() const;
+  inline void clear_bonfire_level();
+  static const int kBonfireLevelFieldNumber = 7;
+  inline ::google::protobuf::uint32 bonfire_level() const;
+  inline void set_bonfire_level(::google::protobuf::uint32 value);
 
   // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
   inline bool has_bonfire_info() const;
@@ -1499,8 +1499,8 @@ class PlayData : public ::google::protobuf::MessageLite {
   inline void clear_has_hollow_level();
   inline void set_has_unknown_4();
   inline void clear_has_unknown_4();
-  inline void set_has_unknown_5();
-  inline void clear_has_unknown_5();
+  inline void set_has_bonfire_level();
+  inline void clear_has_bonfire_level();
   inline void set_has_bonfire_info();
   inline void clear_has_bonfire_info();
 
@@ -1513,7 +1513,7 @@ class PlayData : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 hollow_level_;
   ::google::protobuf::uint32 unknown_4_;
   ::Frpg2PlayerData::BonfireInfo* bonfire_info_;
-  ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 bonfire_level_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2PlayerData_2eproto_impl();
   #else
@@ -6068,28 +6068,28 @@ inline void PlayData::set_unknown_4(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayData.unknown_4)
 }
 
-// optional uint32 unknown_5 = 7;
-inline bool PlayData::has_unknown_5() const {
+// optional uint32 bonfire_level = 7;
+inline bool PlayData::has_bonfire_level() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void PlayData::set_has_unknown_5() {
+inline void PlayData::set_has_bonfire_level() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void PlayData::clear_has_unknown_5() {
+inline void PlayData::clear_has_bonfire_level() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void PlayData::clear_unknown_5() {
-  unknown_5_ = 0u;
-  clear_has_unknown_5();
+inline void PlayData::clear_bonfire_level() {
+  bonfire_level_ = 0u;
+  clear_has_bonfire_level();
 }
-inline ::google::protobuf::uint32 PlayData::unknown_5() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayData.unknown_5)
-  return unknown_5_;
+inline ::google::protobuf::uint32 PlayData::bonfire_level() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayData.bonfire_level)
+  return bonfire_level_;
 }
-inline void PlayData::set_unknown_5(::google::protobuf::uint32 value) {
-  set_has_unknown_5();
-  unknown_5_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayData.unknown_5)
+inline void PlayData::set_bonfire_level(::google::protobuf::uint32 value) {
+  set_has_bonfire_level();
+  bonfire_level_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayData.bonfire_level)
 }
 
 // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;

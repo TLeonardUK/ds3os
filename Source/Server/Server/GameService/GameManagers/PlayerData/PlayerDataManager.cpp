@@ -63,7 +63,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
     Ensure(Request->unknown_1() == 1);
-    Ensure(Request->unknown_2() == 1);
+    //Ensure(Request->unknown_2() == 1);
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
     Response.set_unknown_1(1);

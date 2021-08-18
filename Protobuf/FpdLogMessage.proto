@@ -27,19 +27,19 @@ message GlobalEventLog {
 // ID: 8001
 message SystemOptionLog {
     message Game_option_setting {
-        required uint32 unknown_1 = 2;
-        required uint32 unknown_2 = 3;
-        required uint32 unknown_3 = 4;
-        required uint32 unknown_4 = 5;
-        required uint32 unknown_5 = 6;
+        required uint32 toggle_auto_lock_on = 2;
+        required uint32 auto_target = 3;
+        required uint32 manual_attack_aiming = 4;
+        required uint32 unknown_5 = 5;
+        required uint32 vibration_level = 6;
     }
     message Network_setting {
-        required uint32 unknown_1 = 8;
-        required uint32 unknown_2 = 9;
-        required uint32 unknown_3 = 10;
-        required uint32 unknown_4 = 11;
-        required uint32 unknown_5 = 12;
-        required uint32 unknown_6 = 13;
+        required uint32 allow_cross_region_play = 8;
+        required uint32 has_password = 9;
+        required uint32 restrict_summon_sign_visibility = 10;
+        required uint32 allow_voice_chat = 11;
+        required uint32 unknown_12 = 12;
+        required uint32 start_offline = 13;
     }
     required Game_option_setting game_settings = 1;
     required Network_setting network_settings = 7;
@@ -48,96 +48,120 @@ message SystemOptionLog {
 // ID: 3000
 message UseItemLog {
     message Use_item_info_list {
+        required uint32 item_id = 2;                 
+        required uint32 quantity = 3;                 
+        required uint32 unknown_4 = 4;                 // 9
     }
+
+    repeated Use_item_info_list items = 1;
+    required uint32 unknown_5 = 5;                     // 51
+    required Vector location = 6;
 }
 
 // ID: 3002
 message GetItemLog {
     message Get_item_info_list {
+        required uint32 unknown_2 = 2;                 // 51
+        required Vector location = 3;
+        required uint32 unknown_4 = 4;                 // 4
+        required uint32 item_id = 5;                 
+        required uint32 quantity = 6;                 
+        required uint32 unknown_7 = 7;                 // 2
+        required uint32 unknown_8 = 8;                 // 0
+        required uint32 unknown_9 = 9;                 // 0
     }
+
+    repeated Get_item_info_list items = 1;
 }
 
 // ID: 2021
 message ActGestureLog {
     message Use_gesture_info_list {
+        required uint32 guesture_id = 2;            
+        required uint32 count = 3;
     }
+    
+    repeated Use_gesture_info_list gestures = 1;
+    required uint32 unknown_4 = 4;                          // Always seems to be 37
+    required Vector unknown_5 = 5;
 }
 
 // ID: 2020
 message UseMagicLog {
     message Use_magic_info_list {
+        required uint32 spell_id = 2;
+        required uint32 count = 3;
     }
+
+    repeated Use_magic_info_list items = 1;
+    required uint32 unknown_4 = 4;                     // 40
+    required Vector location = 5;
 }
 
 // ID: 3001
 message PurchaseItemLog {
     message Purchase_item_info_list {
+        required uint32 unknown_2 = 2;                 // 40
+        required Vector location = 3;
+        required uint32 item_id = 5;            
+        required uint32 unknown_6 = 6;                 // 110107, 110251 - Not sure I thought total cost or sounds remaining but neither adds up to that.
+        required uint32 quantity = 7;                  
     }
+
+    repeated Purchase_item_info_list items = 1;
 }
 
 // ID: 3003
 message DropItemLog {
     message Throw_away_item_list {
+        required uint32 unknown_2 = 2;                 // 37
+        required Vector location = 3;
+        required uint32 unknown_4 = 4;                 // 4
+        required uint32 item_id = 5;                 
+        required uint32 quantity = 6;                 
     }
+
+    repeated Throw_away_item_list items = 1;
 }
 
 // ID: 3004
 message LeaveItemLog {
     message Set_item_info_list {
+        required uint32 unknown_2 = 2;                 // 37
+        required Vector location = 3;
+        required uint32 unknown_4 = 4;                 // 4
+        required uint32 item_id = 5;                 
+        required uint32 quantity = 6;                 
     }
+
+    repeated Set_item_info_list items = 1;
 }
 
 // ID: 3005
 message SaleItemLog {
     message Sale_item_info_list {
+        required uint32 unknown_2 = 2;                 // 407
+        required Vector location = 3;
+        required uint32 unknown_4 = 4;                 // 4
+        required uint32 item_id = 5;                 
+        required uint32 quantity = 6;                 
     }
+
+    repeated Sale_item_info_list items = 1;
 }
 
 // ID: 3010
 message StrengthenWeaponLog {
     message Strengthen_weapon_info_list {
+        required uint32 from_item_id = 2;                 
+        required uint32 to_item_id = 3;                 
     }
+    repeated Strengthen_weapon_info_list items = 1;
 }
 
-// ID: ???
-message AccessWarehouseLog {
-    message Access_warehouse_info_list {
-    }
-}
-
-// ID: ???
-message RepairEquipmentLog {
-    message Repair_equipment_info_list {
-    }
-}
-
-// ID: ???
-message LevelUpLog {
-}
-
-// ID: ???
-message BrokenEquipmentLog {
-}
-
-// ID: ???
-message EquipMagicLog {
-}
-
-// ID: ???
-message ChaneEstusFlaskNumLog {
-}
-
-// ID: ???
-message CreateBloodMessageLog {
-}
-
-// ID: ???
-message EvaluateBloodMessageLog {
-}
-
-// ID: ???
+// ID: 7040
 message VisitResultLog {
-    required uint32 unknown_1 = 1;                      // 370000
+    required uint32 map_id = 1;                         // 510000
     required Vector location = 2;
     required uint32 online_area_id_source = 3;          // Where player was before visit occured.
     required uint32 online_area_id_destination = 4;     // Where player goes to for visit.
@@ -169,4 +193,40 @@ message QuickMatchEndLog {
 
 // ID: ???
 message ConvertSaveDataLog {
+}
+
+// ID: ??? - Seemingly never sent.
+message AccessWarehouseLog {
+    message Access_warehouse_info_list {
+    }
+}
+
+// ID: ??? - Seemingly never sent.
+message RepairEquipmentLog {
+    message Repair_equipment_info_list {
+    }
+}
+
+// ID: ??? - Seemingly never sent.
+message LevelUpLog {
+}
+
+// ID: ??? - Seemingly never sent.
+message BrokenEquipmentLog {
+}
+
+// ID: ??? - Seemingly never sent.
+message EquipMagicLog {
+}
+
+// ID: ??? - Seemingly never sent.
+message ChaneEstusFlaskNumLog {
+}
+
+// ID: ??? - Seemingly never sent.
+message CreateBloodMessageLog {
+}
+
+// ID: ??? - Seemingly never sent.
+message EvaluateBloodMessageLog {
 }

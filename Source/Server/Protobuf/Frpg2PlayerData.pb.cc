@@ -4168,7 +4168,7 @@ const int PlayData::kUnknown1FieldNumber;
 const int PlayData::kIsHollowFieldNumber;
 const int PlayData::kHollowLevelFieldNumber;
 const int PlayData::kUnknown4FieldNumber;
-const int PlayData::kUnknown5FieldNumber;
+const int PlayData::kBonfireLevelFieldNumber;
 const int PlayData::kBonfireInfoFieldNumber;
 #endif  // !_MSC_VER
 
@@ -4200,7 +4200,7 @@ void PlayData::SharedCtor() {
   is_hollow_ = 0u;
   hollow_level_ = 0u;
   unknown_4_ = 0u;
-  unknown_5_ = 0u;
+  bonfire_level_ = 0u;
   bonfire_info_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -4253,7 +4253,7 @@ void PlayData::Clear() {
 
   if (_has_bits_[0 / 32] & 63) {
     ZR_(unknown_1_, unknown_4_);
-    unknown_5_ = 0u;
+    bonfire_level_ = 0u;
     if (has_bonfire_info()) {
       if (bonfire_info_ != NULL) bonfire_info_->::Frpg2PlayerData::BonfireInfo::Clear();
     }
@@ -4335,18 +4335,18 @@ bool PlayData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_unknown_5;
+        if (input->ExpectTag(56)) goto parse_bonfire_level;
         break;
       }
 
-      // optional uint32 unknown_5 = 7;
+      // optional uint32 bonfire_level = 7;
       case 7: {
         if (tag == 56) {
-         parse_unknown_5:
+         parse_bonfire_level:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_5_)));
-          set_has_unknown_5();
+                 input, &bonfire_level_)));
+          set_has_bonfire_level();
         } else {
           goto handle_unusual;
         }
@@ -4412,9 +4412,9 @@ void PlayData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_4(), output);
   }
 
-  // optional uint32 unknown_5 = 7;
-  if (has_unknown_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_5(), output);
+  // optional uint32 bonfire_level = 7;
+  if (has_bonfire_level()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->bonfire_level(), output);
   }
 
   // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
@@ -4460,11 +4460,11 @@ int PlayData::ByteSize() const {
           this->unknown_4());
     }
 
-    // optional uint32 unknown_5 = 7;
-    if (has_unknown_5()) {
+    // optional uint32 bonfire_level = 7;
+    if (has_bonfire_level()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_5());
+          this->bonfire_level());
     }
 
     // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
@@ -4503,8 +4503,8 @@ void PlayData::MergeFrom(const PlayData& from) {
     if (from.has_unknown_4()) {
       set_unknown_4(from.unknown_4());
     }
-    if (from.has_unknown_5()) {
-      set_unknown_5(from.unknown_5());
+    if (from.has_bonfire_level()) {
+      set_bonfire_level(from.bonfire_level());
     }
     if (from.has_bonfire_info()) {
       mutable_bonfire_info()->::Frpg2PlayerData::BonfireInfo::MergeFrom(from.bonfire_info());
@@ -4533,7 +4533,7 @@ void PlayData::Swap(PlayData* other) {
     std::swap(is_hollow_, other->is_hollow_);
     std::swap(hollow_level_, other->hollow_level_);
     std::swap(unknown_4_, other->unknown_4_);
-    std::swap(unknown_5_, other->unknown_5_);
+    std::swap(bonfire_level_, other->bonfire_level_);
     std::swap(bonfire_info_, other->bonfire_info_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
