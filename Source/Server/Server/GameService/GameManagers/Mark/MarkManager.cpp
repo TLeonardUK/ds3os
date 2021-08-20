@@ -48,14 +48,8 @@ MessageHandleResult MarkManager::Handle_RequestCreateMark(GameClient* Client, co
 {
     Frpg2RequestMessage::RequestCreateMark* Request = (Frpg2RequestMessage::RequestCreateMark*)Message.Protobuf.get();
 
-    // TODO: Implement
-
-    Frpg2RequestMessage::RequestCreateMarkResponse Response;
-    if (!Client->MessageStream->Send(&Response, &Message))
-    {
-        Warning("[%s] Disconnecting client as failed to send RequestCreateMarkResponse response.", Client->GetName().c_str());
-        return MessageHandleResult::Error;
-    }
+    // These functions should never be called, they are cut-content.
+    Ensure(false);
 
     return MessageHandleResult::Handled;
 }
@@ -64,14 +58,8 @@ MessageHandleResult MarkManager::Handle_RequestRemoveMark(GameClient* Client, co
 {
     Frpg2RequestMessage::RequestRemoveMark* Request = (Frpg2RequestMessage::RequestRemoveMark*)Message.Protobuf.get();
 
-    // TODO: Implement
-
-    Frpg2RequestMessage::RequestRemoveMarkResponse Response;
-    if (!Client->MessageStream->Send(&Response, &Message))
-    {
-        Warning("[%s] Disconnecting client as failed to send RequestRemoveMarkResponse response.", Client->GetName().c_str());
-        return MessageHandleResult::Error;
-    }
+    // These functions should never be called, they are cut-content.
+    Ensure(false);
 
     return MessageHandleResult::Handled;
 }
@@ -80,14 +68,8 @@ MessageHandleResult MarkManager::Handle_RequestReentryMark(GameClient* Client, c
 {
     Frpg2RequestMessage::RequestReentryMark* Request = (Frpg2RequestMessage::RequestReentryMark*)Message.Protobuf.get();
 
-    // TODO: Implement
-
-    Frpg2RequestMessage::RequestReentryMarkResponse Response;
-    if (!Client->MessageStream->Send(&Response, &Message))
-    {
-        Warning("[%s] Disconnecting client as failed to send RequestReentryMarkResponse response.", Client->GetName().c_str());
-        return MessageHandleResult::Error;
-    }
+    // These functions should never be called, they are cut-content.
+    Ensure(false);
 
     return MessageHandleResult::Handled;
 }
@@ -96,14 +78,8 @@ MessageHandleResult MarkManager::Handle_RequestGetMarkList(GameClient* Client, c
 {
     Frpg2RequestMessage::RequestGetMarkList* Request = (Frpg2RequestMessage::RequestGetMarkList*)Message.Protobuf.get();
 
-    // TODO: Implement
-
-    Frpg2RequestMessage::RequestGetMarkListResponse Response;
-    if (!Client->MessageStream->Send(&Response, &Message))
-    {
-        Warning("[%s] Disconnecting client as failed to send RequestGetMarkListResponse response.", Client->GetName().c_str());
-        return MessageHandleResult::Error;
-    }
+    // These functions should never be called, they are cut-content.
+    Ensure(false);
 
     return MessageHandleResult::Handled;
 }

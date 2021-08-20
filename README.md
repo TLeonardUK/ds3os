@@ -37,6 +37,22 @@ While the server is running run the file Loader.exe in the Loader subfolder. Thi
 join the custom server. Within this app set the game path to your DarkSoulsIII.exe and import the server.ds3osconfig file that was made by the server earlier. You should
 now be able to click launch to start the game which will automatically connect to your new server.
 
+# What currently works?
+We're slowly going through and implementing all the games online functionality, this is the current state:
+
+- [x] Login, key exchange and network transport
+- [x] Profile management
+- [x] Blood messages
+- [x] Bloodstains
+- [x] Ghosts
+- [ ] Roster of knights
+- [ ] Invasions
+- [ ] Summoning
+- [ ] Visitors (Summoning via covenant)
+- [ ] Undead match
+- [ ] Archdragon peak bell ringing
+- [ ] Telemetry and misc server calls
+
 # How can I help?
 At the moment of lot of the general structure is being put together so you might want to hold trying to contibute any large changes right now.
 

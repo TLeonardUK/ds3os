@@ -128,7 +128,6 @@
     <ClInclude Include="Server\GameService\GameManagers\QuickMatch\QuickMatchManager.h" />
     <ClInclude Include="Server\GameService\GameManagers\Ranking\RankingManager.h" />
     <ClInclude Include="Server\GameService\GameManagers\Signs\SignManager.h" />
-    <ClInclude Include="Server\GameService\GameManagers\Signs\SummonSign.h" />
     <ClInclude Include="Server\GameService\GameManagers\Visitor\VisitorManager.h" />
     <ClInclude Include="Server\GameService\GameService.h" />
     <ClInclude Include="Server\GameService\PlayerState.h" />

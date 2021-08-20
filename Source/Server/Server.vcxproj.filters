@@ -252,9 +252,6 @@
     <ClInclude Include="Server\GameService\GameManagers\Signs\SignManager.h">
       <Filter>Server\GameService\GameManagers\Signs</Filter>
     </ClInclude>
-    <ClInclude Include="Server\GameService\GameManagers\Signs\SummonSign.h">
-      <Filter>Server\GameService\GameManagers\Signs</Filter>
-    </ClInclude>
     <ClInclude Include="Server\GameService\GameManagers\Ghosts\GhostManager.h">
       <Filter>Server\GameService\GameManagers\Ghosts</Filter>
     </ClInclude>
