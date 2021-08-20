@@ -57,6 +57,8 @@ public:
 
     const std::vector<std::shared_ptr<GameManager>>& GetManagers() { return Managers; }
 
+    std::shared_ptr<GameClient> FindClientByPlayerId(uint32_t PlayerId);
+
 protected:
 
     void HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection);

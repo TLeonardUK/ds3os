@@ -245,7 +245,7 @@ message BloodMessageData {
     required uint32 message_id = 3; 
     required uint32 good = 4;         
     required bytes  message_data = 5;
-    required uint32 player_steam_id = 6;
+    required string player_steam_id = 6;
     required uint32 online_area_id = 7;
     required uint32 poor = 8;                   
 }
@@ -343,7 +343,7 @@ message PushRequestEvaluateBloodMessage {
     required PushMessageId push_message_id = 1; // 918
     required uint32 player_id = 2; 
     required uint32 message_id = 3;
-    required uint32 player_steam_id = 4; 
+    required string player_steam_id = 4; 
     required bool was_poor = 5; 
 }
 

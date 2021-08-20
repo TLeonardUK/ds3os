@@ -7722,7 +7722,7 @@ void BloodMessageData::SharedCtor() {
   message_id_ = 0u;
   good_ = 0u;
   message_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  player_steam_id_ = 0u;
+  player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   online_area_id_ = 0u;
   poor_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -7736,6 +7736,9 @@ BloodMessageData::~BloodMessageData() {
 void BloodMessageData::SharedDtor() {
   if (message_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete message_data_;
+  }
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -7778,10 +7781,15 @@ void BloodMessageData::Clear() {
 
   if (_has_bits_[0 / 32] & 255) {
     ZR_(player_id_, good_);
-    ZR_(player_steam_id_, poor_);
+    ZR_(online_area_id_, poor_);
     if (has_message_data()) {
       if (message_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         message_data_->clear();
+      }
+    }
+    if (has_player_steam_id()) {
+      if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_steam_id_->clear();
       }
     }
   }
@@ -7875,18 +7883,16 @@ bool BloodMessageData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_player_steam_id;
+        if (input->ExpectTag(50)) goto parse_player_steam_id;
         break;
       }
 
-      // required uint32 player_steam_id = 6;
+      // required string player_steam_id = 6;
       case 6: {
-        if (tag == 48) {
+        if (tag == 50) {
          parse_player_steam_id:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &player_steam_id_)));
-          set_has_player_steam_id();
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_player_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -7975,9 +7981,10 @@ void BloodMessageData::SerializeWithCachedSizes(
       5, this->message_data(), output);
   }
 
-  // required uint32 player_steam_id = 6;
+  // required string player_steam_id = 6;
   if (has_player_steam_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->player_steam_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      6, this->player_steam_id(), output);
   }
 
   // required uint32 online_area_id = 7;
@@ -8034,10 +8041,10 @@ int BloodMessageData::ByteSize() const {
           this->message_data());
     }
 
-    // required uint32 player_steam_id = 6;
+    // required string player_steam_id = 6;
     if (has_player_steam_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->player_steam_id());
     }
 
@@ -12160,11 +12167,12 @@ PushRequestEvaluateBloodMessage::PushRequestEvaluateBloodMessage(const PushReque
 }
 
 void PushRequestEvaluateBloodMessage::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 829;
   player_id_ = 0u;
   message_id_ = 0u;
-  player_steam_id_ = 0u;
+  player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   was_poor_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -12175,6 +12183,9 @@ PushRequestEvaluateBloodMessage::~PushRequestEvaluateBloodMessage() {
 }
 
 void PushRequestEvaluateBloodMessage::SharedDtor() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -12215,8 +12226,14 @@ void PushRequestEvaluateBloodMessage::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(player_id_, was_poor_);
+    ZR_(message_id_, was_poor_);
     push_message_id_ = 829;
+    player_id_ = 0u;
+    if (has_player_steam_id()) {
+      if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_steam_id_->clear();
+      }
+    }
   }
 
 #undef OFFSET_OF_FIELD_
@@ -12286,18 +12303,16 @@ bool PushRequestEvaluateBloodMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_player_steam_id;
+        if (input->ExpectTag(34)) goto parse_player_steam_id;
         break;
       }
 
-      // required uint32 player_steam_id = 4;
+      // required string player_steam_id = 4;
       case 4: {
-        if (tag == 32) {
+        if (tag == 34) {
          parse_player_steam_id:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &player_steam_id_)));
-          set_has_player_steam_id();
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_player_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -12361,9 +12376,10 @@ void PushRequestEvaluateBloodMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->message_id(), output);
   }
 
-  // required uint32 player_steam_id = 4;
+  // required string player_steam_id = 4;
   if (has_player_steam_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->player_steam_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->player_steam_id(), output);
   }
 
   // required bool was_poor = 5;
@@ -12400,10 +12416,10 @@ int PushRequestEvaluateBloodMessage::ByteSize() const {
           this->message_id());
     }
 
-    // required uint32 player_steam_id = 4;
+    // required string player_steam_id = 4;
     if (has_player_steam_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->player_steam_id());
     }
 

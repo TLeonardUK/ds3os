@@ -57,7 +57,12 @@ public:
 
     // Maximum number of blood messages to store per area in the cache.
     // If greater than this value are added, the oldest will be removed.
-    int BloodMessageMaxLiveCacheEntriesPerArea = 1000;
+    int BloodMessageMaxLivePoolEntriesPerArea = 100;
+
+    // How many blood messages to insert into the live pool from the database
+    // when the server starts. Saves the game looking empty until enough players
+    // re-enter their messages.
+    int BloodMessagePrimeCountPerArea = 50;
 
 public:
 

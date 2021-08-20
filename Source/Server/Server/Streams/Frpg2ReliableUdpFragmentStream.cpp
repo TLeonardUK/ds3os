@@ -87,7 +87,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
 
     SentFragmentCounter++;
 
-    return false;
+    return true;
 }
 
 bool Frpg2ReliableUdpFragmentStream::Recieve(Frpg2ReliableUdpFragment* Fragment)
@@ -211,6 +211,7 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
             if (Fragments.size() > 0)
             {
                 Frpg2ReliableUdpFragment CombinedFragment = Fragments[0];
+                CombinedFragment.AckSequenceIndex = Fragment.AckSequenceIndex; // Ack the last packet in the fragment list.
                 CombinedFragment.Header.fragment_index = 0;
                 CombinedFragment.Header.fragment_length = Fragment.Header.total_payload_length;
 

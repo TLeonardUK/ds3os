@@ -58,6 +58,8 @@ bool Frpg2ReliableUdpPacketStream::Send(const Frpg2ReliableUdpPacket& Input)
             {
                 SentPacket.Header.opcode = Frpg2ReliableUdpOpCode::DAT_ACK;
                 DatAckResponses.insert(Remote);
+
+                RemoteSequenceIndexAcked = std::max(RemoteSequenceIndex, Remote);
             }
             else
             {
@@ -265,11 +267,13 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
         {   
             // Send an ACK, its possible that the remote is retransmitting packets as
             // a previously sent ACK has dropped.
+            Log("Sending ack as not sent in a while.");
+
             Send_ACK(RemoteSequenceIndexAcked);
 
             return;
         }
-        else
+        else if (!IsDuplicate)
         {
             InsertPacketByLocalSequence(PendingRecieveQueue, Packet, LocalAck);
         }

@@ -51,7 +51,10 @@ void SerializeVar(nlohmann::json& Json, const char* Name, DataType& Value, bool 
 {
     if (Loading)
     {
-        Value = Json[Name];
+        if (Json.contains(Name))
+        {
+            Value = Json[Name];
+        }
     }
     else
     {
@@ -64,12 +67,15 @@ void SerializeVar(nlohmann::json& Json, const char* Name, std::vector<DataType>&
 {
     if (Loading)
     {
-        Value.resize(Json[Name].size());
-
-        int Index = 0;
-        for (auto& ChildValue : Json[Name].items())
+        if (Json.contains(Name))
         {
-            Value[Index++].Serialize(ChildValue.value(), Loading);
+            Value.resize(Json[Name].size());
+
+            int Index = 0;
+            for (auto& ChildValue : Json[Name].items())
+            {
+                Value[Index++].Serialize(ChildValue.value(), Loading);
+            }
         }
     }
     else
@@ -97,14 +103,16 @@ bool RuntimeConfigAnnouncement::Serialize(nlohmann::json& Json, bool Loading)
 
 bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
 {
-    SerializeVar(Json, "ServerName",          ServerName,             Loading);
-    SerializeVar(Json, "ServerDescription",   ServerDescription,      Loading);
-    SerializeVar(Json, "ServerHostname",      ServerHostname,         Loading);
-    SerializeVar(Json, "ServerIP",            ServerIP,               Loading);
-    SerializeVar(Json, "LoginServerPort",     LoginServerPort,        Loading);
-    SerializeVar(Json, "AuthServerPort",      AuthServerPort,         Loading);
-    SerializeVar(Json, "GameServerPort",      GameServerPort,         Loading);
-    SerializeVar(Json, "Announcements",       Announcements,          Loading);
+    SerializeVar(Json, "ServerName",                                    ServerName,                                     Loading);
+    SerializeVar(Json, "ServerDescription",                             ServerDescription,                              Loading);
+    SerializeVar(Json, "ServerHostname",                                ServerHostname,                                 Loading);
+    SerializeVar(Json, "ServerIP",                                      ServerIP,                                       Loading);
+    SerializeVar(Json, "LoginServerPort",                               LoginServerPort,                                Loading);
+    SerializeVar(Json, "AuthServerPort",                                AuthServerPort,                                 Loading);
+    SerializeVar(Json, "GameServerPort",                                GameServerPort,                                 Loading);
+    SerializeVar(Json, "Announcements",                                 Announcements,                                  Loading);
+    SerializeVar(Json, "BloodMessageMaxLivePoolEntriesPerArea",         BloodMessageMaxLivePoolEntriesPerArea,          Loading);
+    SerializeVar(Json, "BloodMessagePrimeCountPerArea",                 BloodMessagePrimeCountPerArea,                  Loading);
 
     return true;
 }

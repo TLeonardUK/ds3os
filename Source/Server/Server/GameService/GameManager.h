@@ -34,11 +34,13 @@ public:
     virtual bool Term() { return true; };
     virtual void Poll() { };
 
-    // Called when a client disconnects.
-    virtual void OnClientDisconnected(GameClient* Client) { };
+    // Called when we have a new player the game manager may way to record information about.
+    // Note that this is not the same as the client connecting, we can gain/lose players if they
+    // for example: change their character.
+    virtual void OnGainPlayer(GameClient* Client) { };
 
-    // Called when a client connects.
-    virtual void OnClientConnected(GameClient* Client) { };
+    // Called when we have a lost a player previously registered with OnGainPlayer.
+    virtual void OnLostPlayer(GameClient* Client) { };
 
     // Called when a game client recieves a message.
     // Returns true if an error occured and the client should be disconnected.

@@ -46,8 +46,17 @@ public:
     // doesn't exist.
     std::shared_ptr<BloodMessage> FindBloodMessage(uint32_t MessageId);
 
+    // Gets the x most recent blood messages in the database.
+    std::vector<std::shared_ptr<BloodMessage>> FindRecentBloodMessage(OnlineAreaId AreaId, int Count);
+
     // Creates a new blood message with the given data and returns a representation of it.
     std::shared_ptr<BloodMessage> CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
+
+    // Removes a blood message from the database that is owned by the given player.
+    bool RemoveOwnBloodMessage(uint32_t PlayerId, uint32_t MessageId);
+
+    // Updates the evaluation ratings of a blood message.
+    bool SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor, uint32_t Good);
 
 protected:
 

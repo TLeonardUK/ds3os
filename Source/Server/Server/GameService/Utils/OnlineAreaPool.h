@@ -14,6 +14,10 @@
 #include <unordered_map>
 #include <queue>
 #include <memory>
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <vector>
 
 // Super simple cache split up spatially based on the online area.
 
@@ -44,6 +48,11 @@ private:
     }
 
 public:
+    OnlineAreaPool()
+        : RandomGenerator(RandomDevice())
+    {
+    }
+
     bool Remove(OnlineAreaId AreaId, EntryId Id)
     {
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
@@ -64,6 +73,36 @@ public:
             return iter->second;
         }
         return nullptr;
+    }
+
+    std::vector<std::shared_ptr<ValueType>> GetRandomSet(OnlineAreaId AreaId, int MaxCount)
+    {
+        std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
+
+        std::vector<std::shared_ptr<ValueType>> Result;
+
+        // TODO: This is not efficient its O(n), do this better.
+
+        // Get a list of entry id's
+        std::vector<EntryId> EntryIds;
+        EntryIds.reserve(AreaInstance->Entries.size());
+
+        for (auto KeyPair : AreaInstance->Entries) 
+        {
+            EntryIds.push_back(KeyPair.first);
+        }
+        
+        // Shuffle them up.
+        std::shuffle(EntryIds.begin(), EntryIds.end(), RandomGenerator);
+
+        // Select however many we need.
+        int MaxToGather = std::min(MaxCount, (int)EntryIds.size());
+        for (int i = 0; i < MaxToGather; i++)
+        {
+            Result.push_back(AreaInstance->Entries[EntryIds[i]]);
+        }
+
+        return Result;
     }
 
     bool Contains(OnlineAreaId AreaId, EntryId Id)
@@ -104,7 +143,7 @@ private:
 
     void TrimArea(std::shared_ptr<Area> AreaInstance)
     {
-        while (AreaInstance->Entries.size() > 0 && AreaInstance->RemoveOrderQueue.size() > 0)
+        while (AreaInstance->Entries.size() > MaxEntriesPerArea && AreaInstance->RemoveOrderQueue.size() > 0)
         {
             EntryId ToRemove = AreaInstance->RemoveOrderQueue.front();
             AreaInstance->RemoveOrderQueue.pop();
@@ -119,5 +158,8 @@ private:
 private:
     std::unordered_map<OnlineAreaId, std::shared_ptr<Area>> AreaMap;
     int MaxEntriesPerArea  = 100;
+
+    std::random_device RandomDevice;
+    std::mt19937 RandomGenerator;
 
 };

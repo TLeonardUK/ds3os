@@ -19,9 +19,16 @@ enum class ENUM_NAME
 #define strings_join2(a, b) a ## b
 #define strings_join(a, b) strings_join2(a, b)
 #define strings_array_name strings_join(strings_, ENUM_NAME)
+#define values_array_name strings_join(values_, ENUM_NAME)
 
 inline std::unordered_map<ENUM_NAME, std::string> strings_array_name = {
 #   define ENTRY(ident, display_name, value) { (ENUM_NAME)value, display_name },
+#   include ENUM_FILE
+#   undef ENTRY
+};
+
+inline std::vector<ENUM_NAME> values_array_name = {
+#   define ENTRY(ident, display_name, value) (ENUM_NAME)value,
 #   include ENUM_FILE
 #   undef ENTRY
 };
@@ -43,6 +50,12 @@ inline ENUM_NAME GetEnumValue<ENUM_NAME>(const std::string& value)
         }
     }
     return ENUM_NAME::Undefined;
+}
+
+template <>
+inline const std::vector<ENUM_NAME>* GetEnumValues()
+{
+    return &values_array_name;
 }
 
 #undef strings_join2

@@ -20,18 +20,18 @@
 struct PlayerState
 {
     // Steam ID of logged in user as a hex string.
-    std::string SteamId;
+    std::string SteamId = "";
 
     // Unique ID of the player account. Used for identifying the 
     // player in most packets past initial login, steam id is not used.
-    uint32_t PlayerId;
+    uint32_t PlayerId = 0;
 
     // The name of the character the player is currently playing with. Will be empty
     // until the first RequestUpdatePlayerStatus is invoked.
-    std::string CharacterName;
+    std::string CharacterName = "";
 
     // Current online matching area the player is in.
-    OnlineAreaId CurrentArea;
+    OnlineAreaId CurrentArea = OnlineAreaId::None;
 
     // Information the player sends and periodically patches with 
     // RequestUpdatePlayerStatus requests.

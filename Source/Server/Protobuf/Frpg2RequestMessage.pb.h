@@ -3557,12 +3557,17 @@ class BloodMessageData : public ::google::protobuf::MessageLite {
   inline ::std::string* release_message_data();
   inline void set_allocated_message_data(::std::string* message_data);
 
-  // required uint32 player_steam_id = 6;
+  // required string player_steam_id = 6;
   inline bool has_player_steam_id() const;
   inline void clear_player_steam_id();
   static const int kPlayerSteamIdFieldNumber = 6;
-  inline ::google::protobuf::uint32 player_steam_id() const;
-  inline void set_player_steam_id(::google::protobuf::uint32 value);
+  inline const ::std::string& player_steam_id() const;
+  inline void set_player_steam_id(const ::std::string& value);
+  inline void set_player_steam_id(const char* value);
+  inline void set_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_player_steam_id();
+  inline ::std::string* release_player_steam_id();
+  inline void set_allocated_player_steam_id(::std::string* player_steam_id);
 
   // required uint32 online_area_id = 7;
   inline bool has_online_area_id() const;
@@ -3606,7 +3611,7 @@ class BloodMessageData : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 message_id_;
   ::google::protobuf::uint32 good_;
   ::std::string* message_data_;
-  ::google::protobuf::uint32 player_steam_id_;
+  ::std::string* player_steam_id_;
   ::google::protobuf::uint32 online_area_id_;
   ::google::protobuf::uint32 poor_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -5518,12 +5523,17 @@ class PushRequestEvaluateBloodMessage : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 message_id() const;
   inline void set_message_id(::google::protobuf::uint32 value);
 
-  // required uint32 player_steam_id = 4;
+  // required string player_steam_id = 4;
   inline bool has_player_steam_id() const;
   inline void clear_player_steam_id();
   static const int kPlayerSteamIdFieldNumber = 4;
-  inline ::google::protobuf::uint32 player_steam_id() const;
-  inline void set_player_steam_id(::google::protobuf::uint32 value);
+  inline const ::std::string& player_steam_id() const;
+  inline void set_player_steam_id(const ::std::string& value);
+  inline void set_player_steam_id(const char* value);
+  inline void set_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_player_steam_id();
+  inline ::std::string* release_player_steam_id();
+  inline void set_allocated_player_steam_id(::std::string* player_steam_id);
 
   // required bool was_poor = 5;
   inline bool has_was_poor() const;
@@ -5551,8 +5561,8 @@ class PushRequestEvaluateBloodMessage : public ::google::protobuf::MessageLite {
   mutable int _cached_size_;
   int push_message_id_;
   ::google::protobuf::uint32 player_id_;
+  ::std::string* player_steam_id_;
   ::google::protobuf::uint32 message_id_;
-  ::google::protobuf::uint32 player_steam_id_;
   bool was_poor_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -26873,7 +26883,7 @@ inline void BloodMessageData::set_allocated_message_data(::std::string* message_
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.BloodMessageData.message_data)
 }
 
-// required uint32 player_steam_id = 6;
+// required string player_steam_id = 6;
 inline bool BloodMessageData::has_player_steam_id() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -26884,17 +26894,69 @@ inline void BloodMessageData::clear_has_player_steam_id() {
   _has_bits_[0] &= ~0x00000020u;
 }
 inline void BloodMessageData::clear_player_steam_id() {
-  player_steam_id_ = 0u;
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_->clear();
+  }
   clear_has_player_steam_id();
 }
-inline ::google::protobuf::uint32 BloodMessageData::player_steam_id() const {
+inline const ::std::string& BloodMessageData::player_steam_id() const {
   // @@protoc_insertion_point(field_get:Frpg2RequestMessage.BloodMessageData.player_steam_id)
+  return *player_steam_id_;
+}
+inline void BloodMessageData::set_player_steam_id(const ::std::string& value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodMessageData.player_steam_id)
+}
+inline void BloodMessageData::set_player_steam_id(const char* value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.BloodMessageData.player_steam_id)
+}
+inline void BloodMessageData::set_player_steam_id(const char* value, size_t size) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.BloodMessageData.player_steam_id)
+}
+inline ::std::string* BloodMessageData::mutable_player_steam_id() {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.BloodMessageData.player_steam_id)
   return player_steam_id_;
 }
-inline void BloodMessageData::set_player_steam_id(::google::protobuf::uint32 value) {
-  set_has_player_steam_id();
-  player_steam_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodMessageData.player_steam_id)
+inline ::std::string* BloodMessageData::release_player_steam_id() {
+  clear_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_steam_id_;
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void BloodMessageData::set_allocated_player_steam_id(::std::string* player_steam_id) {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
+  if (player_steam_id) {
+    set_has_player_steam_id();
+    player_steam_id_ = player_steam_id;
+  } else {
+    clear_has_player_steam_id();
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.BloodMessageData.player_steam_id)
 }
 
 // required uint32 online_area_id = 7;
@@ -28014,7 +28076,7 @@ inline void PushRequestEvaluateBloodMessage::set_message_id(::google::protobuf::
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.message_id)
 }
 
-// required uint32 player_steam_id = 4;
+// required string player_steam_id = 4;
 inline bool PushRequestEvaluateBloodMessage::has_player_steam_id() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -28025,17 +28087,69 @@ inline void PushRequestEvaluateBloodMessage::clear_has_player_steam_id() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void PushRequestEvaluateBloodMessage::clear_player_steam_id() {
-  player_steam_id_ = 0u;
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_->clear();
+  }
   clear_has_player_steam_id();
 }
-inline ::google::protobuf::uint32 PushRequestEvaluateBloodMessage::player_steam_id() const {
+inline const ::std::string& PushRequestEvaluateBloodMessage::player_steam_id() const {
   // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.player_steam_id)
+  return *player_steam_id_;
+}
+inline void PushRequestEvaluateBloodMessage::set_player_steam_id(const ::std::string& value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.player_steam_id)
+}
+inline void PushRequestEvaluateBloodMessage::set_player_steam_id(const char* value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.player_steam_id)
+}
+inline void PushRequestEvaluateBloodMessage::set_player_steam_id(const char* value, size_t size) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.player_steam_id)
+}
+inline ::std::string* PushRequestEvaluateBloodMessage::mutable_player_steam_id() {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.player_steam_id)
   return player_steam_id_;
 }
-inline void PushRequestEvaluateBloodMessage::set_player_steam_id(::google::protobuf::uint32 value) {
-  set_has_player_steam_id();
-  player_steam_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.player_steam_id)
+inline ::std::string* PushRequestEvaluateBloodMessage::release_player_steam_id() {
+  clear_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_steam_id_;
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestEvaluateBloodMessage::set_allocated_player_steam_id(::std::string* player_steam_id) {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
+  if (player_steam_id) {
+    set_has_player_steam_id();
+    player_steam_id_ = player_steam_id;
+  } else {
+    clear_has_player_steam_id();
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestEvaluateBloodMessage.player_steam_id)
 }
 
 // required bool was_poor = 5;

@@ -46,7 +46,7 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<BootManager>(ServerInstance));
     Managers.push_back(std::make_shared<LoggingManager>(ServerInstance));
     Managers.push_back(std::make_shared<PlayerDataManager>(ServerInstance));
-    Managers.push_back(std::make_shared<BloodMessageManager>(ServerInstance));
+    Managers.push_back(std::make_shared<BloodMessageManager>(ServerInstance, this));
     Managers.push_back(std::make_shared<BloodstainManager>(ServerInstance));
     Managers.push_back(std::make_shared<SignManager>(ServerInstance));
     Managers.push_back(std::make_shared<GhostManager>(ServerInstance));
@@ -106,7 +106,7 @@ void GameService::Poll()
 
     for (auto& Manager : Managers)
     {
-        Manager->Init();
+        Manager->Poll();
     }
 
     while (std::shared_ptr<NetConnection> ClientConnection = Connection->Accept())
@@ -148,7 +148,7 @@ void GameService::Poll()
             // may need to clean things up.
             for (auto& Manager : Managers)
             {
-                Manager->OnClientDisconnected(Client.get());
+                Manager->OnLostPlayer(Client.get());
             }
 
             iter = DisconnectingClients.erase(iter);
@@ -212,7 +212,7 @@ void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientCo
     // Let all managers know this client connected.
     for (auto& Manager : Managers)
     {
-        Manager->OnClientConnected(Client.get());
+        Manager->OnGainPlayer(Client.get());
     }
 }
 
@@ -241,4 +241,16 @@ void GameService::RefreshAuthToken(uint64_t AuthToken)
     }
 
     AuthStateIter->second.LastRefreshTime = GetSeconds();
+}
+
+std::shared_ptr<GameClient> GameService::FindClientByPlayerId(uint32_t PlayerId)
+{
+    for (std::shared_ptr<GameClient>& Client : Clients)
+    {
+        if (Client->GetPlayerState().PlayerId == PlayerId)
+        {
+            return Client;
+        }
+    }
+    return nullptr;
 }

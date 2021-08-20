@@ -66,7 +66,8 @@ bool ServerDatabase::CreateTables()
         "   PlayerSteamId       CHAR(50),"                                          \
         "   RatingPoor          INTEGER,"                                           \
         "   RatingGood          INTEGER,"                                           \
-        "   Data                BLOB"                                               \
+        "   Data                BLOB,"                                              \
+        "   CreatedTime         TEXT"                                               \
         ");"
     );
 
@@ -207,7 +208,27 @@ std::shared_ptr<BloodMessage> ServerDatabase::FindBloodMessage(uint32_t MessageI
         Result->RatingPoor      = sqlite3_column_int(statement, 4);
         Result->RatingGood      = sqlite3_column_int(statement, 5);
         const uint8_t* data_blob = (const uint8_t *)sqlite3_column_blob(statement, 6);
-        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 7));
+        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 6));
+    });
+
+    return Result;
+}
+
+std::vector<std::shared_ptr<BloodMessage>> ServerDatabase::FindRecentBloodMessage(OnlineAreaId AreaId, int Count)
+{
+    std::vector<std::shared_ptr<BloodMessage>> Result;
+
+    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+        std::shared_ptr<BloodMessage> Message = std::make_shared<BloodMessage>();
+        Message->MessageId = sqlite3_column_int(statement, 0);
+        Message->OnlineAreaId = (OnlineAreaId)sqlite3_column_int(statement, 1);
+        Message->PlayerId = sqlite3_column_int(statement, 2);
+        Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+        Message->RatingPoor = sqlite3_column_int(statement, 4);
+        Message->RatingGood = sqlite3_column_int(statement, 5);
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 6);
+        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 6));
+        Result.push_back(Message);
     });
 
     return Result;
@@ -215,7 +236,7 @@ std::shared_ptr<BloodMessage> ServerDatabase::FindBloodMessage(uint32_t MessageI
 
 std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data)
 {
-    if (!RunStatement("INSERT INTO BloodMessages(OnlineAreaId, PlayerId, PlayerSteamId, RatingPoor, RatingGood, Data) VALUES(?1, ?2, ?3, ?4, ?5, ?6)", { (uint32_t)AreaId, PlayerId, PlayerSteamId, 0, 0, Data }, nullptr))
+    if (!RunStatement("INSERT INTO BloodMessages(OnlineAreaId, PlayerId, PlayerSteamId, RatingPoor, RatingGood, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, ?6, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, 0, 0, Data }, nullptr))
     {
         return nullptr;
     }
@@ -230,4 +251,24 @@ std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(OnlineAreaId Ar
     Result->Data = Data;
 
     return Result;
+}
+
+bool ServerDatabase::RemoveOwnBloodMessage(uint32_t PlayerId, uint32_t MessageId)
+{
+    if (!RunStatement("DELETE FROM BloodMessages WHERE MessageId = ?1 AND PlayerId = ?2", { MessageId, PlayerId }, nullptr))
+    {
+        return false;
+    }
+
+    return sqlite3_total_changes(db_handle) > 0;
+}
+
+bool ServerDatabase::SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor, uint32_t Good)
+{
+    if (!RunStatement("UPDATE BloodMessages SET RatingPoor = ?1, RatingGood = ?2 WHERE MessageId = ?3", { Poor, Good, MessageId }, nullptr))
+    {
+        return false;
+    }
+
+    return sqlite3_total_changes(db_handle) > 0;
 }

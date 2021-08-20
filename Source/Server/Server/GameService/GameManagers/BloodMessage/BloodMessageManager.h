@@ -15,6 +15,7 @@
 
 struct Frpg2ReliableUdpMessage;
 class Server;
+class GameService;
 
 // Handles client requests relating to placing, reading and 
 // upvoting blood message left in the world.
@@ -23,7 +24,10 @@ class BloodMessageManager
     : public GameManager
 {
 public:    
-    BloodMessageManager(Server* InServerInstance);
+    BloodMessageManager(Server* InServerInstance, GameService* InGameServiceInstance);
+
+    virtual bool Init() override;
+    virtual void Poll() override;
 
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
@@ -40,6 +44,7 @@ protected:
 
 private:
     Server* ServerInstance;
+    GameService* GameServiceInstance;
 
     OnlineAreaPool<BloodMessage> LiveMessageCache;
 

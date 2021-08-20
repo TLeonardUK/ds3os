@@ -27,3 +27,10 @@ inline T GetEnumValue(const std::string& Input)
     Ensure(false);
     return T();
 }
+
+template <typename T>
+inline const std::vector<T>* GetEnumValues()
+{
+    Ensure(false);
+    return nullptr;
+}

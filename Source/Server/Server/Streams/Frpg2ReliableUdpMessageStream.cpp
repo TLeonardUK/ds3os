@@ -107,6 +107,8 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
         return true;
     }
 
+    Log("[%s] Sending '%s' to client.", Connection->GetName().c_str(), Message->GetTypeName().c_str());
+
     return true;
 }
 
