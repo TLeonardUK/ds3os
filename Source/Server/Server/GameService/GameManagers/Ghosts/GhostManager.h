@@ -10,6 +10,8 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
+#include "Server/GameService/Utils/OnlineAreaPool.h"
+#include "Server/Database/DatabaseTypes.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
@@ -24,6 +26,8 @@ class GhostManager
 public:    
     GhostManager(Server* InServerInstance);
 
+    virtual bool Init() override;
+
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
@@ -34,5 +38,7 @@ protected:
 
 private:
     Server* ServerInstance;
+
+    OnlineAreaPool<Ghost> LiveCache;
 
 };

@@ -73,6 +73,15 @@ public:
     // re-enter their messages.
     int BloodstainPrimeCountPerArea = 50;
 
+    // Maximum number of ghoststo store per area in the cache.
+    // If greater than this value are added, the oldest will be removed.
+    int GhostMaxLivePoolEntriesPerArea = 100;
+
+    // How many ghosts to insert into the live pool from the database
+    // when the server starts. Saves the game looking empty until enough players
+    // re-enter their messages.
+    int GhostPrimeCountPerArea = 50;
+
 public:
 
     bool Save(const std::filesystem::path& Path);

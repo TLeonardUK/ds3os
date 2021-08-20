@@ -72,6 +72,16 @@ public:
     // Creates a new blood stain with the given data and returns a representation of it.
     std::shared_ptr<Bloodstain> CreateBloodstain(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData);
 
+    // ----------------------------------------------------------------
+    // Ghosts interface
+    // ----------------------------------------------------------------
+
+    // Gets the x most recent ghosts in the database.
+    std::vector<std::shared_ptr<Ghost>> FindRecentGhosts(OnlineAreaId AreaId, int Count);
+
+    // Creates a new ghost with the given data and returns a representation of it.
+    std::shared_ptr<Ghost> CreateGhost(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
+
 protected:
 
     using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>>;

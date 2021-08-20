@@ -38,3 +38,15 @@ struct Bloodstain
     std::vector<uint8_t> Data;
     std::vector<uint8_t> GhostData;
 };
+
+// Ghost stored in the database or live cache.
+struct Ghost
+{
+    uint32_t GhostId;
+    OnlineAreaId OnlineAreaId;
+
+    uint32_t PlayerId;
+    std::string PlayerSteamId;
+
+    std::vector<uint8_t> Data;
+};

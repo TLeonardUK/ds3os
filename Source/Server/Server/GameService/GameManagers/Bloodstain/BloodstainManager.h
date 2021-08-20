@@ -41,6 +41,4 @@ private:
 
     OnlineAreaPool<Bloodstain> LiveCache;
 
-    uint32_t NextBloodstainId = 1;
-
 };

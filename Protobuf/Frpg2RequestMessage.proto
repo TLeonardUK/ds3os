@@ -823,7 +823,7 @@ message GhostData {
 
 message RequestCreateGhostData {
     required uint32 online_area_id = 1;
-    required bytes ghost_data = 2;
+    required bytes data = 2;
 }
 
 message RequestCreateGhostDataResponse {

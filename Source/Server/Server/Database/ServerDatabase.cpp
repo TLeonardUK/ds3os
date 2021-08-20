@@ -81,6 +81,16 @@ bool ServerDatabase::CreateTables()
         "   CreatedTime         TEXT"                                               \
         ");"
     );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS Ghosts("                                        \
+        "   GhostId             INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   OnlineAreaId        INTEGER,"                                           \
+        "   PlayerId            INTEGER,"                                           \
+        "   PlayerSteamId       CHAR(50),"                                          \
+        "   Data                BLOB,"                                              \
+        "   CreatedTime         TEXT"                                               \
+        ");"
+    );
 
     for (const std::string& statement : tables)
     {
@@ -342,6 +352,43 @@ std::shared_ptr<Bloodstain> ServerDatabase::CreateBloodstain(OnlineAreaId AreaId
     Result->PlayerSteamId = PlayerSteamId;
     Result->Data = Data;
     Result->GhostData = GhostData;
+
+    return Result;
+}
+
+std::vector<std::shared_ptr<Ghost>> ServerDatabase::FindRecentGhosts(OnlineAreaId AreaId, int Count)
+{
+    std::vector<std::shared_ptr<Ghost>> Result;
+
+    RunStatement("SELECT GhostId, OnlineAreaId, PlayerId, PlayerSteamId, Data FROM Ghosts WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+        std::shared_ptr<Ghost> Entry = std::make_shared<Ghost>();
+        Entry->GhostId = sqlite3_column_int(statement, 0);
+        Entry->OnlineAreaId = (OnlineAreaId)sqlite3_column_int(statement, 1);
+        Entry->PlayerId = sqlite3_column_int(statement, 2);
+        Entry->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 4);
+        Entry->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 4));
+
+        Result.push_back(Entry);
+    });
+
+    return Result;
+}
+
+std::shared_ptr<Ghost> ServerDatabase::CreateGhost(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data)
+{
+    if (!RunStatement("INSERT INTO Ghosts(OnlineAreaId, PlayerId, PlayerSteamId, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, Data }, nullptr))
+    {
+        return nullptr;
+    }
+
+    std::shared_ptr<Ghost> Result = std::make_shared<Ghost>();
+    Result->GhostId = (uint32_t)sqlite3_last_insert_rowid(db_handle);
+    Result->OnlineAreaId = AreaId;
+    Result->PlayerId = PlayerId;
+    Result->PlayerSteamId = PlayerSteamId;
+    Result->Data = Data;
 
     return Result;
 }

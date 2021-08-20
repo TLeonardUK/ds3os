@@ -88,6 +88,8 @@ class BloodstainInfo;
 class RequestCreateBloodstain;
 class RequestGetBloodstainList;
 class RequestGetBloodstainListResponse;
+class RequestGetDeadingGhost;
+class RequestGetDeadingGhostResponse;
 class LogCommonInfo_1;
 class LogCommonInfo;
 class DomainLimitData;
@@ -145,8 +147,6 @@ class RequestBreakInTarget;
 class RequestBreakInTargetResponse;
 class RequestRejectBreakInTarget;
 class RequestRejectBreakInTargetResponse;
-class RequestGetDeadingGhost;
-class RequestGetDeadingGhostResponse;
 class RequestGetGhostDataList;
 class GhostData;
 class RequestCreateGhostData;
@@ -6009,6 +6009,223 @@ class RequestGetBloodstainListResponse : public ::google::protobuf::MessageLite 
 
   void InitAsDefaultInstance();
   static RequestGetBloodstainListResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestGetDeadingGhost : public ::google::protobuf::MessageLite {
+ public:
+  RequestGetDeadingGhost();
+  virtual ~RequestGetDeadingGhost();
+
+  RequestGetDeadingGhost(const RequestGetDeadingGhost& from);
+
+  inline RequestGetDeadingGhost& operator=(const RequestGetDeadingGhost& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestGetDeadingGhost& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestGetDeadingGhost* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestGetDeadingGhost* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestGetDeadingGhost* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestGetDeadingGhost& from);
+  void MergeFrom(const RequestGetDeadingGhost& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 bloodstain_id = 2;
+  inline bool has_bloodstain_id() const;
+  inline void clear_bloodstain_id();
+  static const int kBloodstainIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 bloodstain_id() const;
+  inline void set_bloodstain_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetDeadingGhost)
+ private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_bloodstain_id();
+  inline void clear_has_bloodstain_id();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 bloodstain_id_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestGetDeadingGhost* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestGetDeadingGhostResponse : public ::google::protobuf::MessageLite {
+ public:
+  RequestGetDeadingGhostResponse();
+  virtual ~RequestGetDeadingGhostResponse();
+
+  RequestGetDeadingGhostResponse(const RequestGetDeadingGhostResponse& from);
+
+  inline RequestGetDeadingGhostResponse& operator=(const RequestGetDeadingGhostResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestGetDeadingGhostResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestGetDeadingGhostResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestGetDeadingGhostResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestGetDeadingGhostResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestGetDeadingGhostResponse& from);
+  void MergeFrom(const RequestGetDeadingGhostResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // required uint32 bloodstain_id = 2;
+  inline bool has_bloodstain_id() const;
+  inline void clear_bloodstain_id();
+  static const int kBloodstainIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 bloodstain_id() const;
+  inline void set_bloodstain_id(::google::protobuf::uint32 value);
+
+  // required bytes data = 3;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 3;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetDeadingGhostResponse)
+ private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_bloodstain_id();
+  inline void clear_has_bloodstain_id();
+  inline void set_has_data();
+  inline void clear_has_data();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 bloodstain_id_;
+  ::std::string* data_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestGetDeadingGhostResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -12381,223 +12598,6 @@ class RequestRejectBreakInTargetResponse : public ::google::protobuf::MessageLit
 };
 // -------------------------------------------------------------------
 
-class RequestGetDeadingGhost : public ::google::protobuf::MessageLite {
- public:
-  RequestGetDeadingGhost();
-  virtual ~RequestGetDeadingGhost();
-
-  RequestGetDeadingGhost(const RequestGetDeadingGhost& from);
-
-  inline RequestGetDeadingGhost& operator=(const RequestGetDeadingGhost& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const RequestGetDeadingGhost& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const RequestGetDeadingGhost* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(RequestGetDeadingGhost* other);
-
-  // implements Message ----------------------------------------------
-
-  RequestGetDeadingGhost* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const RequestGetDeadingGhost& from);
-  void MergeFrom(const RequestGetDeadingGhost& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 online_area_id = 1;
-  inline bool has_online_area_id() const;
-  inline void clear_online_area_id();
-  static const int kOnlineAreaIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 online_area_id() const;
-  inline void set_online_area_id(::google::protobuf::uint32 value);
-
-  // required uint32 bloodstain_id = 2;
-  inline bool has_bloodstain_id() const;
-  inline void clear_bloodstain_id();
-  static const int kBloodstainIdFieldNumber = 2;
-  inline ::google::protobuf::uint32 bloodstain_id() const;
-  inline void set_bloodstain_id(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetDeadingGhost)
- private:
-  inline void set_has_online_area_id();
-  inline void clear_has_online_area_id();
-  inline void set_has_bloodstain_id();
-  inline void clear_has_bloodstain_id();
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 online_area_id_;
-  ::google::protobuf::uint32 bloodstain_id_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static RequestGetDeadingGhost* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class RequestGetDeadingGhostResponse : public ::google::protobuf::MessageLite {
- public:
-  RequestGetDeadingGhostResponse();
-  virtual ~RequestGetDeadingGhostResponse();
-
-  RequestGetDeadingGhostResponse(const RequestGetDeadingGhostResponse& from);
-
-  inline RequestGetDeadingGhostResponse& operator=(const RequestGetDeadingGhostResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const RequestGetDeadingGhostResponse& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const RequestGetDeadingGhostResponse* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(RequestGetDeadingGhostResponse* other);
-
-  // implements Message ----------------------------------------------
-
-  RequestGetDeadingGhostResponse* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const RequestGetDeadingGhostResponse& from);
-  void MergeFrom(const RequestGetDeadingGhostResponse& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 online_area_id = 1;
-  inline bool has_online_area_id() const;
-  inline void clear_online_area_id();
-  static const int kOnlineAreaIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 online_area_id() const;
-  inline void set_online_area_id(::google::protobuf::uint32 value);
-
-  // required uint32 bloodstain_id = 2;
-  inline bool has_bloodstain_id() const;
-  inline void clear_bloodstain_id();
-  static const int kBloodstainIdFieldNumber = 2;
-  inline ::google::protobuf::uint32 bloodstain_id() const;
-  inline void set_bloodstain_id(::google::protobuf::uint32 value);
-
-  // required bytes data = 3;
-  inline bool has_data() const;
-  inline void clear_data();
-  static const int kDataFieldNumber = 3;
-  inline const ::std::string& data() const;
-  inline void set_data(const ::std::string& value);
-  inline void set_data(const char* value);
-  inline void set_data(const void* value, size_t size);
-  inline ::std::string* mutable_data();
-  inline ::std::string* release_data();
-  inline void set_allocated_data(::std::string* data);
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetDeadingGhostResponse)
- private:
-  inline void set_has_online_area_id();
-  inline void clear_has_online_area_id();
-  inline void set_has_bloodstain_id();
-  inline void clear_has_bloodstain_id();
-  inline void set_has_data();
-  inline void clear_has_data();
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 online_area_id_;
-  ::google::protobuf::uint32 bloodstain_id_;
-  ::std::string* data_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static RequestGetDeadingGhostResponse* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class RequestGetGhostDataList : public ::google::protobuf::MessageLite {
  public:
   RequestGetGhostDataList();
@@ -12886,30 +12886,30 @@ class RequestCreateGhostData : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
 
-  // required bytes ghost_data = 2;
-  inline bool has_ghost_data() const;
-  inline void clear_ghost_data();
-  static const int kGhostDataFieldNumber = 2;
-  inline const ::std::string& ghost_data() const;
-  inline void set_ghost_data(const ::std::string& value);
-  inline void set_ghost_data(const char* value);
-  inline void set_ghost_data(const void* value, size_t size);
-  inline ::std::string* mutable_ghost_data();
-  inline ::std::string* release_ghost_data();
-  inline void set_allocated_ghost_data(::std::string* ghost_data);
+  // required bytes data = 2;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 2;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateGhostData)
  private:
   inline void set_has_online_area_id();
   inline void clear_has_online_area_id();
-  inline void set_has_ghost_data();
-  inline void clear_has_ghost_data();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* ghost_data_;
+  ::std::string* data_;
   ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -28578,6 +28578,186 @@ RequestGetBloodstainListResponse::mutable_bloodstains() {
 
 // -------------------------------------------------------------------
 
+// RequestGetDeadingGhost
+
+// required uint32 online_area_id = 1;
+inline bool RequestGetDeadingGhost::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetDeadingGhost::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetDeadingGhost::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetDeadingGhost::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhost::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhost.online_area_id)
+  return online_area_id_;
+}
+inline void RequestGetDeadingGhost::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhost.online_area_id)
+}
+
+// required uint32 bloodstain_id = 2;
+inline bool RequestGetDeadingGhost::has_bloodstain_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetDeadingGhost::set_has_bloodstain_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetDeadingGhost::clear_has_bloodstain_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetDeadingGhost::clear_bloodstain_id() {
+  bloodstain_id_ = 0u;
+  clear_has_bloodstain_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhost::bloodstain_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhost.bloodstain_id)
+  return bloodstain_id_;
+}
+inline void RequestGetDeadingGhost::set_bloodstain_id(::google::protobuf::uint32 value) {
+  set_has_bloodstain_id();
+  bloodstain_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhost.bloodstain_id)
+}
+
+// -------------------------------------------------------------------
+
+// RequestGetDeadingGhostResponse
+
+// required uint32 online_area_id = 1;
+inline bool RequestGetDeadingGhostResponse::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetDeadingGhostResponse::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetDeadingGhostResponse::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetDeadingGhostResponse::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhostResponse::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.online_area_id)
+  return online_area_id_;
+}
+inline void RequestGetDeadingGhostResponse::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.online_area_id)
+}
+
+// required uint32 bloodstain_id = 2;
+inline bool RequestGetDeadingGhostResponse::has_bloodstain_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetDeadingGhostResponse::set_has_bloodstain_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetDeadingGhostResponse::clear_has_bloodstain_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetDeadingGhostResponse::clear_bloodstain_id() {
+  bloodstain_id_ = 0u;
+  clear_has_bloodstain_id();
+}
+inline ::google::protobuf::uint32 RequestGetDeadingGhostResponse::bloodstain_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.bloodstain_id)
+  return bloodstain_id_;
+}
+inline void RequestGetDeadingGhostResponse::set_bloodstain_id(::google::protobuf::uint32 value) {
+  set_has_bloodstain_id();
+  bloodstain_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.bloodstain_id)
+}
+
+// required bytes data = 3;
+inline bool RequestGetDeadingGhostResponse::has_data() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestGetDeadingGhostResponse::set_has_data() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestGetDeadingGhostResponse::clear_has_data() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestGetDeadingGhostResponse::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& RequestGetDeadingGhostResponse::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+  return *data_;
+}
+inline void RequestGetDeadingGhostResponse::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+inline void RequestGetDeadingGhostResponse::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+inline void RequestGetDeadingGhostResponse::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+inline ::std::string* RequestGetDeadingGhostResponse::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+  return data_;
+}
+inline ::std::string* RequestGetDeadingGhostResponse::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestGetDeadingGhostResponse::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
+}
+
+// -------------------------------------------------------------------
+
 // LogCommonInfo_1
 
 // required uint32 unknown_1 = 34;
@@ -34042,186 +34222,6 @@ inline void RequestBreakInTarget::set_unknown_1(::google::protobuf::uint32 value
 
 // -------------------------------------------------------------------
 
-// RequestGetDeadingGhost
-
-// required uint32 online_area_id = 1;
-inline bool RequestGetDeadingGhost::has_online_area_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void RequestGetDeadingGhost::set_has_online_area_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void RequestGetDeadingGhost::clear_has_online_area_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void RequestGetDeadingGhost::clear_online_area_id() {
-  online_area_id_ = 0u;
-  clear_has_online_area_id();
-}
-inline ::google::protobuf::uint32 RequestGetDeadingGhost::online_area_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhost.online_area_id)
-  return online_area_id_;
-}
-inline void RequestGetDeadingGhost::set_online_area_id(::google::protobuf::uint32 value) {
-  set_has_online_area_id();
-  online_area_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhost.online_area_id)
-}
-
-// required uint32 bloodstain_id = 2;
-inline bool RequestGetDeadingGhost::has_bloodstain_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void RequestGetDeadingGhost::set_has_bloodstain_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void RequestGetDeadingGhost::clear_has_bloodstain_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void RequestGetDeadingGhost::clear_bloodstain_id() {
-  bloodstain_id_ = 0u;
-  clear_has_bloodstain_id();
-}
-inline ::google::protobuf::uint32 RequestGetDeadingGhost::bloodstain_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhost.bloodstain_id)
-  return bloodstain_id_;
-}
-inline void RequestGetDeadingGhost::set_bloodstain_id(::google::protobuf::uint32 value) {
-  set_has_bloodstain_id();
-  bloodstain_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhost.bloodstain_id)
-}
-
-// -------------------------------------------------------------------
-
-// RequestGetDeadingGhostResponse
-
-// required uint32 online_area_id = 1;
-inline bool RequestGetDeadingGhostResponse::has_online_area_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void RequestGetDeadingGhostResponse::set_has_online_area_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void RequestGetDeadingGhostResponse::clear_has_online_area_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void RequestGetDeadingGhostResponse::clear_online_area_id() {
-  online_area_id_ = 0u;
-  clear_has_online_area_id();
-}
-inline ::google::protobuf::uint32 RequestGetDeadingGhostResponse::online_area_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.online_area_id)
-  return online_area_id_;
-}
-inline void RequestGetDeadingGhostResponse::set_online_area_id(::google::protobuf::uint32 value) {
-  set_has_online_area_id();
-  online_area_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.online_area_id)
-}
-
-// required uint32 bloodstain_id = 2;
-inline bool RequestGetDeadingGhostResponse::has_bloodstain_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void RequestGetDeadingGhostResponse::set_has_bloodstain_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void RequestGetDeadingGhostResponse::clear_has_bloodstain_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void RequestGetDeadingGhostResponse::clear_bloodstain_id() {
-  bloodstain_id_ = 0u;
-  clear_has_bloodstain_id();
-}
-inline ::google::protobuf::uint32 RequestGetDeadingGhostResponse::bloodstain_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.bloodstain_id)
-  return bloodstain_id_;
-}
-inline void RequestGetDeadingGhostResponse::set_bloodstain_id(::google::protobuf::uint32 value) {
-  set_has_bloodstain_id();
-  bloodstain_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.bloodstain_id)
-}
-
-// required bytes data = 3;
-inline bool RequestGetDeadingGhostResponse::has_data() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void RequestGetDeadingGhostResponse::set_has_data() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void RequestGetDeadingGhostResponse::clear_has_data() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void RequestGetDeadingGhostResponse::clear_data() {
-  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_->clear();
-  }
-  clear_has_data();
-}
-inline const ::std::string& RequestGetDeadingGhostResponse::data() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
-  return *data_;
-}
-inline void RequestGetDeadingGhostResponse::set_data(const ::std::string& value) {
-  set_has_data();
-  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_ = new ::std::string;
-  }
-  data_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
-}
-inline void RequestGetDeadingGhostResponse::set_data(const char* value) {
-  set_has_data();
-  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_ = new ::std::string;
-  }
-  data_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
-}
-inline void RequestGetDeadingGhostResponse::set_data(const void* value, size_t size) {
-  set_has_data();
-  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_ = new ::std::string;
-  }
-  data_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
-}
-inline ::std::string* RequestGetDeadingGhostResponse::mutable_data() {
-  set_has_data();
-  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
-  return data_;
-}
-inline ::std::string* RequestGetDeadingGhostResponse::release_data() {
-  clear_has_data();
-  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = data_;
-    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void RequestGetDeadingGhostResponse::set_allocated_data(::std::string* data) {
-  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete data_;
-  }
-  if (data) {
-    set_has_data();
-    data_ = data;
-  } else {
-    clear_has_data();
-    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestGetDeadingGhostResponse.data)
-}
-
-// -------------------------------------------------------------------
-
 // RequestGetGhostDataList
 
 // required uint32 max_ghosts = 1;
@@ -34434,80 +34434,80 @@ inline void RequestCreateGhostData::set_online_area_id(::google::protobuf::uint3
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateGhostData.online_area_id)
 }
 
-// required bytes ghost_data = 2;
-inline bool RequestCreateGhostData::has_ghost_data() const {
+// required bytes data = 2;
+inline bool RequestCreateGhostData::has_data() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RequestCreateGhostData::set_has_ghost_data() {
+inline void RequestCreateGhostData::set_has_data() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RequestCreateGhostData::clear_has_ghost_data() {
+inline void RequestCreateGhostData::clear_has_data() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RequestCreateGhostData::clear_ghost_data() {
-  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_->clear();
+inline void RequestCreateGhostData::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
   }
-  clear_has_ghost_data();
+  clear_has_data();
 }
-inline const ::std::string& RequestCreateGhostData::ghost_data() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-  return *ghost_data_;
+inline const ::std::string& RequestCreateGhostData::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateGhostData.data)
+  return *data_;
 }
-inline void RequestCreateGhostData::set_ghost_data(const ::std::string& value) {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
+inline void RequestCreateGhostData::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  ghost_data_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateGhostData.data)
 }
-inline void RequestCreateGhostData::set_ghost_data(const char* value) {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
+inline void RequestCreateGhostData::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  ghost_data_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateGhostData.data)
 }
-inline void RequestCreateGhostData::set_ghost_data(const void* value, size_t size) {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
+inline void RequestCreateGhostData::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  ghost_data_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateGhostData.data)
 }
-inline ::std::string* RequestCreateGhostData::mutable_ghost_data() {
-  set_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    ghost_data_ = new ::std::string;
+inline ::std::string* RequestCreateGhostData::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
-  return ghost_data_;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateGhostData.data)
+  return data_;
 }
-inline ::std::string* RequestCreateGhostData::release_ghost_data() {
-  clear_has_ghost_data();
-  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* RequestCreateGhostData::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = ghost_data_;
-    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void RequestCreateGhostData::set_allocated_ghost_data(::std::string* ghost_data) {
-  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete ghost_data_;
+inline void RequestCreateGhostData::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
-  if (ghost_data) {
-    set_has_ghost_data();
-    ghost_data_ = ghost_data;
+  if (data) {
+    set_has_data();
+    data_ = data;
   } else {
-    clear_has_ghost_data();
-    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateGhostData.ghost_data)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateGhostData.data)
 }
 
 // -------------------------------------------------------------------

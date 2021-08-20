@@ -115,6 +115,8 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SerializeVar(Json, "BloodMessagePrimeCountPerArea",                 BloodMessagePrimeCountPerArea,                  Loading);
     SerializeVar(Json, "BloodstainMaxLivePoolEntriesPerArea",           BloodstainMaxLivePoolEntriesPerArea,            Loading);
     SerializeVar(Json, "BloodstainPrimeCountPerArea",                   BloodstainPrimeCountPerArea,                    Loading);
+    SerializeVar(Json, "GhostMaxLivePoolEntriesPerArea",                GhostMaxLivePoolEntriesPerArea,                 Loading);
+    SerializeVar(Json, "GhostPrimeCountPerArea",                        GhostPrimeCountPerArea,                         Loading);
 
     return true;
 }
