@@ -5652,17 +5652,17 @@ class BloodstainInfo : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 bloodstain_id() const;
   inline void set_bloodstain_id(::google::protobuf::uint32 value);
 
-  // required bytes data_block = 3;
-  inline bool has_data_block() const;
-  inline void clear_data_block();
-  static const int kDataBlockFieldNumber = 3;
-  inline const ::std::string& data_block() const;
-  inline void set_data_block(const ::std::string& value);
-  inline void set_data_block(const char* value);
-  inline void set_data_block(const void* value, size_t size);
-  inline ::std::string* mutable_data_block();
-  inline ::std::string* release_data_block();
-  inline void set_allocated_data_block(::std::string* data_block);
+  // required bytes data = 3;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 3;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.BloodstainInfo)
  private:
@@ -5670,8 +5670,8 @@ class BloodstainInfo : public ::google::protobuf::MessageLite {
   inline void clear_has_online_area_id();
   inline void set_has_bloodstain_id();
   inline void clear_has_bloodstain_id();
-  inline void set_has_data_block();
-  inline void clear_has_data_block();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
@@ -5679,7 +5679,7 @@ class BloodstainInfo : public ::google::protobuf::MessageLite {
   mutable int _cached_size_;
   ::google::protobuf::uint32 online_area_id_;
   ::google::protobuf::uint32 bloodstain_id_;
-  ::std::string* data_block_;
+  ::std::string* data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -5761,45 +5761,45 @@ class RequestCreateBloodstain : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
 
-  // required bytes data_block_1 = 2;
-  inline bool has_data_block_1() const;
-  inline void clear_data_block_1();
-  static const int kDataBlock1FieldNumber = 2;
-  inline const ::std::string& data_block_1() const;
-  inline void set_data_block_1(const ::std::string& value);
-  inline void set_data_block_1(const char* value);
-  inline void set_data_block_1(const void* value, size_t size);
-  inline ::std::string* mutable_data_block_1();
-  inline ::std::string* release_data_block_1();
-  inline void set_allocated_data_block_1(::std::string* data_block_1);
+  // required bytes data = 2;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 2;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
 
-  // required bytes data_block_2 = 3;
-  inline bool has_data_block_2() const;
-  inline void clear_data_block_2();
-  static const int kDataBlock2FieldNumber = 3;
-  inline const ::std::string& data_block_2() const;
-  inline void set_data_block_2(const ::std::string& value);
-  inline void set_data_block_2(const char* value);
-  inline void set_data_block_2(const void* value, size_t size);
-  inline ::std::string* mutable_data_block_2();
-  inline ::std::string* release_data_block_2();
-  inline void set_allocated_data_block_2(::std::string* data_block_2);
+  // required bytes ghost_data = 3;
+  inline bool has_ghost_data() const;
+  inline void clear_ghost_data();
+  static const int kGhostDataFieldNumber = 3;
+  inline const ::std::string& ghost_data() const;
+  inline void set_ghost_data(const ::std::string& value);
+  inline void set_ghost_data(const char* value);
+  inline void set_ghost_data(const void* value, size_t size);
+  inline ::std::string* mutable_ghost_data();
+  inline ::std::string* release_ghost_data();
+  inline void set_allocated_ghost_data(::std::string* ghost_data);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateBloodstain)
  private:
   inline void set_has_online_area_id();
   inline void clear_has_online_area_id();
-  inline void set_has_data_block_1();
-  inline void clear_has_data_block_1();
-  inline void set_has_data_block_2();
-  inline void clear_has_data_block_2();
+  inline void set_has_data();
+  inline void clear_has_data();
+  inline void set_has_ghost_data();
+  inline void clear_has_ghost_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* data_block_1_;
-  ::std::string* data_block_2_;
+  ::std::string* data_;
+  ::std::string* ghost_data_;
   ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -28228,80 +28228,80 @@ inline void BloodstainInfo::set_bloodstain_id(::google::protobuf::uint32 value) 
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodstainInfo.bloodstain_id)
 }
 
-// required bytes data_block = 3;
-inline bool BloodstainInfo::has_data_block() const {
+// required bytes data = 3;
+inline bool BloodstainInfo::has_data() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void BloodstainInfo::set_has_data_block() {
+inline void BloodstainInfo::set_has_data() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void BloodstainInfo::clear_has_data_block() {
+inline void BloodstainInfo::clear_has_data() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void BloodstainInfo::clear_data_block() {
-  if (data_block_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_->clear();
+inline void BloodstainInfo::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
   }
-  clear_has_data_block();
+  clear_has_data();
 }
-inline const ::std::string& BloodstainInfo::data_block() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.BloodstainInfo.data_block)
-  return *data_block_;
+inline const ::std::string& BloodstainInfo::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.BloodstainInfo.data)
+  return *data_;
 }
-inline void BloodstainInfo::set_data_block(const ::std::string& value) {
-  set_has_data_block();
-  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_ = new ::std::string;
+inline void BloodstainInfo::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  data_block_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodstainInfo.data_block)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.BloodstainInfo.data)
 }
-inline void BloodstainInfo::set_data_block(const char* value) {
-  set_has_data_block();
-  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_ = new ::std::string;
+inline void BloodstainInfo::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  data_block_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.BloodstainInfo.data_block)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.BloodstainInfo.data)
 }
-inline void BloodstainInfo::set_data_block(const void* value, size_t size) {
-  set_has_data_block();
-  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_ = new ::std::string;
+inline void BloodstainInfo::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  data_block_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.BloodstainInfo.data_block)
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.BloodstainInfo.data)
 }
-inline ::std::string* BloodstainInfo::mutable_data_block() {
-  set_has_data_block();
-  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_ = new ::std::string;
+inline ::std::string* BloodstainInfo::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.BloodstainInfo.data_block)
-  return data_block_;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.BloodstainInfo.data)
+  return data_;
 }
-inline ::std::string* BloodstainInfo::release_data_block() {
-  clear_has_data_block();
-  if (data_block_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* BloodstainInfo::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = data_block_;
-    data_block_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void BloodstainInfo::set_allocated_data_block(::std::string* data_block) {
-  if (data_block_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete data_block_;
+inline void BloodstainInfo::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
-  if (data_block) {
-    set_has_data_block();
-    data_block_ = data_block;
+  if (data) {
+    set_has_data();
+    data_ = data;
   } else {
-    clear_has_data_block();
-    data_block_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.BloodstainInfo.data_block)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.BloodstainInfo.data)
 }
 
 // -------------------------------------------------------------------
@@ -28332,156 +28332,156 @@ inline void RequestCreateBloodstain::set_online_area_id(::google::protobuf::uint
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.online_area_id)
 }
 
-// required bytes data_block_1 = 2;
-inline bool RequestCreateBloodstain::has_data_block_1() const {
+// required bytes data = 2;
+inline bool RequestCreateBloodstain::has_data() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RequestCreateBloodstain::set_has_data_block_1() {
+inline void RequestCreateBloodstain::set_has_data() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RequestCreateBloodstain::clear_has_data_block_1() {
+inline void RequestCreateBloodstain::clear_has_data() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RequestCreateBloodstain::clear_data_block_1() {
-  if (data_block_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_1_->clear();
+inline void RequestCreateBloodstain::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
   }
-  clear_has_data_block_1();
+  clear_has_data();
 }
-inline const ::std::string& RequestCreateBloodstain::data_block_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
-  return *data_block_1_;
+inline const ::std::string& RequestCreateBloodstain::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateBloodstain.data)
+  return *data_;
 }
-inline void RequestCreateBloodstain::set_data_block_1(const ::std::string& value) {
-  set_has_data_block_1();
-  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_1_ = new ::std::string;
+inline void RequestCreateBloodstain::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  data_block_1_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.data)
 }
-inline void RequestCreateBloodstain::set_data_block_1(const char* value) {
-  set_has_data_block_1();
-  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_1_ = new ::std::string;
+inline void RequestCreateBloodstain::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  data_block_1_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateBloodstain.data)
 }
-inline void RequestCreateBloodstain::set_data_block_1(const void* value, size_t size) {
-  set_has_data_block_1();
-  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_1_ = new ::std::string;
+inline void RequestCreateBloodstain::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  data_block_1_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateBloodstain.data)
 }
-inline ::std::string* RequestCreateBloodstain::mutable_data_block_1() {
-  set_has_data_block_1();
-  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_1_ = new ::std::string;
+inline ::std::string* RequestCreateBloodstain::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
-  return data_block_1_;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateBloodstain.data)
+  return data_;
 }
-inline ::std::string* RequestCreateBloodstain::release_data_block_1() {
-  clear_has_data_block_1();
-  if (data_block_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* RequestCreateBloodstain::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = data_block_1_;
-    data_block_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void RequestCreateBloodstain::set_allocated_data_block_1(::std::string* data_block_1) {
-  if (data_block_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete data_block_1_;
+inline void RequestCreateBloodstain::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
-  if (data_block_1) {
-    set_has_data_block_1();
-    data_block_1_ = data_block_1;
+  if (data) {
+    set_has_data();
+    data_ = data;
   } else {
-    clear_has_data_block_1();
-    data_block_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateBloodstain.data_block_1)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateBloodstain.data)
 }
 
-// required bytes data_block_2 = 3;
-inline bool RequestCreateBloodstain::has_data_block_2() const {
+// required bytes ghost_data = 3;
+inline bool RequestCreateBloodstain::has_ghost_data() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void RequestCreateBloodstain::set_has_data_block_2() {
+inline void RequestCreateBloodstain::set_has_ghost_data() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void RequestCreateBloodstain::clear_has_data_block_2() {
+inline void RequestCreateBloodstain::clear_has_ghost_data() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void RequestCreateBloodstain::clear_data_block_2() {
-  if (data_block_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_2_->clear();
+inline void RequestCreateBloodstain::clear_ghost_data() {
+  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_->clear();
   }
-  clear_has_data_block_2();
+  clear_has_ghost_data();
 }
-inline const ::std::string& RequestCreateBloodstain::data_block_2() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
-  return *data_block_2_;
+inline const ::std::string& RequestCreateBloodstain::ghost_data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateBloodstain.ghost_data)
+  return *ghost_data_;
 }
-inline void RequestCreateBloodstain::set_data_block_2(const ::std::string& value) {
-  set_has_data_block_2();
-  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_2_ = new ::std::string;
+inline void RequestCreateBloodstain::set_ghost_data(const ::std::string& value) {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
   }
-  data_block_2_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+  ghost_data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateBloodstain.ghost_data)
 }
-inline void RequestCreateBloodstain::set_data_block_2(const char* value) {
-  set_has_data_block_2();
-  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_2_ = new ::std::string;
+inline void RequestCreateBloodstain::set_ghost_data(const char* value) {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
   }
-  data_block_2_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+  ghost_data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestCreateBloodstain.ghost_data)
 }
-inline void RequestCreateBloodstain::set_data_block_2(const void* value, size_t size) {
-  set_has_data_block_2();
-  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_2_ = new ::std::string;
+inline void RequestCreateBloodstain::set_ghost_data(const void* value, size_t size) {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
   }
-  data_block_2_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+  ghost_data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestCreateBloodstain.ghost_data)
 }
-inline ::std::string* RequestCreateBloodstain::mutable_data_block_2() {
-  set_has_data_block_2();
-  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    data_block_2_ = new ::std::string;
+inline ::std::string* RequestCreateBloodstain::mutable_ghost_data() {
+  set_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    ghost_data_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
-  return data_block_2_;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestCreateBloodstain.ghost_data)
+  return ghost_data_;
 }
-inline ::std::string* RequestCreateBloodstain::release_data_block_2() {
-  clear_has_data_block_2();
-  if (data_block_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* RequestCreateBloodstain::release_ghost_data() {
+  clear_has_ghost_data();
+  if (ghost_data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = data_block_2_;
-    data_block_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = ghost_data_;
+    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void RequestCreateBloodstain::set_allocated_data_block_2(::std::string* data_block_2) {
-  if (data_block_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete data_block_2_;
+inline void RequestCreateBloodstain::set_allocated_ghost_data(::std::string* ghost_data) {
+  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete ghost_data_;
   }
-  if (data_block_2) {
-    set_has_data_block_2();
-    data_block_2_ = data_block_2;
+  if (ghost_data) {
+    set_has_ghost_data();
+    ghost_data_ = ghost_data;
   } else {
-    clear_has_data_block_2();
-    data_block_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_ghost_data();
+    ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateBloodstain.data_block_2)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestCreateBloodstain.ghost_data)
 }
 
 // -------------------------------------------------------------------

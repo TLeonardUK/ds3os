@@ -32,6 +32,34 @@ MessageHandleResult LoggingManager::OnMessageRecieved(GameClient* Client, const 
     {
         return Handle_RequestNotifyProtoBufLog(Client, Message);
     }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyDisconnectSession)
+    {
+        return Handle_RequestNotifyDisconnectSession(Client, Message);
+    }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyRegisterCharacter)
+    {
+        return Handle_RequestNotifyRegisterCharacter(Client, Message);
+    }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyDie)
+    {
+        return Handle_RequestNotifyDie(Client, Message);
+    }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyKillBoss)
+    {
+        return Handle_RequestNotifyKillBoss(Client, Message);
+    }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyJoinMultiplay)
+    {
+        return Handle_RequestNotifyJoinMultiplay(Client, Message);
+    }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyLeaveMultiplay)
+    {
+        return Handle_RequestNotifyLeaveMultiplay(Client, Message);
+    }
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifySummonSignResult)
+    {
+        return Handle_RequestNotifySummonSignResult(Client, Message);
+    }
 
     return MessageHandleResult::Unhandled;
 }

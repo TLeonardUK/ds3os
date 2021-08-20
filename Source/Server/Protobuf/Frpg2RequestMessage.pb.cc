@@ -12499,7 +12499,7 @@ void PushRequestEvaluateBloodMessage::Swap(PushRequestEvaluateBloodMessage* othe
 #ifndef _MSC_VER
 const int BloodstainInfo::kOnlineAreaIdFieldNumber;
 const int BloodstainInfo::kBloodstainIdFieldNumber;
-const int BloodstainInfo::kDataBlockFieldNumber;
+const int BloodstainInfo::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 BloodstainInfo::BloodstainInfo()
@@ -12523,7 +12523,7 @@ void BloodstainInfo::SharedCtor() {
   _cached_size_ = 0;
   online_area_id_ = 0u;
   bloodstain_id_ = 0u;
-  data_block_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -12533,8 +12533,8 @@ BloodstainInfo::~BloodstainInfo() {
 }
 
 void BloodstainInfo::SharedDtor() {
-  if (data_block_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete data_block_;
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -12577,9 +12577,9 @@ void BloodstainInfo::Clear() {
 
   if (_has_bits_[0 / 32] & 7) {
     ZR_(online_area_id_, bloodstain_id_);
-    if (has_data_block()) {
-      if (data_block_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        data_block_->clear();
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
       }
     }
   }
@@ -12630,16 +12630,16 @@ bool BloodstainInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_data_block;
+        if (input->ExpectTag(26)) goto parse_data;
         break;
       }
 
-      // required bytes data_block = 3;
+      // required bytes data = 3;
       case 3: {
         if (tag == 26) {
-         parse_data_block:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_data_block()));
+                input, this->mutable_data()));
         } else {
           goto handle_unusual;
         }
@@ -12682,10 +12682,10 @@ void BloodstainInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->bloodstain_id(), output);
   }
 
-  // required bytes data_block = 3;
-  if (has_data_block()) {
+  // required bytes data = 3;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      3, this->data_block(), output);
+      3, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -12711,11 +12711,11 @@ int BloodstainInfo::ByteSize() const {
           this->bloodstain_id());
     }
 
-    // required bytes data_block = 3;
-    if (has_data_block()) {
+    // required bytes data = 3;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->data_block());
+          this->data());
     }
 
   }
@@ -12741,8 +12741,8 @@ void BloodstainInfo::MergeFrom(const BloodstainInfo& from) {
     if (from.has_bloodstain_id()) {
       set_bloodstain_id(from.bloodstain_id());
     }
-    if (from.has_data_block()) {
-      set_data_block(from.data_block());
+    if (from.has_data()) {
+      set_data(from.data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -12764,7 +12764,7 @@ void BloodstainInfo::Swap(BloodstainInfo* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
     std::swap(bloodstain_id_, other->bloodstain_id_);
-    std::swap(data_block_, other->data_block_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -12780,8 +12780,8 @@ void BloodstainInfo::Swap(BloodstainInfo* other) {
 
 #ifndef _MSC_VER
 const int RequestCreateBloodstain::kOnlineAreaIdFieldNumber;
-const int RequestCreateBloodstain::kDataBlock1FieldNumber;
-const int RequestCreateBloodstain::kDataBlock2FieldNumber;
+const int RequestCreateBloodstain::kDataFieldNumber;
+const int RequestCreateBloodstain::kGhostDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestCreateBloodstain::RequestCreateBloodstain()
@@ -12804,8 +12804,8 @@ void RequestCreateBloodstain::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   online_area_id_ = 0u;
-  data_block_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  data_block_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -12815,11 +12815,11 @@ RequestCreateBloodstain::~RequestCreateBloodstain() {
 }
 
 void RequestCreateBloodstain::SharedDtor() {
-  if (data_block_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete data_block_1_;
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
-  if (data_block_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete data_block_2_;
+  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete ghost_data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -12852,14 +12852,14 @@ RequestCreateBloodstain* RequestCreateBloodstain::New() const {
 void RequestCreateBloodstain::Clear() {
   if (_has_bits_[0 / 32] & 7) {
     online_area_id_ = 0u;
-    if (has_data_block_1()) {
-      if (data_block_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        data_block_1_->clear();
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
       }
     }
-    if (has_data_block_2()) {
-      if (data_block_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        data_block_2_->clear();
+    if (has_ghost_data()) {
+      if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        ghost_data_->clear();
       }
     }
   }
@@ -12891,29 +12891,29 @@ bool RequestCreateBloodstain::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_data_block_1;
+        if (input->ExpectTag(18)) goto parse_data;
         break;
       }
 
-      // required bytes data_block_1 = 2;
+      // required bytes data = 2;
       case 2: {
         if (tag == 18) {
-         parse_data_block_1:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_data_block_1()));
+                input, this->mutable_data()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_data_block_2;
+        if (input->ExpectTag(26)) goto parse_ghost_data;
         break;
       }
 
-      // required bytes data_block_2 = 3;
+      // required bytes ghost_data = 3;
       case 3: {
         if (tag == 26) {
-         parse_data_block_2:
+         parse_ghost_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_data_block_2()));
+                input, this->mutable_ghost_data()));
         } else {
           goto handle_unusual;
         }
@@ -12951,16 +12951,16 @@ void RequestCreateBloodstain::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // required bytes data_block_1 = 2;
-  if (has_data_block_1()) {
+  // required bytes data = 2;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      2, this->data_block_1(), output);
+      2, this->data(), output);
   }
 
-  // required bytes data_block_2 = 3;
-  if (has_data_block_2()) {
+  // required bytes ghost_data = 3;
+  if (has_ghost_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      3, this->data_block_2(), output);
+      3, this->ghost_data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -12979,18 +12979,18 @@ int RequestCreateBloodstain::ByteSize() const {
           this->online_area_id());
     }
 
-    // required bytes data_block_1 = 2;
-    if (has_data_block_1()) {
+    // required bytes data = 2;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->data_block_1());
+          this->data());
     }
 
-    // required bytes data_block_2 = 3;
-    if (has_data_block_2()) {
+    // required bytes ghost_data = 3;
+    if (has_ghost_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->data_block_2());
+          this->ghost_data());
     }
 
   }
@@ -13013,11 +13013,11 @@ void RequestCreateBloodstain::MergeFrom(const RequestCreateBloodstain& from) {
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_data_block_1()) {
-      set_data_block_1(from.data_block_1());
+    if (from.has_data()) {
+      set_data(from.data());
     }
-    if (from.has_data_block_2()) {
-      set_data_block_2(from.data_block_2());
+    if (from.has_ghost_data()) {
+      set_ghost_data(from.ghost_data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -13038,8 +13038,8 @@ bool RequestCreateBloodstain::IsInitialized() const {
 void RequestCreateBloodstain::Swap(RequestCreateBloodstain* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(data_block_1_, other->data_block_1_);
-    std::swap(data_block_2_, other->data_block_2_);
+    std::swap(data_, other->data_);
+    std::swap(ghost_data_, other->ghost_data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

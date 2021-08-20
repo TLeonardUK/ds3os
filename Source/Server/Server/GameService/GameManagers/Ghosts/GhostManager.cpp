@@ -24,11 +24,7 @@ GhostManager::GhostManager(Server* InServerInstance)
 
 MessageHandleResult GhostManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestGetDeadingGhost)
-    {
-        return Handle_RequestGetDeadingGhost(Client, Message);
-    }
-    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestCreateGhostData)
+    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestCreateGhostData)
     {
         return Handle_RequestCreateGhostData(Client, Message);
     }
@@ -38,22 +34,6 @@ MessageHandleResult GhostManager::OnMessageRecieved(GameClient* Client, const Fr
     }
 
     return MessageHandleResult::Unhandled;
-}
-
-MessageHandleResult GhostManager::Handle_RequestGetDeadingGhost(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
-{
-    Frpg2RequestMessage::RequestGetDeadingGhost* Request = (Frpg2RequestMessage::RequestGetDeadingGhost*)Message.Protobuf.get();
-
-    // TODO: Implement
-
-    Frpg2RequestMessage::RequestGetDeadingGhostResponse Response;
-    if (!Client->MessageStream->Send(&Response, &Message))
-    {
-        Warning("[%s] Disconnecting client as failed to send RequestGetDeadingGhostResponse response.", Client->GetName().c_str());
-        return MessageHandleResult::Error;
-    }
-
-    return MessageHandleResult::Handled;
 }
 
 MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Client, const Frpg2ReliableUdpMessage& Message)

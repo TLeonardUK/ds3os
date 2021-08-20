@@ -354,13 +354,13 @@ message PushRequestEvaluateBloodMessage {
 message BloodstainInfo { 
     required uint32 online_area_id = 1;
     required uint32 bloodstain_id = 2;
-    required bytes data_block = 3;    
+    required bytes data = 3;    
 }
 
 message RequestCreateBloodstain {
     required uint32 online_area_id = 1;
-    required bytes  data_block_1 = 2;               // One of these blocks contains the "DeadingGhost" data, the other is just location/etc info.
-    required bytes  data_block_2 = 3;               // Not sure which is which though.
+    required bytes  data = 2;                       
+    required bytes  ghost_data = 3;         
 }
 
 message RequestGetBloodstainList {
@@ -370,6 +370,17 @@ message RequestGetBloodstainList {
 
 message RequestGetBloodstainListResponse {
     repeated BloodstainInfo bloodstains = 1;
+}
+
+message RequestGetDeadingGhost {
+    required uint32 online_area_id = 1;    
+    required uint32 bloodstain_id = 2;
+}
+
+message RequestGetDeadingGhostResponse {
+    required uint32 online_area_id = 1;    
+    required uint32 bloodstain_id = 2;
+    required bytes data = 3;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -799,25 +810,10 @@ message RequestRejectBreakInTargetResponse {
 // Game Server Messages - Ghost Data
 // ------------------------------------------------------------------------------------------------------------
 
-// Deading ghosts are the ones from bloodstains.
-
-message RequestGetDeadingGhost {
-    required uint32 online_area_id = 1;    
-    required uint32 bloodstain_id = 2;
-}
-
-message RequestGetDeadingGhostResponse {
-    required uint32 online_area_id = 1;    
-    required uint32 bloodstain_id = 2;
-    required bytes data = 3;
-}
-
 message RequestGetGhostDataList {
     required uint32 max_ghosts = 1;                 // Always seems to be 3
     repeated DomainLimitData search_areas = 2;
 }
-
-// Normal "ghosts" are the ones you see move around bonefires etc.
 
 message GhostData {
     required uint32 unknown_1 = 1;                  // Always seems to be 0.

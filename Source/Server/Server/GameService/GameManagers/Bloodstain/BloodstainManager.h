@@ -10,6 +10,8 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
+#include "Server/GameService/Utils/OnlineAreaPool.h"
+#include "Server/Database/DatabaseTypes.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
@@ -23,6 +25,8 @@ class BloodstainManager
 public:    
     BloodstainManager(Server* InServerInstance);
 
+    virtual bool Init() override;
+
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
@@ -30,8 +34,13 @@ public:
 protected:
     MessageHandleResult Handle_RequestCreateBloodstain(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestGetBloodstainList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestGetDeadingGhost(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;
+
+    OnlineAreaPool<Bloodstain> LiveCache;
+
+    uint32_t NextBloodstainId = 1;
 
 };

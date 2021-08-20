@@ -58,6 +58,20 @@ public:
     // Updates the evaluation ratings of a blood message.
     bool SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor, uint32_t Good);
 
+    // ----------------------------------------------------------------
+    // Blood stain interface
+    // ----------------------------------------------------------------
+
+    // Finds the blood stain in the database, or returns nullptr if it
+    // doesn't exist.
+    std::shared_ptr<Bloodstain> FindBloodstain(uint32_t BloodstainId);
+
+    // Gets the x most recent blood stains in the database.
+    std::vector<std::shared_ptr<Bloodstain>> FindRecentBloodstains(OnlineAreaId AreaId, int Count);
+
+    // Creates a new blood stain with the given data and returns a representation of it.
+    std::shared_ptr<Bloodstain> CreateBloodstain(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData);
+
 protected:
 
     using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>>;

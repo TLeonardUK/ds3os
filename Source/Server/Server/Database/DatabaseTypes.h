@@ -25,3 +25,16 @@ struct BloodMessage
 
     std::vector<uint8_t> Data;
 };
+
+// Bloodstain stored in the database or live cache.
+struct Bloodstain
+{
+    uint32_t BloodstainId;
+    OnlineAreaId OnlineAreaId;
+
+    uint32_t PlayerId;
+    std::string PlayerSteamId;
+
+    std::vector<uint8_t> Data;
+    std::vector<uint8_t> GhostData;
+};

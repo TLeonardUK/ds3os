@@ -46,6 +46,6 @@ private:
     Server* ServerInstance;
     GameService* GameServiceInstance;
 
-    OnlineAreaPool<BloodMessage> LiveMessageCache;
+    OnlineAreaPool<BloodMessage> LiveCache;
 
 };

@@ -64,6 +64,15 @@ public:
     // re-enter their messages.
     int BloodMessagePrimeCountPerArea = 50;
 
+    // Maximum number of blood stains to store per area in the cache.
+    // If greater than this value are added, the oldest will be removed.
+    int BloodstainMaxLivePoolEntriesPerArea = 100;
+
+    // How many blood stains to insert into the live pool from the database
+    // when the server starts. Saves the game looking empty until enough players
+    // re-enter their messages.
+    int BloodstainPrimeCountPerArea = 50;
+
 public:
 
     bool Save(const std::filesystem::path& Path);

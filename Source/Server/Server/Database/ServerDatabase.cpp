@@ -70,6 +70,17 @@ bool ServerDatabase::CreateTables()
         "   CreatedTime         TEXT"                                               \
         ");"
     );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS Bloodstains("                                   \
+        "   BloodstainId        INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   OnlineAreaId        INTEGER,"                                           \
+        "   PlayerId            INTEGER,"                                           \
+        "   PlayerSteamId       CHAR(50),"                                          \
+        "   Data                BLOB,"                                              \
+        "   GhostData           BLOB,"                                              \
+        "   CreatedTime         TEXT"                                               \
+        ");"
+    );
 
     for (const std::string& statement : tables)
     {
@@ -271,4 +282,66 @@ bool ServerDatabase::SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor
     }
 
     return sqlite3_total_changes(db_handle) > 0;
+}
+
+std::shared_ptr<Bloodstain> ServerDatabase::FindBloodstain(uint32_t BloodstainId)
+{
+    std::shared_ptr<Bloodstain> Result;
+  
+    RunStatement("SELECT BloodstainId, OnlineAreaId, PlayerId, PlayerSteamId, Data, GhostData FROM Bloodstains WHERE BloodstainId = ?1", { BloodstainId }, [&Result](sqlite3_stmt* statement) {
+        Result = std::make_shared<Bloodstain>();
+        Result->BloodstainId = sqlite3_column_int(statement, 0);
+        Result->OnlineAreaId = (OnlineAreaId)sqlite3_column_int(statement, 1);
+        Result->PlayerId = sqlite3_column_int(statement, 2);
+        Result->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 4);
+        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 4));
+
+        const uint8_t* ghost_data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
+        Result->GhostData.assign(ghost_data_blob, ghost_data_blob + sqlite3_column_bytes(statement, 5));
+    });
+
+    return Result;
+}
+
+std::vector<std::shared_ptr<Bloodstain>> ServerDatabase::FindRecentBloodstains(OnlineAreaId AreaId, int Count)
+{
+    std::vector<std::shared_ptr<Bloodstain>> Result;
+
+    RunStatement("SELECT BloodstainId, OnlineAreaId, PlayerId, PlayerSteamId, Data, GhostData FROM Bloodstains WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+        std::shared_ptr<Bloodstain> Stain = std::make_shared<Bloodstain>();
+        Stain->BloodstainId = sqlite3_column_int(statement, 0);
+        Stain->OnlineAreaId = (OnlineAreaId)sqlite3_column_int(statement, 1);
+        Stain->PlayerId = sqlite3_column_int(statement, 2);
+        Stain->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 4);
+        Stain->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 4));
+
+        const uint8_t* ghost_data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
+        Stain->GhostData.assign(ghost_data_blob, ghost_data_blob + sqlite3_column_bytes(statement, 5));
+
+        Result.push_back(Stain);
+    });
+
+    return Result;
+}
+
+std::shared_ptr<Bloodstain> ServerDatabase::CreateBloodstain(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData)
+{
+    if (!RunStatement("INSERT INTO Bloodstains(OnlineAreaId, PlayerId, PlayerSteamId, Data, GhostData, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, Data, GhostData }, nullptr))
+    {
+        return nullptr;
+    }
+
+    std::shared_ptr<Bloodstain> Result = std::make_shared<Bloodstain>();
+    Result->BloodstainId = (uint32_t)sqlite3_last_insert_rowid(db_handle);
+    Result->OnlineAreaId = AreaId;
+    Result->PlayerId = PlayerId;
+    Result->PlayerSteamId = PlayerSteamId;
+    Result->Data = Data;
+    Result->GhostData = GhostData;
+
+    return Result;
 }
