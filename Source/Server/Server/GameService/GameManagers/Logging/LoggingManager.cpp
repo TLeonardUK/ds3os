@@ -60,7 +60,11 @@ MessageHandleResult LoggingManager::OnMessageRecieved(GameClient* Client, const 
     {
         return Handle_RequestNotifySummonSignResult(Client, Message);
     }
-
+    else if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestNotifyCreateSignResult)
+    {
+        return Handle_RequestNotifyCreateSignResult(Client, Message);
+    }
+    
     return MessageHandleResult::Unhandled;
 }
 
@@ -137,6 +141,15 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyLeaveMultiplay(GameClien
 }
 
 MessageHandleResult LoggingManager::Handle_RequestNotifySummonSignResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestNotifySummonSignResult* Request = (Frpg2RequestMessage::RequestNotifySummonSignResult*)Message.Protobuf.get();
+
+    // TODO: Implement
+
+    return MessageHandleResult::Handled;
+}
+
+MessageHandleResult LoggingManager::Handle_RequestNotifyCreateSignResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestNotifySummonSignResult* Request = (Frpg2RequestMessage::RequestNotifySummonSignResult*)Message.Protobuf.get();
 

@@ -20305,7 +20305,7 @@ void CachedSign::Swap(CachedSign* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int GetSignResult::kSignInfoFieldNumber;
+const int GetSignResult::kSignInfoWithoutDataFieldNumber;
 const int GetSignResult::kSignDataFieldNumber;
 #endif  // !_MSC_VER
 
@@ -20316,12 +20316,6 @@ GetSignResult::GetSignResult()
 }
 
 void GetSignResult::InitAsDefaultInstance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  sign_info_ = const_cast< ::Frpg2RequestMessage::SignInfo*>(
-      ::Frpg2RequestMessage::SignInfo::internal_default_instance());
-#else
-  sign_info_ = const_cast< ::Frpg2RequestMessage::SignInfo*>(&::Frpg2RequestMessage::SignInfo::default_instance());
-#endif
 }
 
 GetSignResult::GetSignResult(const GetSignResult& from)
@@ -20333,7 +20327,6 @@ GetSignResult::GetSignResult(const GetSignResult& from)
 
 void GetSignResult::SharedCtor() {
   _cached_size_ = 0;
-  sign_info_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -20348,7 +20341,6 @@ void GetSignResult::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
-    delete sign_info_;
   }
 }
 
@@ -20373,9 +20365,7 @@ GetSignResult* GetSignResult::New() const {
 }
 
 void GetSignResult::Clear() {
-  if (has_sign_info()) {
-    if (sign_info_ != NULL) sign_info_->::Frpg2RequestMessage::SignInfo::Clear();
-  }
+  sign_info_without_data_.Clear();
   sign_data_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -20395,14 +20385,16 @@ bool GetSignResult::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Frpg2RequestMessage.SignInfo sign_info = 1;
+      // repeated .Frpg2RequestMessage.SignInfo sign_info_without_data = 1;
       case 1: {
         if (tag == 10) {
+         parse_sign_info_without_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_sign_info()));
+                input, add_sign_info_without_data()));
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(10)) goto parse_sign_info_without_data;
         if (input->ExpectTag(18)) goto parse_sign_data;
         break;
       }
@@ -20446,10 +20438,10 @@ failure:
 void GetSignResult::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.GetSignResult)
-  // optional .Frpg2RequestMessage.SignInfo sign_info = 1;
-  if (has_sign_info()) {
+  // repeated .Frpg2RequestMessage.SignInfo sign_info_without_data = 1;
+  for (int i = 0; i < this->sign_info_without_data_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->sign_info(), output);
+      1, this->sign_info_without_data(i), output);
   }
 
   // repeated .Frpg2RequestMessage.SignData sign_data = 2;
@@ -20466,15 +20458,14 @@ void GetSignResult::SerializeWithCachedSizes(
 int GetSignResult::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Frpg2RequestMessage.SignInfo sign_info = 1;
-    if (has_sign_info()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->sign_info());
-    }
-
+  // repeated .Frpg2RequestMessage.SignInfo sign_info_without_data = 1;
+  total_size += 1 * this->sign_info_without_data_size();
+  for (int i = 0; i < this->sign_info_without_data_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->sign_info_without_data(i));
   }
+
   // repeated .Frpg2RequestMessage.SignData sign_data = 2;
   total_size += 1 * this->sign_data_size();
   for (int i = 0; i < this->sign_data_size(); i++) {
@@ -20498,12 +20489,8 @@ void GetSignResult::CheckTypeAndMergeFrom(
 
 void GetSignResult::MergeFrom(const GetSignResult& from) {
   GOOGLE_CHECK_NE(&from, this);
+  sign_info_without_data_.MergeFrom(from.sign_info_without_data_);
   sign_data_.MergeFrom(from.sign_data_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_sign_info()) {
-      mutable_sign_info()->::Frpg2RequestMessage::SignInfo::MergeFrom(from.sign_info());
-    }
-  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -20515,16 +20502,14 @@ void GetSignResult::CopyFrom(const GetSignResult& from) {
 
 bool GetSignResult::IsInitialized() const {
 
-  if (has_sign_info()) {
-    if (!this->sign_info().IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->sign_info_without_data())) return false;
   if (!::google::protobuf::internal::AllAreInitialized(this->sign_data())) return false;
   return true;
 }
 
 void GetSignResult::Swap(GetSignResult* other) {
   if (other != this) {
-    std::swap(sign_info_, other->sign_info_);
+    sign_info_without_data_.Swap(&other->sign_info_without_data_);
     sign_data_.Swap(&other->sign_data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -22058,8 +22043,9 @@ void SignGetFlags::Swap(SignGetFlags* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int SignDomainGetInfo::kUnknownField1FieldNumber;
 const int SignDomainGetInfo::kOnlineAreaIdFieldNumber;
+const int SignDomainGetInfo::kMaxSignsFieldNumber;
+const int SignDomainGetInfo::kAlreadyHaveSignsFieldNumber;
 #endif  // !_MSC_VER
 
 SignDomainGetInfo::SignDomainGetInfo()
@@ -22080,8 +22066,8 @@ SignDomainGetInfo::SignDomainGetInfo(const SignDomainGetInfo& from)
 
 void SignDomainGetInfo::SharedCtor() {
   _cached_size_ = 0;
-  unknown_field_1_ = 0u;
   online_area_id_ = 0u;
+  max_signs_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -22130,11 +22116,12 @@ void SignDomainGetInfo::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(unknown_field_1_, online_area_id_);
+  ZR_(online_area_id_, max_signs_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
+  already_have_signs_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -22153,24 +22140,9 @@ bool SignDomainGetInfo::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_field_1 = 1;
+      // required uint32 online_area_id = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_field_1_)));
-          set_has_unknown_field_1();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_online_area_id;
-        break;
-      }
-
-      // required uint32 online_area_id = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &online_area_id_)));
@@ -22178,6 +22150,35 @@ bool SignDomainGetInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(16)) goto parse_max_signs;
+        break;
+      }
+
+      // required uint32 max_signs = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_max_signs:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &max_signs_)));
+          set_has_max_signs();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_already_have_signs;
+        break;
+      }
+
+      // repeated .Frpg2RequestMessage.SignInfo already_have_signs = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_already_have_signs:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_already_have_signs()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_already_have_signs;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -22207,14 +22208,20 @@ failure:
 void SignDomainGetInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.SignDomainGetInfo)
-  // required uint32 unknown_field_1 = 1;
-  if (has_unknown_field_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_field_1(), output);
+  // required uint32 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // required uint32 online_area_id = 2;
-  if (has_online_area_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id(), output);
+  // required uint32 max_signs = 2;
+  if (has_max_signs()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->max_signs(), output);
+  }
+
+  // repeated .Frpg2RequestMessage.SignInfo already_have_signs = 3;
+  for (int i = 0; i < this->already_have_signs_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      3, this->already_have_signs(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -22226,21 +22233,29 @@ int SignDomainGetInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_field_1 = 1;
-    if (has_unknown_field_1()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_field_1());
-    }
-
-    // required uint32 online_area_id = 2;
+    // required uint32 online_area_id = 1;
     if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->online_area_id());
     }
 
+    // required uint32 max_signs = 2;
+    if (has_max_signs()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->max_signs());
+    }
+
   }
+  // repeated .Frpg2RequestMessage.SignInfo already_have_signs = 3;
+  total_size += 1 * this->already_have_signs_size();
+  for (int i = 0; i < this->already_have_signs_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->already_have_signs(i));
+  }
+
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -22256,12 +22271,13 @@ void SignDomainGetInfo::CheckTypeAndMergeFrom(
 
 void SignDomainGetInfo::MergeFrom(const SignDomainGetInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
+  already_have_signs_.MergeFrom(from.already_have_signs_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_field_1()) {
-      set_unknown_field_1(from.unknown_field_1());
-    }
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
+    }
+    if (from.has_max_signs()) {
+      set_max_signs(from.max_signs());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -22276,13 +22292,15 @@ void SignDomainGetInfo::CopyFrom(const SignDomainGetInfo& from) {
 bool SignDomainGetInfo::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
+  if (!::google::protobuf::internal::AllAreInitialized(this->already_have_signs())) return false;
   return true;
 }
 
 void SignDomainGetInfo::Swap(SignDomainGetInfo* other) {
   if (other != this) {
-    std::swap(unknown_field_1_, other->unknown_field_1_);
     std::swap(online_area_id_, other->online_area_id_);
+    std::swap(max_signs_, other->max_signs_);
+    already_have_signs_.Swap(&other->already_have_signs_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -22298,8 +22316,8 @@ void SignDomainGetInfo::Swap(SignDomainGetInfo* other) {
 
 #ifndef _MSC_VER
 const int RequestGetSignList::kUnknownId1FieldNumber;
-const int RequestGetSignList::kSignDomainGetInfoFieldNumber;
-const int RequestGetSignList::kOnlineAreaIdFieldNumber;
+const int RequestGetSignList::kSearchAreasFieldNumber;
+const int RequestGetSignList::kMaxSignsFieldNumber;
 const int RequestGetSignList::kMatchingParameterFieldNumber;
 const int RequestGetSignList::kSignGetFlagsFieldNumber;
 #endif  // !_MSC_VER
@@ -22335,7 +22353,7 @@ RequestGetSignList::RequestGetSignList(const RequestGetSignList& from)
 void RequestGetSignList::SharedCtor() {
   _cached_size_ = 0;
   unknown_id_1_ = 0u;
-  online_area_id_ = 0u;
+  max_signs_ = 0u;
   matching_parameter_ = NULL;
   sign_get_flags_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -22389,7 +22407,7 @@ void RequestGetSignList::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 29) {
-    ZR_(unknown_id_1_, online_area_id_);
+    ZR_(unknown_id_1_, max_signs_);
     if (has_matching_parameter()) {
       if (matching_parameter_ != NULL) matching_parameter_->::Frpg2RequestMessage::MatchingParameter::Clear();
     }
@@ -22401,7 +22419,7 @@ void RequestGetSignList::Clear() {
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
-  sign_domain_get_info_.Clear();
+  search_areas_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -22430,32 +22448,32 @@ bool RequestGetSignList::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_sign_domain_get_info;
+        if (input->ExpectTag(18)) goto parse_search_areas;
         break;
       }
 
-      // repeated .Frpg2RequestMessage.SignDomainGetInfo sign_domain_get_info = 2;
+      // repeated .Frpg2RequestMessage.SignDomainGetInfo search_areas = 2;
       case 2: {
         if (tag == 18) {
-         parse_sign_domain_get_info:
+         parse_search_areas:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_sign_domain_get_info()));
+                input, add_search_areas()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_sign_domain_get_info;
-        if (input->ExpectTag(24)) goto parse_online_area_id;
+        if (input->ExpectTag(18)) goto parse_search_areas;
+        if (input->ExpectTag(24)) goto parse_max_signs;
         break;
       }
 
-      // required uint32 online_area_id = 3;
+      // required uint32 max_signs = 3;
       case 3: {
         if (tag == 24) {
-         parse_online_area_id:
+         parse_max_signs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_area_id_)));
-          set_has_online_area_id();
+                 input, &max_signs_)));
+          set_has_max_signs();
         } else {
           goto handle_unusual;
         }
@@ -22519,15 +22537,15 @@ void RequestGetSignList::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_id_1(), output);
   }
 
-  // repeated .Frpg2RequestMessage.SignDomainGetInfo sign_domain_get_info = 2;
-  for (int i = 0; i < this->sign_domain_get_info_size(); i++) {
+  // repeated .Frpg2RequestMessage.SignDomainGetInfo search_areas = 2;
+  for (int i = 0; i < this->search_areas_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, this->sign_domain_get_info(i), output);
+      2, this->search_areas(i), output);
   }
 
-  // required uint32 online_area_id = 3;
-  if (has_online_area_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->online_area_id(), output);
+  // required uint32 max_signs = 3;
+  if (has_max_signs()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->max_signs(), output);
   }
 
   // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
@@ -22558,11 +22576,11 @@ int RequestGetSignList::ByteSize() const {
           this->unknown_id_1());
     }
 
-    // required uint32 online_area_id = 3;
-    if (has_online_area_id()) {
+    // required uint32 max_signs = 3;
+    if (has_max_signs()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->online_area_id());
+          this->max_signs());
     }
 
     // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
@@ -22580,12 +22598,12 @@ int RequestGetSignList::ByteSize() const {
     }
 
   }
-  // repeated .Frpg2RequestMessage.SignDomainGetInfo sign_domain_get_info = 2;
-  total_size += 1 * this->sign_domain_get_info_size();
-  for (int i = 0; i < this->sign_domain_get_info_size(); i++) {
+  // repeated .Frpg2RequestMessage.SignDomainGetInfo search_areas = 2;
+  total_size += 1 * this->search_areas_size();
+  for (int i = 0; i < this->search_areas_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->sign_domain_get_info(i));
+        this->search_areas(i));
   }
 
   total_size += unknown_fields().size();
@@ -22603,13 +22621,13 @@ void RequestGetSignList::CheckTypeAndMergeFrom(
 
 void RequestGetSignList::MergeFrom(const RequestGetSignList& from) {
   GOOGLE_CHECK_NE(&from, this);
-  sign_domain_get_info_.MergeFrom(from.sign_domain_get_info_);
+  search_areas_.MergeFrom(from.search_areas_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_unknown_id_1()) {
       set_unknown_id_1(from.unknown_id_1());
     }
-    if (from.has_online_area_id()) {
-      set_online_area_id(from.online_area_id());
+    if (from.has_max_signs()) {
+      set_max_signs(from.max_signs());
     }
     if (from.has_matching_parameter()) {
       mutable_matching_parameter()->::Frpg2RequestMessage::MatchingParameter::MergeFrom(from.matching_parameter());
@@ -22630,7 +22648,7 @@ void RequestGetSignList::CopyFrom(const RequestGetSignList& from) {
 bool RequestGetSignList::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000001d) != 0x0000001d) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->sign_domain_get_info())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->search_areas())) return false;
   if (has_matching_parameter()) {
     if (!this->matching_parameter().IsInitialized()) return false;
   }
@@ -22643,8 +22661,8 @@ bool RequestGetSignList::IsInitialized() const {
 void RequestGetSignList::Swap(RequestGetSignList* other) {
   if (other != this) {
     std::swap(unknown_id_1_, other->unknown_id_1_);
-    sign_domain_get_info_.Swap(&other->sign_domain_get_info_);
-    std::swap(online_area_id_, other->online_area_id_);
+    search_areas_.Swap(&other->search_areas_);
+    std::swap(max_signs_, other->max_signs_);
     std::swap(matching_parameter_, other->matching_parameter_);
     std::swap(sign_get_flags_, other->sign_get_flags_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -22749,7 +22767,7 @@ bool RequestGetSignListResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+      // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -22786,7 +22804,7 @@ failure:
 void RequestGetSignListResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestGetSignListResponse)
-  // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+  // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
   if (has_get_sign_result()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       1, this->get_sign_result(), output);
@@ -22801,7 +22819,7 @@ int RequestGetSignListResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+    // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
     if (has_get_sign_result()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -22839,7 +22857,6 @@ void RequestGetSignListResponse::CopyFrom(const RequestGetSignListResponse& from
 }
 
 bool RequestGetSignListResponse::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   if (has_get_sign_result()) {
     if (!this->get_sign_result().IsInitialized()) return false;
@@ -23223,7 +23240,7 @@ void RequestCreateSign::Swap(RequestCreateSign* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestCreateSignResponse::kSignUniqueNumberFieldNumber;
+const int RequestCreateSignResponse::kSignIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestCreateSignResponse::RequestCreateSignResponse()
@@ -23244,7 +23261,7 @@ RequestCreateSignResponse::RequestCreateSignResponse(const RequestCreateSignResp
 
 void RequestCreateSignResponse::SharedCtor() {
   _cached_size_ = 0;
-  sign_unique_number_ = 0u;
+  sign_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -23283,7 +23300,7 @@ RequestCreateSignResponse* RequestCreateSignResponse::New() const {
 }
 
 void RequestCreateSignResponse::Clear() {
-  sign_unique_number_ = 0u;
+  sign_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -23302,13 +23319,13 @@ bool RequestCreateSignResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 sign_unique_number = 1;
+      // required uint32 sign_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &sign_unique_number_)));
-          set_has_sign_unique_number();
+                 input, &sign_id_)));
+          set_has_sign_id();
         } else {
           goto handle_unusual;
         }
@@ -23341,9 +23358,9 @@ failure:
 void RequestCreateSignResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestCreateSignResponse)
-  // required uint32 sign_unique_number = 1;
-  if (has_sign_unique_number()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->sign_unique_number(), output);
+  // required uint32 sign_id = 1;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->sign_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -23355,11 +23372,11 @@ int RequestCreateSignResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 sign_unique_number = 1;
-    if (has_sign_unique_number()) {
+    // required uint32 sign_id = 1;
+    if (has_sign_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->sign_unique_number());
+          this->sign_id());
     }
 
   }
@@ -23379,8 +23396,8 @@ void RequestCreateSignResponse::CheckTypeAndMergeFrom(
 void RequestCreateSignResponse::MergeFrom(const RequestCreateSignResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_sign_unique_number()) {
-      set_sign_unique_number(from.sign_unique_number());
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -23400,7 +23417,7 @@ bool RequestCreateSignResponse::IsInitialized() const {
 
 void RequestCreateSignResponse::Swap(RequestCreateSignResponse* other) {
   if (other != this) {
-    std::swap(sign_unique_number_, other->sign_unique_number_);
+    std::swap(sign_id_, other->sign_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -38367,6 +38384,12 @@ RequestGetCharacterRankingDataResponse::RequestGetCharacterRankingDataResponse()
 }
 
 void RequestGetCharacterRankingDataResponse::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  data_ = const_cast< ::Frpg2RequestMessage::RankingData*>(
+      ::Frpg2RequestMessage::RankingData::internal_default_instance());
+#else
+  data_ = const_cast< ::Frpg2RequestMessage::RankingData*>(&::Frpg2RequestMessage::RankingData::default_instance());
+#endif
 }
 
 RequestGetCharacterRankingDataResponse::RequestGetCharacterRankingDataResponse(const RequestGetCharacterRankingDataResponse& from)
@@ -38378,6 +38401,7 @@ RequestGetCharacterRankingDataResponse::RequestGetCharacterRankingDataResponse(c
 
 void RequestGetCharacterRankingDataResponse::SharedCtor() {
   _cached_size_ = 0;
+  data_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -38392,6 +38416,7 @@ void RequestGetCharacterRankingDataResponse::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
+    delete data_;
   }
 }
 
@@ -38416,7 +38441,9 @@ RequestGetCharacterRankingDataResponse* RequestGetCharacterRankingDataResponse::
 }
 
 void RequestGetCharacterRankingDataResponse::Clear() {
-  data_.Clear();
+  if (has_data()) {
+    if (data_ != NULL) data_->::Frpg2RequestMessage::RankingData::Clear();
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -38435,16 +38462,14 @@ bool RequestGetCharacterRankingDataResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .Frpg2RequestMessage.RankingData data = 1;
+      // optional .Frpg2RequestMessage.RankingData data = 1;
       case 1: {
         if (tag == 10) {
-         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_data()));
+               input, mutable_data()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_data;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -38474,10 +38499,10 @@ failure:
 void RequestGetCharacterRankingDataResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse)
-  // repeated .Frpg2RequestMessage.RankingData data = 1;
-  for (int i = 0; i < this->data_size(); i++) {
+  // optional .Frpg2RequestMessage.RankingData data = 1;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->data(i), output);
+      1, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -38488,14 +38513,15 @@ void RequestGetCharacterRankingDataResponse::SerializeWithCachedSizes(
 int RequestGetCharacterRankingDataResponse::ByteSize() const {
   int total_size = 0;
 
-  // repeated .Frpg2RequestMessage.RankingData data = 1;
-  total_size += 1 * this->data_size();
-  for (int i = 0; i < this->data_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->data(i));
-  }
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional .Frpg2RequestMessage.RankingData data = 1;
+    if (has_data()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->data());
+    }
 
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -38511,7 +38537,11 @@ void RequestGetCharacterRankingDataResponse::CheckTypeAndMergeFrom(
 
 void RequestGetCharacterRankingDataResponse::MergeFrom(const RequestGetCharacterRankingDataResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
-  data_.MergeFrom(from.data_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_data()) {
+      mutable_data()->::Frpg2RequestMessage::RankingData::MergeFrom(from.data());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -38523,13 +38553,15 @@ void RequestGetCharacterRankingDataResponse::CopyFrom(const RequestGetCharacterR
 
 bool RequestGetCharacterRankingDataResponse::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->data())) return false;
+  if (has_data()) {
+    if (!this->data().IsInitialized()) return false;
+  }
   return true;
 }
 
 void RequestGetCharacterRankingDataResponse::Swap(RequestGetCharacterRankingDataResponse* other) {
   if (other != this) {
-    data_.Swap(&other->data_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

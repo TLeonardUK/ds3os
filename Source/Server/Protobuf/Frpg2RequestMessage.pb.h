@@ -8889,14 +8889,17 @@ class GetSignResult : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // optional .Frpg2RequestMessage.SignInfo sign_info = 1;
-  inline bool has_sign_info() const;
-  inline void clear_sign_info();
-  static const int kSignInfoFieldNumber = 1;
-  inline const ::Frpg2RequestMessage::SignInfo& sign_info() const;
-  inline ::Frpg2RequestMessage::SignInfo* mutable_sign_info();
-  inline ::Frpg2RequestMessage::SignInfo* release_sign_info();
-  inline void set_allocated_sign_info(::Frpg2RequestMessage::SignInfo* sign_info);
+  // repeated .Frpg2RequestMessage.SignInfo sign_info_without_data = 1;
+  inline int sign_info_without_data_size() const;
+  inline void clear_sign_info_without_data();
+  static const int kSignInfoWithoutDataFieldNumber = 1;
+  inline const ::Frpg2RequestMessage::SignInfo& sign_info_without_data(int index) const;
+  inline ::Frpg2RequestMessage::SignInfo* mutable_sign_info_without_data(int index);
+  inline ::Frpg2RequestMessage::SignInfo* add_sign_info_without_data();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >&
+      sign_info_without_data() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >*
+      mutable_sign_info_without_data();
 
   // repeated .Frpg2RequestMessage.SignData sign_data = 2;
   inline int sign_data_size() const;
@@ -8912,14 +8915,12 @@ class GetSignResult : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.GetSignResult)
  private:
-  inline void set_has_sign_info();
-  inline void clear_has_sign_info();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::Frpg2RequestMessage::SignInfo* sign_info_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo > sign_info_without_data_;
   ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignData > sign_data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -9573,33 +9574,46 @@ class SignDomainGetInfo : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_field_1 = 1;
-  inline bool has_unknown_field_1() const;
-  inline void clear_unknown_field_1();
-  static const int kUnknownField1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_field_1() const;
-  inline void set_unknown_field_1(::google::protobuf::uint32 value);
-
-  // required uint32 online_area_id = 2;
+  // required uint32 online_area_id = 1;
   inline bool has_online_area_id() const;
   inline void clear_online_area_id();
-  static const int kOnlineAreaIdFieldNumber = 2;
+  static const int kOnlineAreaIdFieldNumber = 1;
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
 
+  // required uint32 max_signs = 2;
+  inline bool has_max_signs() const;
+  inline void clear_max_signs();
+  static const int kMaxSignsFieldNumber = 2;
+  inline ::google::protobuf::uint32 max_signs() const;
+  inline void set_max_signs(::google::protobuf::uint32 value);
+
+  // repeated .Frpg2RequestMessage.SignInfo already_have_signs = 3;
+  inline int already_have_signs_size() const;
+  inline void clear_already_have_signs();
+  static const int kAlreadyHaveSignsFieldNumber = 3;
+  inline const ::Frpg2RequestMessage::SignInfo& already_have_signs(int index) const;
+  inline ::Frpg2RequestMessage::SignInfo* mutable_already_have_signs(int index);
+  inline ::Frpg2RequestMessage::SignInfo* add_already_have_signs();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >&
+      already_have_signs() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >*
+      mutable_already_have_signs();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.SignDomainGetInfo)
  private:
-  inline void set_has_unknown_field_1();
-  inline void clear_has_unknown_field_1();
   inline void set_has_online_area_id();
   inline void clear_has_online_area_id();
+  inline void set_has_max_signs();
+  inline void clear_has_max_signs();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_field_1_;
   ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 max_signs_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo > already_have_signs_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -9681,24 +9695,24 @@ class RequestGetSignList : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_id_1() const;
   inline void set_unknown_id_1(::google::protobuf::uint32 value);
 
-  // repeated .Frpg2RequestMessage.SignDomainGetInfo sign_domain_get_info = 2;
-  inline int sign_domain_get_info_size() const;
-  inline void clear_sign_domain_get_info();
-  static const int kSignDomainGetInfoFieldNumber = 2;
-  inline const ::Frpg2RequestMessage::SignDomainGetInfo& sign_domain_get_info(int index) const;
-  inline ::Frpg2RequestMessage::SignDomainGetInfo* mutable_sign_domain_get_info(int index);
-  inline ::Frpg2RequestMessage::SignDomainGetInfo* add_sign_domain_get_info();
+  // repeated .Frpg2RequestMessage.SignDomainGetInfo search_areas = 2;
+  inline int search_areas_size() const;
+  inline void clear_search_areas();
+  static const int kSearchAreasFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::SignDomainGetInfo& search_areas(int index) const;
+  inline ::Frpg2RequestMessage::SignDomainGetInfo* mutable_search_areas(int index);
+  inline ::Frpg2RequestMessage::SignDomainGetInfo* add_search_areas();
   inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignDomainGetInfo >&
-      sign_domain_get_info() const;
+      search_areas() const;
   inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignDomainGetInfo >*
-      mutable_sign_domain_get_info();
+      mutable_search_areas();
 
-  // required uint32 online_area_id = 3;
-  inline bool has_online_area_id() const;
-  inline void clear_online_area_id();
-  static const int kOnlineAreaIdFieldNumber = 3;
-  inline ::google::protobuf::uint32 online_area_id() const;
-  inline void set_online_area_id(::google::protobuf::uint32 value);
+  // required uint32 max_signs = 3;
+  inline bool has_max_signs() const;
+  inline void clear_max_signs();
+  static const int kMaxSignsFieldNumber = 3;
+  inline ::google::protobuf::uint32 max_signs() const;
+  inline void set_max_signs(::google::protobuf::uint32 value);
 
   // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
   inline bool has_matching_parameter() const;
@@ -9722,8 +9736,8 @@ class RequestGetSignList : public ::google::protobuf::MessageLite {
  private:
   inline void set_has_unknown_id_1();
   inline void clear_has_unknown_id_1();
-  inline void set_has_online_area_id();
-  inline void clear_has_online_area_id();
+  inline void set_has_max_signs();
+  inline void clear_has_max_signs();
   inline void set_has_matching_parameter();
   inline void clear_has_matching_parameter();
   inline void set_has_sign_get_flags();
@@ -9733,9 +9747,9 @@ class RequestGetSignList : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignDomainGetInfo > sign_domain_get_info_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignDomainGetInfo > search_areas_;
   ::google::protobuf::uint32 unknown_id_1_;
-  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 max_signs_;
   ::Frpg2RequestMessage::MatchingParameter* matching_parameter_;
   ::Frpg2RequestMessage::SignGetFlags* sign_get_flags_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -9812,7 +9826,7 @@ class RequestGetSignListResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+  // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
   inline bool has_get_sign_result() const;
   inline void clear_get_sign_result();
   static const int kGetSignResultFieldNumber = 1;
@@ -10043,23 +10057,23 @@ class RequestCreateSignResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 sign_unique_number = 1;
-  inline bool has_sign_unique_number() const;
-  inline void clear_sign_unique_number();
-  static const int kSignUniqueNumberFieldNumber = 1;
-  inline ::google::protobuf::uint32 sign_unique_number() const;
-  inline void set_sign_unique_number(::google::protobuf::uint32 value);
+  // required uint32 sign_id = 1;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 sign_id() const;
+  inline void set_sign_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCreateSignResponse)
  private:
-  inline void set_has_sign_unique_number();
-  inline void clear_has_sign_unique_number();
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 sign_unique_number_;
+  ::google::protobuf::uint32 sign_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -17062,26 +17076,25 @@ class RequestGetCharacterRankingDataResponse : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
-  // repeated .Frpg2RequestMessage.RankingData data = 1;
-  inline int data_size() const;
+  // optional .Frpg2RequestMessage.RankingData data = 1;
+  inline bool has_data() const;
   inline void clear_data();
   static const int kDataFieldNumber = 1;
-  inline const ::Frpg2RequestMessage::RankingData& data(int index) const;
-  inline ::Frpg2RequestMessage::RankingData* mutable_data(int index);
-  inline ::Frpg2RequestMessage::RankingData* add_data();
-  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >&
-      data() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >*
-      mutable_data();
+  inline const ::Frpg2RequestMessage::RankingData& data() const;
+  inline ::Frpg2RequestMessage::RankingData* mutable_data();
+  inline ::Frpg2RequestMessage::RankingData* release_data();
+  inline void set_allocated_data(::Frpg2RequestMessage::RankingData* data);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse)
  private:
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData > data_;
+  ::Frpg2RequestMessage::RankingData* data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -31273,49 +31286,34 @@ inline void RemoveSignMessage::set_sign_id(::google::protobuf::uint32 value) {
 
 // GetSignResult
 
-// optional .Frpg2RequestMessage.SignInfo sign_info = 1;
-inline bool GetSignResult::has_sign_info() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// repeated .Frpg2RequestMessage.SignInfo sign_info_without_data = 1;
+inline int GetSignResult::sign_info_without_data_size() const {
+  return sign_info_without_data_.size();
 }
-inline void GetSignResult::set_has_sign_info() {
-  _has_bits_[0] |= 0x00000001u;
+inline void GetSignResult::clear_sign_info_without_data() {
+  sign_info_without_data_.Clear();
 }
-inline void GetSignResult::clear_has_sign_info() {
-  _has_bits_[0] &= ~0x00000001u;
+inline const ::Frpg2RequestMessage::SignInfo& GetSignResult::sign_info_without_data(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GetSignResult.sign_info_without_data)
+  return sign_info_without_data_.Get(index);
 }
-inline void GetSignResult::clear_sign_info() {
-  if (sign_info_ != NULL) sign_info_->::Frpg2RequestMessage::SignInfo::Clear();
-  clear_has_sign_info();
+inline ::Frpg2RequestMessage::SignInfo* GetSignResult::mutable_sign_info_without_data(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.GetSignResult.sign_info_without_data)
+  return sign_info_without_data_.Mutable(index);
 }
-inline const ::Frpg2RequestMessage::SignInfo& GetSignResult::sign_info() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.GetSignResult.sign_info)
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  return sign_info_ != NULL ? *sign_info_ : *default_instance().sign_info_;
-#else
-  return sign_info_ != NULL ? *sign_info_ : *default_instance_->sign_info_;
-#endif
+inline ::Frpg2RequestMessage::SignInfo* GetSignResult::add_sign_info_without_data() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.GetSignResult.sign_info_without_data)
+  return sign_info_without_data_.Add();
 }
-inline ::Frpg2RequestMessage::SignInfo* GetSignResult::mutable_sign_info() {
-  set_has_sign_info();
-  if (sign_info_ == NULL) sign_info_ = new ::Frpg2RequestMessage::SignInfo;
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.GetSignResult.sign_info)
-  return sign_info_;
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >&
+GetSignResult::sign_info_without_data() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.GetSignResult.sign_info_without_data)
+  return sign_info_without_data_;
 }
-inline ::Frpg2RequestMessage::SignInfo* GetSignResult::release_sign_info() {
-  clear_has_sign_info();
-  ::Frpg2RequestMessage::SignInfo* temp = sign_info_;
-  sign_info_ = NULL;
-  return temp;
-}
-inline void GetSignResult::set_allocated_sign_info(::Frpg2RequestMessage::SignInfo* sign_info) {
-  delete sign_info_;
-  sign_info_ = sign_info;
-  if (sign_info) {
-    set_has_sign_info();
-  } else {
-    clear_has_sign_info();
-  }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.GetSignResult.sign_info)
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >*
+GetSignResult::mutable_sign_info_without_data() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.GetSignResult.sign_info_without_data)
+  return &sign_info_without_data_;
 }
 
 // repeated .Frpg2RequestMessage.SignData sign_data = 2;
@@ -32170,39 +32168,15 @@ inline void SignGetFlags::set_unknown_id_3(::google::protobuf::uint32 value) {
 
 // SignDomainGetInfo
 
-// required uint32 unknown_field_1 = 1;
-inline bool SignDomainGetInfo::has_unknown_field_1() const {
+// required uint32 online_area_id = 1;
+inline bool SignDomainGetInfo::has_online_area_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SignDomainGetInfo::set_has_unknown_field_1() {
+inline void SignDomainGetInfo::set_has_online_area_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SignDomainGetInfo::clear_has_unknown_field_1() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void SignDomainGetInfo::clear_unknown_field_1() {
-  unknown_field_1_ = 0u;
-  clear_has_unknown_field_1();
-}
-inline ::google::protobuf::uint32 SignDomainGetInfo::unknown_field_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.SignDomainGetInfo.unknown_field_1)
-  return unknown_field_1_;
-}
-inline void SignDomainGetInfo::set_unknown_field_1(::google::protobuf::uint32 value) {
-  set_has_unknown_field_1();
-  unknown_field_1_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.SignDomainGetInfo.unknown_field_1)
-}
-
-// required uint32 online_area_id = 2;
-inline bool SignDomainGetInfo::has_online_area_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void SignDomainGetInfo::set_has_online_area_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
 inline void SignDomainGetInfo::clear_has_online_area_id() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline void SignDomainGetInfo::clear_online_area_id() {
   online_area_id_ = 0u;
@@ -32216,6 +32190,60 @@ inline void SignDomainGetInfo::set_online_area_id(::google::protobuf::uint32 val
   set_has_online_area_id();
   online_area_id_ = value;
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.SignDomainGetInfo.online_area_id)
+}
+
+// required uint32 max_signs = 2;
+inline bool SignDomainGetInfo::has_max_signs() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void SignDomainGetInfo::set_has_max_signs() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void SignDomainGetInfo::clear_has_max_signs() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void SignDomainGetInfo::clear_max_signs() {
+  max_signs_ = 0u;
+  clear_has_max_signs();
+}
+inline ::google::protobuf::uint32 SignDomainGetInfo::max_signs() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.SignDomainGetInfo.max_signs)
+  return max_signs_;
+}
+inline void SignDomainGetInfo::set_max_signs(::google::protobuf::uint32 value) {
+  set_has_max_signs();
+  max_signs_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.SignDomainGetInfo.max_signs)
+}
+
+// repeated .Frpg2RequestMessage.SignInfo already_have_signs = 3;
+inline int SignDomainGetInfo::already_have_signs_size() const {
+  return already_have_signs_.size();
+}
+inline void SignDomainGetInfo::clear_already_have_signs() {
+  already_have_signs_.Clear();
+}
+inline const ::Frpg2RequestMessage::SignInfo& SignDomainGetInfo::already_have_signs(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.SignDomainGetInfo.already_have_signs)
+  return already_have_signs_.Get(index);
+}
+inline ::Frpg2RequestMessage::SignInfo* SignDomainGetInfo::mutable_already_have_signs(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.SignDomainGetInfo.already_have_signs)
+  return already_have_signs_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::SignInfo* SignDomainGetInfo::add_already_have_signs() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.SignDomainGetInfo.already_have_signs)
+  return already_have_signs_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >&
+SignDomainGetInfo::already_have_signs() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.SignDomainGetInfo.already_have_signs)
+  return already_have_signs_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignInfo >*
+SignDomainGetInfo::mutable_already_have_signs() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.SignDomainGetInfo.already_have_signs)
+  return &already_have_signs_;
 }
 
 // -------------------------------------------------------------------
@@ -32246,58 +32274,58 @@ inline void RequestGetSignList::set_unknown_id_1(::google::protobuf::uint32 valu
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetSignList.unknown_id_1)
 }
 
-// repeated .Frpg2RequestMessage.SignDomainGetInfo sign_domain_get_info = 2;
-inline int RequestGetSignList::sign_domain_get_info_size() const {
-  return sign_domain_get_info_.size();
+// repeated .Frpg2RequestMessage.SignDomainGetInfo search_areas = 2;
+inline int RequestGetSignList::search_areas_size() const {
+  return search_areas_.size();
 }
-inline void RequestGetSignList::clear_sign_domain_get_info() {
-  sign_domain_get_info_.Clear();
+inline void RequestGetSignList::clear_search_areas() {
+  search_areas_.Clear();
 }
-inline const ::Frpg2RequestMessage::SignDomainGetInfo& RequestGetSignList::sign_domain_get_info(int index) const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetSignList.sign_domain_get_info)
-  return sign_domain_get_info_.Get(index);
+inline const ::Frpg2RequestMessage::SignDomainGetInfo& RequestGetSignList::search_areas(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetSignList.search_areas)
+  return search_areas_.Get(index);
 }
-inline ::Frpg2RequestMessage::SignDomainGetInfo* RequestGetSignList::mutable_sign_domain_get_info(int index) {
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetSignList.sign_domain_get_info)
-  return sign_domain_get_info_.Mutable(index);
+inline ::Frpg2RequestMessage::SignDomainGetInfo* RequestGetSignList::mutable_search_areas(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetSignList.search_areas)
+  return search_areas_.Mutable(index);
 }
-inline ::Frpg2RequestMessage::SignDomainGetInfo* RequestGetSignList::add_sign_domain_get_info() {
-  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetSignList.sign_domain_get_info)
-  return sign_domain_get_info_.Add();
+inline ::Frpg2RequestMessage::SignDomainGetInfo* RequestGetSignList::add_search_areas() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetSignList.search_areas)
+  return search_areas_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignDomainGetInfo >&
-RequestGetSignList::sign_domain_get_info() const {
-  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetSignList.sign_domain_get_info)
-  return sign_domain_get_info_;
+RequestGetSignList::search_areas() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetSignList.search_areas)
+  return search_areas_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::SignDomainGetInfo >*
-RequestGetSignList::mutable_sign_domain_get_info() {
-  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetSignList.sign_domain_get_info)
-  return &sign_domain_get_info_;
+RequestGetSignList::mutable_search_areas() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetSignList.search_areas)
+  return &search_areas_;
 }
 
-// required uint32 online_area_id = 3;
-inline bool RequestGetSignList::has_online_area_id() const {
+// required uint32 max_signs = 3;
+inline bool RequestGetSignList::has_max_signs() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void RequestGetSignList::set_has_online_area_id() {
+inline void RequestGetSignList::set_has_max_signs() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void RequestGetSignList::clear_has_online_area_id() {
+inline void RequestGetSignList::clear_has_max_signs() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void RequestGetSignList::clear_online_area_id() {
-  online_area_id_ = 0u;
-  clear_has_online_area_id();
+inline void RequestGetSignList::clear_max_signs() {
+  max_signs_ = 0u;
+  clear_has_max_signs();
 }
-inline ::google::protobuf::uint32 RequestGetSignList::online_area_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetSignList.online_area_id)
-  return online_area_id_;
+inline ::google::protobuf::uint32 RequestGetSignList::max_signs() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetSignList.max_signs)
+  return max_signs_;
 }
-inline void RequestGetSignList::set_online_area_id(::google::protobuf::uint32 value) {
-  set_has_online_area_id();
-  online_area_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetSignList.online_area_id)
+inline void RequestGetSignList::set_max_signs(::google::protobuf::uint32 value) {
+  set_has_max_signs();
+  max_signs_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetSignList.max_signs)
 }
 
 // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
@@ -32394,7 +32422,7 @@ inline void RequestGetSignList::set_allocated_sign_get_flags(::Frpg2RequestMessa
 
 // RequestGetSignListResponse
 
-// required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+// optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
 inline bool RequestGetSignListResponse::has_get_sign_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -32640,28 +32668,28 @@ inline void RequestCreateSign::set_allocated_player_struct(::std::string* player
 
 // RequestCreateSignResponse
 
-// required uint32 sign_unique_number = 1;
-inline bool RequestCreateSignResponse::has_sign_unique_number() const {
+// required uint32 sign_id = 1;
+inline bool RequestCreateSignResponse::has_sign_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RequestCreateSignResponse::set_has_sign_unique_number() {
+inline void RequestCreateSignResponse::set_has_sign_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RequestCreateSignResponse::clear_has_sign_unique_number() {
+inline void RequestCreateSignResponse::clear_has_sign_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RequestCreateSignResponse::clear_sign_unique_number() {
-  sign_unique_number_ = 0u;
-  clear_has_sign_unique_number();
+inline void RequestCreateSignResponse::clear_sign_id() {
+  sign_id_ = 0u;
+  clear_has_sign_id();
 }
-inline ::google::protobuf::uint32 RequestCreateSignResponse::sign_unique_number() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateSignResponse.sign_unique_number)
-  return sign_unique_number_;
+inline ::google::protobuf::uint32 RequestCreateSignResponse::sign_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestCreateSignResponse.sign_id)
+  return sign_id_;
 }
-inline void RequestCreateSignResponse::set_sign_unique_number(::google::protobuf::uint32 value) {
-  set_has_sign_unique_number();
-  sign_unique_number_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateSignResponse.sign_unique_number)
+inline void RequestCreateSignResponse::set_sign_id(::google::protobuf::uint32 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestCreateSignResponse.sign_id)
 }
 
 // -------------------------------------------------------------------
@@ -36527,34 +36555,49 @@ inline void RequestGetCharacterRankingData::set_player_id(::google::protobuf::ui
 
 // RequestGetCharacterRankingDataResponse
 
-// repeated .Frpg2RequestMessage.RankingData data = 1;
-inline int RequestGetCharacterRankingDataResponse::data_size() const {
-  return data_.size();
+// optional .Frpg2RequestMessage.RankingData data = 1;
+inline bool RequestGetCharacterRankingDataResponse::has_data() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetCharacterRankingDataResponse::set_has_data() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetCharacterRankingDataResponse::clear_has_data() {
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline void RequestGetCharacterRankingDataResponse::clear_data() {
-  data_.Clear();
+  if (data_ != NULL) data_->::Frpg2RequestMessage::RankingData::Clear();
+  clear_has_data();
 }
-inline const ::Frpg2RequestMessage::RankingData& RequestGetCharacterRankingDataResponse::data(int index) const {
+inline const ::Frpg2RequestMessage::RankingData& RequestGetCharacterRankingDataResponse::data() const {
   // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
-  return data_.Get(index);
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return data_ != NULL ? *data_ : *default_instance().data_;
+#else
+  return data_ != NULL ? *data_ : *default_instance_->data_;
+#endif
 }
-inline ::Frpg2RequestMessage::RankingData* RequestGetCharacterRankingDataResponse::mutable_data(int index) {
+inline ::Frpg2RequestMessage::RankingData* RequestGetCharacterRankingDataResponse::mutable_data() {
+  set_has_data();
+  if (data_ == NULL) data_ = new ::Frpg2RequestMessage::RankingData;
   // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
-  return data_.Mutable(index);
-}
-inline ::Frpg2RequestMessage::RankingData* RequestGetCharacterRankingDataResponse::add_data() {
-  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
-  return data_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >&
-RequestGetCharacterRankingDataResponse::data() const {
-  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
   return data_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RankingData >*
-RequestGetCharacterRankingDataResponse::mutable_data() {
-  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
-  return &data_;
+inline ::Frpg2RequestMessage::RankingData* RequestGetCharacterRankingDataResponse::release_data() {
+  clear_has_data();
+  ::Frpg2RequestMessage::RankingData* temp = data_;
+  data_ = NULL;
+  return temp;
+}
+inline void RequestGetCharacterRankingDataResponse::set_allocated_data(::Frpg2RequestMessage::RankingData* data) {
+  delete data_;
+  data_ = data;
+  if (data) {
+    set_has_data();
+  } else {
+    clear_has_data();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestGetCharacterRankingDataResponse.data)
 }
 
 // -------------------------------------------------------------------

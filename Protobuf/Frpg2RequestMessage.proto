@@ -588,7 +588,7 @@ message CachedSign {
 }
 
 message GetSignResult {
-    optional SignInfo sign_info = 1;
+    repeated SignInfo sign_info_without_data = 1;       // Gets sent back if already_have_signs in SignDomainGetInfo gets passed with the sign and they still exist.
     repeated SignData sign_data = 2;
 }
 
@@ -628,20 +628,21 @@ message SignGetFlags {
 }
 
 message SignDomainGetInfo {
-    required uint32 unknown_field_1 = 1;                  // 32
-    required uint32 online_area_id = 2;
+    required uint32 online_area_id = 1;                     // 30004
+    required uint32 max_signs = 2;                          // 32
+    repeated SignInfo already_have_signs = 3;
 }
 
 message RequestGetSignList {
-    required uint32 unknown_id_1 = 1;                       // 0
-    repeated SignDomainGetInfo sign_domain_get_info = 2;
-    required uint32 online_area_id = 3;                     // Seems to be related to online area
+    required uint32 unknown_id_1 = 1;                       // Always 0
+    repeated SignDomainGetInfo search_areas = 2;
+    required uint32 max_signs = 3;                          // 0
     required MatchingParameter matching_parameter = 4;
     required SignGetFlags sign_get_flags = 5;
 }
 
 message RequestGetSignListResponse {
-    required GetSignResult get_sign_result = 1;
+    optional GetSignResult get_sign_result = 1;
 }
 
 message RequestCreateSign {
@@ -653,7 +654,7 @@ message RequestCreateSign {
 }
 
 message RequestCreateSignResponse {
-    required uint32 sign_unique_number = 1;
+    required uint32 sign_id = 1;
 }
 
 message RequestSummonSign {
@@ -1073,7 +1074,7 @@ message RequestGetCharacterRankingData {
 }
 
 message RequestGetCharacterRankingDataResponse {
-    repeated RankingData data = 1;
+    optional RankingData data = 1;
 }
 
 message RequestCountRankingData {

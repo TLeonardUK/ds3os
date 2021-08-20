@@ -21,6 +21,7 @@ class Frpg2ReliableUdpMessageStream;
 struct Frpg2ReliableUdpMessage;
 class RSAKeyPair;
 class Cipher;
+struct SummonSign;
 
 // Represents an individual client connected to the game service.
 
@@ -40,6 +41,8 @@ public:
 
     std::shared_ptr<NetConnection> Connection;
     std::shared_ptr<Frpg2ReliableUdpMessageStream> MessageStream;
+
+    std::vector<std::shared_ptr<SummonSign>> ActiveSummonSigns;
 
 protected:
 

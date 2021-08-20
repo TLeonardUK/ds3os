@@ -82,6 +82,11 @@ public:
     // re-enter their messages.
     int GhostPrimeCountPerArea = 50;
 
+    // This should be for all intents and purposes infinite. But you can limit
+    // it if you so wish. Bare in mind that players may see signs that no longer
+    // exist on the server.
+    int SummonSignMaxEntriesPerArea = INT_MAX;
+
 public:
 
     bool Save(const std::filesystem::path& Path);

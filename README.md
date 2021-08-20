@@ -41,6 +41,7 @@ now be able to click launch to start the game which will automatically connect t
 We're slowly going through and implementing all the games online functionality, this is the current state:
 
 - [x] Login, key exchange and network transport
+- [x] Announcement messages
 - [x] Profile management
 - [x] Blood messages
 - [x] Bloodstains
@@ -52,6 +53,7 @@ We're slowly going through and implementing all the games online functionality, 
 - [ ] Undead match
 - [ ] Archdragon peak bell ringing
 - [ ] Telemetry and misc server calls
+- [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
 
 # How can I help?
 At the moment of lot of the general structure is being put together so you might want to hold trying to contibute any large changes right now.

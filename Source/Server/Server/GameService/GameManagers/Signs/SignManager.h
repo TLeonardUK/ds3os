@@ -10,6 +10,8 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
+#include "Server/GameService/Utils/OnlineAreaPool.h"
+#include "Server/Database/DatabaseTypes.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
@@ -27,17 +29,24 @@ public:
 
     virtual std::string GetName() override;
 
+    virtual void OnLostPlayer(GameClient* Client) override;
+
 protected:
+    static bool CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Client, const Frpg2RequestMessage::MatchingParameter& Match);
+
     MessageHandleResult Handle_RequestGetSignList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestCreateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestRemoveSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestUpdateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestSummonSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestRejectSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestGetRightMatchingArea(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;
 
-    //std::unordered_map<OnlineAreaId, SummonSign> SignList;
+    OnlineAreaPool<SummonSign> LiveCache;
+
+    uint32_t NextSignId = 1000;
 
 };

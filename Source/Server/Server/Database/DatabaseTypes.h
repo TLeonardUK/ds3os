@@ -11,6 +11,8 @@
 
 #include "Server/GameService/Utils/GameIds.h"
 
+#include "Protobuf/Frpg2RequestMessage.pb.h"
+
 // Blood message stored in the database or live cache.
 struct BloodMessage
 {
@@ -49,4 +51,20 @@ struct Ghost
     std::string PlayerSteamId;
 
     std::vector<uint8_t> Data;
+};
+
+// Summon sign, only stored in live cache for now.
+struct SummonSign
+{
+    uint32_t SignId;
+    OnlineAreaId OnlineAreaId;
+
+    uint32_t PlayerId;
+    std::string PlayerSteamId;
+
+    bool IsRedSign = false;
+
+    Frpg2RequestMessage::MatchingParameter MatchingParameters;
+
+    std::vector<uint8_t> PlayerStruct;
 };

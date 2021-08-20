@@ -235,7 +235,7 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
     Packet.Header.GetAckCounters(LocalAck, RemoteAck);
 
 //    Log("[%s] Recieved Packet: LocalAck=%i RemoteAck=%i", Connection->GetName().c_str(), LocalAck, RemoteAck);
-    EmitDebugInfo(true, Packet);
+    //EmitDebugInfo(true, Packet);
 
     // Check sequence index to prune duplicate / out of order for relevant packets.
     if (IsOpcodeSequenced(Packet.Header.opcode))
@@ -508,7 +508,7 @@ bool Frpg2ReliableUdpPacketStream::SendRaw(const Frpg2ReliableUdpPacket& Input)
     Input.Header.GetAckCounters(LocalAck, RemoteAck);
 
     //Log("[%s] Sent Packet: LocalAck=%i RemoteAck=%i", Connection->GetName().c_str(), LocalAck, RemoteAck);
-    EmitDebugInfo(false, Input);
+    //EmitDebugInfo(false, Input);
 
     Frpg2UdpPacket Packet;
     if (!EncodeReliablePacket(Input, Packet))
@@ -608,26 +608,26 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
 
         SendRaw(Packet);
     }
+}
 
+bool Frpg2ReliableUdpPacketStream::Pump()
+{
     // Mark as connection closed after we have sent everything in the queue.
     if (State == Frpg2ReliableUdpStreamState::Closing && SendQueue.size() == 0)
     {
         Log("[%s] Connection closed.", Connection->GetName().c_str());
         State = Frpg2ReliableUdpStreamState::Closed;
     }
-}
-
-bool Frpg2ReliableUdpPacketStream::Pump()
-{
-    if (Frpg2UdpPacketStream::Pump())
-    {
-        return true;
-    }
 
     // If connection is now closed, just drop all the packets.
     if (State == Frpg2ReliableUdpStreamState::Closed)
     {
         Reset();
+        return true;
+    }
+
+    if (Frpg2UdpPacketStream::Pump())
+    {
         return true;
     }
 

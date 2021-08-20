@@ -12,12 +12,14 @@
 #include "Server/GameService/Utils/Gameids.h"
 
 #include <unordered_map>
-#include <queue>
+#include <deque>
+#include <numeric>
 #include <memory>
 #include <random>
 #include <algorithm>
 #include <iterator>
 #include <vector>
+#include <functional>
 
 // Super simple cache split up spatially based on the online area.
 
@@ -31,7 +33,7 @@ private:
     struct Area
     {
         std::unordered_map<EntryId, std::shared_ptr<ValueType>> Entries;
-        std::queue<EntryId> RemoveOrderQueue;
+        std::deque<EntryId> RemoveOrderQueue;
     };
 
 private:
@@ -58,7 +60,12 @@ public:
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
         if (auto iter = AreaInstance->Entries.find(Id); iter != AreaInstance->Entries.end())
         {
+            std::shared_ptr<ValueType> Entry = iter->second;
             AreaInstance->Entries.erase(iter);
+            
+            // We can ignore the RemoveOrderQueue for now, it will get purged during Trim'ing
+            // Saves iterating over entire deque.
+
             return true;
         }
 
@@ -105,6 +112,30 @@ public:
         return Result;
     }
 
+    std::vector<std::shared_ptr<ValueType>> GetRecentSet(OnlineAreaId AreaId, int MaxCount, std::function<bool(std::shared_ptr<ValueType>)> FilterCallback)
+    {
+        std::vector<std::shared_ptr<ValueType>> Result;
+
+        std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
+
+        int RemainingCount = MaxCount;
+
+        for (int i = 0; i < AreaInstance->RemoveOrderQueue.size() && RemainingCount > 0; i++)
+        {
+            EntryId Id = AreaInstance->RemoveOrderQueue[i];
+            if (auto Iter = AreaInstance->Entries.find(Id); Iter != AreaInstance->Entries.end())
+            {
+                if (FilterCallback(Iter->second))
+                {
+                    Result.push_back(Iter->second);
+                    RemainingCount--;
+                }
+            }
+        }
+
+        return Result;
+    }
+
     bool Contains(OnlineAreaId AreaId, EntryId Id)
     {
         return Find(AreaId, Id) != nullptr;
@@ -119,7 +150,7 @@ public:
         }
 
         AreaInstance->Entries.insert({ Id, Value });
-        AreaInstance->RemoveOrderQueue.emplace(Id);
+        AreaInstance->RemoveOrderQueue.push_back(Id);
         TrimArea(AreaInstance);
 
         return true;
@@ -146,7 +177,7 @@ private:
         while (AreaInstance->Entries.size() > MaxEntriesPerArea && AreaInstance->RemoveOrderQueue.size() > 0)
         {
             EntryId ToRemove = AreaInstance->RemoveOrderQueue.front();
-            AreaInstance->RemoveOrderQueue.pop();
+            AreaInstance->RemoveOrderQueue.pop_front();
 
             if (auto iter = AreaInstance->Entries.find(ToRemove); iter != AreaInstance->Entries.end())
             {
