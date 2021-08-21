@@ -10,6 +10,7 @@
 #include "Core/Utils/File.h"
 
 #include <fstream>
+#include <sstream>
 
 bool ReadTextFromFile(const std::filesystem::path& path, std::string& Output)
 {
