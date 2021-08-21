@@ -31,7 +31,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-
+      
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
       
@@ -47,6 +47,9 @@ jobs:
     - name: Integrate vcpkg with Visual Studio
       working-directory: ${{github.workspace}}/Tools/vcpkg
       run: vcpkg integrate install
+
+    - name: Package DotNet
+      run: dotnet publish ./Source/Loader/Loader.csproj -r win-x64 -c Release --output ${{github.workspace}}/Bin/Loader/Package/ /p:PublishSingleFile=true /p:PublishTrimmed=true /p:IncludeNativeLibrariesForSelfExtract=true
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
