@@ -20,6 +20,14 @@ jobs:
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
+      
+    - name: Install vcpkg
+      working-directory: ${{env.GITHUB_WORKSPACE}}/Tools/vcpkg
+      run: ./bootstrap-vcpkg.bat
+
+    - name: Integrate vcpkg with Visual Studio
+      working-directory: ${{env.GITHUB_WORKSPACE}}/Tools/vcpkg
+      run: vcpkg integrate install
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
