@@ -25,8 +25,9 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
       
     - name: Install vcpkg
+      shell: cmd
       working-directory: ${{env.GITHUB_WORKSPACE}}/Tools/vcpkg
-      run: ${{env.GITHUB_WORKSPACE}}/Tools/vcpkg/bootstrap-vcpkg.bat
+      run: bootstrap-vcpkg.bat
 
     - name: Integrate vcpkg with Visual Studio
       working-directory: ${{env.GITHUB_WORKSPACE}}/Tools/vcpkg
