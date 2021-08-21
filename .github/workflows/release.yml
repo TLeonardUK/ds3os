@@ -62,8 +62,8 @@ jobs:
     - name: Zip Release
       uses: papeloto/action-zip@v1
       with:
-        files: ${{github.workspace}}/Publish/
-        dest: ${{github.workspace}}/Publish.zip
+        files: Publish/
+        dest: Publish.zip
     
     - name: Upload Release
       uses: actions/upload-artifact@v2
