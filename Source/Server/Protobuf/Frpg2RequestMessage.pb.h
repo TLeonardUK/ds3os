@@ -8493,12 +8493,12 @@ class SummonSignMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 online_area_id = 1;
-  inline bool has_online_area_id() const;
-  inline void clear_online_area_id();
-  static const int kOnlineAreaIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 online_area_id() const;
-  inline void set_online_area_id(::google::protobuf::uint32 value);
+  // required uint32 player_id = 1;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
 
   // required string steam_id = 2;
   inline bool has_steam_id() const;
@@ -8535,8 +8535,8 @@ class SummonSignMessage : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.SummonSignMessage)
  private:
-  inline void set_has_online_area_id();
-  inline void clear_has_online_area_id();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
   inline void set_has_steam_id();
   inline void clear_has_steam_id();
   inline void set_has_sign_info();
@@ -8551,7 +8551,7 @@ class SummonSignMessage : public ::google::protobuf::MessageLite {
   ::std::string* steam_id_;
   ::Frpg2RequestMessage::SignInfo* sign_info_;
   ::std::string* player_struct_;
-  ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 player_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -8727,13 +8727,33 @@ class RejectSignMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 player_id = 1;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 player_id() const;
+  inline void set_player_id(::google::protobuf::uint32 value);
+
+  // required uint32 sign_id = 2;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 sign_id() const;
+  inline void set_sign_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RejectSignMessage)
  private:
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 player_id_;
+  ::google::protobuf::uint32 sign_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -31001,28 +31021,28 @@ inline void RequestNotifySummonSignResult::set_unknown_8(::google::protobuf::uin
 
 // SummonSignMessage
 
-// required uint32 online_area_id = 1;
-inline bool SummonSignMessage::has_online_area_id() const {
+// required uint32 player_id = 1;
+inline bool SummonSignMessage::has_player_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SummonSignMessage::set_has_online_area_id() {
+inline void SummonSignMessage::set_has_player_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SummonSignMessage::clear_has_online_area_id() {
+inline void SummonSignMessage::clear_has_player_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SummonSignMessage::clear_online_area_id() {
-  online_area_id_ = 0u;
-  clear_has_online_area_id();
+inline void SummonSignMessage::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
 }
-inline ::google::protobuf::uint32 SummonSignMessage::online_area_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.SummonSignMessage.online_area_id)
-  return online_area_id_;
+inline ::google::protobuf::uint32 SummonSignMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.SummonSignMessage.player_id)
+  return player_id_;
 }
-inline void SummonSignMessage::set_online_area_id(::google::protobuf::uint32 value) {
-  set_has_online_area_id();
-  online_area_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.SummonSignMessage.online_area_id)
+inline void SummonSignMessage::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.SummonSignMessage.player_id)
 }
 
 // required string steam_id = 2;
@@ -31277,6 +31297,54 @@ inline void RemoveSignMessage::set_sign_id(::google::protobuf::uint32 value) {
 // -------------------------------------------------------------------
 
 // RejectSignMessage
+
+// required uint32 player_id = 1;
+inline bool RejectSignMessage::has_player_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RejectSignMessage::set_has_player_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RejectSignMessage::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RejectSignMessage::clear_player_id() {
+  player_id_ = 0u;
+  clear_has_player_id();
+}
+inline ::google::protobuf::uint32 RejectSignMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RejectSignMessage.player_id)
+  return player_id_;
+}
+inline void RejectSignMessage::set_player_id(::google::protobuf::uint32 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RejectSignMessage.player_id)
+}
+
+// required uint32 sign_id = 2;
+inline bool RejectSignMessage::has_sign_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RejectSignMessage::set_has_sign_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RejectSignMessage::clear_has_sign_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RejectSignMessage::clear_sign_id() {
+  sign_id_ = 0u;
+  clear_has_sign_id();
+}
+inline ::google::protobuf::uint32 RejectSignMessage::sign_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RejectSignMessage.sign_id)
+  return sign_id_;
+}
+inline void RejectSignMessage::set_sign_id(::google::protobuf::uint32 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RejectSignMessage.sign_id)
+}
 
 // -------------------------------------------------------------------
 

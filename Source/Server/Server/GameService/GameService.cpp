@@ -48,7 +48,7 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<PlayerDataManager>(ServerInstance));
     Managers.push_back(std::make_shared<BloodMessageManager>(ServerInstance, this));
     Managers.push_back(std::make_shared<BloodstainManager>(ServerInstance));
-    Managers.push_back(std::make_shared<SignManager>(ServerInstance));
+    Managers.push_back(std::make_shared<SignManager>(ServerInstance, this));
     Managers.push_back(std::make_shared<GhostManager>(ServerInstance));
     Managers.push_back(std::make_shared<RankingManager>(ServerInstance));
     Managers.push_back(std::make_shared<QuickMatchManager>(ServerInstance));

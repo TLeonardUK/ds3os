@@ -9,6 +9,7 @@
 
 #include "Server/GameService/GameManagers/Signs/SignManager.h"
 #include "Server/GameService/GameClient.h"
+#include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
 
@@ -18,8 +19,9 @@
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 
-SignManager::SignManager(Server* InServerInstance)
+SignManager::SignManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
+    , GameServiceInstance(InGameServiceInstance)
 {
     LiveCache.SetMaxEntriesPerArea(InServerInstance->GetConfig().SummonSignMaxEntriesPerArea);
 }
@@ -32,6 +34,36 @@ void SignManager::OnLostPlayer(GameClient* Client)
         LiveCache.Remove(Sign->OnlineAreaId, Sign->SignId);
     }
     Client->ActiveSummonSigns.clear();
+}
+
+void SignManager::Poll()
+{
+    /*static float Timer = GetSeconds();
+    if (GetSeconds() - Timer > 10.0f)
+    {
+        if (std::shared_ptr<GameClient> Client = GameServiceInstance->FindClientByPlayerId(2))
+        {
+            if (Client->ActiveSummonSigns.size() > 0)
+            {
+                std::shared_ptr<SummonSign> Sign = Client->ActiveSummonSigns[Client->ActiveSummonSigns.size() - 1];
+
+                Frpg2RequestMessage::PushRequestSummonSign PushMessage;
+                PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestSummonSign);
+                PushMessage.mutable_message()->set_player_id(1);
+                PushMessage.mutable_message()->set_steam_id("0110000149894186");
+                PushMessage.mutable_message()->mutable_sign_info()->set_player_id(Sign->PlayerId);
+                PushMessage.mutable_message()->mutable_sign_info()->set_sign_id(Sign->SignId);
+                PushMessage.mutable_message()->set_player_struct((const char*)Sign->PlayerStruct.data(), Sign->PlayerStruct.size());
+
+                if (!Client->MessageStream->Send(&PushMessage))
+                {
+                    Warning("[%s] Failed to send PushRequestSummonSign.", Client->GetName().c_str());
+                }
+            }
+        }
+
+        Timer = GetSeconds();
+    }*/
 }
 
 MessageHandleResult SignManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
@@ -153,7 +185,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
 
     // DEBUG DEBUG DEBUG
     // Make a fake secondary sign as well from "another" player.
-    {
+    /*{
         std::shared_ptr<SummonSign> DebugSign = std::make_shared<SummonSign>();
         DebugSign->SignId = NextSignId++;
         DebugSign->OnlineAreaId = (OnlineAreaId)Request->online_area_id();
@@ -166,7 +198,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
         DebugSign->PlayerStruct[452] = 'b';
         DebugSign->MatchingParameters = Request->matching_parameter();
         LiveCache.Add(DebugSign->OnlineAreaId, DebugSign->SignId, DebugSign);
-    }
+    }*/
     // DEBUG DEBUG DEBUG
 
     std::shared_ptr<SummonSign> Sign = std::make_shared<SummonSign>();
@@ -177,6 +209,16 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     Sign->IsRedSign = Request->is_red_sign();
     Sign->PlayerStruct.assign(Request->player_struct().data(), Request->player_struct().data() + Request->player_struct().size());
     Sign->MatchingParameters = Request->matching_parameter();
+
+    // Remove any existing summons signs, it should have already been done, but sometimes 
+    // the client doesn't request to remove them during summon sign failures.
+    /*for (std::shared_ptr<SummonSign>& Sign : Client->ActiveSummonSigns)
+    {
+        Warning("[%s] Forcibly removing existing summon sign during RequestCreateSign.", Client->GetName().c_str());
+        LiveCache.Remove(Sign->OnlineAreaId, Sign->SignId);
+    }
+    Client->ActiveSummonSigns.clear();
+    */
 
     LiveCache.Add(Sign->OnlineAreaId, Sign->SignId, Sign);
     Client->ActiveSummonSigns.push_back(Sign);
@@ -235,9 +277,28 @@ MessageHandleResult SignManager::Handle_RequestUpdateSign(GameClient* Client, co
 
 MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestRejectSign* Request = (Frpg2RequestMessage::RequestRejectSign*)Message.Protobuf.get();
+    Frpg2RequestMessage::RequestSummonSign* Request = (Frpg2RequestMessage::RequestSummonSign*)Message.Protobuf.get();
 
     // First check the sign still exists, if it doesn't, send a reject message as its probably already used.
+    /*std::shared_ptr<SummonSign> Sign = LiveCache.Find((OnlineAreaId)Request->online_area_id(), Request->sign_info().sign_id());
+    if (!Sign)
+    {
+        Warning("[%s] Client attempted to use invalid summon sign, sending back rejection, %i.", Client->GetName().c_str(), Request->sign_info().sign_id());
+
+        Frpg2RequestMessage::PushRequestRejectSign PushMessage;
+        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectSign);
+        PushMessage.mutable_message().
+
+        if (!Client->MessageStream->Send(&PushMessage))
+        {
+            Warning("[%s] Failed to send PushRequestRejectSign.", Client->GetName().c_str());
+            return MessageHandleResult::Failed;
+        }
+
+
+        return MessageHandleResult::Handled;
+    }*/
+
 
     // Send an accept message to the source of the sign.
 

@@ -19450,7 +19450,7 @@ void RequestNotifyRegisterCharacter::Swap(RequestNotifyRegisterCharacter* other)
 // ===================================================================
 
 #ifndef _MSC_VER
-const int SummonSignMessage::kOnlineAreaIdFieldNumber;
+const int SummonSignMessage::kPlayerIdFieldNumber;
 const int SummonSignMessage::kSteamIdFieldNumber;
 const int SummonSignMessage::kSignInfoFieldNumber;
 const int SummonSignMessage::kPlayerStructFieldNumber;
@@ -19481,7 +19481,7 @@ SummonSignMessage::SummonSignMessage(const SummonSignMessage& from)
 void SummonSignMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  online_area_id_ = 0u;
+  player_id_ = 0u;
   steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   sign_info_ = NULL;
   player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -19531,7 +19531,7 @@ SummonSignMessage* SummonSignMessage::New() const {
 
 void SummonSignMessage::Clear() {
   if (_has_bits_[0 / 32] & 15) {
-    online_area_id_ = 0u;
+    player_id_ = 0u;
     if (has_steam_id()) {
       if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         steam_id_->clear();
@@ -19564,13 +19564,13 @@ bool SummonSignMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 online_area_id = 1;
+      // required uint32 player_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_area_id_)));
-          set_has_online_area_id();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
@@ -19642,9 +19642,9 @@ failure:
 void SummonSignMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.SummonSignMessage)
-  // required uint32 online_area_id = 1;
-  if (has_online_area_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
+  // required uint32 player_id = 1;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
   }
 
   // required string steam_id = 2;
@@ -19674,11 +19674,11 @@ int SummonSignMessage::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 online_area_id = 1;
-    if (has_online_area_id()) {
+    // required uint32 player_id = 1;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->online_area_id());
+          this->player_id());
     }
 
     // required string steam_id = 2;
@@ -19719,8 +19719,8 @@ void SummonSignMessage::CheckTypeAndMergeFrom(
 void SummonSignMessage::MergeFrom(const SummonSignMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_online_area_id()) {
-      set_online_area_id(from.online_area_id());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
     if (from.has_steam_id()) {
       set_steam_id(from.steam_id());
@@ -19752,7 +19752,7 @@ bool SummonSignMessage::IsInitialized() const {
 
 void SummonSignMessage::Swap(SummonSignMessage* other) {
   if (other != this) {
-    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(player_id_, other->player_id_);
     std::swap(steam_id_, other->steam_id_);
     std::swap(sign_info_, other->sign_info_);
     std::swap(player_struct_, other->player_struct_);
@@ -20009,6 +20009,8 @@ void RemoveSignMessage::Swap(RemoveSignMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RejectSignMessage::kPlayerIdFieldNumber;
+const int RejectSignMessage::kSignIdFieldNumber;
 #endif  // !_MSC_VER
 
 RejectSignMessage::RejectSignMessage()
@@ -20029,6 +20031,8 @@ RejectSignMessage::RejectSignMessage(const RejectSignMessage& from)
 
 void RejectSignMessage::SharedCtor() {
   _cached_size_ = 0;
+  player_id_ = 0u;
+  sign_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -20067,6 +20071,21 @@ RejectSignMessage* RejectSignMessage::New() const {
 }
 
 void RejectSignMessage::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RejectSignMessage*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(player_id_, sign_id_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -20084,14 +20103,48 @@ bool RejectSignMessage::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 player_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &player_id_)));
+          set_has_player_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_sign_id;
+        break;
+      }
+
+      // required uint32 sign_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_sign_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.RejectSignMessage)
@@ -20105,6 +20158,16 @@ failure:
 void RejectSignMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RejectSignMessage)
+  // required uint32 player_id = 1;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
+  }
+
+  // required uint32 sign_id = 2;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->sign_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.RejectSignMessage)
@@ -20113,6 +20176,22 @@ void RejectSignMessage::SerializeWithCachedSizes(
 int RejectSignMessage::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 player_id = 1;
+    if (has_player_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->player_id());
+    }
+
+    // required uint32 sign_id = 2;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->sign_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -20128,6 +20207,14 @@ void RejectSignMessage::CheckTypeAndMergeFrom(
 
 void RejectSignMessage::MergeFrom(const RejectSignMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
+    }
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -20138,12 +20225,16 @@ void RejectSignMessage::CopyFrom(const RejectSignMessage& from) {
 }
 
 bool RejectSignMessage::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
 
 void RejectSignMessage::Swap(RejectSignMessage* other) {
   if (other != this) {
+    std::swap(player_id_, other->player_id_);
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -26419,6 +26510,9 @@ void PushRequestRejectSign::CopyFrom(const PushRequestRejectSign& from) {
 bool PushRequestRejectSign::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
+  if (has_message()) {
+    if (!this->message().IsInitialized()) return false;
+  }
   return true;
 }
 

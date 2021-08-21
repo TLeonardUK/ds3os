@@ -15,6 +15,7 @@
 
 struct Frpg2ReliableUdpMessage;
 class Server;
+class GameService;
 
 // Handles all client requests to do with matchmaking
 // Placing and retrieving summon signs.
@@ -23,11 +24,12 @@ class SignManager
     : public GameManager
 {
 public:    
-    SignManager(Server* InServerInstance);
+    SignManager(Server* InServerInstance, GameService* InGameServiceInstance);
 
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
+    virtual void Poll() override;
 
     virtual void OnLostPlayer(GameClient* Client) override;
 
@@ -44,6 +46,7 @@ protected:
 
 private:
     Server* ServerInstance;
+    GameService* GameServiceInstance;
 
     OnlineAreaPool<SummonSign> LiveCache;
 

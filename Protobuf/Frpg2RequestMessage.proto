@@ -567,8 +567,30 @@ message RequestNotifyRegisterCharacter {
 // Game Server Messages - Summon Signs
 // ------------------------------------------------------------------------------------------------------------
 
+// Order of these events appear to be:
+//
+// As Summonee:
+//
+//   >> RequestCreateSign
+//   << CreateSummonSignResponse
+//   >> RequestUpdateSign (Multiple times, seems to keep them alive)
+//   >> RequestRemoveSign
+//   >> RequestNotifyCreateSignResult
+//   << PushRequestSummonSign
+//
+//   Presumably if its not possible to summon:
+//   >> RequestRejectSign
+//
+// As Summoner:
+//   >> RequestSummonSign
+//   << PushRequestRemoveSign
+//   >> RequestNotifySummonSighResult
+//
+//   Presumably if its not possible to summon:
+//   << PushRequestRejectSign
+
 message SummonSignMessage {
-    required uint32 online_area_id = 1;
+    required uint32 player_id = 1;
     required string steam_id = 2;
     required SignInfo sign_info = 3;
     required string player_struct = 4;
@@ -580,6 +602,8 @@ message RemoveSignMessage {
 }
 
 message RejectSignMessage {
+    required uint32 player_id = 1;
+    required uint32 sign_id = 2;
     // Unknown
 }
 
@@ -689,11 +713,15 @@ message RequestUpdateSignResponse {
 }
 
 message RequestRejectSign {
-    // Unknown
+    required uint32 unknown_1 = 1;              // 50331088
+    required uint32 unknown_2 = 2;              // 587202560
+    required uint32 sign_id = 3;
+    required bool unknown_4 = 4;                // 1
+    required bool unknown_5 = 5;                // 1
 }
 
 message RequestRejectSignResponse {
-    // Unknown
+    // Never gets sent?
 }
 
 message RequestGetRightMatchingArea {
@@ -710,12 +738,12 @@ message RequestGetRightMatchingAreaResponse {
 }
 
 message PushRequestRemoveSign {
-    required PushMessageId push_message_id = 1;     // 829 - Think this is a push message id.
+    required PushMessageId push_message_id = 1;     // 829
     required RemoveSignMessage message = 2;
 }
 
 message PushRequestSummonSign {
-    required PushMessageId push_message_id = 1;     // 830 - Push message id
+    required PushMessageId push_message_id = 1;     // 830
     required SummonSignMessage message = 2;
 }
 
