@@ -5,6 +5,14 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <PackageId>Dark Souls III - Open Server Launcher</PackageId>
+    <Product>Dark Souls III - Open Server Launcher</Product>
+    <Authors>Tim Leonard</Authors>
+    <Description>Application used for launching Dark Souls III in a way that it connects to unofficial servers.</Description>
+    <PackageProjectUrl>https://github.com/TLeonardUK/ds3os</PackageProjectUrl>
+    <Version>1.0.0.2</Version>
+    <FileVersion>1.0.0.3</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

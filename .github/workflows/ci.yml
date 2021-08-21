@@ -1,6 +1,8 @@
-name: MSBuild
+name: CI
 
-on: [push]
+on:
+  workflow_dispatch:
+  push:
 
 env:
   # Path to the solution file relative to the root of the project.

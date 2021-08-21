@@ -17,6 +17,9 @@ env:
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Release
 
+  # Version number being build.
+  VERSION_NUMBER: 1.0.0.0-preview
+
 jobs:
   build:
     runs-on: windows-latest
@@ -49,7 +52,7 @@ jobs:
       run: vcpkg integrate install
 
     - name: Package DotNet
-      run: dotnet publish ./Source/Loader/Loader.csproj -r win-x64 -c Release --output ${{github.workspace}}/Bin/Loader/Package/ /p:PublishSingleFile=true /p:PublishTrimmed=true /p:IncludeNativeLibrariesForSelfExtract=true
+      run: dotnet publish ./Source/Loader/Loader.csproj -r win-x64 -c Release --output ${{github.workspace}}/Bin/Loader/Package/ /p:PublishSingleFile=true /p:PublishTrimmed=true /p:IncludeNativeLibrariesForSelfExtract=true /p:Version=${{env.VERSION_NUMBER}} /p:FileVersion=${{env.VERSION_NUMBER}} /p:AssemblyVersion=${{env.VERSION_NUMBER}}
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
