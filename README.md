@@ -3,6 +3,8 @@ An open source implementation of the dark souls 3 game server. Initially focused
 
 :bangbang: This project is very much an early work in progress, no guarantees are given over its stability.
 
+![Build Status](https://github.com/TLeonardUK/ds3os/actions/workflows/msbuild.yml/badge.svg)
+
 # Whats in the repository?
 ```
 /
