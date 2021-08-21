@@ -38,7 +38,6 @@ Research/
 vcpkg_installed/
 .vs/
 Temp/
-vcpkg/
 RawCaptures/
 GameCaptures/
 Dumps/
