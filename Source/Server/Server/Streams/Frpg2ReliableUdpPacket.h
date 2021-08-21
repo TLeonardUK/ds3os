@@ -132,6 +132,6 @@ private:
     friend class Frpg2ReliableUdpPacketStream;
 
     // Use for internal bookkeeping when sending/recieving the packet.
-    float SendTime;
+    double SendTime;
 
 };

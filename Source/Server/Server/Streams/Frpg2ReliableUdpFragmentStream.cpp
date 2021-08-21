@@ -28,7 +28,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
 {
     std::vector<uint8_t> Payload = Fragment.Payload;
     bool bCompressed = (Fragment.Payload.size() >= MIN_SIZE_FOR_COMPRESSION);
-    uint32_t UncompressedSize = Payload.size();
+    uint32_t UncompressedSize = (uint32_t)Payload.size();
 
     if (bCompressed)
     {        
@@ -41,20 +41,20 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         }
     }
 
-    int FragmentCount = (Payload.size() + (MAX_FRAGMENT_LENGTH - 1)) / MAX_FRAGMENT_LENGTH;
+    size_t FragmentCount = (Payload.size() + (MAX_FRAGMENT_LENGTH - 1)) / MAX_FRAGMENT_LENGTH;
 
     // Fragment up if payload is larger than max payload size.
-    for (int i = 0; i < FragmentCount; i++)
+    for (size_t i = 0; i < FragmentCount; i++)
     {
-        int FragmentOffset = i * MAX_FRAGMENT_LENGTH;
-        int BytesRemaining = Payload.size() - FragmentOffset;
+        int FragmentOffset = (int)i * MAX_FRAGMENT_LENGTH;
+        int BytesRemaining = (int)Payload.size() - FragmentOffset;
         int FragmentLength = std::min(MAX_FRAGMENT_LENGTH, BytesRemaining);
 
         Frpg2ReliableUdpFragment SendFragment;
         SendFragment.Header.compress_flag = bCompressed;
-        SendFragment.Header.fragment_index = i;
+        SendFragment.Header.fragment_index = (uint8_t)i;
         SendFragment.Header.fragment_length = FragmentLength;
-        SendFragment.Header.total_payload_length = Payload.size();
+        SendFragment.Header.total_payload_length = (uint16_t)Payload.size();
         SendFragment.Header.packet_counter = SentFragmentCounter;
         SendFragment.PayloadDecompressedLength = UncompressedSize;
         SendFragment.Payload.resize(FragmentLength);
@@ -221,7 +221,7 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
                 {
                     const Frpg2ReliableUdpFragment& Fragment = Fragments[i];
                     memcpy(CombinedFragment.Payload.data() + Offset, Fragment.Payload.data(), Fragment.Payload.size());
-                    Offset += Fragment.Payload.size();
+                    Offset += (int)Fragment.Payload.size();
                 }
 
                 memcpy(CombinedFragment.Payload.data() + Offset, Fragment.Payload.data(), Fragment.Payload.size());

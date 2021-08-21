@@ -23,7 +23,7 @@
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& CwcKey, uint64_t InAuthToken)
     : Service(OwningService)

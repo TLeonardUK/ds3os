@@ -16,7 +16,7 @@ https://www.whatismyip.com/).
 
 The server accepts connections on ports 50050, 50000 and 50010 by default. If 
 the computer you are running the server on is behind a router you will likely
-need to modify your wrote to port-forward TCP and UDP on all of those ports to
+need to modify your router to port-forward TCP and UDP on all of those ports to
 allow external people to connect. Guides to doing this are numerous and available
 online.
 

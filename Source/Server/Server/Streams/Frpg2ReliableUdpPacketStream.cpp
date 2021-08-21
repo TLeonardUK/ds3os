@@ -103,12 +103,12 @@ bool Frpg2ReliableUdpPacketStream::DecodeReliablePacket(const Frpg2UdpPacket& In
 
     int HeaderOffset = 0;
     int PayloadOffset = sizeof(Frpg2ReliableUdpPacketHeader);
-    int PayloadSize = Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader);
+    int PayloadSize = (int)Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader);
     if (Input.Payload[0] != 0xF5 || Input.Payload[1] != 0x02)
     {
         // TODO: This is a hack to find the correct packet header offset, this only occurs for the very first syn packet so we
         //       can hard code this. We should do this a better way though.
-        HeaderOffset = Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader) - sizeof(Frpg2ReliableUdpPacketOpCodePayload_SYN);
+        HeaderOffset = (int)Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader) - sizeof(Frpg2ReliableUdpPacketOpCodePayload_SYN);
         PayloadOffset = 0;
 
         Ensure(Input.Payload[HeaderOffset] == 0xF5 && Input.Payload[HeaderOffset + 1] == 0x02);
@@ -192,7 +192,7 @@ int Frpg2ReliableUdpPacketStream::GetPacketIndexByLocalSequence(const std::vecto
 
         if (Local == SequenceIndex)
         {
-            return i;
+            return (int)i;
         }
     }
     return -1;
@@ -634,7 +634,7 @@ bool Frpg2ReliableUdpPacketStream::Pump()
     // If closing and its taken too long then don't bother trying to gracefully disconnect.
     if (CloseTimer > 0.0f && State == Frpg2ReliableUdpStreamState::Closing)
     {        
-        if (float Elapsed = GetSeconds() - CloseTimer; Elapsed > CONNECTION_CLOSE_TIMEOUT)
+        if (double Elapsed = GetSeconds() - CloseTimer; Elapsed > CONNECTION_CLOSE_TIMEOUT)
         {
             Log("[%s] Connection closing took to long, assuming connection terminated.", Connection->GetName().c_str());
             State = Frpg2ReliableUdpStreamState::Closed;        

@@ -45,7 +45,7 @@ bool Frpg2UdpPacketStream::Pump()
     {
         int BytesRecieved = 0;
         RecieveBuffer.resize(RecieveBuffer.capacity());
-        if (!Connection->Recieve(RecieveBuffer, 0, RecieveBuffer.size(), BytesRecieved))
+        if (!Connection->Recieve(RecieveBuffer, 0, (int)RecieveBuffer.size(), BytesRecieved))
         {
             Warning("[%s] Failed to recieve on connection.", Connection->GetName().c_str());
             InErrorState = true;
@@ -111,7 +111,7 @@ bool Frpg2UdpPacketStream::Send(const Frpg2UdpPacket& Packet)
         return false;
     }
 
-    if (!Connection->Send(Bytes, 0, Bytes.size()))
+    if (!Connection->Send(Bytes, 0, (int)Bytes.size()))
     {
         Warning("[%s] Failed to send packet,.", Connection->GetName().c_str());
         InErrorState = true;
@@ -136,7 +136,7 @@ bool Frpg2UdpPacketStream::Recieve(Frpg2UdpPacket* OutputPacket)
 
 bool Frpg2UdpPacketStream::BytesToPacket(const std::vector<uint8_t>& Buffer, Frpg2UdpPacket& Packet)
 {
-    int PayloadSize = Buffer.size();
+    int PayloadSize = (int)Buffer.size();
 
     Packet.Payload.resize(PayloadSize);
     memcpy(Packet.Payload.data(), Buffer.data(), PayloadSize);

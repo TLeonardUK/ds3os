@@ -27,7 +27,7 @@
 
 #include "Core/Crypto/CWCCipher.h"
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 AuthClient::AuthClient(AuthService* OwningService, std::shared_ptr<NetConnection> InConnection, RSAKeyPair* InServerRSAKey)
     : Service(OwningService)

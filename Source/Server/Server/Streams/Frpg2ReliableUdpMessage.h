@@ -14,7 +14,7 @@
 #include <vector>
 #include <memory>
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 // All the id's of message type we can recieve.
 enum class Frpg2ReliableUdpMessageType

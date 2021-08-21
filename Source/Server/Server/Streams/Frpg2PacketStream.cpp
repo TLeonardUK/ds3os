@@ -163,7 +163,7 @@ bool Frpg2PacketStream::Send(const Frpg2Packet& Packet)
     *reinterpret_cast<uint16_t*>(BytesWithHeader.data()) = HostOrderToBigEndian((uint16_t)Bytes.size());
     memcpy(BytesWithHeader.data() + sizeof(uint16_t), Bytes.data(), Bytes.size());
 
-    if (!Connection->Send(BytesWithHeader, 0, BytesWithHeader.size()))
+    if (!Connection->Send(BytesWithHeader, 0, (int)BytesWithHeader.size()))
     {
         Warning("[%s] Failed to send packet,.", Connection->GetName().c_str());
         InErrorState = true;

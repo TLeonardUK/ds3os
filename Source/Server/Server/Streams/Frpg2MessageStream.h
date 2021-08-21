@@ -11,7 +11,7 @@
 
 #include "Server/Streams/Frpg2PacketStream.h"
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 struct Frpg2Message;
 class RSAKeyPair;

@@ -16,7 +16,7 @@
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 #include <google/protobuf/unknown_field_set.h>
 
@@ -95,7 +95,7 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
         ResponseMessage.AckSequenceIndex = ResponseTo->AckSequenceIndex;
     }
 
-    if (!Message->SerializeToArray(ResponseMessage.Payload.data(), ResponseMessage.Payload.size()))
+    if (!Message->SerializeToArray(ResponseMessage.Payload.data(), (int)ResponseMessage.Payload.size()))
     {
         Warning("[%s] Failed to serialize protobuf payload.", Connection->GetName().c_str());
         InErrorState = true;
@@ -165,7 +165,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         return false;
     }
 
-    if (!Message->Protobuf->ParseFromArray(Message->Payload.data(), Message->Payload.size()))
+    if (!Message->Protobuf->ParseFromArray(Message->Payload.data(), (int)Message->Payload.size()))
     {
         Warning("[%s] Failed to deserialize protobuf instance for message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
 

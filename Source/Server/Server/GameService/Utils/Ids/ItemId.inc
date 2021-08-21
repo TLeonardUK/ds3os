@@ -7,7 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-ENTRY(Empty,                                                      "Empty",                                                    0xFFFFFFFF)
+ENTRY(Empty,                                                      "Empty",                                                    -1)
 ENTRY(Dark_Hand,                                                  "Dark Hand",                                                0x00A87500)
 ENTRY(Fists,                                                      "Fists",                                                    0x0001ADB0)
 ENTRY(Standard_Arrow,                                             "Standard Arrow",                                           0x00061A80)

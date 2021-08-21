@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include "Protobuf/Frpg2PlayerData.pb.h"
+#include "Protobuf/Protobufs.h"
 
 #include "Server/GameService/Utils/GameIds.h"
 

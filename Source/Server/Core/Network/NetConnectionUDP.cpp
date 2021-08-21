@@ -160,7 +160,7 @@ bool NetConnectionUDP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
     RecieveQueue.erase(RecieveQueue.begin());
 
     memcpy(Buffer.data() + Offset, NextPacket.data(), NextPacket.size());
-    BytesRecieved = NextPacket.size();
+    BytesRecieved = (int)NextPacket.size();
 
     return true;
 }
@@ -246,7 +246,7 @@ bool NetConnectionUDP::Pump()
         socklen_t SourceAddressSize = sizeof(struct sockaddr);
         sockaddr_in SourceAddress = { 0 };
 
-        int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), RecieveBuffer.size(), 0, (sockaddr*)&SourceAddress, &SourceAddressSize);
+        int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), 0, (sockaddr*)&SourceAddress, &SourceAddressSize);
         if (Result < 0)
         {
     #if defined(_WIN32)

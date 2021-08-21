@@ -38,7 +38,7 @@ bool RuntimeConfig::Load(const std::filesystem::path& Path)
         nlohmann::json json = nlohmann::json::parse(JsonText);
         Serialize(json, true);
     }
-    catch (nlohmann::json::parse_error& ex)
+    catch (nlohmann::json::parse_error)
     {
         return false;
     }

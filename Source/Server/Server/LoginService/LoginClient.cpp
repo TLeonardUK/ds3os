@@ -22,7 +22,7 @@
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 LoginClient::LoginClient(LoginService* OwningService, std::shared_ptr<NetConnection> InConnection, RSAKeyPair* InServerRSAKey)
     : Service(OwningService)

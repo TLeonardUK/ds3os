@@ -20,7 +20,7 @@ CWCServerUDPCipher::CWCServerUDPCipher(const std::vector<uint8_t>& InKey, uint64
     : Key(InKey)
     , AuthToken(InAuthToken)
 {
-    cwc_init_and_key(InKey.data(), InKey.size(), &CwcContext);
+    cwc_init_and_key(InKey.data(), (unsigned long)InKey.size(), &CwcContext);
 
     // Auth token bytes to encode in the header are the reversed auth token.
     uint8_t* InAuthTokenBytes = reinterpret_cast<uint8_t*>(&InAuthToken);
@@ -39,7 +39,7 @@ bool CWCServerUDPCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<
     Header.resize(11);
     memcpy(Header.data(), IV.data(), 11);
 
-    if (cwc_encrypt_message(IV.data(), 11, Header.data(), Header.size(), (unsigned char*)Payload.data(), Payload.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
+    if (cwc_encrypt_message(IV.data(), 11, Header.data(), (unsigned long)Header.size(), (unsigned char*)Payload.data(), (unsigned long)Payload.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
     {
         return false;
     }
@@ -78,7 +78,7 @@ bool CWCServerUDPCipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<
 
     //Log("DecryptServer: PayloadSize=%i IV=%s Tag=%s Header=%s", Output.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str());
 
-    if (cwc_decrypt_message(IV.data(), 11, Header.data(), Header.size(), (unsigned char*)Output.data(), Output.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
+    if (cwc_decrypt_message(IV.data(), 11, Header.data(), (unsigned long)Header.size(), (unsigned char*)Output.data(), (unsigned long)Output.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
     {
         return false;
     }

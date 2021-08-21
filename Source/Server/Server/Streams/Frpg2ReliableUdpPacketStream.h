@@ -137,7 +137,6 @@ protected:
     // How many seconds to wait for a graceful disconnection.
     const double CONNECTION_CLOSE_TIMEOUT = 3.0;
 
-    float CloseTimer = 0.0f;
-
+    double CloseTimer = 0.0f;
 
 };

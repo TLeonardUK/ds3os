@@ -63,6 +63,8 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -78,6 +80,8 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,9 +111,8 @@
     <ClInclude Include="Core\Utils\Random.h" />
     <ClInclude Include="Core\Utils\Strings.h" />
     <ClInclude Include="Platform\Platform.h" />
-    <ClInclude Include="Protobuf\FpdLogMessage.pb.h" />
-    <ClInclude Include="Protobuf\Frpg2PlayerData.pb.h" />
-    <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h" />
+    <ClInclude Include="Protobuf\Protobufs.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Server\AuthService\AuthClient.h" />
     <ClInclude Include="Server\AuthService\AuthService.h" />
     <ClInclude Include="Server\Database\DatabaseTypes.h" />
@@ -166,9 +169,9 @@
     <ClCompile Include="Core\Utils\Strings.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Platform\Win32\Win32Platform.cpp" />
-    <ClCompile Include="Protobuf\FpdLogMessage.pb.cc" />
-    <ClCompile Include="Protobuf\Frpg2PlayerData.pb.cc" />
-    <ClCompile Include="Protobuf\Frpg2RequestMessage.pb.cc" />
+    <ClCompile Include="Protobuf\FpdLogMessage.cc" />
+    <ClCompile Include="Protobuf\Frpg2PlayerData.cc" />
+    <ClCompile Include="Protobuf\Frpg2RequestMessage.cc" />
     <ClCompile Include="Server\AuthService\AuthClient.cpp" />
     <ClCompile Include="Server\AuthService\AuthService.cpp" />
     <ClCompile Include="Server\Database\ServerDatabase.cpp" />
@@ -233,6 +236,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Server\Streams\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Resources\icon.ico" />
+    <Image Include="..\..\Resources\icon.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,7 +12,7 @@
 #include "Server/Streams/Frpg2ReliableUdpFragmentStream.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 #include <unordered_map>
 

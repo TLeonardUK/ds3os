@@ -11,7 +11,7 @@
 
 #include "Server/GameService/Utils/GameIds.h"
 
-#include "Protobuf/Frpg2RequestMessage.pb.h"
+#include "Protobuf/Protobufs.h"
 
 // Blood message stored in the database or live cache.
 struct BloodMessage

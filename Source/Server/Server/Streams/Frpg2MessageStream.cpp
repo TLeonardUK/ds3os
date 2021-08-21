@@ -69,7 +69,7 @@ bool Frpg2MessageStream::Send(google::protobuf::MessageLite* Message, uint32_t R
     Frpg2Message ResponseMessage;
     ResponseMessage.Payload.resize(Message->ByteSize());
 
-    if (!Message->SerializeToArray(ResponseMessage.Payload.data(), ResponseMessage.Payload.size()))
+    if (!Message->SerializeToArray(ResponseMessage.Payload.data(), (int)ResponseMessage.Payload.size()))
     {
         Warning("[%s] Failed to serialize protobuf payload.", Connection->GetName().c_str());
         return false;

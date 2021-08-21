@@ -17,7 +17,7 @@
 CWCCipher::CWCCipher(const std::vector<uint8_t>& InKey)
     : Key(InKey)
 {
-    cwc_init_and_key(InKey.data(), InKey.size(), &CwcContext);
+    cwc_init_and_key(InKey.data(), (unsigned long)InKey.size(), &CwcContext);
 }
 
 bool CWCCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output)
@@ -28,7 +28,7 @@ bool CWCCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 
     FillRandomBytes(IV);
 
-    if (cwc_encrypt_message(IV.data(), 11, IV.data(), 11, (unsigned char*)Payload.data(), Payload.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
+    if (cwc_encrypt_message(IV.data(), 11, IV.data(), 11, (unsigned char*)Payload.data(), (unsigned long)Payload.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
     {
         return false;
     }
@@ -59,7 +59,7 @@ bool CWCCipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
     memcpy(Tag.data(), Input.data() + 11, 16);
     memcpy(Output.data(), Input.data() + 11 + 16, Output.size());
 
-    if (cwc_decrypt_message(IV.data(), 11, IV.data(), 11, (unsigned char*)Output.data(), Output.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
+    if (cwc_decrypt_message(IV.data(), 11, IV.data(), 11, (unsigned char*)Output.data(), (unsigned long)Output.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
     {
         return false;
     }

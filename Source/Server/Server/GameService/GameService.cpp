@@ -164,7 +164,7 @@ void GameService::Poll()
     {
         auto& Pair = *iter;
 
-        float ElapsedTime = GetSeconds() - Pair.second.LastRefreshTime;
+        double ElapsedTime = GetSeconds() - Pair.second.LastRefreshTime;
         if (ElapsedTime > BuildConfig::AUTH_TICKET_TIMEOUT)
         {
             Log("Authentication token 0x%016llx has expired.", Pair.second.AuthToken);

@@ -30,7 +30,7 @@ public:
     bool Recieve(Frpg2UdpPacket* Packet);
 
     // Gets the last timestamp where we recieved packets from the remote system, can be used for timeouts etc.
-    float GetLastActivityTime() { return LastActivityTime; }
+    double GetLastActivityTime() { return LastActivityTime; }
 
     // Sends and recieves packets in this stream. If this function
     // returns true the stream is considered to be in an error state
@@ -53,7 +53,7 @@ protected:
 
 private:
     
-    float LastActivityTime;
+    double LastActivityTime;
 
     std::vector<Frpg2UdpPacket> RecieveQueue;
 

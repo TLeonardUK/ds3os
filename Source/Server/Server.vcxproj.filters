@@ -91,6 +91,9 @@
     <Filter Include="Server\GameService\Utils\Ids">
       <UniqueIdentifier>{50746881-e082-419d-b0ab-6c2ce3984450}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{8342f788-f0cc-4d51-82ed-4e04ba562475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server\Server.h">
@@ -146,12 +149,6 @@
     </ClInclude>
     <ClInclude Include="Core\Crypto\RSAKeyPair.h">
       <Filter>Core\Crypto</Filter>
-    </ClInclude>
-    <ClInclude Include="Protobuf\Frpg2RequestMessage.pb.h">
-      <Filter>Protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="Protobuf\Frpg2PlayerData.pb.h">
-      <Filter>Protobuf</Filter>
     </ClInclude>
     <ClInclude Include="Config\RuntimeConfig.h">
       <Filter>Config</Filter>
@@ -228,9 +225,6 @@
     <ClInclude Include="Server\GameService\GameManagers\Logging\LoggingManager.h">
       <Filter>Server\GameService\GameManagers\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\FpdLogMessage.pb.h">
-      <Filter>Protobuf</Filter>
-    </ClInclude>
     <ClInclude Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.h">
       <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
     </ClInclude>
@@ -279,6 +273,12 @@
     <ClInclude Include="Server\Database\DatabaseTypes.h">
       <Filter>Server\Database</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\Protobufs.h">
+      <Filter>Protobuf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -311,12 +311,6 @@
     </ClCompile>
     <ClCompile Include="Core\Crypto\RSAKeyPair.cpp">
       <Filter>Core\Crypto</Filter>
-    </ClCompile>
-    <ClCompile Include="Protobuf\Frpg2RequestMessage.pb.cc">
-      <Filter>Protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="Protobuf\Frpg2PlayerData.pb.cc">
-      <Filter>Protobuf</Filter>
     </ClCompile>
     <ClCompile Include="Server\AuthService\AuthClient.cpp">
       <Filter>Server\AuthService</Filter>
@@ -384,9 +378,6 @@
     <ClCompile Include="Server\GameService\GameManagers\Logging\LoggingManager.cpp">
       <Filter>Server\GameService\GameManagers\Logging</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\FpdLogMessage.pb.cc">
-      <Filter>Protobuf</Filter>
-    </ClCompile>
     <ClCompile Include="Server\GameService\GameManagers\BloodMessage\BloodMessageManager.cpp">
       <Filter>Server\GameService\GameManagers\BloodMessage</Filter>
     </ClCompile>
@@ -419,6 +410,15 @@
     </ClCompile>
     <ClCompile Include="Server\GameService\GameManagers\Misc\MiscManager.cpp">
       <Filter>Server\GameService\GameManagers\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\FpdLogMessage.cc">
+      <Filter>Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\Frpg2PlayerData.cc">
+      <Filter>Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\Frpg2RequestMessage.cc">
+      <Filter>Protobuf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,5 +460,14 @@
     <Text Include="Server\Streams\ReadMe.txt">
       <Filter>Server\Streams</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Resources\icon.png" />
+    <Image Include="..\..\Resources\icon.ico" />
   </ItemGroup>
 </Project>
