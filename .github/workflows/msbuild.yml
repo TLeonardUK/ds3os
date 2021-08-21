@@ -26,8 +26,8 @@ jobs:
       
     - name: Install vcpkg
       shell: cmd
-      working-directory: ${{env.GITHUB_WORKSPACE}}/Tools/vcpkg
-      run: ${{env.GITHUB_WORKSPACE}}/bootstrap-vcpkg.bat
+      working-directory: ${{github.workspace}}/Tools/vcpkg
+      run: ${{github.workspace}}/bootstrap-vcpkg.bat
 
     - name: Integrate vcpkg with Visual Studio
       working-directory: ${{env.GITHUB_WORKSPACE}}/Tools/vcpkg
