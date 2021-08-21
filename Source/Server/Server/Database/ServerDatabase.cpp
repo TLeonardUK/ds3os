@@ -9,7 +9,7 @@
 
 #include "Server/Database/ServerDatabase.h"
 #include "Core/Utils/Logging.h"
-#include <sqlite3.h> 
+#include "ThirdParty/sqlite/sqlite3.h"
 
 ServerDatabase::ServerDatabase()
 {

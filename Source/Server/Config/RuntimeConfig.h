@@ -11,7 +11,7 @@
 
 #include <string>
 #include <filesystem>
-#include <nlohmann/json.hpp>
+#include "ThirdParty/nlohmann/json.hpp"
 
 // Wraps up the values for an announcement show to the user when they join the game.
 struct RuntimeConfigAnnouncement

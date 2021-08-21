@@ -224,6 +224,9 @@
     <ProjectReference Include="..\ThirdParty\protobuf-2.6.1rc1\vsprojects\libprotobuf-lite.vcxproj">
       <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\sqlite\sqlite.vcxproj">
+      <Project>{38059bfe-2a69-43e9-883f-963ea95a9504}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\ThirdParty\zlib\zlib.vcxproj">
       <Project>{cf5b60db-4966-40c6-b777-1b9fdf965296}</Project>
     </ProjectReference>

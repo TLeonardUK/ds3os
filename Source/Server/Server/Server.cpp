@@ -20,7 +20,7 @@
 #include <chrono>
 #include <fstream>
 
-#include <nlohmann/json.hpp>
+#include "ThirdParty/nlohmann/json.hpp"
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>

@@ -3,8 +3,6 @@
   "name": "ds3os-server",
   "version": "0.1.0",
   "dependencies": [
-    "openssl",
-    "nlohmann-json",
-    "sqlite3"
+    "openssl"
   ]
 }
