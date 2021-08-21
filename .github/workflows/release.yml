@@ -1,11 +1,12 @@
 name: Release
 
-on: [workflow_dispatch]
-#  push:
-#    branches:
-#      - "master"
-#    tags:
-#      - "v*"
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+    tags:
+      - "v*"
 
 env:
   # Path to the solution file relative to the root of the project.
