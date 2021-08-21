@@ -80,8 +80,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: v${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_TAG}}
+        release_name: Release v${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_TAG}}
         body: Preview build, not officially supported yet.
         draft: false
         prerelease: true
