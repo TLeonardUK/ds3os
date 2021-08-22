@@ -10,6 +10,7 @@ An open source implementation of the dark souls 3 game server. Initially focused
 /
 ├── Config/               Contains any useful configuration material, server config files and alike.
 ├── Protobuf/             Contains the protobuf definitions used by the server's network traffic. Compiling them is done via the bat file in Tools/
+├── Resources/            General resources used for building and packaging - icons/readmes/etc.
 ├── Source/               All source code for the project.
 │   ├── Loader/           Simple winforms app that loads DS3 such that it will connect to a custom server.
 │   ├── Server/           Source code for the main server.
