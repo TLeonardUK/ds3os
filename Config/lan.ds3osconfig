@@ -1,6 +1,6 @@
 {
     "Description": "Direct connect to debugging server.",
-    "Hostname": "127.0.0.1",
-    "Name": "Localhost Server",
+    "Hostname": "10.8.0.130",
+    "Name": "LAN Server",
     "PublicKey": "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAlK60jy/y9Rcbz3ZhgrWBH3GWTnPzhzRgzZv6+wkO/+p0nGWcMl6F\nw1pwNDye122IR4fZTkDrJQnAzvQH33Ix0dxw9g0cr2MrMaOZb22hCLt2HPK8V6i9\npBlqyvZaG7BNSkXEmvWgJH4HhHjq97IIblyHq12jJ/YgwkdCcqachaCI1mMRwbls\ndzQFW4KB8LuGn9z1bdyl8CopcANlljIk92XxGB/zYs2/Va5T8gfnvHTmefAu9VRK\nziM9hgszM1AV3MqB6GC1+liDGlWwQlQ4zn7VNwJiqbRK1oA4l/oZZCFOxzkmD7gW\nPOqqukxF9m8yK0Y4iEzWjyrRyi6xZdCe5QIDAQAB\n-----END RSA PUBLIC KEY-----\n"
 }

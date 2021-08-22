@@ -82,6 +82,20 @@ public:
         return nullptr;
     }
 
+    // Avoid using this one if you can, it has to look through a lot more areas.
+    std::shared_ptr<ValueType> Find(EntryId Id)
+    {
+        for (auto AreaPair : AreaMap)
+        {
+            std::shared_ptr<Area> AreaInstance = AreaPair.second;
+            if (auto iter = AreaInstance->Entries.find(Id); iter != AreaInstance->Entries.end())
+            {
+                return iter->second;
+            }
+        }
+        return nullptr;
+    }
+
     std::vector<std::shared_ptr<ValueType>> GetRandomSet(OnlineAreaId AreaId, int MaxCount)
     {
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);

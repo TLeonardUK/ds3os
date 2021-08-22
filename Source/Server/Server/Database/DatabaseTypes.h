@@ -67,4 +67,6 @@ struct SummonSign
     Frpg2RequestMessage::MatchingParameter MatchingParameters;
 
     std::vector<uint8_t> PlayerStruct;
+
+    uint32_t BeingSummonedByPlayerId = 0;
 };

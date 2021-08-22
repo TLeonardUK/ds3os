@@ -24838,6 +24838,11 @@ void RequestUpdateSignResponse::Swap(RequestUpdateSignResponse* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestRejectSign::kUnknown1FieldNumber;
+const int RequestRejectSign::kUnknown2FieldNumber;
+const int RequestRejectSign::kSignIdFieldNumber;
+const int RequestRejectSign::kUnknown4FieldNumber;
+const int RequestRejectSign::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
 
 RequestRejectSign::RequestRejectSign()
@@ -24858,6 +24863,11 @@ RequestRejectSign::RequestRejectSign(const RequestRejectSign& from)
 
 void RequestRejectSign::SharedCtor() {
   _cached_size_ = 0;
+  unknown_1_ = 0u;
+  unknown_2_ = 0u;
+  sign_id_ = 0u;
+  unknown_4_ = false;
+  unknown_5_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -24896,6 +24906,23 @@ RequestRejectSign* RequestRejectSign::New() const {
 }
 
 void RequestRejectSign::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestRejectSign*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(unknown_1_, unknown_5_);
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -24913,14 +24940,93 @@ bool RequestRejectSign::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 unknown_1 = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_1_)));
+          set_has_unknown_1();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_unknown_2;
+        break;
+      }
+
+      // required uint32 unknown_2 = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_unknown_2:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_2_)));
+          set_has_unknown_2();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_sign_id;
+        break;
+      }
+
+      // required uint32 sign_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_sign_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_unknown_4;
+        break;
+      }
+
+      // required bool unknown_4 = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_unknown_4:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &unknown_4_)));
+          set_has_unknown_4();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_unknown_5;
+        break;
+      }
+
+      // required bool unknown_5 = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_unknown_5:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &unknown_5_)));
+          set_has_unknown_5();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.RequestRejectSign)
@@ -24934,6 +25040,31 @@ failure:
 void RequestRejectSign::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestRejectSign)
+  // required uint32 unknown_1 = 1;
+  if (has_unknown_1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  }
+
+  // required uint32 unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  }
+
+  // required uint32 sign_id = 3;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->sign_id(), output);
+  }
+
+  // required bool unknown_4 = 4;
+  if (has_unknown_4()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->unknown_4(), output);
+  }
+
+  // required bool unknown_5 = 5;
+  if (has_unknown_5()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->unknown_5(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.RequestRejectSign)
@@ -24942,6 +25073,39 @@ void RequestRejectSign::SerializeWithCachedSizes(
 int RequestRejectSign::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 unknown_1 = 1;
+    if (has_unknown_1()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_1());
+    }
+
+    // required uint32 unknown_2 = 2;
+    if (has_unknown_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_2());
+    }
+
+    // required uint32 sign_id = 3;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->sign_id());
+    }
+
+    // required bool unknown_4 = 4;
+    if (has_unknown_4()) {
+      total_size += 1 + 1;
+    }
+
+    // required bool unknown_5 = 5;
+    if (has_unknown_5()) {
+      total_size += 1 + 1;
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -24957,6 +25121,23 @@ void RequestRejectSign::CheckTypeAndMergeFrom(
 
 void RequestRejectSign::MergeFrom(const RequestRejectSign& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_unknown_1()) {
+      set_unknown_1(from.unknown_1());
+    }
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
+    }
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+    if (from.has_unknown_4()) {
+      set_unknown_4(from.unknown_4());
+    }
+    if (from.has_unknown_5()) {
+      set_unknown_5(from.unknown_5());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -24967,12 +25148,19 @@ void RequestRejectSign::CopyFrom(const RequestRejectSign& from) {
 }
 
 bool RequestRejectSign::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
 
 void RequestRejectSign::Swap(RequestRejectSign* other) {
   if (other != this) {
+    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(unknown_5_, other->unknown_5_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }

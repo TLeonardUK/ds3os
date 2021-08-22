@@ -604,7 +604,6 @@ message RemoveSignMessage {
 message RejectSignMessage {
     required uint32 player_id = 1;
     required uint32 sign_id = 2;
-    // Unknown
 }
 
 message CachedSign {

@@ -258,6 +258,30 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
 
     LiveCache.Remove((OnlineAreaId)Request->online_area_id(), Request->sign_id());
 
+    // If anyone is trying to summon this sign right now, send them a notice that its been removed.
+    if (Sign->BeingSummonedByPlayerId != 0)
+    {
+        if (std::shared_ptr<GameClient> OtherClient = GameServiceInstance->FindClientByPlayerId(Sign->BeingSummonedByPlayerId))
+        {
+            Frpg2RequestMessage::PushRequestRemoveSign PushMessage;
+            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRemoveSign);
+            PushMessage.mutable_message()->set_player_id(Sign->PlayerId);
+            PushMessage.mutable_message()->set_sign_id(Sign->SignId);
+
+            if (!OtherClient->MessageStream->Send(&PushMessage))
+            {
+                Warning("[%s] Failed to send PushRequestRemoveSign to summoner.", Client->GetName().c_str());
+                return MessageHandleResult::Error;
+            }
+        }
+        else
+        {
+            Warning("[%s] PlayerId summoning sign no longer exists, nothing to reject.", Client->GetName().c_str());
+        }
+
+        Sign->BeingSummonedByPlayerId = 0;
+    }
+
     // Note: There is a response type for this message, but the server never normally sends it.
 
     return MessageHandleResult::Handled;
@@ -277,36 +301,68 @@ MessageHandleResult SignManager::Handle_RequestUpdateSign(GameClient* Client, co
 
 MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    PlayerState& Player = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestSummonSign* Request = (Frpg2RequestMessage::RequestSummonSign*)Message.Protobuf.get();
 
+    bool bSuccess = true;
+
     // First check the sign still exists, if it doesn't, send a reject message as its probably already used.
-    /*std::shared_ptr<SummonSign> Sign = LiveCache.Find((OnlineAreaId)Request->online_area_id(), Request->sign_info().sign_id());
+    std::shared_ptr<SummonSign> Sign = LiveCache.Find((OnlineAreaId)Request->online_area_id(), Request->sign_info().sign_id());
     if (!Sign)
     {
         Warning("[%s] Client attempted to use invalid summon sign, sending back rejection, %i.", Client->GetName().c_str(), Request->sign_info().sign_id());
+        bSuccess = false;
+    }
 
+    // Sign is already being summoned, send rejection.
+    if (Sign && Sign->BeingSummonedByPlayerId != 0)
+    {
+        Warning("[%s] Client attempted to use summon sign that is already being summoned, sending back rejection, %i.", Client->GetName().c_str(), Request->sign_info().sign_id());
+        bSuccess = false;        
+    }
+
+    bSuccess = false;
+
+    // Send an accept message to the source client of the sign telling them someone is trying to summon them.
+    if (bSuccess)
+    {
+        std::shared_ptr<GameClient> OriginClient = GameServiceInstance->FindClientByPlayerId(Sign->PlayerId);
+        Ensure(OriginClient != nullptr); // Should always be valid if the sign is in the cache.
+
+        Frpg2RequestMessage::PushRequestSummonSign PushMessage;
+        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestSummonSign);
+        PushMessage.mutable_message()->set_player_id(Player.PlayerId);
+        PushMessage.mutable_message()->set_steam_id(Player.SteamId);
+        PushMessage.mutable_message()->mutable_sign_info()->set_sign_id(Sign->SignId);
+        PushMessage.mutable_message()->mutable_sign_info()->set_player_id(Sign->PlayerId);
+        PushMessage.mutable_message()->set_player_struct(Request->player_struct().data(), Request->player_struct().size());
+
+        if (!OriginClient->MessageStream->Send(&PushMessage))
+        {
+            Warning("[%s] Failed to send PushRequestSummonSign.", OriginClient->GetName().c_str());
+            bSuccess = false;
+        }
+        else
+        {
+            Sign->BeingSummonedByPlayerId = Player.PlayerId;
+        }
+    }
+
+    // If failure then send a reject message.
+    if (!bSuccess)
+    {
         Frpg2RequestMessage::PushRequestRejectSign PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectSign);
-        PushMessage.mutable_message().
+        PushMessage.mutable_message()->set_player_id(Request->sign_info().player_id());
+        PushMessage.mutable_message()->set_sign_id(Request->sign_info().sign_id());
 
         if (!Client->MessageStream->Send(&PushMessage))
         {
             Warning("[%s] Failed to send PushRequestRejectSign.", Client->GetName().c_str());
-            return MessageHandleResult::Failed;
+            return MessageHandleResult::Error;
         }
-
-
-        return MessageHandleResult::Handled;
-    }*/
-
-
-    // Send an accept message to the source of the sign.
-
-    // TODO: 
-
-    //
-
-    // Note: There is a response type for this message, but the server never normally sends it.
+    }
 
     return MessageHandleResult::Handled;
 }
@@ -315,15 +371,39 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
 {
     Frpg2RequestMessage::RequestRejectSign* Request = (Frpg2RequestMessage::RequestRejectSign*)Message.Protobuf.get();
 
-    // TODO: Implement
-
-    Frpg2RequestMessage::RequestRejectSignResponse Response;
-
-    if (!Client->MessageStream->Send(&Response, &Message))
+    // First check the sign still exists, if it doesn't, send a reject message as its probably already used.
+    std::shared_ptr<SummonSign> Sign = LiveCache.Find(Request->sign_id());
+    if (!Sign)
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRejectSignResponse response.", Client->GetName().c_str());
+        Warning("[%s] Client attempted to reject summoning for invalid sign, %i.", Client->GetName().c_str(), Request->sign_id());
         return MessageHandleResult::Error;
     }
+
+    // Send PushRequestRejectSign response to whichever client attempted to summon them.
+    if (Sign->BeingSummonedByPlayerId != 0)
+    {
+        if (std::shared_ptr<GameClient> OtherClient = GameServiceInstance->FindClientByPlayerId(Sign->BeingSummonedByPlayerId))
+        {
+            Frpg2RequestMessage::PushRequestRejectSign PushMessage;
+            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectSign);
+            PushMessage.mutable_message()->set_player_id(Sign->PlayerId);
+            PushMessage.mutable_message()->set_sign_id(Sign->SignId);
+
+            if (!OtherClient->MessageStream->Send(&PushMessage))
+            {
+                Warning("[%s] Failed to send PushRequestRejectSign to summoner.", Client->GetName().c_str());
+                return MessageHandleResult::Error;
+            }
+        }
+        else
+        {
+            Warning("[%s] PlayerId summoning sign no longer exists, nothing to reject.", Client->GetName().c_str());
+        }        
+
+        Sign->BeingSummonedByPlayerId = 0;
+    }
+    
+    // Note: There is a response type for this message, but the server never normally sends it.
 
     return MessageHandleResult::Handled;
 }
