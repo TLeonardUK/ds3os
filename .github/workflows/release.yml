@@ -60,10 +60,10 @@ jobs:
 
     - name: Update version numbers
       uses: jacobtomlinson/gha-find-replace@master
-        with:
-          find: "1.0.0.0"
-          replace: "${{env.VERSION_NUMBER}}"
-          include: "Resource.rc"
+      with:
+        find: "1.0.0.0"
+        replace: "${{env.VERSION_NUMBER}}"
+        include: "Resource.rc"
 
     - name: Package DotNet
       run: dotnet publish ./Source/Loader/Loader.csproj -r win-x64 -c Release --output ${{github.workspace}}/Bin/Loader/Package/ /p:PublishSingleFile=true /p:PublishTrimmed=true /p:IncludeNativeLibrariesForSelfExtract=true /p:Version=${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_POSTFIX}} /p:FileVersion=${{env.VERSION_NUMBER}} /p:AssemblyVersion=${{env.VERSION_NUMBER}}
