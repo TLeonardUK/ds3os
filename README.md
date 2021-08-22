@@ -49,10 +49,11 @@ We're slowly going through and implementing all the games online functionality, 
 - [x] Blood messages
 - [x] Bloodstains
 - [x] Ghosts
-- [ ] Roster of knights
+- [x] Summoning
 - [ ] Invasions
-- [ ] Summoning
 - [ ] Visitors (Summoning via covenant)
+- [ ] Matchmaking (eg. Correctly matching summoning/invasions/visits with player level)
+- [ ] Roster of knights
 - [ ] Undead match
 - [ ] Archdragon peak bell ringing
 - [ ] Telemetry and misc server calls

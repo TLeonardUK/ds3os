@@ -8727,33 +8727,33 @@ class RejectSignMessage : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 player_id = 1;
-  inline bool has_player_id() const;
-  inline void clear_player_id();
-  static const int kPlayerIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 player_id() const;
-  inline void set_player_id(::google::protobuf::uint32 value);
-
-  // required uint32 sign_id = 2;
+  // required uint32 sign_id = 1;
   inline bool has_sign_id() const;
   inline void clear_sign_id();
-  static const int kSignIdFieldNumber = 2;
+  static const int kSignIdFieldNumber = 1;
   inline ::google::protobuf::uint32 sign_id() const;
   inline void set_sign_id(::google::protobuf::uint32 value);
 
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RejectSignMessage)
  private:
-  inline void set_has_player_id();
-  inline void clear_has_player_id();
   inline void set_has_sign_id();
   inline void clear_has_sign_id();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 player_id_;
   ::google::protobuf::uint32 sign_id_;
+  ::google::protobuf::uint32 unknown_2_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -31348,39 +31348,15 @@ inline void RemoveSignMessage::set_sign_id(::google::protobuf::uint32 value) {
 
 // RejectSignMessage
 
-// required uint32 player_id = 1;
-inline bool RejectSignMessage::has_player_id() const {
+// required uint32 sign_id = 1;
+inline bool RejectSignMessage::has_sign_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RejectSignMessage::set_has_player_id() {
+inline void RejectSignMessage::set_has_sign_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RejectSignMessage::clear_has_player_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void RejectSignMessage::clear_player_id() {
-  player_id_ = 0u;
-  clear_has_player_id();
-}
-inline ::google::protobuf::uint32 RejectSignMessage::player_id() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RejectSignMessage.player_id)
-  return player_id_;
-}
-inline void RejectSignMessage::set_player_id(::google::protobuf::uint32 value) {
-  set_has_player_id();
-  player_id_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RejectSignMessage.player_id)
-}
-
-// required uint32 sign_id = 2;
-inline bool RejectSignMessage::has_sign_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void RejectSignMessage::set_has_sign_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
 inline void RejectSignMessage::clear_has_sign_id() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline void RejectSignMessage::clear_sign_id() {
   sign_id_ = 0u;
@@ -31394,6 +31370,30 @@ inline void RejectSignMessage::set_sign_id(::google::protobuf::uint32 value) {
   set_has_sign_id();
   sign_id_ = value;
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RejectSignMessage.sign_id)
+}
+
+// required uint32 unknown_2 = 2;
+inline bool RejectSignMessage::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RejectSignMessage::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RejectSignMessage::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RejectSignMessage::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 RejectSignMessage::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RejectSignMessage.unknown_2)
+  return unknown_2_;
+}
+inline void RejectSignMessage::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RejectSignMessage.unknown_2)
 }
 
 // -------------------------------------------------------------------

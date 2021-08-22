@@ -62,7 +62,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
     // but all the values are always the same? Maybe its just to tell the server our char has changed and to reset everything?
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
-    Ensure(Request->unknown_1() == 1);
+    //Ensure(Request->unknown_1() == 1);
     //Ensure(Request->unknown_2() == 1);
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
@@ -138,8 +138,6 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
 MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestUpdatePlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdatePlayerCharacter*)Message.Protobuf.get();
-
-    Log("===== Player Character: %i", Request->unknown_1());
 
     // TODO: Implement
 

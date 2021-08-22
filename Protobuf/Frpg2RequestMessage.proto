@@ -602,8 +602,8 @@ message RemoveSignMessage {
 }
 
 message RejectSignMessage {
-    required uint32 player_id = 1;
-    required uint32 sign_id = 2;
+    required uint32 sign_id = 1;
+    required uint32 unknown_2 = 2;      // Usually just 1, maybe an error-code of some type?
 }
 
 message CachedSign {

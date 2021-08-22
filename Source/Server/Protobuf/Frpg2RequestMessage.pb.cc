@@ -20009,8 +20009,8 @@ void RemoveSignMessage::Swap(RemoveSignMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RejectSignMessage::kPlayerIdFieldNumber;
 const int RejectSignMessage::kSignIdFieldNumber;
+const int RejectSignMessage::kUnknown2FieldNumber;
 #endif  // !_MSC_VER
 
 RejectSignMessage::RejectSignMessage()
@@ -20031,8 +20031,8 @@ RejectSignMessage::RejectSignMessage(const RejectSignMessage& from)
 
 void RejectSignMessage::SharedCtor() {
   _cached_size_ = 0;
-  player_id_ = 0u;
   sign_id_ = 0u;
+  unknown_2_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -20081,7 +20081,7 @@ void RejectSignMessage::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(player_id_, sign_id_);
+  ZR_(sign_id_, unknown_2_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -20104,28 +20104,28 @@ bool RejectSignMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 player_id = 1;
+      // required uint32 sign_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &player_id_)));
-          set_has_player_id();
+                 input, &sign_id_)));
+          set_has_sign_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_sign_id;
+        if (input->ExpectTag(16)) goto parse_unknown_2;
         break;
       }
 
-      // required uint32 sign_id = 2;
+      // required uint32 unknown_2 = 2;
       case 2: {
         if (tag == 16) {
-         parse_sign_id:
+         parse_unknown_2:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &sign_id_)));
-          set_has_sign_id();
+                 input, &unknown_2_)));
+          set_has_unknown_2();
         } else {
           goto handle_unusual;
         }
@@ -20158,14 +20158,14 @@ failure:
 void RejectSignMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RejectSignMessage)
-  // required uint32 player_id = 1;
-  if (has_player_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
+  // required uint32 sign_id = 1;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->sign_id(), output);
   }
 
-  // required uint32 sign_id = 2;
-  if (has_sign_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->sign_id(), output);
+  // required uint32 unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -20177,18 +20177,18 @@ int RejectSignMessage::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 player_id = 1;
-    if (has_player_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->player_id());
-    }
-
-    // required uint32 sign_id = 2;
+    // required uint32 sign_id = 1;
     if (has_sign_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->sign_id());
+    }
+
+    // required uint32 unknown_2 = 2;
+    if (has_unknown_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_2());
     }
 
   }
@@ -20208,11 +20208,11 @@ void RejectSignMessage::CheckTypeAndMergeFrom(
 void RejectSignMessage::MergeFrom(const RejectSignMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_player_id()) {
-      set_player_id(from.player_id());
-    }
     if (from.has_sign_id()) {
       set_sign_id(from.sign_id());
+    }
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -20232,8 +20232,8 @@ bool RejectSignMessage::IsInitialized() const {
 
 void RejectSignMessage::Swap(RejectSignMessage* other) {
   if (other != this) {
-    std::swap(player_id_, other->player_id_);
     std::swap(sign_id_, other->sign_id_);
+    std::swap(unknown_2_, other->unknown_2_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
