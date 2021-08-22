@@ -59,7 +59,7 @@ jobs:
       run: vcpkg integrate install
 
     - name: Update version numbers
-      uses: datamonsters/replace-action
+      uses: datamonsters/replace-action@v2
       with:
         files: 'Source/Server/Resource.rc'
         replacements: '1.0.0.0=${{env.VERSION_NUMBER}}'
