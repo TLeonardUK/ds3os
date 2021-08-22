@@ -2,11 +2,14 @@ name: Release
 
 on: 
   workflow_dispatch:
-  push:
-    branches:
-      - "master"
-    tags:
-      - "v*"
+    version:
+      description: 'Version'     
+      required: true
+      default: '1.0.0.0'
+    version_postifx:
+      description: 'Version Postfix'     
+      required: true
+      default: '-preview'
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -18,10 +21,10 @@ env:
   BUILD_CONFIGURATION: Release
 
   # Version number being build.
-  VERSION_NUMBER_TAG: -preview
+  VERSION_NUMBER_POSTFIX: ${{ github.event.inputs.version_postifx }}
 
   # Version number being build.
-  VERSION_NUMBER: 1.0.0.0
+  VERSION_NUMBER: ${{ github.event.inputs.version }}
 
 jobs:
   build:
@@ -55,7 +58,7 @@ jobs:
       run: vcpkg integrate install
 
     - name: Package DotNet
-      run: dotnet publish ./Source/Loader/Loader.csproj -r win-x64 -c Release --output ${{github.workspace}}/Bin/Loader/Package/ /p:PublishSingleFile=true /p:PublishTrimmed=true /p:IncludeNativeLibrariesForSelfExtract=true /p:Version=${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_TAG}} /p:FileVersion=${{env.VERSION_NUMBER}} /p:AssemblyVersion=${{env.VERSION_NUMBER}}
+      run: dotnet publish ./Source/Loader/Loader.csproj -r win-x64 -c Release --output ${{github.workspace}}/Bin/Loader/Package/ /p:PublishSingleFile=true /p:PublishTrimmed=true /p:IncludeNativeLibrariesForSelfExtract=true /p:Version=${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_POSTFIX}} /p:FileVersion=${{env.VERSION_NUMBER}} /p:AssemblyVersion=${{env.VERSION_NUMBER}}
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -80,8 +83,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_TAG}}
-        release_name: Release v${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_TAG}}
+        tag_name: v${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_POSTFIX}}
+        release_name: Release v${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_POSTFIX}}
         body: Preview build, not officially supported yet.
         draft: false
         prerelease: true
