@@ -121,7 +121,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClien
                 continue;
             }
 
-            Log("[%s] Returning blood stain %i in area %i.", Client->GetName().c_str(), AreaMsg->BloodstainId, AreaMsg->OnlineAreaId);
+            //Log("[%s] Returning blood stain %i in area %i.", Client->GetName().c_str(), AreaMsg->BloodstainId, AreaMsg->OnlineAreaId);
 
             Frpg2RequestMessage::BloodstainInfo& Data = *Response.mutable_bloodstains()->Add();
             Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);

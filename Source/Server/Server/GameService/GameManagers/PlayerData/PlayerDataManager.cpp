@@ -114,7 +114,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         uint32_t LowerArea = Request->status().player_location().online_area_id_lower();
         uint32_t UpperArea = Request->status().player_location().online_area_id_upper();
         OnlineAreaId AreaId = static_cast<OnlineAreaId>(UpperArea);
-        if (AreaId != State.CurrentArea)
+        if (AreaId != State.CurrentArea && AreaId != OnlineAreaId::None)
         {
             Log("[%s] User has entered '%s'", Client->GetName().c_str(), GetEnumString(AreaId).c_str());
             State.CurrentArea = AreaId;

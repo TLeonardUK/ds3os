@@ -313,7 +313,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
                 continue;
             }
 
-            Log("[%s] Returning blood message %i in area %i.", Client->GetName().c_str(), AreaMsg->MessageId, AreaMsg->OnlineAreaId);
+            //Log("[%s] Returning blood message %i in area %i.", Client->GetName().c_str(), AreaMsg->MessageId, AreaMsg->OnlineAreaId);
 
             Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
             Data.set_player_id(Player.PlayerId);

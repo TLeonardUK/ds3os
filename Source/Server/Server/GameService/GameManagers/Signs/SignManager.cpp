@@ -117,7 +117,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
                 continue;
             }
 
-            Log("[%s] Returning sign %i in area %i.", Client->GetName().c_str(), Sign->SignId, Sign->OnlineAreaId);
+            //Log("[%s] Returning sign %i in area %i.", Client->GetName().c_str(), Sign->SignId, Sign->OnlineAreaId);
 
             // If client already has sign data we only need to return a limited set of data.
             if (ClientExistingSignId.count(Sign->SignId) > 0)
@@ -166,6 +166,14 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     Sign->PlayerStruct.assign(Request->player_struct().data(), Request->player_struct().data() + Request->player_struct().size());
     Sign->MatchingParameters = Request->matching_parameter();
 
+    // The client seems to queue up removal messages and send them periodically, but will send CreateSign instantly. This 
+    // can lead to multiple signs existing at once. We just purge here and ignore future remove requests for old id's.
+    for (std::shared_ptr<SummonSign> OtherSign : Client->ActiveSummonSigns)
+    {
+        LiveCache.Remove(OtherSign->OnlineAreaId, OtherSign->SignId);
+    }
+    Client->ActiveSummonSigns.clear();
+
     LiveCache.Add(Sign->OnlineAreaId, Sign->SignId, Sign);
     Client->ActiveSummonSigns.push_back(Sign);
 
@@ -188,8 +196,8 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
     std::shared_ptr<SummonSign> Sign = LiveCache.Find((OnlineAreaId)Request->online_area_id(), Request->sign_id());
     if (!Sign)
     {
-        Warning("[%s] Disconnecting client as attempted to remove non-existant summon sign, %i.", Client->GetName().c_str(), Request->sign_id());
-        return MessageHandleResult::Error;
+        Warning("[%s] Client as attempted to remove non-existant summon sign, %i, has probably already been cleaned up by CreateSummonSign.", Client->GetName().c_str(), Request->sign_id());
+        return MessageHandleResult::Handled;
     }
 
     if (auto Iter = std::find(Client->ActiveSummonSigns.begin(), Client->ActiveSummonSigns.end(), Sign); Iter != Client->ActiveSummonSigns.end())

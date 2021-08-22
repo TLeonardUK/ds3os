@@ -14,6 +14,7 @@
 #include <memory>
 #include <vector>
 #include <unordered_map>
+#include <functional>
 
 class Server;
 class GameClient;
@@ -58,6 +59,7 @@ public:
     const std::vector<std::shared_ptr<GameManager>>& GetManagers() { return Managers; }
 
     std::shared_ptr<GameClient> FindClientByPlayerId(uint32_t PlayerId);
+    std::vector<std::shared_ptr<GameClient>> FindClients(std::function<bool(const std::shared_ptr<GameClient>&)> Predicate);
 
 protected:
 

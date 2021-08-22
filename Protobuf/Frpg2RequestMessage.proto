@@ -762,8 +762,8 @@ message PushRequestRejectSign {
 //      Invader        << RequestGetBreakInTargetListResponse
 //      Invader        >> RequestBreakInTarget
 //      Host           << PushRequestBreakInTarget
-//      Host           >> Optional: RequestRejectBreakInTarget (I think this is how its used)
-//      Invader & Host << PushRequestAllowBreakInTarget (Or PushRequestRejectBreakInTarget on failure)
+//      Host           >> RequestRejectBreakInTarget or RequestSendMessageToPlayers (containing PushRequestAllowBreakInTarget)
+//      Invader & Host << PushRequestAllowBreakInTarget PushRequestRejectBreakInTarget
 //      Invader        >> RequestNotifyBreakInResult
 
 message BreakInTargetData {
@@ -771,67 +771,77 @@ message BreakInTargetData {
     required string steam_id = 2;
 }
 
-// Sent by invader looking for worlds to invade
 message RequestGetBreakInTargetList { 
     required uint32 map_id = 1;
     required uint32 online_area_id = 2;
-    required uint32 unknown_1 = 3;
+    required uint32 max_targets = 3;                       
     required MatchingParameter matching_parameter = 4;
-    required uint32 unknown_2 = 5;
+    required uint32 unknown_5 = 5;                          // 0
 }
 
-// Received by invader looking for worlds to invade
 message RequestGetBreakInTargetListResponse {
     required uint32 map_id = 1;
     required uint32 online_area_id = 2;
-    repeated BreakInTargetData break_in_target_data = 3;
+    repeated BreakInTargetData target_data = 3;
 }
 
-// Received by invader and host, notifies that the server has allowed invading.
 message PushRequestAllowBreakInTarget { 
     required PushMessageId push_message_id = 1;
-    required uint32 player_id = 2;  // Host playerid
-    required string data = 3;
-    required uint32 unknown_2 = 4;  // 0
+    required uint32 player_id = 2;                          // Host playerid
+    required string player_struct = 3;
+    required uint32 unknown_4 = 4;                          // 0
 }
 
-// Recieved by invaider, notifies that server has rejected invasion.
 message PushRequestRejectBreakInTarget {
-    required PushMessageId push_message_id = 1;
-    // Unknown
+    required PushMessageId push_message_id = 1;    
+
+    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
+    required uint32 unknown_2 = 2;
+    required uint32 unknown_3 = 3;
+    required string unknown_4 = 4;                           // WIRETYPE_LENGTH_DELIMITED, guessing string, might be BreakInTargetData
+    required uint32 unknown_5 = 5;
 }
 
-// Received by host
 message PushRequestBreakInTarget { 
     required PushMessageId push_message_id = 1;
-    required uint32 player_id = 2;      // invading playerid
+    required uint32 player_id = 2;                          // invading playerid
     required string steam_id = 3;       
-    required uint32 unknown_2 = 4;      // 0
+    required uint32 unknown_4 = 4;                          // 0
     required uint32 map_id = 5;
     required uint32 online_area_id = 6;
 }
 
 message PushRequestRemoveBreakInTarget {
+    required PushMessageId push_message_id = 1;
+ 
+    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
+    required uint32 unknown_2 = 2;
+    required string unknown_3 = 3;                          // WIRETYPE_LENGTH_DELIMITED, guessing string, might be BreakInTargetData
+    required uint32 unknown_4 = 4;
 }
 
-// Send by invaded to ask to invade host.
 message RequestBreakInTarget {
     required uint32 map_id = 1;
     required uint32 online_area_id = 2;
     required uint32 player_id = 3;
-    required uint32 unknown_1 = 4;          // Seems to always be 0
-}
-
-message RequestBreakInTargetResponse {
-    // Unknown
+    required uint32 unknown_4 = 4;                          // Seems to always be 0
 }
 
 message RequestRejectBreakInTarget {
-    // Unknown
+    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
+    required uint32 unknown_1 = 1;
+    required uint32 unknown_2 = 2;
+    required uint32 unknown_3 = 3;
+    required uint32 unknown_4 = 4;
+    required uint32 unknown_5 = 5;
+}
+
+message RequestBreakInTargetResponse {
+    // Unknown - If like summon signs, probably not sent.
 }
 
 message RequestRejectBreakInTargetResponse {
-    // Unknown
+    // Unknown - If like summon signs, probably not sent.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -913,10 +923,6 @@ message RequestVisit {
     required bytes  metadata = 5;
 }
 
-message RequestVisitResponse {
-    // Seems to never be sent by server.
-}
-
 message PushRequestVisit {
     required PushMessageId push_message_id = 1;         // 951 - Push message id
     required uint32 player_id = 2; 
@@ -928,16 +934,31 @@ message PushRequestVisit {
 }
 
 message RequestRejectVisit {
-    // Unknown
-}
 
-message RequestRejectVisitResponse {
-    // Unknown
+    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
+    required uint32 unknown_1 = 1;
+    required uint32 unknown_2 = 2;
+    required uint32 unknown_3 = 3;
+    required uint32 unknown_4 = 4;
+    required uint32 unknown_5 = 5;
 }
 
 message PushRequestRejectVisit {
     required PushMessageId push_message_id = 1;
-    // Unknown
+    
+    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
+    required uint32 unknown_2 = 2;
+    required uint32 unknown_3 = 3;
+    required uint32 unknown_4 = 4;                        // WIRETYPE_LENGTH_DELIMITED, guessing string, might be BreakInTargetData
+    required uint32 unknown_5 = 5;
+}
+
+message RequestVisitResponse {
+    // Seems to never be sent by server.
+}
+
+message RequestRejectVisitResponse {
+    // Unknown - If like summon signs, probably not sent.
 }
 
 // ------------------------------------------------------------------------------------------------------------

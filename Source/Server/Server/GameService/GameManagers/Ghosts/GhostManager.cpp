@@ -118,7 +118,7 @@ MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Cli
                 continue;
             }
 
-            Log("[%s] Returning ghost %i in area %i.", Client->GetName().c_str(), AreaMsg->GhostId, AreaMsg->OnlineAreaId);
+            //Log("[%s] Returning ghost %i in area %i.", Client->GetName().c_str(), AreaMsg->GhostId, AreaMsg->OnlineAreaId);
 
             Frpg2RequestMessage::GhostData& Data = *Response.mutable_ghosts()->Add();
             Data.set_unknown_1(1);                                                      // TODO: Figure out what this is.

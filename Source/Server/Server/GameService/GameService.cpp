@@ -52,7 +52,7 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<GhostManager>(ServerInstance));
     Managers.push_back(std::make_shared<RankingManager>(ServerInstance));
     Managers.push_back(std::make_shared<QuickMatchManager>(ServerInstance));
-    Managers.push_back(std::make_shared<BreakInManager>(ServerInstance));
+    Managers.push_back(std::make_shared<BreakInManager>(ServerInstance, this));
     Managers.push_back(std::make_shared<VisitorManager>(ServerInstance));
     Managers.push_back(std::make_shared<MarkManager>(ServerInstance));
     Managers.push_back(std::make_shared<MiscManager>(ServerInstance));
@@ -253,4 +253,19 @@ std::shared_ptr<GameClient> GameService::FindClientByPlayerId(uint32_t PlayerId)
         }
     }
     return nullptr;
+}
+
+std::vector<std::shared_ptr<GameClient>> GameService::FindClients(std::function<bool(const std::shared_ptr<GameClient>&)> Predicate)
+{
+    std::vector<std::shared_ptr<GameClient>> Result;
+
+    for (std::shared_ptr<GameClient>& Client : Clients)
+    {
+        if (Predicate(Client))
+        {
+            Result.push_back(Client);
+        }
+    }
+
+    return Result;
 }

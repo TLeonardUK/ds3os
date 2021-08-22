@@ -107,7 +107,7 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
         return true;
     }
 
-    Log("[%s] >> %s", Connection->GetName().c_str(), Message->GetTypeName().c_str());
+    //Log("[%s] >> %s", Connection->GetName().c_str(), Message->GetTypeName().c_str());
 
     return true;
 }
@@ -179,8 +179,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         return false;
     }
 
-    Log("[%s] << %s", Connection->GetName().c_str(), Message->Protobuf->GetTypeName().c_str());
-
+    //Log("[%s] << %s", Connection->GetName().c_str(), Message->Protobuf->GetTypeName().c_str());
     //Log("[%s] Recieving message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), Message->Header.msg_type, Message->Header.msg_index)
 
     return true;
