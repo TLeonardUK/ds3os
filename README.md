@@ -19,7 +19,7 @@ An open source implementation of the dark souls 3 game server. Initially focused
 ```
 
 # Where can I download it?
-No binaries are available at the moment. If you want to run it, you will have to build it yourself.
+Downloads are available on the github releases page - https://github.com/TLeonardUK/ds3os/releases
 
 # How do I build it?
 Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely
