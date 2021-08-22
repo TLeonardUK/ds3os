@@ -2,14 +2,15 @@ name: Release
 
 on: 
   workflow_dispatch:
-    version:
-      description: 'Version'     
-      required: true
-      default: '1.0.0.0'
-    version_postifx:
-      description: 'Version Postfix'     
-      required: true
-      default: '-preview'
+    inputs:
+      version:
+        description: 'Version'     
+        required: true
+        default: '1.0.0.0'
+      version_postifx:
+        description: 'Version Postfix'     
+        required: true
+        default: '-preview'
 
 env:
   # Path to the solution file relative to the root of the project.
