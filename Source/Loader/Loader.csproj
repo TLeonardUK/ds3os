@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://github.com/TLeonardUK/ds3os</PackageProjectUrl>
     <Version>1.0.0.2</Version>
     <FileVersion>1.0.0.3</FileVersion>
+    <Copyright>Copyright (C) 2021 Tim Leonard</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
