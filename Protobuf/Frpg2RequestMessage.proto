@@ -185,7 +185,7 @@ message RequestUpdatePlayerStatus {
 }
 
 message RequestUpdatePlayerStatusResponse {
-    // Seemingly unused, never seen it returned by server.
+    // Empty Response
 }
 
 message PlayerCharacterData { 
@@ -197,7 +197,7 @@ message RequestUpdatePlayerCharacter {
 }
 
 message RequestUpdatePlayerCharacterResponse {
-    // Seemingly unused, never seen it returned by server.
+    // Empty Response
 }
 
 message PlayerCharacterID {
@@ -305,7 +305,7 @@ message RequestRemoveBloodMessage {
 }
 
 message RequestRemoveBloodMessageResponse {
-    // Never sent by server it appears.
+    // Empty response.
 }
 
 message RequestGetBloodMessageList {
@@ -324,7 +324,7 @@ message RequestEvaluateBloodMessage {
 }
 
 message RequestEvaluateBloodMessageResponse {
-    // Never sent by server it appears.
+    // Empty response.
 }
 
 message RequestGetBloodMessageEvaluation {
@@ -690,7 +690,7 @@ message RequestSummonSign {
 }
 
 message RequestSummonSignResponse {
-    // Never gets sent?
+    // Empty response.
 }
 
 message RequestRemoveSign {
@@ -700,7 +700,7 @@ message RequestRemoveSign {
 }
 
 message RequestRemoveSignResponse {
-    // Never gets sent?
+    // Empty response.
 }
 
 message RequestUpdateSign {
@@ -710,7 +710,7 @@ message RequestUpdateSign {
 }
 
 message RequestUpdateSignResponse {
-    // Never gets sent?
+    // Empty response.
 }
 
 message RequestRejectSign {
@@ -722,7 +722,7 @@ message RequestRejectSign {
 }
 
 message RequestRejectSignResponse {
-    // Never gets sent?
+    // Empty response.
 }
 
 message RequestGetRightMatchingArea {
@@ -838,11 +838,11 @@ message PushRequestRejectBreakInTarget {
 }
 
 message RequestBreakInTargetResponse {
-    // Unknown - If like summon signs, probably not sent.
+    // Empty response.
 }
 
 message RequestRejectBreakInTargetResponse {
-    // Unknown - If like summon signs, probably not sent.
+    // Empty response.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -866,7 +866,7 @@ message RequestCreateGhostData {
 }
 
 message RequestCreateGhostDataResponse {
-    // Never gets sent?
+    // Empty response.
 }
 
 message RequestGetGhostDataListResponse {
@@ -877,16 +877,15 @@ message RequestGetGhostDataListResponse {
 // Game Server Messages - Vistors (Join via covenenant I think)
 // ------------------------------------------------------------------------------------------------------------
 
+// Seems to basically work the same as invasions just without the PushRequestAllowBreakInTarget exchange step.
+
 // Order of these events appear to be:
 //
-// Searching:
 //      Host >> RequestGetVisitorList
 //      Host << RequestGetVisitorListResponse
 //      Host >> RequestVisit
-//      Host << PushRequestRemoveVisitor
-//
-// Visitor:
 //      Summonee << PushRequestVisit
+//      Host << PushRequestRemoveVisitor
 //      Sumoneee >> VisitResultLog
 
 message RequestGetVisitorList {
@@ -955,11 +954,11 @@ message PushRequestRejectVisit {
 }
 
 message RequestVisitResponse {
-    // Seems to never be sent by server.
+    // Empty response.
 }
 
 message RequestRejectVisitResponse {
-    // Unknown - If like summon signs, probably not sent.
+    // Empty response.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -972,7 +971,7 @@ message RequestNotifyRingBell {
 }
 
 message RequestNotifyRingBellResponse {
-    // Never send by server?
+    // Empty response.
 }
 
 message PushRequestNotifyRingBell {
@@ -1308,7 +1307,7 @@ message RequestUnregisterQuickMatch {
 }
 
 message RequestUnregisterQuickMatchResponse {
-    // Never sent by server?
+    // Empty response.
 }
 
 message RequestUpdateQuickMatch {
@@ -1318,7 +1317,7 @@ message RequestUpdateQuickMatch {
 }
 
 message RequestUpdateQuickMatchResponse {
-    // Never sent by server?
+    // Empty response.
 }
 
 message RequestJoinQuickMatch {
@@ -1342,7 +1341,7 @@ message RequestAcceptQuickMatch {
 }
 
 message RequestAcceptQuickMatchResponse {
-    // Never sent by server?
+    // Empty response.
 }
 
 message RequestRejectQuickMatch {
@@ -1453,7 +1452,10 @@ message UserLogout {
 
 message ManagementTextMessage {
     required PushMessageId push_message_id = 1;
-    // Unknown - This can be sent as a push message and there is handling code for it in the client.
+    required string unknown_2 = 2;
+    required string unknown_3 = 3;
+    required uint32 unknown_4 = 4;
+    required uint32 unknown_5 = 5;
 }
 
 message NRLogUploadRequest {

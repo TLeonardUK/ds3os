@@ -50756,6 +50756,10 @@ void UserLogout::Swap(UserLogout* other) {
 
 #ifndef _MSC_VER
 const int ManagementTextMessage::kPushMessageIdFieldNumber;
+const int ManagementTextMessage::kUnknown2FieldNumber;
+const int ManagementTextMessage::kUnknown3FieldNumber;
+const int ManagementTextMessage::kUnknown4FieldNumber;
+const int ManagementTextMessage::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
 
 ManagementTextMessage::ManagementTextMessage()
@@ -50775,8 +50779,13 @@ ManagementTextMessage::ManagementTextMessage(const ManagementTextMessage& from)
 }
 
 void ManagementTextMessage::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 829;
+  unknown_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  unknown_3_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  unknown_4_ = 0u;
+  unknown_5_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -50786,6 +50795,12 @@ ManagementTextMessage::~ManagementTextMessage() {
 }
 
 void ManagementTextMessage::SharedDtor() {
+  if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_2_;
+  }
+  if (unknown_3_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_3_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -50815,7 +50830,21 @@ ManagementTextMessage* ManagementTextMessage::New() const {
 }
 
 void ManagementTextMessage::Clear() {
-  push_message_id_ = 829;
+  if (_has_bits_[0 / 32] & 31) {
+    push_message_id_ = 829;
+    if (has_unknown_2()) {
+      if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        unknown_2_->clear();
+      }
+    }
+    if (has_unknown_3()) {
+      if (unknown_3_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        unknown_3_->clear();
+      }
+    }
+    unknown_4_ = 0u;
+    unknown_5_ = 0u;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -50847,6 +50876,62 @@ bool ManagementTextMessage::MergePartialFromCodedStream(
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
           }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_unknown_2;
+        break;
+      }
+
+      // required string unknown_2 = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_unknown_2:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_unknown_2()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_unknown_3;
+        break;
+      }
+
+      // required string unknown_3 = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_unknown_3:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_unknown_3()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_unknown_4;
+        break;
+      }
+
+      // required uint32 unknown_4 = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_unknown_4:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_4_)));
+          set_has_unknown_4();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_unknown_5;
+        break;
+      }
+
+      // required uint32 unknown_5 = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_unknown_5:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_5_)));
+          set_has_unknown_5();
         } else {
           goto handle_unusual;
         }
@@ -50885,6 +50970,28 @@ void ManagementTextMessage::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
+  // required string unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->unknown_2(), output);
+  }
+
+  // required string unknown_3 = 3;
+  if (has_unknown_3()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->unknown_3(), output);
+  }
+
+  // required uint32 unknown_4 = 4;
+  if (has_unknown_4()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  }
+
+  // required uint32 unknown_5 = 5;
+  if (has_unknown_5()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.ManagementTextMessage)
@@ -50898,6 +51005,34 @@ int ManagementTextMessage::ByteSize() const {
     if (has_push_message_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
+    }
+
+    // required string unknown_2 = 2;
+    if (has_unknown_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->unknown_2());
+    }
+
+    // required string unknown_3 = 3;
+    if (has_unknown_3()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->unknown_3());
+    }
+
+    // required uint32 unknown_4 = 4;
+    if (has_unknown_4()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_4());
+    }
+
+    // required uint32 unknown_5 = 5;
+    if (has_unknown_5()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_5());
     }
 
   }
@@ -50920,6 +51055,18 @@ void ManagementTextMessage::MergeFrom(const ManagementTextMessage& from) {
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
+    }
+    if (from.has_unknown_3()) {
+      set_unknown_3(from.unknown_3());
+    }
+    if (from.has_unknown_4()) {
+      set_unknown_4(from.unknown_4());
+    }
+    if (from.has_unknown_5()) {
+      set_unknown_5(from.unknown_5());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -50931,7 +51078,7 @@ void ManagementTextMessage::CopyFrom(const ManagementTextMessage& from) {
 }
 
 bool ManagementTextMessage::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -50939,6 +51086,10 @@ bool ManagementTextMessage::IsInitialized() const {
 void ManagementTextMessage::Swap(ManagementTextMessage* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
+    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(unknown_5_, other->unknown_5_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

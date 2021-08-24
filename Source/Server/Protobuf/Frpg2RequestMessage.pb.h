@@ -22688,16 +22688,66 @@ class ManagementTextMessage : public ::google::protobuf::MessageLite {
   inline ::Frpg2RequestMessage::PushMessageId push_message_id() const;
   inline void set_push_message_id(::Frpg2RequestMessage::PushMessageId value);
 
+  // required string unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline const ::std::string& unknown_2() const;
+  inline void set_unknown_2(const ::std::string& value);
+  inline void set_unknown_2(const char* value);
+  inline void set_unknown_2(const char* value, size_t size);
+  inline ::std::string* mutable_unknown_2();
+  inline ::std::string* release_unknown_2();
+  inline void set_allocated_unknown_2(::std::string* unknown_2);
+
+  // required string unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline const ::std::string& unknown_3() const;
+  inline void set_unknown_3(const ::std::string& value);
+  inline void set_unknown_3(const char* value);
+  inline void set_unknown_3(const char* value, size_t size);
+  inline ::std::string* mutable_unknown_3();
+  inline ::std::string* release_unknown_3();
+  inline void set_allocated_unknown_3(::std::string* unknown_3);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.ManagementTextMessage)
  private:
   inline void set_has_push_message_id();
   inline void clear_has_push_message_id();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* unknown_2_;
   int push_message_id_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::std::string* unknown_3_;
+  ::google::protobuf::uint32 unknown_5_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -40233,6 +40283,206 @@ inline void ManagementTextMessage::set_push_message_id(::Frpg2RequestMessage::Pu
   set_has_push_message_id();
   push_message_id_ = value;
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.ManagementTextMessage.push_message_id)
+}
+
+// required string unknown_2 = 2;
+inline bool ManagementTextMessage::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ManagementTextMessage::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ManagementTextMessage::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ManagementTextMessage::clear_unknown_2() {
+  if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_2_->clear();
+  }
+  clear_has_unknown_2();
+}
+inline const ::std::string& ManagementTextMessage::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.ManagementTextMessage.unknown_2)
+  return *unknown_2_;
+}
+inline void ManagementTextMessage::set_unknown_2(const ::std::string& value) {
+  set_has_unknown_2();
+  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_2_ = new ::std::string;
+  }
+  unknown_2_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.ManagementTextMessage.unknown_2)
+}
+inline void ManagementTextMessage::set_unknown_2(const char* value) {
+  set_has_unknown_2();
+  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_2_ = new ::std::string;
+  }
+  unknown_2_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.ManagementTextMessage.unknown_2)
+}
+inline void ManagementTextMessage::set_unknown_2(const char* value, size_t size) {
+  set_has_unknown_2();
+  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_2_ = new ::std::string;
+  }
+  unknown_2_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.ManagementTextMessage.unknown_2)
+}
+inline ::std::string* ManagementTextMessage::mutable_unknown_2() {
+  set_has_unknown_2();
+  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_2_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.ManagementTextMessage.unknown_2)
+  return unknown_2_;
+}
+inline ::std::string* ManagementTextMessage::release_unknown_2() {
+  clear_has_unknown_2();
+  if (unknown_2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = unknown_2_;
+    unknown_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void ManagementTextMessage::set_allocated_unknown_2(::std::string* unknown_2) {
+  if (unknown_2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_2_;
+  }
+  if (unknown_2) {
+    set_has_unknown_2();
+    unknown_2_ = unknown_2;
+  } else {
+    clear_has_unknown_2();
+    unknown_2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.ManagementTextMessage.unknown_2)
+}
+
+// required string unknown_3 = 3;
+inline bool ManagementTextMessage::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ManagementTextMessage::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ManagementTextMessage::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ManagementTextMessage::clear_unknown_3() {
+  if (unknown_3_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_3_->clear();
+  }
+  clear_has_unknown_3();
+}
+inline const ::std::string& ManagementTextMessage::unknown_3() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.ManagementTextMessage.unknown_3)
+  return *unknown_3_;
+}
+inline void ManagementTextMessage::set_unknown_3(const ::std::string& value) {
+  set_has_unknown_3();
+  if (unknown_3_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_3_ = new ::std::string;
+  }
+  unknown_3_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.ManagementTextMessage.unknown_3)
+}
+inline void ManagementTextMessage::set_unknown_3(const char* value) {
+  set_has_unknown_3();
+  if (unknown_3_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_3_ = new ::std::string;
+  }
+  unknown_3_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.ManagementTextMessage.unknown_3)
+}
+inline void ManagementTextMessage::set_unknown_3(const char* value, size_t size) {
+  set_has_unknown_3();
+  if (unknown_3_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_3_ = new ::std::string;
+  }
+  unknown_3_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.ManagementTextMessage.unknown_3)
+}
+inline ::std::string* ManagementTextMessage::mutable_unknown_3() {
+  set_has_unknown_3();
+  if (unknown_3_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_3_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.ManagementTextMessage.unknown_3)
+  return unknown_3_;
+}
+inline ::std::string* ManagementTextMessage::release_unknown_3() {
+  clear_has_unknown_3();
+  if (unknown_3_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = unknown_3_;
+    unknown_3_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void ManagementTextMessage::set_allocated_unknown_3(::std::string* unknown_3) {
+  if (unknown_3_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_3_;
+  }
+  if (unknown_3) {
+    set_has_unknown_3();
+    unknown_3_ = unknown_3;
+  } else {
+    clear_has_unknown_3();
+    unknown_3_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.ManagementTextMessage.unknown_3)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool ManagementTextMessage::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void ManagementTextMessage::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void ManagementTextMessage::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void ManagementTextMessage::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 ManagementTextMessage::unknown_4() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.ManagementTextMessage.unknown_4)
+  return unknown_4_;
+}
+inline void ManagementTextMessage::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.ManagementTextMessage.unknown_4)
+}
+
+// required uint32 unknown_5 = 5;
+inline bool ManagementTextMessage::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void ManagementTextMessage::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void ManagementTextMessage::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void ManagementTextMessage::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 ManagementTextMessage::unknown_5() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.ManagementTextMessage.unknown_5)
+  return unknown_5_;
+}
+inline void ManagementTextMessage::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.ManagementTextMessage.unknown_5)
 }
 
 // -------------------------------------------------------------------

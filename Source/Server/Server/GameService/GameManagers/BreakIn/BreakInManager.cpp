@@ -62,10 +62,10 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
         {
             return false;
         }
-        /*if (OtherClient->GetPlayerState().CurrentArea != (OnlineAreaId)Request->online_area_id())
+        if (OtherClient->GetPlayerState().CurrentArea != (OnlineAreaId)Request->online_area_id())
         {
             return false;
-        }*/
+        }
         return CanMatchWith(Request->matching_parameter(), OtherClient); 
     });
 
