@@ -79,8 +79,8 @@ message PlayerStatus {
 
     optional uint32 unknown_32 = 32;                         // 
     optional uint32 unknown_33 = 33;                         // 
-    optional uint32 unknown_34 = 34;                         // 0
-    optional uint32 unknown_35 = 35;                         // 0
+    optional uint32 unknown_34 = 34;                         // 0       -> changes to 2 during invasion
+    optional uint32 unknown_35 = 35;                         // 0       -> changes to 1 during invasion
     optional uint32 unknown_36 = 36;                         // 0
     optional uint32 character_id = 37;                       
 

@@ -13,6 +13,7 @@
 
 struct Frpg2ReliableUdpMessage;
 class Server;
+class GameService;
 
 // Handles various misc client requests that don't really justify
 // having their own manager.
@@ -21,7 +22,7 @@ class MiscManager
     : public GameManager
 {
 public:    
-    MiscManager(Server* InServerInstance);
+    MiscManager(Server* InServerInstance, GameService* InGameServiceInstance);
 
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
@@ -37,5 +38,6 @@ protected:
 
 private:
     Server* ServerInstance;
+    GameService* GameServiceInstance;
 
 };

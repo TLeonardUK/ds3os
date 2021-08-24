@@ -236,7 +236,14 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
         Sign->BeingSummonedByPlayerId = 0;
     }
 
-    // Note: There is a response type for this message, but the server never normally sends it.
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestRemoveSignResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestRemoveSignResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     return MessageHandleResult::Handled;
 }
@@ -248,7 +255,14 @@ MessageHandleResult SignManager::Handle_RequestUpdateSign(GameClient* Client, co
     // I think the game uses this as something of a hearbeat to keep the sign active in the pool.
     // We keep all players signs active until they are removed, so we don't need to handle this.
 
-    // Note: There is a response type for this message, but the server never normally sends it.
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestUpdateSignResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestUpdateSignResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     return MessageHandleResult::Handled;
 }
@@ -299,6 +313,15 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
         {
             Sign->BeingSummonedByPlayerId = Player.PlayerId;
         }
+    }
+
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestSummonSignResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestSummonSignResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
     // If failure then send a reject message.
@@ -354,8 +377,15 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
 
         Sign->BeingSummonedByPlayerId = 0;
     }
-    
-    // Note: There is a response type for this message, but the server never normally sends it.
+
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestRejectSignResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestRejectSignResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     return MessageHandleResult::Handled;
 }

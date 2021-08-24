@@ -27,6 +27,9 @@ public:
     // Short hand version of Send for protobufs, takes care of constructing the wrapper message.
     virtual bool Send(google::protobuf::MessageLite* Message, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
 
+    // If we have a protobuf thats already serialized we can send it via this. Code assumes it should be sent with Push message type.
+    virtual bool SendRawProtobuf(const std::vector<uint8_t>& Data, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
+
     // Returns true if a packet was recieved and stores packet in OutputPacket.
     virtual bool Recieve(Frpg2ReliableUdpMessage* Message);
 

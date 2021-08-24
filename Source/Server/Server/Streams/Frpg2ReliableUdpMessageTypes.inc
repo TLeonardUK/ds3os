@@ -112,10 +112,8 @@ DEFINE_MESSAGE         (0x03D3, RequestNotifyJoinMultiplay,         RequestNotif
 DEFINE_MESSAGE         (0x03D4, RequestNotifyLeaveMultiplay,        RequestNotifyLeaveMultiplay)
 DEFINE_MESSAGE         (0x03D6, RequestNotifySummonSignResult,      RequestNotifySummonSignResult)
 DEFINE_MESSAGE         (0x03D8, RequestNotifyProtoBufLog,           RequestNotifyProtoBufLog)
+DEFINE_MESSAGE         (0x03D7, RequestNotifyBreakInResult,         RequestNotifyBreakInResult)
 DEFINE_MESSAGE         (0x03D5, RequestNotifyCreateSignResult,      RequestNotifyCreateSignResult)
-
-// Code for registration seems to be ofuscated.
-//DEFINE_MESSAGE       (0x,     RequestNotifyBreakInResult,         RequestNotifyBreakInResult)
 
 // -----------------------------------------------------------------------------------------------
 // Ranking

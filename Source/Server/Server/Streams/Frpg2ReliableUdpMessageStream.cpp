@@ -35,7 +35,11 @@ Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<Net
 bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& Message, const Frpg2ReliableUdpMessage* ResponseTo)
 {
     Frpg2ReliableUdpMessage SendMessage = Message;
-    if (ResponseTo != nullptr)
+    if (SendMessage.Header.msg_type == Frpg2ReliableUdpMessageType::Push)
+    {
+        SendMessage.Header.msg_index = 0xFFFFFFFF;
+    }
+    else if (ResponseTo != nullptr)
     {
         SendMessage.Header.msg_index = ResponseTo->Header.msg_index;
         SendMessage.Header.msg_type = Frpg2ReliableUdpMessageType::Reply;
@@ -100,6 +104,31 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
         Warning("[%s] Failed to serialize protobuf payload.", Connection->GetName().c_str());
         InErrorState = true;
         return false;
+    }
+
+    if (!SendInternal(ResponseMessage, ResponseTo))
+    {
+        return true;
+    }
+
+    //Log("[%s] >> %s", Connection->GetName().c_str(), Message->GetTypeName().c_str());
+
+    return true;
+}
+
+bool Frpg2ReliableUdpMessageStream::SendRawProtobuf(const std::vector<uint8_t>& Data, const Frpg2ReliableUdpMessage* ResponseTo)
+{
+    Frpg2ReliableUdpMessage ResponseMessage;
+    ResponseMessage.Payload = Data;
+
+    if (ResponseTo == nullptr)
+    {
+        ResponseMessage.Header.msg_type = Frpg2ReliableUdpMessageType::Push;
+    }
+    else
+    {
+        // TODO: Remove when we have a better way to handle this without breaking abstraction.
+        ResponseMessage.AckSequenceIndex = ResponseTo->AckSequenceIndex;
     }
 
     if (!SendInternal(ResponseMessage, ResponseTo))

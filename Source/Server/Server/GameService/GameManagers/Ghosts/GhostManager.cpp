@@ -85,7 +85,14 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
         return MessageHandleResult::Error;
     }
 
-    // There is a response type for this message, but server never seems to send it.
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestCreateGhostDataResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestCreateGhostDataResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     return MessageHandleResult::Handled;
 }

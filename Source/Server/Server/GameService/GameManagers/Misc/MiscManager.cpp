@@ -8,6 +8,7 @@
  */
 
 #include "Server/GameService/GameManagers/Misc/MiscManager.h"
+#include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
@@ -17,8 +18,9 @@
 
 #include "Core/Utils/Logging.h"
 
-MiscManager::MiscManager(Server* InServerInstance)
+MiscManager::MiscManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
+    , GameServiceInstance(InGameServiceInstance)
 {
 }
 
@@ -72,8 +74,31 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
 {
     Frpg2RequestMessage::RequestSendMessageToPlayers* Request = (Frpg2RequestMessage::RequestSendMessageToPlayers*)Message.Protobuf.get();
 
-    // TODO: Implement
+    // Wow this whole function seems unsafe, no idea why from software allows this to be a thing.
 
+    std::vector<uint8_t> MessageData;
+    MessageData.assign(Request->message().data(), Request->message().data() + Request->message().size());
+
+    for (int i = 0; i < Request->player_ids_size(); i++)
+    {
+        uint32_t PlayerId = Request->player_ids(i);
+
+        std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(PlayerId);
+        if (!TargetClient)
+        {
+            Warning("[%s] Client attempted to send message to other client %i, but client doesn't exist.", Client->GetName().c_str(), PlayerId);
+        }
+        else
+        {
+            if (!TargetClient->MessageStream->SendRawProtobuf(MessageData))
+            {
+                Warning("[%s] Failed to send raw protobuf from RequestSendMessageToPlayers to %s.", Client->GetName().c_str(), TargetClient->GetName().c_str());
+            }
+        }
+    }
+
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
     Frpg2RequestMessage::RequestSendMessageToPlayersResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -85,7 +110,6 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
 }
 
 MessageHandleResult MiscManager::Handle_RequestMeasureUploadBandwidth(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
-
 {
     Frpg2RequestMessage::RequestMeasureUploadBandwidth* Request = (Frpg2RequestMessage::RequestMeasureUploadBandwidth*)Message.Protobuf.get();
 

@@ -280,7 +280,14 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
         Warning("[%s] Failed to remove blood message.", Client->GetName().c_str());
     }
 
-    // Note: There is a response type for this message, but its never sent by the server.
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestRemoveBloodMessageResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestRemoveBloodMessageResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     return MessageHandleResult::Handled;
 }
@@ -409,7 +416,14 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
         }
     }
 
-    // Note: There is a response type for this message, but its never sent by the server.
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestEvaluateBloodMessageResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestEvaluateBloodMessageResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     return MessageHandleResult::Handled;
 }

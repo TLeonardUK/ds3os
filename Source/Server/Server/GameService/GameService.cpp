@@ -55,7 +55,7 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<BreakInManager>(ServerInstance, this));
     Managers.push_back(std::make_shared<VisitorManager>(ServerInstance));
     Managers.push_back(std::make_shared<MarkManager>(ServerInstance));
-    Managers.push_back(std::make_shared<MiscManager>(ServerInstance));
+    Managers.push_back(std::make_shared<MiscManager>(ServerInstance, this));
 }
 
 GameService::~GameService()
