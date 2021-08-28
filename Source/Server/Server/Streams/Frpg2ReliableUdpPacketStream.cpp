@@ -22,6 +22,7 @@
 Frpg2ReliableUdpPacketStream::Frpg2ReliableUdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken)
     : Frpg2UdpPacketStream(Connection, CwcKey, AuthToken)
 {
+    Reset();
 }
 
 void Frpg2ReliableUdpPacketStream::Disconnect()
@@ -59,7 +60,7 @@ bool Frpg2ReliableUdpPacketStream::Send(const Frpg2ReliableUdpPacket& Input)
                 SentPacket.Header.opcode = Frpg2ReliableUdpOpCode::DAT_ACK;
                 DatAckResponses.insert(Remote);
 
-                RemoteSequenceIndexAcked = std::max(RemoteSequenceIndex, Remote);
+                RemoteSequenceIndexAcked = Remote;
             }
             else
             {
@@ -67,7 +68,7 @@ bool Frpg2ReliableUdpPacketStream::Send(const Frpg2ReliableUdpPacket& Input)
             }
         }
 
-        SequenceIndex++;
+        SequenceIndex = (SequenceIndex + 1) % MAX_ACK_VALUE;
         
         SendQueue.push_back(SentPacket);
     }
@@ -167,14 +168,15 @@ void Frpg2ReliableUdpPacketStream::HandleIncoming()
         uint32_t Local, Remote;
         Next.Header.GetAckCounters(Local, Remote);
 
-        if (Local == RemoteSequenceIndex + 1)
+        if (Local == GetNextRemoteSequenceIndex())
         {
             //Log("[%s] Processing next packet in sequence %i.", Connection->GetName().c_str(), RemoteSequenceIndex + 1);
 
             ProcessPacket(Next);
       
             PendingRecieveQueue.erase(PendingRecieveQueue.begin());
-            RemoteSequenceIndex++;
+
+            RemoteSequenceIndex = (RemoteSequenceIndex + 1) % MAX_ACK_VALUE;
         }
         else
         {
@@ -196,23 +198,6 @@ int Frpg2ReliableUdpPacketStream::GetPacketIndexByLocalSequence(const std::vecto
         }
     }
     return -1;
-}
-
-void Frpg2ReliableUdpPacketStream::InsertPacketByLocalSequence(std::vector<Frpg2ReliableUdpPacket>& Queue, const Frpg2ReliableUdpPacket& Packet, uint32_t SequenceIndex)
-{
-    for (size_t i = 0; i < Queue.size(); i++)
-    {
-        uint32_t Local, Remote;
-        Queue[i].Header.GetAckCounters(Local, Remote);
-
-        if (Local > SequenceIndex)
-        {
-            Queue.insert(Queue.begin() + i, Packet);
-            return;
-        }
-    }
-
-    Queue.push_back(Packet);
 }
 
 bool Frpg2ReliableUdpPacketStream::IsOpcodeSequenced(Frpg2ReliableUdpOpCode Opcode)
@@ -249,21 +234,23 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
             return;
         }
 
-        bool IsDuplicate = false;
+        bool IsInCorrectSequence = false;
 
-        if (LocalAck <= RemoteSequenceIndex)
+        // TODO: Fix this so we can queue up out of order packets and handle them when recieved. We had this before but causes issues
+        //       when ack values overflow.
+        if (LocalAck != GetNextRemoteSequenceIndex())
         {
-            Warning("[%s] Ignoring incoming packet, prior to ack head (incoming=%i head=%i), likely duplicate. ", Connection->GetName().c_str(), LocalAck, RemoteSequenceIndex);
-            IsDuplicate = true;
+            Warning("[%s] Ignoring incoming packet, out of sequence (incoming=%i head=%i). ", Connection->GetName().c_str(), LocalAck, RemoteSequenceIndex);
+            IsInCorrectSequence = true;
         }
 
         if (GetPacketIndexByLocalSequence(PendingRecieveQueue, LocalAck) >= 0)
         {
             Warning("[%s] Ignoring incoming packet, duplicate that we already have. ", Connection->GetName().c_str());
-            IsDuplicate = true;
+            IsInCorrectSequence = true;
         }
 
-        if (IsDuplicate && (GetSeconds() - LastAckSendTime) > MIN_TIME_BETWEEN_RESEND_ACK)
+        if (IsInCorrectSequence && (GetSeconds() - LastAckSendTime) > MIN_TIME_BETWEEN_RESEND_ACK)
         {   
             // Send an ACK, its possible that the remote is retransmitting packets as
             // a previously sent ACK has dropped.
@@ -273,9 +260,9 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
 
             return;
         }
-        else if (!IsDuplicate)
+        else if (!IsInCorrectSequence)
         {
-            InsertPacketByLocalSequence(PendingRecieveQueue, Packet, LocalAck);
+            PendingRecieveQueue.push_back(Packet);
         }
     }
     else
@@ -367,7 +354,15 @@ void Frpg2ReliableUdpPacketStream::Handle_HBT(const Frpg2ReliableUdpPacket& Pack
     uint32_t InLocalAck, InRemoteAck;
     Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
 
-    SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
+    // TODO: Handle overflow - This is super crude,  do it in a better way.
+    if (SequenceIndexAcked > MAX_ACK_VALUE_TOP_QUART && InRemoteAck < MAX_ACK_VALUE_BOTTOM_QUART)
+    {
+        SequenceIndexAcked = InRemoteAck;
+    }
+    else
+    {
+        SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
+    }
 
     Send_HBT();
 }
@@ -408,7 +403,17 @@ void Frpg2ReliableUdpPacketStream::Handle_ACK(const Frpg2ReliableUdpPacket& Pack
     uint32_t InLocalAck, InRemoteAck;
     Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
 
-    SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
+    uint32_t SequenceIndexAckedOriginal = SequenceIndexAcked;
+     
+    // TODO: Handle overflow - This is super crude,  do it in a better way.
+    if (SequenceIndexAcked > MAX_ACK_VALUE_TOP_QUART && InRemoteAck < MAX_ACK_VALUE_BOTTOM_QUART)
+    {
+        SequenceIndexAcked = InRemoteAck;
+    }
+    else
+    {
+        SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
+    }
 }
 
 void Frpg2ReliableUdpPacketStream::Handle_DAT(const Frpg2ReliableUdpPacket& Packet)
@@ -425,7 +430,17 @@ void Frpg2ReliableUdpPacketStream::Handle_DAT_ACK(const Frpg2ReliableUdpPacket& 
     uint32_t InLocalAck, InRemoteAck;
     Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
 
-    SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
+    uint32_t SequenceIndexAckedOriginal = SequenceIndexAcked;
+
+    // TODO: Handle overflow - This is super crude,  do it in a better way.
+    if (SequenceIndexAcked > MAX_ACK_VALUE_TOP_QUART && InRemoteAck < MAX_ACK_VALUE_BOTTOM_QUART)
+    {
+        SequenceIndexAcked = InRemoteAck;
+    }
+    else
+    {
+        SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
+    }
     
     // TODO: From our perspective do we actually need to do anything special with DAT_ACK? 
     //       Filter up that a packet is a reply to another or something? Most of our traffic
@@ -468,7 +483,7 @@ void Frpg2ReliableUdpPacketStream::Send_ACK(uint32_t RemoteIndex)
 
     Send(AckResponse);
 
-    RemoteSequenceIndexAcked = std::max(RemoteSequenceIndex, RemoteIndex);
+    RemoteSequenceIndexAcked = RemoteIndex;
     LastAckSendTime = GetSeconds();
 }
 
@@ -530,7 +545,7 @@ bool Frpg2ReliableUdpPacketStream::SendRaw(const Frpg2ReliableUdpPacket& Input)
 
 void Frpg2ReliableUdpPacketStream::Reset()
 {
-    SequenceIndex = 1;
+    SequenceIndex = START_SEQUENCE_INDEX;
     SequenceIndexAcked = 0;
     RemoteSequenceIndex = 0;
     RemoteSequenceIndexAcked = 0;
@@ -551,7 +566,9 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
         uint32_t InLocalAck, InRemoteAck;
         Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
 
-        if (InLocalAck <= SequenceIndexAcked)
+        // TODO: Handle overflow - This is super crude,  do it in a better way.
+        if (InLocalAck > MAX_ACK_VALUE_TOP_QUART && SequenceIndexAcked < MAX_ACK_VALUE_BOTTOM_QUART ||
+            InLocalAck <= SequenceIndexAcked)
         {
             //Log("[%s] Removing packet for retransmit buffer as its been acknowledged.", Connection->GetName().c_str());
 
@@ -587,7 +604,9 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
             }
         } 
     }
-    else if (SequenceIndexAcked >= RetransmittingIndex)
+    // TODO: Handle overflow - This is super crude,  do it in a better way.
+    else if (RetransmittingIndex > MAX_ACK_VALUE_TOP_QUART && SequenceIndexAcked < MAX_ACK_VALUE_BOTTOM_QUART ||
+             SequenceIndexAcked >= RetransmittingIndex)
     {
         Log("[%s] Recovered from retransmit.", Connection->GetName().c_str());
 
@@ -644,12 +663,6 @@ bool Frpg2ReliableUdpPacketStream::Pump()
 
     HandleIncoming();
     HandleOutgoing();
-
-    // Acknowledge whatever the latest thing recieved was.
-    /*if (RemoteSequenceIndex != RemoteSequenceIndexAcked)
-    {
-        Send_ACK(RemoteSequenceIndex);
-    }*/
 
     return false;
 }

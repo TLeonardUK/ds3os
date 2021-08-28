@@ -63,6 +63,22 @@ void SerializeVar(nlohmann::json& Json, const char* Name, DataType& Value, bool 
 }
 
 template <typename DataType>
+void SerializeStructVar(nlohmann::json& Json, const char* Name, DataType& Value, bool Loading)
+{
+    if (Loading)
+    {
+        if (Json.contains(Name))
+        {
+            Value.Serialize(Json[Name], Loading);
+        }
+    }
+    else
+    {
+        Value.Serialize(Json[Name], Loading);
+    }
+}
+
+template <typename DataType>
 void SerializeVar(nlohmann::json& Json, const char* Name, std::vector<DataType>& Value, bool Loading)
 {
     if (Loading)
@@ -93,31 +109,128 @@ void SerializeVar(nlohmann::json& Json, const char* Name, std::vector<DataType>&
     }
 }
 
+template <>
+void SerializeVar(nlohmann::json& Json, const char* Name, std::vector<int>& Value, bool Loading)
+{
+    if (Loading)
+    {
+        if (Json.contains(Name))
+        {
+            Value.resize(Json[Name].size());
+
+            int Index = 0;
+            for (auto& ChildValue : Json[Name].items())
+            {
+                Value[Index++] = ChildValue.value();
+            }
+        }
+    }
+    else
+    {
+        nlohmann::json Array = nlohmann::json::array();
+
+        for (auto& ChildValue : Value)
+        {
+            Array.push_back(ChildValue);
+        }
+
+        Json[Name] = Array;
+    }
+}
+
+bool RuntimeConfigMatchingParameters::CheckMatch(int HostSoulLevel, int HostWeaponLevel, int ClientSoulLevel, int ClientWeaponLevel, bool HasPassword) const
+{
+    // Can ignore all of this if we have a password.
+    if (PasswordDisablesLimits && HasPassword)
+    {
+        return true;
+    }
+
+    if (!DisableLevelMatching)
+    {
+        float lower_limit = (HostSoulLevel * LowerLimitMultiplier) + LowerLimitModifier;
+        float upper_limit = (HostSoulLevel * UpperLimitMultiplier) + UpperLimitModifier;
+
+        // When host is above 351 upper limit gets removed. 
+        if (HostSoulLevel >= RangeRemovalLevel)
+        {
+            lower_limit = (float)RangeRemovalLevel;
+            upper_limit = FLT_MAX;
+        }
+
+        // If match falls outside bounds host can't match with them.
+        if (ClientSoulLevel < lower_limit || ClientSoulLevel > upper_limit)
+        {
+            return false;
+        }
+    }
+
+    if (!DisableWeaponLevelMatching)
+    {
+        if (ClientWeaponLevel > WeaponLevelUpperLimit[HostWeaponLevel])
+        {
+            return false;
+        }
+        if (HostWeaponLevel > WeaponLevelUpperLimit[ClientWeaponLevel])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+#define SERIALIZE_VAR(x) SerializeVar(Json, #x, x, Loading);
+#define SERIALIZE_STRUCT_VAR(x) SerializeStructVar(Json, #x, x, Loading);
+
 bool RuntimeConfigAnnouncement::Serialize(nlohmann::json& Json, bool Loading)
 {
-    SerializeVar(Json, "Header",              Header,                 Loading);
-    SerializeVar(Json, "Body",                Body,                   Loading);
+    SERIALIZE_VAR(Header);
+    SERIALIZE_VAR(Body);
 
+    return true;
+}
+
+bool RuntimeConfigMatchingParameters::Serialize(nlohmann::json& Json, bool Loading)
+{
+    SERIALIZE_VAR(LowerLimitMultiplier);
+    SERIALIZE_VAR(LowerLimitModifier);
+    SERIALIZE_VAR(UpperLimitMultiplier);
+    SERIALIZE_VAR(UpperLimitModifier);
+    SERIALIZE_VAR(WeaponLevelUpperLimit);
+    SERIALIZE_VAR(RangeRemovalLevel);
+    SERIALIZE_VAR(PasswordDisablesLimits);
+    SERIALIZE_VAR(DisableLevelMatching);
+    SERIALIZE_VAR(DisableWeaponLevelMatching);
+    
     return true;
 }
 
 bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
 {
-    SerializeVar(Json, "ServerName",                                    ServerName,                                     Loading);
-    SerializeVar(Json, "ServerDescription",                             ServerDescription,                              Loading);
-    SerializeVar(Json, "ServerHostname",                                ServerHostname,                                 Loading);
-    SerializeVar(Json, "ServerIP",                                      ServerIP,                                       Loading);
-    SerializeVar(Json, "LoginServerPort",                               LoginServerPort,                                Loading);
-    SerializeVar(Json, "AuthServerPort",                                AuthServerPort,                                 Loading);
-    SerializeVar(Json, "GameServerPort",                                GameServerPort,                                 Loading);
-    SerializeVar(Json, "Announcements",                                 Announcements,                                  Loading);
-    SerializeVar(Json, "BloodMessageMaxLivePoolEntriesPerArea",         BloodMessageMaxLivePoolEntriesPerArea,          Loading);
-    SerializeVar(Json, "BloodMessagePrimeCountPerArea",                 BloodMessagePrimeCountPerArea,                  Loading);
-    SerializeVar(Json, "BloodstainMaxLivePoolEntriesPerArea",           BloodstainMaxLivePoolEntriesPerArea,            Loading);
-    SerializeVar(Json, "BloodstainPrimeCountPerArea",                   BloodstainPrimeCountPerArea,                    Loading);
-    SerializeVar(Json, "GhostMaxLivePoolEntriesPerArea",                GhostMaxLivePoolEntriesPerArea,                 Loading);
-    SerializeVar(Json, "GhostPrimeCountPerArea",                        GhostPrimeCountPerArea,                         Loading);
-    SerializeVar(Json, "SummonSignMaxEntriesPerArea",                   SummonSignMaxEntriesPerArea,                    Loading);
+    SERIALIZE_VAR(ServerName);
+    SERIALIZE_VAR(ServerDescription);
+    SERIALIZE_VAR(ServerHostname);
+    SERIALIZE_VAR(ServerIP);
+    SERIALIZE_VAR(LoginServerPort);
+    SERIALIZE_VAR(AuthServerPort);
+    SERIALIZE_VAR(GameServerPort);
+    SERIALIZE_VAR(Announcements);
+    SERIALIZE_VAR(BloodMessageMaxLivePoolEntriesPerArea);
+    SERIALIZE_VAR(BloodMessagePrimeCountPerArea);
+    SERIALIZE_VAR(BloodstainMaxLivePoolEntriesPerArea);
+    SERIALIZE_VAR(BloodstainPrimeCountPerArea);
+    SERIALIZE_VAR(GhostMaxLivePoolEntriesPerArea);
+    SERIALIZE_VAR(GhostPrimeCountPerArea);
+    SERIALIZE_VAR(SummonSignMaxEntriesPerArea);
+    SERIALIZE_STRUCT_VAR(SummonSignMatchingParameters);
+    SERIALIZE_STRUCT_VAR(WayOfBlueMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DarkSpiritInvasionMatchingParameters);
+    SERIALIZE_STRUCT_VAR(MoundMakerInvasionMatchingParameters);
+    SERIALIZE_STRUCT_VAR(CovenantInvasionMatchingParameters);
 
     return true;
 }
+
+#undef SERIALIZE_STRUCT_VAR
+#undef SERIALIZE_VAR

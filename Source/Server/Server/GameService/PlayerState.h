@@ -33,7 +33,20 @@ struct PlayerState
     // Current online matching area the player is in.
     OnlineAreaId CurrentArea = OnlineAreaId::None;
 
+    // If the player is currently in a state they can be invaded in.
+    bool IsInvadable = false;
+
+    // Players current soul level.
+    int SoulLevel = 0;
+
+    // Players maximum weapon level. 
+    int MaxWeaponLevel = 0;
+
+    // What type of visitor the player can currently be summoned as.
+    Frpg2RequestMessage::VisitorPool VisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_None;
+
     // Information the player sends and periodically patches with 
     // RequestUpdatePlayerStatus requests.
     Frpg2PlayerData::AllStatus PlayerStatus;
+
 };

@@ -74,9 +74,23 @@ MessageHandleResult SignManager::OnMessageRecieved(GameClient* Client, const Frp
     return MessageHandleResult::Unhandled;
 }
 
-bool SignManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Client, const Frpg2RequestMessage::MatchingParameter& Match)
+bool SignManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Host, const Frpg2RequestMessage::MatchingParameter& Match)
 {
-    // TODO: Actually apply some matching rules here.
+    // If password missmatch then no match.
+    if (Host.password() != Match.password())
+    {
+        return false;
+    }
+
+    // Check matching parameters.
+    if (!ServerInstance->GetConfig().SummonSignMatchingParameters.CheckMatch(
+            Host.soul_level(), Host.weapon_level(), 
+            Match.soul_level(), Match.weapon_level(), 
+            Host.password().size() > 0
+        ))
+    {
+        return false;
+    }
 
     return true;
 }
@@ -106,7 +120,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
         uint32_t MaxForArea = Area.max_signs();
         uint32_t GatherCount = std::min(MaxForArea, RemainingSignCount);
 
-        std::vector<std::shared_ptr<SummonSign>> AreaSigns = LiveCache.GetRecentSet(AreaId, GatherCount, [&Player, &Request](const std::shared_ptr<SummonSign>& Sign) { 
+        std::vector<std::shared_ptr<SummonSign>> AreaSigns = LiveCache.GetRecentSet(AreaId, GatherCount, [this, &Player, &Request](const std::shared_ptr<SummonSign>& Sign) { 
             return CanMatchWith(Request->matching_parameter(), Sign->MatchingParameters); 
         });
         for (std::shared_ptr<SummonSign>& Sign : AreaSigns)
@@ -168,11 +182,12 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
 
     // The client seems to queue up removal messages and send them periodically, but will send CreateSign instantly. This 
     // can lead to multiple signs existing at once. We just purge here and ignore future remove requests for old id's.
-    for (std::shared_ptr<SummonSign> OtherSign : Client->ActiveSummonSigns)
+    /*for (std::shared_ptr<SummonSign> OtherSign : Client->ActiveSummonSigns)
     {
         LiveCache.Remove(OtherSign->OnlineAreaId, OtherSign->SignId);
     }
     Client->ActiveSummonSigns.clear();
+    */
 
     LiveCache.Add(Sign->OnlineAreaId, Sign->SignId, Sign);
     Client->ActiveSummonSigns.push_back(Sign);

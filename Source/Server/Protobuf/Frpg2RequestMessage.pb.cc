@@ -824,6 +824,37 @@ bool LogType_IsValid(int value) {
   }
 }
 
+bool Covenant_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool VisitorPool_IsValid(int value) {
+  switch(value) {
+    case -1:
+    case 0:
+    case 2:
+    case 3:
+    case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
 bool QuickMatchGameMode_IsValid(int value) {
   switch(value) {
     case 0:
@@ -15643,12 +15674,6 @@ RequestNotifyProtoBufLog::RequestNotifyProtoBufLog()
 }
 
 void RequestNotifyProtoBufLog::InitAsDefaultInstance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  common_ = const_cast< ::Frpg2RequestMessage::LogCommonInfo*>(
-      ::Frpg2RequestMessage::LogCommonInfo::internal_default_instance());
-#else
-  common_ = const_cast< ::Frpg2RequestMessage::LogCommonInfo*>(&::Frpg2RequestMessage::LogCommonInfo::default_instance());
-#endif
 }
 
 RequestNotifyProtoBufLog::RequestNotifyProtoBufLog(const RequestNotifyProtoBufLog& from)
@@ -15662,7 +15687,7 @@ void RequestNotifyProtoBufLog::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   type_ = 2020;
-  common_ = NULL;
+  common_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -15673,6 +15698,9 @@ RequestNotifyProtoBufLog::~RequestNotifyProtoBufLog() {
 }
 
 void RequestNotifyProtoBufLog::SharedDtor() {
+  if (common_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete common_;
+  }
   if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete data_;
   }
@@ -15681,7 +15709,6 @@ void RequestNotifyProtoBufLog::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
-    delete common_;
   }
 }
 
@@ -15709,7 +15736,9 @@ void RequestNotifyProtoBufLog::Clear() {
   if (_has_bits_[0 / 32] & 7) {
     type_ = 2020;
     if (has_common()) {
-      if (common_ != NULL) common_->::Frpg2RequestMessage::LogCommonInfo::Clear();
+      if (common_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        common_->clear();
+      }
     }
     if (has_data()) {
       if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -15755,12 +15784,12 @@ bool RequestNotifyProtoBufLog::MergePartialFromCodedStream(
         break;
       }
 
-      // required .Frpg2RequestMessage.LogCommonInfo common = 2;
+      // required bytes common = 2;
       case 2: {
         if (tag == 18) {
          parse_common:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_common()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_common()));
         } else {
           goto handle_unusual;
         }
@@ -15812,9 +15841,9 @@ void RequestNotifyProtoBufLog::SerializeWithCachedSizes(
       1, this->type(), output);
   }
 
-  // required .Frpg2RequestMessage.LogCommonInfo common = 2;
+  // required bytes common = 2;
   if (has_common()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       2, this->common(), output);
   }
 
@@ -15839,10 +15868,10 @@ int RequestNotifyProtoBufLog::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
-    // required .Frpg2RequestMessage.LogCommonInfo common = 2;
+    // required bytes common = 2;
     if (has_common()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->common());
     }
 
@@ -15874,7 +15903,7 @@ void RequestNotifyProtoBufLog::MergeFrom(const RequestNotifyProtoBufLog& from) {
       set_type(from.type());
     }
     if (from.has_common()) {
-      mutable_common()->::Frpg2RequestMessage::LogCommonInfo::MergeFrom(from.common());
+      set_common(from.common());
     }
     if (from.has_data()) {
       set_data(from.data());
@@ -15892,9 +15921,6 @@ void RequestNotifyProtoBufLog::CopyFrom(const RequestNotifyProtoBufLog& from) {
 bool RequestNotifyProtoBufLog::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
-  if (has_common()) {
-    if (!this->common().IsInitialized()) return false;
-  }
   return true;
 }
 
@@ -21312,7 +21338,7 @@ void MatchingParameter::SharedCtor() {
   unknown_string_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   unknown_id_9_ = 0u;
   password_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  covenant_ = 0u;
+  covenant_ = 0;
   weapon_level_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -21553,14 +21579,20 @@ bool MatchingParameter::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 covenant = 11;
+      // required .Frpg2RequestMessage.Covenant covenant = 11;
       case 11: {
         if (tag == 88) {
          parse_covenant:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &covenant_)));
-          set_has_covenant();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::Covenant_IsValid(value)) {
+            set_covenant(static_cast< ::Frpg2RequestMessage::Covenant >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -21660,9 +21692,10 @@ void MatchingParameter::SerializeWithCachedSizes(
       10, this->password(), output);
   }
 
-  // required uint32 covenant = 11;
+  // required .Frpg2RequestMessage.Covenant covenant = 11;
   if (has_covenant()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->covenant(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      11, this->covenant(), output);
   }
 
   // required uint32 weapon_level = 14;
@@ -21751,11 +21784,10 @@ int MatchingParameter::ByteSize() const {
           this->password());
     }
 
-    // required uint32 covenant = 11;
+    // required .Frpg2RequestMessage.Covenant covenant = 11;
     if (has_covenant()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->covenant());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->covenant());
     }
 
     // required uint32 weapon_level = 14;
@@ -30967,9 +30999,9 @@ void RequestGetGhostDataListResponse::Swap(RequestGetGhostDataListResponse* othe
 #ifndef _MSC_VER
 const int RequestGetVisitorList::kMapIdFieldNumber;
 const int RequestGetVisitorList::kOnlineAreaIdFieldNumber;
-const int RequestGetVisitorList::kUnknown3FieldNumber;
+const int RequestGetVisitorList::kMaxVisitorsFieldNumber;
 const int RequestGetVisitorList::kMatchingParameterFieldNumber;
-const int RequestGetVisitorList::kUnknown5FieldNumber;
+const int RequestGetVisitorList::kVisitorPoolFieldNumber;
 const int RequestGetVisitorList::kUnknown6FieldNumber;
 #endif  // !_MSC_VER
 
@@ -30999,9 +31031,9 @@ void RequestGetVisitorList::SharedCtor() {
   _cached_size_ = 0;
   map_id_ = 0u;
   online_area_id_ = 0u;
-  unknown_3_ = 0u;
+  max_visitors_ = 0u;
   matching_parameter_ = NULL;
-  unknown_5_ = 0u;
+  visitor_pool_ = -1;
   unknown_6_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -31054,10 +31086,12 @@ void RequestGetVisitorList::Clear() {
 
   if (_has_bits_[0 / 32] & 63) {
     ZR_(map_id_, online_area_id_);
-    ZR_(unknown_3_, unknown_6_);
+    max_visitors_ = 0u;
     if (has_matching_parameter()) {
       if (matching_parameter_ != NULL) matching_parameter_->::Frpg2RequestMessage::MatchingParameter::Clear();
     }
+    visitor_pool_ = -1;
+    unknown_6_ = 0u;
   }
 
 #undef OFFSET_OF_FIELD_
@@ -31106,18 +31140,18 @@ bool RequestGetVisitorList::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_max_visitors;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required uint32 max_visitors = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_max_visitors:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &max_visitors_)));
+          set_has_max_visitors();
         } else {
           goto handle_unusual;
         }
@@ -31134,18 +31168,24 @@ bool RequestGetVisitorList::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_unknown_5;
+        if (input->ExpectTag(40)) goto parse_visitor_pool;
         break;
       }
 
-      // required uint32 unknown_5 = 5;
+      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 5;
       case 5: {
         if (tag == 40) {
-         parse_unknown_5:
+         parse_visitor_pool:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_5_)));
-          set_has_unknown_5();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::VisitorPool_IsValid(value)) {
+            set_visitor_pool(static_cast< ::Frpg2RequestMessage::VisitorPool >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -31203,9 +31243,9 @@ void RequestGetVisitorList::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required uint32 max_visitors = 3;
+  if (has_max_visitors()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->max_visitors(), output);
   }
 
   // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
@@ -31214,9 +31254,10 @@ void RequestGetVisitorList::SerializeWithCachedSizes(
       4, this->matching_parameter(), output);
   }
 
-  // required uint32 unknown_5 = 5;
-  if (has_unknown_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 5;
+  if (has_visitor_pool()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->visitor_pool(), output);
   }
 
   // required uint32 unknown_6 = 6;
@@ -31247,11 +31288,11 @@ int RequestGetVisitorList::ByteSize() const {
           this->online_area_id());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required uint32 max_visitors = 3;
+    if (has_max_visitors()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->max_visitors());
     }
 
     // required .Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
@@ -31261,11 +31302,10 @@ int RequestGetVisitorList::ByteSize() const {
           this->matching_parameter());
     }
 
-    // required uint32 unknown_5 = 5;
-    if (has_unknown_5()) {
+    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 5;
+    if (has_visitor_pool()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_5());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
     }
 
     // required uint32 unknown_6 = 6;
@@ -31298,14 +31338,14 @@ void RequestGetVisitorList::MergeFrom(const RequestGetVisitorList& from) {
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_max_visitors()) {
+      set_max_visitors(from.max_visitors());
     }
     if (from.has_matching_parameter()) {
       mutable_matching_parameter()->::Frpg2RequestMessage::MatchingParameter::MergeFrom(from.matching_parameter());
     }
-    if (from.has_unknown_5()) {
-      set_unknown_5(from.unknown_5());
+    if (from.has_visitor_pool()) {
+      set_visitor_pool(from.visitor_pool());
     }
     if (from.has_unknown_6()) {
       set_unknown_6(from.unknown_6());
@@ -31333,9 +31373,9 @@ void RequestGetVisitorList::Swap(RequestGetVisitorList* other) {
   if (other != this) {
     std::swap(map_id_, other->map_id_);
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(max_visitors_, other->max_visitors_);
     std::swap(matching_parameter_, other->matching_parameter_);
-    std::swap(unknown_5_, other->unknown_5_);
+    std::swap(visitor_pool_, other->visitor_pool_);
     std::swap(unknown_6_, other->unknown_6_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -31861,7 +31901,7 @@ void RequestGetVisitorListResponse::Swap(RequestGetVisitorListResponse* other) {
 const int PushRequestRemoveVisitor::kPushMessageIdFieldNumber;
 const int PushRequestRemoveVisitor::kPlayerIdFieldNumber;
 const int PushRequestRemoveVisitor::kPlayerSteamIdFieldNumber;
-const int PushRequestRemoveVisitor::kUnknown4FieldNumber;
+const int PushRequestRemoveVisitor::kVisitorPoolFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestRemoveVisitor::PushRequestRemoveVisitor()
@@ -31886,7 +31926,7 @@ void PushRequestRemoveVisitor::SharedCtor() {
   push_message_id_ = 829;
   player_id_ = 0u;
   player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  unknown_4_ = 0u;
+  visitor_pool_ = -1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -31936,7 +31976,7 @@ void PushRequestRemoveVisitor::Clear() {
         player_steam_id_->clear();
       }
     }
-    unknown_4_ = 0u;
+    visitor_pool_ = -1;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -32000,18 +32040,24 @@ bool PushRequestRemoveVisitor::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_visitor_pool;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_visitor_pool:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::VisitorPool_IsValid(value)) {
+            set_visitor_pool(static_cast< ::Frpg2RequestMessage::VisitorPool >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -32061,9 +32107,10 @@ void PushRequestRemoveVisitor::SerializeWithCachedSizes(
       3, this->player_steam_id(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 4;
+  if (has_visitor_pool()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      4, this->visitor_pool(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -32095,11 +32142,10 @@ int PushRequestRemoveVisitor::ByteSize() const {
           this->player_steam_id());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 4;
+    if (has_visitor_pool()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
     }
 
   }
@@ -32128,8 +32174,8 @@ void PushRequestRemoveVisitor::MergeFrom(const PushRequestRemoveVisitor& from) {
     if (from.has_player_steam_id()) {
       set_player_steam_id(from.player_steam_id());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_visitor_pool()) {
+      set_visitor_pool(from.visitor_pool());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -32152,7 +32198,7 @@ void PushRequestRemoveVisitor::Swap(PushRequestRemoveVisitor* other) {
     std::swap(push_message_id_, other->push_message_id_);
     std::swap(player_id_, other->player_id_);
     std::swap(player_steam_id_, other->player_steam_id_);
-    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(visitor_pool_, other->visitor_pool_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -32169,9 +32215,9 @@ void PushRequestRemoveVisitor::Swap(PushRequestRemoveVisitor* other) {
 #ifndef _MSC_VER
 const int RequestVisit::kMapIdFieldNumber;
 const int RequestVisit::kOnlineAreaIdFieldNumber;
-const int RequestVisit::kUnknown3FieldNumber;
+const int RequestVisit::kVisitorPoolFieldNumber;
 const int RequestVisit::kPlayerIdFieldNumber;
-const int RequestVisit::kMetadataFieldNumber;
+const int RequestVisit::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestVisit::RequestVisit()
@@ -32195,9 +32241,9 @@ void RequestVisit::SharedCtor() {
   _cached_size_ = 0;
   map_id_ = 0u;
   online_area_id_ = 0u;
-  unknown_3_ = 0u;
+  visitor_pool_ = -1;
   player_id_ = 0u;
-  metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -32207,8 +32253,8 @@ RequestVisit::~RequestVisit() {
 }
 
 void RequestVisit::SharedDtor() {
-  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete metadata_;
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -32250,10 +32296,12 @@ void RequestVisit::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(map_id_, player_id_);
-    if (has_metadata()) {
-      if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        metadata_->clear();
+    ZR_(map_id_, online_area_id_);
+    visitor_pool_ = -1;
+    player_id_ = 0u;
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
       }
     }
   }
@@ -32304,18 +32352,24 @@ bool RequestVisit::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_visitor_pool;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_visitor_pool:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::VisitorPool_IsValid(value)) {
+            set_visitor_pool(static_cast< ::Frpg2RequestMessage::VisitorPool >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -32334,16 +32388,16 @@ bool RequestVisit::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_metadata;
+        if (input->ExpectTag(42)) goto parse_data;
         break;
       }
 
-      // required bytes metadata = 5;
+      // required bytes data = 5;
       case 5: {
         if (tag == 42) {
-         parse_metadata:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_metadata()));
+                input, this->mutable_data()));
         } else {
           goto handle_unusual;
         }
@@ -32386,9 +32440,10 @@ void RequestVisit::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+  if (has_visitor_pool()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->visitor_pool(), output);
   }
 
   // required uint32 player_id = 4;
@@ -32396,10 +32451,10 @@ void RequestVisit::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->player_id(), output);
   }
 
-  // required bytes metadata = 5;
-  if (has_metadata()) {
+  // required bytes data = 5;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      5, this->metadata(), output);
+      5, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -32425,11 +32480,10 @@ int RequestVisit::ByteSize() const {
           this->online_area_id());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+    if (has_visitor_pool()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
     }
 
     // required uint32 player_id = 4;
@@ -32439,11 +32493,11 @@ int RequestVisit::ByteSize() const {
           this->player_id());
     }
 
-    // required bytes metadata = 5;
-    if (has_metadata()) {
+    // required bytes data = 5;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->metadata());
+          this->data());
     }
 
   }
@@ -32469,14 +32523,14 @@ void RequestVisit::MergeFrom(const RequestVisit& from) {
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_visitor_pool()) {
+      set_visitor_pool(from.visitor_pool());
     }
     if (from.has_player_id()) {
       set_player_id(from.player_id());
     }
-    if (from.has_metadata()) {
-      set_metadata(from.metadata());
+    if (from.has_data()) {
+      set_data(from.data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -32498,9 +32552,9 @@ void RequestVisit::Swap(RequestVisit* other) {
   if (other != this) {
     std::swap(map_id_, other->map_id_);
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(visitor_pool_, other->visitor_pool_);
     std::swap(player_id_, other->player_id_);
-    std::swap(metadata_, other->metadata_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -32519,9 +32573,9 @@ const int PushRequestVisit::kPushMessageIdFieldNumber;
 const int PushRequestVisit::kPlayerIdFieldNumber;
 const int PushRequestVisit::kPlayerSteamIdFieldNumber;
 const int PushRequestVisit::kDataFieldNumber;
-const int PushRequestVisit::kUnknown2FieldNumber;
+const int PushRequestVisit::kVisitorPoolFieldNumber;
 const int PushRequestVisit::kMapIdFieldNumber;
-const int PushRequestVisit::kOnlineMapIdFieldNumber;
+const int PushRequestVisit::kOnlineAreaIdFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestVisit::PushRequestVisit()
@@ -32547,9 +32601,9 @@ void PushRequestVisit::SharedCtor() {
   player_id_ = 0u;
   player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  unknown_2_ = 0u;
+  visitor_pool_ = -1;
   map_id_ = 0u;
-  online_map_id_ = 0u;
+  online_area_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -32605,7 +32659,7 @@ void PushRequestVisit::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 127) {
-    ZR_(unknown_2_, online_map_id_);
+    ZR_(map_id_, online_area_id_);
     push_message_id_ = 829;
     player_id_ = 0u;
     if (has_player_steam_id()) {
@@ -32618,6 +32672,7 @@ void PushRequestVisit::Clear() {
         data_->clear();
       }
     }
+    visitor_pool_ = -1;
   }
 
 #undef OFFSET_OF_FIELD_
@@ -32698,18 +32753,24 @@ bool PushRequestVisit::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_unknown_2;
+        if (input->ExpectTag(40)) goto parse_visitor_pool;
         break;
       }
 
-      // required uint32 unknown_2 = 5;
+      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 5;
       case 5: {
         if (tag == 40) {
-         parse_unknown_2:
+         parse_visitor_pool:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::VisitorPool_IsValid(value)) {
+            set_visitor_pool(static_cast< ::Frpg2RequestMessage::VisitorPool >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -32728,18 +32789,18 @@ bool PushRequestVisit::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_online_map_id;
+        if (input->ExpectTag(56)) goto parse_online_area_id;
         break;
       }
 
-      // required uint32 online_map_id = 7;
+      // required uint32 online_area_id = 7;
       case 7: {
         if (tag == 56) {
-         parse_online_map_id:
+         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_map_id_)));
-          set_has_online_map_id();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
@@ -32795,9 +32856,10 @@ void PushRequestVisit::SerializeWithCachedSizes(
       4, this->data(), output);
   }
 
-  // required uint32 unknown_2 = 5;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_2(), output);
+  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 5;
+  if (has_visitor_pool()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->visitor_pool(), output);
   }
 
   // required uint32 map_id = 6;
@@ -32805,9 +32867,9 @@ void PushRequestVisit::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->map_id(), output);
   }
 
-  // required uint32 online_map_id = 7;
-  if (has_online_map_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->online_map_id(), output);
+  // required uint32 online_area_id = 7;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->online_area_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -32846,11 +32908,10 @@ int PushRequestVisit::ByteSize() const {
           this->data());
     }
 
-    // required uint32 unknown_2 = 5;
-    if (has_unknown_2()) {
+    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 5;
+    if (has_visitor_pool()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
     }
 
     // required uint32 map_id = 6;
@@ -32860,11 +32921,11 @@ int PushRequestVisit::ByteSize() const {
           this->map_id());
     }
 
-    // required uint32 online_map_id = 7;
-    if (has_online_map_id()) {
+    // required uint32 online_area_id = 7;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->online_map_id());
+          this->online_area_id());
     }
 
   }
@@ -32896,14 +32957,14 @@ void PushRequestVisit::MergeFrom(const PushRequestVisit& from) {
     if (from.has_data()) {
       set_data(from.data());
     }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_visitor_pool()) {
+      set_visitor_pool(from.visitor_pool());
     }
     if (from.has_map_id()) {
       set_map_id(from.map_id());
     }
-    if (from.has_online_map_id()) {
-      set_online_map_id(from.online_map_id());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -32927,9 +32988,9 @@ void PushRequestVisit::Swap(PushRequestVisit* other) {
     std::swap(player_id_, other->player_id_);
     std::swap(player_steam_id_, other->player_steam_id_);
     std::swap(data_, other->data_);
-    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(visitor_pool_, other->visitor_pool_);
     std::swap(map_id_, other->map_id_);
-    std::swap(online_map_id_, other->online_map_id_);
+    std::swap(online_area_id_, other->online_area_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -32944,10 +33005,10 @@ void PushRequestVisit::Swap(PushRequestVisit* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestRejectVisit::kUnknown1FieldNumber;
-const int RequestRejectVisit::kUnknown2FieldNumber;
-const int RequestRejectVisit::kUnknown3FieldNumber;
-const int RequestRejectVisit::kUnknown4FieldNumber;
+const int RequestRejectVisit::kPlayerIdFieldNumber;
+const int RequestRejectVisit::kVisitorPoolFieldNumber;
+const int RequestRejectVisit::kMapIdFieldNumber;
+const int RequestRejectVisit::kOnlineAreaIdFieldNumber;
 const int RequestRejectVisit::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
 
@@ -32969,10 +33030,10 @@ RequestRejectVisit::RequestRejectVisit(const RequestRejectVisit& from)
 
 void RequestRejectVisit::SharedCtor() {
   _cached_size_ = 0;
-  unknown_1_ = 0u;
-  unknown_2_ = 0u;
-  unknown_3_ = 0u;
-  unknown_4_ = 0u;
+  player_id_ = 0u;
+  visitor_pool_ = -1;
+  map_id_ = 0u;
+  online_area_id_ = 0u;
   unknown_5_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -33023,7 +33084,9 @@ void RequestRejectVisit::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(unknown_1_, unknown_5_);
+    ZR_(map_id_, unknown_5_);
+    player_id_ = 0u;
+    visitor_pool_ = -1;
   }
 
 #undef OFFSET_OF_FIELD_
@@ -33047,58 +33110,64 @@ bool RequestRejectVisit::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // required uint32 player_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(16)) goto parse_visitor_pool;
         break;
       }
 
-      // required uint32 unknown_2 = 2;
+      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_visitor_pool:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::VisitorPool_IsValid(value)) {
+            set_visitor_pool(static_cast< ::Frpg2RequestMessage::VisitorPool >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_map_id;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required uint32 map_id = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_map_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &map_id_)));
+          set_has_map_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_online_area_id;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required uint32 online_area_id = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
@@ -33146,24 +33215,25 @@ failure:
 void RequestRejectVisit::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestRejectVisit)
-  // required uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // required uint32 player_id = 1;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
   }
 
-  // required uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
+  if (has_visitor_pool()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->visitor_pool(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required uint32 map_id = 3;
+  if (has_map_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->map_id(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required uint32 online_area_id = 4;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->online_area_id(), output);
   }
 
   // required uint32 unknown_5 = 5;
@@ -33180,32 +33250,31 @@ int RequestRejectVisit::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // required uint32 player_id = 1;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->player_id());
     }
 
-    // required uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
+    if (has_visitor_pool()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required uint32 map_id = 3;
+    if (has_map_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->map_id());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required uint32 online_area_id = 4;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+          this->online_area_id());
     }
 
     // required uint32 unknown_5 = 5;
@@ -33232,17 +33301,17 @@ void RequestRejectVisit::CheckTypeAndMergeFrom(
 void RequestRejectVisit::MergeFrom(const RequestRejectVisit& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_visitor_pool()) {
+      set_visitor_pool(from.visitor_pool());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_map_id()) {
+      set_map_id(from.map_id());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
     if (from.has_unknown_5()) {
       set_unknown_5(from.unknown_5());
@@ -33265,10 +33334,10 @@ bool RequestRejectVisit::IsInitialized() const {
 
 void RequestRejectVisit::Swap(RequestRejectVisit* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
-    std::swap(unknown_2_, other->unknown_2_);
-    std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(player_id_, other->player_id_);
+    std::swap(visitor_pool_, other->visitor_pool_);
+    std::swap(map_id_, other->map_id_);
+    std::swap(online_area_id_, other->online_area_id_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -33285,9 +33354,9 @@ void RequestRejectVisit::Swap(RequestRejectVisit* other) {
 
 #ifndef _MSC_VER
 const int PushRequestRejectVisit::kPushMessageIdFieldNumber;
-const int PushRequestRejectVisit::kUnknown2FieldNumber;
-const int PushRequestRejectVisit::kUnknown3FieldNumber;
-const int PushRequestRejectVisit::kUnknown4FieldNumber;
+const int PushRequestRejectVisit::kPlayerIdFieldNumber;
+const int PushRequestRejectVisit::kVisitorPoolFieldNumber;
+const int PushRequestRejectVisit::kSteamIdFieldNumber;
 const int PushRequestRejectVisit::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
 
@@ -33308,11 +33377,12 @@ PushRequestRejectVisit::PushRequestRejectVisit(const PushRequestRejectVisit& fro
 }
 
 void PushRequestRejectVisit::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 829;
-  unknown_2_ = 0u;
-  unknown_3_ = 0u;
-  unknown_4_ = 0u;
+  player_id_ = 0u;
+  visitor_pool_ = -1;
+  steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   unknown_5_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -33323,6 +33393,9 @@ PushRequestRejectVisit::~PushRequestRejectVisit() {
 }
 
 void PushRequestRejectVisit::SharedDtor() {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -33352,24 +33425,17 @@ PushRequestRejectVisit* PushRequestRejectVisit::New() const {
 }
 
 void PushRequestRejectVisit::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<PushRequestRejectVisit*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(unknown_2_, unknown_5_);
     push_message_id_ = 829;
+    player_id_ = 0u;
+    visitor_pool_ = -1;
+    if (has_steam_id()) {
+      if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        steam_id_->clear();
+      }
+    }
+    unknown_5_ = 0u;
   }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -33404,48 +33470,52 @@ bool PushRequestRejectVisit::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(16)) goto parse_player_id;
         break;
       }
 
-      // required uint32 unknown_2 = 2;
+      // required uint32 player_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_player_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_visitor_pool;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_visitor_pool:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::VisitorPool_IsValid(value)) {
+            set_visitor_pool(static_cast< ::Frpg2RequestMessage::VisitorPool >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(34)) goto parse_steam_id;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required string steam_id = 4;
       case 4: {
-        if (tag == 32) {
-         parse_unknown_4:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+        if (tag == 34) {
+         parse_steam_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -33499,19 +33569,21 @@ void PushRequestRejectVisit::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
-  // required uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // required uint32 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->player_id(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+  if (has_visitor_pool()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->visitor_pool(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required string steam_id = 4;
+  if (has_steam_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->steam_id(), output);
   }
 
   // required uint32 unknown_5 = 5;
@@ -33534,25 +33606,24 @@ int PushRequestRejectVisit::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
     }
 
-    // required uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // required uint32 player_id = 2;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+          this->player_id());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+    if (has_visitor_pool()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required string steam_id = 4;
+    if (has_steam_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->steam_id());
     }
 
     // required uint32 unknown_5 = 5;
@@ -33582,14 +33653,14 @@ void PushRequestRejectVisit::MergeFrom(const PushRequestRejectVisit& from) {
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_visitor_pool()) {
+      set_visitor_pool(from.visitor_pool());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_steam_id()) {
+      set_steam_id(from.steam_id());
     }
     if (from.has_unknown_5()) {
       set_unknown_5(from.unknown_5());
@@ -33613,9 +33684,9 @@ bool PushRequestRejectVisit::IsInitialized() const {
 void PushRequestRejectVisit::Swap(PushRequestRejectVisit* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
-    std::swap(unknown_2_, other->unknown_2_);
-    std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(player_id_, other->player_id_);
+    std::swap(visitor_pool_, other->visitor_pool_);
+    std::swap(steam_id_, other->steam_id_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);

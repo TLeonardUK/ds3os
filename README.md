@@ -50,9 +50,9 @@ We're slowly going through and implementing all the games online functionality, 
 - [x] Bloodstains
 - [x] Ghosts
 - [x] Summoning
-- [ ] Invasions
-- [ ] Visitors (Summoning via covenant)
-- [ ] Matchmaking (eg. Correctly matching summoning/invasions/visits with player level)
+- [x] Invasions
+- [x] Visitors (Summoning via covenant)
+- [x] Matchmaking (eg. Correctly matching summoning/invasions/visits with player level)
 - [ ] Roster of knights
 - [ ] Undead match
 - [ ] Archdragon peak bell ringing

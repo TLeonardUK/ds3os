@@ -39,6 +39,42 @@ message AllStatus {
     optional UnknownStruct1 unknown_1 = 7;
 }
 
+enum InvasionType {
+    InvasionType_None = 0;
+    InvasionType_Summon_White = 1;
+    InvasionType_Summon_Red = 2;
+    InvasionType_Invade_Red = 3;
+    InvasionType_Summon_Purple_White = 4;
+    InvasionType_Covenant_Spear_of_the_Church = 6;
+    InvasionType_Covenant_Blade_of_the_Darkmoon = 7;
+    InvasionType_Guardian_of_Rosaria = 8;
+    InvasionType_Covenant_Watchdog_of_Farron = 9;
+    InvasionType_Covenant_Aldrich_Faithful = 10;
+    InvasionType_Avatar = 11;
+    InvasionType_Arena_Battle_Royal = 12;
+    InvasionType_Umbasa_White = 13;
+    InvasionType_Summon_Sunlight_White = 14;
+    InvasionType_Summon_Sunlight_Dark = 15;
+    InvasionType_Summon_Purple_Dark = 16;
+    InvasionType_Invade_Sunlight_Dark = 17;
+    InvasionType_Invade_Purple_Dark = 18;
+    InvasionType_Force_Join_Session = 19;
+    InvasionType_Red_Hunter = 20;
+    InvasionType_Covenant_Blue_Sentinel = 21;
+}
+
+enum WorldType {
+    WorldType_None = 0;              // Loading screens etc
+    WorldType_Singleplayer = 1;      // User is on their own
+    WorldType_Multiplayer = 2;       // Multiple users are in the world
+}
+
+enum NetMode {
+    NetMode_None = 0;               // On own, not hosting a shared world.
+    NetMode_Host = 1;               // Multiple users in game, we are hosting.
+    NetMode_Client = 2;             // Multiple users in game, we are a client.
+}
+
 message PlayerStatus {
     optional uint32 unknown_1 = 1;                           // 135000
     optional uint32 unknown_2 = 2;                           // 2
@@ -48,15 +84,15 @@ message PlayerStatus {
 
     optional uint32 sinner_points = 5;
     optional uint32 unknown_6 = 6;                           // 0
-    optional uint32 unknown_7 = 7;                           // 0
-    optional uint32 unknown_8 = 8;                           // 0
+    optional uint32 is_invadable = 7;                        
+    optional uint32 can_summon_for_way_of_blue = 8;     
     optional uint32 unknown_9 = 9;                           // 0
-    optional uint32 unknown_10 = 10;                         // 0
-    optional uint32 unknown_11 = 11;                         // 0
-    optional uint32 unknown_12 = 12;                         // 0
+    optional uint32 can_summon_for_watchdog_of_farron = 10;   
+    optional uint32 can_summon_for_aldritch_faithful = 11;    
+    optional uint32 can_summon_for_spear_of_church = 12;      
     optional uint32 unknown_13 = 13;                         // 1
     optional uint32 unknown_14 = 14;                         // 0
-    optional uint32 unknown_15 = 15;                         // 1
+    optional WorldType game_world = 15;                      
     optional uint32 covenant = 16;                           
 
     repeated uint32 played_areas = 17;
@@ -79,9 +115,9 @@ message PlayerStatus {
 
     optional uint32 unknown_32 = 32;                         // 
     optional uint32 unknown_33 = 33;                         // 
-    optional uint32 unknown_34 = 34;                         // 0       -> changes to 2 during invasion
-    optional uint32 unknown_35 = 35;                         // 0       -> changes to 1 during invasion
-    optional uint32 unknown_36 = 36;                         // 0
+    optional NetMode net_mode = 34;                         
+    optional uint32 dried_fingers_active = 35;              
+    optional InvasionType invasion_type = 36;                       
     optional uint32 character_id = 37;                       
 
     optional string name = 38;
@@ -135,10 +171,10 @@ message PlayerStatus {
 }
 
 message PlayData {
-    optional uint32 unknown_1 = 1;                          // 78286, 84689
+    optional uint32 play_time_seconds = 1;
     optional uint32 is_hollow = 4;                          
     optional uint32 hollow_level = 5;                          
-    optional uint32 unknown_4 = 6;                          // 0
+    optional uint32 unknown_4 = 6;                          // 0, 5 on journey 2?
     optional uint32 bonfire_level = 7;                      
     optional BonfireInfo bonfire_info = 8;
 }
@@ -211,8 +247,9 @@ message Equipment {
     optional int32 spell_12 = 45;
     optional int32 spell_13 = 46;
     optional int32 spell_14 = 47;
+    optional int32 covenant_item = 48;
 
-    optional int32 unknown_48 = 48;     // 10070
+    // Some of these seem to count down during combat but without a consistent interval.
     optional int32 unknown_49 = 49;     // 90
     optional int32 unknown_50 = 50;     // 1
     optional int32 unknown_51 = 51;     // 1

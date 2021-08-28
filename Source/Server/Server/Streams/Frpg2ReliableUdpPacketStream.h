@@ -78,13 +78,14 @@ protected:
     void Send_HBT();
 
     int GetPacketIndexByLocalSequence(const std::vector<Frpg2ReliableUdpPacket>& Queue, uint32_t SequenceIndex);
-    void InsertPacketByLocalSequence(std::vector<Frpg2ReliableUdpPacket>& Queue, const Frpg2ReliableUdpPacket& Packet, uint32_t SequenceIndex);
 
     bool IsOpcodeSequenced(Frpg2ReliableUdpOpCode Opcode);
 
     void EmitDebugInfo(bool Incoming, const Frpg2ReliableUdpPacket& Packet);
 
     virtual void Reset();
+
+    uint32_t GetNextRemoteSequenceIndex() { return (RemoteSequenceIndex + 1) % MAX_ACK_VALUE; }
 
 protected:
 
@@ -100,7 +101,7 @@ protected:
     // TODO: Need to handle these rolling over. They have 12 bits so 
     //       it shouldn't happen for a while, but still needs fixing.
 
-    uint32_t SequenceIndex = 1;
+    uint32_t SequenceIndex = START_SEQUENCE_INDEX;
     uint32_t SequenceIndexAcked = 0;
 
     uint32_t RemoteSequenceIndex = 0;
@@ -136,6 +137,19 @@ protected:
 
     // How many seconds to wait for a graceful disconnection.
     const double CONNECTION_CLOSE_TIMEOUT = 3.0;
+
+    // How many values ACK increases before it rolls over.
+    const uint32_t MAX_ACK_VALUE = 4096;
+
+    // Top quater ack range, used to handle overflows.
+    const uint32_t MAX_ACK_VALUE_TOP_QUART = (4096 / 4) * 3;
+
+    // Bottom quater ack range, used to handle overflows.
+    const uint32_t MAX_ACK_VALUE_BOTTOM_QUART = (4096 / 4) * 1;
+
+    // Starting sequence index. TCP protocol expects this to be 
+    // randomised but there isn't really any benefit to that.
+    const uint32_t START_SEQUENCE_INDEX = 4000;
 
     double CloseTimer = 0.0f;
 

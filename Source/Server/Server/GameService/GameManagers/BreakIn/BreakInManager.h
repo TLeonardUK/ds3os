@@ -33,7 +33,7 @@ public:
     virtual void OnLostPlayer(GameClient* Client) override;
 
 protected:
-    static bool CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Client, const std::shared_ptr<GameClient>& Match);
+    bool CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Client, const std::shared_ptr<GameClient>& Match);
 
     MessageHandleResult Handle_RequestGetBreakInTargetList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestBreakInTarget(GameClient* Client, const Frpg2ReliableUdpMessage& Message);

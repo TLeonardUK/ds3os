@@ -22,6 +22,38 @@ struct RuntimeConfigAnnouncement
     bool Serialize(nlohmann::json& Json, bool Loading);
 };
 
+// Wraps the parameters used during matching for the various 
+// summoning systems.
+struct RuntimeConfigMatchingParameters
+{
+    // Calculated as:
+    //      (soul_level * LowerLimitMultiplier) + LowerLimitModifier
+    float LowerLimitMultiplier =  1.0f;
+    float LowerLimitModifier   = -10;
+    float UpperLimitMultiplier =  1.0f;
+    float UpperLimitModifier   =  10;
+
+    // Maximum weapon levels a user with the given max weapon level can match with.
+    std::vector<int> WeaponLevelUpperLimit = { 1, 2, 3, 4, 6, 7, 8, 9, 10, 10, 10 };
+
+    // Range at which the upper limit of the range is removed and the lower
+    // limit is set to this value.
+    int RangeRemovalLevel = 351;
+
+    // If true the range is ignored when a password is set.
+    bool PasswordDisablesLimits = true;
+
+    // Flat disables all the level matching.
+    bool DisableLevelMatching = false;
+
+    // Flat disables all the weapon level matching.
+    bool DisableWeaponLevelMatching = false;
+
+    bool Serialize(nlohmann::json& Json, bool Loading);
+
+    bool CheckMatch(int HostSoulLevel, int HostWeaponLevel, int ClientSoulLevel, int ClientWeaponLevel, bool HasPassword) const;
+};
+
 // Configuration saved and loaded at runtime by the server from a configuration file.
 class RuntimeConfig
 {
@@ -86,6 +118,61 @@ public:
     // it if you so wish. Bare in mind that players may see signs that no longer
     // exist on the server.
     int SummonSignMaxEntriesPerArea = INT_MAX;
+
+    // Parameters used for determining which signs a player can see.
+    RuntimeConfigMatchingParameters SummonSignMatchingParameters = {
+        0.9f, -10,                                                      // LowerLimit
+        1.1f, +10,                                                      // UpperLimit
+        { 1, 2, 3, 4, 6, 7, 8, 9, 10, 10, 10 },                         // WeaponLevelUpperLimit
+        351,                                                            // RangeRemovalLevel
+        true,                                                           // PasswordDisablesLimits
+        false,                                                          // DisableLevelMatching
+        false,                                                          // DisableWeaponLevelMatching
+    };
+    
+    // Parameters used for determining way of the blue auto-summoning.
+    RuntimeConfigMatchingParameters WayOfBlueMatchingParameters = {
+        0.9f, -15,                                                      // LowerLimit
+        1.1f, +15,                                                      // UpperLimit
+        { 1, 2, 3, 4, 6, 7, 8, 9, 10, 10, 10 },                         // WeaponLevelUpperLimit
+        351,                                                            // RangeRemovalLevel
+        false,                                                          // PasswordDisablesLimits
+        false,                                                          // DisableLevelMatching
+        false,                                                          // DisableWeaponLevelMatching
+    };
+    
+    // Parameters used for determining dark spirit invasion.
+    RuntimeConfigMatchingParameters DarkSpiritInvasionMatchingParameters = {
+        0.9f,   0,                                                      // LowerLimit
+        1.1f, +20,                                                      // UpperLimit
+        { 1, 2, 3, 4, 6, 7, 8, 9, 10, 10, 10 },                         // WeaponLevelUpperLimit
+        351,                                                            // RangeRemovalLevel
+        false,                                                          // PasswordDisablesLimits
+        false,                                                          // DisableLevelMatching
+        false,                                                          // DisableWeaponLevelMatching
+    };
+
+    // Parameters used for determining mound maker invasion.
+    RuntimeConfigMatchingParameters MoundMakerInvasionMatchingParameters = {
+        0.9f,   0,                                                      // LowerLimit
+        1.15f, +20,                                                     // UpperLimit
+        { 1, 2, 3, 4, 6, 7, 8, 9, 10, 10, 10 },                         // WeaponLevelUpperLimit
+        351,                                                            // RangeRemovalLevel
+        false,                                                          // PasswordDisablesLimits
+        false,                                                          // DisableLevelMatching
+        false,                                                          // DisableWeaponLevelMatching
+    };
+    
+    // Parameters used for determining convenant auto invasion.
+    RuntimeConfigMatchingParameters CovenantInvasionMatchingParameters = {
+        0.8f, -20,                                                      // LowerLimit
+        1.1f,  0,                                                       // UpperLimit
+        { 1, 2, 3, 4, 6, 7, 8, 9, 10, 10, 10 },                         // WeaponLevelUpperLimit
+        351,                                                            // RangeRemovalLevel
+        false,                                                          // PasswordDisablesLimits
+        false,                                                          // DisableLevelMatching
+        false,                                                          // DisableWeaponLevelMatching
+    };
 
 public:
 

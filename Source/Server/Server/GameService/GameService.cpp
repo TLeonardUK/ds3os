@@ -53,7 +53,7 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<RankingManager>(ServerInstance));
     Managers.push_back(std::make_shared<QuickMatchManager>(ServerInstance));
     Managers.push_back(std::make_shared<BreakInManager>(ServerInstance, this));
-    Managers.push_back(std::make_shared<VisitorManager>(ServerInstance));
+    Managers.push_back(std::make_shared<VisitorManager>(ServerInstance, this));
     Managers.push_back(std::make_shared<MarkManager>(ServerInstance));
     Managers.push_back(std::make_shared<MiscManager>(ServerInstance, this));
 }

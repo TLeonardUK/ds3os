@@ -48,7 +48,27 @@ MessageHandleResult BreakInManager::OnMessageRecieved(GameClient* Client, const 
 
 bool BreakInManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
-    // TODO: Actually apply some matching rules here.
+    if (!Match->GetPlayerState().IsInvadable)
+    {
+        return false;
+    }
+
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+    const RuntimeConfigMatchingParameters* MatchingParams = &Config.DarkSpiritInvasionMatchingParameters;
+    if (Request.covenant() == Frpg2RequestMessage::Covenant::Covenant_Mound_Makers)
+    {
+        MatchingParams = &Config.MoundMakerInvasionMatchingParameters;
+    }
+
+    // Check matching parameters.
+    if (!MatchingParams->CheckMatch(
+            Request.soul_level(), Request.weapon_level(), 
+            Match->GetPlayerState().SoulLevel, Match->GetPlayerState().MaxWeaponLevel,
+            Request.password().size() > 0
+        ))
+    {
+        return false;
+    }
 
     return true;
 }
@@ -57,7 +77,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
 {
     Frpg2RequestMessage::RequestGetBreakInTargetList* Request = (Frpg2RequestMessage::RequestGetBreakInTargetList*)Message.Protobuf.get();
     
-    std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([Client, Request](const std::shared_ptr<GameClient>& OtherClient) {
+    std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([this, Client, Request](const std::shared_ptr<GameClient>& OtherClient) {
         if (Client == OtherClient.get())
         {
             return false;
@@ -74,8 +94,6 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
     Frpg2RequestMessage::RequestGetBreakInTargetListResponse Response;
     Response.set_map_id(Request->map_id());
     Response.set_online_area_id(Request->online_area_id());
-
-    Log("[BreakIn] [GetList] Found %i potential targets.", PotentialTargets.size());
 
     int CountToSend = std::min((int)Request->max_targets(), (int)PotentialTargets.size());
     for (int i = 0; i < CountToSend; i++)
@@ -188,6 +206,15 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
     if (!InvaderClient->MessageStream->Send(&PushMessage))
     {
         Warning("[%s] Failed to send PushRequestRejectBreakInTarget to invader client %s.", Client->GetName().c_str(), InvaderClient->GetName().c_str());
+    }
+
+    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // doesn't work without it though.
+    Frpg2RequestMessage::RequestRejectBreakInTargetResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestRejectBreakInTargetResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
     }
 
     return MessageHandleResult::Handled;

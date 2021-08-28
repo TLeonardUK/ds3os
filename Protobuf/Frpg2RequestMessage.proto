@@ -21,8 +21,7 @@ import "Frpg2PlayerData.proto";
 //
 // The message-id thats recieved on the reliable udp message layer is always 0x0320, and the first
 // field is read to disambiguate the actual message.
-enum PushMessageId
-{
+enum PushMessageId {
     PushID_PushRequestRemoveSign               = 0x033D;
     PushID_PushRequestSummonSign               = 0x033E;
     PushID_PushRequestRejectSign               = 0x033F;
@@ -463,7 +462,7 @@ message PartyMemberInfo {
 // for all their definitions.
 message RequestNotifyProtoBufLog {
     required LogType type = 1; 
-    required LogCommonInfo common = 2;
+    required bytes common = 2;      // Switching this to bytes, the format of this data seems to vary greatly, not sure its a defined struct.
 
     // This is an embedded protobuf, its one of the *Log protobufs
     // in the FpdLogMessage.proto file.
@@ -591,6 +590,20 @@ message RequestNotifyRegisterCharacter {
 //   Presumably if its not possible to summon:
 //   << PushRequestRejectSign
 
+enum Covenant
+{
+    Covenant_None = 0;
+    Covenant_Blade_of_the_Darkmoon = 1;
+    Covenant_Warriors_of_Sunlight = 2;
+    Covenant_Mound_Makers = 3;
+    Covenant_Spears_of_the_Church = 4;
+    Covenant_Fingers_of_Rosaria = 5;
+    Covenant_Watchdogs_of_Farron = 6;
+    Covenant_Aldrich_Faithfuls = 7;
+    Covenant_Way_of_Blue = 8;
+    Covenant_Blue_Sentinels = 9;
+}
+
 message SummonSignMessage {
     required uint32 player_id = 1;
     required string steam_id = 2;
@@ -642,7 +655,7 @@ message MatchingParameter {
     optional string unknown_string = 8;
     required uint32 unknown_id_9 = 9;                     // 0, 1, 7
     required string password = 10;
-    required uint32 covenant = 11;
+    required Covenant covenant = 11;
     required uint32 weapon_level = 14;
 }
 
@@ -879,7 +892,7 @@ message RequestGetGhostDataListResponse {
 
 // Seems to basically work the same as invasions just without the PushRequestAllowBreakInTarget exchange step.
 
-// Order of these events appear to be:
+// Order of these events:
 //
 //      Host >> RequestGetVisitorList
 //      Host << RequestGetVisitorListResponse
@@ -887,14 +900,28 @@ message RequestGetGhostDataListResponse {
 //      Summonee << PushRequestVisit
 //      Host << PushRequestRemoveVisitor
 //      Sumoneee >> VisitResultLog
+//
+// Side note the frequency of request calls for watchdogs is all over the place, I'm not suprised people never see
+// them being summoned.
+
+// I think this is basically just the pool of visitors we request from.
+enum VisitorPool
+{
+    VisitorPool_None                    = -1;   // Not used in network, just handy sentinel value for server code.
+    VisitorPool_Way_of_Blue             = 0;    // This grabs darkmoon & blue sentinels
+                                                // No idea what 1 is, doesn't look like its used anywhere.
+    VisitorPool_Watchdog_of_Farron      = 2;
+    VisitorPool_Aldrich_Faithful        = 3;
+    VisitorPool_Spear_of_the_Church     = 4;
+}
 
 message RequestGetVisitorList {
     required uint32 map_id = 1;   
     required uint32 online_area_id = 2;   
-    required uint32 unknown_3 = 3;          // 10 (on spears of church)  , 10 (Concord)
+    required uint32 max_visitors = 3;
     required MatchingParameter matching_parameter = 4;
-    required uint32 unknown_5 = 5;          // 4 (spears of church summon), 0 (Concord)
-    required uint32 unknown_6 = 6;          // 0
+    required VisitorPool visitor_pool = 5;                      
+    required uint32 unknown_6 = 6;                              // 0
 }
 
 message VisitorData {
@@ -909,48 +936,46 @@ message RequestGetVisitorListResponse {
 }
 
 message PushRequestRemoveVisitor {
-    required PushMessageId push_message_id = 1;     // 965/953
+    required PushMessageId push_message_id = 1;     
     required uint32 player_id = 2;
     required string player_steam_id = 3;
-    required uint32 unknown_4 = 4;                  // 4 (spears of church summon), 0 (Concord)
+    required VisitorPool visitor_pool = 4;                           
 }
 
 message RequestVisit {
     required uint32 map_id = 1;   
     required uint32 online_area_id = 2;   
-    required uint32 unknown_3 = 3;                   // 4 (spears of church summon), 0 (Concord)
+    required VisitorPool visitor_pool = 3;        
     required uint32 player_id = 4;              
-    required bytes  metadata = 5;
+    required bytes  data = 5;
 }
 
 message PushRequestVisit {
     required PushMessageId push_message_id = 1;         // 951 - Push message id
     required uint32 player_id = 2; 
     required string player_steam_id = 3;
-    required bytes  data = 4;
-    required uint32 unknown_2 = 5;                      // 0
+    required bytes  data = 4;                           
+    required VisitorPool visitor_pool = 5;       
     required uint32 map_id = 6;
-    required uint32 online_map_id = 7;
+    required uint32 online_area_id = 7;
 }
 
 message RequestRejectVisit {
-
-    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
-    required uint32 unknown_1 = 1;
-    required uint32 unknown_2 = 2;
-    required uint32 unknown_3 = 3;
-    required uint32 unknown_4 = 4;
-    required uint32 unknown_5 = 5;
+    required uint32 player_id = 1;                         
+    required VisitorPool visitor_pool = 2;              // total guess might be unknown_5 
+    required uint32 map_id = 3;
+    required uint32 online_area_id = 4;
+    required uint32 unknown_5 = 5;                      // 0  
 }
 
 message PushRequestRejectVisit {
     required PushMessageId push_message_id = 1;
     
-    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
-    required uint32 unknown_2 = 2;
-    required uint32 unknown_3 = 3;
-    required uint32 unknown_4 = 4;                        // WIRETYPE_LENGTH_DELIMITED, guessing string, might be BreakInTargetData
-    required uint32 unknown_5 = 5;
+    // Unknown - The fields in this have been figured out based on reading ghidra and looking at BreakIn code, not seen in the wild.
+    required uint32 player_id = 2;
+    required VisitorPool visitor_pool = 3;              // total guess might be unknown_5   
+    required string steam_id = 4;                           
+    required uint32 unknown_5 = 5;                         
 }
 
 message RequestVisitResponse {
@@ -1104,7 +1129,7 @@ message RequestRegisterRankingData {
 }
 
 message RequestRegisterRankingDataResponse {
-    // Never seems to be sent by server?
+    // Empty Response.
 }
 
 message RequestGetRankingData {

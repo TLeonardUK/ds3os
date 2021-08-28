@@ -121,7 +121,89 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         }
     }
 
-    // TODO: Do something with this data?
+    // Grab some matchmaking values.
+    if (Request->status().has_player_status())
+    {
+        // Grab invadability state.
+        if (Request->status().player_status().has_is_invadable())
+        {
+            bool NewState = Request->status().player_status().is_invadable();
+            if (NewState != State.IsInvadable)
+            {
+                Log("[%s] User is now %s", Client->GetName().c_str(), NewState ? "invadable" : "no longer invadable");
+                State.IsInvadable = NewState;
+            }
+        }
+
+        // Grab soul level / weapon level.
+        if (Request->status().player_status().has_soul_level())
+        {
+            State.SoulLevel = Request->status().player_status().soul_level();
+        }
+        if (Request->status().player_status().has_max_weapon_level())
+        {
+            State.MaxWeaponLevel = Request->status().player_status().max_weapon_level();
+        }
+
+        // Grab whatever visitor pool they should be in.
+        Frpg2RequestMessage::VisitorPool NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_None;
+        if (Request->status().player_status().has_can_summon_for_way_of_blue() && Request->status().player_status().can_summon_for_way_of_blue())
+        {
+            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue;
+        }
+        if (Request->status().player_status().has_can_summon_for_watchdog_of_farron() && Request->status().player_status().can_summon_for_watchdog_of_farron())
+        {
+            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Watchdog_of_Farron;
+        }
+        if (Request->status().player_status().has_can_summon_for_aldritch_faithful() && Request->status().player_status().can_summon_for_aldritch_faithful())
+        {
+            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Aldrich_Faithful;
+        }
+        if (Request->status().player_status().has_can_summon_for_spear_of_church() && Request->status().player_status().can_summon_for_spear_of_church())
+        {
+            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Spear_of_the_Church;
+        }
+
+        if (NewVisitorPool != State.VisitorPool)
+        {
+            Log("[%s] User is now in visitor pool %i.", Client->GetName().c_str(), NewVisitorPool);
+            State.VisitorPool = NewVisitorPool;
+        }
+    }
+
+    // DEBUG DEBUG DEBUG
+    #define CHECK_PLAYER_STATUS_DIFF(GroupName, FieldName) if (State.PlayerStatus.has_##GroupName() && State.PlayerStatus.GroupName().has_##FieldName() && Request->status().has_##GroupName() && Request->status().GroupName().has_##FieldName() && State.PlayerStatus.GroupName().FieldName() != Request->status().GroupName().FieldName()) \
+                                                    Warning("[%s] Changed %s.%s to %i.", Client->GetName().c_str(), #GroupName, #FieldName, Request->status().GroupName().FieldName());
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_1)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_2)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_6)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_9)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_13)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_14)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_32)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_33)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_63)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_75)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_76)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_78)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_79)
+    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_80)
+    CHECK_PLAYER_STATUS_DIFF(play_data, unknown_4)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_49)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_50)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_51)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_52)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_53)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_54)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_55)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_56)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_57)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_58)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_59)
+    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_60)
+    // DEBUG DEBUG DEBUG
+
+    // Merge the delta into the current state.
     State.PlayerStatus.MergeFrom(Request->status());
 
     // I don't think this response is even required, the normal server does not send it.

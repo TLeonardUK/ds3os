@@ -89,6 +89,57 @@ struct StaticDescriptorInitializer_Frpg2PlayerData_2eproto {
   }
 } static_descriptor_initializer_Frpg2PlayerData_2eproto_;
 #endif
+bool InvasionType_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
+    case 14:
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool WorldType_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool NetMode_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -1232,15 +1283,15 @@ const int PlayerStatus::kCrossRegionMatchmakingDisabledFieldNumber;
 const int PlayerStatus::kSoulLevelFieldNumber;
 const int PlayerStatus::kSinnerPointsFieldNumber;
 const int PlayerStatus::kUnknown6FieldNumber;
-const int PlayerStatus::kUnknown7FieldNumber;
-const int PlayerStatus::kUnknown8FieldNumber;
+const int PlayerStatus::kIsInvadableFieldNumber;
+const int PlayerStatus::kCanSummonForWayOfBlueFieldNumber;
 const int PlayerStatus::kUnknown9FieldNumber;
-const int PlayerStatus::kUnknown10FieldNumber;
-const int PlayerStatus::kUnknown11FieldNumber;
-const int PlayerStatus::kUnknown12FieldNumber;
+const int PlayerStatus::kCanSummonForWatchdogOfFarronFieldNumber;
+const int PlayerStatus::kCanSummonForAldritchFaithfulFieldNumber;
+const int PlayerStatus::kCanSummonForSpearOfChurchFieldNumber;
 const int PlayerStatus::kUnknown13FieldNumber;
 const int PlayerStatus::kUnknown14FieldNumber;
-const int PlayerStatus::kUnknown15FieldNumber;
+const int PlayerStatus::kGameWorldFieldNumber;
 const int PlayerStatus::kCovenantFieldNumber;
 const int PlayerStatus::kPlayedAreasFieldNumber;
 const int PlayerStatus::kUnknown18FieldNumber;
@@ -1259,9 +1310,9 @@ const int PlayerStatus::kMaxStaminaFieldNumber;
 const int PlayerStatus::kBaseMaxStaminaFieldNumber;
 const int PlayerStatus::kUnknown32FieldNumber;
 const int PlayerStatus::kUnknown33FieldNumber;
-const int PlayerStatus::kUnknown34FieldNumber;
-const int PlayerStatus::kUnknown35FieldNumber;
-const int PlayerStatus::kUnknown36FieldNumber;
+const int PlayerStatus::kNetModeFieldNumber;
+const int PlayerStatus::kDriedFingersActiveFieldNumber;
+const int PlayerStatus::kInvasionTypeFieldNumber;
 const int PlayerStatus::kCharacterIdFieldNumber;
 const int PlayerStatus::kNameFieldNumber;
 const int PlayerStatus::kIsMaleFieldNumber;
@@ -1357,15 +1408,15 @@ void PlayerStatus::SharedCtor() {
   soul_level_ = 0;
   sinner_points_ = 0u;
   unknown_6_ = 0u;
-  unknown_7_ = 0u;
-  unknown_8_ = 0u;
+  is_invadable_ = 0u;
+  can_summon_for_way_of_blue_ = 0u;
   unknown_9_ = 0u;
-  unknown_10_ = 0u;
-  unknown_11_ = 0u;
-  unknown_12_ = 0u;
+  can_summon_for_watchdog_of_farron_ = 0u;
+  can_summon_for_aldritch_faithful_ = 0u;
+  can_summon_for_spear_of_church_ = 0u;
   unknown_13_ = 0u;
   unknown_14_ = 0u;
-  unknown_15_ = 0u;
+  game_world_ = 0;
   covenant_ = 0u;
   embered_ = 0u;
   souls_ = 0u;
@@ -1382,9 +1433,9 @@ void PlayerStatus::SharedCtor() {
   base_max_stamina_ = 0;
   unknown_32_ = 0u;
   unknown_33_ = 0u;
-  unknown_34_ = 0u;
-  unknown_35_ = 0u;
-  unknown_36_ = 0u;
+  net_mode_ = 0;
+  dried_fingers_active_ = 0u;
+  invasion_type_ = 0;
   character_id_ = 0u;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   is_male_ = false;
@@ -1484,11 +1535,11 @@ void PlayerStatus::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(unknown_1_, unknown_8_);
+    ZR_(unknown_1_, can_summon_for_way_of_blue_);
     cross_region_matchmaking_disabled_ = false;
   }
   if (_has_bits_[8 / 32] & 65280) {
-    ZR_(unknown_9_, unknown_15_);
+    ZR_(unknown_9_, game_world_);
     covenant_ = 0u;
   }
   if (_has_bits_[16 / 32] & 16515072) {
@@ -1500,7 +1551,7 @@ void PlayerStatus::Clear() {
     ZR_(base_max_hp_, unknown_32_);
   }
   if (_has_bits_[32 / 32] & 255) {
-    ZR_(unknown_33_, unknown_36_);
+    ZR_(unknown_33_, invasion_type_);
     ZR_(character_id_, vigor_);
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -1647,33 +1698,33 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_unknown_7;
+        if (input->ExpectTag(56)) goto parse_is_invadable;
         break;
       }
 
-      // optional uint32 unknown_7 = 7;
+      // optional uint32 is_invadable = 7;
       case 7: {
         if (tag == 56) {
-         parse_unknown_7:
+         parse_is_invadable:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_7_)));
-          set_has_unknown_7();
+                 input, &is_invadable_)));
+          set_has_is_invadable();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_unknown_8;
+        if (input->ExpectTag(64)) goto parse_can_summon_for_way_of_blue;
         break;
       }
 
-      // optional uint32 unknown_8 = 8;
+      // optional uint32 can_summon_for_way_of_blue = 8;
       case 8: {
         if (tag == 64) {
-         parse_unknown_8:
+         parse_can_summon_for_way_of_blue:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_8_)));
-          set_has_unknown_8();
+                 input, &can_summon_for_way_of_blue_)));
+          set_has_can_summon_for_way_of_blue();
         } else {
           goto handle_unusual;
         }
@@ -1692,48 +1743,48 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(80)) goto parse_unknown_10;
+        if (input->ExpectTag(80)) goto parse_can_summon_for_watchdog_of_farron;
         break;
       }
 
-      // optional uint32 unknown_10 = 10;
+      // optional uint32 can_summon_for_watchdog_of_farron = 10;
       case 10: {
         if (tag == 80) {
-         parse_unknown_10:
+         parse_can_summon_for_watchdog_of_farron:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_10_)));
-          set_has_unknown_10();
+                 input, &can_summon_for_watchdog_of_farron_)));
+          set_has_can_summon_for_watchdog_of_farron();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(88)) goto parse_unknown_11;
+        if (input->ExpectTag(88)) goto parse_can_summon_for_aldritch_faithful;
         break;
       }
 
-      // optional uint32 unknown_11 = 11;
+      // optional uint32 can_summon_for_aldritch_faithful = 11;
       case 11: {
         if (tag == 88) {
-         parse_unknown_11:
+         parse_can_summon_for_aldritch_faithful:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_11_)));
-          set_has_unknown_11();
+                 input, &can_summon_for_aldritch_faithful_)));
+          set_has_can_summon_for_aldritch_faithful();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(96)) goto parse_unknown_12;
+        if (input->ExpectTag(96)) goto parse_can_summon_for_spear_of_church;
         break;
       }
 
-      // optional uint32 unknown_12 = 12;
+      // optional uint32 can_summon_for_spear_of_church = 12;
       case 12: {
         if (tag == 96) {
-         parse_unknown_12:
+         parse_can_summon_for_spear_of_church:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_12_)));
-          set_has_unknown_12();
+                 input, &can_summon_for_spear_of_church_)));
+          set_has_can_summon_for_spear_of_church();
         } else {
           goto handle_unusual;
         }
@@ -1767,18 +1818,24 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(120)) goto parse_unknown_15;
+        if (input->ExpectTag(120)) goto parse_game_world;
         break;
       }
 
-      // optional uint32 unknown_15 = 15;
+      // optional .Frpg2PlayerData.WorldType game_world = 15;
       case 15: {
         if (tag == 120) {
-         parse_unknown_15:
+         parse_game_world:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_15_)));
-          set_has_unknown_15();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2PlayerData::WorldType_IsValid(value)) {
+            set_game_world(static_cast< ::Frpg2PlayerData::WorldType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -2060,48 +2117,60 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(272)) goto parse_unknown_34;
+        if (input->ExpectTag(272)) goto parse_net_mode;
         break;
       }
 
-      // optional uint32 unknown_34 = 34;
+      // optional .Frpg2PlayerData.NetMode net_mode = 34;
       case 34: {
         if (tag == 272) {
-         parse_unknown_34:
+         parse_net_mode:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_34_)));
-          set_has_unknown_34();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2PlayerData::NetMode_IsValid(value)) {
+            set_net_mode(static_cast< ::Frpg2PlayerData::NetMode >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(280)) goto parse_unknown_35;
+        if (input->ExpectTag(280)) goto parse_dried_fingers_active;
         break;
       }
 
-      // optional uint32 unknown_35 = 35;
+      // optional uint32 dried_fingers_active = 35;
       case 35: {
         if (tag == 280) {
-         parse_unknown_35:
+         parse_dried_fingers_active:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_35_)));
-          set_has_unknown_35();
+                 input, &dried_fingers_active_)));
+          set_has_dried_fingers_active();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(288)) goto parse_unknown_36;
+        if (input->ExpectTag(288)) goto parse_invasion_type;
         break;
       }
 
-      // optional uint32 unknown_36 = 36;
+      // optional .Frpg2PlayerData.InvasionType invasion_type = 36;
       case 36: {
         if (tag == 288) {
-         parse_unknown_36:
+         parse_invasion_type:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_36_)));
-          set_has_unknown_36();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2PlayerData::InvasionType_IsValid(value)) {
+            set_invasion_type(static_cast< ::Frpg2PlayerData::InvasionType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -2818,14 +2887,14 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
   }
 
-  // optional uint32 unknown_7 = 7;
-  if (has_unknown_7()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
+  // optional uint32 is_invadable = 7;
+  if (has_is_invadable()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->is_invadable(), output);
   }
 
-  // optional uint32 unknown_8 = 8;
-  if (has_unknown_8()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->unknown_8(), output);
+  // optional uint32 can_summon_for_way_of_blue = 8;
+  if (has_can_summon_for_way_of_blue()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->can_summon_for_way_of_blue(), output);
   }
 
   // optional uint32 unknown_9 = 9;
@@ -2833,19 +2902,19 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->unknown_9(), output);
   }
 
-  // optional uint32 unknown_10 = 10;
-  if (has_unknown_10()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->unknown_10(), output);
+  // optional uint32 can_summon_for_watchdog_of_farron = 10;
+  if (has_can_summon_for_watchdog_of_farron()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->can_summon_for_watchdog_of_farron(), output);
   }
 
-  // optional uint32 unknown_11 = 11;
-  if (has_unknown_11()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->unknown_11(), output);
+  // optional uint32 can_summon_for_aldritch_faithful = 11;
+  if (has_can_summon_for_aldritch_faithful()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->can_summon_for_aldritch_faithful(), output);
   }
 
-  // optional uint32 unknown_12 = 12;
-  if (has_unknown_12()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(12, this->unknown_12(), output);
+  // optional uint32 can_summon_for_spear_of_church = 12;
+  if (has_can_summon_for_spear_of_church()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(12, this->can_summon_for_spear_of_church(), output);
   }
 
   // optional uint32 unknown_13 = 13;
@@ -2858,9 +2927,10 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(14, this->unknown_14(), output);
   }
 
-  // optional uint32 unknown_15 = 15;
-  if (has_unknown_15()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(15, this->unknown_15(), output);
+  // optional .Frpg2PlayerData.WorldType game_world = 15;
+  if (has_game_world()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      15, this->game_world(), output);
   }
 
   // optional uint32 covenant = 16;
@@ -2955,19 +3025,21 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(33, this->unknown_33(), output);
   }
 
-  // optional uint32 unknown_34 = 34;
-  if (has_unknown_34()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(34, this->unknown_34(), output);
+  // optional .Frpg2PlayerData.NetMode net_mode = 34;
+  if (has_net_mode()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      34, this->net_mode(), output);
   }
 
-  // optional uint32 unknown_35 = 35;
-  if (has_unknown_35()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(35, this->unknown_35(), output);
+  // optional uint32 dried_fingers_active = 35;
+  if (has_dried_fingers_active()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(35, this->dried_fingers_active(), output);
   }
 
-  // optional uint32 unknown_36 = 36;
-  if (has_unknown_36()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(36, this->unknown_36(), output);
+  // optional .Frpg2PlayerData.InvasionType invasion_type = 36;
+  if (has_invasion_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      36, this->invasion_type(), output);
   }
 
   // optional uint32 character_id = 37;
@@ -3245,18 +3317,18 @@ int PlayerStatus::ByteSize() const {
           this->unknown_6());
     }
 
-    // optional uint32 unknown_7 = 7;
-    if (has_unknown_7()) {
+    // optional uint32 is_invadable = 7;
+    if (has_is_invadable()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_7());
+          this->is_invadable());
     }
 
-    // optional uint32 unknown_8 = 8;
-    if (has_unknown_8()) {
+    // optional uint32 can_summon_for_way_of_blue = 8;
+    if (has_can_summon_for_way_of_blue()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_8());
+          this->can_summon_for_way_of_blue());
     }
 
   }
@@ -3268,25 +3340,25 @@ int PlayerStatus::ByteSize() const {
           this->unknown_9());
     }
 
-    // optional uint32 unknown_10 = 10;
-    if (has_unknown_10()) {
+    // optional uint32 can_summon_for_watchdog_of_farron = 10;
+    if (has_can_summon_for_watchdog_of_farron()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_10());
+          this->can_summon_for_watchdog_of_farron());
     }
 
-    // optional uint32 unknown_11 = 11;
-    if (has_unknown_11()) {
+    // optional uint32 can_summon_for_aldritch_faithful = 11;
+    if (has_can_summon_for_aldritch_faithful()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_11());
+          this->can_summon_for_aldritch_faithful());
     }
 
-    // optional uint32 unknown_12 = 12;
-    if (has_unknown_12()) {
+    // optional uint32 can_summon_for_spear_of_church = 12;
+    if (has_can_summon_for_spear_of_church()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_12());
+          this->can_summon_for_spear_of_church());
     }
 
     // optional uint32 unknown_13 = 13;
@@ -3303,11 +3375,10 @@ int PlayerStatus::ByteSize() const {
           this->unknown_14());
     }
 
-    // optional uint32 unknown_15 = 15;
-    if (has_unknown_15()) {
+    // optional .Frpg2PlayerData.WorldType game_world = 15;
+    if (has_game_world()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_15());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->game_world());
     }
 
     // optional uint32 covenant = 16;
@@ -3428,25 +3499,23 @@ int PlayerStatus::ByteSize() const {
           this->unknown_33());
     }
 
-    // optional uint32 unknown_34 = 34;
-    if (has_unknown_34()) {
+    // optional .Frpg2PlayerData.NetMode net_mode = 34;
+    if (has_net_mode()) {
       total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_34());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->net_mode());
     }
 
-    // optional uint32 unknown_35 = 35;
-    if (has_unknown_35()) {
+    // optional uint32 dried_fingers_active = 35;
+    if (has_dried_fingers_active()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_35());
+          this->dried_fingers_active());
     }
 
-    // optional uint32 unknown_36 = 36;
-    if (has_unknown_36()) {
+    // optional .Frpg2PlayerData.InvasionType invasion_type = 36;
+    if (has_invasion_type()) {
       total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_36());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->invasion_type());
     }
 
     // optional uint32 character_id = 37;
@@ -3820,25 +3889,25 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_unknown_6()) {
       set_unknown_6(from.unknown_6());
     }
-    if (from.has_unknown_7()) {
-      set_unknown_7(from.unknown_7());
+    if (from.has_is_invadable()) {
+      set_is_invadable(from.is_invadable());
     }
-    if (from.has_unknown_8()) {
-      set_unknown_8(from.unknown_8());
+    if (from.has_can_summon_for_way_of_blue()) {
+      set_can_summon_for_way_of_blue(from.can_summon_for_way_of_blue());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_unknown_9()) {
       set_unknown_9(from.unknown_9());
     }
-    if (from.has_unknown_10()) {
-      set_unknown_10(from.unknown_10());
+    if (from.has_can_summon_for_watchdog_of_farron()) {
+      set_can_summon_for_watchdog_of_farron(from.can_summon_for_watchdog_of_farron());
     }
-    if (from.has_unknown_11()) {
-      set_unknown_11(from.unknown_11());
+    if (from.has_can_summon_for_aldritch_faithful()) {
+      set_can_summon_for_aldritch_faithful(from.can_summon_for_aldritch_faithful());
     }
-    if (from.has_unknown_12()) {
-      set_unknown_12(from.unknown_12());
+    if (from.has_can_summon_for_spear_of_church()) {
+      set_can_summon_for_spear_of_church(from.can_summon_for_spear_of_church());
     }
     if (from.has_unknown_13()) {
       set_unknown_13(from.unknown_13());
@@ -3846,8 +3915,8 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_unknown_14()) {
       set_unknown_14(from.unknown_14());
     }
-    if (from.has_unknown_15()) {
-      set_unknown_15(from.unknown_15());
+    if (from.has_game_world()) {
+      set_game_world(from.game_world());
     }
     if (from.has_covenant()) {
       set_covenant(from.covenant());
@@ -3903,14 +3972,14 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_unknown_33()) {
       set_unknown_33(from.unknown_33());
     }
-    if (from.has_unknown_34()) {
-      set_unknown_34(from.unknown_34());
+    if (from.has_net_mode()) {
+      set_net_mode(from.net_mode());
     }
-    if (from.has_unknown_35()) {
-      set_unknown_35(from.unknown_35());
+    if (from.has_dried_fingers_active()) {
+      set_dried_fingers_active(from.dried_fingers_active());
     }
-    if (from.has_unknown_36()) {
-      set_unknown_36(from.unknown_36());
+    if (from.has_invasion_type()) {
+      set_invasion_type(from.invasion_type());
     }
     if (from.has_character_id()) {
       set_character_id(from.character_id());
@@ -4074,15 +4143,15 @@ void PlayerStatus::Swap(PlayerStatus* other) {
     std::swap(soul_level_, other->soul_level_);
     std::swap(sinner_points_, other->sinner_points_);
     std::swap(unknown_6_, other->unknown_6_);
-    std::swap(unknown_7_, other->unknown_7_);
-    std::swap(unknown_8_, other->unknown_8_);
+    std::swap(is_invadable_, other->is_invadable_);
+    std::swap(can_summon_for_way_of_blue_, other->can_summon_for_way_of_blue_);
     std::swap(unknown_9_, other->unknown_9_);
-    std::swap(unknown_10_, other->unknown_10_);
-    std::swap(unknown_11_, other->unknown_11_);
-    std::swap(unknown_12_, other->unknown_12_);
+    std::swap(can_summon_for_watchdog_of_farron_, other->can_summon_for_watchdog_of_farron_);
+    std::swap(can_summon_for_aldritch_faithful_, other->can_summon_for_aldritch_faithful_);
+    std::swap(can_summon_for_spear_of_church_, other->can_summon_for_spear_of_church_);
     std::swap(unknown_13_, other->unknown_13_);
     std::swap(unknown_14_, other->unknown_14_);
-    std::swap(unknown_15_, other->unknown_15_);
+    std::swap(game_world_, other->game_world_);
     std::swap(covenant_, other->covenant_);
     played_areas_.Swap(&other->played_areas_);
     unknown_18_.Swap(&other->unknown_18_);
@@ -4101,9 +4170,9 @@ void PlayerStatus::Swap(PlayerStatus* other) {
     std::swap(base_max_stamina_, other->base_max_stamina_);
     std::swap(unknown_32_, other->unknown_32_);
     std::swap(unknown_33_, other->unknown_33_);
-    std::swap(unknown_34_, other->unknown_34_);
-    std::swap(unknown_35_, other->unknown_35_);
-    std::swap(unknown_36_, other->unknown_36_);
+    std::swap(net_mode_, other->net_mode_);
+    std::swap(dried_fingers_active_, other->dried_fingers_active_);
+    std::swap(invasion_type_, other->invasion_type_);
     std::swap(character_id_, other->character_id_);
     std::swap(name_, other->name_);
     std::swap(is_male_, other->is_male_);
@@ -4164,7 +4233,7 @@ void PlayerStatus::Swap(PlayerStatus* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int PlayData::kUnknown1FieldNumber;
+const int PlayData::kPlayTimeSecondsFieldNumber;
 const int PlayData::kIsHollowFieldNumber;
 const int PlayData::kHollowLevelFieldNumber;
 const int PlayData::kUnknown4FieldNumber;
@@ -4196,7 +4265,7 @@ PlayData::PlayData(const PlayData& from)
 
 void PlayData::SharedCtor() {
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  play_time_seconds_ = 0u;
   is_hollow_ = 0u;
   hollow_level_ = 0u;
   unknown_4_ = 0u;
@@ -4252,7 +4321,7 @@ void PlayData::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 63) {
-    ZR_(unknown_1_, unknown_4_);
+    ZR_(play_time_seconds_, unknown_4_);
     bonfire_level_ = 0u;
     if (has_bonfire_info()) {
       if (bonfire_info_ != NULL) bonfire_info_->::Frpg2PlayerData::BonfireInfo::Clear();
@@ -4280,13 +4349,13 @@ bool PlayData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 unknown_1 = 1;
+      // optional uint32 play_time_seconds = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &play_time_seconds_)));
+          set_has_play_time_seconds();
         } else {
           goto handle_unusual;
         }
@@ -4392,9 +4461,9 @@ failure:
 void PlayData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2PlayerData.PlayData)
-  // optional uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // optional uint32 play_time_seconds = 1;
+  if (has_play_time_seconds()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->play_time_seconds(), output);
   }
 
   // optional uint32 is_hollow = 4;
@@ -4432,11 +4501,11 @@ int PlayData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // optional uint32 play_time_seconds = 1;
+    if (has_play_time_seconds()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->play_time_seconds());
     }
 
     // optional uint32 is_hollow = 4;
@@ -4491,8 +4560,8 @@ void PlayData::CheckTypeAndMergeFrom(
 void PlayData::MergeFrom(const PlayData& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_play_time_seconds()) {
+      set_play_time_seconds(from.play_time_seconds());
     }
     if (from.has_is_hollow()) {
       set_is_hollow(from.is_hollow());
@@ -4529,7 +4598,7 @@ bool PlayData::IsInitialized() const {
 
 void PlayData::Swap(PlayData* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(play_time_seconds_, other->play_time_seconds_);
     std::swap(is_hollow_, other->is_hollow_);
     std::swap(hollow_level_, other->hollow_level_);
     std::swap(unknown_4_, other->unknown_4_);
@@ -5430,7 +5499,7 @@ const int Equipment::kSpell11FieldNumber;
 const int Equipment::kSpell12FieldNumber;
 const int Equipment::kSpell13FieldNumber;
 const int Equipment::kSpell14FieldNumber;
-const int Equipment::kUnknown48FieldNumber;
+const int Equipment::kCovenantItemFieldNumber;
 const int Equipment::kUnknown49FieldNumber;
 const int Equipment::kUnknown50FieldNumber;
 const int Equipment::kUnknown51FieldNumber;
@@ -5510,7 +5579,7 @@ void Equipment::SharedCtor() {
   spell_12_ = 0;
   spell_13_ = 0;
   spell_14_ = 0;
-  unknown_48_ = 0;
+  covenant_item_ = 0;
   unknown_49_ = 0;
   unknown_50_ = 0;
   unknown_51_ = 0;
@@ -5587,7 +5656,7 @@ void Equipment::Clear() {
     ZR_(bolt_2_, spell_7_);
   }
   if (_has_bits_[40 / 32] & 65280) {
-    ZR_(spell_8_, unknown_48_);
+    ZR_(spell_8_, covenant_item_);
   }
   if (_has_bits_[48 / 32] & 16711680) {
     ZR_(unknown_49_, unknown_56_);
@@ -6315,18 +6384,18 @@ bool Equipment::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(384)) goto parse_unknown_48;
+        if (input->ExpectTag(384)) goto parse_covenant_item;
         break;
       }
 
-      // optional int32 unknown_48 = 48;
+      // optional int32 covenant_item = 48;
       case 48: {
         if (tag == 384) {
-         parse_unknown_48:
+         parse_covenant_item:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_48_)));
-          set_has_unknown_48();
+                 input, &covenant_item_)));
+          set_has_covenant_item();
         } else {
           goto handle_unusual;
         }
@@ -6774,9 +6843,9 @@ void Equipment::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(47, this->spell_14(), output);
   }
 
-  // optional int32 unknown_48 = 48;
-  if (has_unknown_48()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(48, this->unknown_48(), output);
+  // optional int32 covenant_item = 48;
+  if (has_covenant_item()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(48, this->covenant_item(), output);
   }
 
   // optional int32 unknown_49 = 49;
@@ -7187,11 +7256,11 @@ int Equipment::ByteSize() const {
           this->spell_14());
     }
 
-    // optional int32 unknown_48 = 48;
-    if (has_unknown_48()) {
+    // optional int32 covenant_item = 48;
+    if (has_covenant_item()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_48());
+          this->covenant_item());
     }
 
   }
@@ -7450,8 +7519,8 @@ void Equipment::MergeFrom(const Equipment& from) {
     if (from.has_spell_14()) {
       set_spell_14(from.spell_14());
     }
-    if (from.has_unknown_48()) {
-      set_unknown_48(from.unknown_48());
+    if (from.has_covenant_item()) {
+      set_covenant_item(from.covenant_item());
     }
   }
   if (from._has_bits_[48 / 32] & (0xffu << (48 % 32))) {
@@ -7557,7 +7626,7 @@ void Equipment::Swap(Equipment* other) {
     std::swap(spell_12_, other->spell_12_);
     std::swap(spell_13_, other->spell_13_);
     std::swap(spell_14_, other->spell_14_);
-    std::swap(unknown_48_, other->unknown_48_);
+    std::swap(covenant_item_, other->covenant_item_);
     std::swap(unknown_49_, other->unknown_49_);
     std::swap(unknown_50_, other->unknown_50_);
     std::swap(unknown_51_, other->unknown_51_);
