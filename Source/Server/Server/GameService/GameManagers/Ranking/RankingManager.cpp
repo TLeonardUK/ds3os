@@ -46,10 +46,21 @@ MessageHandleResult RankingManager::OnMessageRecieved(GameClient* Client, const 
 
 MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+    PlayerState& Player = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestRegisterRankingData* Request = (Frpg2RequestMessage::RequestRegisterRankingData*)Message.Protobuf.get();
 
-    // TODO: Implement
+    std::vector<uint8_t> Data;
+    Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
 
+    if (!Database.RegisterScore(Request->board_id(), Player.PlayerId, Request->character_id(), Request->score(), Data))
+    {
+        Warning("[%s] Failed to register score in database.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
+
+    // Empty response.
     Frpg2RequestMessage::RequestRegisterRankingDataResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -62,11 +73,24 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
 
 MessageHandleResult RankingManager::Handle_RequestGetRankingData(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+
     Frpg2RequestMessage::RequestGetRankingData* Request = (Frpg2RequestMessage::RequestGetRankingData*)Message.Protobuf.get();
-
-    // TODO: Implement
-
+    
+    std::vector<std::shared_ptr<Ranking>> Rankings = Database.GetRankings(Request->board_id(), Request->offset(), Request->count());
+    
     Frpg2RequestMessage::RequestGetRankingDataResponse Response;
+    for (std::shared_ptr<Ranking>& Ranking : Rankings)
+    {
+        Frpg2RequestMessage::RankingData& Data = *Response.add_data();
+        Data.set_player_id(Ranking->PlayerId);
+        Data.set_character_id(Ranking->CharacterId);
+        Data.set_serial_rank(Ranking->SerialRank);
+        Data.set_rank(Ranking->Rank);
+        Data.set_score(Ranking->Score);
+        Data.set_data(Ranking->Data.data(), Ranking->Data.size());
+    }
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestGetRankingDataResponse response.", Client->GetName().c_str());
@@ -78,11 +102,33 @@ MessageHandleResult RankingManager::Handle_RequestGetRankingData(GameClient* Cli
 
 MessageHandleResult RankingManager::Handle_RequestGetCharacterRankingData(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+    PlayerState& Player = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestGetCharacterRankingData* Request = (Frpg2RequestMessage::RequestGetCharacterRankingData*)Message.Protobuf.get();
-
-    // TODO: Implement
-
     Frpg2RequestMessage::RequestGetCharacterRankingDataResponse Response;
+    Frpg2RequestMessage::RankingData& ResponseData = *Response.mutable_data();
+
+    std::shared_ptr<Ranking> CharRanking = Database.GetCharacterRanking(Request->board_id(), Player.PlayerId, Request->character_id());
+    if (CharRanking)
+    {
+        ResponseData.set_player_id(Player.PlayerId);
+        ResponseData.set_character_id(Request->character_id());
+        ResponseData.set_serial_rank(CharRanking->SerialRank);
+        ResponseData.set_rank(CharRanking->Rank);
+        ResponseData.set_score(CharRanking->Score);
+        ResponseData.set_data(CharRanking->Data.data(), CharRanking->Data.size());
+    }
+    else
+    {
+        ResponseData.set_player_id(Player.PlayerId);
+        ResponseData.set_character_id(Request->character_id());
+        ResponseData.set_serial_rank(0);
+        ResponseData.set_rank(0);
+        ResponseData.set_score(0);
+        ResponseData.set_data("");
+    }
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestGetCharacterRankingDataResponse response.", Client->GetName().c_str());
@@ -94,11 +140,15 @@ MessageHandleResult RankingManager::Handle_RequestGetCharacterRankingData(GameCl
 
 MessageHandleResult RankingManager::Handle_RequestCountRankingData(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+
     Frpg2RequestMessage::RequestCountRankingData* Request = (Frpg2RequestMessage::RequestCountRankingData*)Message.Protobuf.get();
 
-    // TODO: Implement
+    uint32_t RankingCount = Database.GetRankingCount(Request->board_id());
 
     Frpg2RequestMessage::RequestCountRankingDataResponse Response;
+    Response.set_count(RankingCount);
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestCountRankingDataResponse response.", Client->GetName().c_str());

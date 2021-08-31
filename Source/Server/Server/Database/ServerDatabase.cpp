@@ -64,6 +64,7 @@ bool ServerDatabase::CreateTables()
         "   OnlineAreaId        INTEGER,"                                           \
         "   PlayerId            INTEGER,"                                           \
         "   PlayerSteamId       CHAR(50),"                                          \
+        "   CharacterId         INTEGER,"                                           \
         "   RatingPoor          INTEGER,"                                           \
         "   RatingGood          INTEGER,"                                           \
         "   Data                BLOB,"                                              \
@@ -87,6 +88,19 @@ bool ServerDatabase::CreateTables()
         "   OnlineAreaId        INTEGER,"                                           \
         "   PlayerId            INTEGER,"                                           \
         "   PlayerSteamId       CHAR(50),"                                          \
+        "   Data                BLOB,"                                              \
+        "   CreatedTime         TEXT"                                               \
+        ");"
+    );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS Rankings("                                      \
+        "   ScoreId             INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   BoardId             INTEGER,"                                           \
+        "   PlayerId            INTEGER,"                                           \
+        "   CharacterId         INTEGER,"                                           \
+        "   Score               INTEGER,"                                           \
+        "   Rank                INTEGER,"                                           \
+        "   SerialRank          INTEGER,"                                           \
         "   Data                BLOB,"                                              \
         "   CreatedTime         TEXT"                                               \
         ");"
@@ -220,16 +234,17 @@ std::shared_ptr<BloodMessage> ServerDatabase::FindBloodMessage(uint32_t MessageI
 {
     std::shared_ptr<BloodMessage> Result = nullptr;
 
-    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE MessageId = ?1", { MessageId }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE MessageId = ?1", { MessageId }, [&Result](sqlite3_stmt* statement) {
         Result = std::make_shared<BloodMessage>();
         Result->MessageId       = sqlite3_column_int(statement, 0);
         Result->OnlineAreaId    = (OnlineAreaId)sqlite3_column_int(statement, 1);
         Result->PlayerId        = sqlite3_column_int(statement, 2);
         Result->PlayerSteamId   = (const char*)sqlite3_column_text(statement, 3);
-        Result->RatingPoor      = sqlite3_column_int(statement, 4);
-        Result->RatingGood      = sqlite3_column_int(statement, 5);
-        const uint8_t* data_blob = (const uint8_t *)sqlite3_column_blob(statement, 6);
-        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 6));
+        Result->CharacterId     = sqlite3_column_int(statement, 4);
+        Result->RatingPoor      = sqlite3_column_int(statement, 5);
+        Result->RatingGood      = sqlite3_column_int(statement, 6);
+        const uint8_t* data_blob = (const uint8_t *)sqlite3_column_blob(statement, 7);
+        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 7));
     });
 
     return Result;
@@ -239,25 +254,26 @@ std::vector<std::shared_ptr<BloodMessage>> ServerDatabase::FindRecentBloodMessag
 {
     std::vector<std::shared_ptr<BloodMessage>> Result;
 
-    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
         std::shared_ptr<BloodMessage> Message = std::make_shared<BloodMessage>();
         Message->MessageId = sqlite3_column_int(statement, 0);
         Message->OnlineAreaId = (OnlineAreaId)sqlite3_column_int(statement, 1);
         Message->PlayerId = sqlite3_column_int(statement, 2);
         Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
-        Message->RatingPoor = sqlite3_column_int(statement, 4);
-        Message->RatingGood = sqlite3_column_int(statement, 5);
-        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 6);
-        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 6));
+        Message->CharacterId = sqlite3_column_int(statement, 4);
+        Message->RatingPoor = sqlite3_column_int(statement, 5);
+        Message->RatingGood = sqlite3_column_int(statement, 6);
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 7);
+        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 7));
         Result.push_back(Message);
     });
 
     return Result;
 }
 
-std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data)
+std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, uint32_t CharacterId, const std::vector<uint8_t>& Data)
 {
-    if (!RunStatement("INSERT INTO BloodMessages(OnlineAreaId, PlayerId, PlayerSteamId, RatingPoor, RatingGood, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, ?6, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, 0, 0, Data }, nullptr))
+    if (!RunStatement("INSERT INTO BloodMessages(OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, ?6, ?7, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, CharacterId, 0, 0, Data }, nullptr))
     {
         return nullptr;
     }
@@ -265,6 +281,7 @@ std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(OnlineAreaId Ar
     std::shared_ptr<BloodMessage> Result = std::make_shared<BloodMessage>();
     Result->MessageId = (uint32_t)sqlite3_last_insert_rowid(db_handle);
     Result->OnlineAreaId = AreaId;
+    Result->CharacterId = CharacterId;
     Result->PlayerId = PlayerId;
     Result->PlayerSteamId = PlayerSteamId;
     Result->RatingPoor = 0;
@@ -389,6 +406,138 @@ std::shared_ptr<Ghost> ServerDatabase::CreateGhost(OnlineAreaId AreaId, uint32_t
     Result->PlayerId = PlayerId;
     Result->PlayerSteamId = PlayerSteamId;
     Result->Data = Data;
+
+    return Result;
+}
+
+std::shared_ptr<Ranking> ServerDatabase::RegisterScore(uint32_t BoardId, uint32_t PlayerId, uint32_t CharacterId, uint32_t Score, const std::vector<uint8_t>& Data)
+{
+    // Delete existing ranking.
+    if (!RunStatement("DELETE FROM Rankings WHERE BoardId = ?1 AND PlayerId = ?2 AND CharacterId = ?3", { BoardId, PlayerId, CharacterId }, nullptr))
+    {
+        return nullptr;
+    }
+
+    // Insert new ranking.
+    if (!RunStatement("INSERT INTO Rankings(BoardId, PlayerId, CharacterId, Score, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, datetime('now'))", { BoardId, PlayerId, CharacterId, Score, Data }, nullptr))
+    {
+        return nullptr;
+    }
+
+    uint32_t NewRankingId = (uint32_t)sqlite3_last_insert_rowid(db_handle);
+    uint32_t NewRank = 1;
+    uint32_t NewSerialRank = 1;
+
+    // Update rankings of all socre entries. 
+    // TODO: If we get any reasonable frequency of ranking registrations we should do these lazily 
+    //       at a periodic interval to keep load down.
+    
+    uint32_t CurrentRank = 1;
+    uint32_t CurrentRankScore = 0;
+    uint32_t CurrentSerialRank = 1;
+
+    std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> ScoreRanks;
+
+    RunStatement("SELECT ScoreId, Score FROM Rankings WHERE BoardId = ?1 ORDER BY Score DESC, CreatedTime ASC", { BoardId }, [&CurrentRank, &CurrentRankScore, &CurrentSerialRank, &ScoreRanks, NewRankingId, &NewRank, &NewSerialRank] (sqlite3_stmt* statement) {
+        uint32_t ScoreId = sqlite3_column_int(statement, 0);
+        uint32_t Score = sqlite3_column_int(statement, 1);
+        uint32_t ScoreRank = 0;
+        uint32_t ScoreSerialRank = 0;
+
+        if (CurrentSerialRank == 1)
+        {
+            CurrentRankScore = Score;
+        }
+        else if (Score < CurrentRankScore)
+        {
+            CurrentRank++;
+            CurrentRankScore = Score;
+        }
+
+        if (ScoreId == NewRankingId)
+        {
+            NewRank = CurrentRank;
+            NewSerialRank = CurrentSerialRank;
+        }
+
+        ScoreRanks.push_back(std::make_tuple(ScoreId, CurrentRank, CurrentSerialRank));
+
+        CurrentSerialRank++;       
+    });
+
+    for (auto& tuple : ScoreRanks)
+    {
+        if (!RunStatement("UPDATE Rankings SET Rank = ?1, SerialRank = ?2 WHERE ScoreId = ?3", { std::get<1>(tuple), std::get<2>(tuple), std::get<0>(tuple) }, nullptr))
+        {
+            return nullptr;
+        }
+    }
+
+    // Create and return a ranking to the caller.
+    std::shared_ptr<Ranking> Result = std::make_shared<Ranking>();
+    Result->Id = NewRankingId;
+    Result->BoardId = BoardId;
+    Result->PlayerId = PlayerId;
+    Result->CharacterId = CharacterId;
+    Result->Score = Score;
+    Result->Data = Data;
+    Result->Rank = NewRank; 
+    Result->SerialRank = NewSerialRank;
+
+    return Result;
+}
+
+std::vector<std::shared_ptr<Ranking>> ServerDatabase::GetRankings(uint32_t BoardId, uint32_t Offset, uint32_t Count)
+{
+    std::vector<std::shared_ptr<Ranking>> Result;
+
+    RunStatement("SELECT ScoreId, PlayerId, CharacterId, Rank, SerialRank, Score, Data FROM Rankings WHERE BoardId = ?1 ORDER BY SerialRank DESC LIMIT ?2 OFFSET ?3", { BoardId, Count, Offset - 1 }, [&Result, BoardId](sqlite3_stmt* statement) {
+        std::shared_ptr<Ranking> Entry = std::make_shared<Ranking>();
+        Entry->Id = sqlite3_column_int(statement, 0);
+        Entry->BoardId = BoardId;
+        Entry->PlayerId = sqlite3_column_int(statement, 1);
+        Entry->CharacterId = sqlite3_column_int(statement, 2);
+        Entry->Rank = sqlite3_column_int(statement, 3);
+        Entry->SerialRank = sqlite3_column_int(statement, 4);
+        Entry->Score = sqlite3_column_int(statement, 5);
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 6);
+        Entry->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 6));
+
+        Result.push_back(Entry);
+    });
+
+    return Result;
+}
+
+std::shared_ptr<Ranking> ServerDatabase::GetCharacterRanking(uint32_t BoardId, uint32_t PlayerId, uint32_t CharacterId)
+{
+    std::shared_ptr<Ranking> Result;
+
+    RunStatement("SELECT ScoreId, Rank, SerialRank, Score, Data FROM Rankings WHERE BoardId = ?1 AND PlayerId = ?2 AND CharacterId = ?3 LIMIT 1", { BoardId, PlayerId, CharacterId }, [&Result, BoardId, PlayerId, CharacterId](sqlite3_stmt* statement) {
+        Result = std::make_shared<Ranking>();
+        Result->Id = sqlite3_column_int(statement, 0);
+        Result->BoardId = BoardId;
+        Result->PlayerId = PlayerId;
+        Result->CharacterId = CharacterId;
+        Result->Rank = sqlite3_column_int(statement, 1);
+        Result->SerialRank = sqlite3_column_int(statement, 2);
+        Result->Score = sqlite3_column_int(statement, 3);
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 4);
+        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 4));
+    });
+
+    return Result;
+}
+
+uint32_t ServerDatabase::GetRankingCount(uint32_t BoardId)
+{
+    uint32_t Result = 0;
+
+    RunStatement("SELECT COUNT(*) FROM Rankings WHERE BoardId = ?1", { BoardId }, [&Result](sqlite3_stmt* statement) {
+        Result = sqlite3_column_int(statement, 0);
+    });
 
     return Result;
 }

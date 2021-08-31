@@ -98,7 +98,6 @@ MessageHandleResult BloodMessageManager::Handle_RequestReentryBloodMessage(GameC
     ServerDatabase& Database = ServerInstance->GetDatabase();
 
     Frpg2RequestMessage::RequestReentryBloodMessage* Request = (Frpg2RequestMessage::RequestReentryBloodMessage*)Message.Protobuf.get();
-    Ensure(Request->unknown_2() == 1);
 
     Frpg2RequestMessage::RequestReentryBloodMessageResponse Response;
     auto RecreateMessageIds = Response.mutable_recreate_message_ids();
@@ -142,7 +141,6 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
     PlayerState& Player = Client->GetPlayerState();
     
     Frpg2RequestMessage::RequestReCreateBloodMessageList* Request = (Frpg2RequestMessage::RequestReCreateBloodMessageList*)Message.Protobuf.get();
-    Ensure(Request->unknown_2() == 1);
 
     Frpg2RequestMessage::RequestReCreateBloodMessageListResponse Response;
     auto CreatedMessageIds = Response.mutable_message_ids();
@@ -156,7 +154,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
         MessageData.assign(MessageInfo.message_data().data(), MessageInfo.message_data().data() + MessageInfo.message_data().size());
 
         // Create the message in the database.
-        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((OnlineAreaId)MessageInfo.online_area_id(), Player.PlayerId, Player.SteamId, MessageData);
+        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((OnlineAreaId)MessageInfo.online_area_id(), Player.PlayerId, Player.SteamId, Request->character_id(), MessageData);
         if (!BloodMessage)
         {
             Warning("[%s] Failed to recreate blood message.", Client->GetName().c_str());
@@ -234,14 +232,13 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestCreateBloodMessage* Request = (Frpg2RequestMessage::RequestCreateBloodMessage*)Message.Protobuf.get();
-    Ensure(Request->unknown_1() == 1);
 
     Frpg2RequestMessage::RequestCreateBloodMessageResponse Response;
 
     std::vector<uint8_t> MessageData;
     MessageData.assign(Request->message_data().data(), Request->message_data().data() + Request->message_data().size());
 
-    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((OnlineAreaId)Request->online_area_id(), Player.PlayerId, Player.SteamId, MessageData))
+    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((OnlineAreaId)Request->online_area_id(), Player.PlayerId, Player.SteamId, Request->character_id(), MessageData))
     {
         Response.set_message_id(ActiveMessage->MessageId);
 
@@ -323,8 +320,8 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
             //Log("[%s] Returning blood message %i in area %i.", Client->GetName().c_str(), AreaMsg->MessageId, AreaMsg->OnlineAreaId);
 
             Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
-            Data.set_player_id(Player.PlayerId);
-            Data.set_unknown_1(1);                                                                  // TODO: Figure this value out.
+            Data.set_player_id(AreaMsg->PlayerId);
+            Data.set_character_id(AreaMsg->CharacterId); 
             Data.set_message_id(AreaMsg->MessageId);
             Data.set_good(AreaMsg->RatingGood);
             Data.set_message_data(AreaMsg->Data.data(), AreaMsg->Data.size());

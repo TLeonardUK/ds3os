@@ -155,6 +155,13 @@ message RequestGetAnnounceMessageListResponse {
 // Game Server Messages - Character Info Management
 // ------------------------------------------------------------------------------------------------------------
 
+message PlayerCharacterData { 
+}
+
+message PlayerCharacterID {
+    // Unknown
+}
+
 // I'm guessing this is used to configure how often the user uploads their info, and in what locations.
 message PlayerInfoUploadConfigPushMessage { 
     required PushMessageId push_message_id = 1;                     // 908 - Push message id.
@@ -164,17 +171,17 @@ message PlayerInfoUploadConfigPushMessage {
 }
 
 message RequestUpdateLoginPlayerCharacter {
-    required uint32 unknown_1 = 1; // Always seems to be 1
-    repeated uint32 unknown_2 = 2; // Always seems to be 1
+    required uint32 character_id = 1; 
+    repeated uint32 unknown_2 = 2;                                   // Always seems to be 1
 }
 
 message RequestUpdateLoginPlayerCharacterResponseData {
-    required uint32 unknown_1 = 1; // Always seems to be 0
-    required uint32 unknown_2 = 2; // Always seems to be 0
+    required uint32 unknown_1 = 1;                                  // Always seems to be 0
+    required uint32 unknown_2 = 2;                                  // Always seems to be 0
 }
 
 message RequestUpdateLoginPlayerCharacterResponse {
-    required uint32 unknown_1 = 1; // Always seems to be 1
+    required uint32 character_id = 1;                              
     required RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;
     required RequestUpdateLoginPlayerCharacterResponseData unknown_3 = 3;
 }
@@ -187,11 +194,8 @@ message RequestUpdatePlayerStatusResponse {
     // Empty Response
 }
 
-message PlayerCharacterData { 
-}
-
 message RequestUpdatePlayerCharacter {
-    required uint32 unknown_1 = 1;          // PlayerCharacter Index?
+    required uint32 character_id = 1;          
     required bytes character_data = 2;      
 }
 
@@ -199,21 +203,17 @@ message RequestUpdatePlayerCharacterResponse {
     // Empty Response
 }
 
-message PlayerCharacterID {
-    // Unknown
-}
-
 // The GetPlayerCharacter only seems to get called by the Roster of Knights when looking
 // at an entries character profile.
 
 message RequestGetPlayerCharacter {
     required uint32 player_id = 1;
-    required uint32 unknown_1 = 2;              // PlayerCharacter Index?
+    required uint32 character_id = 2;            
 }
 
 message RequestGetPlayerCharacterResponse {
     required uint32 player_id = 1;
-    required uint32 unknown_1 = 2;              // PlayerCharacter Index?
+    required uint32 character_id = 2;           
     required bytes  character_data = 3;         // Seems to contain profile information.
 }
 
@@ -242,7 +242,7 @@ message RequestGetPlayerCharacterListResponse {
 
 message BloodMessageData {
     required uint32 player_id = 1;
-    required uint32 unknown_1 = 2;                      // No idea, seems to be 1, 2, 3, 4, 13, 61, 5, 8  Doesn't seem to be character id. Huuum
+    required uint32 character_id = 2;   
     required uint32 message_id = 3; 
     required uint32 good = 4;         
     required bytes  message_data = 5;
@@ -265,7 +265,7 @@ message BloodMessageDomainLimitData {
 
 message RequestReentryBloodMessage {
     repeated LocatedBloodMessage messages = 1;
-    required uint32 unknown_2 = 2;                      // Always seems to be 1.
+    required uint32 character_id = 2;                   
 }
 
 message RequestReentryBloodMessageResponse {
@@ -276,7 +276,7 @@ message RequestReentryBloodMessageResponse {
 
 message RequestCreateBloodMessage {
     required uint32 online_area_id = 1;
-    required uint32 unknown_1 = 2;                      // Always seems to be 1.
+    required uint32 character_id = 2;                      
     required bytes  message_data = 3;
 }
 
@@ -285,7 +285,7 @@ message RequestCreateBloodMessageResponse {
 }
 
 message RequestReCreateBloodMessageList {
-    required uint32 unknown_2 = 2;                      // Always seems to be 1.    
+    required uint32 character_id = 2;                     
     repeated group Blood_message_info_list = 3 {
         required uint32 online_area_id = 1;
         required bytes  message_data = 2;
@@ -1102,7 +1102,7 @@ message RequestSendPlayerList {
 
 message RankingData {
     required uint32 player_id = 1;  
-    required uint32 unknown_1 = 2;      // PlayerCharacter Index?
+    required uint32 character_id = 2;   
     required uint32 serial_rank = 3;    // Index of rank globally, no duplicates.
     required uint32 rank = 4;           // Rank of player, may be duplicates if multiple players have same score.
     required uint32 score = 5;          
@@ -1123,7 +1123,7 @@ message RankingDataPack {
 
 message RequestRegisterRankingData {
     required uint32 board_id = 1;     
-    required uint32 unknown_1 = 2;      // PlayerCharacter Index?
+    required uint32 character_id = 2;     
     required uint32 score = 3;         
     required bytes  data = 4;           // Probably a serialized RankingDataPack
 }
@@ -1144,7 +1144,7 @@ message RequestGetRankingDataResponse {
 
 message RequestGetCharacterRankingData {
     required uint32 board_id = 1;       
-    required uint32 player_id = 2;      // passing 1 to this returns local player it seems. Might actually just be the PlayerCharacter Index?
+    required uint32 character_id = 2; 
 }
 
 message RequestGetCharacterRankingDataResponse {

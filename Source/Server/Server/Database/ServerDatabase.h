@@ -50,7 +50,7 @@ public:
     std::vector<std::shared_ptr<BloodMessage>> FindRecentBloodMessage(OnlineAreaId AreaId, int Count);
 
     // Creates a new blood message with the given data and returns a representation of it.
-    std::shared_ptr<BloodMessage> CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
+    std::shared_ptr<BloodMessage> CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, uint32_t CharacterId, const std::vector<uint8_t>& Data);
 
     // Removes a blood message from the database that is owned by the given player.
     bool RemoveOwnBloodMessage(uint32_t PlayerId, uint32_t MessageId);
@@ -81,6 +81,22 @@ public:
 
     // Creates a new ghost with the given data and returns a representation of it.
     std::shared_ptr<Ghost> CreateGhost(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
+
+    // ----------------------------------------------------------------
+    // Rankings interface
+    // ----------------------------------------------------------------
+
+    // Registers a new score to a leaderboard.
+    std::shared_ptr<Ranking> RegisterScore(uint32_t BoardId, uint32_t PlayerId, uint32_t CharcterId, uint32_t Score, const std::vector<uint8_t>& Data);
+
+    // Gets a range of ranks from a leaderboard.
+    std::vector<std::shared_ptr<Ranking>> GetRankings(uint32_t BoardId, uint32_t Offset, uint32_t Count);
+
+    // Gets the ranking for a given player character.
+    std::shared_ptr<Ranking> GetCharacterRanking(uint32_t BoardId, uint32_t PlayerId, uint32_t CharacterId);
+
+    // Get the number of ranks in a given board.
+    uint32_t GetRankingCount(uint32_t BoardId);
 
 protected:
 

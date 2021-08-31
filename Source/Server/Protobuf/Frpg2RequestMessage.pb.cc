@@ -31,16 +31,16 @@ void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto() {
   delete AnnounceMessageDataList::default_instance_;
   delete RequestGetAnnounceMessageList::default_instance_;
   delete RequestGetAnnounceMessageListResponse::default_instance_;
+  delete PlayerCharacterData::default_instance_;
+  delete PlayerCharacterID::default_instance_;
   delete PlayerInfoUploadConfigPushMessage::default_instance_;
   delete RequestUpdateLoginPlayerCharacter::default_instance_;
   delete RequestUpdateLoginPlayerCharacterResponseData::default_instance_;
   delete RequestUpdateLoginPlayerCharacterResponse::default_instance_;
   delete RequestUpdatePlayerStatus::default_instance_;
   delete RequestUpdatePlayerStatusResponse::default_instance_;
-  delete PlayerCharacterData::default_instance_;
   delete RequestUpdatePlayerCharacter::default_instance_;
   delete RequestUpdatePlayerCharacterResponse::default_instance_;
-  delete PlayerCharacterID::default_instance_;
   delete RequestGetPlayerCharacter::default_instance_;
   delete RequestGetPlayerCharacterResponse::default_instance_;
   delete RequestGetLoginPlayerCharacter::default_instance_;
@@ -289,16 +289,16 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   AnnounceMessageDataList::default_instance_ = new AnnounceMessageDataList();
   RequestGetAnnounceMessageList::default_instance_ = new RequestGetAnnounceMessageList();
   RequestGetAnnounceMessageListResponse::default_instance_ = new RequestGetAnnounceMessageListResponse();
+  PlayerCharacterData::default_instance_ = new PlayerCharacterData();
+  PlayerCharacterID::default_instance_ = new PlayerCharacterID();
   PlayerInfoUploadConfigPushMessage::default_instance_ = new PlayerInfoUploadConfigPushMessage();
   RequestUpdateLoginPlayerCharacter::default_instance_ = new RequestUpdateLoginPlayerCharacter();
   RequestUpdateLoginPlayerCharacterResponseData::default_instance_ = new RequestUpdateLoginPlayerCharacterResponseData();
   RequestUpdateLoginPlayerCharacterResponse::default_instance_ = new RequestUpdateLoginPlayerCharacterResponse();
   RequestUpdatePlayerStatus::default_instance_ = new RequestUpdatePlayerStatus();
   RequestUpdatePlayerStatusResponse::default_instance_ = new RequestUpdatePlayerStatusResponse();
-  PlayerCharacterData::default_instance_ = new PlayerCharacterData();
   RequestUpdatePlayerCharacter::default_instance_ = new RequestUpdatePlayerCharacter();
   RequestUpdatePlayerCharacterResponse::default_instance_ = new RequestUpdatePlayerCharacterResponse();
-  PlayerCharacterID::default_instance_ = new PlayerCharacterID();
   RequestGetPlayerCharacter::default_instance_ = new RequestGetPlayerCharacter();
   RequestGetPlayerCharacterResponse::default_instance_ = new RequestGetPlayerCharacterResponse();
   RequestGetLoginPlayerCharacter::default_instance_ = new RequestGetLoginPlayerCharacter();
@@ -532,16 +532,16 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   AnnounceMessageDataList::default_instance_->InitAsDefaultInstance();
   RequestGetAnnounceMessageList::default_instance_->InitAsDefaultInstance();
   RequestGetAnnounceMessageListResponse::default_instance_->InitAsDefaultInstance();
+  PlayerCharacterData::default_instance_->InitAsDefaultInstance();
+  PlayerCharacterID::default_instance_->InitAsDefaultInstance();
   PlayerInfoUploadConfigPushMessage::default_instance_->InitAsDefaultInstance();
   RequestUpdateLoginPlayerCharacter::default_instance_->InitAsDefaultInstance();
   RequestUpdateLoginPlayerCharacterResponseData::default_instance_->InitAsDefaultInstance();
   RequestUpdateLoginPlayerCharacterResponse::default_instance_->InitAsDefaultInstance();
   RequestUpdatePlayerStatus::default_instance_->InitAsDefaultInstance();
   RequestUpdatePlayerStatusResponse::default_instance_->InitAsDefaultInstance();
-  PlayerCharacterData::default_instance_->InitAsDefaultInstance();
   RequestUpdatePlayerCharacter::default_instance_->InitAsDefaultInstance();
   RequestUpdatePlayerCharacterResponse::default_instance_->InitAsDefaultInstance();
-  PlayerCharacterID::default_instance_->InitAsDefaultInstance();
   RequestGetPlayerCharacter::default_instance_->InitAsDefaultInstance();
   RequestGetPlayerCharacterResponse::default_instance_->InitAsDefaultInstance();
   RequestGetLoginPlayerCharacter::default_instance_->InitAsDefaultInstance();
@@ -4498,6 +4498,302 @@ void RequestGetAnnounceMessageListResponse::Swap(RequestGetAnnounceMessageListRe
 // ===================================================================
 
 #ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+PlayerCharacterData::PlayerCharacterData()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.PlayerCharacterData)
+}
+
+void PlayerCharacterData::InitAsDefaultInstance() {
+}
+
+PlayerCharacterData::PlayerCharacterData(const PlayerCharacterData& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.PlayerCharacterData)
+}
+
+void PlayerCharacterData::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+PlayerCharacterData::~PlayerCharacterData() {
+  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.PlayerCharacterData)
+  SharedDtor();
+}
+
+void PlayerCharacterData::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void PlayerCharacterData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const PlayerCharacterData& PlayerCharacterData::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+PlayerCharacterData* PlayerCharacterData::default_instance_ = NULL;
+
+PlayerCharacterData* PlayerCharacterData::New() const {
+  return new PlayerCharacterData;
+}
+
+void PlayerCharacterData::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool PlayerCharacterData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.PlayerCharacterData)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.PlayerCharacterData)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.PlayerCharacterData)
+  return false;
+#undef DO_
+}
+
+void PlayerCharacterData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.PlayerCharacterData)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PlayerCharacterData)
+}
+
+int PlayerCharacterData::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PlayerCharacterData::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const PlayerCharacterData*>(&from));
+}
+
+void PlayerCharacterData::MergeFrom(const PlayerCharacterData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void PlayerCharacterData::CopyFrom(const PlayerCharacterData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PlayerCharacterData::IsInitialized() const {
+
+  return true;
+}
+
+void PlayerCharacterData::Swap(PlayerCharacterData* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string PlayerCharacterData::GetTypeName() const {
+  return "Frpg2RequestMessage.PlayerCharacterData";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+PlayerCharacterID::PlayerCharacterID()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.PlayerCharacterID)
+}
+
+void PlayerCharacterID::InitAsDefaultInstance() {
+}
+
+PlayerCharacterID::PlayerCharacterID(const PlayerCharacterID& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.PlayerCharacterID)
+}
+
+void PlayerCharacterID::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+PlayerCharacterID::~PlayerCharacterID() {
+  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.PlayerCharacterID)
+  SharedDtor();
+}
+
+void PlayerCharacterID::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void PlayerCharacterID::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const PlayerCharacterID& PlayerCharacterID::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+PlayerCharacterID* PlayerCharacterID::default_instance_ = NULL;
+
+PlayerCharacterID* PlayerCharacterID::New() const {
+  return new PlayerCharacterID;
+}
+
+void PlayerCharacterID::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool PlayerCharacterID::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.PlayerCharacterID)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.PlayerCharacterID)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.PlayerCharacterID)
+  return false;
+#undef DO_
+}
+
+void PlayerCharacterID::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.PlayerCharacterID)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PlayerCharacterID)
+}
+
+int PlayerCharacterID::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PlayerCharacterID::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const PlayerCharacterID*>(&from));
+}
+
+void PlayerCharacterID::MergeFrom(const PlayerCharacterID& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void PlayerCharacterID::CopyFrom(const PlayerCharacterID& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PlayerCharacterID::IsInitialized() const {
+
+  return true;
+}
+
+void PlayerCharacterID::Swap(PlayerCharacterID* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string PlayerCharacterID::GetTypeName() const {
+  return "Frpg2RequestMessage.PlayerCharacterID";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int PlayerInfoUploadConfigPushMessage::kPushMessageIdFieldNumber;
 const int PlayerInfoUploadConfigPushMessage::kUnknown2FieldNumber;
 const int PlayerInfoUploadConfigPushMessage::kUnknown3FieldNumber;
@@ -4824,7 +5120,7 @@ void PlayerInfoUploadConfigPushMessage::Swap(PlayerInfoUploadConfigPushMessage* 
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestUpdateLoginPlayerCharacter::kUnknown1FieldNumber;
+const int RequestUpdateLoginPlayerCharacter::kCharacterIdFieldNumber;
 const int RequestUpdateLoginPlayerCharacter::kUnknown2FieldNumber;
 #endif  // !_MSC_VER
 
@@ -4846,7 +5142,7 @@ RequestUpdateLoginPlayerCharacter::RequestUpdateLoginPlayerCharacter(const Reque
 
 void RequestUpdateLoginPlayerCharacter::SharedCtor() {
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4885,7 +5181,7 @@ RequestUpdateLoginPlayerCharacter* RequestUpdateLoginPlayerCharacter::New() cons
 }
 
 void RequestUpdateLoginPlayerCharacter::Clear() {
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   unknown_2_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -4905,13 +5201,13 @@ bool RequestUpdateLoginPlayerCharacter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // required uint32 character_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -4963,9 +5259,9 @@ failure:
 void RequestUpdateLoginPlayerCharacter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacter)
-  // required uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // required uint32 character_id = 1;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->character_id(), output);
   }
 
   // repeated uint32 unknown_2 = 2;
@@ -4983,11 +5279,11 @@ int RequestUpdateLoginPlayerCharacter::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 1;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
   }
@@ -5018,8 +5314,8 @@ void RequestUpdateLoginPlayerCharacter::MergeFrom(const RequestUpdateLoginPlayer
   GOOGLE_CHECK_NE(&from, this);
   unknown_2_.MergeFrom(from.unknown_2_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -5039,7 +5335,7 @@ bool RequestUpdateLoginPlayerCharacter::IsInitialized() const {
 
 void RequestUpdateLoginPlayerCharacter::Swap(RequestUpdateLoginPlayerCharacter* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     unknown_2_.Swap(&other->unknown_2_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -5294,7 +5590,7 @@ void RequestUpdateLoginPlayerCharacterResponseData::Swap(RequestUpdateLoginPlaye
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestUpdateLoginPlayerCharacterResponse::kUnknown1FieldNumber;
+const int RequestUpdateLoginPlayerCharacterResponse::kCharacterIdFieldNumber;
 const int RequestUpdateLoginPlayerCharacterResponse::kUnknown2FieldNumber;
 const int RequestUpdateLoginPlayerCharacterResponse::kUnknown3FieldNumber;
 #endif  // !_MSC_VER
@@ -5329,7 +5625,7 @@ RequestUpdateLoginPlayerCharacterResponse::RequestUpdateLoginPlayerCharacterResp
 
 void RequestUpdateLoginPlayerCharacterResponse::SharedCtor() {
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   unknown_2_ = NULL;
   unknown_3_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -5373,7 +5669,7 @@ RequestUpdateLoginPlayerCharacterResponse* RequestUpdateLoginPlayerCharacterResp
 
 void RequestUpdateLoginPlayerCharacterResponse::Clear() {
   if (_has_bits_[0 / 32] & 7) {
-    unknown_1_ = 0u;
+    character_id_ = 0u;
     if (has_unknown_2()) {
       if (unknown_2_ != NULL) unknown_2_->::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData::Clear();
     }
@@ -5399,13 +5695,13 @@ bool RequestUpdateLoginPlayerCharacterResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // required uint32 character_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -5464,9 +5760,9 @@ failure:
 void RequestUpdateLoginPlayerCharacterResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse)
-  // required uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // required uint32 character_id = 1;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->character_id(), output);
   }
 
   // required .Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;
@@ -5490,11 +5786,11 @@ int RequestUpdateLoginPlayerCharacterResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 1;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
     // required .Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;
@@ -5528,8 +5824,8 @@ void RequestUpdateLoginPlayerCharacterResponse::CheckTypeAndMergeFrom(
 void RequestUpdateLoginPlayerCharacterResponse::MergeFrom(const RequestUpdateLoginPlayerCharacterResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_unknown_2()) {
       mutable_unknown_2()->::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData::MergeFrom(from.unknown_2());
@@ -5561,7 +5857,7 @@ bool RequestUpdateLoginPlayerCharacterResponse::IsInitialized() const {
 
 void RequestUpdateLoginPlayerCharacterResponse::Swap(RequestUpdateLoginPlayerCharacterResponse* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(unknown_2_, other->unknown_2_);
     std::swap(unknown_3_, other->unknown_3_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -5929,155 +6225,7 @@ void RequestUpdatePlayerStatusResponse::Swap(RequestUpdatePlayerStatusResponse* 
 // ===================================================================
 
 #ifndef _MSC_VER
-#endif  // !_MSC_VER
-
-PlayerCharacterData::PlayerCharacterData()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.PlayerCharacterData)
-}
-
-void PlayerCharacterData::InitAsDefaultInstance() {
-}
-
-PlayerCharacterData::PlayerCharacterData(const PlayerCharacterData& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.PlayerCharacterData)
-}
-
-void PlayerCharacterData::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-PlayerCharacterData::~PlayerCharacterData() {
-  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.PlayerCharacterData)
-  SharedDtor();
-}
-
-void PlayerCharacterData::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void PlayerCharacterData::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const PlayerCharacterData& PlayerCharacterData::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-PlayerCharacterData* PlayerCharacterData::default_instance_ = NULL;
-
-PlayerCharacterData* PlayerCharacterData::New() const {
-  return new PlayerCharacterData;
-}
-
-void PlayerCharacterData::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool PlayerCharacterData::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.PlayerCharacterData)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.PlayerCharacterData)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.PlayerCharacterData)
-  return false;
-#undef DO_
-}
-
-void PlayerCharacterData::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.PlayerCharacterData)
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PlayerCharacterData)
-}
-
-int PlayerCharacterData::ByteSize() const {
-  int total_size = 0;
-
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void PlayerCharacterData::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const PlayerCharacterData*>(&from));
-}
-
-void PlayerCharacterData::MergeFrom(const PlayerCharacterData& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void PlayerCharacterData::CopyFrom(const PlayerCharacterData& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool PlayerCharacterData::IsInitialized() const {
-
-  return true;
-}
-
-void PlayerCharacterData::Swap(PlayerCharacterData* other) {
-  if (other != this) {
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string PlayerCharacterData::GetTypeName() const {
-  return "Frpg2RequestMessage.PlayerCharacterData";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int RequestUpdatePlayerCharacter::kUnknown1FieldNumber;
+const int RequestUpdatePlayerCharacter::kCharacterIdFieldNumber;
 const int RequestUpdatePlayerCharacter::kCharacterDataFieldNumber;
 #endif  // !_MSC_VER
 
@@ -6100,7 +6248,7 @@ RequestUpdatePlayerCharacter::RequestUpdatePlayerCharacter(const RequestUpdatePl
 void RequestUpdatePlayerCharacter::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   character_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -6144,7 +6292,7 @@ RequestUpdatePlayerCharacter* RequestUpdatePlayerCharacter::New() const {
 
 void RequestUpdatePlayerCharacter::Clear() {
   if (_has_bits_[0 / 32] & 3) {
-    unknown_1_ = 0u;
+    character_id_ = 0u;
     if (has_character_data()) {
       if (character_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         character_data_->clear();
@@ -6169,13 +6317,13 @@ bool RequestUpdatePlayerCharacter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // required uint32 character_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -6221,9 +6369,9 @@ failure:
 void RequestUpdatePlayerCharacter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestUpdatePlayerCharacter)
-  // required uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // required uint32 character_id = 1;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->character_id(), output);
   }
 
   // required bytes character_data = 2;
@@ -6241,11 +6389,11 @@ int RequestUpdatePlayerCharacter::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 1;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
     // required bytes character_data = 2;
@@ -6272,8 +6420,8 @@ void RequestUpdatePlayerCharacter::CheckTypeAndMergeFrom(
 void RequestUpdatePlayerCharacter::MergeFrom(const RequestUpdatePlayerCharacter& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_character_data()) {
       set_character_data(from.character_data());
@@ -6296,7 +6444,7 @@ bool RequestUpdatePlayerCharacter::IsInitialized() const {
 
 void RequestUpdatePlayerCharacter::Swap(RequestUpdatePlayerCharacter* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(character_data_, other->character_data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -6460,156 +6608,8 @@ void RequestUpdatePlayerCharacterResponse::Swap(RequestUpdatePlayerCharacterResp
 // ===================================================================
 
 #ifndef _MSC_VER
-#endif  // !_MSC_VER
-
-PlayerCharacterID::PlayerCharacterID()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.PlayerCharacterID)
-}
-
-void PlayerCharacterID::InitAsDefaultInstance() {
-}
-
-PlayerCharacterID::PlayerCharacterID(const PlayerCharacterID& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.PlayerCharacterID)
-}
-
-void PlayerCharacterID::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-PlayerCharacterID::~PlayerCharacterID() {
-  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.PlayerCharacterID)
-  SharedDtor();
-}
-
-void PlayerCharacterID::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void PlayerCharacterID::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const PlayerCharacterID& PlayerCharacterID::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-PlayerCharacterID* PlayerCharacterID::default_instance_ = NULL;
-
-PlayerCharacterID* PlayerCharacterID::New() const {
-  return new PlayerCharacterID;
-}
-
-void PlayerCharacterID::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool PlayerCharacterID::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.PlayerCharacterID)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.PlayerCharacterID)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.PlayerCharacterID)
-  return false;
-#undef DO_
-}
-
-void PlayerCharacterID::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.PlayerCharacterID)
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PlayerCharacterID)
-}
-
-int PlayerCharacterID::ByteSize() const {
-  int total_size = 0;
-
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void PlayerCharacterID::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const PlayerCharacterID*>(&from));
-}
-
-void PlayerCharacterID::MergeFrom(const PlayerCharacterID& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void PlayerCharacterID::CopyFrom(const PlayerCharacterID& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool PlayerCharacterID::IsInitialized() const {
-
-  return true;
-}
-
-void PlayerCharacterID::Swap(PlayerCharacterID* other) {
-  if (other != this) {
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string PlayerCharacterID::GetTypeName() const {
-  return "Frpg2RequestMessage.PlayerCharacterID";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
 const int RequestGetPlayerCharacter::kPlayerIdFieldNumber;
-const int RequestGetPlayerCharacter::kUnknown1FieldNumber;
+const int RequestGetPlayerCharacter::kCharacterIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetPlayerCharacter::RequestGetPlayerCharacter()
@@ -6631,7 +6631,7 @@ RequestGetPlayerCharacter::RequestGetPlayerCharacter(const RequestGetPlayerChara
 void RequestGetPlayerCharacter::SharedCtor() {
   _cached_size_ = 0;
   player_id_ = 0u;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -6680,7 +6680,7 @@ void RequestGetPlayerCharacter::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(player_id_, unknown_1_);
+  ZR_(player_id_, character_id_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -6713,18 +6713,18 @@ bool RequestGetPlayerCharacter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_1;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 unknown_1 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_1:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -6762,9 +6762,9 @@ void RequestGetPlayerCharacter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
   }
 
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -6783,11 +6783,11 @@ int RequestGetPlayerCharacter::ByteSize() const {
           this->player_id());
     }
 
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
   }
@@ -6810,8 +6810,8 @@ void RequestGetPlayerCharacter::MergeFrom(const RequestGetPlayerCharacter& from)
     if (from.has_player_id()) {
       set_player_id(from.player_id());
     }
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -6832,7 +6832,7 @@ bool RequestGetPlayerCharacter::IsInitialized() const {
 void RequestGetPlayerCharacter::Swap(RequestGetPlayerCharacter* other) {
   if (other != this) {
     std::swap(player_id_, other->player_id_);
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -6848,7 +6848,7 @@ void RequestGetPlayerCharacter::Swap(RequestGetPlayerCharacter* other) {
 
 #ifndef _MSC_VER
 const int RequestGetPlayerCharacterResponse::kPlayerIdFieldNumber;
-const int RequestGetPlayerCharacterResponse::kUnknown1FieldNumber;
+const int RequestGetPlayerCharacterResponse::kCharacterIdFieldNumber;
 const int RequestGetPlayerCharacterResponse::kCharacterDataFieldNumber;
 #endif  // !_MSC_VER
 
@@ -6872,7 +6872,7 @@ void RequestGetPlayerCharacterResponse::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   player_id_ = 0u;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   character_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -6926,7 +6926,7 @@ void RequestGetPlayerCharacterResponse::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 7) {
-    ZR_(player_id_, unknown_1_);
+    ZR_(player_id_, character_id_);
     if (has_character_data()) {
       if (character_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         character_data_->clear();
@@ -6965,18 +6965,18 @@ bool RequestGetPlayerCharacterResponse::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_1;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 unknown_1 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_1:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -7027,9 +7027,9 @@ void RequestGetPlayerCharacterResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
   }
 
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   // required bytes character_data = 3;
@@ -7054,11 +7054,11 @@ int RequestGetPlayerCharacterResponse::ByteSize() const {
           this->player_id());
     }
 
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
     // required bytes character_data = 3;
@@ -7088,8 +7088,8 @@ void RequestGetPlayerCharacterResponse::MergeFrom(const RequestGetPlayerCharacte
     if (from.has_player_id()) {
       set_player_id(from.player_id());
     }
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_character_data()) {
       set_character_data(from.character_data());
@@ -7113,7 +7113,7 @@ bool RequestGetPlayerCharacterResponse::IsInitialized() const {
 void RequestGetPlayerCharacterResponse::Swap(RequestGetPlayerCharacterResponse* other) {
   if (other != this) {
     std::swap(player_id_, other->player_id_);
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(character_data_, other->character_data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -7722,7 +7722,7 @@ void RequestGetPlayerCharacterListResponse::Swap(RequestGetPlayerCharacterListRe
 
 #ifndef _MSC_VER
 const int BloodMessageData::kPlayerIdFieldNumber;
-const int BloodMessageData::kUnknown1FieldNumber;
+const int BloodMessageData::kCharacterIdFieldNumber;
 const int BloodMessageData::kMessageIdFieldNumber;
 const int BloodMessageData::kGoodFieldNumber;
 const int BloodMessageData::kMessageDataFieldNumber;
@@ -7751,7 +7751,7 @@ void BloodMessageData::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   player_id_ = 0u;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   message_id_ = 0u;
   good_ = 0u;
   message_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -7858,18 +7858,18 @@ bool BloodMessageData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_1;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 unknown_1 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_1:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -7993,9 +7993,9 @@ void BloodMessageData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
   }
 
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   // required uint32 message_id = 3;
@@ -8046,11 +8046,11 @@ int BloodMessageData::ByteSize() const {
           this->player_id());
     }
 
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
     // required uint32 message_id = 3;
@@ -8115,8 +8115,8 @@ void BloodMessageData::MergeFrom(const BloodMessageData& from) {
     if (from.has_player_id()) {
       set_player_id(from.player_id());
     }
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_message_id()) {
       set_message_id(from.message_id());
@@ -8155,7 +8155,7 @@ bool BloodMessageData::IsInitialized() const {
 void BloodMessageData::Swap(BloodMessageData* other) {
   if (other != this) {
     std::swap(player_id_, other->player_id_);
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(message_id_, other->message_id_);
     std::swap(good_, other->good_);
     std::swap(message_data_, other->message_data_);
@@ -8688,7 +8688,7 @@ void BloodMessageDomainLimitData::Swap(BloodMessageDomainLimitData* other) {
 
 #ifndef _MSC_VER
 const int RequestReentryBloodMessage::kMessagesFieldNumber;
-const int RequestReentryBloodMessage::kUnknown2FieldNumber;
+const int RequestReentryBloodMessage::kCharacterIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestReentryBloodMessage::RequestReentryBloodMessage()
@@ -8709,7 +8709,7 @@ RequestReentryBloodMessage::RequestReentryBloodMessage(const RequestReentryBlood
 
 void RequestReentryBloodMessage::SharedCtor() {
   _cached_size_ = 0;
-  unknown_2_ = 0u;
+  character_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -8748,7 +8748,7 @@ RequestReentryBloodMessage* RequestReentryBloodMessage::New() const {
 }
 
 void RequestReentryBloodMessage::Clear() {
-  unknown_2_ = 0u;
+  character_id_ = 0u;
   messages_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -8778,18 +8778,18 @@ bool RequestReentryBloodMessage::MergePartialFromCodedStream(
           goto handle_unusual;
         }
         if (input->ExpectTag(10)) goto parse_messages;
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 unknown_2 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -8828,9 +8828,9 @@ void RequestReentryBloodMessage::SerializeWithCachedSizes(
       1, this->messages(i), output);
   }
 
-  // required uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -8842,11 +8842,11 @@ int RequestReentryBloodMessage::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    // required uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+          this->character_id());
     }
 
   }
@@ -8875,8 +8875,8 @@ void RequestReentryBloodMessage::MergeFrom(const RequestReentryBloodMessage& fro
   GOOGLE_CHECK_NE(&from, this);
   messages_.MergeFrom(from.messages_);
   if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -8898,7 +8898,7 @@ bool RequestReentryBloodMessage::IsInitialized() const {
 void RequestReentryBloodMessage::Swap(RequestReentryBloodMessage* other) {
   if (other != this) {
     messages_.Swap(&other->messages_);
-    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(character_id_, other->character_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -9107,7 +9107,7 @@ void RequestReentryBloodMessageResponse::Swap(RequestReentryBloodMessageResponse
 
 #ifndef _MSC_VER
 const int RequestCreateBloodMessage::kOnlineAreaIdFieldNumber;
-const int RequestCreateBloodMessage::kUnknown1FieldNumber;
+const int RequestCreateBloodMessage::kCharacterIdFieldNumber;
 const int RequestCreateBloodMessage::kMessageDataFieldNumber;
 #endif  // !_MSC_VER
 
@@ -9131,7 +9131,7 @@ void RequestCreateBloodMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   online_area_id_ = 0u;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   message_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -9185,7 +9185,7 @@ void RequestCreateBloodMessage::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 7) {
-    ZR_(online_area_id_, unknown_1_);
+    ZR_(online_area_id_, character_id_);
     if (has_message_data()) {
       if (message_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         message_data_->clear();
@@ -9224,18 +9224,18 @@ bool RequestCreateBloodMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_1;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 unknown_1 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_1:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -9286,9 +9286,9 @@ void RequestCreateBloodMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   // required bytes message_data = 3;
@@ -9313,11 +9313,11 @@ int RequestCreateBloodMessage::ByteSize() const {
           this->online_area_id());
     }
 
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
     // required bytes message_data = 3;
@@ -9347,8 +9347,8 @@ void RequestCreateBloodMessage::MergeFrom(const RequestCreateBloodMessage& from)
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_message_data()) {
       set_message_data(from.message_data());
@@ -9372,7 +9372,7 @@ bool RequestCreateBloodMessage::IsInitialized() const {
 void RequestCreateBloodMessage::Swap(RequestCreateBloodMessage* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(message_data_, other->message_data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -9895,7 +9895,7 @@ void RequestReCreateBloodMessageList_Blood_message_info_list::Swap(RequestReCrea
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int RequestReCreateBloodMessageList::kUnknown2FieldNumber;
+const int RequestReCreateBloodMessageList::kCharacterIdFieldNumber;
 const int RequestReCreateBloodMessageList::kBloodMessageInfoListFieldNumber;
 #endif  // !_MSC_VER
 
@@ -9917,7 +9917,7 @@ RequestReCreateBloodMessageList::RequestReCreateBloodMessageList(const RequestRe
 
 void RequestReCreateBloodMessageList::SharedCtor() {
   _cached_size_ = 0;
-  unknown_2_ = 0u;
+  character_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -9956,7 +9956,7 @@ RequestReCreateBloodMessageList* RequestReCreateBloodMessageList::New() const {
 }
 
 void RequestReCreateBloodMessageList::Clear() {
-  unknown_2_ = 0u;
+  character_id_ = 0u;
   blood_message_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -9976,13 +9976,13 @@ bool RequestReCreateBloodMessageList::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_2 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -10029,9 +10029,9 @@ failure:
 void RequestReCreateBloodMessageList::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestReCreateBloodMessageList)
-  // required uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   // repeated group Blood_message_info_list = 3 {
@@ -10049,11 +10049,11 @@ int RequestReCreateBloodMessageList::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+          this->character_id());
     }
 
   }
@@ -10082,8 +10082,8 @@ void RequestReCreateBloodMessageList::MergeFrom(const RequestReCreateBloodMessag
   GOOGLE_CHECK_NE(&from, this);
   blood_message_info_list_.MergeFrom(from.blood_message_info_list_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -10104,7 +10104,7 @@ bool RequestReCreateBloodMessageList::IsInitialized() const {
 
 void RequestReCreateBloodMessageList::Swap(RequestReCreateBloodMessageList* other) {
   if (other != this) {
-    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(character_id_, other->character_id_);
     blood_message_info_list_.Swap(&other->blood_message_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -37644,7 +37644,7 @@ void RequestSendPlayerList::Swap(RequestSendPlayerList* other) {
 
 #ifndef _MSC_VER
 const int RankingData::kPlayerIdFieldNumber;
-const int RankingData::kUnknown1FieldNumber;
+const int RankingData::kCharacterIdFieldNumber;
 const int RankingData::kSerialRankFieldNumber;
 const int RankingData::kRankFieldNumber;
 const int RankingData::kScoreFieldNumber;
@@ -37671,7 +37671,7 @@ void RankingData::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   player_id_ = 0u;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   serial_rank_ = 0u;
   rank_ = 0u;
   score_ = 0u;
@@ -37768,18 +37768,18 @@ bool RankingData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_1;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 unknown_1 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_1:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -37875,9 +37875,9 @@ void RankingData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
   }
 
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   // required uint32 serial_rank = 3;
@@ -37917,11 +37917,11 @@ int RankingData::ByteSize() const {
           this->player_id());
     }
 
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
     // required uint32 serial_rank = 3;
@@ -37972,8 +37972,8 @@ void RankingData::MergeFrom(const RankingData& from) {
     if (from.has_player_id()) {
       set_player_id(from.player_id());
     }
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_serial_rank()) {
       set_serial_rank(from.serial_rank());
@@ -38006,7 +38006,7 @@ bool RankingData::IsInitialized() const {
 void RankingData::Swap(RankingData* other) {
   if (other != this) {
     std::swap(player_id_, other->player_id_);
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(serial_rank_, other->serial_rank_);
     std::swap(rank_, other->rank_);
     std::swap(score_, other->score_);
@@ -38470,7 +38470,7 @@ void RankingDataPack::Swap(RankingDataPack* other) {
 
 #ifndef _MSC_VER
 const int RequestRegisterRankingData::kBoardIdFieldNumber;
-const int RequestRegisterRankingData::kUnknown1FieldNumber;
+const int RequestRegisterRankingData::kCharacterIdFieldNumber;
 const int RequestRegisterRankingData::kScoreFieldNumber;
 const int RequestRegisterRankingData::kDataFieldNumber;
 #endif  // !_MSC_VER
@@ -38495,7 +38495,7 @@ void RequestRegisterRankingData::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   board_id_ = 0u;
-  unknown_1_ = 0u;
+  character_id_ = 0u;
   score_ = 0u;
   data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -38550,7 +38550,7 @@ void RequestRegisterRankingData::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 15) {
-    ZR_(board_id_, unknown_1_);
+    ZR_(board_id_, character_id_);
     score_ = 0u;
     if (has_data()) {
       if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -38590,18 +38590,18 @@ bool RequestRegisterRankingData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_1;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 unknown_1 = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_1:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -38667,9 +38667,9 @@ void RequestRegisterRankingData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->board_id(), output);
   }
 
-  // required uint32 unknown_1 = 2;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_1(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   // required uint32 score = 3;
@@ -38699,11 +38699,11 @@ int RequestRegisterRankingData::ByteSize() const {
           this->board_id());
     }
 
-    // required uint32 unknown_1 = 2;
-    if (has_unknown_1()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->character_id());
     }
 
     // required uint32 score = 3;
@@ -38740,8 +38740,8 @@ void RequestRegisterRankingData::MergeFrom(const RequestRegisterRankingData& fro
     if (from.has_board_id()) {
       set_board_id(from.board_id());
     }
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_score()) {
       set_score(from.score());
@@ -38768,7 +38768,7 @@ bool RequestRegisterRankingData::IsInitialized() const {
 void RequestRegisterRankingData::Swap(RequestRegisterRankingData* other) {
   if (other != this) {
     std::swap(board_id_, other->board_id_);
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(character_id_, other->character_id_);
     std::swap(score_, other->score_);
     std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -39393,7 +39393,7 @@ void RequestGetRankingDataResponse::Swap(RequestGetRankingDataResponse* other) {
 
 #ifndef _MSC_VER
 const int RequestGetCharacterRankingData::kBoardIdFieldNumber;
-const int RequestGetCharacterRankingData::kPlayerIdFieldNumber;
+const int RequestGetCharacterRankingData::kCharacterIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetCharacterRankingData::RequestGetCharacterRankingData()
@@ -39415,7 +39415,7 @@ RequestGetCharacterRankingData::RequestGetCharacterRankingData(const RequestGetC
 void RequestGetCharacterRankingData::SharedCtor() {
   _cached_size_ = 0;
   board_id_ = 0u;
-  player_id_ = 0u;
+  character_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -39464,7 +39464,7 @@ void RequestGetCharacterRankingData::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(board_id_, player_id_);
+  ZR_(board_id_, character_id_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -39497,18 +39497,18 @@ bool RequestGetCharacterRankingData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_player_id;
+        if (input->ExpectTag(16)) goto parse_character_id;
         break;
       }
 
-      // required uint32 player_id = 2;
+      // required uint32 character_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_player_id:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &player_id_)));
-          set_has_player_id();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -39546,9 +39546,9 @@ void RequestGetCharacterRankingData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->board_id(), output);
   }
 
-  // required uint32 player_id = 2;
-  if (has_player_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->player_id(), output);
+  // required uint32 character_id = 2;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->character_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -39567,11 +39567,11 @@ int RequestGetCharacterRankingData::ByteSize() const {
           this->board_id());
     }
 
-    // required uint32 player_id = 2;
-    if (has_player_id()) {
+    // required uint32 character_id = 2;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->player_id());
+          this->character_id());
     }
 
   }
@@ -39594,8 +39594,8 @@ void RequestGetCharacterRankingData::MergeFrom(const RequestGetCharacterRankingD
     if (from.has_board_id()) {
       set_board_id(from.board_id());
     }
-    if (from.has_player_id()) {
-      set_player_id(from.player_id());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -39616,7 +39616,7 @@ bool RequestGetCharacterRankingData::IsInitialized() const {
 void RequestGetCharacterRankingData::Swap(RequestGetCharacterRankingData* other) {
   if (other != this) {
     std::swap(board_id_, other->board_id_);
-    std::swap(player_id_, other->player_id_);
+    std::swap(character_id_, other->character_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

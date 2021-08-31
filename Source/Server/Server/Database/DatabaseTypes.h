@@ -22,6 +22,8 @@ struct BloodMessage
     uint32_t PlayerId;
     std::string PlayerSteamId;
 
+    uint32_t CharacterId;
+
     uint32_t RatingPoor;
     uint32_t RatingGood;
 
@@ -69,4 +71,17 @@ struct SummonSign
     std::vector<uint8_t> PlayerStruct;
 
     uint32_t BeingSummonedByPlayerId = 0;
+};
+
+// Individual ranking in a leaderboard.
+struct Ranking
+{
+    uint32_t Id;
+    uint32_t BoardId;
+    uint32_t PlayerId;
+    uint32_t CharacterId;
+    uint32_t Rank;
+    uint32_t SerialRank;
+    uint32_t Score;
+    std::vector<uint8_t> Data;
 };
