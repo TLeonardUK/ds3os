@@ -34,7 +34,7 @@ ENTRY(Undead_Settlement_Irina,                                    "Undead Settle
 ENTRY(Unknown_2,                                                  "Unknown 2",                                                310004)
 ENTRY(Undead_Settlement_Curse_rotted_Greatwood,                   "Undead Settlement - Curse-rotted Greatwood",               310020)
 ENTRY(Undead_Settlement_Before_Road_of_Sacrifices,                "Undead Settlement - Before Road of Sacrifices",            310021)
-ENTRY(Unknown_3,                                                  "Unknown 3",                                                320001)
+ENTRY(Archdragon_Peak_Start,                                      "Archdragon Peak - Start",                                  320001)
 ENTRY(Archdragon_Peak,                                            "Archdragon Peak",                                          320002)
 ENTRY(Archdragon_Peak_Ancient_Wyvern,                             "Archdragon Peak - Ancient Wyvern",                         320010)
 ENTRY(Archdragon_Peak_Dragon_kin_Mausoleum,                       "Archdragon Peak - Dragon-kin Mausoleum",                   320011)

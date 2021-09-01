@@ -33999,7 +33999,7 @@ void RequestRejectVisitResponse::Swap(RequestRejectVisitResponse* other) {
 
 #ifndef _MSC_VER
 const int RequestNotifyRingBell::kOnlineAreaIdFieldNumber;
-const int RequestNotifyRingBell::kMetadataFieldNumber;
+const int RequestNotifyRingBell::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestNotifyRingBell::RequestNotifyRingBell()
@@ -34022,7 +34022,7 @@ void RequestNotifyRingBell::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   online_area_id_ = 0u;
-  metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -34032,8 +34032,8 @@ RequestNotifyRingBell::~RequestNotifyRingBell() {
 }
 
 void RequestNotifyRingBell::SharedDtor() {
-  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete metadata_;
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -34066,9 +34066,9 @@ RequestNotifyRingBell* RequestNotifyRingBell::New() const {
 void RequestNotifyRingBell::Clear() {
   if (_has_bits_[0 / 32] & 3) {
     online_area_id_ = 0u;
-    if (has_metadata()) {
-      if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        metadata_->clear();
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
       }
     }
   }
@@ -34100,16 +34100,16 @@ bool RequestNotifyRingBell::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_metadata;
+        if (input->ExpectTag(18)) goto parse_data;
         break;
       }
 
-      // required bytes metadata = 2;
+      // required bytes data = 2;
       case 2: {
         if (tag == 18) {
-         parse_metadata:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_metadata()));
+                input, this->mutable_data()));
         } else {
           goto handle_unusual;
         }
@@ -34147,10 +34147,10 @@ void RequestNotifyRingBell::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // required bytes metadata = 2;
-  if (has_metadata()) {
+  // required bytes data = 2;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      2, this->metadata(), output);
+      2, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -34169,11 +34169,11 @@ int RequestNotifyRingBell::ByteSize() const {
           this->online_area_id());
     }
 
-    // required bytes metadata = 2;
-    if (has_metadata()) {
+    // required bytes data = 2;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->metadata());
+          this->data());
     }
 
   }
@@ -34196,8 +34196,8 @@ void RequestNotifyRingBell::MergeFrom(const RequestNotifyRingBell& from) {
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_metadata()) {
-      set_metadata(from.metadata());
+    if (from.has_data()) {
+      set_data(from.data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -34218,7 +34218,7 @@ bool RequestNotifyRingBell::IsInitialized() const {
 void RequestNotifyRingBell::Swap(RequestNotifyRingBell* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(metadata_, other->metadata_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -34384,7 +34384,7 @@ void RequestNotifyRingBellResponse::Swap(RequestNotifyRingBellResponse* other) {
 const int PushRequestNotifyRingBell::kPushMessageIdFieldNumber;
 const int PushRequestNotifyRingBell::kPlayerIdFieldNumber;
 const int PushRequestNotifyRingBell::kOnlineAreaIdFieldNumber;
-const int PushRequestNotifyRingBell::kMetadataFieldNumber;
+const int PushRequestNotifyRingBell::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestNotifyRingBell::PushRequestNotifyRingBell()
@@ -34409,7 +34409,7 @@ void PushRequestNotifyRingBell::SharedCtor() {
   push_message_id_ = 829;
   player_id_ = 0u;
   online_area_id_ = 0u;
-  metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -34419,8 +34419,8 @@ PushRequestNotifyRingBell::~PushRequestNotifyRingBell() {
 }
 
 void PushRequestNotifyRingBell::SharedDtor() {
-  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete metadata_;
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -34455,9 +34455,9 @@ void PushRequestNotifyRingBell::Clear() {
     push_message_id_ = 829;
     player_id_ = 0u;
     online_area_id_ = 0u;
-    if (has_metadata()) {
-      if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        metadata_->clear();
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
       }
     }
   }
@@ -34525,16 +34525,16 @@ bool PushRequestNotifyRingBell::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_metadata;
+        if (input->ExpectTag(34)) goto parse_data;
         break;
       }
 
-      // required bytes metadata = 4;
+      // required bytes data = 4;
       case 4: {
         if (tag == 34) {
-         parse_metadata:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_metadata()));
+                input, this->mutable_data()));
         } else {
           goto handle_unusual;
         }
@@ -34583,10 +34583,10 @@ void PushRequestNotifyRingBell::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->online_area_id(), output);
   }
 
-  // required bytes metadata = 4;
-  if (has_metadata()) {
+  // required bytes data = 4;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      4, this->metadata(), output);
+      4, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -34618,11 +34618,11 @@ int PushRequestNotifyRingBell::ByteSize() const {
           this->online_area_id());
     }
 
-    // required bytes metadata = 4;
-    if (has_metadata()) {
+    // required bytes data = 4;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->metadata());
+          this->data());
     }
 
   }
@@ -34651,8 +34651,8 @@ void PushRequestNotifyRingBell::MergeFrom(const PushRequestNotifyRingBell& from)
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_metadata()) {
-      set_metadata(from.metadata());
+    if (from.has_data()) {
+      set_data(from.data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -34675,7 +34675,7 @@ void PushRequestNotifyRingBell::Swap(PushRequestNotifyRingBell* other) {
     std::swap(push_message_id_, other->push_message_id_);
     std::swap(player_id_, other->player_id_);
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(metadata_, other->metadata_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

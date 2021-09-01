@@ -65,6 +65,8 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
     //Ensure(Request->unknown_1() == 1);
     //Ensure(Request->unknown_2() == 1);
 
+    //we need to figure out all this character-id stuff
+
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
     Response.set_character_id(Request->character_id());
 

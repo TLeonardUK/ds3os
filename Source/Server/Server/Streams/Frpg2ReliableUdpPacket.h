@@ -80,8 +80,6 @@ struct Frpg2ReliableUdpPacketHeader
 {
 public:
 
-    // TODO: These ACK counters roll over at 4096, we need to figure out a graceful way to handle that as its easy to get to those numbers.
-
     uint16_t                magic_number = 0x02F5;
     uint8_t                 ack_counters[3] = { 0, 0, 0 };          // Not using a bitfield for these as msvc really doesn't seem to want to pack them right.
     Frpg2ReliableUdpOpCode  opcode = Frpg2ReliableUdpOpCode::Unset;

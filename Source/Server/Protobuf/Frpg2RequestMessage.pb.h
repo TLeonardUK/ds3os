@@ -14640,30 +14640,30 @@ class RequestNotifyRingBell : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
 
-  // required bytes metadata = 2;
-  inline bool has_metadata() const;
-  inline void clear_metadata();
-  static const int kMetadataFieldNumber = 2;
-  inline const ::std::string& metadata() const;
-  inline void set_metadata(const ::std::string& value);
-  inline void set_metadata(const char* value);
-  inline void set_metadata(const void* value, size_t size);
-  inline ::std::string* mutable_metadata();
-  inline ::std::string* release_metadata();
-  inline void set_allocated_metadata(::std::string* metadata);
+  // required bytes data = 2;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 2;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestNotifyRingBell)
  private:
   inline void set_has_online_area_id();
   inline void clear_has_online_area_id();
-  inline void set_has_metadata();
-  inline void clear_has_metadata();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* metadata_;
+  ::std::string* data_;
   ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -14841,17 +14841,17 @@ class PushRequestNotifyRingBell : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
 
-  // required bytes metadata = 4;
-  inline bool has_metadata() const;
-  inline void clear_metadata();
-  static const int kMetadataFieldNumber = 4;
-  inline const ::std::string& metadata() const;
-  inline void set_metadata(const ::std::string& value);
-  inline void set_metadata(const char* value);
-  inline void set_metadata(const void* value, size_t size);
-  inline ::std::string* mutable_metadata();
-  inline ::std::string* release_metadata();
-  inline void set_allocated_metadata(::std::string* metadata);
+  // required bytes data = 4;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 4;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PushRequestNotifyRingBell)
  private:
@@ -14861,8 +14861,8 @@ class PushRequestNotifyRingBell : public ::google::protobuf::MessageLite {
   inline void clear_has_player_id();
   inline void set_has_online_area_id();
   inline void clear_has_online_area_id();
-  inline void set_has_metadata();
-  inline void clear_has_metadata();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
@@ -14870,7 +14870,7 @@ class PushRequestNotifyRingBell : public ::google::protobuf::MessageLite {
   mutable int _cached_size_;
   int push_message_id_;
   ::google::protobuf::uint32 player_id_;
-  ::std::string* metadata_;
+  ::std::string* data_;
   ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -36906,80 +36906,80 @@ inline void RequestNotifyRingBell::set_online_area_id(::google::protobuf::uint32
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRingBell.online_area_id)
 }
 
-// required bytes metadata = 2;
-inline bool RequestNotifyRingBell::has_metadata() const {
+// required bytes data = 2;
+inline bool RequestNotifyRingBell::has_data() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RequestNotifyRingBell::set_has_metadata() {
+inline void RequestNotifyRingBell::set_has_data() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RequestNotifyRingBell::clear_has_metadata() {
+inline void RequestNotifyRingBell::clear_has_data() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RequestNotifyRingBell::clear_metadata() {
-  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_->clear();
+inline void RequestNotifyRingBell::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
   }
-  clear_has_metadata();
+  clear_has_data();
 }
-inline const ::std::string& RequestNotifyRingBell::metadata() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
-  return *metadata_;
+inline const ::std::string& RequestNotifyRingBell::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRingBell.data)
+  return *data_;
 }
-inline void RequestNotifyRingBell::set_metadata(const ::std::string& value) {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline void RequestNotifyRingBell::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  metadata_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRingBell.data)
 }
-inline void RequestNotifyRingBell::set_metadata(const char* value) {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline void RequestNotifyRingBell::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  metadata_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestNotifyRingBell.data)
 }
-inline void RequestNotifyRingBell::set_metadata(const void* value, size_t size) {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline void RequestNotifyRingBell::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  metadata_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestNotifyRingBell.data)
 }
-inline ::std::string* RequestNotifyRingBell::mutable_metadata() {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline ::std::string* RequestNotifyRingBell::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
-  return metadata_;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestNotifyRingBell.data)
+  return data_;
 }
-inline ::std::string* RequestNotifyRingBell::release_metadata() {
-  clear_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* RequestNotifyRingBell::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = metadata_;
-    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void RequestNotifyRingBell::set_allocated_metadata(::std::string* metadata) {
-  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete metadata_;
+inline void RequestNotifyRingBell::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
-  if (metadata) {
-    set_has_metadata();
-    metadata_ = metadata;
+  if (data) {
+    set_has_data();
+    data_ = data;
   } else {
-    clear_has_metadata();
-    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestNotifyRingBell.metadata)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestNotifyRingBell.data)
 }
 
 // -------------------------------------------------------------------
@@ -37063,80 +37063,80 @@ inline void PushRequestNotifyRingBell::set_online_area_id(::google::protobuf::ui
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestNotifyRingBell.online_area_id)
 }
 
-// required bytes metadata = 4;
-inline bool PushRequestNotifyRingBell::has_metadata() const {
+// required bytes data = 4;
+inline bool PushRequestNotifyRingBell::has_data() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void PushRequestNotifyRingBell::set_has_metadata() {
+inline void PushRequestNotifyRingBell::set_has_data() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void PushRequestNotifyRingBell::clear_has_metadata() {
+inline void PushRequestNotifyRingBell::clear_has_data() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void PushRequestNotifyRingBell::clear_metadata() {
-  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_->clear();
+inline void PushRequestNotifyRingBell::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
   }
-  clear_has_metadata();
+  clear_has_data();
 }
-inline const ::std::string& PushRequestNotifyRingBell::metadata() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
-  return *metadata_;
+inline const ::std::string& PushRequestNotifyRingBell::data() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PushRequestNotifyRingBell.data)
+  return *data_;
 }
-inline void PushRequestNotifyRingBell::set_metadata(const ::std::string& value) {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline void PushRequestNotifyRingBell::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  metadata_->assign(value);
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestNotifyRingBell.data)
 }
-inline void PushRequestNotifyRingBell::set_metadata(const char* value) {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline void PushRequestNotifyRingBell::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  metadata_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.PushRequestNotifyRingBell.data)
 }
-inline void PushRequestNotifyRingBell::set_metadata(const void* value, size_t size) {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline void PushRequestNotifyRingBell::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  metadata_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.PushRequestNotifyRingBell.data)
 }
-inline ::std::string* PushRequestNotifyRingBell::mutable_metadata() {
-  set_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    metadata_ = new ::std::string;
+inline ::std::string* PushRequestNotifyRingBell::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
-  return metadata_;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.PushRequestNotifyRingBell.data)
+  return data_;
 }
-inline ::std::string* PushRequestNotifyRingBell::release_metadata() {
-  clear_has_metadata();
-  if (metadata_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* PushRequestNotifyRingBell::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = metadata_;
-    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void PushRequestNotifyRingBell::set_allocated_metadata(::std::string* metadata) {
-  if (metadata_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete metadata_;
+inline void PushRequestNotifyRingBell::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
-  if (metadata) {
-    set_has_metadata();
-    metadata_ = metadata;
+  if (data) {
+    set_has_data();
+    data_ = data;
   } else {
-    clear_has_metadata();
-    metadata_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestNotifyRingBell.metadata)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.PushRequestNotifyRingBell.data)
 }
 
 // -------------------------------------------------------------------

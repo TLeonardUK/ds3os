@@ -60,6 +60,7 @@ public:
 
     std::shared_ptr<GameClient> FindClientByPlayerId(uint32_t PlayerId);
     std::vector<std::shared_ptr<GameClient>> FindClients(std::function<bool(const std::shared_ptr<GameClient>&)> Predicate);
+    std::vector<std::shared_ptr<GameClient>> GetClients() { return Clients; }
 
 protected:
 

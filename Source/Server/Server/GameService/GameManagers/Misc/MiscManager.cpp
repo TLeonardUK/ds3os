@@ -18,6 +18,8 @@
 
 #include "Core/Utils/Logging.h"
 
+#include <unordered_set>
+
 MiscManager::MiscManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
     , GameServiceInstance(InGameServiceInstance)
@@ -54,11 +56,45 @@ MessageHandleResult MiscManager::OnMessageRecieved(GameClient* Client, const Frp
     return MessageHandleResult::Unhandled;
 }
 
+void MiscManager::Poll()
+{
+}
+
 MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestNotifyRingBell* Request = (Frpg2RequestMessage::RequestNotifyRingBell*)Message.Protobuf.get();
+    PlayerState& Player = Client->GetPlayerState();
 
-    // TODO: Implement
+    Frpg2RequestMessage::RequestNotifyRingBell* Request = (Frpg2RequestMessage::RequestNotifyRingBell*)Message.Protobuf.get();
+    
+    // List of locations the user should be in to recieve a push notification about the bell.
+    std::unordered_set<OnlineAreaId> NotifyLocations = {
+        OnlineAreaId::Archdragon_Peak_Start,
+        OnlineAreaId::Archdragon_Peak,
+        OnlineAreaId::Archdragon_Peak_Ancient_Wyvern,
+        OnlineAreaId::Archdragon_Peak_Dragon_kin_Mausoleum,
+        OnlineAreaId::Archdragon_Peak_Nameless_King_Bonfire,
+        OnlineAreaId::Archdragon_Peak_Second_Wyvern,
+        OnlineAreaId::Archdragon_Peak_Great_Belfry,
+        OnlineAreaId::Archdragon_Peak_Mausoleum_Lift
+    };
+
+    std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([Client, Request, NotifyLocations](const std::shared_ptr<GameClient>& OtherClient) {
+        return NotifyLocations.count(OtherClient->GetPlayerState().CurrentArea) > 0;
+    });
+
+    for (std::shared_ptr<GameClient>& OtherClient : PotentialTargets)
+    {
+        Frpg2RequestMessage::PushRequestNotifyRingBell PushMessage;
+        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestNotifyRingBell);
+        PushMessage.set_player_id(Player.PlayerId);
+        PushMessage.set_online_area_id(Request->online_area_id());
+        PushMessage.set_data(Request->data().data(), Request->data().size());
+
+        if (!OtherClient->MessageStream->Send(&PushMessage))
+        {
+            Warning("[%s] Failed to send push message for bell ring to player '%s'", Client->GetName().c_str(), OtherClient->GetName().c_str());
+        }
+    }
 
     Frpg2RequestMessage::RequestNotifyRingBellResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

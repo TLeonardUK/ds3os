@@ -26,6 +26,8 @@ public:
 
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
+    virtual void Poll() override;
+    
     virtual std::string GetName() override;
 
 protected:
