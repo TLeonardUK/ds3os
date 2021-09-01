@@ -1291,7 +1291,7 @@ const int PlayerStatus::kCanSummonForAldritchFaithfulFieldNumber;
 const int PlayerStatus::kCanSummonForSpearOfChurchFieldNumber;
 const int PlayerStatus::kUnknown13FieldNumber;
 const int PlayerStatus::kUnknown14FieldNumber;
-const int PlayerStatus::kGameWorldFieldNumber;
+const int PlayerStatus::kWorldTypeFieldNumber;
 const int PlayerStatus::kCovenantFieldNumber;
 const int PlayerStatus::kPlayedAreasFieldNumber;
 const int PlayerStatus::kUnknown18FieldNumber;
@@ -1416,7 +1416,7 @@ void PlayerStatus::SharedCtor() {
   can_summon_for_spear_of_church_ = 0u;
   unknown_13_ = 0u;
   unknown_14_ = 0u;
-  game_world_ = 0;
+  world_type_ = 0;
   covenant_ = 0u;
   embered_ = 0u;
   souls_ = 0u;
@@ -1539,7 +1539,7 @@ void PlayerStatus::Clear() {
     cross_region_matchmaking_disabled_ = false;
   }
   if (_has_bits_[8 / 32] & 65280) {
-    ZR_(unknown_9_, game_world_);
+    ZR_(unknown_9_, world_type_);
     covenant_ = 0u;
   }
   if (_has_bits_[16 / 32] & 16515072) {
@@ -1818,20 +1818,20 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(120)) goto parse_game_world;
+        if (input->ExpectTag(120)) goto parse_world_type;
         break;
       }
 
-      // optional .Frpg2PlayerData.WorldType game_world = 15;
+      // optional .Frpg2PlayerData.WorldType world_type = 15;
       case 15: {
         if (tag == 120) {
-         parse_game_world:
+         parse_world_type:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
           if (::Frpg2PlayerData::WorldType_IsValid(value)) {
-            set_game_world(static_cast< ::Frpg2PlayerData::WorldType >(value));
+            set_world_type(static_cast< ::Frpg2PlayerData::WorldType >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -2927,10 +2927,10 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(14, this->unknown_14(), output);
   }
 
-  // optional .Frpg2PlayerData.WorldType game_world = 15;
-  if (has_game_world()) {
+  // optional .Frpg2PlayerData.WorldType world_type = 15;
+  if (has_world_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      15, this->game_world(), output);
+      15, this->world_type(), output);
   }
 
   // optional uint32 covenant = 16;
@@ -3375,10 +3375,10 @@ int PlayerStatus::ByteSize() const {
           this->unknown_14());
     }
 
-    // optional .Frpg2PlayerData.WorldType game_world = 15;
-    if (has_game_world()) {
+    // optional .Frpg2PlayerData.WorldType world_type = 15;
+    if (has_world_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->game_world());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->world_type());
     }
 
     // optional uint32 covenant = 16;
@@ -3915,8 +3915,8 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_unknown_14()) {
       set_unknown_14(from.unknown_14());
     }
-    if (from.has_game_world()) {
-      set_game_world(from.game_world());
+    if (from.has_world_type()) {
+      set_world_type(from.world_type());
     }
     if (from.has_covenant()) {
       set_covenant(from.covenant());
@@ -4151,7 +4151,7 @@ void PlayerStatus::Swap(PlayerStatus* other) {
     std::swap(can_summon_for_spear_of_church_, other->can_summon_for_spear_of_church_);
     std::swap(unknown_13_, other->unknown_13_);
     std::swap(unknown_14_, other->unknown_14_);
-    std::swap(game_world_, other->game_world_);
+    std::swap(world_type_, other->world_type_);
     std::swap(covenant_, other->covenant_);
     played_areas_.Swap(&other->played_areas_);
     unknown_18_.Swap(&other->unknown_18_);
@@ -5500,16 +5500,16 @@ const int Equipment::kSpell12FieldNumber;
 const int Equipment::kSpell13FieldNumber;
 const int Equipment::kSpell14FieldNumber;
 const int Equipment::kCovenantItemFieldNumber;
-const int Equipment::kUnknown49FieldNumber;
-const int Equipment::kUnknown50FieldNumber;
-const int Equipment::kUnknown51FieldNumber;
-const int Equipment::kUnknown52FieldNumber;
-const int Equipment::kUnknown53FieldNumber;
-const int Equipment::kUnknown54FieldNumber;
-const int Equipment::kUnknown55FieldNumber;
-const int Equipment::kUnknown56FieldNumber;
-const int Equipment::kUnknown57FieldNumber;
-const int Equipment::kUnknown58FieldNumber;
+const int Equipment::kLeftWeapon1DurabilityFieldNumber;
+const int Equipment::kLeftWeapon2DurabilityFieldNumber;
+const int Equipment::kLeftWeapon3DurabilityFieldNumber;
+const int Equipment::kRightWeapon1DurabilityFieldNumber;
+const int Equipment::kRightWeapon2DurabilityFieldNumber;
+const int Equipment::kRightWeapon3DurabilityFieldNumber;
+const int Equipment::kHeadDurabilityFieldNumber;
+const int Equipment::kChestDurabilityFieldNumber;
+const int Equipment::kHandsDurabilityFieldNumber;
+const int Equipment::kLegsDurabilityFieldNumber;
 const int Equipment::kUnknown59FieldNumber;
 const int Equipment::kUnknown60FieldNumber;
 #endif  // !_MSC_VER
@@ -5580,16 +5580,16 @@ void Equipment::SharedCtor() {
   spell_13_ = 0;
   spell_14_ = 0;
   covenant_item_ = 0;
-  unknown_49_ = 0;
-  unknown_50_ = 0;
-  unknown_51_ = 0;
-  unknown_52_ = 0;
-  unknown_53_ = 0;
-  unknown_54_ = 0;
-  unknown_55_ = 0;
-  unknown_56_ = 0;
-  unknown_57_ = 0;
-  unknown_58_ = 0;
+  left_weapon_1_durability_ = 0;
+  left_weapon_2_durability_ = 0;
+  left_weapon_3_durability_ = 0;
+  right_weapon_1_durability_ = 0;
+  right_weapon_2_durability_ = 0;
+  right_weapon_3_durability_ = 0;
+  head_durability_ = 0;
+  chest_durability_ = 0;
+  hands_durability_ = 0;
+  legs_durability_ = 0;
   unknown_59_ = 0;
   unknown_60_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -5659,9 +5659,9 @@ void Equipment::Clear() {
     ZR_(spell_8_, covenant_item_);
   }
   if (_has_bits_[48 / 32] & 16711680) {
-    ZR_(unknown_49_, unknown_56_);
+    ZR_(left_weapon_1_durability_, chest_durability_);
   }
-  ZR_(unknown_57_, unknown_60_);
+  ZR_(hands_durability_, unknown_60_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -6399,153 +6399,153 @@ bool Equipment::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(392)) goto parse_unknown_49;
+        if (input->ExpectTag(392)) goto parse_left_weapon_1_durability;
         break;
       }
 
-      // optional int32 unknown_49 = 49;
+      // optional int32 left_weapon_1_durability = 49;
       case 49: {
         if (tag == 392) {
-         parse_unknown_49:
+         parse_left_weapon_1_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_49_)));
-          set_has_unknown_49();
+                 input, &left_weapon_1_durability_)));
+          set_has_left_weapon_1_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(400)) goto parse_unknown_50;
+        if (input->ExpectTag(400)) goto parse_left_weapon_2_durability;
         break;
       }
 
-      // optional int32 unknown_50 = 50;
+      // optional int32 left_weapon_2_durability = 50;
       case 50: {
         if (tag == 400) {
-         parse_unknown_50:
+         parse_left_weapon_2_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_50_)));
-          set_has_unknown_50();
+                 input, &left_weapon_2_durability_)));
+          set_has_left_weapon_2_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(408)) goto parse_unknown_51;
+        if (input->ExpectTag(408)) goto parse_left_weapon_3_durability;
         break;
       }
 
-      // optional int32 unknown_51 = 51;
+      // optional int32 left_weapon_3_durability = 51;
       case 51: {
         if (tag == 408) {
-         parse_unknown_51:
+         parse_left_weapon_3_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_51_)));
-          set_has_unknown_51();
+                 input, &left_weapon_3_durability_)));
+          set_has_left_weapon_3_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(416)) goto parse_unknown_52;
+        if (input->ExpectTag(416)) goto parse_right_weapon_1_durability;
         break;
       }
 
-      // optional int32 unknown_52 = 52;
+      // optional int32 right_weapon_1_durability = 52;
       case 52: {
         if (tag == 416) {
-         parse_unknown_52:
+         parse_right_weapon_1_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_52_)));
-          set_has_unknown_52();
+                 input, &right_weapon_1_durability_)));
+          set_has_right_weapon_1_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(424)) goto parse_unknown_53;
+        if (input->ExpectTag(424)) goto parse_right_weapon_2_durability;
         break;
       }
 
-      // optional int32 unknown_53 = 53;
+      // optional int32 right_weapon_2_durability = 53;
       case 53: {
         if (tag == 424) {
-         parse_unknown_53:
+         parse_right_weapon_2_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_53_)));
-          set_has_unknown_53();
+                 input, &right_weapon_2_durability_)));
+          set_has_right_weapon_2_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(432)) goto parse_unknown_54;
+        if (input->ExpectTag(432)) goto parse_right_weapon_3_durability;
         break;
       }
 
-      // optional int32 unknown_54 = 54;
+      // optional int32 right_weapon_3_durability = 54;
       case 54: {
         if (tag == 432) {
-         parse_unknown_54:
+         parse_right_weapon_3_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_54_)));
-          set_has_unknown_54();
+                 input, &right_weapon_3_durability_)));
+          set_has_right_weapon_3_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(440)) goto parse_unknown_55;
+        if (input->ExpectTag(440)) goto parse_head_durability;
         break;
       }
 
-      // optional int32 unknown_55 = 55;
+      // optional int32 head_durability = 55;
       case 55: {
         if (tag == 440) {
-         parse_unknown_55:
+         parse_head_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_55_)));
-          set_has_unknown_55();
+                 input, &head_durability_)));
+          set_has_head_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(448)) goto parse_unknown_56;
+        if (input->ExpectTag(448)) goto parse_chest_durability;
         break;
       }
 
-      // optional int32 unknown_56 = 56;
+      // optional int32 chest_durability = 56;
       case 56: {
         if (tag == 448) {
-         parse_unknown_56:
+         parse_chest_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_56_)));
-          set_has_unknown_56();
+                 input, &chest_durability_)));
+          set_has_chest_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(456)) goto parse_unknown_57;
+        if (input->ExpectTag(456)) goto parse_hands_durability;
         break;
       }
 
-      // optional int32 unknown_57 = 57;
+      // optional int32 hands_durability = 57;
       case 57: {
         if (tag == 456) {
-         parse_unknown_57:
+         parse_hands_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_57_)));
-          set_has_unknown_57();
+                 input, &hands_durability_)));
+          set_has_hands_durability();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(464)) goto parse_unknown_58;
+        if (input->ExpectTag(464)) goto parse_legs_durability;
         break;
       }
 
-      // optional int32 unknown_58 = 58;
+      // optional int32 legs_durability = 58;
       case 58: {
         if (tag == 464) {
-         parse_unknown_58:
+         parse_legs_durability:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &unknown_58_)));
-          set_has_unknown_58();
+                 input, &legs_durability_)));
+          set_has_legs_durability();
         } else {
           goto handle_unusual;
         }
@@ -6848,54 +6848,54 @@ void Equipment::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(48, this->covenant_item(), output);
   }
 
-  // optional int32 unknown_49 = 49;
-  if (has_unknown_49()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(49, this->unknown_49(), output);
+  // optional int32 left_weapon_1_durability = 49;
+  if (has_left_weapon_1_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(49, this->left_weapon_1_durability(), output);
   }
 
-  // optional int32 unknown_50 = 50;
-  if (has_unknown_50()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(50, this->unknown_50(), output);
+  // optional int32 left_weapon_2_durability = 50;
+  if (has_left_weapon_2_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(50, this->left_weapon_2_durability(), output);
   }
 
-  // optional int32 unknown_51 = 51;
-  if (has_unknown_51()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(51, this->unknown_51(), output);
+  // optional int32 left_weapon_3_durability = 51;
+  if (has_left_weapon_3_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(51, this->left_weapon_3_durability(), output);
   }
 
-  // optional int32 unknown_52 = 52;
-  if (has_unknown_52()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(52, this->unknown_52(), output);
+  // optional int32 right_weapon_1_durability = 52;
+  if (has_right_weapon_1_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(52, this->right_weapon_1_durability(), output);
   }
 
-  // optional int32 unknown_53 = 53;
-  if (has_unknown_53()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(53, this->unknown_53(), output);
+  // optional int32 right_weapon_2_durability = 53;
+  if (has_right_weapon_2_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(53, this->right_weapon_2_durability(), output);
   }
 
-  // optional int32 unknown_54 = 54;
-  if (has_unknown_54()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(54, this->unknown_54(), output);
+  // optional int32 right_weapon_3_durability = 54;
+  if (has_right_weapon_3_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(54, this->right_weapon_3_durability(), output);
   }
 
-  // optional int32 unknown_55 = 55;
-  if (has_unknown_55()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(55, this->unknown_55(), output);
+  // optional int32 head_durability = 55;
+  if (has_head_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(55, this->head_durability(), output);
   }
 
-  // optional int32 unknown_56 = 56;
-  if (has_unknown_56()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(56, this->unknown_56(), output);
+  // optional int32 chest_durability = 56;
+  if (has_chest_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(56, this->chest_durability(), output);
   }
 
-  // optional int32 unknown_57 = 57;
-  if (has_unknown_57()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(57, this->unknown_57(), output);
+  // optional int32 hands_durability = 57;
+  if (has_hands_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(57, this->hands_durability(), output);
   }
 
-  // optional int32 unknown_58 = 58;
-  if (has_unknown_58()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(58, this->unknown_58(), output);
+  // optional int32 legs_durability = 58;
+  if (has_legs_durability()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(58, this->legs_durability(), output);
   }
 
   // optional int32 unknown_59 = 59;
@@ -7265,76 +7265,76 @@ int Equipment::ByteSize() const {
 
   }
   if (_has_bits_[48 / 32] & (0xffu << (48 % 32))) {
-    // optional int32 unknown_49 = 49;
-    if (has_unknown_49()) {
+    // optional int32 left_weapon_1_durability = 49;
+    if (has_left_weapon_1_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_49());
+          this->left_weapon_1_durability());
     }
 
-    // optional int32 unknown_50 = 50;
-    if (has_unknown_50()) {
+    // optional int32 left_weapon_2_durability = 50;
+    if (has_left_weapon_2_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_50());
+          this->left_weapon_2_durability());
     }
 
-    // optional int32 unknown_51 = 51;
-    if (has_unknown_51()) {
+    // optional int32 left_weapon_3_durability = 51;
+    if (has_left_weapon_3_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_51());
+          this->left_weapon_3_durability());
     }
 
-    // optional int32 unknown_52 = 52;
-    if (has_unknown_52()) {
+    // optional int32 right_weapon_1_durability = 52;
+    if (has_right_weapon_1_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_52());
+          this->right_weapon_1_durability());
     }
 
-    // optional int32 unknown_53 = 53;
-    if (has_unknown_53()) {
+    // optional int32 right_weapon_2_durability = 53;
+    if (has_right_weapon_2_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_53());
+          this->right_weapon_2_durability());
     }
 
-    // optional int32 unknown_54 = 54;
-    if (has_unknown_54()) {
+    // optional int32 right_weapon_3_durability = 54;
+    if (has_right_weapon_3_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_54());
+          this->right_weapon_3_durability());
     }
 
-    // optional int32 unknown_55 = 55;
-    if (has_unknown_55()) {
+    // optional int32 head_durability = 55;
+    if (has_head_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_55());
+          this->head_durability());
     }
 
-    // optional int32 unknown_56 = 56;
-    if (has_unknown_56()) {
+    // optional int32 chest_durability = 56;
+    if (has_chest_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_56());
+          this->chest_durability());
     }
 
   }
   if (_has_bits_[56 / 32] & (0xffu << (56 % 32))) {
-    // optional int32 unknown_57 = 57;
-    if (has_unknown_57()) {
+    // optional int32 hands_durability = 57;
+    if (has_hands_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_57());
+          this->hands_durability());
     }
 
-    // optional int32 unknown_58 = 58;
-    if (has_unknown_58()) {
+    // optional int32 legs_durability = 58;
+    if (has_legs_durability()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->unknown_58());
+          this->legs_durability());
     }
 
     // optional int32 unknown_59 = 59;
@@ -7524,37 +7524,37 @@ void Equipment::MergeFrom(const Equipment& from) {
     }
   }
   if (from._has_bits_[48 / 32] & (0xffu << (48 % 32))) {
-    if (from.has_unknown_49()) {
-      set_unknown_49(from.unknown_49());
+    if (from.has_left_weapon_1_durability()) {
+      set_left_weapon_1_durability(from.left_weapon_1_durability());
     }
-    if (from.has_unknown_50()) {
-      set_unknown_50(from.unknown_50());
+    if (from.has_left_weapon_2_durability()) {
+      set_left_weapon_2_durability(from.left_weapon_2_durability());
     }
-    if (from.has_unknown_51()) {
-      set_unknown_51(from.unknown_51());
+    if (from.has_left_weapon_3_durability()) {
+      set_left_weapon_3_durability(from.left_weapon_3_durability());
     }
-    if (from.has_unknown_52()) {
-      set_unknown_52(from.unknown_52());
+    if (from.has_right_weapon_1_durability()) {
+      set_right_weapon_1_durability(from.right_weapon_1_durability());
     }
-    if (from.has_unknown_53()) {
-      set_unknown_53(from.unknown_53());
+    if (from.has_right_weapon_2_durability()) {
+      set_right_weapon_2_durability(from.right_weapon_2_durability());
     }
-    if (from.has_unknown_54()) {
-      set_unknown_54(from.unknown_54());
+    if (from.has_right_weapon_3_durability()) {
+      set_right_weapon_3_durability(from.right_weapon_3_durability());
     }
-    if (from.has_unknown_55()) {
-      set_unknown_55(from.unknown_55());
+    if (from.has_head_durability()) {
+      set_head_durability(from.head_durability());
     }
-    if (from.has_unknown_56()) {
-      set_unknown_56(from.unknown_56());
+    if (from.has_chest_durability()) {
+      set_chest_durability(from.chest_durability());
     }
   }
   if (from._has_bits_[56 / 32] & (0xffu << (56 % 32))) {
-    if (from.has_unknown_57()) {
-      set_unknown_57(from.unknown_57());
+    if (from.has_hands_durability()) {
+      set_hands_durability(from.hands_durability());
     }
-    if (from.has_unknown_58()) {
-      set_unknown_58(from.unknown_58());
+    if (from.has_legs_durability()) {
+      set_legs_durability(from.legs_durability());
     }
     if (from.has_unknown_59()) {
       set_unknown_59(from.unknown_59());
@@ -7627,16 +7627,16 @@ void Equipment::Swap(Equipment* other) {
     std::swap(spell_13_, other->spell_13_);
     std::swap(spell_14_, other->spell_14_);
     std::swap(covenant_item_, other->covenant_item_);
-    std::swap(unknown_49_, other->unknown_49_);
-    std::swap(unknown_50_, other->unknown_50_);
-    std::swap(unknown_51_, other->unknown_51_);
-    std::swap(unknown_52_, other->unknown_52_);
-    std::swap(unknown_53_, other->unknown_53_);
-    std::swap(unknown_54_, other->unknown_54_);
-    std::swap(unknown_55_, other->unknown_55_);
-    std::swap(unknown_56_, other->unknown_56_);
-    std::swap(unknown_57_, other->unknown_57_);
-    std::swap(unknown_58_, other->unknown_58_);
+    std::swap(left_weapon_1_durability_, other->left_weapon_1_durability_);
+    std::swap(left_weapon_2_durability_, other->left_weapon_2_durability_);
+    std::swap(left_weapon_3_durability_, other->left_weapon_3_durability_);
+    std::swap(right_weapon_1_durability_, other->right_weapon_1_durability_);
+    std::swap(right_weapon_2_durability_, other->right_weapon_2_durability_);
+    std::swap(right_weapon_3_durability_, other->right_weapon_3_durability_);
+    std::swap(head_durability_, other->head_durability_);
+    std::swap(chest_durability_, other->chest_durability_);
+    std::swap(hands_durability_, other->hands_durability_);
+    std::swap(legs_durability_, other->legs_durability_);
     std::swap(unknown_59_, other->unknown_59_);
     std::swap(unknown_60_, other->unknown_60_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -7654,8 +7654,8 @@ void Equipment::Swap(Equipment* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int PlayerLocation::kOnlineAreaIdLowerFieldNumber;
-const int PlayerLocation::kOnlineAreaIdUpperFieldNumber;
+const int PlayerLocation::kMapIdFieldNumber;
+const int PlayerLocation::kOnlineAreaIdFieldNumber;
 #endif  // !_MSC_VER
 
 PlayerLocation::PlayerLocation()
@@ -7676,8 +7676,8 @@ PlayerLocation::PlayerLocation(const PlayerLocation& from)
 
 void PlayerLocation::SharedCtor() {
   _cached_size_ = 0;
-  online_area_id_lower_ = 0u;
-  online_area_id_upper_ = 0u;
+  map_id_ = 0u;
+  online_area_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7726,7 +7726,7 @@ void PlayerLocation::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(online_area_id_lower_, online_area_id_upper_);
+  ZR_(map_id_, online_area_id_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -7749,28 +7749,28 @@ bool PlayerLocation::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 online_area_id_lower = 1;
+      // optional uint32 map_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_area_id_lower_)));
-          set_has_online_area_id_lower();
+                 input, &map_id_)));
+          set_has_map_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_online_area_id_upper;
+        if (input->ExpectTag(16)) goto parse_online_area_id;
         break;
       }
 
-      // optional uint32 online_area_id_upper = 2;
+      // optional uint32 online_area_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_online_area_id_upper:
+         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_area_id_upper_)));
-          set_has_online_area_id_upper();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
@@ -7803,14 +7803,14 @@ failure:
 void PlayerLocation::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2PlayerData.PlayerLocation)
-  // optional uint32 online_area_id_lower = 1;
-  if (has_online_area_id_lower()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id_lower(), output);
+  // optional uint32 map_id = 1;
+  if (has_map_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->map_id(), output);
   }
 
-  // optional uint32 online_area_id_upper = 2;
-  if (has_online_area_id_upper()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id_upper(), output);
+  // optional uint32 online_area_id = 2;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -7822,18 +7822,18 @@ int PlayerLocation::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional uint32 online_area_id_lower = 1;
-    if (has_online_area_id_lower()) {
+    // optional uint32 map_id = 1;
+    if (has_map_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->online_area_id_lower());
+          this->map_id());
     }
 
-    // optional uint32 online_area_id_upper = 2;
-    if (has_online_area_id_upper()) {
+    // optional uint32 online_area_id = 2;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->online_area_id_upper());
+          this->online_area_id());
     }
 
   }
@@ -7853,11 +7853,11 @@ void PlayerLocation::CheckTypeAndMergeFrom(
 void PlayerLocation::MergeFrom(const PlayerLocation& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_online_area_id_lower()) {
-      set_online_area_id_lower(from.online_area_id_lower());
+    if (from.has_map_id()) {
+      set_map_id(from.map_id());
     }
-    if (from.has_online_area_id_upper()) {
-      set_online_area_id_upper(from.online_area_id_upper());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -7876,8 +7876,8 @@ bool PlayerLocation::IsInitialized() const {
 
 void PlayerLocation::Swap(PlayerLocation* other) {
   if (other != this) {
-    std::swap(online_area_id_lower_, other->online_area_id_lower_);
-    std::swap(online_area_id_upper_, other->online_area_id_upper_);
+    std::swap(map_id_, other->map_id_);
+    std::swap(online_area_id_, other->online_area_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

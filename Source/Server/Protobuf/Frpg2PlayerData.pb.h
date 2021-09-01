@@ -688,12 +688,12 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_14() const;
   inline void set_unknown_14(::google::protobuf::uint32 value);
 
-  // optional .Frpg2PlayerData.WorldType game_world = 15;
-  inline bool has_game_world() const;
-  inline void clear_game_world();
-  static const int kGameWorldFieldNumber = 15;
-  inline ::Frpg2PlayerData::WorldType game_world() const;
-  inline void set_game_world(::Frpg2PlayerData::WorldType value);
+  // optional .Frpg2PlayerData.WorldType world_type = 15;
+  inline bool has_world_type() const;
+  inline void clear_world_type();
+  static const int kWorldTypeFieldNumber = 15;
+  inline ::Frpg2PlayerData::WorldType world_type() const;
+  inline void set_world_type(::Frpg2PlayerData::WorldType value);
 
   // optional uint32 covenant = 16;
   inline bool has_covenant() const;
@@ -1208,8 +1208,8 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_13();
   inline void set_has_unknown_14();
   inline void clear_has_unknown_14();
-  inline void set_has_game_world();
-  inline void clear_has_game_world();
+  inline void set_has_world_type();
+  inline void clear_has_world_type();
   inline void set_has_covenant();
   inline void clear_has_covenant();
   inline void set_has_embered();
@@ -1352,7 +1352,7 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 can_summon_for_spear_of_church_;
   ::google::protobuf::uint32 unknown_13_;
   ::google::protobuf::uint32 unknown_14_;
-  int game_world_;
+  int world_type_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > played_areas_;
   ::google::protobuf::uint32 covenant_;
   ::google::protobuf::uint32 embered_;
@@ -2278,75 +2278,75 @@ class Equipment : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 covenant_item() const;
   inline void set_covenant_item(::google::protobuf::int32 value);
 
-  // optional int32 unknown_49 = 49;
-  inline bool has_unknown_49() const;
-  inline void clear_unknown_49();
-  static const int kUnknown49FieldNumber = 49;
-  inline ::google::protobuf::int32 unknown_49() const;
-  inline void set_unknown_49(::google::protobuf::int32 value);
+  // optional int32 left_weapon_1_durability = 49;
+  inline bool has_left_weapon_1_durability() const;
+  inline void clear_left_weapon_1_durability();
+  static const int kLeftWeapon1DurabilityFieldNumber = 49;
+  inline ::google::protobuf::int32 left_weapon_1_durability() const;
+  inline void set_left_weapon_1_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_50 = 50;
-  inline bool has_unknown_50() const;
-  inline void clear_unknown_50();
-  static const int kUnknown50FieldNumber = 50;
-  inline ::google::protobuf::int32 unknown_50() const;
-  inline void set_unknown_50(::google::protobuf::int32 value);
+  // optional int32 left_weapon_2_durability = 50;
+  inline bool has_left_weapon_2_durability() const;
+  inline void clear_left_weapon_2_durability();
+  static const int kLeftWeapon2DurabilityFieldNumber = 50;
+  inline ::google::protobuf::int32 left_weapon_2_durability() const;
+  inline void set_left_weapon_2_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_51 = 51;
-  inline bool has_unknown_51() const;
-  inline void clear_unknown_51();
-  static const int kUnknown51FieldNumber = 51;
-  inline ::google::protobuf::int32 unknown_51() const;
-  inline void set_unknown_51(::google::protobuf::int32 value);
+  // optional int32 left_weapon_3_durability = 51;
+  inline bool has_left_weapon_3_durability() const;
+  inline void clear_left_weapon_3_durability();
+  static const int kLeftWeapon3DurabilityFieldNumber = 51;
+  inline ::google::protobuf::int32 left_weapon_3_durability() const;
+  inline void set_left_weapon_3_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_52 = 52;
-  inline bool has_unknown_52() const;
-  inline void clear_unknown_52();
-  static const int kUnknown52FieldNumber = 52;
-  inline ::google::protobuf::int32 unknown_52() const;
-  inline void set_unknown_52(::google::protobuf::int32 value);
+  // optional int32 right_weapon_1_durability = 52;
+  inline bool has_right_weapon_1_durability() const;
+  inline void clear_right_weapon_1_durability();
+  static const int kRightWeapon1DurabilityFieldNumber = 52;
+  inline ::google::protobuf::int32 right_weapon_1_durability() const;
+  inline void set_right_weapon_1_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_53 = 53;
-  inline bool has_unknown_53() const;
-  inline void clear_unknown_53();
-  static const int kUnknown53FieldNumber = 53;
-  inline ::google::protobuf::int32 unknown_53() const;
-  inline void set_unknown_53(::google::protobuf::int32 value);
+  // optional int32 right_weapon_2_durability = 53;
+  inline bool has_right_weapon_2_durability() const;
+  inline void clear_right_weapon_2_durability();
+  static const int kRightWeapon2DurabilityFieldNumber = 53;
+  inline ::google::protobuf::int32 right_weapon_2_durability() const;
+  inline void set_right_weapon_2_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_54 = 54;
-  inline bool has_unknown_54() const;
-  inline void clear_unknown_54();
-  static const int kUnknown54FieldNumber = 54;
-  inline ::google::protobuf::int32 unknown_54() const;
-  inline void set_unknown_54(::google::protobuf::int32 value);
+  // optional int32 right_weapon_3_durability = 54;
+  inline bool has_right_weapon_3_durability() const;
+  inline void clear_right_weapon_3_durability();
+  static const int kRightWeapon3DurabilityFieldNumber = 54;
+  inline ::google::protobuf::int32 right_weapon_3_durability() const;
+  inline void set_right_weapon_3_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_55 = 55;
-  inline bool has_unknown_55() const;
-  inline void clear_unknown_55();
-  static const int kUnknown55FieldNumber = 55;
-  inline ::google::protobuf::int32 unknown_55() const;
-  inline void set_unknown_55(::google::protobuf::int32 value);
+  // optional int32 head_durability = 55;
+  inline bool has_head_durability() const;
+  inline void clear_head_durability();
+  static const int kHeadDurabilityFieldNumber = 55;
+  inline ::google::protobuf::int32 head_durability() const;
+  inline void set_head_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_56 = 56;
-  inline bool has_unknown_56() const;
-  inline void clear_unknown_56();
-  static const int kUnknown56FieldNumber = 56;
-  inline ::google::protobuf::int32 unknown_56() const;
-  inline void set_unknown_56(::google::protobuf::int32 value);
+  // optional int32 chest_durability = 56;
+  inline bool has_chest_durability() const;
+  inline void clear_chest_durability();
+  static const int kChestDurabilityFieldNumber = 56;
+  inline ::google::protobuf::int32 chest_durability() const;
+  inline void set_chest_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_57 = 57;
-  inline bool has_unknown_57() const;
-  inline void clear_unknown_57();
-  static const int kUnknown57FieldNumber = 57;
-  inline ::google::protobuf::int32 unknown_57() const;
-  inline void set_unknown_57(::google::protobuf::int32 value);
+  // optional int32 hands_durability = 57;
+  inline bool has_hands_durability() const;
+  inline void clear_hands_durability();
+  static const int kHandsDurabilityFieldNumber = 57;
+  inline ::google::protobuf::int32 hands_durability() const;
+  inline void set_hands_durability(::google::protobuf::int32 value);
 
-  // optional int32 unknown_58 = 58;
-  inline bool has_unknown_58() const;
-  inline void clear_unknown_58();
-  static const int kUnknown58FieldNumber = 58;
-  inline ::google::protobuf::int32 unknown_58() const;
-  inline void set_unknown_58(::google::protobuf::int32 value);
+  // optional int32 legs_durability = 58;
+  inline bool has_legs_durability() const;
+  inline void clear_legs_durability();
+  static const int kLegsDurabilityFieldNumber = 58;
+  inline ::google::protobuf::int32 legs_durability() const;
+  inline void set_legs_durability(::google::protobuf::int32 value);
 
   // optional int32 unknown_59 = 59;
   inline bool has_unknown_59() const;
@@ -2460,26 +2460,26 @@ class Equipment : public ::google::protobuf::MessageLite {
   inline void clear_has_spell_14();
   inline void set_has_covenant_item();
   inline void clear_has_covenant_item();
-  inline void set_has_unknown_49();
-  inline void clear_has_unknown_49();
-  inline void set_has_unknown_50();
-  inline void clear_has_unknown_50();
-  inline void set_has_unknown_51();
-  inline void clear_has_unknown_51();
-  inline void set_has_unknown_52();
-  inline void clear_has_unknown_52();
-  inline void set_has_unknown_53();
-  inline void clear_has_unknown_53();
-  inline void set_has_unknown_54();
-  inline void clear_has_unknown_54();
-  inline void set_has_unknown_55();
-  inline void clear_has_unknown_55();
-  inline void set_has_unknown_56();
-  inline void clear_has_unknown_56();
-  inline void set_has_unknown_57();
-  inline void clear_has_unknown_57();
-  inline void set_has_unknown_58();
-  inline void clear_has_unknown_58();
+  inline void set_has_left_weapon_1_durability();
+  inline void clear_has_left_weapon_1_durability();
+  inline void set_has_left_weapon_2_durability();
+  inline void clear_has_left_weapon_2_durability();
+  inline void set_has_left_weapon_3_durability();
+  inline void clear_has_left_weapon_3_durability();
+  inline void set_has_right_weapon_1_durability();
+  inline void clear_has_right_weapon_1_durability();
+  inline void set_has_right_weapon_2_durability();
+  inline void clear_has_right_weapon_2_durability();
+  inline void set_has_right_weapon_3_durability();
+  inline void clear_has_right_weapon_3_durability();
+  inline void set_has_head_durability();
+  inline void clear_has_head_durability();
+  inline void set_has_chest_durability();
+  inline void clear_has_chest_durability();
+  inline void set_has_hands_durability();
+  inline void clear_has_hands_durability();
+  inline void set_has_legs_durability();
+  inline void clear_has_legs_durability();
   inline void set_has_unknown_59();
   inline void clear_has_unknown_59();
   inline void set_has_unknown_60();
@@ -2536,16 +2536,16 @@ class Equipment : public ::google::protobuf::MessageLite {
   ::google::protobuf::int32 spell_13_;
   ::google::protobuf::int32 spell_14_;
   ::google::protobuf::int32 covenant_item_;
-  ::google::protobuf::int32 unknown_49_;
-  ::google::protobuf::int32 unknown_50_;
-  ::google::protobuf::int32 unknown_51_;
-  ::google::protobuf::int32 unknown_52_;
-  ::google::protobuf::int32 unknown_53_;
-  ::google::protobuf::int32 unknown_54_;
-  ::google::protobuf::int32 unknown_55_;
-  ::google::protobuf::int32 unknown_56_;
-  ::google::protobuf::int32 unknown_57_;
-  ::google::protobuf::int32 unknown_58_;
+  ::google::protobuf::int32 left_weapon_1_durability_;
+  ::google::protobuf::int32 left_weapon_2_durability_;
+  ::google::protobuf::int32 left_weapon_3_durability_;
+  ::google::protobuf::int32 right_weapon_1_durability_;
+  ::google::protobuf::int32 right_weapon_2_durability_;
+  ::google::protobuf::int32 right_weapon_3_durability_;
+  ::google::protobuf::int32 head_durability_;
+  ::google::protobuf::int32 chest_durability_;
+  ::google::protobuf::int32 hands_durability_;
+  ::google::protobuf::int32 legs_durability_;
   ::google::protobuf::int32 unknown_59_;
   ::google::protobuf::int32 unknown_60_;
   mutable int _cached_size_;
@@ -2623,33 +2623,33 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 online_area_id_lower = 1;
-  inline bool has_online_area_id_lower() const;
-  inline void clear_online_area_id_lower();
-  static const int kOnlineAreaIdLowerFieldNumber = 1;
-  inline ::google::protobuf::uint32 online_area_id_lower() const;
-  inline void set_online_area_id_lower(::google::protobuf::uint32 value);
+  // optional uint32 map_id = 1;
+  inline bool has_map_id() const;
+  inline void clear_map_id();
+  static const int kMapIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 map_id() const;
+  inline void set_map_id(::google::protobuf::uint32 value);
 
-  // optional uint32 online_area_id_upper = 2;
-  inline bool has_online_area_id_upper() const;
-  inline void clear_online_area_id_upper();
-  static const int kOnlineAreaIdUpperFieldNumber = 2;
-  inline ::google::protobuf::uint32 online_area_id_upper() const;
-  inline void set_online_area_id_upper(::google::protobuf::uint32 value);
+  // optional uint32 online_area_id = 2;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:Frpg2PlayerData.PlayerLocation)
  private:
-  inline void set_has_online_area_id_lower();
-  inline void clear_has_online_area_id_lower();
-  inline void set_has_online_area_id_upper();
-  inline void clear_has_online_area_id_upper();
+  inline void set_has_map_id();
+  inline void clear_has_map_id();
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 online_area_id_lower_;
-  ::google::protobuf::uint32 online_area_id_upper_;
+  ::google::protobuf::uint32 map_id_;
+  ::google::protobuf::uint32 online_area_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2PlayerData_2eproto_impl();
   #else
@@ -4278,29 +4278,29 @@ inline void PlayerStatus::set_unknown_14(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerStatus.unknown_14)
 }
 
-// optional .Frpg2PlayerData.WorldType game_world = 15;
-inline bool PlayerStatus::has_game_world() const {
+// optional .Frpg2PlayerData.WorldType world_type = 15;
+inline bool PlayerStatus::has_world_type() const {
   return (_has_bits_[0] & 0x00004000u) != 0;
 }
-inline void PlayerStatus::set_has_game_world() {
+inline void PlayerStatus::set_has_world_type() {
   _has_bits_[0] |= 0x00004000u;
 }
-inline void PlayerStatus::clear_has_game_world() {
+inline void PlayerStatus::clear_has_world_type() {
   _has_bits_[0] &= ~0x00004000u;
 }
-inline void PlayerStatus::clear_game_world() {
-  game_world_ = 0;
-  clear_has_game_world();
+inline void PlayerStatus::clear_world_type() {
+  world_type_ = 0;
+  clear_has_world_type();
 }
-inline ::Frpg2PlayerData::WorldType PlayerStatus::game_world() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerStatus.game_world)
-  return static_cast< ::Frpg2PlayerData::WorldType >(game_world_);
+inline ::Frpg2PlayerData::WorldType PlayerStatus::world_type() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerStatus.world_type)
+  return static_cast< ::Frpg2PlayerData::WorldType >(world_type_);
 }
-inline void PlayerStatus::set_game_world(::Frpg2PlayerData::WorldType value) {
+inline void PlayerStatus::set_world_type(::Frpg2PlayerData::WorldType value) {
   assert(::Frpg2PlayerData::WorldType_IsValid(value));
-  set_has_game_world();
-  game_world_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerStatus.game_world)
+  set_has_world_type();
+  world_type_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerStatus.world_type)
 }
 
 // optional uint32 covenant = 16;
@@ -7730,244 +7730,244 @@ inline void Equipment::set_covenant_item(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.covenant_item)
 }
 
-// optional int32 unknown_49 = 49;
-inline bool Equipment::has_unknown_49() const {
+// optional int32 left_weapon_1_durability = 49;
+inline bool Equipment::has_left_weapon_1_durability() const {
   return (_has_bits_[1] & 0x00010000u) != 0;
 }
-inline void Equipment::set_has_unknown_49() {
+inline void Equipment::set_has_left_weapon_1_durability() {
   _has_bits_[1] |= 0x00010000u;
 }
-inline void Equipment::clear_has_unknown_49() {
+inline void Equipment::clear_has_left_weapon_1_durability() {
   _has_bits_[1] &= ~0x00010000u;
 }
-inline void Equipment::clear_unknown_49() {
-  unknown_49_ = 0;
-  clear_has_unknown_49();
+inline void Equipment::clear_left_weapon_1_durability() {
+  left_weapon_1_durability_ = 0;
+  clear_has_left_weapon_1_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_49() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_49)
-  return unknown_49_;
+inline ::google::protobuf::int32 Equipment::left_weapon_1_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.left_weapon_1_durability)
+  return left_weapon_1_durability_;
 }
-inline void Equipment::set_unknown_49(::google::protobuf::int32 value) {
-  set_has_unknown_49();
-  unknown_49_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_49)
+inline void Equipment::set_left_weapon_1_durability(::google::protobuf::int32 value) {
+  set_has_left_weapon_1_durability();
+  left_weapon_1_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.left_weapon_1_durability)
 }
 
-// optional int32 unknown_50 = 50;
-inline bool Equipment::has_unknown_50() const {
+// optional int32 left_weapon_2_durability = 50;
+inline bool Equipment::has_left_weapon_2_durability() const {
   return (_has_bits_[1] & 0x00020000u) != 0;
 }
-inline void Equipment::set_has_unknown_50() {
+inline void Equipment::set_has_left_weapon_2_durability() {
   _has_bits_[1] |= 0x00020000u;
 }
-inline void Equipment::clear_has_unknown_50() {
+inline void Equipment::clear_has_left_weapon_2_durability() {
   _has_bits_[1] &= ~0x00020000u;
 }
-inline void Equipment::clear_unknown_50() {
-  unknown_50_ = 0;
-  clear_has_unknown_50();
+inline void Equipment::clear_left_weapon_2_durability() {
+  left_weapon_2_durability_ = 0;
+  clear_has_left_weapon_2_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_50() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_50)
-  return unknown_50_;
+inline ::google::protobuf::int32 Equipment::left_weapon_2_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.left_weapon_2_durability)
+  return left_weapon_2_durability_;
 }
-inline void Equipment::set_unknown_50(::google::protobuf::int32 value) {
-  set_has_unknown_50();
-  unknown_50_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_50)
+inline void Equipment::set_left_weapon_2_durability(::google::protobuf::int32 value) {
+  set_has_left_weapon_2_durability();
+  left_weapon_2_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.left_weapon_2_durability)
 }
 
-// optional int32 unknown_51 = 51;
-inline bool Equipment::has_unknown_51() const {
+// optional int32 left_weapon_3_durability = 51;
+inline bool Equipment::has_left_weapon_3_durability() const {
   return (_has_bits_[1] & 0x00040000u) != 0;
 }
-inline void Equipment::set_has_unknown_51() {
+inline void Equipment::set_has_left_weapon_3_durability() {
   _has_bits_[1] |= 0x00040000u;
 }
-inline void Equipment::clear_has_unknown_51() {
+inline void Equipment::clear_has_left_weapon_3_durability() {
   _has_bits_[1] &= ~0x00040000u;
 }
-inline void Equipment::clear_unknown_51() {
-  unknown_51_ = 0;
-  clear_has_unknown_51();
+inline void Equipment::clear_left_weapon_3_durability() {
+  left_weapon_3_durability_ = 0;
+  clear_has_left_weapon_3_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_51() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_51)
-  return unknown_51_;
+inline ::google::protobuf::int32 Equipment::left_weapon_3_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.left_weapon_3_durability)
+  return left_weapon_3_durability_;
 }
-inline void Equipment::set_unknown_51(::google::protobuf::int32 value) {
-  set_has_unknown_51();
-  unknown_51_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_51)
+inline void Equipment::set_left_weapon_3_durability(::google::protobuf::int32 value) {
+  set_has_left_weapon_3_durability();
+  left_weapon_3_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.left_weapon_3_durability)
 }
 
-// optional int32 unknown_52 = 52;
-inline bool Equipment::has_unknown_52() const {
+// optional int32 right_weapon_1_durability = 52;
+inline bool Equipment::has_right_weapon_1_durability() const {
   return (_has_bits_[1] & 0x00080000u) != 0;
 }
-inline void Equipment::set_has_unknown_52() {
+inline void Equipment::set_has_right_weapon_1_durability() {
   _has_bits_[1] |= 0x00080000u;
 }
-inline void Equipment::clear_has_unknown_52() {
+inline void Equipment::clear_has_right_weapon_1_durability() {
   _has_bits_[1] &= ~0x00080000u;
 }
-inline void Equipment::clear_unknown_52() {
-  unknown_52_ = 0;
-  clear_has_unknown_52();
+inline void Equipment::clear_right_weapon_1_durability() {
+  right_weapon_1_durability_ = 0;
+  clear_has_right_weapon_1_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_52() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_52)
-  return unknown_52_;
+inline ::google::protobuf::int32 Equipment::right_weapon_1_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.right_weapon_1_durability)
+  return right_weapon_1_durability_;
 }
-inline void Equipment::set_unknown_52(::google::protobuf::int32 value) {
-  set_has_unknown_52();
-  unknown_52_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_52)
+inline void Equipment::set_right_weapon_1_durability(::google::protobuf::int32 value) {
+  set_has_right_weapon_1_durability();
+  right_weapon_1_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.right_weapon_1_durability)
 }
 
-// optional int32 unknown_53 = 53;
-inline bool Equipment::has_unknown_53() const {
+// optional int32 right_weapon_2_durability = 53;
+inline bool Equipment::has_right_weapon_2_durability() const {
   return (_has_bits_[1] & 0x00100000u) != 0;
 }
-inline void Equipment::set_has_unknown_53() {
+inline void Equipment::set_has_right_weapon_2_durability() {
   _has_bits_[1] |= 0x00100000u;
 }
-inline void Equipment::clear_has_unknown_53() {
+inline void Equipment::clear_has_right_weapon_2_durability() {
   _has_bits_[1] &= ~0x00100000u;
 }
-inline void Equipment::clear_unknown_53() {
-  unknown_53_ = 0;
-  clear_has_unknown_53();
+inline void Equipment::clear_right_weapon_2_durability() {
+  right_weapon_2_durability_ = 0;
+  clear_has_right_weapon_2_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_53() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_53)
-  return unknown_53_;
+inline ::google::protobuf::int32 Equipment::right_weapon_2_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.right_weapon_2_durability)
+  return right_weapon_2_durability_;
 }
-inline void Equipment::set_unknown_53(::google::protobuf::int32 value) {
-  set_has_unknown_53();
-  unknown_53_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_53)
+inline void Equipment::set_right_weapon_2_durability(::google::protobuf::int32 value) {
+  set_has_right_weapon_2_durability();
+  right_weapon_2_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.right_weapon_2_durability)
 }
 
-// optional int32 unknown_54 = 54;
-inline bool Equipment::has_unknown_54() const {
+// optional int32 right_weapon_3_durability = 54;
+inline bool Equipment::has_right_weapon_3_durability() const {
   return (_has_bits_[1] & 0x00200000u) != 0;
 }
-inline void Equipment::set_has_unknown_54() {
+inline void Equipment::set_has_right_weapon_3_durability() {
   _has_bits_[1] |= 0x00200000u;
 }
-inline void Equipment::clear_has_unknown_54() {
+inline void Equipment::clear_has_right_weapon_3_durability() {
   _has_bits_[1] &= ~0x00200000u;
 }
-inline void Equipment::clear_unknown_54() {
-  unknown_54_ = 0;
-  clear_has_unknown_54();
+inline void Equipment::clear_right_weapon_3_durability() {
+  right_weapon_3_durability_ = 0;
+  clear_has_right_weapon_3_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_54() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_54)
-  return unknown_54_;
+inline ::google::protobuf::int32 Equipment::right_weapon_3_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.right_weapon_3_durability)
+  return right_weapon_3_durability_;
 }
-inline void Equipment::set_unknown_54(::google::protobuf::int32 value) {
-  set_has_unknown_54();
-  unknown_54_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_54)
+inline void Equipment::set_right_weapon_3_durability(::google::protobuf::int32 value) {
+  set_has_right_weapon_3_durability();
+  right_weapon_3_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.right_weapon_3_durability)
 }
 
-// optional int32 unknown_55 = 55;
-inline bool Equipment::has_unknown_55() const {
+// optional int32 head_durability = 55;
+inline bool Equipment::has_head_durability() const {
   return (_has_bits_[1] & 0x00400000u) != 0;
 }
-inline void Equipment::set_has_unknown_55() {
+inline void Equipment::set_has_head_durability() {
   _has_bits_[1] |= 0x00400000u;
 }
-inline void Equipment::clear_has_unknown_55() {
+inline void Equipment::clear_has_head_durability() {
   _has_bits_[1] &= ~0x00400000u;
 }
-inline void Equipment::clear_unknown_55() {
-  unknown_55_ = 0;
-  clear_has_unknown_55();
+inline void Equipment::clear_head_durability() {
+  head_durability_ = 0;
+  clear_has_head_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_55() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_55)
-  return unknown_55_;
+inline ::google::protobuf::int32 Equipment::head_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.head_durability)
+  return head_durability_;
 }
-inline void Equipment::set_unknown_55(::google::protobuf::int32 value) {
-  set_has_unknown_55();
-  unknown_55_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_55)
+inline void Equipment::set_head_durability(::google::protobuf::int32 value) {
+  set_has_head_durability();
+  head_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.head_durability)
 }
 
-// optional int32 unknown_56 = 56;
-inline bool Equipment::has_unknown_56() const {
+// optional int32 chest_durability = 56;
+inline bool Equipment::has_chest_durability() const {
   return (_has_bits_[1] & 0x00800000u) != 0;
 }
-inline void Equipment::set_has_unknown_56() {
+inline void Equipment::set_has_chest_durability() {
   _has_bits_[1] |= 0x00800000u;
 }
-inline void Equipment::clear_has_unknown_56() {
+inline void Equipment::clear_has_chest_durability() {
   _has_bits_[1] &= ~0x00800000u;
 }
-inline void Equipment::clear_unknown_56() {
-  unknown_56_ = 0;
-  clear_has_unknown_56();
+inline void Equipment::clear_chest_durability() {
+  chest_durability_ = 0;
+  clear_has_chest_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_56() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_56)
-  return unknown_56_;
+inline ::google::protobuf::int32 Equipment::chest_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.chest_durability)
+  return chest_durability_;
 }
-inline void Equipment::set_unknown_56(::google::protobuf::int32 value) {
-  set_has_unknown_56();
-  unknown_56_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_56)
+inline void Equipment::set_chest_durability(::google::protobuf::int32 value) {
+  set_has_chest_durability();
+  chest_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.chest_durability)
 }
 
-// optional int32 unknown_57 = 57;
-inline bool Equipment::has_unknown_57() const {
+// optional int32 hands_durability = 57;
+inline bool Equipment::has_hands_durability() const {
   return (_has_bits_[1] & 0x01000000u) != 0;
 }
-inline void Equipment::set_has_unknown_57() {
+inline void Equipment::set_has_hands_durability() {
   _has_bits_[1] |= 0x01000000u;
 }
-inline void Equipment::clear_has_unknown_57() {
+inline void Equipment::clear_has_hands_durability() {
   _has_bits_[1] &= ~0x01000000u;
 }
-inline void Equipment::clear_unknown_57() {
-  unknown_57_ = 0;
-  clear_has_unknown_57();
+inline void Equipment::clear_hands_durability() {
+  hands_durability_ = 0;
+  clear_has_hands_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_57() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_57)
-  return unknown_57_;
+inline ::google::protobuf::int32 Equipment::hands_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.hands_durability)
+  return hands_durability_;
 }
-inline void Equipment::set_unknown_57(::google::protobuf::int32 value) {
-  set_has_unknown_57();
-  unknown_57_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_57)
+inline void Equipment::set_hands_durability(::google::protobuf::int32 value) {
+  set_has_hands_durability();
+  hands_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.hands_durability)
 }
 
-// optional int32 unknown_58 = 58;
-inline bool Equipment::has_unknown_58() const {
+// optional int32 legs_durability = 58;
+inline bool Equipment::has_legs_durability() const {
   return (_has_bits_[1] & 0x02000000u) != 0;
 }
-inline void Equipment::set_has_unknown_58() {
+inline void Equipment::set_has_legs_durability() {
   _has_bits_[1] |= 0x02000000u;
 }
-inline void Equipment::clear_has_unknown_58() {
+inline void Equipment::clear_has_legs_durability() {
   _has_bits_[1] &= ~0x02000000u;
 }
-inline void Equipment::clear_unknown_58() {
-  unknown_58_ = 0;
-  clear_has_unknown_58();
+inline void Equipment::clear_legs_durability() {
+  legs_durability_ = 0;
+  clear_has_legs_durability();
 }
-inline ::google::protobuf::int32 Equipment::unknown_58() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.unknown_58)
-  return unknown_58_;
+inline ::google::protobuf::int32 Equipment::legs_durability() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.Equipment.legs_durability)
+  return legs_durability_;
 }
-inline void Equipment::set_unknown_58(::google::protobuf::int32 value) {
-  set_has_unknown_58();
-  unknown_58_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.unknown_58)
+inline void Equipment::set_legs_durability(::google::protobuf::int32 value) {
+  set_has_legs_durability();
+  legs_durability_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.Equipment.legs_durability)
 }
 
 // optional int32 unknown_59 = 59;
@@ -8022,52 +8022,52 @@ inline void Equipment::set_unknown_60(::google::protobuf::int32 value) {
 
 // PlayerLocation
 
-// optional uint32 online_area_id_lower = 1;
-inline bool PlayerLocation::has_online_area_id_lower() const {
+// optional uint32 map_id = 1;
+inline bool PlayerLocation::has_map_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void PlayerLocation::set_has_online_area_id_lower() {
+inline void PlayerLocation::set_has_map_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void PlayerLocation::clear_has_online_area_id_lower() {
+inline void PlayerLocation::clear_has_map_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void PlayerLocation::clear_online_area_id_lower() {
-  online_area_id_lower_ = 0u;
-  clear_has_online_area_id_lower();
+inline void PlayerLocation::clear_map_id() {
+  map_id_ = 0u;
+  clear_has_map_id();
 }
-inline ::google::protobuf::uint32 PlayerLocation::online_area_id_lower() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerLocation.online_area_id_lower)
-  return online_area_id_lower_;
+inline ::google::protobuf::uint32 PlayerLocation::map_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerLocation.map_id)
+  return map_id_;
 }
-inline void PlayerLocation::set_online_area_id_lower(::google::protobuf::uint32 value) {
-  set_has_online_area_id_lower();
-  online_area_id_lower_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerLocation.online_area_id_lower)
+inline void PlayerLocation::set_map_id(::google::protobuf::uint32 value) {
+  set_has_map_id();
+  map_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerLocation.map_id)
 }
 
-// optional uint32 online_area_id_upper = 2;
-inline bool PlayerLocation::has_online_area_id_upper() const {
+// optional uint32 online_area_id = 2;
+inline bool PlayerLocation::has_online_area_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void PlayerLocation::set_has_online_area_id_upper() {
+inline void PlayerLocation::set_has_online_area_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void PlayerLocation::clear_has_online_area_id_upper() {
+inline void PlayerLocation::clear_has_online_area_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void PlayerLocation::clear_online_area_id_upper() {
-  online_area_id_upper_ = 0u;
-  clear_has_online_area_id_upper();
+inline void PlayerLocation::clear_online_area_id() {
+  online_area_id_ = 0u;
+  clear_has_online_area_id();
 }
-inline ::google::protobuf::uint32 PlayerLocation::online_area_id_upper() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerLocation.online_area_id_upper)
-  return online_area_id_upper_;
+inline ::google::protobuf::uint32 PlayerLocation::online_area_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerLocation.online_area_id)
+  return online_area_id_;
 }
-inline void PlayerLocation::set_online_area_id_upper(::google::protobuf::uint32 value) {
-  set_has_online_area_id_upper();
-  online_area_id_upper_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerLocation.online_area_id_upper)
+inline void PlayerLocation::set_online_area_id(::google::protobuf::uint32 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerLocation.online_area_id)
 }
 
 // -------------------------------------------------------------------

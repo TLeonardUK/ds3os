@@ -113,9 +113,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     // Print a log if user has changed online location.
     if (Request->status().has_player_location())
     {
-        uint32_t LowerArea = Request->status().player_location().online_area_id_lower();
-        uint32_t UpperArea = Request->status().player_location().online_area_id_upper();
-        OnlineAreaId AreaId = static_cast<OnlineAreaId>(UpperArea);
+        OnlineAreaId AreaId = static_cast<OnlineAreaId>(Request->status().player_location().online_area_id());
         if (AreaId != State.CurrentArea && AreaId != OnlineAreaId::None)
         {
             Log("[%s] User has entered '%s'", Client->GetName().c_str(), GetEnumString(AreaId).c_str());
@@ -191,16 +189,6 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     CHECK_PLAYER_STATUS_DIFF(player_status, unknown_79)
     CHECK_PLAYER_STATUS_DIFF(player_status, unknown_80)
     CHECK_PLAYER_STATUS_DIFF(play_data, unknown_4)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_49)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_50)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_51)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_52)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_53)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_54)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_55)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_56)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_57)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_58)
     CHECK_PLAYER_STATUS_DIFF(equipment, unknown_59)
     CHECK_PLAYER_STATUS_DIFF(equipment, unknown_60)
     // DEBUG DEBUG DEBUG
@@ -208,7 +196,6 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     // Merge the delta into the current state.
     State.PlayerStatus.MergeFrom(Request->status());
 
-    // I don't think this response is even required, the normal server does not send it.
     Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -221,11 +208,20 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
 
 MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+    PlayerState& State = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestUpdatePlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdatePlayerCharacter*)Message.Protobuf.get();
 
-    // TODO: Implement
+    std::vector<uint8_t> Data;
+    Data.assign(Request->character_data().data(), Request->character_data().data() + Request->character_data().size());
 
-    // I don't think this response is even required, the normal server does not send it.
+    if (!Database.CreateOrUpdateCharacter(State.PlayerId, Request->character_id(), Data))
+    {
+        Warning("[%s] Disconnecting client as failed to find or update character %i.", Client->GetName().c_str(), Request->character_id());
+        return MessageHandleResult::Error;
+    }
+
     Frpg2RequestMessage::RequestUpdatePlayerCharacterResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -238,11 +234,23 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameC
 
 MessageHandleResult PlayerDataManager::Handle_RequestGetPlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+    PlayerState& State = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestGetPlayerCharacter* Request = (Frpg2RequestMessage::RequestGetPlayerCharacter*)Message.Protobuf.get();
-
-    // TODO: Implement
-
     Frpg2RequestMessage::RequestGetPlayerCharacterResponse Response;
+
+    std::vector<uint8_t> CharacterData;
+    std::shared_ptr<Character> Character = Database.FindCharacter(Request->player_id(), Request->character_id());
+    if (Character)
+    {
+        CharacterData = Character->Data;
+    }
+
+    Response.set_player_id(Request->player_id());
+    Response.set_character_id(Request->character_id());
+    Response.set_character_data(CharacterData.data(), CharacterData.size());
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestGetPlayerCharacterResponse response.", Client->GetName().c_str());

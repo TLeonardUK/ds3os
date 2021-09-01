@@ -407,11 +407,66 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
 
 MessageHandleResult SignManager::Handle_RequestGetRightMatchingArea(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+
     Frpg2RequestMessage::RequestGetRightMatchingArea* Request = (Frpg2RequestMessage::RequestGetRightMatchingArea*)Message.Protobuf.get();
-
-    // TODO: Implement
-
     Frpg2RequestMessage::RequestGetRightMatchingAreaResponse Response;
+
+    // There are a few ways to handle this. I'm not sure how the server itself does it.
+    // The simplest is to go through each client and check if they can match with the user, and use that 
+    // to derive the best matching areas. The other option is we use the number of summon signs and recent invasions to do it
+    // that might give a more accurate display of what is available for coop?
+
+    std::string Password = Request->matching_parameter().password();
+    int SoulLevel = Request->matching_parameter().soul_level();
+    int WeaponLevel = Request->matching_parameter().weapon_level();
+
+    std::unordered_map<OnlineAreaId, int> PotentialAreas;
+    int MaxAreaPopulation = 1;
+
+    for (std::shared_ptr<GameClient>& OtherClient : GameServiceInstance->GetClients())
+    {
+        int OtherSoulLevel = OtherClient->GetPlayerState().SoulLevel;
+        int OtherWeaponLevel = OtherClient->GetPlayerState().MaxWeaponLevel;
+        OnlineAreaId OtherArea = OtherClient->GetPlayerState().CurrentArea;
+
+        if (OtherArea == OnlineAreaId::None)
+        {
+            continue;
+        }
+
+        if (OtherClient.get() == Client)
+        {
+            continue;
+        }
+
+        // TODO: We don't have the other clients password stored, so we can't take that into account for this, it
+        // would be good if we could somehow.
+
+        // Is the client in range to summon or invade us?
+        if (Config.SummonSignMatchingParameters.CheckMatch(SoulLevel, WeaponLevel, OtherSoulLevel, OtherWeaponLevel, false) ||
+            Config.DarkSpiritInvasionMatchingParameters.CheckMatch(OtherSoulLevel, OtherWeaponLevel, SoulLevel, WeaponLevel, false))
+        {
+            if (auto Iter = PotentialAreas.find(OtherArea); Iter != PotentialAreas.end())
+            {
+                MaxAreaPopulation = std::max(MaxAreaPopulation, ++PotentialAreas[OtherArea]);
+            }
+            else
+            {
+                PotentialAreas.emplace(OtherArea, 1);
+            }
+        }
+    }
+
+    // Normalize the values to the 0-5 range the client expects and return them.
+    for (auto Pair : PotentialAreas)
+    {
+        int NormalizedPopulation = (int)std::ceilf((Pair.second / (float)MaxAreaPopulation) * 5.0f);
+
+        Frpg2RequestMessage::RequestGetRightMatchingAreaResponse_Area_info& Info = *Response.add_area_info();
+        Info.set_online_area_id((uint32_t)Pair.first);
+        Info.set_population(NormalizedPopulation);
+    }
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {

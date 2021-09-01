@@ -171,19 +171,19 @@ message PlayerInfoUploadConfigPushMessage {
 }
 
 message RequestUpdateLoginPlayerCharacter {
-    required uint32 character_id = 1; 
-    repeated uint32 unknown_2 = 2;                                   // Always seems to be 1
+    required uint32 character_id = 1;                               
+    repeated uint32 unknown_2 = 2;                                   // 1, 1, 1, 1, 1, 1, 1, 6, 7
 }
 
 message RequestUpdateLoginPlayerCharacterResponseData {
-    required uint32 unknown_1 = 1;                                  // Always seems to be 0
-    required uint32 unknown_2 = 2;                                  // Always seems to be 0
+    required uint32 unknown_1 = 1;                                  
+    required uint32 unknown_2 = 2;                                  
 }
 
 message RequestUpdateLoginPlayerCharacterResponse {
     required uint32 character_id = 1;                              
-    required RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;
-    required RequestUpdateLoginPlayerCharacterResponseData unknown_3 = 3;
+    required RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;   // 0, 0
+    required RequestUpdateLoginPlayerCharacterResponseData unknown_3 = 3;   // 0, 0 (something 1, 2200)
 }
 
 message RequestUpdatePlayerStatus {
@@ -561,7 +561,16 @@ message RequestNotifyDisconnectSessionResponse {
 }
 
 message RequestNotifyRegisterCharacter {
-    // Unknown
+    required Frpg2PlayerData.AllStatus status = 1;
+    required uint32 unknown_2 = 2;                  // 0
+    required uint32 unknown_3 = 3;                  // 0
+    required uint32 unknown_4 = 4;                  // 6
+    required uint32 unknown_5 = 5;                  // 1
+    required uint32 unknown_6 = 6;                  // 0
+    required uint32 unknown_7 = 7;                  // 2
+    required uint32 unknown_8 = 8;                  // 0
+    required uint32 unknown_9 = 9;                  // 0
+    required uint32 unknown_10 = 10;                // 1
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -743,12 +752,11 @@ message RequestGetRightMatchingArea {
     required uint32 unknown = 2;
 }
 
-message RequestGetRightMatchingAreaResponse {  
-    message Area_info {
+message RequestGetRightMatchingAreaResponse {          
+    repeated group Area_info = 1 {
         required uint32 online_area_id = 1;
-        required uint32 population = 2; // Seems to be on a scale of 1-5.
+        required uint32 population = 2;             // Seems to be on a scale of 0-5.
     }
-    repeated Area_info area_info = 1;
 }
 
 message PushRequestRemoveSign {

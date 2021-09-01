@@ -130,7 +130,7 @@ ENTRY(TRC_Demon_Prince,                                           "TRC - Demon P
 ENTRY(TRC_The_Dreg_Heap,                                          "TRC - The Dreg Heap",                                      500001)
 ENTRY(TRC_Earthen_Peak_Ruins,                                     "TRC - Earthen Peak Ruins",                                 500002)
 ENTRY(TRC_Within_the_Earthen_Peak_Ruins,                          "TRC - Within the Earthen Peak Ruins",                      500003)
-ENTRY(Unknown_16,                                                 "Unknown 16",                                               500020)
+ENTRY(TRC_Envoy_Banner_Area,                                      "TRC - Envoy Banner Area",                                  500020)
 ENTRY(TRC_Spear_of_the_Church_Boss,                               "TRC - Spear of the Church Boss",                           510000)
 ENTRY(TRC_Mausoleum_Lookout,                                      "TRC - Mausoleum Lookout",                                  510001)
 ENTRY(TRC_Ringed_Inner_Wall,                                      "TRC - Ringed Inner Wall",                                  510002)

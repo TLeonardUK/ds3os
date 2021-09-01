@@ -39,6 +39,16 @@ public:
     bool FindOrCreatePlayer(const std::string& SteamId, uint32_t& PlayerId);
 
     // ----------------------------------------------------------------
+    // Character interface
+    // ----------------------------------------------------------------
+
+    // Creates or updates a specific character owned by the player.
+    bool CreateOrUpdateCharacter(uint32_t PlayerId, uint32_t CharacterId, const std::vector<uint8_t>& Data);
+
+    // Finds a character owned by a specific player.
+    std::shared_ptr<Character> FindCharacter(uint32_t PlayerId, uint32_t CharacterId);
+
+    // ----------------------------------------------------------------
     // Blood message interface
     // ----------------------------------------------------------------
 

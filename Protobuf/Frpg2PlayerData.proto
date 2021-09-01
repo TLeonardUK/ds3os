@@ -92,7 +92,7 @@ message PlayerStatus {
     optional uint32 can_summon_for_spear_of_church = 12;      
     optional uint32 unknown_13 = 13;                         // 1
     optional uint32 unknown_14 = 14;                         // 0
-    optional WorldType game_world = 15;                      
+    optional WorldType world_type = 15;                      
     optional uint32 covenant = 16;                           
 
     repeated uint32 played_areas = 17;
@@ -248,25 +248,24 @@ message Equipment {
     optional int32 spell_13 = 46;
     optional int32 spell_14 = 47;
     optional int32 covenant_item = 48;
+    optional int32 left_weapon_1_durability = 49;     
+    optional int32 left_weapon_2_durability = 50;     
+    optional int32 left_weapon_3_durability = 51;     
+    optional int32 right_weapon_1_durability = 52;     
+    optional int32 right_weapon_2_durability = 53;     
+    optional int32 right_weapon_3_durability = 54;     
+    optional int32 head_durability = 55;  
+    optional int32 chest_durability = 56;     
+    optional int32 hands_durability = 57;    
+    optional int32 legs_durability = 58;     
 
-    // Some of these seem to count down during combat but without a consistent interval.
-    optional int32 unknown_49 = 49;     // 90
-    optional int32 unknown_50 = 50;     // 1
-    optional int32 unknown_51 = 51;     // 1
-    optional int32 unknown_52 = 52;     // 105
-    optional int32 unknown_53 = 53;     // 1
-    optional int32 unknown_54 = 54;     // 1
-    optional int32 unknown_55 = 55;     // 410
-    optional int32 unknown_56 = 56;     // 360
-    optional int32 unknown_57 = 57;     // 370
-    optional int32 unknown_58 = 58;     // 370
     optional int32 unknown_59 = 59;     // 0
-    optional int32 unknown_60 = 60;     // 1
+    optional int32 unknown_60 = 60;     // 1, 5, 3      - estus charges?
 }
 
 message PlayerLocation {
-    optional uint32 online_area_id_lower = 1;
-    optional uint32 online_area_id_upper = 2;
+    optional uint32 map_id = 1;
+    optional uint32 online_area_id = 2;
 }
 
 message DefenseInfo {

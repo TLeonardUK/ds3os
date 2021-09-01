@@ -105,6 +105,15 @@ bool ServerDatabase::CreateTables()
         "   CreatedTime         TEXT"                                               \
         ");"
     );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS Characters("                                    \
+        "   Id                  INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   PlayerId            INTEGER,"                                           \
+        "   CharacterId         INTEGER,"                                           \
+        "   Data                BLOB,"                                              \
+        "   CreatedTime         TEXT"                                               \
+        ");"
+    );
 
     for (const std::string& statement : tables)
     {
@@ -491,7 +500,7 @@ std::vector<std::shared_ptr<Ranking>> ServerDatabase::GetRankings(uint32_t Board
 {
     std::vector<std::shared_ptr<Ranking>> Result;
 
-    RunStatement("SELECT ScoreId, PlayerId, CharacterId, Rank, SerialRank, Score, Data FROM Rankings WHERE BoardId = ?1 ORDER BY SerialRank DESC LIMIT ?2 OFFSET ?3", { BoardId, Count, Offset - 1 }, [&Result, BoardId](sqlite3_stmt* statement) {
+    RunStatement("SELECT ScoreId, PlayerId, CharacterId, Rank, SerialRank, Score, Data FROM Rankings WHERE BoardId = ?1 ORDER BY SerialRank ASC LIMIT ?2 OFFSET ?3", { BoardId, Count, Offset - 1 }, [&Result, BoardId](sqlite3_stmt* statement) {
         std::shared_ptr<Ranking> Entry = std::make_shared<Ranking>();
         Entry->Id = sqlite3_column_int(statement, 0);
         Entry->BoardId = BoardId;
@@ -537,6 +546,41 @@ uint32_t ServerDatabase::GetRankingCount(uint32_t BoardId)
 
     RunStatement("SELECT COUNT(*) FROM Rankings WHERE BoardId = ?1", { BoardId }, [&Result](sqlite3_stmt* statement) {
         Result = sqlite3_column_int(statement, 0);
+    });
+
+    return Result;
+}
+
+bool ServerDatabase::CreateOrUpdateCharacter(uint32_t PlayerId, uint32_t CharacterId, const std::vector<uint8_t>& Data)
+{
+    if (!RunStatement("UPDATE Characters SET Data = ?3 WHERE PlayerId = ?1 AND CharacterId = ?2", { PlayerId, CharacterId, Data }, nullptr))
+    {
+        return false;
+    }
+
+    if (sqlite3_total_changes(db_handle) == 0)
+    {
+        if (!RunStatement("INSERT INTO Characters(PlayerId, CharacterId, Data, CreatedTime) VALUES(?1, ?2, ?3, datetime('now'))", { PlayerId, CharacterId, Data }, nullptr))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+std::shared_ptr<Character> ServerDatabase::FindCharacter(uint32_t PlayerId, uint32_t CharacterId)
+{
+    std::shared_ptr<Character> Result;
+
+    RunStatement("SELECT Id, Data FROM Characters WHERE PlayerId = ?1 AND CharacterId = ?2 LIMIT 1", { PlayerId, CharacterId }, [&Result, PlayerId, CharacterId](sqlite3_stmt* statement) {
+        Result = std::make_shared<Character>();
+        Result->Id = sqlite3_column_int(statement, 0);
+        Result->PlayerId = PlayerId;
+        Result->CharacterId = CharacterId;
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 1);
+        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 1));
     });
 
     return Result;

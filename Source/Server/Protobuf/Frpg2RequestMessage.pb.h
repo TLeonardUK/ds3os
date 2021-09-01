@@ -8446,13 +8446,115 @@ class RequestNotifyRegisterCharacter : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .Frpg2PlayerData.AllStatus status = 1;
+  inline bool has_status() const;
+  inline void clear_status();
+  static const int kStatusFieldNumber = 1;
+  inline const ::Frpg2PlayerData::AllStatus& status() const;
+  inline ::Frpg2PlayerData::AllStatus* mutable_status();
+  inline ::Frpg2PlayerData::AllStatus* release_status();
+  inline void set_allocated_status(::Frpg2PlayerData::AllStatus* status);
+
+  // required uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_3 = 3;
+  inline bool has_unknown_3() const;
+  inline void clear_unknown_3();
+  static const int kUnknown3FieldNumber = 3;
+  inline ::google::protobuf::uint32 unknown_3() const;
+  inline void set_unknown_3(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::uint32 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_5 = 5;
+  inline bool has_unknown_5() const;
+  inline void clear_unknown_5();
+  static const int kUnknown5FieldNumber = 5;
+  inline ::google::protobuf::uint32 unknown_5() const;
+  inline void set_unknown_5(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_6 = 6;
+  inline bool has_unknown_6() const;
+  inline void clear_unknown_6();
+  static const int kUnknown6FieldNumber = 6;
+  inline ::google::protobuf::uint32 unknown_6() const;
+  inline void set_unknown_6(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_7 = 7;
+  inline bool has_unknown_7() const;
+  inline void clear_unknown_7();
+  static const int kUnknown7FieldNumber = 7;
+  inline ::google::protobuf::uint32 unknown_7() const;
+  inline void set_unknown_7(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_8 = 8;
+  inline bool has_unknown_8() const;
+  inline void clear_unknown_8();
+  static const int kUnknown8FieldNumber = 8;
+  inline ::google::protobuf::uint32 unknown_8() const;
+  inline void set_unknown_8(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_9 = 9;
+  inline bool has_unknown_9() const;
+  inline void clear_unknown_9();
+  static const int kUnknown9FieldNumber = 9;
+  inline ::google::protobuf::uint32 unknown_9() const;
+  inline void set_unknown_9(::google::protobuf::uint32 value);
+
+  // required uint32 unknown_10 = 10;
+  inline bool has_unknown_10() const;
+  inline void clear_unknown_10();
+  static const int kUnknown10FieldNumber = 10;
+  inline ::google::protobuf::uint32 unknown_10() const;
+  inline void set_unknown_10(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestNotifyRegisterCharacter)
  private:
+  inline void set_has_status();
+  inline void clear_has_status();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
+  inline void set_has_unknown_3();
+  inline void clear_has_unknown_3();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_unknown_5();
+  inline void clear_has_unknown_5();
+  inline void set_has_unknown_6();
+  inline void clear_has_unknown_6();
+  inline void set_has_unknown_7();
+  inline void clear_has_unknown_7();
+  inline void set_has_unknown_8();
+  inline void clear_has_unknown_8();
+  inline void set_has_unknown_9();
+  inline void clear_has_unknown_9();
+  inline void set_has_unknown_10();
+  inline void clear_has_unknown_10();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::Frpg2PlayerData::AllStatus* status_;
+  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 unknown_4_;
+  ::google::protobuf::uint32 unknown_5_;
+  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 unknown_7_;
+  ::google::protobuf::uint32 unknown_8_;
+  ::google::protobuf::uint32 unknown_9_;
+  ::google::protobuf::uint32 unknown_10_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -11213,7 +11315,7 @@ class RequestGetRightMatchingAreaResponse : public ::google::protobuf::MessageLi
 
   // accessors -------------------------------------------------------
 
-  // repeated .Frpg2RequestMessage.RequestGetRightMatchingAreaResponse.Area_info area_info = 1;
+  // repeated group Area_info = 1 {
   inline int area_info_size() const;
   inline void clear_area_info();
   static const int kAreaInfoFieldNumber = 1;
@@ -31437,6 +31539,267 @@ inline void RequestNotifySummonSignResult::set_unknown_8(::google::protobuf::uin
 
 // RequestNotifyRegisterCharacter
 
+// required .Frpg2PlayerData.AllStatus status = 1;
+inline bool RequestNotifyRegisterCharacter::has_status() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_status() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_status() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestNotifyRegisterCharacter::clear_status() {
+  if (status_ != NULL) status_->::Frpg2PlayerData::AllStatus::Clear();
+  clear_has_status();
+}
+inline const ::Frpg2PlayerData::AllStatus& RequestNotifyRegisterCharacter::status() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.status)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return status_ != NULL ? *status_ : *default_instance().status_;
+#else
+  return status_ != NULL ? *status_ : *default_instance_->status_;
+#endif
+}
+inline ::Frpg2PlayerData::AllStatus* RequestNotifyRegisterCharacter::mutable_status() {
+  set_has_status();
+  if (status_ == NULL) status_ = new ::Frpg2PlayerData::AllStatus;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestNotifyRegisterCharacter.status)
+  return status_;
+}
+inline ::Frpg2PlayerData::AllStatus* RequestNotifyRegisterCharacter::release_status() {
+  clear_has_status();
+  ::Frpg2PlayerData::AllStatus* temp = status_;
+  status_ = NULL;
+  return temp;
+}
+inline void RequestNotifyRegisterCharacter::set_allocated_status(::Frpg2PlayerData::AllStatus* status) {
+  delete status_;
+  status_ = status;
+  if (status) {
+    set_has_status();
+  } else {
+    clear_has_status();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestNotifyRegisterCharacter.status)
+}
+
+// required uint32 unknown_2 = 2;
+inline bool RequestNotifyRegisterCharacter::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_2() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_2)
+  return unknown_2_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_2)
+}
+
+// required uint32 unknown_3 = 3;
+inline bool RequestNotifyRegisterCharacter::has_unknown_3() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_3() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_3() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_3() {
+  unknown_3_ = 0u;
+  clear_has_unknown_3();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_3() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_3)
+  return unknown_3_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_3(::google::protobuf::uint32 value) {
+  set_has_unknown_3();
+  unknown_3_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_3)
+}
+
+// required uint32 unknown_4 = 4;
+inline bool RequestNotifyRegisterCharacter::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_4() {
+  unknown_4_ = 0u;
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_4() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_4)
+  return unknown_4_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_4(::google::protobuf::uint32 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_4)
+}
+
+// required uint32 unknown_5 = 5;
+inline bool RequestNotifyRegisterCharacter::has_unknown_5() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_5() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_5() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_5() {
+  unknown_5_ = 0u;
+  clear_has_unknown_5();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_5() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_5)
+  return unknown_5_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_5(::google::protobuf::uint32 value) {
+  set_has_unknown_5();
+  unknown_5_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_5)
+}
+
+// required uint32 unknown_6 = 6;
+inline bool RequestNotifyRegisterCharacter::has_unknown_6() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_6() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_6() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_6() {
+  unknown_6_ = 0u;
+  clear_has_unknown_6();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_6() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_6)
+  return unknown_6_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_6(::google::protobuf::uint32 value) {
+  set_has_unknown_6();
+  unknown_6_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_6)
+}
+
+// required uint32 unknown_7 = 7;
+inline bool RequestNotifyRegisterCharacter::has_unknown_7() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_7() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_7() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_7() {
+  unknown_7_ = 0u;
+  clear_has_unknown_7();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_7() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_7)
+  return unknown_7_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_7(::google::protobuf::uint32 value) {
+  set_has_unknown_7();
+  unknown_7_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_7)
+}
+
+// required uint32 unknown_8 = 8;
+inline bool RequestNotifyRegisterCharacter::has_unknown_8() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_8() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_8() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_8() {
+  unknown_8_ = 0u;
+  clear_has_unknown_8();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_8() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_8)
+  return unknown_8_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_8(::google::protobuf::uint32 value) {
+  set_has_unknown_8();
+  unknown_8_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_8)
+}
+
+// required uint32 unknown_9 = 9;
+inline bool RequestNotifyRegisterCharacter::has_unknown_9() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_9() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_9() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_9() {
+  unknown_9_ = 0u;
+  clear_has_unknown_9();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_9() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_9)
+  return unknown_9_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_9(::google::protobuf::uint32 value) {
+  set_has_unknown_9();
+  unknown_9_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_9)
+}
+
+// required uint32 unknown_10 = 10;
+inline bool RequestNotifyRegisterCharacter::has_unknown_10() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void RequestNotifyRegisterCharacter::set_has_unknown_10() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void RequestNotifyRegisterCharacter::clear_has_unknown_10() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void RequestNotifyRegisterCharacter::clear_unknown_10() {
+  unknown_10_ = 0u;
+  clear_has_unknown_10();
+}
+inline ::google::protobuf::uint32 RequestNotifyRegisterCharacter::unknown_10() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_10)
+  return unknown_10_;
+}
+inline void RequestNotifyRegisterCharacter::set_unknown_10(::google::protobuf::uint32 value) {
+  set_has_unknown_10();
+  unknown_10_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyRegisterCharacter.unknown_10)
+}
+
 // -------------------------------------------------------------------
 
 // SummonSignMessage
@@ -33775,7 +34138,7 @@ inline void RequestGetRightMatchingAreaResponse_Area_info::set_population(::goog
 
 // RequestGetRightMatchingAreaResponse
 
-// repeated .Frpg2RequestMessage.RequestGetRightMatchingAreaResponse.Area_info area_info = 1;
+// repeated group Area_info = 1 {
 inline int RequestGetRightMatchingAreaResponse::area_info_size() const {
   return area_info_.size();
 }

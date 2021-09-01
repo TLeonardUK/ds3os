@@ -19330,6 +19330,16 @@ void RequestNotifyDisconnectSessionResponse::Swap(RequestNotifyDisconnectSession
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestNotifyRegisterCharacter::kStatusFieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown2FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown3FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown4FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown5FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown6FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown7FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown8FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown9FieldNumber;
+const int RequestNotifyRegisterCharacter::kUnknown10FieldNumber;
 #endif  // !_MSC_VER
 
 RequestNotifyRegisterCharacter::RequestNotifyRegisterCharacter()
@@ -19339,6 +19349,12 @@ RequestNotifyRegisterCharacter::RequestNotifyRegisterCharacter()
 }
 
 void RequestNotifyRegisterCharacter::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  status_ = const_cast< ::Frpg2PlayerData::AllStatus*>(
+      ::Frpg2PlayerData::AllStatus::internal_default_instance());
+#else
+  status_ = const_cast< ::Frpg2PlayerData::AllStatus*>(&::Frpg2PlayerData::AllStatus::default_instance());
+#endif
 }
 
 RequestNotifyRegisterCharacter::RequestNotifyRegisterCharacter(const RequestNotifyRegisterCharacter& from)
@@ -19350,6 +19366,16 @@ RequestNotifyRegisterCharacter::RequestNotifyRegisterCharacter(const RequestNoti
 
 void RequestNotifyRegisterCharacter::SharedCtor() {
   _cached_size_ = 0;
+  status_ = NULL;
+  unknown_2_ = 0u;
+  unknown_3_ = 0u;
+  unknown_4_ = 0u;
+  unknown_5_ = 0u;
+  unknown_6_ = 0u;
+  unknown_7_ = 0u;
+  unknown_8_ = 0u;
+  unknown_9_ = 0u;
+  unknown_10_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -19364,6 +19390,7 @@ void RequestNotifyRegisterCharacter::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
+    delete status_;
   }
 }
 
@@ -19388,6 +19415,27 @@ RequestNotifyRegisterCharacter* RequestNotifyRegisterCharacter::New() const {
 }
 
 void RequestNotifyRegisterCharacter::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestNotifyRegisterCharacter*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(unknown_2_, unknown_8_);
+    if (has_status()) {
+      if (status_ != NULL) status_->::Frpg2PlayerData::AllStatus::Clear();
+    }
+  }
+  ZR_(unknown_9_, unknown_10_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -19405,14 +19453,166 @@ bool RequestNotifyRegisterCharacter::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Frpg2PlayerData.AllStatus status = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_status()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_unknown_2;
+        break;
+      }
+
+      // required uint32 unknown_2 = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_unknown_2:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_2_)));
+          set_has_unknown_2();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_unknown_3;
+        break;
+      }
+
+      // required uint32 unknown_3 = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_unknown_3:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_3_)));
+          set_has_unknown_3();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_unknown_4;
+        break;
+      }
+
+      // required uint32 unknown_4 = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_unknown_4:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_4_)));
+          set_has_unknown_4();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_unknown_5;
+        break;
+      }
+
+      // required uint32 unknown_5 = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_unknown_5:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_5_)));
+          set_has_unknown_5();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_unknown_6;
+        break;
+      }
+
+      // required uint32 unknown_6 = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_unknown_6:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_6_)));
+          set_has_unknown_6();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(56)) goto parse_unknown_7;
+        break;
+      }
+
+      // required uint32 unknown_7 = 7;
+      case 7: {
+        if (tag == 56) {
+         parse_unknown_7:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_7_)));
+          set_has_unknown_7();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(64)) goto parse_unknown_8;
+        break;
+      }
+
+      // required uint32 unknown_8 = 8;
+      case 8: {
+        if (tag == 64) {
+         parse_unknown_8:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_8_)));
+          set_has_unknown_8();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(72)) goto parse_unknown_9;
+        break;
+      }
+
+      // required uint32 unknown_9 = 9;
+      case 9: {
+        if (tag == 72) {
+         parse_unknown_9:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_9_)));
+          set_has_unknown_9();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(80)) goto parse_unknown_10;
+        break;
+      }
+
+      // required uint32 unknown_10 = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_unknown_10:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_10_)));
+          set_has_unknown_10();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.RequestNotifyRegisterCharacter)
@@ -19426,6 +19626,57 @@ failure:
 void RequestNotifyRegisterCharacter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestNotifyRegisterCharacter)
+  // required .Frpg2PlayerData.AllStatus status = 1;
+  if (has_status()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      1, this->status(), output);
+  }
+
+  // required uint32 unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  }
+
+  // required uint32 unknown_3 = 3;
+  if (has_unknown_3()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  }
+
+  // required uint32 unknown_4 = 4;
+  if (has_unknown_4()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  }
+
+  // required uint32 unknown_5 = 5;
+  if (has_unknown_5()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  }
+
+  // required uint32 unknown_6 = 6;
+  if (has_unknown_6()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
+  }
+
+  // required uint32 unknown_7 = 7;
+  if (has_unknown_7()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
+  }
+
+  // required uint32 unknown_8 = 8;
+  if (has_unknown_8()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->unknown_8(), output);
+  }
+
+  // required uint32 unknown_9 = 9;
+  if (has_unknown_9()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->unknown_9(), output);
+  }
+
+  // required uint32 unknown_10 = 10;
+  if (has_unknown_10()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->unknown_10(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.RequestNotifyRegisterCharacter)
@@ -19434,6 +19685,80 @@ void RequestNotifyRegisterCharacter::SerializeWithCachedSizes(
 int RequestNotifyRegisterCharacter::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Frpg2PlayerData.AllStatus status = 1;
+    if (has_status()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->status());
+    }
+
+    // required uint32 unknown_2 = 2;
+    if (has_unknown_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_2());
+    }
+
+    // required uint32 unknown_3 = 3;
+    if (has_unknown_3()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_3());
+    }
+
+    // required uint32 unknown_4 = 4;
+    if (has_unknown_4()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_4());
+    }
+
+    // required uint32 unknown_5 = 5;
+    if (has_unknown_5()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_5());
+    }
+
+    // required uint32 unknown_6 = 6;
+    if (has_unknown_6()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_6());
+    }
+
+    // required uint32 unknown_7 = 7;
+    if (has_unknown_7()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_7());
+    }
+
+    // required uint32 unknown_8 = 8;
+    if (has_unknown_8()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_8());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // required uint32 unknown_9 = 9;
+    if (has_unknown_9()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_9());
+    }
+
+    // required uint32 unknown_10 = 10;
+    if (has_unknown_10()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_10());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -19449,6 +19774,40 @@ void RequestNotifyRegisterCharacter::CheckTypeAndMergeFrom(
 
 void RequestNotifyRegisterCharacter::MergeFrom(const RequestNotifyRegisterCharacter& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_status()) {
+      mutable_status()->::Frpg2PlayerData::AllStatus::MergeFrom(from.status());
+    }
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
+    }
+    if (from.has_unknown_3()) {
+      set_unknown_3(from.unknown_3());
+    }
+    if (from.has_unknown_4()) {
+      set_unknown_4(from.unknown_4());
+    }
+    if (from.has_unknown_5()) {
+      set_unknown_5(from.unknown_5());
+    }
+    if (from.has_unknown_6()) {
+      set_unknown_6(from.unknown_6());
+    }
+    if (from.has_unknown_7()) {
+      set_unknown_7(from.unknown_7());
+    }
+    if (from.has_unknown_8()) {
+      set_unknown_8(from.unknown_8());
+    }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_unknown_9()) {
+      set_unknown_9(from.unknown_9());
+    }
+    if (from.has_unknown_10()) {
+      set_unknown_10(from.unknown_10());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -19459,12 +19818,27 @@ void RequestNotifyRegisterCharacter::CopyFrom(const RequestNotifyRegisterCharact
 }
 
 bool RequestNotifyRegisterCharacter::IsInitialized() const {
+  if ((_has_bits_[0] & 0x000003ff) != 0x000003ff) return false;
 
+  if (has_status()) {
+    if (!this->status().IsInitialized()) return false;
+  }
   return true;
 }
 
 void RequestNotifyRegisterCharacter::Swap(RequestNotifyRegisterCharacter* other) {
   if (other != this) {
+    std::swap(status_, other->status_);
+    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(unknown_5_, other->unknown_5_);
+    std::swap(unknown_6_, other->unknown_6_);
+    std::swap(unknown_7_, other->unknown_7_);
+    std::swap(unknown_8_, other->unknown_8_);
+    std::swap(unknown_9_, other->unknown_9_);
+    std::swap(unknown_10_, other->unknown_10_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -25912,16 +26286,16 @@ bool RequestGetRightMatchingAreaResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .Frpg2RequestMessage.RequestGetRightMatchingAreaResponse.Area_info area_info = 1;
+      // repeated group Area_info = 1 {
       case 1: {
-        if (tag == 10) {
+        if (tag == 11) {
          parse_area_info:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_area_info()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_area_info()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_area_info;
+        if (input->ExpectTag(11)) goto parse_area_info;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -25951,9 +26325,9 @@ failure:
 void RequestGetRightMatchingAreaResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestGetRightMatchingAreaResponse)
-  // repeated .Frpg2RequestMessage.RequestGetRightMatchingAreaResponse.Area_info area_info = 1;
+  // repeated group Area_info = 1 {
   for (int i = 0; i < this->area_info_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
       1, this->area_info(i), output);
   }
 
@@ -25965,11 +26339,11 @@ void RequestGetRightMatchingAreaResponse::SerializeWithCachedSizes(
 int RequestGetRightMatchingAreaResponse::ByteSize() const {
   int total_size = 0;
 
-  // repeated .Frpg2RequestMessage.RequestGetRightMatchingAreaResponse.Area_info area_info = 1;
-  total_size += 1 * this->area_info_size();
+  // repeated group Area_info = 1 {
+  total_size += 2 * this->area_info_size();
   for (int i = 0; i < this->area_info_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
         this->area_info(i));
   }
 

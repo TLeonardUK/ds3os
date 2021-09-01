@@ -85,3 +85,12 @@ struct Ranking
     uint32_t Score;
     std::vector<uint8_t> Data;
 };
+
+// Individual character profile registered by a player.
+struct Character
+{
+    uint32_t Id;
+    uint32_t PlayerId;
+    uint32_t CharacterId;
+    std::vector<uint8_t> Data;
+};
