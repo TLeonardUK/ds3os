@@ -102,6 +102,9 @@
     <ClInclude Include="Core\Network\NetConnection.h" />
     <ClInclude Include="Core\Network\NetConnectionTCP.h" />
     <ClInclude Include="Core\Network\NetConnectionUDP.h" />
+    <ClInclude Include="Core\Network\NetHttpRequest.h" />
+    <ClInclude Include="Core\Network\NetIPAddress.h" />
+    <ClInclude Include="Core\Network\NetUtils.h" />
     <ClInclude Include="Core\Utils\Compression.h" />
     <ClInclude Include="Core\Utils\Endian.h" />
     <ClInclude Include="Core\Utils\Enum.h" />
@@ -162,6 +165,8 @@
     <ClCompile Include="Core\Crypto\RSAKeyPair.cpp" />
     <ClCompile Include="Core\Network\NetConnectionTCP.cpp" />
     <ClCompile Include="Core\Network\NetConnectionUDP.cpp" />
+    <ClCompile Include="Core\Network\NetHttpRequest.cpp" />
+    <ClCompile Include="Core\Network\NetUtils.cpp" />
     <ClCompile Include="Core\Utils\Compression.cpp" />
     <ClCompile Include="Core\Utils\File.cpp" />
     <ClCompile Include="Core\Utils\Logging.cpp" />

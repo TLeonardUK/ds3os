@@ -53,7 +53,7 @@ bool GameClient::Poll()
     }
     if (!Connection->IsConnected())
     {
-        Warning("[%s] Client disconnected.", GetName().c_str());
+        Log("[%s] Client disconnected.", GetName().c_str());
         return true;
     }
 

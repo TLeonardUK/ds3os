@@ -51,7 +51,7 @@ bool LoginClient::Poll()
     }
     if (!Connection->IsConnected())
     {
-        Warning("[%s] Client disconnected.", GetName().c_str());
+        Log("[%s] Client disconnected.", GetName().c_str());
         return true;
     }
 
@@ -76,10 +76,19 @@ bool LoginClient::Poll()
 
         //Log("[%s] Recieved RequestQueryLoginServerInfo, client is on steam account %s.", GetName().c_str(), Request.steam_id().c_str());
 
-        Frpg2RequestMessage::RequestQueryLoginServerInfoResponse Response;
-        // TODO: If on same subnet as servers private ip, return the private ip not the external one.
         const RuntimeConfig& Config = Service->GetServer()->GetConfig();
-        Response.set_server_ip(Config.ServerIP);
+        std::string ServerIP = Config.ServerIP;
+
+        // If user IP is on a private network, we can assume they are on our LAN
+        // and return our internal IP address.
+        if (Connection->GetAddress().IsPrivateNetwork())
+        {
+            Log("[%s] Directing login client to our private ip as appears to be on private subnet.", GetName().c_str());
+            ServerIP = Service->GetServer()->GetPrivateIP().ToString();
+        }
+
+        Frpg2RequestMessage::RequestQueryLoginServerInfoResponse Response;
+        Response.set_server_ip(ServerIP);
         Response.set_port(Config.AuthServerPort);
 
         if (!MessageStream->Send(&Response, Message.Header.request_index))

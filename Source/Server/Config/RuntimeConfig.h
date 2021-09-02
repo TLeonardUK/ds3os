@@ -66,12 +66,12 @@ public:
     std::string ServerDescription = "A custom Dark Souls 3 server.";
 
     // Hostname of the server that should be used for connecting.
-    std::string ServerHostname = "127.0.0.1";
+    // If none is supplied then this wil be the external ip of the server.
+    std::string ServerHostname = "";
 
     // IP of the server that should be used for connecting. 
-    // TODO: If none is supplied then the IP will be the resolved IP of ServerHostname.
-    // TODO: Private ip of server will be returned rather than this if client is on same subnet.
-    std::string ServerIP = "127.0.0.1";
+    // If none is supplied then the IP will be the external ip of the server.
+    std::string ServerIP = "";
 
     // Network port the login server listens for connections on.
     int LoginServerPort = 50050;

@@ -19,6 +19,8 @@
 
 #include "Core/Crypto/RSAKeyPair.h"
 
+#include "Core/Network/NetIPAddress.h"
+
 #include "Config/RuntimeConfig.h"
 
 // Core of this application, manages all the 
@@ -36,8 +38,11 @@ public:
     bool Term();
     void RunUntilQuit();
 
-    const RuntimeConfig& GetConfig() { return Config; }
-    ServerDatabase& GetDatabase() { return Database; }
+    const RuntimeConfig& GetConfig()    { return Config; }
+    ServerDatabase& GetDatabase()       { return Database; }
+
+    NetIPAddress GetPublicIP()          { return PublicIP; }
+    NetIPAddress GetPrivateIP()         { return PrivateIP; }
 
     template <typename T>
     std::shared_ptr<T> GetService()
@@ -71,6 +76,9 @@ private:
     std::filesystem::path PublicKeyPath;
     std::filesystem::path Ds3osconfigPath;
     std::filesystem::path DatabasePath;
+
+    NetIPAddress PublicIP;
+    NetIPAddress PrivateIP;
 
     RSAKeyPair PrimaryKeyPair;
 

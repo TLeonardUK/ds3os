@@ -62,10 +62,6 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
     // but all the values are always the same? Maybe its just to tell the server our char has changed and to reset everything?
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
-    //Ensure(Request->unknown_1() == 1);
-    //Ensure(Request->unknown_2() == 1);
-
-    //we need to figure out all this character-id stuff
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
     Response.set_character_id(Request->character_id());
@@ -166,7 +162,6 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
 
         if (NewVisitorPool != State.VisitorPool)
         {
-            Log("[%s] User is now in visitor pool %i.", Client->GetName().c_str(), NewVisitorPool);
             State.VisitorPool = NewVisitorPool;
         }
     }

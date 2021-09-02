@@ -40,7 +40,7 @@ public:
 #endif
 
 public:
-    NetConnectionUDP(SocketType ParentSocket, sockaddr_in DestinationIP, const std::string& InName);
+    NetConnectionUDP(SocketType ParentSocket, sockaddr_in DestinationIP, const std::string& InName, const NetIPAddress& InAddress);
     NetConnectionUDP(const std::string& InName);
     virtual ~NetConnectionUDP();
 
@@ -59,12 +59,14 @@ public:
     virtual bool Disconnect() override;
 
     virtual bool IsConnected() override;
+    virtual NetIPAddress GetAddress() override;
 
     virtual std::string GetName() override;
     virtual void Rename(const std::string& Name) override;
 
 private:
     std::string Name;
+    NetIPAddress IPAddress;
 
     SocketType Socket = INVALID_SOCKET_VALUE;
 

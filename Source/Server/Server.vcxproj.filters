@@ -279,6 +279,15 @@
     <ClInclude Include="Protobuf\Protobufs.h">
       <Filter>Protobuf</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Network\NetHttpRequest.h">
+      <Filter>Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Network\NetUtils.h">
+      <Filter>Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Network\NetIPAddress.h">
+      <Filter>Core\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -419,6 +428,12 @@
     </ClCompile>
     <ClCompile Include="Protobuf\Frpg2RequestMessage.cc">
       <Filter>Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Network\NetHttpRequest.cpp">
+      <Filter>Core\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Network\NetUtils.cpp">
+      <Filter>Core\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

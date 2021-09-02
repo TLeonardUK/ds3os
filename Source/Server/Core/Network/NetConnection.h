@@ -18,6 +18,8 @@
 // specializations of this class for each network protocol
 // that is used (TCP / UDP).
 
+#include "Core/Network/NetIPAddress.h"
+
 class Cipher;
 
 class NetConnection
@@ -41,6 +43,7 @@ public:
     virtual bool Disconnect() = 0;
 
     virtual bool IsConnected() = 0;
+    virtual NetIPAddress GetAddress() = 0;
 
     virtual std::string GetName() = 0;
     virtual void Rename(const std::string& Name) = 0;

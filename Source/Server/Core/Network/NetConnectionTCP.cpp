@@ -17,9 +17,10 @@ NetConnectionTCP::NetConnectionTCP(const std::string& InName)
 {
 }
 
-NetConnectionTCP::NetConnectionTCP(SocketType InSocket, const std::string& InName)
+NetConnectionTCP::NetConnectionTCP(SocketType InSocket, const std::string& InName, const NetIPAddress& InAddress)
     : Socket(InSocket)
     , Name(InName)
+    , IPAddress(InAddress)
 {
 }
 
@@ -116,10 +117,21 @@ std::shared_ptr<NetConnection> NetConnectionTCP::Accept()
         // TODO: Keep track of these clients and disconnect them when 
         //       this socket is disconnected.
 
-        return std::make_shared<NetConnectionTCP>(NewSocket, ClientName.data());
+        NetIPAddress NetClientAddress(
+            ClientAddress.sin_addr.S_un.S_un_b.s_b1, 
+            ClientAddress.sin_addr.S_un.S_un_b.s_b2, 
+            ClientAddress.sin_addr.S_un.S_un_b.s_b3, 
+            ClientAddress.sin_addr.S_un.S_un_b.s_b4);
+
+        return std::make_shared<NetConnectionTCP>(NewSocket, ClientName.data(), NetClientAddress);
     }
 
     return nullptr;
+}
+
+NetIPAddress NetConnectionTCP::GetAddress()
+{
+    return IPAddress;
 }
 
 bool NetConnectionTCP::Connect(std::string Hostname, int Port)
@@ -172,11 +184,11 @@ bool NetConnectionTCP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
         Error("[%s] Failed to recieve with error 0x%08x.", GetName().c_str(), error);
         return false;
     }
-
-    /*if (Result > 0)
+    else if (Result == 0)
     {
-        Log("[%s] RECV %i", GetName().c_str(), Result);
-    }*/
+        HasDisconnected = true;
+    }
+
     BytesRecieved = Result;
     return true;
 }
@@ -266,6 +278,11 @@ void NetConnectionTCP::Rename(const std::string& InName)
 
 bool NetConnectionTCP::IsConnected()
 {
+    if (HasDisconnected)
+    {
+        return false;
+    }
+
     int error_code;
     int error_code_size = sizeof(error_code);
     if (getsockopt(Socket, SOL_SOCKET, SO_ERROR, (char*)&error_code, &error_code_size) < 0)

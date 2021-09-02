@@ -15,6 +15,7 @@
 #include "Server/GameService/GameService.h"
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Network/NetUtils.h"
 
 #include <thread>
 #include <chrono>
@@ -55,6 +56,21 @@ Server::~Server()
 bool Server::Init()
 {
     Log("Initializing server ...");
+
+    // Grab the external server IP address from a webapi.
+    if (!::GetMachineIPv4(PublicIP, true))
+    {
+        Error("Failed to resolve public ip address of server.");
+        return false;
+    }
+    if (!::GetMachineIPv4(PrivateIP, false))
+    {
+        Error("Failed to resolve private ip address of server.");
+        return false;
+    }
+
+    Log("Public ip address: %s", PublicIP.ToString().c_str());
+    Log("Private ip address: %s", PrivateIP.ToString().c_str());
 
     // Generate folder we are going to save everything into.
     if (!std::filesystem::is_directory(SavedPath))
@@ -111,6 +127,16 @@ bool Server::Init()
         }
 
         Log("Loaded rsa key pair successfully.");
+    }
+
+    // Fill in IP information of server if not provided.
+    if (Config.ServerHostname == "")
+    {
+        Config.ServerHostname = PublicIP.ToString();
+    }
+    if (Config.ServerIP == "")
+    {
+        Config.ServerIP = PublicIP.ToString();
     }
 
     // Write out the server import file with the latest configuration.

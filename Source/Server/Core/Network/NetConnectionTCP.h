@@ -37,7 +37,7 @@ public:
 #endif
 
 public:
-    NetConnectionTCP(SocketType InSocket, const std::string& InName);
+    NetConnectionTCP(SocketType InSocket, const std::string& InName, const NetIPAddress& InAddress);
     NetConnectionTCP(const std::string& InName);
     virtual ~NetConnectionTCP();
 
@@ -57,6 +57,8 @@ public:
 
     virtual bool IsConnected() override;
 
+    virtual NetIPAddress GetAddress() override;
+
     virtual std::string GetName() override;
     virtual void Rename(const std::string& Name) override;
 
@@ -66,6 +68,9 @@ protected:
 
 private:
     std::string Name;
+    NetIPAddress IPAddress;
+
+    bool HasDisconnected = false;
 
     SocketType Socket = INVALID_SOCKET_VALUE;
 

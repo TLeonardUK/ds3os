@@ -18,11 +18,12 @@ NetConnectionUDP::NetConnectionUDP(const std::string& InName)
     RecieveBuffer.resize(64 * 1024);
 }
 
-NetConnectionUDP::NetConnectionUDP(SocketType ParentSocket, sockaddr_in InDestination, const std::string& InName)
+NetConnectionUDP::NetConnectionUDP(SocketType ParentSocket, sockaddr_in InDestination, const std::string& InName, const NetIPAddress& InAddress)
     : Destination(InDestination)
     , Name(InName)
     , bChild(true)
     , Socket(ParentSocket)
+    , IPAddress(InAddress)
 {
 }
 
@@ -110,6 +111,11 @@ std::shared_ptr<NetConnection> NetConnectionUDP::Accept()
     }
 
     return nullptr;
+}
+
+NetIPAddress NetConnectionUDP::GetAddress()
+{
+    return IPAddress;
 }
 
 bool NetConnectionUDP::Connect(std::string Hostname, int Port)
@@ -297,7 +303,13 @@ bool NetConnectionUDP::Pump()
                     ClientName.resize(64);
                     snprintf(ClientName.data(), ClientName.size(), "%s{%s:%i}", Name.c_str(), inet_ntoa(SourceAddress.sin_addr), SourceAddress.sin_port);
 
-                    std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(Socket, SourceAddress, ClientName.data());
+                    NetIPAddress NetClientAddress(
+                        SourceAddress.sin_addr.S_un.S_un_b.s_b1,
+                        SourceAddress.sin_addr.S_un.S_un_b.s_b2,
+                        SourceAddress.sin_addr.S_un.S_un_b.s_b3,
+                        SourceAddress.sin_addr.S_un.S_un_b.s_b4);
+
+                    std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(Socket, SourceAddress, ClientName.data(), NetClientAddress);
                     NewConnection->RecieveQueue.push_back(Packet);
                     NewConnections.push_back(NewConnection);
                     ChildConnections.push_back(NewConnection);

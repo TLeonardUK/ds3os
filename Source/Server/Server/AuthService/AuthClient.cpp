@@ -56,7 +56,7 @@ bool AuthClient::Poll()
     }
     if (!Connection->IsConnected())
     {
-        Warning("[%s] Client disconnected.", GetName().c_str());
+        Log("[%s] Client disconnected.", GetName().c_str());
         return true;
     }
 
@@ -203,11 +203,21 @@ bool AuthClient::Poll()
 
                 const RuntimeConfig& RuntimeConfig = Service->GetServer()->GetConfig();
 
+                std::string ServerIP = RuntimeConfig.ServerIP;
+
+                // If user IP is on a private network, we can assume they are on our LAN
+                // and return our internal IP address.
+                if (Connection->GetAddress().IsPrivateNetwork())
+                {
+                    Log("[%s] Directing auth client to our private ip as appears to be on private subnet.", GetName().c_str());
+                    ServerIP = Service->GetServer()->GetPrivateIP().ToString();
+                }
+
                 Frpg2GameServerInfo GameInfo;
                 memset(GameInfo.stack_data, 0, sizeof(GameInfo.stack_data));
                 memset(GameInfo.game_server_ip, 0, sizeof(GameInfo.game_server_ip));
                 FillRandomBytes((uint8_t*)&GameInfo.auth_token, 8);
-                memcpy(GameInfo.game_server_ip, RuntimeConfig.ServerIP.data(), RuntimeConfig.ServerIP.size() + 1);
+                memcpy(GameInfo.game_server_ip, ServerIP.data(), ServerIP.size() + 1);
                 GameInfo.game_port = RuntimeConfig.GameServerPort;
                 GameInfo.SwapEndian();
 
