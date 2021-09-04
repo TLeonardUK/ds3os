@@ -223,6 +223,10 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(GhostMaxLivePoolEntriesPerArea);
     SERIALIZE_VAR(GhostPrimeCountPerArea);
     SERIALIZE_VAR(SummonSignMaxEntriesPerArea);
+    SERIALIZE_VAR(QuickMatchWinXp);
+    SERIALIZE_VAR(QuickMatchLoseXp);
+    SERIALIZE_VAR(QuickMatchDrawXp);
+    SERIALIZE_VAR(QuickMatchRankXp);
     SERIALIZE_STRUCT_VAR(SummonSignMatchingParameters);
     SERIALIZE_STRUCT_VAR(WayOfBlueMatchingParameters);
     SERIALIZE_STRUCT_VAR(DarkSpiritInvasionMatchingParameters);

@@ -9,6 +9,7 @@
 
 #include "Server/GameService/GameManagers/QuickMatch/QuickMatchManager.h"
 #include "Server/GameService/GameClient.h"
+#include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
 
@@ -16,9 +17,33 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/File.h"
 
-QuickMatchManager::QuickMatchManager(Server* InServerInstance)
+QuickMatchManager::QuickMatchManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
+    , GameServiceInstance(InGameServiceInstance)
+{
+}
+
+void QuickMatchManager::OnLostPlayer(GameClient* Client)
+{
+    for (auto Iter = Matches.begin(); Iter != Matches.end(); /* empty */)
+    {
+        std::shared_ptr<Match> Match = *Iter;
+
+        if (Match->HostPlayerId == Client->GetPlayerState().PlayerId)
+        {
+            Log("[%s] Cleaned up undead match due to disconnecting client.", Client->GetName().c_str());
+            Iter = Matches.erase(Iter);
+        }
+        else
+        {
+            Iter++;
+        }
+    }
+}
+
+void QuickMatchManager::Poll()
 {
 }
 
@@ -64,13 +89,95 @@ MessageHandleResult QuickMatchManager::OnMessageRecieved(GameClient* Client, con
     return MessageHandleResult::Unhandled;
 }
 
+bool QuickMatchManager::CanMatchWith(GameClient* Client, const Frpg2RequestMessage::RequestSearchQuickMatch& Request, const std::shared_ptr<Match>& Match)
+{
+    // Matches requested game mode.
+    if (Match->GameMode != Request.mode())
+    {
+        return false;
+    }
+
+    // Matches requested map.
+    bool ValidMap = false;
+    for (int i = 0; i < Request.map_id_list_size(); i++)
+    {
+        if (Request.map_id_list(i).map_id() == (uint32_t)Match->MapId &&
+            Request.map_id_list(i).online_area_id() == (uint32_t)Match->AreaId)
+        {
+            ValidMap = true;
+            break;
+        }
+    }
+    if (!ValidMap)
+    {
+        return false;
+    }
+
+    // Can match with the hosts level.
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+    const RuntimeConfigMatchingParameters* MatchingParams = &Config.UndeadMatchMatchingParameters;
+
+    if (!MatchingParams->CheckMatch(
+        Match->MatchingParams.soul_level(), Match->MatchingParams.weapon_level(),
+        Request.matching_parameter().soul_level(), Request.matching_parameter().weapon_level(),
+        Match->MatchingParams.password().size() > 0
+    ))
+    {
+        return false;
+    }
+
+    // Check passwords match.
+    if (Match->MatchingParams.password() != Request.matching_parameter().password())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+std::shared_ptr<QuickMatchManager::Match> QuickMatchManager::GetMatchByHost(uint32_t HostPlayerId)
+{
+    for (std::shared_ptr<Match>& Iter : Matches)
+    {
+        if (Iter->HostPlayerId == HostPlayerId)
+        {
+            return Iter;
+        }
+    }
+    return nullptr;
+}
+
 MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestCountRankingData* Request = (Frpg2RequestMessage::RequestCountRankingData*)Message.Protobuf.get();
+    Frpg2RequestMessage::RequestSearchQuickMatch* Request = (Frpg2RequestMessage::RequestSearchQuickMatch*)Message.Protobuf.get();
+    Frpg2RequestMessage::RequestSearchQuickMatchResponse Response;
 
-    // TODO: Implement
+    int ResultCount = 0;
+    for (std::shared_ptr<Match>& Iter : Matches)
+    {
+        if (!CanMatchWith(Client, *Request, Iter))
+        {
+            continue;
+        }
 
-    Frpg2RequestMessage::RequestCountRankingDataResponse Response;
+        Frpg2RequestMessage::QuickMatchSearchResult* Result = Response.add_matches();
+        Result->mutable_data()->set_host_player_id(Iter->HostPlayerId);
+        Result->mutable_data()->set_host_player_steam_id(Iter->HostPlayerSteamId);
+        Result->mutable_data()->set_online_area_id((uint32_t)Iter->AreaId);
+        Result->set_unknown_3(0);
+        Result->set_unknown_4(0);
+
+        ResultCount++;
+    }
+
+    // If there are no results server seems to send an empty match result, client fails without it.
+    if (ResultCount == 0)
+    {
+        Frpg2RequestMessage::QuickMatchSearchResult* Result = Response.add_matches();
+        Result->set_unknown_3(0);
+        Result->set_unknown_4(0);
+    }
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestCountRankingDataResponse response.", Client->GetName().c_str());
@@ -80,13 +187,51 @@ MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient
     return MessageHandleResult::Handled;
 }
 
+MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+{
+    Frpg2RequestMessage::RequestRegisterQuickMatch* Request = (Frpg2RequestMessage::RequestRegisterQuickMatch*)Message.Protobuf.get();
+    Frpg2RequestMessage::RequestRegisterQuickMatchResponse Response;
+
+    std::shared_ptr<Match> NewMatch = std::make_shared<Match>();
+    NewMatch->HostPlayerId = Client->GetPlayerState().PlayerId;
+    NewMatch->HostPlayerSteamId = Client->GetPlayerState().SteamId;
+    NewMatch->GameMode = Request->mode();
+    NewMatch->MatchingParams = Request->matching_parameter();
+    NewMatch->MapId = Request->map_id();
+    NewMatch->AreaId = (OnlineAreaId)Request->online_area_id();
+    NewMatch->HasStarted = false;
+
+    Matches.push_back(NewMatch);
+
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestRegisterQuickMatchResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
+
+    return MessageHandleResult::Handled;
+}
+
 MessageHandleResult QuickMatchManager::Handle_RequestUnregisterQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     Frpg2RequestMessage::RequestUnregisterQuickMatch* Request = (Frpg2RequestMessage::RequestUnregisterQuickMatch*)Message.Protobuf.get();
-
-    // TODO: Implement
-
     Frpg2RequestMessage::RequestUnregisterQuickMatchResponse Response;
+
+    for (auto Iter = Matches.begin(); Iter != Matches.end(); /* empty */)
+    {
+        std::shared_ptr<Match> Match = *Iter;
+        if (          Match->GameMode == Request->mode() &&
+                      Match->MapId == Request->map_id() &&
+            (uint32_t)Match->AreaId == Request->online_area_id())
+        {
+            Iter = Matches.erase(Iter);
+        }
+        else
+        {
+            Iter++;
+        }
+    }
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestUnregisterQuickMatchResponse response.", Client->GetName().c_str());
@@ -100,7 +245,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestUpdateQuickMatch(GameClient
 {
     Frpg2RequestMessage::RequestUpdateQuickMatch* Request = (Frpg2RequestMessage::RequestUpdateQuickMatch*)Message.Protobuf.get();
 
-    // TODO: Implement
+    // Not sure we really need to do anything with this. It just keeps the match alive?
 
     Frpg2RequestMessage::RequestUpdateQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -114,9 +259,58 @@ MessageHandleResult QuickMatchManager::Handle_RequestUpdateQuickMatch(GameClient
 
 MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    PlayerState& Player = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestJoinQuickMatch* Request = (Frpg2RequestMessage::RequestJoinQuickMatch*)Message.Protobuf.get();
 
-    // TODO: Implement
+    bool bSuccess = false;
+
+    std::shared_ptr<GameClient> HostClient = GameServiceInstance->FindClientByPlayerId(Request->host_player_id());
+    if (HostClient)
+    {
+        std::shared_ptr<Match> ExistingMatch = GetMatchByHost(Request->host_player_id());    
+        if (ExistingMatch)
+        {        
+            Frpg2RequestMessage::PushRequestJoinQuickMatch PushMessage;
+            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestJoinQuickMatch);
+            PushMessage.mutable_message()->set_join_player_id(Player.PlayerId);
+            PushMessage.mutable_message()->set_join_player_steam_id(Player.SteamId);
+            PushMessage.mutable_message()->set_unknown_3(1);                 // TODO: Figure out
+            PushMessage.mutable_message()->set_online_area_id((uint32_t)ExistingMatch->AreaId);
+            PushMessage.mutable_message()->set_unknown_5(0);                 // TODO: Figure out
+            PushMessage.mutable_message()->set_unknown_6("");                // TODO: Figure out
+
+            if (!HostClient->MessageStream->Send(&PushMessage))
+            {
+                Warning("[%s] Failed to send PushRequestJoinQuickMatch to host of quick match.", Client->GetName().c_str());
+                bSuccess = false;
+            }
+            else
+            {
+                bSuccess = true;
+            }
+        }
+    }
+
+    if (!bSuccess)
+    {
+        Frpg2RequestMessage::PushRequestRejectQuickMatch PushMessage;
+        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectQuickMatch);
+        PushMessage.mutable_message()->set_host_player_id(Request->host_player_id());
+     
+        if (HostClient)
+        {
+            PushMessage.mutable_message()->set_host_player_steam_id(HostClient->GetPlayerState().SteamId);
+        }
+
+        if (!Client->MessageStream->Send(&PushMessage))
+        {
+            Warning("[%s] Failed to send PushRequestRejectQuickMatch to player attempting to join quick match.", Client->GetName().c_str());
+            bSuccess = false;
+        }
+
+        return MessageHandleResult::Error;
+    }
 
     Frpg2RequestMessage::RequestJoinQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -130,9 +324,23 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
 
 MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    PlayerState& Player = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestAcceptQuickMatch* Request = (Frpg2RequestMessage::RequestAcceptQuickMatch*)Message.Protobuf.get();
 
-    // TODO: Implement
+    if (std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->join_player_id()))
+    {    
+        Frpg2RequestMessage::PushRequestAcceptQuickMatch PushMessage;
+        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestAcceptQuickMatch);
+        PushMessage.mutable_message()->set_host_player_id(Player.PlayerId);
+        PushMessage.mutable_message()->set_host_player_steam_id(Player.SteamId);
+        PushMessage.mutable_message()->set_metadata(Request->data().data(), Request->data().size());
+
+        if (!TargetClient->MessageStream->Send(&PushMessage))
+        {
+            Warning("[%s] Failed to send PushRequestAcceptQuickMatch to target of quick match join.", Client->GetName().c_str());
+        }
+    }
 
     Frpg2RequestMessage::RequestAcceptQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -146,9 +354,22 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
 
 MessageHandleResult QuickMatchManager::Handle_RequestRejectQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    PlayerState& Player = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestRejectQuickMatch* Request = (Frpg2RequestMessage::RequestRejectQuickMatch*)Message.Protobuf.get();
 
-    // TODO: Implement
+    if (std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->join_player_id()))
+    {
+        Frpg2RequestMessage::PushRequestRejectQuickMatch PushMessage;
+        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectQuickMatch);
+        PushMessage.mutable_message()->set_host_player_id(Player.PlayerId);
+        PushMessage.mutable_message()->set_host_player_steam_id(Player.SteamId);
+
+        if (!TargetClient->MessageStream->Send(&PushMessage))
+        {
+            Warning("[%s] Failed to send PushRequestAcceptQuickMatch to target of quick match join.", Client->GetName().c_str());
+        }
+    }
 
     Frpg2RequestMessage::RequestRejectQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -160,31 +381,88 @@ MessageHandleResult QuickMatchManager::Handle_RequestRejectQuickMatch(GameClient
     return MessageHandleResult::Handled;
 }
 
-MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
-{
-    Frpg2RequestMessage::RequestRegisterQuickMatch* Request = (Frpg2RequestMessage::RequestRegisterQuickMatch*)Message.Protobuf.get();
-
-    // TODO: Implement
-
-    return MessageHandleResult::Handled;
-}
-
 MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchStart(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    PlayerState& Player = Client->GetPlayerState();
+
     Frpg2RequestMessage::RequestSendQuickMatchStart* Request = (Frpg2RequestMessage::RequestSendQuickMatchStart*)Message.Protobuf.get();
 
-    // TODO: Implement
+    for (auto Iter = Matches.begin(); Iter != Matches.end(); Iter++)
+    {
+        std::shared_ptr<Match> Match = *Iter;
+        if (Match->HostPlayerId == Player.PlayerId)
+        {
+            Matches.erase(Iter);
+            break;
+        }
+    }
+
+    Frpg2RequestMessage::RequestSendQuickMatchStartResponse Response;
+    if (!Client->MessageStream->Send(&Response, &Message))
+    {
+        Warning("[%s] Disconnecting client as failed to send RequestSendQuickMatchStartResponse response.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     return MessageHandleResult::Handled;
 }
 
 MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+
     Frpg2RequestMessage::RequestSendQuickMatchResult* Request = (Frpg2RequestMessage::RequestSendQuickMatchResult*)Message.Protobuf.get();
-
-    // TODO: Implement
-
     Frpg2RequestMessage::RequestSendQuickMatchResultResponse Response;
+    Response.set_unknown_1(0); // TODO: Figure out.
+
+    // TODO: Store rank in database
+    // TODO: Return rank in RequestUpdateLoginPlayerCharacter.
+
+    // Increase and return rank.
+    uint32_t Rank = Request->local_rank().rank();
+    uint32_t XP = Request->local_rank().xp();
+
+    uint32_t OriginalRank = Request->local_rank().rank();
+    uint32_t OriginalXP = Request->local_rank().xp();
+
+    switch (Request->result())
+    {
+        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Win:
+        {
+            XP += Config.QuickMatchWinXp;
+            break;
+        }
+        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Draw:
+        {
+            XP += Config.QuickMatchDrawXp;
+            break;
+        }
+        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Lose:
+        {
+            XP += Config.QuickMatchLoseXp;
+            break;
+        }
+    }
+
+    while (Rank < Config.QuickMatchRankXp.size() - 1)
+    {
+        uint32_t NextRankXP = Config.QuickMatchRankXp[Rank + 1];
+        if (XP > NextRankXP)
+        {
+            Rank++;
+            XP -= NextRankXP;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    Response.mutable_new_local_rank()->set_rank(Rank);
+    Response.mutable_new_local_rank()->set_xp(XP);
+
+    Log("[%s] Player finished undead match, ranked up to: rank=%i xp=%i (from rank=%i xp=%i)", Client->GetName().c_str(), Rank, XP, OriginalRank, OriginalXP);
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestSendQuickMatchResultResponse response.", Client->GetName().c_str());

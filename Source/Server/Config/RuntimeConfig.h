@@ -119,6 +119,20 @@ public:
     // exist on the server.
     int SummonSignMaxEntriesPerArea = INT_MAX;
 
+    // How much XP the user gets when winning an undead match.
+    int QuickMatchWinXp = 2250;
+
+    // How much XP the user gets when losing an undead match.
+    int QuickMatchLoseXp = 200; // I've seen this come back as 750 from server when on first rank.
+
+    // How much XP the user gets when drawing an undead match.
+    int QuickMatchDrawXp = 200;
+
+    // How much XP to rank up at each level. These values are quess-timated, we should figure
+    // out the actual rank boundries.
+    // Ranks: unranked, iron, bronze, silver, gold
+    std::vector<int> QuickMatchRankXp = { 0, 9250, 15000, 20000, 30000 };
+
     // Parameters used for determining which signs a player can see.
     RuntimeConfigMatchingParameters SummonSignMatchingParameters = {
         0.9f, -10,                                                      // LowerLimit
@@ -173,6 +187,17 @@ public:
         false,                                                          // DisableLevelMatching
         false,                                                          // DisableWeaponLevelMatching
     };
+
+    // Parameters used for determining who can play together in undead match.
+    RuntimeConfigMatchingParameters UndeadMatchMatchingParameters = {
+        0.9f, -10,                                                      // LowerLimit
+        1.1f, +10,                                                      // UpperLimit
+        { 1, 2, 3, 4, 6, 7, 8, 9, 10, 10, 10 },                         // WeaponLevelUpperLimit
+        351,                                                            // RangeRemovalLevel
+        true,                                                           // PasswordDisablesLimits
+        false,                                                          // DisableLevelMatching
+        false,                                                          // DisableWeaponLevelMatching
+    };    
 
 public:
 

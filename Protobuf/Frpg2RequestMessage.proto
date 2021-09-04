@@ -175,15 +175,10 @@ message RequestUpdateLoginPlayerCharacter {
     repeated uint32 unknown_2 = 2;                                   // 1, 1, 1, 1, 1, 1, 1, 6, 7
 }
 
-message RequestUpdateLoginPlayerCharacterResponseData {
-    required uint32 unknown_1 = 1;                                  
-    required uint32 unknown_2 = 2;                                  
-}
-
 message RequestUpdateLoginPlayerCharacterResponse {
     required uint32 character_id = 1;                              
-    required RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;   // 0, 0
-    required RequestUpdateLoginPlayerCharacterResponseData unknown_3 = 3;   // 0, 0 (something 1, 2200)
+    required QuickMatchRank quickmatch_brawl_rank = 2;   
+    required QuickMatchRank quickmatch_dual_rank = 3;   
 }
 
 message RequestUpdatePlayerStatus {
@@ -1215,7 +1210,8 @@ message RequestGetOnlineShopItemListResponse {
 //      >> QuickMatchResultLog
 //      >> RequestUnregisterQuickMatch
 //      >> RequestSendQuickMatchStart
-//      >> RequestSendQuickMatchResult
+//      << RequestSendQuickMatchStartResponse       
+//      >> RequestSendQuickMatchResult              Not sent if using password matching.
 //      << RequestSendQuickMatchResultResponse
 //      >> QuickMatchEndLog
 
@@ -1235,8 +1231,8 @@ enum QuickMatchGameMode {
 }
 
 message QuickMatchRank {
-    optional uint32 xp = 1;         
-    optional uint32 rank = 2;       
+    optional uint32 rank = 1;       
+    optional uint32 xp = 2;         
 }
 
 message QuickMatchRankCache {
@@ -1257,11 +1253,11 @@ message QuickMatchApologyPoint {
 message QuickMatchData {
     required uint32 host_player_id = 1;      
     required string host_player_steam_id = 2;       // Not sure this is right, looks like { 6:49, 6:0x6535313130303030, 12:0x31393834 }    
-    required uint32 unknown_3 = 3;                  // 470000
+    required uint32 online_area_id = 3;             
 }
 
 message QuickMatchSearchResult {
-    optional QuickMatchData data = 1;
+    optional QuickMatchData data = 2;
     required uint32 unknown_3 = 3;                  // Always 0
     required uint32 unknown_4 = 4;                  // Always 0
 }
@@ -1273,7 +1269,9 @@ message AcceptQuickMatchMessage {
 }
 
 message RejectQuickMatchMessage {
-    // Unknown
+    // Based on ghidra, not managed to reproduce in-game.
+    required uint32 host_player_id = 1;  
+    required string host_player_steam_id = 2;
 }
 
 message RemoveQuickMatchMessage {
@@ -1281,10 +1279,10 @@ message RemoveQuickMatchMessage {
 }
 
 message JoinQuickMatchMessage {
-    required uint32 host_player_id = 1;
-    required string host_player_steam_id = 2;
-    required uint32 unknown_3 = 3;                  // 14
-    required uint32 unknown_4 = 4;                  // 540000
+    required uint32 join_player_id = 1;
+    required string join_player_steam_id = 2;
+    required uint32 unknown_3 = 3;                  // 1, 14
+    required uint32 online_area_id = 4;             
     required uint32 unknown_5 = 5;                  // 0
     required string unknown_6 = 6;                  // ""
 }
@@ -1300,22 +1298,17 @@ message PushRequestAcceptQuickMatch {
 }
 
 message PushRequestRejectQuickMatch {
-    // Guessing here from existing pattern.
+    // Based on ghidra, not managed to reproduce in-game.
     required PushMessageId push_message_id = 1;                     // 0x0342
     required RejectQuickMatchMessage message = 2;
 }
 
 message RequestSearchQuickMatch {
-    message Map_id_list {
+    required QuickMatchGameMode mode = 1;
+    repeated group Map_id_list = 2 {
         required uint32 map_id = 1;
         required uint32 online_area_id = 2;
     }
-
-    // Note: The prefered team doesn't seem to make any difference to the matching options.
-    //       I guess this is negotiated when everyone connects to the host?
-
-    required QuickMatchGameMode mode = 1;
-    repeated Map_id_list map_ids = 2;
     required uint32 unknown_3 = 3;                      // 5    
     required MatchingParameter matching_parameter = 4;
 }
@@ -1339,6 +1332,10 @@ message RequestUnregisterQuickMatch {
     required uint32 unknown_4 = 4;                      // 0
 }
 
+message RequestRegisterQuickMatchResponse {
+    // Empty response.
+}
+
 message RequestUnregisterQuickMatchResponse {
     // Empty response.
 }
@@ -1354,22 +1351,22 @@ message RequestUpdateQuickMatchResponse {
 }
 
 message RequestJoinQuickMatch {
-    required uint32 unknown_1 = 1;                  // 0
+    required QuickMatchGameMode mode = 1;
     required uint32 unknown_2 = 2;                  // 1
     required uint32 host_player_id = 4;              
-    required uint32 unknown_5 = 5;                  // 470000
-    required uint32 unknown_6 = 6;                  // 470000 
+    required uint32 map_id = 5;                  
+    required uint32 online_area_id = 6;             
     required uint32 unknown_7 = 7;                  // 0
-    required string unknown_8 = 8;                  // ""
+    required string password = 8;                   // ""
 }
 
 message RequestJoinQuickMatchResponse {
-    // Unknown
+    // Empty response.
 }
 
 message RequestAcceptQuickMatch {
-    required uint32 unknown_1 = 1;                  // 0
-    required uint32 host_player_id = 4;                           
+    required QuickMatchGameMode mode = 1;
+    required uint32 join_player_id = 4;                           
     required bytes  data = 5;                  
 }
 
@@ -1378,34 +1375,47 @@ message RequestAcceptQuickMatchResponse {
 }
 
 message RequestRejectQuickMatch {
-    // Unknown
+    required QuickMatchGameMode mode = 1;
+    required uint32 map_id = 2;  
+    required uint32 online_area_id = 3;
+    required uint32 join_player_id = 4; 
+    required uint32 unknown_5 = 5;              // 2
 }
 
 message RequestRejectQuickMatchResponse {
-    // Unknown
+    // Empty response.
 }
 
 message RequestSendQuickMatchStart {
-    message Session_member_list {
+    required uint32 unknown_1 = 1;                  // 0                <- Probably game mode?
+    repeated group  Session_member_list = 2 {
         required uint32 player_id = 1;
         required uint32 unknown_2 = 2;              // 1, 14        (Might be unknown_3 from JoinQuickMatchMessage)
     }
-    required uint32 unknown_1 = 1;                  // 0
-    repeated Session_member_list members = 2;
+}
+
+message RequestSendQuickMatchStartResponse {
+    // Empty response.
+}
+
+enum QuickMatchResult{
+    QuickMatchResult_Win = 0;
+    QuickMatchResult_Lose = 1;
+    QuickMatchResult_Draw = 2;
 }
 
 message RequestSendQuickMatchResult {
-    required uint32 unknown_1 = 1;                      // 0
+    required uint32 unknown_1 = 1;                      // 0            <- Probably game mode?
     required uint32 unknown_2 = 2;                      // 1
-    required bool remote_won = 3;                       // 0, 1     0 if win, 1 if lose     - My guess is both are 0 in timeout.
-    required bool local_won = 4;                        // 0, 1     1 if win, 0 if lose
+    required QuickMatchResult result = 3;               // 0, 1     0 if win, 1 if lose, 2 if draw
+    required bool local_won = 4;                        // 0, 1     1 if win, 0 if lose, 0 if draw
     required QuickMatchRank remote_rank = 5;            // lose{ 0, 0 }                         win{ 0, 0 } { 0, 0 } { 0, 0 } { 0, 0 } { 0, 0 }
     required QuickMatchRank local_rank = 6;             // lose{ 0, 0 } { 0, 750 } { 0, 1500 }  win{ 0, 2250 } { 0, 4500 } { 0, 6750 } { 0, 9000 } { 1, 2000 }
     required string unknown_7 = 7;                      // Looks like a timestamp + player_id "202108171531370006872049"
 }
 
 message RequestSendQuickMatchResultResponse {
-    required uint32 unknown_1 = 1;                      // 0
+    required uint32 unknown_1 = 1;                      // 0            <- Probably game mode?
     required QuickMatchRank new_local_rank = 2;         // { 0, 750 } { 0, 1500 } { 0, 2250 } { 0, 4450 } { 0, 6750 } { 0, 9000 } { 1, 2000 } { 1, 2200 }
 }
 

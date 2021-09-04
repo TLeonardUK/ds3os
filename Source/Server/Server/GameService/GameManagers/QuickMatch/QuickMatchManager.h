@@ -10,9 +10,12 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
+#include "Protobuf/Protobufs.h"
+#include "Server/GameService/Utils/GameIds.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
+class GameService;
 
 // Handles client requests for joining/leaving quick matches (undead matches)
 
@@ -20,11 +23,15 @@ class QuickMatchManager
     : public GameManager
 {
 public:    
-    QuickMatchManager(Server* InServerInstance);
+    QuickMatchManager(Server* InServerInstance, GameService* InGameServiceInstance);
 
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 
     virtual std::string GetName() override;
+
+    virtual void Poll() override;
+
+    virtual void OnLostPlayer(GameClient* Client) override;
 
 protected:
     MessageHandleResult Handle_RequestSearchQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
@@ -38,6 +45,29 @@ protected:
     MessageHandleResult Handle_RequestSendQuickMatchResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
+    struct Match
+    {
+        uint32_t HostPlayerId;
+        std::string HostPlayerSteamId;
+
+        Frpg2RequestMessage::QuickMatchGameMode GameMode;
+        Frpg2RequestMessage::MatchingParameter MatchingParams;
+
+        uint32_t MapId;
+        OnlineAreaId AreaId;
+
+        bool HasStarted = false;
+    };
+
+private:
+    bool CanMatchWith(GameClient* Client, const Frpg2RequestMessage::RequestSearchQuickMatch& Request, const std::shared_ptr<Match>& Match);
+
+    std::shared_ptr<Match> GetMatchByHost(uint32_t HostPlayerId);
+
+private:
     Server* ServerInstance;
+    GameService* GameServiceInstance;
+
+    std::vector<std::shared_ptr<Match>> Matches;
 
 };

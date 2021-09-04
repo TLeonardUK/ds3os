@@ -143,8 +143,8 @@ DEFINE_REQUEST_RESPONSE(0x044E,   RequestUpdateQuickMatch,          RequestUpdat
 DEFINE_REQUEST_RESPONSE(0x044F,   RequestJoinQuickMatch,            RequestJoinQuickMatch,              RequestJoinQuickMatchResponse)
 DEFINE_REQUEST_RESPONSE(0x0450,   RequestAcceptQuickMatch,          RequestAcceptQuickMatch,            RequestAcceptQuickMatchResponse)
 DEFINE_REQUEST_RESPONSE(0x0451,   RequestRejectQuickMatch,          RequestRejectQuickMatch,            RequestRejectQuickMatchResponse)
-DEFINE_MESSAGE         (0x0452,   RequestRegisterQuickMatch,        RequestRegisterQuickMatch)
-DEFINE_MESSAGE         (0x0454,   RequestSendQuickMatchStart,       RequestSendQuickMatchStart)
+DEFINE_REQUEST_RESPONSE(0x0452,   RequestRegisterQuickMatch,        RequestRegisterQuickMatch,          RequestRegisterQuickMatchResponse)
+DEFINE_REQUEST_RESPONSE(0x0454,   RequestSendQuickMatchStart,       RequestSendQuickMatchStart,         RequestSendQuickMatchStartResponse)
 DEFINE_REQUEST_RESPONSE(0x0455,   RequestSendQuickMatchResult,      RequestSendQuickMatchResult,        RequestSendQuickMatchResultResponse)
 
 // Can't find registration in code.

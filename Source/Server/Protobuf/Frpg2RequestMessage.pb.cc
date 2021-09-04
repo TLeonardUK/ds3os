@@ -203,6 +203,7 @@ void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto() {
   delete RequestSearchQuickMatchResponse::default_instance_;
   delete RequestRegisterQuickMatch::default_instance_;
   delete RequestUnregisterQuickMatch::default_instance_;
+  delete RequestRegisterQuickMatchResponse::default_instance_;
   delete RequestUnregisterQuickMatchResponse::default_instance_;
   delete RequestUpdateQuickMatch::default_instance_;
   delete RequestUpdateQuickMatchResponse::default_instance_;
@@ -214,6 +215,7 @@ void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto() {
   delete RequestRejectQuickMatchResponse::default_instance_;
   delete RequestSendQuickMatchStart::default_instance_;
   delete RequestSendQuickMatchStart_Session_member_list::default_instance_;
+  delete RequestSendQuickMatchStartResponse::default_instance_;
   delete RequestSendQuickMatchResult::default_instance_;
   delete RequestSendQuickMatchResultResponse::default_instance_;
   delete RequestPushSendQuickMatchStart::default_instance_;
@@ -461,6 +463,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   RequestSearchQuickMatchResponse::default_instance_ = new RequestSearchQuickMatchResponse();
   RequestRegisterQuickMatch::default_instance_ = new RequestRegisterQuickMatch();
   RequestUnregisterQuickMatch::default_instance_ = new RequestUnregisterQuickMatch();
+  RequestRegisterQuickMatchResponse::default_instance_ = new RequestRegisterQuickMatchResponse();
   RequestUnregisterQuickMatchResponse::default_instance_ = new RequestUnregisterQuickMatchResponse();
   RequestUpdateQuickMatch::default_instance_ = new RequestUpdateQuickMatch();
   RequestUpdateQuickMatchResponse::default_instance_ = new RequestUpdateQuickMatchResponse();
@@ -472,6 +475,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   RequestRejectQuickMatchResponse::default_instance_ = new RequestRejectQuickMatchResponse();
   RequestSendQuickMatchStart::default_instance_ = new RequestSendQuickMatchStart();
   RequestSendQuickMatchStart_Session_member_list::default_instance_ = new RequestSendQuickMatchStart_Session_member_list();
+  RequestSendQuickMatchStartResponse::default_instance_ = new RequestSendQuickMatchStartResponse();
   RequestSendQuickMatchResult::default_instance_ = new RequestSendQuickMatchResult();
   RequestSendQuickMatchResultResponse::default_instance_ = new RequestSendQuickMatchResultResponse();
   RequestPushSendQuickMatchStart::default_instance_ = new RequestPushSendQuickMatchStart();
@@ -704,6 +708,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   RequestSearchQuickMatchResponse::default_instance_->InitAsDefaultInstance();
   RequestRegisterQuickMatch::default_instance_->InitAsDefaultInstance();
   RequestUnregisterQuickMatch::default_instance_->InitAsDefaultInstance();
+  RequestRegisterQuickMatchResponse::default_instance_->InitAsDefaultInstance();
   RequestUnregisterQuickMatchResponse::default_instance_->InitAsDefaultInstance();
   RequestUpdateQuickMatch::default_instance_->InitAsDefaultInstance();
   RequestUpdateQuickMatchResponse::default_instance_->InitAsDefaultInstance();
@@ -715,6 +720,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   RequestRejectQuickMatchResponse::default_instance_->InitAsDefaultInstance();
   RequestSendQuickMatchStart::default_instance_->InitAsDefaultInstance();
   RequestSendQuickMatchStart_Session_member_list::default_instance_->InitAsDefaultInstance();
+  RequestSendQuickMatchStartResponse::default_instance_->InitAsDefaultInstance();
   RequestSendQuickMatchResult::default_instance_->InitAsDefaultInstance();
   RequestSendQuickMatchResultResponse::default_instance_->InitAsDefaultInstance();
   RequestPushSendQuickMatchStart::default_instance_->InitAsDefaultInstance();
@@ -865,6 +871,17 @@ bool QuickMatchGameMode_IsValid(int value) {
     case 5:
     case 6:
     case 7:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool QuickMatchResult_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
       return true;
     default:
       return false;
@@ -41331,8 +41348,8 @@ void RequestGetOnlineShopItemListResponse::Swap(RequestGetOnlineShopItemListResp
 // ===================================================================
 
 #ifndef _MSC_VER
-const int QuickMatchRank::kXpFieldNumber;
 const int QuickMatchRank::kRankFieldNumber;
+const int QuickMatchRank::kXpFieldNumber;
 #endif  // !_MSC_VER
 
 QuickMatchRank::QuickMatchRank()
@@ -41353,8 +41370,8 @@ QuickMatchRank::QuickMatchRank(const QuickMatchRank& from)
 
 void QuickMatchRank::SharedCtor() {
   _cached_size_ = 0;
-  xp_ = 0u;
   rank_ = 0u;
+  xp_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -41403,7 +41420,7 @@ void QuickMatchRank::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(xp_, rank_);
+  ZR_(rank_, xp_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -41426,28 +41443,28 @@ bool QuickMatchRank::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 xp = 1;
+      // optional uint32 rank = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &xp_)));
-          set_has_xp();
+                 input, &rank_)));
+          set_has_rank();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_rank;
+        if (input->ExpectTag(16)) goto parse_xp;
         break;
       }
 
-      // optional uint32 rank = 2;
+      // optional uint32 xp = 2;
       case 2: {
         if (tag == 16) {
-         parse_rank:
+         parse_xp:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &rank_)));
-          set_has_rank();
+                 input, &xp_)));
+          set_has_xp();
         } else {
           goto handle_unusual;
         }
@@ -41480,14 +41497,14 @@ failure:
 void QuickMatchRank::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.QuickMatchRank)
-  // optional uint32 xp = 1;
-  if (has_xp()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->xp(), output);
+  // optional uint32 rank = 1;
+  if (has_rank()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->rank(), output);
   }
 
-  // optional uint32 rank = 2;
-  if (has_rank()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->rank(), output);
+  // optional uint32 xp = 2;
+  if (has_xp()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->xp(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -41499,18 +41516,18 @@ int QuickMatchRank::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional uint32 xp = 1;
-    if (has_xp()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->xp());
-    }
-
-    // optional uint32 rank = 2;
+    // optional uint32 rank = 1;
     if (has_rank()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->rank());
+    }
+
+    // optional uint32 xp = 2;
+    if (has_xp()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->xp());
     }
 
   }
@@ -41530,11 +41547,11 @@ void QuickMatchRank::CheckTypeAndMergeFrom(
 void QuickMatchRank::MergeFrom(const QuickMatchRank& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_xp()) {
-      set_xp(from.xp());
-    }
     if (from.has_rank()) {
       set_rank(from.rank());
+    }
+    if (from.has_xp()) {
+      set_xp(from.xp());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -41553,8 +41570,8 @@ bool QuickMatchRank::IsInitialized() const {
 
 void QuickMatchRank::Swap(QuickMatchRank* other) {
   if (other != this) {
-    std::swap(xp_, other->xp_);
     std::swap(rank_, other->rank_);
+    std::swap(xp_, other->xp_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -42163,7 +42180,7 @@ void QuickMatchApologyPoint::Swap(QuickMatchApologyPoint* other) {
 #ifndef _MSC_VER
 const int QuickMatchData::kHostPlayerIdFieldNumber;
 const int QuickMatchData::kHostPlayerSteamIdFieldNumber;
-const int QuickMatchData::kUnknown3FieldNumber;
+const int QuickMatchData::kOnlineAreaIdFieldNumber;
 #endif  // !_MSC_VER
 
 QuickMatchData::QuickMatchData()
@@ -42187,7 +42204,7 @@ void QuickMatchData::SharedCtor() {
   _cached_size_ = 0;
   host_player_id_ = 0u;
   host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  unknown_3_ = 0u;
+  online_area_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -42240,7 +42257,7 @@ void QuickMatchData::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 7) {
-    ZR_(host_player_id_, unknown_3_);
+    ZR_(host_player_id_, online_area_id_);
     if (has_host_player_steam_id()) {
       if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         host_player_steam_id_->clear();
@@ -42292,18 +42309,18 @@ bool QuickMatchData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_online_area_id;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required uint32 online_area_id = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
@@ -42347,9 +42364,9 @@ void QuickMatchData::SerializeWithCachedSizes(
       2, this->host_player_steam_id(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required uint32 online_area_id = 3;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->online_area_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -42375,11 +42392,11 @@ int QuickMatchData::ByteSize() const {
           this->host_player_steam_id());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required uint32 online_area_id = 3;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->online_area_id());
     }
 
   }
@@ -42405,8 +42422,8 @@ void QuickMatchData::MergeFrom(const QuickMatchData& from) {
     if (from.has_host_player_steam_id()) {
       set_host_player_steam_id(from.host_player_steam_id());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -42428,7 +42445,7 @@ void QuickMatchData::Swap(QuickMatchData* other) {
   if (other != this) {
     std::swap(host_player_id_, other->host_player_id_);
     std::swap(host_player_steam_id_, other->host_player_steam_id_);
-    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(online_area_id_, other->online_area_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -42552,9 +42569,9 @@ bool QuickMatchSearchResult::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Frpg2RequestMessage.QuickMatchData data = 1;
-      case 1: {
-        if (tag == 10) {
+      // optional .Frpg2RequestMessage.QuickMatchData data = 2;
+      case 2: {
+        if (tag == 18) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_data()));
         } else {
@@ -42619,10 +42636,10 @@ failure:
 void QuickMatchSearchResult::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.QuickMatchSearchResult)
-  // optional .Frpg2RequestMessage.QuickMatchData data = 1;
+  // optional .Frpg2RequestMessage.QuickMatchData data = 2;
   if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->data(), output);
+      2, this->data(), output);
   }
 
   // required uint32 unknown_3 = 3;
@@ -42644,7 +42661,7 @@ int QuickMatchSearchResult::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Frpg2RequestMessage.QuickMatchData data = 1;
+    // optional .Frpg2RequestMessage.QuickMatchData data = 2;
     if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -43004,6 +43021,8 @@ void AcceptQuickMatchMessage::Swap(AcceptQuickMatchMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RejectQuickMatchMessage::kHostPlayerIdFieldNumber;
+const int RejectQuickMatchMessage::kHostPlayerSteamIdFieldNumber;
 #endif  // !_MSC_VER
 
 RejectQuickMatchMessage::RejectQuickMatchMessage()
@@ -43023,7 +43042,10 @@ RejectQuickMatchMessage::RejectQuickMatchMessage(const RejectQuickMatchMessage& 
 }
 
 void RejectQuickMatchMessage::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  host_player_id_ = 0u;
+  host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -43033,6 +43055,9 @@ RejectQuickMatchMessage::~RejectQuickMatchMessage() {
 }
 
 void RejectQuickMatchMessage::SharedDtor() {
+  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete host_player_steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -43062,6 +43087,14 @@ RejectQuickMatchMessage* RejectQuickMatchMessage::New() const {
 }
 
 void RejectQuickMatchMessage::Clear() {
+  if (_has_bits_[0 / 32] & 3) {
+    host_player_id_ = 0u;
+    if (has_host_player_steam_id()) {
+      if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        host_player_steam_id_->clear();
+      }
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -43079,14 +43112,46 @@ bool RejectQuickMatchMessage::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 host_player_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &host_player_id_)));
+          set_has_host_player_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_host_player_steam_id;
+        break;
+      }
+
+      // required string host_player_steam_id = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_host_player_steam_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_host_player_steam_id()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.RejectQuickMatchMessage)
@@ -43100,6 +43165,17 @@ failure:
 void RejectQuickMatchMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RejectQuickMatchMessage)
+  // required uint32 host_player_id = 1;
+  if (has_host_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->host_player_id(), output);
+  }
+
+  // required string host_player_steam_id = 2;
+  if (has_host_player_steam_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->host_player_steam_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.RejectQuickMatchMessage)
@@ -43108,6 +43184,22 @@ void RejectQuickMatchMessage::SerializeWithCachedSizes(
 int RejectQuickMatchMessage::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 host_player_id = 1;
+    if (has_host_player_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->host_player_id());
+    }
+
+    // required string host_player_steam_id = 2;
+    if (has_host_player_steam_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->host_player_steam_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -43123,6 +43215,14 @@ void RejectQuickMatchMessage::CheckTypeAndMergeFrom(
 
 void RejectQuickMatchMessage::MergeFrom(const RejectQuickMatchMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_host_player_id()) {
+      set_host_player_id(from.host_player_id());
+    }
+    if (from.has_host_player_steam_id()) {
+      set_host_player_steam_id(from.host_player_steam_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -43133,12 +43233,16 @@ void RejectQuickMatchMessage::CopyFrom(const RejectQuickMatchMessage& from) {
 }
 
 bool RejectQuickMatchMessage::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
 
 void RejectQuickMatchMessage::Swap(RejectQuickMatchMessage* other) {
   if (other != this) {
+    std::swap(host_player_id_, other->host_player_id_);
+    std::swap(host_player_steam_id_, other->host_player_steam_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -43300,10 +43404,10 @@ void RemoveQuickMatchMessage::Swap(RemoveQuickMatchMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int JoinQuickMatchMessage::kHostPlayerIdFieldNumber;
-const int JoinQuickMatchMessage::kHostPlayerSteamIdFieldNumber;
+const int JoinQuickMatchMessage::kJoinPlayerIdFieldNumber;
+const int JoinQuickMatchMessage::kJoinPlayerSteamIdFieldNumber;
 const int JoinQuickMatchMessage::kUnknown3FieldNumber;
-const int JoinQuickMatchMessage::kUnknown4FieldNumber;
+const int JoinQuickMatchMessage::kOnlineAreaIdFieldNumber;
 const int JoinQuickMatchMessage::kUnknown5FieldNumber;
 const int JoinQuickMatchMessage::kUnknown6FieldNumber;
 #endif  // !_MSC_VER
@@ -43327,10 +43431,10 @@ JoinQuickMatchMessage::JoinQuickMatchMessage(const JoinQuickMatchMessage& from)
 void JoinQuickMatchMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  host_player_id_ = 0u;
-  host_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  join_player_id_ = 0u;
+  join_player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   unknown_3_ = 0u;
-  unknown_4_ = 0u;
+  online_area_id_ = 0u;
   unknown_5_ = 0u;
   unknown_6_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -43342,8 +43446,8 @@ JoinQuickMatchMessage::~JoinQuickMatchMessage() {
 }
 
 void JoinQuickMatchMessage::SharedDtor() {
-  if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete host_player_steam_id_;
+  if (join_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete join_player_steam_id_;
   }
   if (unknown_6_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete unknown_6_;
@@ -43388,10 +43492,10 @@ void JoinQuickMatchMessage::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 63) {
-    ZR_(host_player_id_, unknown_5_);
-    if (has_host_player_steam_id()) {
-      if (host_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        host_player_steam_id_->clear();
+    ZR_(join_player_id_, unknown_5_);
+    if (has_join_player_steam_id()) {
+      if (join_player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        join_player_steam_id_->clear();
       }
     }
     if (has_unknown_6()) {
@@ -43422,26 +43526,26 @@ bool JoinQuickMatchMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 host_player_id = 1;
+      // required uint32 join_player_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &host_player_id_)));
-          set_has_host_player_id();
+                 input, &join_player_id_)));
+          set_has_join_player_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_host_player_steam_id;
+        if (input->ExpectTag(18)) goto parse_join_player_steam_id;
         break;
       }
 
-      // required string host_player_steam_id = 2;
+      // required string join_player_steam_id = 2;
       case 2: {
         if (tag == 18) {
-         parse_host_player_steam_id:
+         parse_join_player_steam_id:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_host_player_steam_id()));
+                input, this->mutable_join_player_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -43460,18 +43564,18 @@ bool JoinQuickMatchMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_online_area_id;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required uint32 online_area_id = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
@@ -43532,15 +43636,15 @@ failure:
 void JoinQuickMatchMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.JoinQuickMatchMessage)
-  // required uint32 host_player_id = 1;
-  if (has_host_player_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->host_player_id(), output);
+  // required uint32 join_player_id = 1;
+  if (has_join_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->join_player_id(), output);
   }
 
-  // required string host_player_steam_id = 2;
-  if (has_host_player_steam_id()) {
+  // required string join_player_steam_id = 2;
+  if (has_join_player_steam_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->host_player_steam_id(), output);
+      2, this->join_player_steam_id(), output);
   }
 
   // required uint32 unknown_3 = 3;
@@ -43548,9 +43652,9 @@ void JoinQuickMatchMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required uint32 online_area_id = 4;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->online_area_id(), output);
   }
 
   // required uint32 unknown_5 = 5;
@@ -43573,18 +43677,18 @@ int JoinQuickMatchMessage::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 host_player_id = 1;
-    if (has_host_player_id()) {
+    // required uint32 join_player_id = 1;
+    if (has_join_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->host_player_id());
+          this->join_player_id());
     }
 
-    // required string host_player_steam_id = 2;
-    if (has_host_player_steam_id()) {
+    // required string join_player_steam_id = 2;
+    if (has_join_player_steam_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->host_player_steam_id());
+          this->join_player_steam_id());
     }
 
     // required uint32 unknown_3 = 3;
@@ -43594,11 +43698,11 @@ int JoinQuickMatchMessage::ByteSize() const {
           this->unknown_3());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required uint32 online_area_id = 4;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+          this->online_area_id());
     }
 
     // required uint32 unknown_5 = 5;
@@ -43632,17 +43736,17 @@ void JoinQuickMatchMessage::CheckTypeAndMergeFrom(
 void JoinQuickMatchMessage::MergeFrom(const JoinQuickMatchMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_host_player_id()) {
-      set_host_player_id(from.host_player_id());
+    if (from.has_join_player_id()) {
+      set_join_player_id(from.join_player_id());
     }
-    if (from.has_host_player_steam_id()) {
-      set_host_player_steam_id(from.host_player_steam_id());
+    if (from.has_join_player_steam_id()) {
+      set_join_player_steam_id(from.join_player_steam_id());
     }
     if (from.has_unknown_3()) {
       set_unknown_3(from.unknown_3());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
     if (from.has_unknown_5()) {
       set_unknown_5(from.unknown_5());
@@ -43668,10 +43772,10 @@ bool JoinQuickMatchMessage::IsInitialized() const {
 
 void JoinQuickMatchMessage::Swap(JoinQuickMatchMessage* other) {
   if (other != this) {
-    std::swap(host_player_id_, other->host_player_id_);
-    std::swap(host_player_steam_id_, other->host_player_steam_id_);
+    std::swap(join_player_id_, other->join_player_id_);
+    std::swap(join_player_steam_id_, other->join_player_steam_id_);
     std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(online_area_id_, other->online_area_id_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(unknown_6_, other->unknown_6_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -44399,6 +44503,9 @@ void PushRequestRejectQuickMatch::CopyFrom(const PushRequestRejectQuickMatch& fr
 bool PushRequestRejectQuickMatch::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
+  if (has_message()) {
+    if (!this->message().IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -44660,7 +44767,7 @@ void RequestSearchQuickMatch_Map_id_list::Swap(RequestSearchQuickMatch_Map_id_li
 
 #ifndef _MSC_VER
 const int RequestSearchQuickMatch::kModeFieldNumber;
-const int RequestSearchQuickMatch::kMapIdsFieldNumber;
+const int RequestSearchQuickMatch::kMapIdListFieldNumber;
 const int RequestSearchQuickMatch::kUnknown3FieldNumber;
 const int RequestSearchQuickMatch::kMatchingParameterFieldNumber;
 #endif  // !_MSC_VER
@@ -44751,7 +44858,7 @@ void RequestSearchQuickMatch::Clear() {
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
-  map_ids_.Clear();
+  map_id_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -44786,20 +44893,20 @@ bool RequestSearchQuickMatch::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_map_ids;
+        if (input->ExpectTag(19)) goto parse_map_id_list;
         break;
       }
 
-      // repeated .Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list map_ids = 2;
+      // repeated group Map_id_list = 2 {
       case 2: {
-        if (tag == 18) {
-         parse_map_ids:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_map_ids()));
+        if (tag == 19) {
+         parse_map_id_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                2, input, add_map_id_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_map_ids;
+        if (input->ExpectTag(19)) goto parse_map_id_list;
         if (input->ExpectTag(24)) goto parse_unknown_3;
         break;
       }
@@ -44863,10 +44970,10 @@ void RequestSearchQuickMatch::SerializeWithCachedSizes(
       1, this->mode(), output);
   }
 
-  // repeated .Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list map_ids = 2;
-  for (int i = 0; i < this->map_ids_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, this->map_ids(i), output);
+  // repeated group Map_id_list = 2 {
+  for (int i = 0; i < this->map_id_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      2, this->map_id_list(i), output);
   }
 
   // required uint32 unknown_3 = 3;
@@ -44910,12 +45017,12 @@ int RequestSearchQuickMatch::ByteSize() const {
     }
 
   }
-  // repeated .Frpg2RequestMessage.RequestSearchQuickMatch.Map_id_list map_ids = 2;
-  total_size += 1 * this->map_ids_size();
-  for (int i = 0; i < this->map_ids_size(); i++) {
+  // repeated group Map_id_list = 2 {
+  total_size += 2 * this->map_id_list_size();
+  for (int i = 0; i < this->map_id_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->map_ids(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->map_id_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -44933,7 +45040,7 @@ void RequestSearchQuickMatch::CheckTypeAndMergeFrom(
 
 void RequestSearchQuickMatch::MergeFrom(const RequestSearchQuickMatch& from) {
   GOOGLE_CHECK_NE(&from, this);
-  map_ids_.MergeFrom(from.map_ids_);
+  map_id_list_.MergeFrom(from.map_id_list_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_mode()) {
       set_mode(from.mode());
@@ -44957,7 +45064,7 @@ void RequestSearchQuickMatch::CopyFrom(const RequestSearchQuickMatch& from) {
 bool RequestSearchQuickMatch::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000000d) != 0x0000000d) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->map_ids())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->map_id_list())) return false;
   if (has_matching_parameter()) {
     if (!this->matching_parameter().IsInitialized()) return false;
   }
@@ -44967,7 +45074,7 @@ bool RequestSearchQuickMatch::IsInitialized() const {
 void RequestSearchQuickMatch::Swap(RequestSearchQuickMatch* other) {
   if (other != this) {
     std::swap(mode_, other->mode_);
-    map_ids_.Swap(&other->map_ids_);
+    map_id_list_.Swap(&other->map_id_list_);
     std::swap(unknown_3_, other->unknown_3_);
     std::swap(matching_parameter_, other->matching_parameter_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -45843,6 +45950,154 @@ void RequestUnregisterQuickMatch::Swap(RequestUnregisterQuickMatch* other) {
 #ifndef _MSC_VER
 #endif  // !_MSC_VER
 
+RequestRegisterQuickMatchResponse::RequestRegisterQuickMatchResponse()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+}
+
+void RequestRegisterQuickMatchResponse::InitAsDefaultInstance() {
+}
+
+RequestRegisterQuickMatchResponse::RequestRegisterQuickMatchResponse(const RequestRegisterQuickMatchResponse& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+}
+
+void RequestRegisterQuickMatchResponse::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+RequestRegisterQuickMatchResponse::~RequestRegisterQuickMatchResponse() {
+  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+  SharedDtor();
+}
+
+void RequestRegisterQuickMatchResponse::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void RequestRegisterQuickMatchResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const RequestRegisterQuickMatchResponse& RequestRegisterQuickMatchResponse::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+RequestRegisterQuickMatchResponse* RequestRegisterQuickMatchResponse::default_instance_ = NULL;
+
+RequestRegisterQuickMatchResponse* RequestRegisterQuickMatchResponse::New() const {
+  return new RequestRegisterQuickMatchResponse;
+}
+
+void RequestRegisterQuickMatchResponse::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool RequestRegisterQuickMatchResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+  return false;
+#undef DO_
+}
+
+void RequestRegisterQuickMatchResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.RequestRegisterQuickMatchResponse)
+}
+
+int RequestRegisterQuickMatchResponse::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void RequestRegisterQuickMatchResponse::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const RequestRegisterQuickMatchResponse*>(&from));
+}
+
+void RequestRegisterQuickMatchResponse::MergeFrom(const RequestRegisterQuickMatchResponse& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void RequestRegisterQuickMatchResponse::CopyFrom(const RequestRegisterQuickMatchResponse& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RequestRegisterQuickMatchResponse::IsInitialized() const {
+
+  return true;
+}
+
+void RequestRegisterQuickMatchResponse::Swap(RequestRegisterQuickMatchResponse* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string RequestRegisterQuickMatchResponse::GetTypeName() const {
+  return "Frpg2RequestMessage.RequestRegisterQuickMatchResponse";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
 RequestUnregisterQuickMatchResponse::RequestUnregisterQuickMatchResponse()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
@@ -46415,13 +46670,13 @@ void RequestUpdateQuickMatchResponse::Swap(RequestUpdateQuickMatchResponse* othe
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestJoinQuickMatch::kUnknown1FieldNumber;
+const int RequestJoinQuickMatch::kModeFieldNumber;
 const int RequestJoinQuickMatch::kUnknown2FieldNumber;
 const int RequestJoinQuickMatch::kHostPlayerIdFieldNumber;
-const int RequestJoinQuickMatch::kUnknown5FieldNumber;
-const int RequestJoinQuickMatch::kUnknown6FieldNumber;
+const int RequestJoinQuickMatch::kMapIdFieldNumber;
+const int RequestJoinQuickMatch::kOnlineAreaIdFieldNumber;
 const int RequestJoinQuickMatch::kUnknown7FieldNumber;
-const int RequestJoinQuickMatch::kUnknown8FieldNumber;
+const int RequestJoinQuickMatch::kPasswordFieldNumber;
 #endif  // !_MSC_VER
 
 RequestJoinQuickMatch::RequestJoinQuickMatch()
@@ -46443,13 +46698,13 @@ RequestJoinQuickMatch::RequestJoinQuickMatch(const RequestJoinQuickMatch& from)
 void RequestJoinQuickMatch::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  mode_ = 0;
   unknown_2_ = 0u;
   host_player_id_ = 0u;
-  unknown_5_ = 0u;
-  unknown_6_ = 0u;
+  map_id_ = 0u;
+  online_area_id_ = 0u;
   unknown_7_ = 0u;
-  unknown_8_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  password_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -46459,8 +46714,8 @@ RequestJoinQuickMatch::~RequestJoinQuickMatch() {
 }
 
 void RequestJoinQuickMatch::SharedDtor() {
-  if (unknown_8_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete unknown_8_;
+  if (password_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete password_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -46502,10 +46757,10 @@ void RequestJoinQuickMatch::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 127) {
-    ZR_(unknown_1_, unknown_7_);
-    if (has_unknown_8()) {
-      if (unknown_8_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        unknown_8_->clear();
+    ZR_(mode_, unknown_7_);
+    if (has_password()) {
+      if (password_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        password_->clear();
       }
     }
   }
@@ -46531,13 +46786,19 @@ bool RequestJoinQuickMatch::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value)) {
+            set_mode(static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -46571,33 +46832,33 @@ bool RequestJoinQuickMatch::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_unknown_5;
+        if (input->ExpectTag(40)) goto parse_map_id;
         break;
       }
 
-      // required uint32 unknown_5 = 5;
+      // required uint32 map_id = 5;
       case 5: {
         if (tag == 40) {
-         parse_unknown_5:
+         parse_map_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_5_)));
-          set_has_unknown_5();
+                 input, &map_id_)));
+          set_has_map_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_unknown_6;
+        if (input->ExpectTag(48)) goto parse_online_area_id;
         break;
       }
 
-      // required uint32 unknown_6 = 6;
+      // required uint32 online_area_id = 6;
       case 6: {
         if (tag == 48) {
-         parse_unknown_6:
+         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_6_)));
-          set_has_unknown_6();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
@@ -46616,16 +46877,16 @@ bool RequestJoinQuickMatch::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(66)) goto parse_unknown_8;
+        if (input->ExpectTag(66)) goto parse_password;
         break;
       }
 
-      // required string unknown_8 = 8;
+      // required string password = 8;
       case 8: {
         if (tag == 66) {
-         parse_unknown_8:
+         parse_password:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_unknown_8()));
+                input, this->mutable_password()));
         } else {
           goto handle_unusual;
         }
@@ -46658,9 +46919,10 @@ failure:
 void RequestJoinQuickMatch::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestJoinQuickMatch)
-  // required uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  if (has_mode()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mode(), output);
   }
 
   // required uint32 unknown_2 = 2;
@@ -46673,14 +46935,14 @@ void RequestJoinQuickMatch::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->host_player_id(), output);
   }
 
-  // required uint32 unknown_5 = 5;
-  if (has_unknown_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  // required uint32 map_id = 5;
+  if (has_map_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->map_id(), output);
   }
 
-  // required uint32 unknown_6 = 6;
-  if (has_unknown_6()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
+  // required uint32 online_area_id = 6;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->online_area_id(), output);
   }
 
   // required uint32 unknown_7 = 7;
@@ -46688,10 +46950,10 @@ void RequestJoinQuickMatch::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
   }
 
-  // required string unknown_8 = 8;
-  if (has_unknown_8()) {
+  // required string password = 8;
+  if (has_password()) {
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      8, this->unknown_8(), output);
+      8, this->password(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -46703,11 +46965,10 @@ int RequestJoinQuickMatch::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+    if (has_mode()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->mode());
     }
 
     // required uint32 unknown_2 = 2;
@@ -46724,18 +46985,18 @@ int RequestJoinQuickMatch::ByteSize() const {
           this->host_player_id());
     }
 
-    // required uint32 unknown_5 = 5;
-    if (has_unknown_5()) {
+    // required uint32 map_id = 5;
+    if (has_map_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_5());
+          this->map_id());
     }
 
-    // required uint32 unknown_6 = 6;
-    if (has_unknown_6()) {
+    // required uint32 online_area_id = 6;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_6());
+          this->online_area_id());
     }
 
     // required uint32 unknown_7 = 7;
@@ -46745,11 +47006,11 @@ int RequestJoinQuickMatch::ByteSize() const {
           this->unknown_7());
     }
 
-    // required string unknown_8 = 8;
-    if (has_unknown_8()) {
+    // required string password = 8;
+    if (has_password()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->unknown_8());
+          this->password());
     }
 
   }
@@ -46769,8 +47030,8 @@ void RequestJoinQuickMatch::CheckTypeAndMergeFrom(
 void RequestJoinQuickMatch::MergeFrom(const RequestJoinQuickMatch& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_mode()) {
+      set_mode(from.mode());
     }
     if (from.has_unknown_2()) {
       set_unknown_2(from.unknown_2());
@@ -46778,17 +47039,17 @@ void RequestJoinQuickMatch::MergeFrom(const RequestJoinQuickMatch& from) {
     if (from.has_host_player_id()) {
       set_host_player_id(from.host_player_id());
     }
-    if (from.has_unknown_5()) {
-      set_unknown_5(from.unknown_5());
+    if (from.has_map_id()) {
+      set_map_id(from.map_id());
     }
-    if (from.has_unknown_6()) {
-      set_unknown_6(from.unknown_6());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
     if (from.has_unknown_7()) {
       set_unknown_7(from.unknown_7());
     }
-    if (from.has_unknown_8()) {
-      set_unknown_8(from.unknown_8());
+    if (from.has_password()) {
+      set_password(from.password());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -46808,13 +47069,13 @@ bool RequestJoinQuickMatch::IsInitialized() const {
 
 void RequestJoinQuickMatch::Swap(RequestJoinQuickMatch* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(mode_, other->mode_);
     std::swap(unknown_2_, other->unknown_2_);
     std::swap(host_player_id_, other->host_player_id_);
-    std::swap(unknown_5_, other->unknown_5_);
-    std::swap(unknown_6_, other->unknown_6_);
+    std::swap(map_id_, other->map_id_);
+    std::swap(online_area_id_, other->online_area_id_);
     std::swap(unknown_7_, other->unknown_7_);
-    std::swap(unknown_8_, other->unknown_8_);
+    std::swap(password_, other->password_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -46977,8 +47238,8 @@ void RequestJoinQuickMatchResponse::Swap(RequestJoinQuickMatchResponse* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestAcceptQuickMatch::kUnknown1FieldNumber;
-const int RequestAcceptQuickMatch::kHostPlayerIdFieldNumber;
+const int RequestAcceptQuickMatch::kModeFieldNumber;
+const int RequestAcceptQuickMatch::kJoinPlayerIdFieldNumber;
 const int RequestAcceptQuickMatch::kDataFieldNumber;
 #endif  // !_MSC_VER
 
@@ -47001,8 +47262,8 @@ RequestAcceptQuickMatch::RequestAcceptQuickMatch(const RequestAcceptQuickMatch& 
 void RequestAcceptQuickMatch::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  unknown_1_ = 0u;
-  host_player_id_ = 0u;
+  mode_ = 0;
+  join_player_id_ = 0u;
   data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -47056,7 +47317,7 @@ void RequestAcceptQuickMatch::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 7) {
-    ZR_(unknown_1_, host_player_id_);
+    ZR_(mode_, join_player_id_);
     if (has_data()) {
       if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         data_->clear();
@@ -47085,28 +47346,34 @@ bool RequestAcceptQuickMatch::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value)) {
+            set_mode(static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_host_player_id;
+        if (input->ExpectTag(32)) goto parse_join_player_id;
         break;
       }
 
-      // required uint32 host_player_id = 4;
+      // required uint32 join_player_id = 4;
       case 4: {
         if (tag == 32) {
-         parse_host_player_id:
+         parse_join_player_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &host_player_id_)));
-          set_has_host_player_id();
+                 input, &join_player_id_)));
+          set_has_join_player_id();
         } else {
           goto handle_unusual;
         }
@@ -47152,14 +47419,15 @@ failure:
 void RequestAcceptQuickMatch::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestAcceptQuickMatch)
-  // required uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  if (has_mode()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mode(), output);
   }
 
-  // required uint32 host_player_id = 4;
-  if (has_host_player_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->host_player_id(), output);
+  // required uint32 join_player_id = 4;
+  if (has_join_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->join_player_id(), output);
   }
 
   // required bytes data = 5;
@@ -47177,18 +47445,17 @@ int RequestAcceptQuickMatch::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+    if (has_mode()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->mode());
     }
 
-    // required uint32 host_player_id = 4;
-    if (has_host_player_id()) {
+    // required uint32 join_player_id = 4;
+    if (has_join_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->host_player_id());
+          this->join_player_id());
     }
 
     // required bytes data = 5;
@@ -47215,11 +47482,11 @@ void RequestAcceptQuickMatch::CheckTypeAndMergeFrom(
 void RequestAcceptQuickMatch::MergeFrom(const RequestAcceptQuickMatch& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_mode()) {
+      set_mode(from.mode());
     }
-    if (from.has_host_player_id()) {
-      set_host_player_id(from.host_player_id());
+    if (from.has_join_player_id()) {
+      set_join_player_id(from.join_player_id());
     }
     if (from.has_data()) {
       set_data(from.data());
@@ -47242,8 +47509,8 @@ bool RequestAcceptQuickMatch::IsInitialized() const {
 
 void RequestAcceptQuickMatch::Swap(RequestAcceptQuickMatch* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
-    std::swap(host_player_id_, other->host_player_id_);
+    std::swap(mode_, other->mode_);
+    std::swap(join_player_id_, other->join_player_id_);
     std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -47407,6 +47674,11 @@ void RequestAcceptQuickMatchResponse::Swap(RequestAcceptQuickMatchResponse* othe
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestRejectQuickMatch::kModeFieldNumber;
+const int RequestRejectQuickMatch::kMapIdFieldNumber;
+const int RequestRejectQuickMatch::kOnlineAreaIdFieldNumber;
+const int RequestRejectQuickMatch::kJoinPlayerIdFieldNumber;
+const int RequestRejectQuickMatch::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
 
 RequestRejectQuickMatch::RequestRejectQuickMatch()
@@ -47427,6 +47699,11 @@ RequestRejectQuickMatch::RequestRejectQuickMatch(const RequestRejectQuickMatch& 
 
 void RequestRejectQuickMatch::SharedCtor() {
   _cached_size_ = 0;
+  mode_ = 0;
+  map_id_ = 0u;
+  online_area_id_ = 0u;
+  join_player_id_ = 0u;
+  unknown_5_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -47465,6 +47742,23 @@ RequestRejectQuickMatch* RequestRejectQuickMatch::New() const {
 }
 
 void RequestRejectQuickMatch::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestRejectQuickMatch*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(mode_, unknown_5_);
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -47482,14 +47776,99 @@ bool RequestRejectQuickMatch::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+      case 1: {
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value)) {
+            set_mode(static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_map_id;
+        break;
+      }
+
+      // required uint32 map_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_map_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &map_id_)));
+          set_has_map_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_online_area_id;
+        break;
+      }
+
+      // required uint32 online_area_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_online_area_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &online_area_id_)));
+          set_has_online_area_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_join_player_id;
+        break;
+      }
+
+      // required uint32 join_player_id = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_join_player_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &join_player_id_)));
+          set_has_join_player_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_unknown_5;
+        break;
+      }
+
+      // required uint32 unknown_5 = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_unknown_5:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_5_)));
+          set_has_unknown_5();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.RequestRejectQuickMatch)
@@ -47503,6 +47882,32 @@ failure:
 void RequestRejectQuickMatch::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestRejectQuickMatch)
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  if (has_mode()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mode(), output);
+  }
+
+  // required uint32 map_id = 2;
+  if (has_map_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->map_id(), output);
+  }
+
+  // required uint32 online_area_id = 3;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->online_area_id(), output);
+  }
+
+  // required uint32 join_player_id = 4;
+  if (has_join_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->join_player_id(), output);
+  }
+
+  // required uint32 unknown_5 = 5;
+  if (has_unknown_5()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.RequestRejectQuickMatch)
@@ -47511,6 +47916,42 @@ void RequestRejectQuickMatch::SerializeWithCachedSizes(
 int RequestRejectQuickMatch::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+    if (has_mode()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->mode());
+    }
+
+    // required uint32 map_id = 2;
+    if (has_map_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->map_id());
+    }
+
+    // required uint32 online_area_id = 3;
+    if (has_online_area_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->online_area_id());
+    }
+
+    // required uint32 join_player_id = 4;
+    if (has_join_player_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->join_player_id());
+    }
+
+    // required uint32 unknown_5 = 5;
+    if (has_unknown_5()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_5());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -47526,6 +47967,23 @@ void RequestRejectQuickMatch::CheckTypeAndMergeFrom(
 
 void RequestRejectQuickMatch::MergeFrom(const RequestRejectQuickMatch& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_mode()) {
+      set_mode(from.mode());
+    }
+    if (from.has_map_id()) {
+      set_map_id(from.map_id());
+    }
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
+    }
+    if (from.has_join_player_id()) {
+      set_join_player_id(from.join_player_id());
+    }
+    if (from.has_unknown_5()) {
+      set_unknown_5(from.unknown_5());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -47536,12 +47994,19 @@ void RequestRejectQuickMatch::CopyFrom(const RequestRejectQuickMatch& from) {
 }
 
 bool RequestRejectQuickMatch::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
 
 void RequestRejectQuickMatch::Swap(RequestRejectQuickMatch* other) {
   if (other != this) {
+    std::swap(mode_, other->mode_);
+    std::swap(map_id_, other->map_id_);
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(join_player_id_, other->join_player_id_);
+    std::swap(unknown_5_, other->unknown_5_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -47943,7 +48408,7 @@ void RequestSendQuickMatchStart_Session_member_list::Swap(RequestSendQuickMatchS
 
 #ifndef _MSC_VER
 const int RequestSendQuickMatchStart::kUnknown1FieldNumber;
-const int RequestSendQuickMatchStart::kMembersFieldNumber;
+const int RequestSendQuickMatchStart::kSessionMemberListFieldNumber;
 #endif  // !_MSC_VER
 
 RequestSendQuickMatchStart::RequestSendQuickMatchStart()
@@ -48004,7 +48469,7 @@ RequestSendQuickMatchStart* RequestSendQuickMatchStart::New() const {
 
 void RequestSendQuickMatchStart::Clear() {
   unknown_1_ = 0u;
-  members_.Clear();
+  session_member_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -48033,20 +48498,20 @@ bool RequestSendQuickMatchStart::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_members;
+        if (input->ExpectTag(19)) goto parse_session_member_list;
         break;
       }
 
-      // repeated .Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list members = 2;
+      // repeated group Session_member_list = 2 {
       case 2: {
-        if (tag == 18) {
-         parse_members:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_members()));
+        if (tag == 19) {
+         parse_session_member_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                2, input, add_session_member_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_members;
+        if (input->ExpectTag(19)) goto parse_session_member_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -48081,10 +48546,10 @@ void RequestSendQuickMatchStart::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
   }
 
-  // repeated .Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list members = 2;
-  for (int i = 0; i < this->members_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, this->members(i), output);
+  // repeated group Session_member_list = 2 {
+  for (int i = 0; i < this->session_member_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      2, this->session_member_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -48104,12 +48569,12 @@ int RequestSendQuickMatchStart::ByteSize() const {
     }
 
   }
-  // repeated .Frpg2RequestMessage.RequestSendQuickMatchStart.Session_member_list members = 2;
-  total_size += 1 * this->members_size();
-  for (int i = 0; i < this->members_size(); i++) {
+  // repeated group Session_member_list = 2 {
+  total_size += 2 * this->session_member_list_size();
+  for (int i = 0; i < this->session_member_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->members(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->session_member_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -48127,7 +48592,7 @@ void RequestSendQuickMatchStart::CheckTypeAndMergeFrom(
 
 void RequestSendQuickMatchStart::MergeFrom(const RequestSendQuickMatchStart& from) {
   GOOGLE_CHECK_NE(&from, this);
-  members_.MergeFrom(from.members_);
+  session_member_list_.MergeFrom(from.session_member_list_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_unknown_1()) {
       set_unknown_1(from.unknown_1());
@@ -48145,14 +48610,14 @@ void RequestSendQuickMatchStart::CopyFrom(const RequestSendQuickMatchStart& from
 bool RequestSendQuickMatchStart::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->members())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->session_member_list())) return false;
   return true;
 }
 
 void RequestSendQuickMatchStart::Swap(RequestSendQuickMatchStart* other) {
   if (other != this) {
     std::swap(unknown_1_, other->unknown_1_);
-    members_.Swap(&other->members_);
+    session_member_list_.Swap(&other->session_member_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -48167,9 +48632,157 @@ void RequestSendQuickMatchStart::Swap(RequestSendQuickMatchStart* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+RequestSendQuickMatchStartResponse::RequestSendQuickMatchStartResponse()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+}
+
+void RequestSendQuickMatchStartResponse::InitAsDefaultInstance() {
+}
+
+RequestSendQuickMatchStartResponse::RequestSendQuickMatchStartResponse(const RequestSendQuickMatchStartResponse& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+}
+
+void RequestSendQuickMatchStartResponse::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+RequestSendQuickMatchStartResponse::~RequestSendQuickMatchStartResponse() {
+  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+  SharedDtor();
+}
+
+void RequestSendQuickMatchStartResponse::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void RequestSendQuickMatchStartResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const RequestSendQuickMatchStartResponse& RequestSendQuickMatchStartResponse::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+RequestSendQuickMatchStartResponse* RequestSendQuickMatchStartResponse::default_instance_ = NULL;
+
+RequestSendQuickMatchStartResponse* RequestSendQuickMatchStartResponse::New() const {
+  return new RequestSendQuickMatchStartResponse;
+}
+
+void RequestSendQuickMatchStartResponse::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool RequestSendQuickMatchStartResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+  return false;
+#undef DO_
+}
+
+void RequestSendQuickMatchStartResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.RequestSendQuickMatchStartResponse)
+}
+
+int RequestSendQuickMatchStartResponse::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void RequestSendQuickMatchStartResponse::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const RequestSendQuickMatchStartResponse*>(&from));
+}
+
+void RequestSendQuickMatchStartResponse::MergeFrom(const RequestSendQuickMatchStartResponse& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void RequestSendQuickMatchStartResponse::CopyFrom(const RequestSendQuickMatchStartResponse& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RequestSendQuickMatchStartResponse::IsInitialized() const {
+
+  return true;
+}
+
+void RequestSendQuickMatchStartResponse::Swap(RequestSendQuickMatchStartResponse* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string RequestSendQuickMatchStartResponse::GetTypeName() const {
+  return "Frpg2RequestMessage.RequestSendQuickMatchStartResponse";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int RequestSendQuickMatchResult::kUnknown1FieldNumber;
 const int RequestSendQuickMatchResult::kUnknown2FieldNumber;
-const int RequestSendQuickMatchResult::kRemoteWonFieldNumber;
+const int RequestSendQuickMatchResult::kResultFieldNumber;
 const int RequestSendQuickMatchResult::kLocalWonFieldNumber;
 const int RequestSendQuickMatchResult::kRemoteRankFieldNumber;
 const int RequestSendQuickMatchResult::kLocalRankFieldNumber;
@@ -48209,7 +48822,7 @@ void RequestSendQuickMatchResult::SharedCtor() {
   _cached_size_ = 0;
   unknown_1_ = 0u;
   unknown_2_ = 0u;
-  remote_won_ = false;
+  result_ = 0;
   local_won_ = false;
   remote_rank_ = NULL;
   local_rank_ = NULL;
@@ -48268,8 +48881,7 @@ void RequestSendQuickMatchResult::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 127) {
-    ZR_(unknown_1_, unknown_2_);
-    ZR_(remote_won_, local_won_);
+    ZR_(unknown_1_, local_won_);
     if (has_remote_rank()) {
       if (remote_rank_ != NULL) remote_rank_->::Frpg2RequestMessage::QuickMatchRank::Clear();
     }
@@ -48329,18 +48941,24 @@ bool RequestSendQuickMatchResult::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_remote_won;
+        if (input->ExpectTag(24)) goto parse_result;
         break;
       }
 
-      // required bool remote_won = 3;
+      // required .Frpg2RequestMessage.QuickMatchResult result = 3;
       case 3: {
         if (tag == 24) {
-         parse_remote_won:
+         parse_result:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &remote_won_)));
-          set_has_remote_won();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::QuickMatchResult_IsValid(value)) {
+            set_result(static_cast< ::Frpg2RequestMessage::QuickMatchResult >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -48437,9 +49055,10 @@ void RequestSendQuickMatchResult::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
   }
 
-  // required bool remote_won = 3;
-  if (has_remote_won()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->remote_won(), output);
+  // required .Frpg2RequestMessage.QuickMatchResult result = 3;
+  if (has_result()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->result(), output);
   }
 
   // required bool local_won = 4;
@@ -48488,9 +49107,10 @@ int RequestSendQuickMatchResult::ByteSize() const {
           this->unknown_2());
     }
 
-    // required bool remote_won = 3;
-    if (has_remote_won()) {
-      total_size += 1 + 1;
+    // required .Frpg2RequestMessage.QuickMatchResult result = 3;
+    if (has_result()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
     }
 
     // required bool local_won = 4;
@@ -48542,8 +49162,8 @@ void RequestSendQuickMatchResult::MergeFrom(const RequestSendQuickMatchResult& f
     if (from.has_unknown_2()) {
       set_unknown_2(from.unknown_2());
     }
-    if (from.has_remote_won()) {
-      set_remote_won(from.remote_won());
+    if (from.has_result()) {
+      set_result(from.result());
     }
     if (from.has_local_won()) {
       set_local_won(from.local_won());
@@ -48577,7 +49197,7 @@ void RequestSendQuickMatchResult::Swap(RequestSendQuickMatchResult* other) {
   if (other != this) {
     std::swap(unknown_1_, other->unknown_1_);
     std::swap(unknown_2_, other->unknown_2_);
-    std::swap(remote_won_, other->remote_won_);
+    std::swap(result_, other->result_);
     std::swap(local_won_, other->local_won_);
     std::swap(remote_rank_, other->remote_rank_);
     std::swap(local_rank_, other->local_rank_);

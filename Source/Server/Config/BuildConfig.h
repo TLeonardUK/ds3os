@@ -34,7 +34,7 @@ public:
 
     // What application version we support (this is the app version shown on the menu without the dot and -1).
     // So 1.15 = 114
-    inline static const int APP_VERSION = 144;
+    inline static const int APP_VERSION = 114;
 
     // If true clients are disconnected if we are unable to handle the message they send.
     // Be careful with this, if we don't reply to some messages the client will deadlock.
