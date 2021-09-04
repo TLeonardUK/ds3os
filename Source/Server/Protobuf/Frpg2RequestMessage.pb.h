@@ -52,7 +52,6 @@ class PlayerCharacterData;
 class PlayerCharacterID;
 class PlayerInfoUploadConfigPushMessage;
 class RequestUpdateLoginPlayerCharacter;
-class RequestUpdateLoginPlayerCharacterResponseData;
 class RequestUpdateLoginPlayerCharacterResponse;
 class RequestUpdatePlayerStatus;
 class RequestUpdatePlayerStatusResponse;
@@ -2381,107 +2380,6 @@ class RequestUpdateLoginPlayerCharacter : public ::google::protobuf::MessageLite
 };
 // -------------------------------------------------------------------
 
-class RequestUpdateLoginPlayerCharacterResponseData : public ::google::protobuf::MessageLite {
- public:
-  RequestUpdateLoginPlayerCharacterResponseData();
-  virtual ~RequestUpdateLoginPlayerCharacterResponseData();
-
-  RequestUpdateLoginPlayerCharacterResponseData(const RequestUpdateLoginPlayerCharacterResponseData& from);
-
-  inline RequestUpdateLoginPlayerCharacterResponseData& operator=(const RequestUpdateLoginPlayerCharacterResponseData& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const RequestUpdateLoginPlayerCharacterResponseData& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const RequestUpdateLoginPlayerCharacterResponseData* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(RequestUpdateLoginPlayerCharacterResponseData* other);
-
-  // implements Message ----------------------------------------------
-
-  RequestUpdateLoginPlayerCharacterResponseData* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const RequestUpdateLoginPlayerCharacterResponseData& from);
-  void MergeFrom(const RequestUpdateLoginPlayerCharacterResponseData& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
-
-  // required uint32 unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData)
- private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
-  ::google::protobuf::uint32 unknown_2_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static RequestUpdateLoginPlayerCharacterResponseData* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class RequestUpdateLoginPlayerCharacterResponse : public ::google::protobuf::MessageLite {
  public:
   RequestUpdateLoginPlayerCharacterResponse();
@@ -2550,39 +2448,39 @@ class RequestUpdateLoginPlayerCharacterResponse : public ::google::protobuf::Mes
   inline ::google::protobuf::uint32 character_id() const;
   inline void set_character_id(::google::protobuf::uint32 value);
 
-  // required .Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline const ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData& unknown_2() const;
-  inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* mutable_unknown_2();
-  inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* release_unknown_2();
-  inline void set_allocated_unknown_2(::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* unknown_2);
+  // required .Frpg2RequestMessage.QuickMatchRank quickmatch_brawl_rank = 2;
+  inline bool has_quickmatch_brawl_rank() const;
+  inline void clear_quickmatch_brawl_rank();
+  static const int kQuickmatchBrawlRankFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::QuickMatchRank& quickmatch_brawl_rank() const;
+  inline ::Frpg2RequestMessage::QuickMatchRank* mutable_quickmatch_brawl_rank();
+  inline ::Frpg2RequestMessage::QuickMatchRank* release_quickmatch_brawl_rank();
+  inline void set_allocated_quickmatch_brawl_rank(::Frpg2RequestMessage::QuickMatchRank* quickmatch_brawl_rank);
 
-  // required .Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData unknown_3 = 3;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 3;
-  inline const ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData& unknown_3() const;
-  inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* mutable_unknown_3();
-  inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* release_unknown_3();
-  inline void set_allocated_unknown_3(::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* unknown_3);
+  // required .Frpg2RequestMessage.QuickMatchRank quickmatch_dual_rank = 3;
+  inline bool has_quickmatch_dual_rank() const;
+  inline void clear_quickmatch_dual_rank();
+  static const int kQuickmatchDualRankFieldNumber = 3;
+  inline const ::Frpg2RequestMessage::QuickMatchRank& quickmatch_dual_rank() const;
+  inline ::Frpg2RequestMessage::QuickMatchRank* mutable_quickmatch_dual_rank();
+  inline ::Frpg2RequestMessage::QuickMatchRank* release_quickmatch_dual_rank();
+  inline void set_allocated_quickmatch_dual_rank(::Frpg2RequestMessage::QuickMatchRank* quickmatch_dual_rank);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse)
  private:
   inline void set_has_character_id();
   inline void clear_has_character_id();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
+  inline void set_has_quickmatch_brawl_rank();
+  inline void clear_has_quickmatch_brawl_rank();
+  inline void set_has_quickmatch_dual_rank();
+  inline void clear_has_quickmatch_dual_rank();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* unknown_2_;
-  ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* unknown_3_;
+  ::Frpg2RequestMessage::QuickMatchRank* quickmatch_brawl_rank_;
+  ::Frpg2RequestMessage::QuickMatchRank* quickmatch_dual_rank_;
   ::google::protobuf::uint32 character_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -21510,12 +21408,12 @@ class RequestSendQuickMatchResult : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+  inline bool has_mode() const;
+  inline void clear_mode();
+  static const int kModeFieldNumber = 1;
+  inline ::Frpg2RequestMessage::QuickMatchGameMode mode() const;
+  inline void set_mode(::Frpg2RequestMessage::QuickMatchGameMode value);
 
   // required uint32 unknown_2 = 2;
   inline bool has_unknown_2() const;
@@ -21570,8 +21468,8 @@ class RequestSendQuickMatchResult : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestSendQuickMatchResult)
  private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
+  inline void set_has_mode();
+  inline void clear_has_mode();
   inline void set_has_unknown_2();
   inline void clear_has_unknown_2();
   inline void set_has_result();
@@ -21589,7 +21487,7 @@ class RequestSendQuickMatchResult : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
+  int mode_;
   ::google::protobuf::uint32 unknown_2_;
   int result_;
   bool local_won_;
@@ -26955,58 +26853,6 @@ RequestUpdateLoginPlayerCharacter::mutable_unknown_2() {
 
 // -------------------------------------------------------------------
 
-// RequestUpdateLoginPlayerCharacterResponseData
-
-// required uint32 unknown_1 = 1;
-inline bool RequestUpdateLoginPlayerCharacterResponseData::has_unknown_1() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::set_has_unknown_1() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::clear_has_unknown_1() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
-}
-inline ::google::protobuf::uint32 RequestUpdateLoginPlayerCharacterResponseData::unknown_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData.unknown_1)
-  return unknown_1_;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData.unknown_1)
-}
-
-// required uint32 unknown_2 = 2;
-inline bool RequestUpdateLoginPlayerCharacterResponseData::has_unknown_2() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::set_has_unknown_2() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::clear_has_unknown_2() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::clear_unknown_2() {
-  unknown_2_ = 0u;
-  clear_has_unknown_2();
-}
-inline ::google::protobuf::uint32 RequestUpdateLoginPlayerCharacterResponseData::unknown_2() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData.unknown_2)
-  return unknown_2_;
-}
-inline void RequestUpdateLoginPlayerCharacterResponseData::set_unknown_2(::google::protobuf::uint32 value) {
-  set_has_unknown_2();
-  unknown_2_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData.unknown_2)
-}
-
-// -------------------------------------------------------------------
-
 // RequestUpdateLoginPlayerCharacterResponse
 
 // required uint32 character_id = 1;
@@ -27033,94 +26879,94 @@ inline void RequestUpdateLoginPlayerCharacterResponse::set_character_id(::google
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.character_id)
 }
 
-// required .Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData unknown_2 = 2;
-inline bool RequestUpdateLoginPlayerCharacterResponse::has_unknown_2() const {
+// required .Frpg2RequestMessage.QuickMatchRank quickmatch_brawl_rank = 2;
+inline bool RequestUpdateLoginPlayerCharacterResponse::has_quickmatch_brawl_rank() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::set_has_unknown_2() {
+inline void RequestUpdateLoginPlayerCharacterResponse::set_has_quickmatch_brawl_rank() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::clear_has_unknown_2() {
+inline void RequestUpdateLoginPlayerCharacterResponse::clear_has_quickmatch_brawl_rank() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::clear_unknown_2() {
-  if (unknown_2_ != NULL) unknown_2_->::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData::Clear();
-  clear_has_unknown_2();
+inline void RequestUpdateLoginPlayerCharacterResponse::clear_quickmatch_brawl_rank() {
+  if (quickmatch_brawl_rank_ != NULL) quickmatch_brawl_rank_->::Frpg2RequestMessage::QuickMatchRank::Clear();
+  clear_has_quickmatch_brawl_rank();
 }
-inline const ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData& RequestUpdateLoginPlayerCharacterResponse::unknown_2() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.unknown_2)
+inline const ::Frpg2RequestMessage::QuickMatchRank& RequestUpdateLoginPlayerCharacterResponse::quickmatch_brawl_rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.quickmatch_brawl_rank)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  return unknown_2_ != NULL ? *unknown_2_ : *default_instance().unknown_2_;
+  return quickmatch_brawl_rank_ != NULL ? *quickmatch_brawl_rank_ : *default_instance().quickmatch_brawl_rank_;
 #else
-  return unknown_2_ != NULL ? *unknown_2_ : *default_instance_->unknown_2_;
+  return quickmatch_brawl_rank_ != NULL ? *quickmatch_brawl_rank_ : *default_instance_->quickmatch_brawl_rank_;
 #endif
 }
-inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* RequestUpdateLoginPlayerCharacterResponse::mutable_unknown_2() {
-  set_has_unknown_2();
-  if (unknown_2_ == NULL) unknown_2_ = new ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData;
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.unknown_2)
-  return unknown_2_;
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestUpdateLoginPlayerCharacterResponse::mutable_quickmatch_brawl_rank() {
+  set_has_quickmatch_brawl_rank();
+  if (quickmatch_brawl_rank_ == NULL) quickmatch_brawl_rank_ = new ::Frpg2RequestMessage::QuickMatchRank;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.quickmatch_brawl_rank)
+  return quickmatch_brawl_rank_;
 }
-inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* RequestUpdateLoginPlayerCharacterResponse::release_unknown_2() {
-  clear_has_unknown_2();
-  ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* temp = unknown_2_;
-  unknown_2_ = NULL;
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestUpdateLoginPlayerCharacterResponse::release_quickmatch_brawl_rank() {
+  clear_has_quickmatch_brawl_rank();
+  ::Frpg2RequestMessage::QuickMatchRank* temp = quickmatch_brawl_rank_;
+  quickmatch_brawl_rank_ = NULL;
   return temp;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::set_allocated_unknown_2(::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* unknown_2) {
-  delete unknown_2_;
-  unknown_2_ = unknown_2;
-  if (unknown_2) {
-    set_has_unknown_2();
+inline void RequestUpdateLoginPlayerCharacterResponse::set_allocated_quickmatch_brawl_rank(::Frpg2RequestMessage::QuickMatchRank* quickmatch_brawl_rank) {
+  delete quickmatch_brawl_rank_;
+  quickmatch_brawl_rank_ = quickmatch_brawl_rank;
+  if (quickmatch_brawl_rank) {
+    set_has_quickmatch_brawl_rank();
   } else {
-    clear_has_unknown_2();
+    clear_has_quickmatch_brawl_rank();
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.unknown_2)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.quickmatch_brawl_rank)
 }
 
-// required .Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponseData unknown_3 = 3;
-inline bool RequestUpdateLoginPlayerCharacterResponse::has_unknown_3() const {
+// required .Frpg2RequestMessage.QuickMatchRank quickmatch_dual_rank = 3;
+inline bool RequestUpdateLoginPlayerCharacterResponse::has_quickmatch_dual_rank() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::set_has_unknown_3() {
+inline void RequestUpdateLoginPlayerCharacterResponse::set_has_quickmatch_dual_rank() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::clear_has_unknown_3() {
+inline void RequestUpdateLoginPlayerCharacterResponse::clear_has_quickmatch_dual_rank() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::clear_unknown_3() {
-  if (unknown_3_ != NULL) unknown_3_->::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData::Clear();
-  clear_has_unknown_3();
+inline void RequestUpdateLoginPlayerCharacterResponse::clear_quickmatch_dual_rank() {
+  if (quickmatch_dual_rank_ != NULL) quickmatch_dual_rank_->::Frpg2RequestMessage::QuickMatchRank::Clear();
+  clear_has_quickmatch_dual_rank();
 }
-inline const ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData& RequestUpdateLoginPlayerCharacterResponse::unknown_3() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.unknown_3)
+inline const ::Frpg2RequestMessage::QuickMatchRank& RequestUpdateLoginPlayerCharacterResponse::quickmatch_dual_rank() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.quickmatch_dual_rank)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  return unknown_3_ != NULL ? *unknown_3_ : *default_instance().unknown_3_;
+  return quickmatch_dual_rank_ != NULL ? *quickmatch_dual_rank_ : *default_instance().quickmatch_dual_rank_;
 #else
-  return unknown_3_ != NULL ? *unknown_3_ : *default_instance_->unknown_3_;
+  return quickmatch_dual_rank_ != NULL ? *quickmatch_dual_rank_ : *default_instance_->quickmatch_dual_rank_;
 #endif
 }
-inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* RequestUpdateLoginPlayerCharacterResponse::mutable_unknown_3() {
-  set_has_unknown_3();
-  if (unknown_3_ == NULL) unknown_3_ = new ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData;
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.unknown_3)
-  return unknown_3_;
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestUpdateLoginPlayerCharacterResponse::mutable_quickmatch_dual_rank() {
+  set_has_quickmatch_dual_rank();
+  if (quickmatch_dual_rank_ == NULL) quickmatch_dual_rank_ = new ::Frpg2RequestMessage::QuickMatchRank;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.quickmatch_dual_rank)
+  return quickmatch_dual_rank_;
 }
-inline ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* RequestUpdateLoginPlayerCharacterResponse::release_unknown_3() {
-  clear_has_unknown_3();
-  ::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* temp = unknown_3_;
-  unknown_3_ = NULL;
+inline ::Frpg2RequestMessage::QuickMatchRank* RequestUpdateLoginPlayerCharacterResponse::release_quickmatch_dual_rank() {
+  clear_has_quickmatch_dual_rank();
+  ::Frpg2RequestMessage::QuickMatchRank* temp = quickmatch_dual_rank_;
+  quickmatch_dual_rank_ = NULL;
   return temp;
 }
-inline void RequestUpdateLoginPlayerCharacterResponse::set_allocated_unknown_3(::Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* unknown_3) {
-  delete unknown_3_;
-  unknown_3_ = unknown_3;
-  if (unknown_3) {
-    set_has_unknown_3();
+inline void RequestUpdateLoginPlayerCharacterResponse::set_allocated_quickmatch_dual_rank(::Frpg2RequestMessage::QuickMatchRank* quickmatch_dual_rank) {
+  delete quickmatch_dual_rank_;
+  quickmatch_dual_rank_ = quickmatch_dual_rank;
+  if (quickmatch_dual_rank) {
+    set_has_quickmatch_dual_rank();
   } else {
-    clear_has_unknown_3();
+    clear_has_quickmatch_dual_rank();
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.unknown_3)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestUpdateLoginPlayerCharacterResponse.quickmatch_dual_rank)
 }
 
 // -------------------------------------------------------------------
@@ -40827,28 +40673,29 @@ RequestSendQuickMatchStart::mutable_session_member_list() {
 
 // RequestSendQuickMatchResult
 
-// required uint32 unknown_1 = 1;
-inline bool RequestSendQuickMatchResult::has_unknown_1() const {
+// required .Frpg2RequestMessage.QuickMatchGameMode mode = 1;
+inline bool RequestSendQuickMatchResult::has_mode() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RequestSendQuickMatchResult::set_has_unknown_1() {
+inline void RequestSendQuickMatchResult::set_has_mode() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RequestSendQuickMatchResult::clear_has_unknown_1() {
+inline void RequestSendQuickMatchResult::clear_has_mode() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RequestSendQuickMatchResult::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void RequestSendQuickMatchResult::clear_mode() {
+  mode_ = 0;
+  clear_has_mode();
 }
-inline ::google::protobuf::uint32 RequestSendQuickMatchResult::unknown_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_1)
-  return unknown_1_;
+inline ::Frpg2RequestMessage::QuickMatchGameMode RequestSendQuickMatchResult::mode() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestSendQuickMatchResult.mode)
+  return static_cast< ::Frpg2RequestMessage::QuickMatchGameMode >(mode_);
 }
-inline void RequestSendQuickMatchResult::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResult.unknown_1)
+inline void RequestSendQuickMatchResult::set_mode(::Frpg2RequestMessage::QuickMatchGameMode value) {
+  assert(::Frpg2RequestMessage::QuickMatchGameMode_IsValid(value));
+  set_has_mode();
+  mode_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestSendQuickMatchResult.mode)
 }
 
 // required uint32 unknown_2 = 2;

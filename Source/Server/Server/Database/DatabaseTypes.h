@@ -93,4 +93,9 @@ struct Character
     uint32_t PlayerId;
     uint32_t CharacterId;
     std::vector<uint8_t> Data;
+    
+    uint32_t QuickMatchDuelRank = 0;
+    uint32_t QuickMatchDuelXp = 0;
+    uint32_t QuickMatchBrawlRank = 0;
+    uint32_t QuickMatchBrawlXp = 0;
 };

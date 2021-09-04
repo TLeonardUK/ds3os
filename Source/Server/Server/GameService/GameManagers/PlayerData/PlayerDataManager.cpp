@@ -57,22 +57,35 @@ MessageHandleResult PlayerDataManager::OnMessageRecieved(GameClient* Client, con
 
 MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    // TODO: Implement
-    // I'm not sure what the purpose of this request even is to be honest, it seems to occur when you switch characters and enter a game
-    // but all the values are always the same? Maybe its just to tell the server our char has changed and to reset everything?
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+    PlayerState& State = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
+
+    std::shared_ptr<Character> Character = Database.FindCharacter(State.PlayerId, Request->character_id());
+    if (!Character)
+    {
+        std::vector<uint8_t> Data;        
+        if (!Database.CreateOrUpdateCharacter(State.PlayerId, Request->character_id(), Data))
+        {
+            Warning("[%s] Disconnecting client as failed to find or update character %i.", Client->GetName().c_str(), Request->character_id());
+            return MessageHandleResult::Error;
+        }
+
+        Character = Database.FindCharacter(State.PlayerId, Request->character_id());
+        Ensure(Character);
+    }
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
     Response.set_character_id(Request->character_id());
 
-    Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponseData* Data = Response.mutable_unknown_2();
-    Data->set_unknown_1(0);
-    Data->set_unknown_2(0);
+    Frpg2RequestMessage::QuickMatchRank* Rank = Response.mutable_quickmatch_brawl_rank();
+    Rank->set_rank(Character->QuickMatchBrawlRank);
+    Rank->set_xp(Character->QuickMatchBrawlXp);
 
-    Data = Response.mutable_unknown_3();
-    Data->set_unknown_1(0);
-    Data->set_unknown_2(0);
+    Rank = Response.mutable_quickmatch_dual_rank();
+    Rank->set_rank(Character->QuickMatchDuelRank);
+    Rank->set_xp(Character->QuickMatchDuelXp);
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -88,6 +101,12 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     Frpg2RequestMessage::RequestUpdatePlayerStatus* Request = (Frpg2RequestMessage::RequestUpdatePlayerStatus*)Message.Protobuf.get();
 
     PlayerState& State = Client->GetPlayerState();
+
+    // Keep track of the players character id.
+    if (Request->status().has_player_status() && Request->status().player_status().has_character_id())
+    {
+        State.CharacterId = Request->status().player_status().character_id();
+    }
 
     // Keep track of the players character name, useful for logging.
     if (Request->status().has_player_status() && Request->status().player_status().has_name())

@@ -48,6 +48,9 @@ public:
     // Finds a character owned by a specific player.
     std::shared_ptr<Character> FindCharacter(uint32_t PlayerId, uint32_t CharacterId);
 
+    // Updates a characters quick match rank.
+    bool UpdateCharacterQuickMatchRank(uint32_t PlayerId, uint32_t CharacterId, uint32_t DualRank, uint32_t DualXp, uint32_t BrawlRank, uint32_t BrawlXp);
+
     // ----------------------------------------------------------------
     // Blood message interface
     // ----------------------------------------------------------------

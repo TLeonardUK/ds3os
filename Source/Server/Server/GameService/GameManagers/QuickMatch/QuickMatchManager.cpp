@@ -409,22 +409,31 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchStart(GameCli
 
 MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     const RuntimeConfig& Config = ServerInstance->GetConfig();
+    PlayerState& State = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestSendQuickMatchResult* Request = (Frpg2RequestMessage::RequestSendQuickMatchResult*)Message.Protobuf.get();
     Frpg2RequestMessage::RequestSendQuickMatchResultResponse Response;
     Response.set_unknown_1(0); // TODO: Figure out.
 
-    // TODO: Store rank in database
-    // TODO: Return rank in RequestUpdateLoginPlayerCharacter.
+    // Grab the players character to get their current rank data.
+    std::shared_ptr<Character> Character = Database.FindCharacter(State.PlayerId, State.CharacterId);
+    if (!Character)
+    {
+        Warning("[%s] Disconnecting client as failed to find current character during QuickMatchResult.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     // Increase and return rank.
-    uint32_t Rank = Request->local_rank().rank();
-    uint32_t XP = Request->local_rank().xp();
+    bool IsDuel = (Request->mode() == Frpg2RequestMessage::QuickMatchGameMode::Duel);
 
-    uint32_t OriginalRank = Request->local_rank().rank();
-    uint32_t OriginalXP = Request->local_rank().xp();
+    uint32_t OriginalRank = IsDuel ? Character->QuickMatchDuelRank : Character->QuickMatchBrawlRank;
+    uint32_t OriginalXP = IsDuel ? Character->QuickMatchDuelXp : Character->QuickMatchBrawlXp;
 
+    uint32_t& Rank = IsDuel ? Character->QuickMatchDuelRank : Character->QuickMatchBrawlRank;
+    uint32_t& XP = IsDuel ? Character->QuickMatchDuelXp : Character->QuickMatchBrawlXp;
+    
     switch (Request->result())
     {
         case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Win:
@@ -462,6 +471,13 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     Response.mutable_new_local_rank()->set_xp(XP);
 
     Log("[%s] Player finished undead match, ranked up to: rank=%i xp=%i (from rank=%i xp=%i)", Client->GetName().c_str(), Rank, XP, OriginalRank, OriginalXP);
+
+    // Update character state.
+    if (!Database.UpdateCharacterQuickMatchRank(State.PlayerId, State.CharacterId, Character->QuickMatchDuelRank, Character->QuickMatchDuelXp, Character->QuickMatchBrawlRank, Character->QuickMatchBrawlXp))
+    {
+        Warning("[%s] Disconnecting client as failed to update their quick match result.", Client->GetName().c_str());
+        return MessageHandleResult::Error;
+    }
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {

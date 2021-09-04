@@ -111,6 +111,10 @@ bool ServerDatabase::CreateTables()
         "   PlayerId            INTEGER,"                                           \
         "   CharacterId         INTEGER,"                                           \
         "   Data                BLOB,"                                              \
+        "   QuickMatchDuelRank  INTEGER,"                                           \
+        "   QuickMatchDuelXp    INTEGER,"                                           \
+        "   QuickMatchBrawlRank INTEGER,"                                           \
+        "   QuickMatchBrawlXp   INTEGER,"                                           \
         "   CreatedTime         TEXT"                                               \
         ");"
     );
@@ -307,7 +311,7 @@ bool ServerDatabase::RemoveOwnBloodMessage(uint32_t PlayerId, uint32_t MessageId
         return false;
     }
 
-    return sqlite3_total_changes(db_handle) > 0;
+    return sqlite3_changes(db_handle) > 0;
 }
 
 bool ServerDatabase::SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor, uint32_t Good)
@@ -317,7 +321,7 @@ bool ServerDatabase::SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor
         return false;
     }
 
-    return sqlite3_total_changes(db_handle) > 0;
+    return sqlite3_changes(db_handle) > 0;
 }
 
 std::shared_ptr<Bloodstain> ServerDatabase::FindBloodstain(uint32_t BloodstainId)
@@ -558,7 +562,7 @@ bool ServerDatabase::CreateOrUpdateCharacter(uint32_t PlayerId, uint32_t Charact
         return false;
     }
 
-    if (sqlite3_total_changes(db_handle) == 0)
+    if (sqlite3_changes(db_handle) == 0)
     {
         if (!RunStatement("INSERT INTO Characters(PlayerId, CharacterId, Data, CreatedTime) VALUES(?1, ?2, ?3, datetime('now'))", { PlayerId, CharacterId, Data }, nullptr))
         {
@@ -573,7 +577,7 @@ std::shared_ptr<Character> ServerDatabase::FindCharacter(uint32_t PlayerId, uint
 {
     std::shared_ptr<Character> Result;
 
-    RunStatement("SELECT Id, Data FROM Characters WHERE PlayerId = ?1 AND CharacterId = ?2 LIMIT 1", { PlayerId, CharacterId }, [&Result, PlayerId, CharacterId](sqlite3_stmt* statement) {
+    RunStatement("SELECT Id, Data, QuickMatchDuelRank, QuickMatchDuelXp, QuickMatchBrawlRank, QuickMatchBrawlXp FROM Characters WHERE PlayerId = ?1 AND CharacterId = ?2 LIMIT 1", { PlayerId, CharacterId }, [&Result, PlayerId, CharacterId](sqlite3_stmt* statement) {
         Result = std::make_shared<Character>();
         Result->Id = sqlite3_column_int(statement, 0);
         Result->PlayerId = PlayerId;
@@ -581,7 +585,32 @@ std::shared_ptr<Character> ServerDatabase::FindCharacter(uint32_t PlayerId, uint
 
         const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 1);
         Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 1));
+
+        Result->QuickMatchDuelRank = sqlite3_column_int(statement, 2);
+        Result->QuickMatchDuelXp = sqlite3_column_int(statement, 3);
+        Result->QuickMatchBrawlRank = sqlite3_column_int(statement, 4);
+        Result->QuickMatchBrawlXp = sqlite3_column_int(statement, 5);
     });
 
     return Result;
 }
+
+bool ServerDatabase::UpdateCharacterQuickMatchRank(uint32_t PlayerId, uint32_t CharacterId, uint32_t DualRank, uint32_t DualXp, uint32_t BrawlRank, uint32_t BrawlXp)
+{
+    std::shared_ptr<Character> Result;
+
+    if (!RunStatement("UPDATE Characters SET QuickMatchDuelRank = ?1, QuickMatchDuelXp = ?2, QuickMatchBrawlRank = ?3, QuickMatchBrawlXp = ?4  WHERE PlayerId = ?5 AND CharacterId = ?6", { 
+            DualRank,
+            DualXp,
+            BrawlRank,
+            BrawlXp,
+            PlayerId,
+            CharacterId
+        }, nullptr))
+    {
+        return false;
+    }
+
+    return true;
+}
+ \

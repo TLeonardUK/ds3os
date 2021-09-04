@@ -172,7 +172,7 @@ message PlayerInfoUploadConfigPushMessage {
 
 message RequestUpdateLoginPlayerCharacter {
     required uint32 character_id = 1;                               
-    repeated uint32 unknown_2 = 2;                                   // 1, 1, 1, 1, 1, 1, 1, 6, 7
+    repeated uint32 unknown_2 = 2;                                   // 1, 1, 1, 1, 1, 1, 1, 6, 7 <- I think this is the id's of all the local player characters.
 }
 
 message RequestUpdateLoginPlayerCharacterResponse {
@@ -1405,7 +1405,8 @@ enum QuickMatchResult{
 }
 
 message RequestSendQuickMatchResult {
-    required uint32 unknown_1 = 1;                      // 0            <- Probably game mode?
+    // I'm guessing one of these values is the number of people killed in brawl which will be used to determine xp.
+    required QuickMatchGameMode mode = 1;
     required uint32 unknown_2 = 2;                      // 1
     required QuickMatchResult result = 3;               // 0, 1     0 if win, 1 if lose, 2 if draw
     required bool local_won = 4;                        // 0, 1     1 if win, 0 if lose, 0 if draw

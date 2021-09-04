@@ -26,6 +26,9 @@ struct PlayerState
     // player in most packets past initial login, steam id is not used.
     uint32_t PlayerId = 0;
 
+    // What character id they are currently playing.
+    uint32_t CharacterId = 0;
+
     // The name of the character the player is currently playing with. Will be empty
     // until the first RequestUpdatePlayerStatus is invoked.
     std::string CharacterName = "";
