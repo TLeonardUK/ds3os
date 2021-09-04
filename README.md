@@ -55,7 +55,7 @@ We're slowly going through and implementing all the games online functionality, 
 - [x] Matchmaking (eg. Correctly matching summoning/invasions/visits with player level)
 - [x] Roster of knights
 - [x] Archdragon peak bell ringing
-- [ ] Undead match
+- [x] Undead match
 - [ ] Telemetry and misc server calls
 - [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
 
