@@ -16,6 +16,7 @@
 namespace Frpg2RequestMessage {
 
 void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto() {
+  delete EmptyResponse::default_instance_;
   delete RequestQueryLoginServerInfo::default_instance_;
   delete RequestQueryLoginServerInfoResponse::default_instance_;
   delete RequestQueryLoginServerInfoForXboxOne::default_instance_;
@@ -275,6 +276,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
 
 #endif
   ::Frpg2PlayerData::protobuf_AddDesc_Frpg2PlayerData_2eproto();
+  EmptyResponse::default_instance_ = new EmptyResponse();
   RequestQueryLoginServerInfo::default_instance_ = new RequestQueryLoginServerInfo();
   RequestQueryLoginServerInfoResponse::default_instance_ = new RequestQueryLoginServerInfoResponse();
   RequestQueryLoginServerInfoForXboxOne::default_instance_ = new RequestQueryLoginServerInfoForXboxOne();
@@ -519,6 +521,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   RequestDisconnectAllUser::default_instance_ = new RequestDisconnectAllUser();
   RequestSendMessageToPushClient::default_instance_ = new RequestSendMessageToPushClient();
   RequestGetServerSidePlayerStatus::default_instance_ = new RequestGetServerSidePlayerStatus();
+  EmptyResponse::default_instance_->InitAsDefaultInstance();
   RequestQueryLoginServerInfo::default_instance_->InitAsDefaultInstance();
   RequestQueryLoginServerInfoResponse::default_instance_->InitAsDefaultInstance();
   RequestQueryLoginServerInfoForXboxOne::default_instance_->InitAsDefaultInstance();
@@ -827,6 +830,20 @@ bool LogType_IsValid(int value) {
   }
 }
 
+bool CauseOfDeath_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
 bool Covenant_IsValid(int value) {
   switch(value) {
     case 0:
@@ -883,6 +900,154 @@ bool QuickMatchResult_IsValid(int value) {
     default:
       return false;
   }
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+EmptyResponse::EmptyResponse()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.EmptyResponse)
+}
+
+void EmptyResponse::InitAsDefaultInstance() {
+}
+
+EmptyResponse::EmptyResponse(const EmptyResponse& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.EmptyResponse)
+}
+
+void EmptyResponse::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+EmptyResponse::~EmptyResponse() {
+  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.EmptyResponse)
+  SharedDtor();
+}
+
+void EmptyResponse::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void EmptyResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const EmptyResponse& EmptyResponse::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+EmptyResponse* EmptyResponse::default_instance_ = NULL;
+
+EmptyResponse* EmptyResponse::New() const {
+  return new EmptyResponse;
+}
+
+void EmptyResponse::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool EmptyResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.EmptyResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+        input, tag, &unknown_fields_stream));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.EmptyResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.EmptyResponse)
+  return false;
+#undef DO_
+}
+
+void EmptyResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.EmptyResponse)
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.EmptyResponse)
+}
+
+int EmptyResponse::ByteSize() const {
+  int total_size = 0;
+
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void EmptyResponse::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const EmptyResponse*>(&from));
+}
+
+void EmptyResponse::MergeFrom(const EmptyResponse& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void EmptyResponse::CopyFrom(const EmptyResponse& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool EmptyResponse::IsInitialized() const {
+
+  return true;
+}
+
+void EmptyResponse::Swap(EmptyResponse* other) {
+  if (other != this) {
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string EmptyResponse::GetTypeName() const {
+  return "Frpg2RequestMessage.EmptyResponse";
 }
 
 
@@ -15064,6 +15229,7 @@ const int PartyMemberInfo::kUnknown2FieldNumber;
 const int PartyMemberInfo::kUnknown4FieldNumber;
 const int PartyMemberInfo::kUnknown5FieldNumber;
 const int PartyMemberInfo::kUnknown6FieldNumber;
+const int PartyMemberInfo::kUnknown7FieldNumber;
 #endif  // !_MSC_VER
 
 PartyMemberInfo::PartyMemberInfo()
@@ -15090,6 +15256,7 @@ void PartyMemberInfo::SharedCtor() {
   unknown_4_ = 0u;
   unknown_5_ = 0u;
   unknown_6_ = 0u;
+  unknown_7_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -15138,8 +15305,8 @@ void PartyMemberInfo::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 63) {
-    ZR_(player_id_, unknown_6_);
+  if (_has_bits_[0 / 32] & 127) {
+    ZR_(player_id_, unknown_7_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -15248,6 +15415,21 @@ bool PartyMemberInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(56)) goto parse_unknown_7;
+        break;
+      }
+
+      // optional uint32 unknown_7 = 7;
+      case 7: {
+        if (tag == 56) {
+         parse_unknown_7:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &unknown_7_)));
+          set_has_unknown_7();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -15307,6 +15489,11 @@ void PartyMemberInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
   }
 
+  // optional uint32 unknown_7 = 7;
+  if (has_unknown_7()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PartyMemberInfo)
@@ -15358,6 +15545,13 @@ int PartyMemberInfo::ByteSize() const {
           this->unknown_6());
     }
 
+    // optional uint32 unknown_7 = 7;
+    if (has_unknown_7()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_7());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -15393,6 +15587,9 @@ void PartyMemberInfo::MergeFrom(const PartyMemberInfo& from) {
     if (from.has_unknown_6()) {
       set_unknown_6(from.unknown_6());
     }
+    if (from.has_unknown_7()) {
+      set_unknown_7(from.unknown_7());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -15417,6 +15614,7 @@ void PartyMemberInfo::Swap(PartyMemberInfo* other) {
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(unknown_6_, other->unknown_6_);
+    std::swap(unknown_7_, other->unknown_7_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -15715,9 +15913,9 @@ void RequestNotifyProtoBufLog::Swap(RequestNotifyProtoBufLog* other) {
 const int RequestNotifyDie::kUnknown1FieldNumber;
 const int RequestNotifyDie::kMapIdFieldNumber;
 const int RequestNotifyDie::kLocationFieldNumber;
-const int RequestNotifyDie::kUnknown4FieldNumber;
-const int RequestNotifyDie::kUnknown5FieldNumber;
-const int RequestNotifyDie::kUnknown6FieldNumber;
+const int RequestNotifyDie::kCauseOfDeathFieldNumber;
+const int RequestNotifyDie::kSoulsDroppedFieldNumber;
+const int RequestNotifyDie::kSoulsLostFieldNumber;
 const int RequestNotifyDie::kUnknown7FieldNumber;
 const int RequestNotifyDie::kUnknown8FieldNumber;
 #endif  // !_MSC_VER
@@ -15756,9 +15954,9 @@ void RequestNotifyDie::SharedCtor() {
   unknown_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   map_id_ = 0u;
   location_ = NULL;
-  unknown_4_ = 0u;
-  unknown_5_ = 0u;
-  unknown_6_ = 0u;
+  cause_of_death_ = 0;
+  souls_dropped_ = 0u;
+  souls_lost_ = 0u;
   unknown_7_ = 0u;
   unknown_8_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -15815,7 +16013,7 @@ void RequestNotifyDie::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(map_id_, unknown_6_);
+    ZR_(map_id_, souls_lost_);
     if (has_unknown_1()) {
       if (unknown_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         unknown_1_->clear();
@@ -15887,48 +16085,54 @@ bool RequestNotifyDie::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_cause_of_death;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required .Frpg2RequestMessage.CauseOfDeath cause_of_death = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_cause_of_death:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Frpg2RequestMessage::CauseOfDeath_IsValid(value)) {
+            set_cause_of_death(static_cast< ::Frpg2RequestMessage::CauseOfDeath >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_unknown_5;
+        if (input->ExpectTag(40)) goto parse_souls_dropped;
         break;
       }
 
-      // required uint32 unknown_5 = 5;
+      // required uint32 souls_dropped = 5;
       case 5: {
         if (tag == 40) {
-         parse_unknown_5:
+         parse_souls_dropped:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_5_)));
-          set_has_unknown_5();
+                 input, &souls_dropped_)));
+          set_has_souls_dropped();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_unknown_6;
+        if (input->ExpectTag(48)) goto parse_souls_lost;
         break;
       }
 
-      // required uint32 unknown_6 = 6;
+      // required uint32 souls_lost = 6;
       case 6: {
         if (tag == 48) {
-         parse_unknown_6:
+         parse_souls_lost:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_6_)));
-          set_has_unknown_6();
+                 input, &souls_lost_)));
+          set_has_souls_lost();
         } else {
           goto handle_unusual;
         }
@@ -16006,19 +16210,20 @@ void RequestNotifyDie::SerializeWithCachedSizes(
       3, this->location(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required .Frpg2RequestMessage.CauseOfDeath cause_of_death = 4;
+  if (has_cause_of_death()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      4, this->cause_of_death(), output);
   }
 
-  // required uint32 unknown_5 = 5;
-  if (has_unknown_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  // required uint32 souls_dropped = 5;
+  if (has_souls_dropped()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->souls_dropped(), output);
   }
 
-  // required uint32 unknown_6 = 6;
-  if (has_unknown_6()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
+  // required uint32 souls_lost = 6;
+  if (has_souls_lost()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->souls_lost(), output);
   }
 
   // required uint32 unknown_7 = 7;
@@ -16062,25 +16267,24 @@ int RequestNotifyDie::ByteSize() const {
           this->location());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required .Frpg2RequestMessage.CauseOfDeath cause_of_death = 4;
+    if (has_cause_of_death()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->cause_of_death());
     }
 
-    // required uint32 unknown_5 = 5;
-    if (has_unknown_5()) {
+    // required uint32 souls_dropped = 5;
+    if (has_souls_dropped()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_5());
+          this->souls_dropped());
     }
 
-    // required uint32 unknown_6 = 6;
-    if (has_unknown_6()) {
+    // required uint32 souls_lost = 6;
+    if (has_souls_lost()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_6());
+          this->souls_lost());
     }
 
     // required uint32 unknown_7 = 7;
@@ -16123,14 +16327,14 @@ void RequestNotifyDie::MergeFrom(const RequestNotifyDie& from) {
     if (from.has_location()) {
       mutable_location()->::Frpg2PlayerData::Vector::MergeFrom(from.location());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_cause_of_death()) {
+      set_cause_of_death(from.cause_of_death());
     }
-    if (from.has_unknown_5()) {
-      set_unknown_5(from.unknown_5());
+    if (from.has_souls_dropped()) {
+      set_souls_dropped(from.souls_dropped());
     }
-    if (from.has_unknown_6()) {
-      set_unknown_6(from.unknown_6());
+    if (from.has_souls_lost()) {
+      set_souls_lost(from.souls_lost());
     }
     if (from.has_unknown_7()) {
       set_unknown_7(from.unknown_7());
@@ -16165,9 +16369,9 @@ void RequestNotifyDie::Swap(RequestNotifyDie* other) {
     std::swap(unknown_1_, other->unknown_1_);
     std::swap(map_id_, other->map_id_);
     std::swap(location_, other->location_);
-    std::swap(unknown_4_, other->unknown_4_);
-    std::swap(unknown_5_, other->unknown_5_);
-    std::swap(unknown_6_, other->unknown_6_);
+    std::swap(cause_of_death_, other->cause_of_death_);
+    std::swap(souls_dropped_, other->souls_dropped_);
+    std::swap(souls_lost_, other->souls_lost_);
     std::swap(unknown_7_, other->unknown_7_);
     std::swap(unknown_8_, other->unknown_8_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

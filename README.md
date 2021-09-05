@@ -51,12 +51,12 @@ We're slowly going through and implementing all the games online functionality, 
 - [x] Ghosts
 - [x] Summoning
 - [x] Invasions
-- [x] Visitors (Summoning via covenant)
+- [x] Visitors (Auto-Summoning via covenant)
 - [x] Matchmaking (eg. Correctly matching summoning/invasions/visits with player level)
 - [x] Roster of knights
 - [x] Archdragon peak bell ringing
 - [x] Undead match
-- [ ] Telemetry and misc server calls
+- [x] Telemetry and misc server calls (the few that are of use to us)
 - [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
 
 # How can I help?

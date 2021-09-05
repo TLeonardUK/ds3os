@@ -16,6 +16,7 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 RankingManager::RankingManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)
@@ -59,6 +60,10 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
         Warning("[%s] Failed to register score in database.", Client->GetName().c_str());
         return MessageHandleResult::Error;
     }
+
+    std::string TypeStatisticKey = StringFormat("Ranking/TotalRegistrations");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
 
     // Empty response.
     Frpg2RequestMessage::RequestRegisterRankingDataResponse Response;

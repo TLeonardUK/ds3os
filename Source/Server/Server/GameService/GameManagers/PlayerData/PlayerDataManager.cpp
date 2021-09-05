@@ -279,6 +279,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestGetLoginPlayerCharacter(Gam
     Frpg2RequestMessage::RequestGetLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestGetLoginPlayerCharacter*)Message.Protobuf.get();
 
     // TODO: Implement
+    Ensure(false); // Never seen this in use.
 
     Frpg2RequestMessage::RequestGetLoginPlayerCharacterResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -295,6 +296,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestGetPlayerCharacterList(Game
     Frpg2RequestMessage::RequestGetPlayerCharacterList* Request = (Frpg2RequestMessage::RequestGetPlayerCharacterList*)Message.Protobuf.get();
 
     // TODO: Implement
+    Ensure(false); // Never seen this in use.
 
     Frpg2RequestMessage::RequestGetPlayerCharacterListResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

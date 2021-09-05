@@ -33,6 +33,7 @@ void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
 void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
 void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
 
+class EmptyResponse;
 class RequestQueryLoginServerInfo;
 class RequestQueryLoginServerInfoResponse;
 class RequestQueryLoginServerInfoForXboxOne;
@@ -323,6 +324,19 @@ const LogType LogType_MIN = UseMagicLog;
 const LogType LogType_MAX = SystemOptionLog;
 const int LogType_ARRAYSIZE = LogType_MAX + 1;
 
+enum CauseOfDeath {
+  Unknown = 0,
+  Physical = 1,
+  Fire = 2,
+  Fall = 3,
+  Cursed = 4,
+  PosionToxicMagic = 5
+};
+bool CauseOfDeath_IsValid(int value);
+const CauseOfDeath CauseOfDeath_MIN = Unknown;
+const CauseOfDeath CauseOfDeath_MAX = PosionToxicMagic;
+const int CauseOfDeath_ARRAYSIZE = CauseOfDeath_MAX + 1;
+
 enum Covenant {
   Covenant_None = 0,
   Covenant_Blade_of_the_Darkmoon = 1,
@@ -378,6 +392,87 @@ const QuickMatchResult QuickMatchResult_MAX = QuickMatchResult_Draw;
 const int QuickMatchResult_ARRAYSIZE = QuickMatchResult_MAX + 1;
 
 // ===================================================================
+
+class EmptyResponse : public ::google::protobuf::MessageLite {
+ public:
+  EmptyResponse();
+  virtual ~EmptyResponse();
+
+  EmptyResponse(const EmptyResponse& from);
+
+  inline EmptyResponse& operator=(const EmptyResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const EmptyResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const EmptyResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(EmptyResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  EmptyResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const EmptyResponse& from);
+  void MergeFrom(const EmptyResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.EmptyResponse)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static EmptyResponse* default_instance_;
+};
+// -------------------------------------------------------------------
 
 class RequestQueryLoginServerInfo : public ::google::protobuf::MessageLite {
  public:
@@ -6802,6 +6897,13 @@ class PartyMemberInfo : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_6() const;
   inline void set_unknown_6(::google::protobuf::uint32 value);
 
+  // optional uint32 unknown_7 = 7;
+  inline bool has_unknown_7() const;
+  inline void clear_unknown_7();
+  static const int kUnknown7FieldNumber = 7;
+  inline ::google::protobuf::uint32 unknown_7() const;
+  inline void set_unknown_7(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.PartyMemberInfo)
  private:
   inline void set_has_player_id();
@@ -6816,6 +6918,8 @@ class PartyMemberInfo : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_5();
   inline void set_has_unknown_6();
   inline void clear_has_unknown_6();
+  inline void set_has_unknown_7();
+  inline void clear_has_unknown_7();
 
   ::std::string _unknown_fields_;
 
@@ -6827,6 +6931,7 @@ class PartyMemberInfo : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 unknown_4_;
   ::google::protobuf::uint32 unknown_5_;
   ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 unknown_7_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -7050,26 +7155,26 @@ class RequestNotifyDie : public ::google::protobuf::MessageLite {
   inline ::Frpg2PlayerData::Vector* release_location();
   inline void set_allocated_location(::Frpg2PlayerData::Vector* location);
 
-  // required uint32 unknown_4 = 4;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown_4() const;
-  inline void set_unknown_4(::google::protobuf::uint32 value);
+  // required .Frpg2RequestMessage.CauseOfDeath cause_of_death = 4;
+  inline bool has_cause_of_death() const;
+  inline void clear_cause_of_death();
+  static const int kCauseOfDeathFieldNumber = 4;
+  inline ::Frpg2RequestMessage::CauseOfDeath cause_of_death() const;
+  inline void set_cause_of_death(::Frpg2RequestMessage::CauseOfDeath value);
 
-  // required uint32 unknown_5 = 5;
-  inline bool has_unknown_5() const;
-  inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 5;
-  inline ::google::protobuf::uint32 unknown_5() const;
-  inline void set_unknown_5(::google::protobuf::uint32 value);
+  // required uint32 souls_dropped = 5;
+  inline bool has_souls_dropped() const;
+  inline void clear_souls_dropped();
+  static const int kSoulsDroppedFieldNumber = 5;
+  inline ::google::protobuf::uint32 souls_dropped() const;
+  inline void set_souls_dropped(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_6 = 6;
-  inline bool has_unknown_6() const;
-  inline void clear_unknown_6();
-  static const int kUnknown6FieldNumber = 6;
-  inline ::google::protobuf::uint32 unknown_6() const;
-  inline void set_unknown_6(::google::protobuf::uint32 value);
+  // required uint32 souls_lost = 6;
+  inline bool has_souls_lost() const;
+  inline void clear_souls_lost();
+  static const int kSoulsLostFieldNumber = 6;
+  inline ::google::protobuf::uint32 souls_lost() const;
+  inline void set_souls_lost(::google::protobuf::uint32 value);
 
   // required uint32 unknown_7 = 7;
   inline bool has_unknown_7() const;
@@ -7095,12 +7200,12 @@ class RequestNotifyDie : public ::google::protobuf::MessageLite {
   inline void clear_has_map_id();
   inline void set_has_location();
   inline void clear_has_location();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
-  inline void set_has_unknown_5();
-  inline void clear_has_unknown_5();
-  inline void set_has_unknown_6();
-  inline void clear_has_unknown_6();
+  inline void set_has_cause_of_death();
+  inline void clear_has_cause_of_death();
+  inline void set_has_souls_dropped();
+  inline void clear_has_souls_dropped();
+  inline void set_has_souls_lost();
+  inline void clear_has_souls_lost();
   inline void set_has_unknown_7();
   inline void clear_has_unknown_7();
   inline void set_has_unknown_8();
@@ -7113,9 +7218,9 @@ class RequestNotifyDie : public ::google::protobuf::MessageLite {
   ::std::string* unknown_1_;
   ::Frpg2PlayerData::Vector* location_;
   ::google::protobuf::uint32 map_id_;
-  ::google::protobuf::uint32 unknown_4_;
-  ::google::protobuf::uint32 unknown_5_;
-  ::google::protobuf::uint32 unknown_6_;
+  int cause_of_death_;
+  ::google::protobuf::uint32 souls_dropped_;
+  ::google::protobuf::uint32 souls_lost_;
   ::Frpg2RequestMessage::KillerInfo* unknown_8_;
   ::google::protobuf::uint32 unknown_7_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -25166,6 +25271,10 @@ class RequestGetServerSidePlayerStatus : public ::google::protobuf::MessageLite 
 
 // ===================================================================
 
+// EmptyResponse
+
+// -------------------------------------------------------------------
+
 // RequestQueryLoginServerInfo
 
 // required string steam_id = 1;
@@ -29873,6 +29982,30 @@ inline void PartyMemberInfo::set_unknown_6(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PartyMemberInfo.unknown_6)
 }
 
+// optional uint32 unknown_7 = 7;
+inline bool PartyMemberInfo::has_unknown_7() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PartyMemberInfo::set_has_unknown_7() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PartyMemberInfo::clear_has_unknown_7() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PartyMemberInfo::clear_unknown_7() {
+  unknown_7_ = 0u;
+  clear_has_unknown_7();
+}
+inline ::google::protobuf::uint32 PartyMemberInfo::unknown_7() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.PartyMemberInfo.unknown_7)
+  return unknown_7_;
+}
+inline void PartyMemberInfo::set_unknown_7(::google::protobuf::uint32 value) {
+  set_has_unknown_7();
+  unknown_7_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PartyMemberInfo.unknown_7)
+}
+
 // -------------------------------------------------------------------
 
 // RequestNotifyProtoBufLog
@@ -30203,76 +30336,77 @@ inline void RequestNotifyDie::set_allocated_location(::Frpg2PlayerData::Vector* 
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestNotifyDie.location)
 }
 
-// required uint32 unknown_4 = 4;
-inline bool RequestNotifyDie::has_unknown_4() const {
+// required .Frpg2RequestMessage.CauseOfDeath cause_of_death = 4;
+inline bool RequestNotifyDie::has_cause_of_death() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void RequestNotifyDie::set_has_unknown_4() {
+inline void RequestNotifyDie::set_has_cause_of_death() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void RequestNotifyDie::clear_has_unknown_4() {
+inline void RequestNotifyDie::clear_has_cause_of_death() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void RequestNotifyDie::clear_unknown_4() {
-  unknown_4_ = 0u;
-  clear_has_unknown_4();
+inline void RequestNotifyDie::clear_cause_of_death() {
+  cause_of_death_ = 0;
+  clear_has_cause_of_death();
 }
-inline ::google::protobuf::uint32 RequestNotifyDie::unknown_4() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.unknown_4)
-  return unknown_4_;
+inline ::Frpg2RequestMessage::CauseOfDeath RequestNotifyDie::cause_of_death() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.cause_of_death)
+  return static_cast< ::Frpg2RequestMessage::CauseOfDeath >(cause_of_death_);
 }
-inline void RequestNotifyDie::set_unknown_4(::google::protobuf::uint32 value) {
-  set_has_unknown_4();
-  unknown_4_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.unknown_4)
+inline void RequestNotifyDie::set_cause_of_death(::Frpg2RequestMessage::CauseOfDeath value) {
+  assert(::Frpg2RequestMessage::CauseOfDeath_IsValid(value));
+  set_has_cause_of_death();
+  cause_of_death_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.cause_of_death)
 }
 
-// required uint32 unknown_5 = 5;
-inline bool RequestNotifyDie::has_unknown_5() const {
+// required uint32 souls_dropped = 5;
+inline bool RequestNotifyDie::has_souls_dropped() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void RequestNotifyDie::set_has_unknown_5() {
+inline void RequestNotifyDie::set_has_souls_dropped() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void RequestNotifyDie::clear_has_unknown_5() {
+inline void RequestNotifyDie::clear_has_souls_dropped() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void RequestNotifyDie::clear_unknown_5() {
-  unknown_5_ = 0u;
-  clear_has_unknown_5();
+inline void RequestNotifyDie::clear_souls_dropped() {
+  souls_dropped_ = 0u;
+  clear_has_souls_dropped();
 }
-inline ::google::protobuf::uint32 RequestNotifyDie::unknown_5() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.unknown_5)
-  return unknown_5_;
+inline ::google::protobuf::uint32 RequestNotifyDie::souls_dropped() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.souls_dropped)
+  return souls_dropped_;
 }
-inline void RequestNotifyDie::set_unknown_5(::google::protobuf::uint32 value) {
-  set_has_unknown_5();
-  unknown_5_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.unknown_5)
+inline void RequestNotifyDie::set_souls_dropped(::google::protobuf::uint32 value) {
+  set_has_souls_dropped();
+  souls_dropped_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.souls_dropped)
 }
 
-// required uint32 unknown_6 = 6;
-inline bool RequestNotifyDie::has_unknown_6() const {
+// required uint32 souls_lost = 6;
+inline bool RequestNotifyDie::has_souls_lost() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void RequestNotifyDie::set_has_unknown_6() {
+inline void RequestNotifyDie::set_has_souls_lost() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void RequestNotifyDie::clear_has_unknown_6() {
+inline void RequestNotifyDie::clear_has_souls_lost() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void RequestNotifyDie::clear_unknown_6() {
-  unknown_6_ = 0u;
-  clear_has_unknown_6();
+inline void RequestNotifyDie::clear_souls_lost() {
+  souls_lost_ = 0u;
+  clear_has_souls_lost();
 }
-inline ::google::protobuf::uint32 RequestNotifyDie::unknown_6() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.unknown_6)
-  return unknown_6_;
+inline ::google::protobuf::uint32 RequestNotifyDie::souls_lost() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.souls_lost)
+  return souls_lost_;
 }
-inline void RequestNotifyDie::set_unknown_6(::google::protobuf::uint32 value) {
-  set_has_unknown_6();
-  unknown_6_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.unknown_6)
+inline void RequestNotifyDie::set_souls_lost(::google::protobuf::uint32 value) {
+  set_has_souls_lost();
+  souls_lost_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.souls_lost)
 }
 
 // required uint32 unknown_7 = 7;

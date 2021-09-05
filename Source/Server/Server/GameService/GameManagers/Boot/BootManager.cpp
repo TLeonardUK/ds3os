@@ -16,6 +16,7 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 BootManager::BootManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)
@@ -38,6 +39,7 @@ MessageHandleResult BootManager::OnMessageRecieved(GameClient* Client, const Frp
 
 MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& State = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestWaitForUserLogin* Request = (Frpg2RequestMessage::RequestWaitForUserLogin*)Message.Protobuf.get();
@@ -97,6 +99,10 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
         Warning("[%s] Disconnecting client as failed to send UploadInfoPushMessage response.", Client->GetName().c_str());
         return MessageHandleResult::Error;
     }
+
+    std::string TypeStatisticKey = StringFormat("Player/TotalLogins");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, State.PlayerId, 1);
 
     return MessageHandleResult::Handled;
 }

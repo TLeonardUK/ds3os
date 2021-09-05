@@ -19,6 +19,7 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Utils/Strings.h"
 
 BloodMessageManager::BloodMessageManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -250,6 +251,10 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
         return MessageHandleResult::Error;
     }
 
+    std::string TypeStatisticKey = StringFormat("BloodMessage/TotalCreated");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         Warning("[%s] Disconnecting client as failed to send RequestCreateBloodMessageResponse response.", Client->GetName().c_str());
@@ -412,6 +417,10 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
             }
         }
     }
+
+    std::string TypeStatisticKey = StringFormat("BloodMessage/TotalEvaluated");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.

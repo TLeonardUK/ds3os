@@ -111,9 +111,35 @@ public:
     // Get the number of ranks in a given board.
     uint32_t GetRankingCount(uint32_t BoardId);
 
+    // ----------------------------------------------------------------
+    // Statistic interface
+    // ----------------------------------------------------------------
+
+    // Adds the given count to the statistic with the given name. If statistic
+    // does not exist, it will be created.
+    void AddStatistic(const std::string& Name, const std::string& Scope, int64_t Count);
+
+    // Set the value of the statistic with the given name. If statistic
+    // does not exist, it will be created.
+    void SetStatistic(const std::string& Name, const std::string& Scope, int64_t Count);
+
+    // Gets the value of the statistic with the given name. If statitic 
+    // does not exist, 0 will be returned.
+    int64_t GetStatistic(const std::string& Name, const std::string& Scope);
+
+    // Some helper versions of the above functions that infer the scope.
+    void AddGlobalStatistic(const std::string& Name, int64_t Count);
+    void SetGlobalStatistic(const std::string& Name, int64_t Count);
+    int64_t GetGlobalStatistic(const std::string& Name);
+
+    // Some helper versions of the above functions that infer the scope.
+    void AddPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count);
+    void SetPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count);
+    int64_t GetPlayerStatistic(const std::string& Name, uint32_t PlayerId);
+
 protected:
 
-    using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>>;
+    using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>, int64_t>;
 
     typedef std::function<void(sqlite3_stmt* statement)> RowCallback;
 

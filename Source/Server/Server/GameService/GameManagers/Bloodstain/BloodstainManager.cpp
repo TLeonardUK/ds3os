@@ -16,6 +16,7 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 BloodstainManager::BloodstainManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)
@@ -90,6 +91,10 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
         Warning("[%s] Disconnecting client as failed to create blood stain.", Client->GetName().c_str());
         return MessageHandleResult::Error;
     }
+
+    std::string TypeStatisticKey = StringFormat("Bloodstain/TotalCreated");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
 
     return MessageHandleResult::Handled;
 }

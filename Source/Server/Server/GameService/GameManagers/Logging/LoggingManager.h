@@ -14,6 +14,10 @@
 struct Frpg2ReliableUdpMessage;
 class Server;
 
+namespace Frpg2RequestMessage {
+    class RequestNotifyProtoBufLog;
+};
+
 // Handles telemetry messages sent by the client, usually this logs things
 // like item usage, game settngs, match results, etc.
 
@@ -41,6 +45,16 @@ protected:
     MessageHandleResult Handle_RequestNotifyCreateSignResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestNotifyBreakInResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     
+    void Handle_UseMagicLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_ActGestureLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_UseItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_PurchaseItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_GetItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_DropItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_LeaveItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_SaleItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_StrengthenWeaponLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+
 private:
     Server* ServerInstance;
 

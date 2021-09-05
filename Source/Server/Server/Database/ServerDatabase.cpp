@@ -118,6 +118,14 @@ bool ServerDatabase::CreateTables()
         "   CreatedTime         TEXT"                                               \
         ");"
     );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS Statistics("                                    \
+        "   Name                STRING,"                                            \
+        "   Scope               STRING,"                                            \
+        "   Value               INTEGER,"                                           \
+        "   PRIMARY KEY (Name, Scope)"                                              \
+        ");"
+    );
 
     for (const std::string& statement : tables)
     {
@@ -157,6 +165,15 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
         else if (auto CastValue = std::get_if<int>(&Value))
         {
             if (int result = sqlite3_bind_int(statement, i + 1, *CastValue); result != SQLITE_OK)
+            {
+                Error("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
+                sqlite3_finalize(statement);
+                return false;
+            }
+        }
+        else if (auto CastValue = std::get_if<int64_t>(&Value))
+        {
+            if (int result = sqlite3_bind_int64(statement, i + 1, *CastValue); result != SQLITE_OK)
             {
                 Error("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
                 sqlite3_finalize(statement);
@@ -613,4 +630,85 @@ bool ServerDatabase::UpdateCharacterQuickMatchRank(uint32_t PlayerId, uint32_t C
 
     return true;
 }
- \
+
+void ServerDatabase::AddStatistic(const std::string& Name, const std::string& Scope, int64_t Count)
+{
+    if (!RunStatement("UPDATE Statistics SET Value = Value + ?3 WHERE Name = ?1 AND Scope = ?2", { Name, Scope, Count }, nullptr))
+    {
+        return;
+    }
+
+    if (sqlite3_changes(db_handle) == 0)
+    {
+        if (!RunStatement("INSERT INTO Statistics(Name, Scope, Value) VALUES(?1, ?2, ?3)", { Name, Scope, Count }, nullptr))
+        {
+            return;
+        }
+    }
+}
+
+void ServerDatabase::SetStatistic(const std::string& Name, const std::string& Scope, int64_t Count)
+{
+    if (!RunStatement("UPDATE Statistics SET Value = ?3 WHERE Name = ?1 AND Scope = ?2", { Name, Scope, Count }, nullptr))
+    {
+        return;
+    }
+
+    if (sqlite3_changes(db_handle) == 0)
+    {
+        if (!RunStatement("INSERT INTO Statistics(Name, Scope, Value) VALUES(?1, ?2, ?3)", { Name, Scope, Count }, nullptr))
+        {
+            return;
+        }
+    }
+}
+
+int64_t ServerDatabase::GetStatistic(const std::string& Name, const std::string& Scope)
+{
+    int64_t Result;
+
+    RunStatement("SELECT Value FROM Statistics WHERE Name = ?1 AND Scope = ?2 LIMIT 1", { Name, Scope }, [&Result](sqlite3_stmt* statement) {
+        Result = sqlite3_column_int64(statement, 0);
+    });
+
+    return Result;
+}
+
+void ServerDatabase::AddGlobalStatistic(const std::string& Name, int64_t Count)
+{
+    return AddStatistic(Name, "Global", Count);
+}
+
+void ServerDatabase::SetGlobalStatistic(const std::string& Name, int64_t Count)
+{
+    return SetStatistic(Name, "Global", Count);
+}
+
+int64_t ServerDatabase::GetGlobalStatistic(const std::string& Name)
+{
+    return GetStatistic(Name, "Global");
+}
+
+void ServerDatabase::AddPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count)
+{
+    char Scope[64];
+    snprintf(Scope, 64, "Player/%u", PlayerId);
+
+    return AddStatistic(Name, Scope, Count);
+}
+
+void ServerDatabase::SetPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count)
+{
+    char Scope[64];
+    snprintf(Scope, 64, "Player/%u", PlayerId);
+
+    return SetStatistic(Name, Scope, Count);
+}
+
+int64_t ServerDatabase::GetPlayerStatistic(const std::string& Name, uint32_t PlayerId)
+{
+    char Scope[64];
+    snprintf(Scope, 64, "Player/%u", PlayerId);
+
+    return GetStatistic(Name, Scope);
+}

@@ -725,12 +725,12 @@ class UseItemLog_Use_item_info_list : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 item_id() const;
   inline void set_item_id(::google::protobuf::uint32 value);
 
-  // required uint32 quantity = 3;
-  inline bool has_quantity() const;
-  inline void clear_quantity();
-  static const int kQuantityFieldNumber = 3;
-  inline ::google::protobuf::uint32 quantity() const;
-  inline void set_quantity(::google::protobuf::uint32 value);
+  // required uint32 count = 3;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 3;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
 
   // required uint32 unknown_4 = 4;
   inline bool has_unknown_4() const;
@@ -743,8 +743,8 @@ class UseItemLog_Use_item_info_list : public ::google::protobuf::MessageLite {
  private:
   inline void set_has_item_id();
   inline void clear_has_item_id();
-  inline void set_has_quantity();
-  inline void clear_has_quantity();
+  inline void set_has_count();
+  inline void clear_has_count();
   inline void set_has_unknown_4();
   inline void clear_has_unknown_4();
 
@@ -753,7 +753,7 @@ class UseItemLog_Use_item_info_list : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::uint32 item_id_;
-  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 count_;
   ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
@@ -831,17 +831,17 @@ class UseItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.UseItemLog.Use_item_info_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::UseItemLog_Use_item_info_list& items(int index) const;
-  inline ::FpdLogMessage::UseItemLog_Use_item_info_list* mutable_items(int index);
-  inline ::FpdLogMessage::UseItemLog_Use_item_info_list* add_items();
+  // repeated group Use_item_info_list = 1 {
+  inline int use_item_info_list_size() const;
+  inline void clear_use_item_info_list();
+  static const int kUseItemInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::UseItemLog_Use_item_info_list& use_item_info_list(int index) const;
+  inline ::FpdLogMessage::UseItemLog_Use_item_info_list* mutable_use_item_info_list(int index);
+  inline ::FpdLogMessage::UseItemLog_Use_item_info_list* add_use_item_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >&
-      items() const;
+      use_item_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >*
-      mutable_items();
+      mutable_use_item_info_list();
 
   // required uint32 unknown_5 = 5;
   inline bool has_unknown_5() const;
@@ -870,7 +870,7 @@ class UseItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list > use_item_info_list_;
   ::FpdLogMessage::Vector* location_;
   ::google::protobuf::uint32 unknown_5_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -977,12 +977,12 @@ class GetItemLog_Get_item_info_list : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 item_id() const;
   inline void set_item_id(::google::protobuf::uint32 value);
 
-  // required uint32 quantity = 6;
-  inline bool has_quantity() const;
-  inline void clear_quantity();
-  static const int kQuantityFieldNumber = 6;
-  inline ::google::protobuf::uint32 quantity() const;
-  inline void set_quantity(::google::protobuf::uint32 value);
+  // required uint32 count = 6;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 6;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
 
   // required uint32 unknown_7 = 7;
   inline bool has_unknown_7() const;
@@ -1015,8 +1015,8 @@ class GetItemLog_Get_item_info_list : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_4();
   inline void set_has_item_id();
   inline void clear_has_item_id();
-  inline void set_has_quantity();
-  inline void clear_has_quantity();
+  inline void set_has_count();
+  inline void clear_has_count();
   inline void set_has_unknown_7();
   inline void clear_has_unknown_7();
   inline void set_has_unknown_8();
@@ -1032,7 +1032,7 @@ class GetItemLog_Get_item_info_list : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::uint32 unknown_4_;
   ::google::protobuf::uint32 item_id_;
-  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 count_;
   ::google::protobuf::uint32 unknown_7_;
   ::google::protobuf::uint32 unknown_8_;
   ::google::protobuf::uint32 unknown_9_;
@@ -1112,17 +1112,17 @@ class GetItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.GetItemLog.Get_item_info_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::GetItemLog_Get_item_info_list& items(int index) const;
-  inline ::FpdLogMessage::GetItemLog_Get_item_info_list* mutable_items(int index);
-  inline ::FpdLogMessage::GetItemLog_Get_item_info_list* add_items();
+  // repeated group Get_item_info_list = 1 {
+  inline int get_item_info_list_size() const;
+  inline void clear_get_item_info_list();
+  static const int kGetItemInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::GetItemLog_Get_item_info_list& get_item_info_list(int index) const;
+  inline ::FpdLogMessage::GetItemLog_Get_item_info_list* mutable_get_item_info_list(int index);
+  inline ::FpdLogMessage::GetItemLog_Get_item_info_list* add_get_item_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >&
-      items() const;
+      get_item_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >*
-      mutable_items();
+      mutable_get_item_info_list();
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.GetItemLog)
  private:
@@ -1131,7 +1131,7 @@ class GetItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list > get_item_info_list_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1309,17 +1309,17 @@ class ActGestureLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.ActGestureLog.Use_gesture_info_list gestures = 1;
-  inline int gestures_size() const;
-  inline void clear_gestures();
-  static const int kGesturesFieldNumber = 1;
-  inline const ::FpdLogMessage::ActGestureLog_Use_gesture_info_list& gestures(int index) const;
-  inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* mutable_gestures(int index);
-  inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* add_gestures();
+  // repeated group Use_gesture_info_list = 1 {
+  inline int use_gesture_info_list_size() const;
+  inline void clear_use_gesture_info_list();
+  static const int kUseGestureInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::ActGestureLog_Use_gesture_info_list& use_gesture_info_list(int index) const;
+  inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* mutable_use_gesture_info_list(int index);
+  inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* add_use_gesture_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >&
-      gestures() const;
+      use_gesture_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >*
-      mutable_gestures();
+      mutable_use_gesture_info_list();
 
   // required uint32 unknown_4 = 4;
   inline bool has_unknown_4() const;
@@ -1348,7 +1348,7 @@ class ActGestureLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list > gestures_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list > use_gesture_info_list_;
   ::FpdLogMessage::Vector* unknown_5_;
   ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1528,17 +1528,17 @@ class UseMagicLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.UseMagicLog.Use_magic_info_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::UseMagicLog_Use_magic_info_list& items(int index) const;
-  inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* mutable_items(int index);
-  inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* add_items();
+  // repeated group Use_magic_info_list = 1 {
+  inline int use_magic_info_list_size() const;
+  inline void clear_use_magic_info_list();
+  static const int kUseMagicInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::UseMagicLog_Use_magic_info_list& use_magic_info_list(int index) const;
+  inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* mutable_use_magic_info_list(int index);
+  inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* add_use_magic_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >&
-      items() const;
+      use_magic_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >*
-      mutable_items();
+      mutable_use_magic_info_list();
 
   // required uint32 unknown_4 = 4;
   inline bool has_unknown_4() const;
@@ -1567,7 +1567,7 @@ class UseMagicLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list > use_magic_info_list_;
   ::FpdLogMessage::Vector* location_;
   ::google::protobuf::uint32 unknown_4_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1674,12 +1674,12 @@ class PurchaseItemLog_Purchase_item_info_list : public ::google::protobuf::Messa
   inline ::google::protobuf::uint32 unknown_6() const;
   inline void set_unknown_6(::google::protobuf::uint32 value);
 
-  // required uint32 quantity = 7;
-  inline bool has_quantity() const;
-  inline void clear_quantity();
-  static const int kQuantityFieldNumber = 7;
-  inline ::google::protobuf::uint32 quantity() const;
-  inline void set_quantity(::google::protobuf::uint32 value);
+  // required uint32 count = 7;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 7;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list)
  private:
@@ -1691,8 +1691,8 @@ class PurchaseItemLog_Purchase_item_info_list : public ::google::protobuf::Messa
   inline void clear_has_item_id();
   inline void set_has_unknown_6();
   inline void clear_has_unknown_6();
-  inline void set_has_quantity();
-  inline void clear_has_quantity();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
@@ -1702,7 +1702,7 @@ class PurchaseItemLog_Purchase_item_info_list : public ::google::protobuf::Messa
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::uint32 item_id_;
   ::google::protobuf::uint32 unknown_6_;
-  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1779,17 +1779,17 @@ class PurchaseItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.PurchaseItemLog.Purchase_item_info_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& items(int index) const;
-  inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* mutable_items(int index);
-  inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* add_items();
+  // repeated group Purchase_item_info_list = 1 {
+  inline int purchase_item_info_list_size() const;
+  inline void clear_purchase_item_info_list();
+  static const int kPurchaseItemInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& purchase_item_info_list(int index) const;
+  inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* mutable_purchase_item_info_list(int index);
+  inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* add_purchase_item_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >&
-      items() const;
+      purchase_item_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >*
-      mutable_items();
+      mutable_purchase_item_info_list();
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.PurchaseItemLog)
  private:
@@ -1798,7 +1798,7 @@ class PurchaseItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list > purchase_item_info_list_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -1903,12 +1903,12 @@ class DropItemLog_Throw_away_item_list : public ::google::protobuf::MessageLite 
   inline ::google::protobuf::uint32 item_id() const;
   inline void set_item_id(::google::protobuf::uint32 value);
 
-  // required uint32 quantity = 6;
-  inline bool has_quantity() const;
-  inline void clear_quantity();
-  static const int kQuantityFieldNumber = 6;
-  inline ::google::protobuf::uint32 quantity() const;
-  inline void set_quantity(::google::protobuf::uint32 value);
+  // required uint32 count = 6;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 6;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.DropItemLog.Throw_away_item_list)
  private:
@@ -1920,8 +1920,8 @@ class DropItemLog_Throw_away_item_list : public ::google::protobuf::MessageLite 
   inline void clear_has_unknown_4();
   inline void set_has_item_id();
   inline void clear_has_item_id();
-  inline void set_has_quantity();
-  inline void clear_has_quantity();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
@@ -1931,7 +1931,7 @@ class DropItemLog_Throw_away_item_list : public ::google::protobuf::MessageLite 
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::uint32 unknown_4_;
   ::google::protobuf::uint32 item_id_;
-  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2008,17 +2008,17 @@ class DropItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.DropItemLog.Throw_away_item_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::DropItemLog_Throw_away_item_list& items(int index) const;
-  inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* mutable_items(int index);
-  inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* add_items();
+  // repeated group Throw_away_item_list = 1 {
+  inline int throw_away_item_list_size() const;
+  inline void clear_throw_away_item_list();
+  static const int kThrowAwayItemListFieldNumber = 1;
+  inline const ::FpdLogMessage::DropItemLog_Throw_away_item_list& throw_away_item_list(int index) const;
+  inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* mutable_throw_away_item_list(int index);
+  inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* add_throw_away_item_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >&
-      items() const;
+      throw_away_item_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >*
-      mutable_items();
+      mutable_throw_away_item_list();
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.DropItemLog)
  private:
@@ -2027,7 +2027,7 @@ class DropItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list > throw_away_item_list_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2132,12 +2132,12 @@ class LeaveItemLog_Set_item_info_list : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 item_id() const;
   inline void set_item_id(::google::protobuf::uint32 value);
 
-  // required uint32 quantity = 6;
-  inline bool has_quantity() const;
-  inline void clear_quantity();
-  static const int kQuantityFieldNumber = 6;
-  inline ::google::protobuf::uint32 quantity() const;
-  inline void set_quantity(::google::protobuf::uint32 value);
+  // required uint32 count = 6;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 6;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.LeaveItemLog.Set_item_info_list)
  private:
@@ -2149,8 +2149,8 @@ class LeaveItemLog_Set_item_info_list : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_4();
   inline void set_has_item_id();
   inline void clear_has_item_id();
-  inline void set_has_quantity();
-  inline void clear_has_quantity();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
@@ -2160,7 +2160,7 @@ class LeaveItemLog_Set_item_info_list : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::uint32 unknown_4_;
   ::google::protobuf::uint32 item_id_;
-  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2237,17 +2237,17 @@ class LeaveItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.LeaveItemLog.Set_item_info_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::LeaveItemLog_Set_item_info_list& items(int index) const;
-  inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* mutable_items(int index);
-  inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* add_items();
+  // repeated group Set_item_info_list = 1 {
+  inline int set_item_info_list_size() const;
+  inline void clear_set_item_info_list();
+  static const int kSetItemInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::LeaveItemLog_Set_item_info_list& set_item_info_list(int index) const;
+  inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* mutable_set_item_info_list(int index);
+  inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* add_set_item_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >&
-      items() const;
+      set_item_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >*
-      mutable_items();
+      mutable_set_item_info_list();
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.LeaveItemLog)
  private:
@@ -2256,7 +2256,7 @@ class LeaveItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list > set_item_info_list_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2361,12 +2361,12 @@ class SaleItemLog_Sale_item_info_list : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 item_id() const;
   inline void set_item_id(::google::protobuf::uint32 value);
 
-  // required uint32 quantity = 6;
-  inline bool has_quantity() const;
-  inline void clear_quantity();
-  static const int kQuantityFieldNumber = 6;
-  inline ::google::protobuf::uint32 quantity() const;
-  inline void set_quantity(::google::protobuf::uint32 value);
+  // required uint32 count = 6;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 6;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.SaleItemLog.Sale_item_info_list)
  private:
@@ -2378,8 +2378,8 @@ class SaleItemLog_Sale_item_info_list : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_4();
   inline void set_has_item_id();
   inline void clear_has_item_id();
-  inline void set_has_quantity();
-  inline void clear_has_quantity();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
@@ -2389,7 +2389,7 @@ class SaleItemLog_Sale_item_info_list : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::uint32 unknown_4_;
   ::google::protobuf::uint32 item_id_;
-  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2466,17 +2466,17 @@ class SaleItemLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.SaleItemLog.Sale_item_info_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::SaleItemLog_Sale_item_info_list& items(int index) const;
-  inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* mutable_items(int index);
-  inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* add_items();
+  // repeated group Sale_item_info_list = 1 {
+  inline int sale_item_info_list_size() const;
+  inline void clear_sale_item_info_list();
+  static const int kSaleItemInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::SaleItemLog_Sale_item_info_list& sale_item_info_list(int index) const;
+  inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* mutable_sale_item_info_list(int index);
+  inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* add_sale_item_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >&
-      items() const;
+      sale_item_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >*
-      mutable_items();
+      mutable_sale_item_info_list();
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.SaleItemLog)
  private:
@@ -2485,7 +2485,7 @@ class SaleItemLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list > sale_item_info_list_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -2663,17 +2663,17 @@ class StrengthenWeaponLog : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list items = 1;
-  inline int items_size() const;
-  inline void clear_items();
-  static const int kItemsFieldNumber = 1;
-  inline const ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& items(int index) const;
-  inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* mutable_items(int index);
-  inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* add_items();
+  // repeated group Strengthen_weapon_info_list = 1 {
+  inline int strengthen_weapon_info_list_size() const;
+  inline void clear_strengthen_weapon_info_list();
+  static const int kStrengthenWeaponInfoListFieldNumber = 1;
+  inline const ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& strengthen_weapon_info_list(int index) const;
+  inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* mutable_strengthen_weapon_info_list(int index);
+  inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* add_strengthen_weapon_info_list();
   inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >&
-      items() const;
+      strengthen_weapon_info_list() const;
   inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >*
-      mutable_items();
+      mutable_strengthen_weapon_info_list();
 
   // @@protoc_insertion_point(class_scope:FpdLogMessage.StrengthenWeaponLog)
  private:
@@ -2682,7 +2682,7 @@ class StrengthenWeaponLog : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list > items_;
+  ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list > strengthen_weapon_info_list_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_FpdLogMessage_2eproto_impl();
   #else
@@ -4541,28 +4541,28 @@ inline void UseItemLog_Use_item_info_list::set_item_id(::google::protobuf::uint3
   // @@protoc_insertion_point(field_set:FpdLogMessage.UseItemLog.Use_item_info_list.item_id)
 }
 
-// required uint32 quantity = 3;
-inline bool UseItemLog_Use_item_info_list::has_quantity() const {
+// required uint32 count = 3;
+inline bool UseItemLog_Use_item_info_list::has_count() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void UseItemLog_Use_item_info_list::set_has_quantity() {
+inline void UseItemLog_Use_item_info_list::set_has_count() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void UseItemLog_Use_item_info_list::clear_has_quantity() {
+inline void UseItemLog_Use_item_info_list::clear_has_count() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void UseItemLog_Use_item_info_list::clear_quantity() {
-  quantity_ = 0u;
-  clear_has_quantity();
+inline void UseItemLog_Use_item_info_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
 }
-inline ::google::protobuf::uint32 UseItemLog_Use_item_info_list::quantity() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.Use_item_info_list.quantity)
-  return quantity_;
+inline ::google::protobuf::uint32 UseItemLog_Use_item_info_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.Use_item_info_list.count)
+  return count_;
 }
-inline void UseItemLog_Use_item_info_list::set_quantity(::google::protobuf::uint32 value) {
-  set_has_quantity();
-  quantity_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.UseItemLog.Use_item_info_list.quantity)
+inline void UseItemLog_Use_item_info_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.UseItemLog.Use_item_info_list.count)
 }
 
 // required uint32 unknown_4 = 4;
@@ -4593,34 +4593,34 @@ inline void UseItemLog_Use_item_info_list::set_unknown_4(::google::protobuf::uin
 
 // UseItemLog
 
-// repeated .FpdLogMessage.UseItemLog.Use_item_info_list items = 1;
-inline int UseItemLog::items_size() const {
-  return items_.size();
+// repeated group Use_item_info_list = 1 {
+inline int UseItemLog::use_item_info_list_size() const {
+  return use_item_info_list_.size();
 }
-inline void UseItemLog::clear_items() {
-  items_.Clear();
+inline void UseItemLog::clear_use_item_info_list() {
+  use_item_info_list_.Clear();
 }
-inline const ::FpdLogMessage::UseItemLog_Use_item_info_list& UseItemLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::UseItemLog_Use_item_info_list& UseItemLog::use_item_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseItemLog.use_item_info_list)
+  return use_item_info_list_.Get(index);
 }
-inline ::FpdLogMessage::UseItemLog_Use_item_info_list* UseItemLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseItemLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::UseItemLog_Use_item_info_list* UseItemLog::mutable_use_item_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseItemLog.use_item_info_list)
+  return use_item_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::UseItemLog_Use_item_info_list* UseItemLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.UseItemLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::UseItemLog_Use_item_info_list* UseItemLog::add_use_item_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.UseItemLog.use_item_info_list)
+  return use_item_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >&
-UseItemLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.UseItemLog.items)
-  return items_;
+UseItemLog::use_item_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.UseItemLog.use_item_info_list)
+  return use_item_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseItemLog_Use_item_info_list >*
-UseItemLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.UseItemLog.items)
-  return &items_;
+UseItemLog::mutable_use_item_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.UseItemLog.use_item_info_list)
+  return &use_item_info_list_;
 }
 
 // required uint32 unknown_5 = 5;
@@ -4813,28 +4813,28 @@ inline void GetItemLog_Get_item_info_list::set_item_id(::google::protobuf::uint3
   // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.item_id)
 }
 
-// required uint32 quantity = 6;
-inline bool GetItemLog_Get_item_info_list::has_quantity() const {
+// required uint32 count = 6;
+inline bool GetItemLog_Get_item_info_list::has_count() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void GetItemLog_Get_item_info_list::set_has_quantity() {
+inline void GetItemLog_Get_item_info_list::set_has_count() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void GetItemLog_Get_item_info_list::clear_has_quantity() {
+inline void GetItemLog_Get_item_info_list::clear_has_count() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void GetItemLog_Get_item_info_list::clear_quantity() {
-  quantity_ = 0u;
-  clear_has_quantity();
+inline void GetItemLog_Get_item_info_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
 }
-inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::quantity() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.quantity)
-  return quantity_;
+inline ::google::protobuf::uint32 GetItemLog_Get_item_info_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.Get_item_info_list.count)
+  return count_;
 }
-inline void GetItemLog_Get_item_info_list::set_quantity(::google::protobuf::uint32 value) {
-  set_has_quantity();
-  quantity_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.quantity)
+inline void GetItemLog_Get_item_info_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.GetItemLog.Get_item_info_list.count)
 }
 
 // required uint32 unknown_7 = 7;
@@ -4913,34 +4913,34 @@ inline void GetItemLog_Get_item_info_list::set_unknown_9(::google::protobuf::uin
 
 // GetItemLog
 
-// repeated .FpdLogMessage.GetItemLog.Get_item_info_list items = 1;
-inline int GetItemLog::items_size() const {
-  return items_.size();
+// repeated group Get_item_info_list = 1 {
+inline int GetItemLog::get_item_info_list_size() const {
+  return get_item_info_list_.size();
 }
-inline void GetItemLog::clear_items() {
-  items_.Clear();
+inline void GetItemLog::clear_get_item_info_list() {
+  get_item_info_list_.Clear();
 }
-inline const ::FpdLogMessage::GetItemLog_Get_item_info_list& GetItemLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::GetItemLog_Get_item_info_list& GetItemLog::get_item_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.GetItemLog.get_item_info_list)
+  return get_item_info_list_.Get(index);
 }
-inline ::FpdLogMessage::GetItemLog_Get_item_info_list* GetItemLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.GetItemLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::GetItemLog_Get_item_info_list* GetItemLog::mutable_get_item_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.GetItemLog.get_item_info_list)
+  return get_item_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::GetItemLog_Get_item_info_list* GetItemLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.GetItemLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::GetItemLog_Get_item_info_list* GetItemLog::add_get_item_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.GetItemLog.get_item_info_list)
+  return get_item_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >&
-GetItemLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.GetItemLog.items)
-  return items_;
+GetItemLog::get_item_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.GetItemLog.get_item_info_list)
+  return get_item_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::GetItemLog_Get_item_info_list >*
-GetItemLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.GetItemLog.items)
-  return &items_;
+GetItemLog::mutable_get_item_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.GetItemLog.get_item_info_list)
+  return &get_item_info_list_;
 }
 
 // -------------------------------------------------------------------
@@ -4999,34 +4999,34 @@ inline void ActGestureLog_Use_gesture_info_list::set_count(::google::protobuf::u
 
 // ActGestureLog
 
-// repeated .FpdLogMessage.ActGestureLog.Use_gesture_info_list gestures = 1;
-inline int ActGestureLog::gestures_size() const {
-  return gestures_.size();
+// repeated group Use_gesture_info_list = 1 {
+inline int ActGestureLog::use_gesture_info_list_size() const {
+  return use_gesture_info_list_.size();
 }
-inline void ActGestureLog::clear_gestures() {
-  gestures_.Clear();
+inline void ActGestureLog::clear_use_gesture_info_list() {
+  use_gesture_info_list_.Clear();
 }
-inline const ::FpdLogMessage::ActGestureLog_Use_gesture_info_list& ActGestureLog::gestures(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.ActGestureLog.gestures)
-  return gestures_.Get(index);
+inline const ::FpdLogMessage::ActGestureLog_Use_gesture_info_list& ActGestureLog::use_gesture_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.ActGestureLog.use_gesture_info_list)
+  return use_gesture_info_list_.Get(index);
 }
-inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* ActGestureLog::mutable_gestures(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.ActGestureLog.gestures)
-  return gestures_.Mutable(index);
+inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* ActGestureLog::mutable_use_gesture_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.ActGestureLog.use_gesture_info_list)
+  return use_gesture_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* ActGestureLog::add_gestures() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.ActGestureLog.gestures)
-  return gestures_.Add();
+inline ::FpdLogMessage::ActGestureLog_Use_gesture_info_list* ActGestureLog::add_use_gesture_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.ActGestureLog.use_gesture_info_list)
+  return use_gesture_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >&
-ActGestureLog::gestures() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.ActGestureLog.gestures)
-  return gestures_;
+ActGestureLog::use_gesture_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.ActGestureLog.use_gesture_info_list)
+  return use_gesture_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::ActGestureLog_Use_gesture_info_list >*
-ActGestureLog::mutable_gestures() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.ActGestureLog.gestures)
-  return &gestures_;
+ActGestureLog::mutable_use_gesture_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.ActGestureLog.use_gesture_info_list)
+  return &use_gesture_info_list_;
 }
 
 // required uint32 unknown_4 = 4;
@@ -5154,34 +5154,34 @@ inline void UseMagicLog_Use_magic_info_list::set_count(::google::protobuf::uint3
 
 // UseMagicLog
 
-// repeated .FpdLogMessage.UseMagicLog.Use_magic_info_list items = 1;
-inline int UseMagicLog::items_size() const {
-  return items_.size();
+// repeated group Use_magic_info_list = 1 {
+inline int UseMagicLog::use_magic_info_list_size() const {
+  return use_magic_info_list_.size();
 }
-inline void UseMagicLog::clear_items() {
-  items_.Clear();
+inline void UseMagicLog::clear_use_magic_info_list() {
+  use_magic_info_list_.Clear();
 }
-inline const ::FpdLogMessage::UseMagicLog_Use_magic_info_list& UseMagicLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.UseMagicLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::UseMagicLog_Use_magic_info_list& UseMagicLog::use_magic_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.UseMagicLog.use_magic_info_list)
+  return use_magic_info_list_.Get(index);
 }
-inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* UseMagicLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseMagicLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* UseMagicLog::mutable_use_magic_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.UseMagicLog.use_magic_info_list)
+  return use_magic_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* UseMagicLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.UseMagicLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::UseMagicLog_Use_magic_info_list* UseMagicLog::add_use_magic_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.UseMagicLog.use_magic_info_list)
+  return use_magic_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >&
-UseMagicLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.UseMagicLog.items)
-  return items_;
+UseMagicLog::use_magic_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.UseMagicLog.use_magic_info_list)
+  return use_magic_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::UseMagicLog_Use_magic_info_list >*
-UseMagicLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.UseMagicLog.items)
-  return &items_;
+UseMagicLog::mutable_use_magic_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.UseMagicLog.use_magic_info_list)
+  return &use_magic_info_list_;
 }
 
 // required uint32 unknown_4 = 4;
@@ -5374,62 +5374,62 @@ inline void PurchaseItemLog_Purchase_item_info_list::set_unknown_6(::google::pro
   // @@protoc_insertion_point(field_set:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.unknown_6)
 }
 
-// required uint32 quantity = 7;
-inline bool PurchaseItemLog_Purchase_item_info_list::has_quantity() const {
+// required uint32 count = 7;
+inline bool PurchaseItemLog_Purchase_item_info_list::has_count() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void PurchaseItemLog_Purchase_item_info_list::set_has_quantity() {
+inline void PurchaseItemLog_Purchase_item_info_list::set_has_count() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void PurchaseItemLog_Purchase_item_info_list::clear_has_quantity() {
+inline void PurchaseItemLog_Purchase_item_info_list::clear_has_count() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void PurchaseItemLog_Purchase_item_info_list::clear_quantity() {
-  quantity_ = 0u;
-  clear_has_quantity();
+inline void PurchaseItemLog_Purchase_item_info_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
 }
-inline ::google::protobuf::uint32 PurchaseItemLog_Purchase_item_info_list::quantity() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.quantity)
-  return quantity_;
+inline ::google::protobuf::uint32 PurchaseItemLog_Purchase_item_info_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.count)
+  return count_;
 }
-inline void PurchaseItemLog_Purchase_item_info_list::set_quantity(::google::protobuf::uint32 value) {
-  set_has_quantity();
-  quantity_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.quantity)
+inline void PurchaseItemLog_Purchase_item_info_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.PurchaseItemLog.Purchase_item_info_list.count)
 }
 
 // -------------------------------------------------------------------
 
 // PurchaseItemLog
 
-// repeated .FpdLogMessage.PurchaseItemLog.Purchase_item_info_list items = 1;
-inline int PurchaseItemLog::items_size() const {
-  return items_.size();
+// repeated group Purchase_item_info_list = 1 {
+inline int PurchaseItemLog::purchase_item_info_list_size() const {
+  return purchase_item_info_list_.size();
 }
-inline void PurchaseItemLog::clear_items() {
-  items_.Clear();
+inline void PurchaseItemLog::clear_purchase_item_info_list() {
+  purchase_item_info_list_.Clear();
 }
-inline const ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& PurchaseItemLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& PurchaseItemLog::purchase_item_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.PurchaseItemLog.purchase_item_info_list)
+  return purchase_item_info_list_.Get(index);
 }
-inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* PurchaseItemLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.PurchaseItemLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* PurchaseItemLog::mutable_purchase_item_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.PurchaseItemLog.purchase_item_info_list)
+  return purchase_item_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* PurchaseItemLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.PurchaseItemLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list* PurchaseItemLog::add_purchase_item_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.PurchaseItemLog.purchase_item_info_list)
+  return purchase_item_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >&
-PurchaseItemLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.PurchaseItemLog.items)
-  return items_;
+PurchaseItemLog::purchase_item_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.PurchaseItemLog.purchase_item_info_list)
+  return purchase_item_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::PurchaseItemLog_Purchase_item_info_list >*
-PurchaseItemLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.PurchaseItemLog.items)
-  return &items_;
+PurchaseItemLog::mutable_purchase_item_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.PurchaseItemLog.purchase_item_info_list)
+  return &purchase_item_info_list_;
 }
 
 // -------------------------------------------------------------------
@@ -5553,62 +5553,62 @@ inline void DropItemLog_Throw_away_item_list::set_item_id(::google::protobuf::ui
   // @@protoc_insertion_point(field_set:FpdLogMessage.DropItemLog.Throw_away_item_list.item_id)
 }
 
-// required uint32 quantity = 6;
-inline bool DropItemLog_Throw_away_item_list::has_quantity() const {
+// required uint32 count = 6;
+inline bool DropItemLog_Throw_away_item_list::has_count() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void DropItemLog_Throw_away_item_list::set_has_quantity() {
+inline void DropItemLog_Throw_away_item_list::set_has_count() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void DropItemLog_Throw_away_item_list::clear_has_quantity() {
+inline void DropItemLog_Throw_away_item_list::clear_has_count() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void DropItemLog_Throw_away_item_list::clear_quantity() {
-  quantity_ = 0u;
-  clear_has_quantity();
+inline void DropItemLog_Throw_away_item_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
 }
-inline ::google::protobuf::uint32 DropItemLog_Throw_away_item_list::quantity() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.Throw_away_item_list.quantity)
-  return quantity_;
+inline ::google::protobuf::uint32 DropItemLog_Throw_away_item_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.Throw_away_item_list.count)
+  return count_;
 }
-inline void DropItemLog_Throw_away_item_list::set_quantity(::google::protobuf::uint32 value) {
-  set_has_quantity();
-  quantity_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.DropItemLog.Throw_away_item_list.quantity)
+inline void DropItemLog_Throw_away_item_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.DropItemLog.Throw_away_item_list.count)
 }
 
 // -------------------------------------------------------------------
 
 // DropItemLog
 
-// repeated .FpdLogMessage.DropItemLog.Throw_away_item_list items = 1;
-inline int DropItemLog::items_size() const {
-  return items_.size();
+// repeated group Throw_away_item_list = 1 {
+inline int DropItemLog::throw_away_item_list_size() const {
+  return throw_away_item_list_.size();
 }
-inline void DropItemLog::clear_items() {
-  items_.Clear();
+inline void DropItemLog::clear_throw_away_item_list() {
+  throw_away_item_list_.Clear();
 }
-inline const ::FpdLogMessage::DropItemLog_Throw_away_item_list& DropItemLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::DropItemLog_Throw_away_item_list& DropItemLog::throw_away_item_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.DropItemLog.throw_away_item_list)
+  return throw_away_item_list_.Get(index);
 }
-inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* DropItemLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.DropItemLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* DropItemLog::mutable_throw_away_item_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.DropItemLog.throw_away_item_list)
+  return throw_away_item_list_.Mutable(index);
 }
-inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* DropItemLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.DropItemLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::DropItemLog_Throw_away_item_list* DropItemLog::add_throw_away_item_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.DropItemLog.throw_away_item_list)
+  return throw_away_item_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >&
-DropItemLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.DropItemLog.items)
-  return items_;
+DropItemLog::throw_away_item_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.DropItemLog.throw_away_item_list)
+  return throw_away_item_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::DropItemLog_Throw_away_item_list >*
-DropItemLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.DropItemLog.items)
-  return &items_;
+DropItemLog::mutable_throw_away_item_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.DropItemLog.throw_away_item_list)
+  return &throw_away_item_list_;
 }
 
 // -------------------------------------------------------------------
@@ -5732,62 +5732,62 @@ inline void LeaveItemLog_Set_item_info_list::set_item_id(::google::protobuf::uin
   // @@protoc_insertion_point(field_set:FpdLogMessage.LeaveItemLog.Set_item_info_list.item_id)
 }
 
-// required uint32 quantity = 6;
-inline bool LeaveItemLog_Set_item_info_list::has_quantity() const {
+// required uint32 count = 6;
+inline bool LeaveItemLog_Set_item_info_list::has_count() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void LeaveItemLog_Set_item_info_list::set_has_quantity() {
+inline void LeaveItemLog_Set_item_info_list::set_has_count() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void LeaveItemLog_Set_item_info_list::clear_has_quantity() {
+inline void LeaveItemLog_Set_item_info_list::clear_has_count() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void LeaveItemLog_Set_item_info_list::clear_quantity() {
-  quantity_ = 0u;
-  clear_has_quantity();
+inline void LeaveItemLog_Set_item_info_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
 }
-inline ::google::protobuf::uint32 LeaveItemLog_Set_item_info_list::quantity() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.Set_item_info_list.quantity)
-  return quantity_;
+inline ::google::protobuf::uint32 LeaveItemLog_Set_item_info_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.Set_item_info_list.count)
+  return count_;
 }
-inline void LeaveItemLog_Set_item_info_list::set_quantity(::google::protobuf::uint32 value) {
-  set_has_quantity();
-  quantity_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.LeaveItemLog.Set_item_info_list.quantity)
+inline void LeaveItemLog_Set_item_info_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.LeaveItemLog.Set_item_info_list.count)
 }
 
 // -------------------------------------------------------------------
 
 // LeaveItemLog
 
-// repeated .FpdLogMessage.LeaveItemLog.Set_item_info_list items = 1;
-inline int LeaveItemLog::items_size() const {
-  return items_.size();
+// repeated group Set_item_info_list = 1 {
+inline int LeaveItemLog::set_item_info_list_size() const {
+  return set_item_info_list_.size();
 }
-inline void LeaveItemLog::clear_items() {
-  items_.Clear();
+inline void LeaveItemLog::clear_set_item_info_list() {
+  set_item_info_list_.Clear();
 }
-inline const ::FpdLogMessage::LeaveItemLog_Set_item_info_list& LeaveItemLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::LeaveItemLog_Set_item_info_list& LeaveItemLog::set_item_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.LeaveItemLog.set_item_info_list)
+  return set_item_info_list_.Get(index);
 }
-inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* LeaveItemLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.LeaveItemLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* LeaveItemLog::mutable_set_item_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.LeaveItemLog.set_item_info_list)
+  return set_item_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* LeaveItemLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.LeaveItemLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::LeaveItemLog_Set_item_info_list* LeaveItemLog::add_set_item_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.LeaveItemLog.set_item_info_list)
+  return set_item_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >&
-LeaveItemLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.LeaveItemLog.items)
-  return items_;
+LeaveItemLog::set_item_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.LeaveItemLog.set_item_info_list)
+  return set_item_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::LeaveItemLog_Set_item_info_list >*
-LeaveItemLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.LeaveItemLog.items)
-  return &items_;
+LeaveItemLog::mutable_set_item_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.LeaveItemLog.set_item_info_list)
+  return &set_item_info_list_;
 }
 
 // -------------------------------------------------------------------
@@ -5911,62 +5911,62 @@ inline void SaleItemLog_Sale_item_info_list::set_item_id(::google::protobuf::uin
   // @@protoc_insertion_point(field_set:FpdLogMessage.SaleItemLog.Sale_item_info_list.item_id)
 }
 
-// required uint32 quantity = 6;
-inline bool SaleItemLog_Sale_item_info_list::has_quantity() const {
+// required uint32 count = 6;
+inline bool SaleItemLog_Sale_item_info_list::has_count() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void SaleItemLog_Sale_item_info_list::set_has_quantity() {
+inline void SaleItemLog_Sale_item_info_list::set_has_count() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void SaleItemLog_Sale_item_info_list::clear_has_quantity() {
+inline void SaleItemLog_Sale_item_info_list::clear_has_count() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void SaleItemLog_Sale_item_info_list::clear_quantity() {
-  quantity_ = 0u;
-  clear_has_quantity();
+inline void SaleItemLog_Sale_item_info_list::clear_count() {
+  count_ = 0u;
+  clear_has_count();
 }
-inline ::google::protobuf::uint32 SaleItemLog_Sale_item_info_list::quantity() const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.Sale_item_info_list.quantity)
-  return quantity_;
+inline ::google::protobuf::uint32 SaleItemLog_Sale_item_info_list::count() const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.Sale_item_info_list.count)
+  return count_;
 }
-inline void SaleItemLog_Sale_item_info_list::set_quantity(::google::protobuf::uint32 value) {
-  set_has_quantity();
-  quantity_ = value;
-  // @@protoc_insertion_point(field_set:FpdLogMessage.SaleItemLog.Sale_item_info_list.quantity)
+inline void SaleItemLog_Sale_item_info_list::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:FpdLogMessage.SaleItemLog.Sale_item_info_list.count)
 }
 
 // -------------------------------------------------------------------
 
 // SaleItemLog
 
-// repeated .FpdLogMessage.SaleItemLog.Sale_item_info_list items = 1;
-inline int SaleItemLog::items_size() const {
-  return items_.size();
+// repeated group Sale_item_info_list = 1 {
+inline int SaleItemLog::sale_item_info_list_size() const {
+  return sale_item_info_list_.size();
 }
-inline void SaleItemLog::clear_items() {
-  items_.Clear();
+inline void SaleItemLog::clear_sale_item_info_list() {
+  sale_item_info_list_.Clear();
 }
-inline const ::FpdLogMessage::SaleItemLog_Sale_item_info_list& SaleItemLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::SaleItemLog_Sale_item_info_list& SaleItemLog::sale_item_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.SaleItemLog.sale_item_info_list)
+  return sale_item_info_list_.Get(index);
 }
-inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* SaleItemLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.SaleItemLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* SaleItemLog::mutable_sale_item_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.SaleItemLog.sale_item_info_list)
+  return sale_item_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* SaleItemLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.SaleItemLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::SaleItemLog_Sale_item_info_list* SaleItemLog::add_sale_item_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.SaleItemLog.sale_item_info_list)
+  return sale_item_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >&
-SaleItemLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.SaleItemLog.items)
-  return items_;
+SaleItemLog::sale_item_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.SaleItemLog.sale_item_info_list)
+  return sale_item_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::SaleItemLog_Sale_item_info_list >*
-SaleItemLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.SaleItemLog.items)
-  return &items_;
+SaleItemLog::mutable_sale_item_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.SaleItemLog.sale_item_info_list)
+  return &sale_item_info_list_;
 }
 
 // -------------------------------------------------------------------
@@ -6025,34 +6025,34 @@ inline void StrengthenWeaponLog_Strengthen_weapon_info_list::set_to_item_id(::go
 
 // StrengthenWeaponLog
 
-// repeated .FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list items = 1;
-inline int StrengthenWeaponLog::items_size() const {
-  return items_.size();
+// repeated group Strengthen_weapon_info_list = 1 {
+inline int StrengthenWeaponLog::strengthen_weapon_info_list_size() const {
+  return strengthen_weapon_info_list_.size();
 }
-inline void StrengthenWeaponLog::clear_items() {
-  items_.Clear();
+inline void StrengthenWeaponLog::clear_strengthen_weapon_info_list() {
+  strengthen_weapon_info_list_.Clear();
 }
-inline const ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& StrengthenWeaponLog::items(int index) const {
-  // @@protoc_insertion_point(field_get:FpdLogMessage.StrengthenWeaponLog.items)
-  return items_.Get(index);
+inline const ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& StrengthenWeaponLog::strengthen_weapon_info_list(int index) const {
+  // @@protoc_insertion_point(field_get:FpdLogMessage.StrengthenWeaponLog.strengthen_weapon_info_list)
+  return strengthen_weapon_info_list_.Get(index);
 }
-inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* StrengthenWeaponLog::mutable_items(int index) {
-  // @@protoc_insertion_point(field_mutable:FpdLogMessage.StrengthenWeaponLog.items)
-  return items_.Mutable(index);
+inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* StrengthenWeaponLog::mutable_strengthen_weapon_info_list(int index) {
+  // @@protoc_insertion_point(field_mutable:FpdLogMessage.StrengthenWeaponLog.strengthen_weapon_info_list)
+  return strengthen_weapon_info_list_.Mutable(index);
 }
-inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* StrengthenWeaponLog::add_items() {
-  // @@protoc_insertion_point(field_add:FpdLogMessage.StrengthenWeaponLog.items)
-  return items_.Add();
+inline ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list* StrengthenWeaponLog::add_strengthen_weapon_info_list() {
+  // @@protoc_insertion_point(field_add:FpdLogMessage.StrengthenWeaponLog.strengthen_weapon_info_list)
+  return strengthen_weapon_info_list_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >&
-StrengthenWeaponLog::items() const {
-  // @@protoc_insertion_point(field_list:FpdLogMessage.StrengthenWeaponLog.items)
-  return items_;
+StrengthenWeaponLog::strengthen_weapon_info_list() const {
+  // @@protoc_insertion_point(field_list:FpdLogMessage.StrengthenWeaponLog.strengthen_weapon_info_list)
+  return strengthen_weapon_info_list_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list >*
-StrengthenWeaponLog::mutable_items() {
-  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.StrengthenWeaponLog.items)
-  return &items_;
+StrengthenWeaponLog::mutable_strengthen_weapon_info_list() {
+  // @@protoc_insertion_point(field_mutable_list:FpdLogMessage.StrengthenWeaponLog.strengthen_weapon_info_list)
+  return &strengthen_weapon_info_list_;
 }
 
 // -------------------------------------------------------------------

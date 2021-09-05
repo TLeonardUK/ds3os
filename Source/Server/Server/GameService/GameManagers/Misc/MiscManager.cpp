@@ -17,6 +17,7 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 #include <unordered_set>
 
@@ -62,6 +63,7 @@ void MiscManager::Poll()
 
 MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestNotifyRingBell* Request = (Frpg2RequestMessage::RequestNotifyRingBell*)Message.Protobuf.get();
@@ -95,6 +97,10 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
             Warning("[%s] Failed to send push message for bell ring to player '%s'", Client->GetName().c_str(), OtherClient->GetName().c_str());
         }
     }
+
+    std::string TypeStatisticKey = StringFormat("Bell/TotalBellRings");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
 
     Frpg2RequestMessage::RequestNotifyRingBellResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -149,7 +155,8 @@ MessageHandleResult MiscManager::Handle_RequestMeasureUploadBandwidth(GameClient
 {
     Frpg2RequestMessage::RequestMeasureUploadBandwidth* Request = (Frpg2RequestMessage::RequestMeasureUploadBandwidth*)Message.Protobuf.get();
 
-    // TODO: Implement
+    // Never seen this called by client.
+    Ensure(false);
 
     Frpg2RequestMessage::RequestMeasureUploadBandwidthResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -165,7 +172,8 @@ MessageHandleResult MiscManager::Handle_RequestMeasureDownloadBandwidth(GameClie
 {
     Frpg2RequestMessage::RequestMeasureDownloadBandwidth* Request = (Frpg2RequestMessage::RequestMeasureDownloadBandwidth*)Message.Protobuf.get();
 
-    // TODO: Implement
+    // Never seen this called by client.
+    Ensure(false);
 
     Frpg2RequestMessage::RequestMeasureDownloadBandwidthResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -181,7 +189,8 @@ MessageHandleResult MiscManager::Handle_RequestGetOnlineShopItemList(GameClient*
 {
     Frpg2RequestMessage::RequestGetOnlineShopItemList* Request = (Frpg2RequestMessage::RequestGetOnlineShopItemList*)Message.Protobuf.get();
 
-    // TODO: Implement
+    // Never seen this called by client.
+    Ensure(false);
 
     Frpg2RequestMessage::RequestGetOnlineShopItemListResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -197,7 +206,8 @@ MessageHandleResult MiscManager::Handle_RequestBenchmarkThroughput(GameClient* C
 {
     Frpg2RequestMessage::RequestBenchmarkThroughput* Request = (Frpg2RequestMessage::RequestBenchmarkThroughput*)Message.Protobuf.get();
 
-    // TODO: Implement
+    // Never seen this called by client.
+    Ensure(false);
 
     Frpg2RequestMessage::RequestBenchmarkThroughputResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

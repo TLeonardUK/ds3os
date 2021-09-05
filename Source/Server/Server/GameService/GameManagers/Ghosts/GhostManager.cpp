@@ -16,6 +16,7 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 GhostManager::GhostManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)
@@ -84,6 +85,10 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
         Warning("[%s] Disconnecting client as failed to create ghost.", Client->GetName().c_str());
         return MessageHandleResult::Error;
     }
+
+    std::string TypeStatisticKey = StringFormat("Ghosts/TotalGhostsCreated");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.

@@ -18,6 +18,7 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Utils/Strings.h"
 
 QuickMatchManager::QuickMatchManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -478,6 +479,10 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
         Warning("[%s] Disconnecting client as failed to update their quick match result.", Client->GetName().c_str());
         return MessageHandleResult::Error;
     }
+
+    std::string TypeStatisticKey = StringFormat("QuickMatch/TotalMatches");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, State.PlayerId, 1);
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {

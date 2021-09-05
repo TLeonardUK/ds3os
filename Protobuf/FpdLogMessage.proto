@@ -47,116 +47,102 @@ message SystemOptionLog {
 
 // ID: 3000
 message UseItemLog {
-    message Use_item_info_list {
+    repeated group Use_item_info_list =1 {
         required uint32 item_id = 2;                 
-        required uint32 quantity = 3;                 
+        required uint32 count = 3;                 
         required uint32 unknown_4 = 4;                 // 9
     }
 
-    repeated Use_item_info_list items = 1;
     required uint32 unknown_5 = 5;                     // 51
     required Vector location = 6;
 }
 
 // ID: 3002
 message GetItemLog {
-    message Get_item_info_list {
+    repeated group Get_item_info_list = 1 {
         required uint32 unknown_2 = 2;                 // 51
         required Vector location = 3;
         required uint32 unknown_4 = 4;                 // 4
         required uint32 item_id = 5;                 
-        required uint32 quantity = 6;                 
+        required uint32 count = 6;                 
         required uint32 unknown_7 = 7;                 // 2
         required uint32 unknown_8 = 8;                 // 0
         required uint32 unknown_9 = 9;                 // 0
     }
-
-    repeated Get_item_info_list items = 1;
 }
 
 // ID: 2021
 message ActGestureLog {
-    message Use_gesture_info_list {
+    repeated group Use_gesture_info_list = 1 {
         required uint32 guesture_id = 2;            
         required uint32 count = 3;
     }
     
-    repeated Use_gesture_info_list gestures = 1;
     required uint32 unknown_4 = 4;                          // Always seems to be 37
     required Vector unknown_5 = 5;
 }
 
 // ID: 2020
 message UseMagicLog {
-    message Use_magic_info_list {
+    repeated group Use_magic_info_list = 1 {
         required uint32 spell_id = 2;
         required uint32 count = 3;
     }
 
-    repeated Use_magic_info_list items = 1;
     required uint32 unknown_4 = 4;                     // 40
     required Vector location = 5;
 }
 
 // ID: 3001
 message PurchaseItemLog {
-    message Purchase_item_info_list {
+    repeated group Purchase_item_info_list = 1 {
         required uint32 unknown_2 = 2;                 // 40
         required Vector location = 3;
         required uint32 item_id = 5;            
         required uint32 unknown_6 = 6;                 // 110107, 110251 - Not sure I thought total cost or sounds remaining but neither adds up to that.
-        required uint32 quantity = 7;                  
+        required uint32 count = 7;                  
     }
-
-    repeated Purchase_item_info_list items = 1;
 }
 
 // ID: 3003
 message DropItemLog {
-    message Throw_away_item_list {
+    repeated group Throw_away_item_list = 1 {
         required uint32 unknown_2 = 2;                 // 37
         required Vector location = 3;
         required uint32 unknown_4 = 4;                 // 4
         required uint32 item_id = 5;                 
-        required uint32 quantity = 6;                 
+        required uint32 count = 6;                 
     }
-
-    repeated Throw_away_item_list items = 1;
 }
 
 // ID: 3004
 message LeaveItemLog {
-    message Set_item_info_list {
+    repeated group Set_item_info_list = 1 {
         required uint32 unknown_2 = 2;                 // 37
         required Vector location = 3;
         required uint32 unknown_4 = 4;                 // 4
         required uint32 item_id = 5;                 
-        required uint32 quantity = 6;                 
+        required uint32 count = 6;                 
     }
-
-    repeated Set_item_info_list items = 1;
 }
 
 // ID: 3005
 message SaleItemLog {
-    message Sale_item_info_list {
+    repeated group Sale_item_info_list = 1 {
         required uint32 unknown_2 = 2;                 // 407
         required Vector location = 3;
         required uint32 unknown_4 = 4;                 // 4
         required uint32 item_id = 5;                 
-        required uint32 quantity = 6;                 
+        required uint32 count = 6;                 
     }
-
-    repeated Sale_item_info_list items = 1;
 }
 
 // ID: 3010
 message StrengthenWeaponLog {
-    message Strengthen_weapon_info_list {
+    repeated group Strengthen_weapon_info_list = 1 {
         required uint32 from_item_id = 2;                 
         required uint32 to_item_id = 3;                 
     }
-    repeated Strengthen_weapon_info_list items = 1;
 }
 
 // ID: 7040

@@ -1585,7 +1585,7 @@ void SystemOptionLog::Swap(SystemOptionLog* other) {
 
 #ifndef _MSC_VER
 const int UseItemLog_Use_item_info_list::kItemIdFieldNumber;
-const int UseItemLog_Use_item_info_list::kQuantityFieldNumber;
+const int UseItemLog_Use_item_info_list::kCountFieldNumber;
 const int UseItemLog_Use_item_info_list::kUnknown4FieldNumber;
 #endif  // !_MSC_VER
 
@@ -1608,7 +1608,7 @@ UseItemLog_Use_item_info_list::UseItemLog_Use_item_info_list(const UseItemLog_Us
 void UseItemLog_Use_item_info_list::SharedCtor() {
   _cached_size_ = 0;
   item_id_ = 0u;
-  quantity_ = 0u;
+  count_ = 0u;
   unknown_4_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1691,18 +1691,18 @@ bool UseItemLog_Use_item_info_list::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_quantity;
+        if (input->ExpectTag(24)) goto parse_count;
         break;
       }
 
-      // required uint32 quantity = 3;
+      // required uint32 count = 3;
       case 3: {
         if (tag == 24) {
-         parse_quantity:
+         parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &quantity_)));
-          set_has_quantity();
+                 input, &count_)));
+          set_has_count();
         } else {
           goto handle_unusual;
         }
@@ -1755,9 +1755,9 @@ void UseItemLog_Use_item_info_list::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->item_id(), output);
   }
 
-  // required uint32 quantity = 3;
-  if (has_quantity()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->quantity(), output);
+  // required uint32 count = 3;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->count(), output);
   }
 
   // required uint32 unknown_4 = 4;
@@ -1781,11 +1781,11 @@ int UseItemLog_Use_item_info_list::ByteSize() const {
           this->item_id());
     }
 
-    // required uint32 quantity = 3;
-    if (has_quantity()) {
+    // required uint32 count = 3;
+    if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->quantity());
+          this->count());
     }
 
     // required uint32 unknown_4 = 4;
@@ -1815,8 +1815,8 @@ void UseItemLog_Use_item_info_list::MergeFrom(const UseItemLog_Use_item_info_lis
     if (from.has_item_id()) {
       set_item_id(from.item_id());
     }
-    if (from.has_quantity()) {
-      set_quantity(from.quantity());
+    if (from.has_count()) {
+      set_count(from.count());
     }
     if (from.has_unknown_4()) {
       set_unknown_4(from.unknown_4());
@@ -1840,7 +1840,7 @@ bool UseItemLog_Use_item_info_list::IsInitialized() const {
 void UseItemLog_Use_item_info_list::Swap(UseItemLog_Use_item_info_list* other) {
   if (other != this) {
     std::swap(item_id_, other->item_id_);
-    std::swap(quantity_, other->quantity_);
+    std::swap(count_, other->count_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -1856,7 +1856,7 @@ void UseItemLog_Use_item_info_list::Swap(UseItemLog_Use_item_info_list* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int UseItemLog::kItemsFieldNumber;
+const int UseItemLog::kUseItemInfoListFieldNumber;
 const int UseItemLog::kUnknown5FieldNumber;
 const int UseItemLog::kLocationFieldNumber;
 #endif  // !_MSC_VER
@@ -1932,7 +1932,7 @@ void UseItemLog::Clear() {
       if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
     }
   }
-  items_.Clear();
+  use_item_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -1951,16 +1951,16 @@ bool UseItemLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.UseItemLog.Use_item_info_list items = 1;
+      // repeated group Use_item_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_use_item_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_use_item_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_use_item_info_list;
         if (input->ExpectTag(40)) goto parse_unknown_5;
         break;
       }
@@ -2018,10 +2018,10 @@ failure:
 void UseItemLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.UseItemLog)
-  // repeated .FpdLogMessage.UseItemLog.Use_item_info_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Use_item_info_list = 1 {
+  for (int i = 0; i < this->use_item_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->use_item_info_list(i), output);
   }
 
   // required uint32 unknown_5 = 5;
@@ -2059,12 +2059,12 @@ int UseItemLog::ByteSize() const {
     }
 
   }
-  // repeated .FpdLogMessage.UseItemLog.Use_item_info_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Use_item_info_list = 1 {
+  total_size += 2 * this->use_item_info_list_size();
+  for (int i = 0; i < this->use_item_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->use_item_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -2082,7 +2082,7 @@ void UseItemLog::CheckTypeAndMergeFrom(
 
 void UseItemLog::MergeFrom(const UseItemLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  use_item_info_list_.MergeFrom(from.use_item_info_list_);
   if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
     if (from.has_unknown_5()) {
       set_unknown_5(from.unknown_5());
@@ -2103,7 +2103,7 @@ void UseItemLog::CopyFrom(const UseItemLog& from) {
 bool UseItemLog::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000006) != 0x00000006) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->use_item_info_list())) return false;
   if (has_location()) {
     if (!this->location().IsInitialized()) return false;
   }
@@ -2112,7 +2112,7 @@ bool UseItemLog::IsInitialized() const {
 
 void UseItemLog::Swap(UseItemLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    use_item_info_list_.Swap(&other->use_item_info_list_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(location_, other->location_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -2133,7 +2133,7 @@ const int GetItemLog_Get_item_info_list::kUnknown2FieldNumber;
 const int GetItemLog_Get_item_info_list::kLocationFieldNumber;
 const int GetItemLog_Get_item_info_list::kUnknown4FieldNumber;
 const int GetItemLog_Get_item_info_list::kItemIdFieldNumber;
-const int GetItemLog_Get_item_info_list::kQuantityFieldNumber;
+const int GetItemLog_Get_item_info_list::kCountFieldNumber;
 const int GetItemLog_Get_item_info_list::kUnknown7FieldNumber;
 const int GetItemLog_Get_item_info_list::kUnknown8FieldNumber;
 const int GetItemLog_Get_item_info_list::kUnknown9FieldNumber;
@@ -2167,7 +2167,7 @@ void GetItemLog_Get_item_info_list::SharedCtor() {
   location_ = NULL;
   unknown_4_ = 0u;
   item_id_ = 0u;
-  quantity_ = 0u;
+  count_ = 0u;
   unknown_7_ = 0u;
   unknown_8_ = 0u;
   unknown_9_ = 0u;
@@ -2301,18 +2301,18 @@ bool GetItemLog_Get_item_info_list::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_quantity;
+        if (input->ExpectTag(48)) goto parse_count;
         break;
       }
 
-      // required uint32 quantity = 6;
+      // required uint32 count = 6;
       case 6: {
         if (tag == 48) {
-         parse_quantity:
+         parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &quantity_)));
-          set_has_quantity();
+                 input, &count_)));
+          set_has_count();
         } else {
           goto handle_unusual;
         }
@@ -2411,9 +2411,9 @@ void GetItemLog_Get_item_info_list::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->item_id(), output);
   }
 
-  // required uint32 quantity = 6;
-  if (has_quantity()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->quantity(), output);
+  // required uint32 count = 6;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->count(), output);
   }
 
   // required uint32 unknown_7 = 7;
@@ -2468,11 +2468,11 @@ int GetItemLog_Get_item_info_list::ByteSize() const {
           this->item_id());
     }
 
-    // required uint32 quantity = 6;
-    if (has_quantity()) {
+    // required uint32 count = 6;
+    if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->quantity());
+          this->count());
     }
 
     // required uint32 unknown_7 = 7;
@@ -2525,8 +2525,8 @@ void GetItemLog_Get_item_info_list::MergeFrom(const GetItemLog_Get_item_info_lis
     if (from.has_item_id()) {
       set_item_id(from.item_id());
     }
-    if (from.has_quantity()) {
-      set_quantity(from.quantity());
+    if (from.has_count()) {
+      set_count(from.count());
     }
     if (from.has_unknown_7()) {
       set_unknown_7(from.unknown_7());
@@ -2562,7 +2562,7 @@ void GetItemLog_Get_item_info_list::Swap(GetItemLog_Get_item_info_list* other) {
     std::swap(location_, other->location_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(item_id_, other->item_id_);
-    std::swap(quantity_, other->quantity_);
+    std::swap(count_, other->count_);
     std::swap(unknown_7_, other->unknown_7_);
     std::swap(unknown_8_, other->unknown_8_);
     std::swap(unknown_9_, other->unknown_9_);
@@ -2580,7 +2580,7 @@ void GetItemLog_Get_item_info_list::Swap(GetItemLog_Get_item_info_list* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int GetItemLog::kItemsFieldNumber;
+const int GetItemLog::kGetItemInfoListFieldNumber;
 #endif  // !_MSC_VER
 
 GetItemLog::GetItemLog()
@@ -2639,7 +2639,7 @@ GetItemLog* GetItemLog::New() const {
 }
 
 void GetItemLog::Clear() {
-  items_.Clear();
+  get_item_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -2658,16 +2658,16 @@ bool GetItemLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.GetItemLog.Get_item_info_list items = 1;
+      // repeated group Get_item_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_get_item_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_get_item_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_get_item_info_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2697,10 +2697,10 @@ failure:
 void GetItemLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.GetItemLog)
-  // repeated .FpdLogMessage.GetItemLog.Get_item_info_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Get_item_info_list = 1 {
+  for (int i = 0; i < this->get_item_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->get_item_info_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -2711,12 +2711,12 @@ void GetItemLog::SerializeWithCachedSizes(
 int GetItemLog::ByteSize() const {
   int total_size = 0;
 
-  // repeated .FpdLogMessage.GetItemLog.Get_item_info_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Get_item_info_list = 1 {
+  total_size += 2 * this->get_item_info_list_size();
+  for (int i = 0; i < this->get_item_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->get_item_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -2734,7 +2734,7 @@ void GetItemLog::CheckTypeAndMergeFrom(
 
 void GetItemLog::MergeFrom(const GetItemLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  get_item_info_list_.MergeFrom(from.get_item_info_list_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -2746,13 +2746,13 @@ void GetItemLog::CopyFrom(const GetItemLog& from) {
 
 bool GetItemLog::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->get_item_info_list())) return false;
   return true;
 }
 
 void GetItemLog::Swap(GetItemLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    get_item_info_list_.Swap(&other->get_item_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -3006,7 +3006,7 @@ void ActGestureLog_Use_gesture_info_list::Swap(ActGestureLog_Use_gesture_info_li
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int ActGestureLog::kGesturesFieldNumber;
+const int ActGestureLog::kUseGestureInfoListFieldNumber;
 const int ActGestureLog::kUnknown4FieldNumber;
 const int ActGestureLog::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
@@ -3082,7 +3082,7 @@ void ActGestureLog::Clear() {
       if (unknown_5_ != NULL) unknown_5_->::FpdLogMessage::Vector::Clear();
     }
   }
-  gestures_.Clear();
+  use_gesture_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -3101,16 +3101,16 @@ bool ActGestureLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.ActGestureLog.Use_gesture_info_list gestures = 1;
+      // repeated group Use_gesture_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_gestures:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_gestures()));
+        if (tag == 11) {
+         parse_use_gesture_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_use_gesture_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_gestures;
+        if (input->ExpectTag(11)) goto parse_use_gesture_info_list;
         if (input->ExpectTag(32)) goto parse_unknown_4;
         break;
       }
@@ -3168,10 +3168,10 @@ failure:
 void ActGestureLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.ActGestureLog)
-  // repeated .FpdLogMessage.ActGestureLog.Use_gesture_info_list gestures = 1;
-  for (int i = 0; i < this->gestures_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->gestures(i), output);
+  // repeated group Use_gesture_info_list = 1 {
+  for (int i = 0; i < this->use_gesture_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->use_gesture_info_list(i), output);
   }
 
   // required uint32 unknown_4 = 4;
@@ -3209,12 +3209,12 @@ int ActGestureLog::ByteSize() const {
     }
 
   }
-  // repeated .FpdLogMessage.ActGestureLog.Use_gesture_info_list gestures = 1;
-  total_size += 1 * this->gestures_size();
-  for (int i = 0; i < this->gestures_size(); i++) {
+  // repeated group Use_gesture_info_list = 1 {
+  total_size += 2 * this->use_gesture_info_list_size();
+  for (int i = 0; i < this->use_gesture_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->gestures(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->use_gesture_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -3232,7 +3232,7 @@ void ActGestureLog::CheckTypeAndMergeFrom(
 
 void ActGestureLog::MergeFrom(const ActGestureLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  gestures_.MergeFrom(from.gestures_);
+  use_gesture_info_list_.MergeFrom(from.use_gesture_info_list_);
   if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
     if (from.has_unknown_4()) {
       set_unknown_4(from.unknown_4());
@@ -3253,7 +3253,7 @@ void ActGestureLog::CopyFrom(const ActGestureLog& from) {
 bool ActGestureLog::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000006) != 0x00000006) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->gestures())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->use_gesture_info_list())) return false;
   if (has_unknown_5()) {
     if (!this->unknown_5().IsInitialized()) return false;
   }
@@ -3262,7 +3262,7 @@ bool ActGestureLog::IsInitialized() const {
 
 void ActGestureLog::Swap(ActGestureLog* other) {
   if (other != this) {
-    gestures_.Swap(&other->gestures_);
+    use_gesture_info_list_.Swap(&other->use_gesture_info_list_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -3518,7 +3518,7 @@ void UseMagicLog_Use_magic_info_list::Swap(UseMagicLog_Use_magic_info_list* othe
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int UseMagicLog::kItemsFieldNumber;
+const int UseMagicLog::kUseMagicInfoListFieldNumber;
 const int UseMagicLog::kUnknown4FieldNumber;
 const int UseMagicLog::kLocationFieldNumber;
 #endif  // !_MSC_VER
@@ -3594,7 +3594,7 @@ void UseMagicLog::Clear() {
       if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
     }
   }
-  items_.Clear();
+  use_magic_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -3613,16 +3613,16 @@ bool UseMagicLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.UseMagicLog.Use_magic_info_list items = 1;
+      // repeated group Use_magic_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_use_magic_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_use_magic_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_use_magic_info_list;
         if (input->ExpectTag(32)) goto parse_unknown_4;
         break;
       }
@@ -3680,10 +3680,10 @@ failure:
 void UseMagicLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.UseMagicLog)
-  // repeated .FpdLogMessage.UseMagicLog.Use_magic_info_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Use_magic_info_list = 1 {
+  for (int i = 0; i < this->use_magic_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->use_magic_info_list(i), output);
   }
 
   // required uint32 unknown_4 = 4;
@@ -3721,12 +3721,12 @@ int UseMagicLog::ByteSize() const {
     }
 
   }
-  // repeated .FpdLogMessage.UseMagicLog.Use_magic_info_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Use_magic_info_list = 1 {
+  total_size += 2 * this->use_magic_info_list_size();
+  for (int i = 0; i < this->use_magic_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->use_magic_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -3744,7 +3744,7 @@ void UseMagicLog::CheckTypeAndMergeFrom(
 
 void UseMagicLog::MergeFrom(const UseMagicLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  use_magic_info_list_.MergeFrom(from.use_magic_info_list_);
   if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
     if (from.has_unknown_4()) {
       set_unknown_4(from.unknown_4());
@@ -3765,7 +3765,7 @@ void UseMagicLog::CopyFrom(const UseMagicLog& from) {
 bool UseMagicLog::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000006) != 0x00000006) return false;
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->use_magic_info_list())) return false;
   if (has_location()) {
     if (!this->location().IsInitialized()) return false;
   }
@@ -3774,7 +3774,7 @@ bool UseMagicLog::IsInitialized() const {
 
 void UseMagicLog::Swap(UseMagicLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    use_magic_info_list_.Swap(&other->use_magic_info_list_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(location_, other->location_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -3795,7 +3795,7 @@ const int PurchaseItemLog_Purchase_item_info_list::kUnknown2FieldNumber;
 const int PurchaseItemLog_Purchase_item_info_list::kLocationFieldNumber;
 const int PurchaseItemLog_Purchase_item_info_list::kItemIdFieldNumber;
 const int PurchaseItemLog_Purchase_item_info_list::kUnknown6FieldNumber;
-const int PurchaseItemLog_Purchase_item_info_list::kQuantityFieldNumber;
+const int PurchaseItemLog_Purchase_item_info_list::kCountFieldNumber;
 #endif  // !_MSC_VER
 
 PurchaseItemLog_Purchase_item_info_list::PurchaseItemLog_Purchase_item_info_list()
@@ -3826,7 +3826,7 @@ void PurchaseItemLog_Purchase_item_info_list::SharedCtor() {
   location_ = NULL;
   item_id_ = 0u;
   unknown_6_ = 0u;
-  quantity_ = 0u;
+  count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3877,7 +3877,7 @@ void PurchaseItemLog_Purchase_item_info_list::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(unknown_2_, quantity_);
+    ZR_(unknown_2_, count_);
     if (has_location()) {
       if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
     }
@@ -3957,18 +3957,18 @@ bool PurchaseItemLog_Purchase_item_info_list::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_quantity;
+        if (input->ExpectTag(56)) goto parse_count;
         break;
       }
 
-      // required uint32 quantity = 7;
+      // required uint32 count = 7;
       case 7: {
         if (tag == 56) {
-         parse_quantity:
+         parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &quantity_)));
-          set_has_quantity();
+                 input, &count_)));
+          set_has_count();
         } else {
           goto handle_unusual;
         }
@@ -4022,9 +4022,9 @@ void PurchaseItemLog_Purchase_item_info_list::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
   }
 
-  // required uint32 quantity = 7;
-  if (has_quantity()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->quantity(), output);
+  // required uint32 count = 7;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->count(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -4064,11 +4064,11 @@ int PurchaseItemLog_Purchase_item_info_list::ByteSize() const {
           this->unknown_6());
     }
 
-    // required uint32 quantity = 7;
-    if (has_quantity()) {
+    // required uint32 count = 7;
+    if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->quantity());
+          this->count());
     }
 
   }
@@ -4100,8 +4100,8 @@ void PurchaseItemLog_Purchase_item_info_list::MergeFrom(const PurchaseItemLog_Pu
     if (from.has_unknown_6()) {
       set_unknown_6(from.unknown_6());
     }
-    if (from.has_quantity()) {
-      set_quantity(from.quantity());
+    if (from.has_count()) {
+      set_count(from.count());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -4128,7 +4128,7 @@ void PurchaseItemLog_Purchase_item_info_list::Swap(PurchaseItemLog_Purchase_item
     std::swap(location_, other->location_);
     std::swap(item_id_, other->item_id_);
     std::swap(unknown_6_, other->unknown_6_);
-    std::swap(quantity_, other->quantity_);
+    std::swap(count_, other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4143,7 +4143,7 @@ void PurchaseItemLog_Purchase_item_info_list::Swap(PurchaseItemLog_Purchase_item
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int PurchaseItemLog::kItemsFieldNumber;
+const int PurchaseItemLog::kPurchaseItemInfoListFieldNumber;
 #endif  // !_MSC_VER
 
 PurchaseItemLog::PurchaseItemLog()
@@ -4202,7 +4202,7 @@ PurchaseItemLog* PurchaseItemLog::New() const {
 }
 
 void PurchaseItemLog::Clear() {
-  items_.Clear();
+  purchase_item_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -4221,16 +4221,16 @@ bool PurchaseItemLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.PurchaseItemLog.Purchase_item_info_list items = 1;
+      // repeated group Purchase_item_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_purchase_item_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_purchase_item_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_purchase_item_info_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -4260,10 +4260,10 @@ failure:
 void PurchaseItemLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.PurchaseItemLog)
-  // repeated .FpdLogMessage.PurchaseItemLog.Purchase_item_info_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Purchase_item_info_list = 1 {
+  for (int i = 0; i < this->purchase_item_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->purchase_item_info_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -4274,12 +4274,12 @@ void PurchaseItemLog::SerializeWithCachedSizes(
 int PurchaseItemLog::ByteSize() const {
   int total_size = 0;
 
-  // repeated .FpdLogMessage.PurchaseItemLog.Purchase_item_info_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Purchase_item_info_list = 1 {
+  total_size += 2 * this->purchase_item_info_list_size();
+  for (int i = 0; i < this->purchase_item_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->purchase_item_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -4297,7 +4297,7 @@ void PurchaseItemLog::CheckTypeAndMergeFrom(
 
 void PurchaseItemLog::MergeFrom(const PurchaseItemLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  purchase_item_info_list_.MergeFrom(from.purchase_item_info_list_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -4309,13 +4309,13 @@ void PurchaseItemLog::CopyFrom(const PurchaseItemLog& from) {
 
 bool PurchaseItemLog::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->purchase_item_info_list())) return false;
   return true;
 }
 
 void PurchaseItemLog::Swap(PurchaseItemLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    purchase_item_info_list_.Swap(&other->purchase_item_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4334,7 +4334,7 @@ const int DropItemLog_Throw_away_item_list::kUnknown2FieldNumber;
 const int DropItemLog_Throw_away_item_list::kLocationFieldNumber;
 const int DropItemLog_Throw_away_item_list::kUnknown4FieldNumber;
 const int DropItemLog_Throw_away_item_list::kItemIdFieldNumber;
-const int DropItemLog_Throw_away_item_list::kQuantityFieldNumber;
+const int DropItemLog_Throw_away_item_list::kCountFieldNumber;
 #endif  // !_MSC_VER
 
 DropItemLog_Throw_away_item_list::DropItemLog_Throw_away_item_list()
@@ -4365,7 +4365,7 @@ void DropItemLog_Throw_away_item_list::SharedCtor() {
   location_ = NULL;
   unknown_4_ = 0u;
   item_id_ = 0u;
-  quantity_ = 0u;
+  count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4416,7 +4416,7 @@ void DropItemLog_Throw_away_item_list::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(unknown_2_, quantity_);
+    ZR_(unknown_2_, count_);
     if (has_location()) {
       if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
     }
@@ -4496,18 +4496,18 @@ bool DropItemLog_Throw_away_item_list::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_quantity;
+        if (input->ExpectTag(48)) goto parse_count;
         break;
       }
 
-      // required uint32 quantity = 6;
+      // required uint32 count = 6;
       case 6: {
         if (tag == 48) {
-         parse_quantity:
+         parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &quantity_)));
-          set_has_quantity();
+                 input, &count_)));
+          set_has_count();
         } else {
           goto handle_unusual;
         }
@@ -4561,9 +4561,9 @@ void DropItemLog_Throw_away_item_list::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->item_id(), output);
   }
 
-  // required uint32 quantity = 6;
-  if (has_quantity()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->quantity(), output);
+  // required uint32 count = 6;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->count(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -4603,11 +4603,11 @@ int DropItemLog_Throw_away_item_list::ByteSize() const {
           this->item_id());
     }
 
-    // required uint32 quantity = 6;
-    if (has_quantity()) {
+    // required uint32 count = 6;
+    if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->quantity());
+          this->count());
     }
 
   }
@@ -4639,8 +4639,8 @@ void DropItemLog_Throw_away_item_list::MergeFrom(const DropItemLog_Throw_away_it
     if (from.has_item_id()) {
       set_item_id(from.item_id());
     }
-    if (from.has_quantity()) {
-      set_quantity(from.quantity());
+    if (from.has_count()) {
+      set_count(from.count());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -4667,7 +4667,7 @@ void DropItemLog_Throw_away_item_list::Swap(DropItemLog_Throw_away_item_list* ot
     std::swap(location_, other->location_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(item_id_, other->item_id_);
-    std::swap(quantity_, other->quantity_);
+    std::swap(count_, other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4682,7 +4682,7 @@ void DropItemLog_Throw_away_item_list::Swap(DropItemLog_Throw_away_item_list* ot
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int DropItemLog::kItemsFieldNumber;
+const int DropItemLog::kThrowAwayItemListFieldNumber;
 #endif  // !_MSC_VER
 
 DropItemLog::DropItemLog()
@@ -4741,7 +4741,7 @@ DropItemLog* DropItemLog::New() const {
 }
 
 void DropItemLog::Clear() {
-  items_.Clear();
+  throw_away_item_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -4760,16 +4760,16 @@ bool DropItemLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.DropItemLog.Throw_away_item_list items = 1;
+      // repeated group Throw_away_item_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_throw_away_item_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_throw_away_item_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_throw_away_item_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -4799,10 +4799,10 @@ failure:
 void DropItemLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.DropItemLog)
-  // repeated .FpdLogMessage.DropItemLog.Throw_away_item_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Throw_away_item_list = 1 {
+  for (int i = 0; i < this->throw_away_item_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->throw_away_item_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -4813,12 +4813,12 @@ void DropItemLog::SerializeWithCachedSizes(
 int DropItemLog::ByteSize() const {
   int total_size = 0;
 
-  // repeated .FpdLogMessage.DropItemLog.Throw_away_item_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Throw_away_item_list = 1 {
+  total_size += 2 * this->throw_away_item_list_size();
+  for (int i = 0; i < this->throw_away_item_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->throw_away_item_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -4836,7 +4836,7 @@ void DropItemLog::CheckTypeAndMergeFrom(
 
 void DropItemLog::MergeFrom(const DropItemLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  throw_away_item_list_.MergeFrom(from.throw_away_item_list_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -4848,13 +4848,13 @@ void DropItemLog::CopyFrom(const DropItemLog& from) {
 
 bool DropItemLog::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->throw_away_item_list())) return false;
   return true;
 }
 
 void DropItemLog::Swap(DropItemLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    throw_away_item_list_.Swap(&other->throw_away_item_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4873,7 +4873,7 @@ const int LeaveItemLog_Set_item_info_list::kUnknown2FieldNumber;
 const int LeaveItemLog_Set_item_info_list::kLocationFieldNumber;
 const int LeaveItemLog_Set_item_info_list::kUnknown4FieldNumber;
 const int LeaveItemLog_Set_item_info_list::kItemIdFieldNumber;
-const int LeaveItemLog_Set_item_info_list::kQuantityFieldNumber;
+const int LeaveItemLog_Set_item_info_list::kCountFieldNumber;
 #endif  // !_MSC_VER
 
 LeaveItemLog_Set_item_info_list::LeaveItemLog_Set_item_info_list()
@@ -4904,7 +4904,7 @@ void LeaveItemLog_Set_item_info_list::SharedCtor() {
   location_ = NULL;
   unknown_4_ = 0u;
   item_id_ = 0u;
-  quantity_ = 0u;
+  count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4955,7 +4955,7 @@ void LeaveItemLog_Set_item_info_list::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(unknown_2_, quantity_);
+    ZR_(unknown_2_, count_);
     if (has_location()) {
       if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
     }
@@ -5035,18 +5035,18 @@ bool LeaveItemLog_Set_item_info_list::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_quantity;
+        if (input->ExpectTag(48)) goto parse_count;
         break;
       }
 
-      // required uint32 quantity = 6;
+      // required uint32 count = 6;
       case 6: {
         if (tag == 48) {
-         parse_quantity:
+         parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &quantity_)));
-          set_has_quantity();
+                 input, &count_)));
+          set_has_count();
         } else {
           goto handle_unusual;
         }
@@ -5100,9 +5100,9 @@ void LeaveItemLog_Set_item_info_list::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->item_id(), output);
   }
 
-  // required uint32 quantity = 6;
-  if (has_quantity()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->quantity(), output);
+  // required uint32 count = 6;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->count(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5142,11 +5142,11 @@ int LeaveItemLog_Set_item_info_list::ByteSize() const {
           this->item_id());
     }
 
-    // required uint32 quantity = 6;
-    if (has_quantity()) {
+    // required uint32 count = 6;
+    if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->quantity());
+          this->count());
     }
 
   }
@@ -5178,8 +5178,8 @@ void LeaveItemLog_Set_item_info_list::MergeFrom(const LeaveItemLog_Set_item_info
     if (from.has_item_id()) {
       set_item_id(from.item_id());
     }
-    if (from.has_quantity()) {
-      set_quantity(from.quantity());
+    if (from.has_count()) {
+      set_count(from.count());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -5206,7 +5206,7 @@ void LeaveItemLog_Set_item_info_list::Swap(LeaveItemLog_Set_item_info_list* othe
     std::swap(location_, other->location_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(item_id_, other->item_id_);
-    std::swap(quantity_, other->quantity_);
+    std::swap(count_, other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -5221,7 +5221,7 @@ void LeaveItemLog_Set_item_info_list::Swap(LeaveItemLog_Set_item_info_list* othe
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int LeaveItemLog::kItemsFieldNumber;
+const int LeaveItemLog::kSetItemInfoListFieldNumber;
 #endif  // !_MSC_VER
 
 LeaveItemLog::LeaveItemLog()
@@ -5280,7 +5280,7 @@ LeaveItemLog* LeaveItemLog::New() const {
 }
 
 void LeaveItemLog::Clear() {
-  items_.Clear();
+  set_item_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -5299,16 +5299,16 @@ bool LeaveItemLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.LeaveItemLog.Set_item_info_list items = 1;
+      // repeated group Set_item_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_set_item_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_set_item_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_set_item_info_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -5338,10 +5338,10 @@ failure:
 void LeaveItemLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.LeaveItemLog)
-  // repeated .FpdLogMessage.LeaveItemLog.Set_item_info_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Set_item_info_list = 1 {
+  for (int i = 0; i < this->set_item_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->set_item_info_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5352,12 +5352,12 @@ void LeaveItemLog::SerializeWithCachedSizes(
 int LeaveItemLog::ByteSize() const {
   int total_size = 0;
 
-  // repeated .FpdLogMessage.LeaveItemLog.Set_item_info_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Set_item_info_list = 1 {
+  total_size += 2 * this->set_item_info_list_size();
+  for (int i = 0; i < this->set_item_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->set_item_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -5375,7 +5375,7 @@ void LeaveItemLog::CheckTypeAndMergeFrom(
 
 void LeaveItemLog::MergeFrom(const LeaveItemLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  set_item_info_list_.MergeFrom(from.set_item_info_list_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -5387,13 +5387,13 @@ void LeaveItemLog::CopyFrom(const LeaveItemLog& from) {
 
 bool LeaveItemLog::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->set_item_info_list())) return false;
   return true;
 }
 
 void LeaveItemLog::Swap(LeaveItemLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    set_item_info_list_.Swap(&other->set_item_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -5412,7 +5412,7 @@ const int SaleItemLog_Sale_item_info_list::kUnknown2FieldNumber;
 const int SaleItemLog_Sale_item_info_list::kLocationFieldNumber;
 const int SaleItemLog_Sale_item_info_list::kUnknown4FieldNumber;
 const int SaleItemLog_Sale_item_info_list::kItemIdFieldNumber;
-const int SaleItemLog_Sale_item_info_list::kQuantityFieldNumber;
+const int SaleItemLog_Sale_item_info_list::kCountFieldNumber;
 #endif  // !_MSC_VER
 
 SaleItemLog_Sale_item_info_list::SaleItemLog_Sale_item_info_list()
@@ -5443,7 +5443,7 @@ void SaleItemLog_Sale_item_info_list::SharedCtor() {
   location_ = NULL;
   unknown_4_ = 0u;
   item_id_ = 0u;
-  quantity_ = 0u;
+  count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5494,7 +5494,7 @@ void SaleItemLog_Sale_item_info_list::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(unknown_2_, quantity_);
+    ZR_(unknown_2_, count_);
     if (has_location()) {
       if (location_ != NULL) location_->::FpdLogMessage::Vector::Clear();
     }
@@ -5574,18 +5574,18 @@ bool SaleItemLog_Sale_item_info_list::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_quantity;
+        if (input->ExpectTag(48)) goto parse_count;
         break;
       }
 
-      // required uint32 quantity = 6;
+      // required uint32 count = 6;
       case 6: {
         if (tag == 48) {
-         parse_quantity:
+         parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &quantity_)));
-          set_has_quantity();
+                 input, &count_)));
+          set_has_count();
         } else {
           goto handle_unusual;
         }
@@ -5639,9 +5639,9 @@ void SaleItemLog_Sale_item_info_list::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->item_id(), output);
   }
 
-  // required uint32 quantity = 6;
-  if (has_quantity()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->quantity(), output);
+  // required uint32 count = 6;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->count(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5681,11 +5681,11 @@ int SaleItemLog_Sale_item_info_list::ByteSize() const {
           this->item_id());
     }
 
-    // required uint32 quantity = 6;
-    if (has_quantity()) {
+    // required uint32 count = 6;
+    if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->quantity());
+          this->count());
     }
 
   }
@@ -5717,8 +5717,8 @@ void SaleItemLog_Sale_item_info_list::MergeFrom(const SaleItemLog_Sale_item_info
     if (from.has_item_id()) {
       set_item_id(from.item_id());
     }
-    if (from.has_quantity()) {
-      set_quantity(from.quantity());
+    if (from.has_count()) {
+      set_count(from.count());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -5745,7 +5745,7 @@ void SaleItemLog_Sale_item_info_list::Swap(SaleItemLog_Sale_item_info_list* othe
     std::swap(location_, other->location_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(item_id_, other->item_id_);
-    std::swap(quantity_, other->quantity_);
+    std::swap(count_, other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -5760,7 +5760,7 @@ void SaleItemLog_Sale_item_info_list::Swap(SaleItemLog_Sale_item_info_list* othe
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int SaleItemLog::kItemsFieldNumber;
+const int SaleItemLog::kSaleItemInfoListFieldNumber;
 #endif  // !_MSC_VER
 
 SaleItemLog::SaleItemLog()
@@ -5819,7 +5819,7 @@ SaleItemLog* SaleItemLog::New() const {
 }
 
 void SaleItemLog::Clear() {
-  items_.Clear();
+  sale_item_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -5838,16 +5838,16 @@ bool SaleItemLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.SaleItemLog.Sale_item_info_list items = 1;
+      // repeated group Sale_item_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_sale_item_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_sale_item_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_sale_item_info_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -5877,10 +5877,10 @@ failure:
 void SaleItemLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.SaleItemLog)
-  // repeated .FpdLogMessage.SaleItemLog.Sale_item_info_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Sale_item_info_list = 1 {
+  for (int i = 0; i < this->sale_item_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->sale_item_info_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5891,12 +5891,12 @@ void SaleItemLog::SerializeWithCachedSizes(
 int SaleItemLog::ByteSize() const {
   int total_size = 0;
 
-  // repeated .FpdLogMessage.SaleItemLog.Sale_item_info_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Sale_item_info_list = 1 {
+  total_size += 2 * this->sale_item_info_list_size();
+  for (int i = 0; i < this->sale_item_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->sale_item_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -5914,7 +5914,7 @@ void SaleItemLog::CheckTypeAndMergeFrom(
 
 void SaleItemLog::MergeFrom(const SaleItemLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  sale_item_info_list_.MergeFrom(from.sale_item_info_list_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -5926,13 +5926,13 @@ void SaleItemLog::CopyFrom(const SaleItemLog& from) {
 
 bool SaleItemLog::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->sale_item_info_list())) return false;
   return true;
 }
 
 void SaleItemLog::Swap(SaleItemLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    sale_item_info_list_.Swap(&other->sale_item_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -6186,7 +6186,7 @@ void StrengthenWeaponLog_Strengthen_weapon_info_list::Swap(StrengthenWeaponLog_S
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
-const int StrengthenWeaponLog::kItemsFieldNumber;
+const int StrengthenWeaponLog::kStrengthenWeaponInfoListFieldNumber;
 #endif  // !_MSC_VER
 
 StrengthenWeaponLog::StrengthenWeaponLog()
@@ -6245,7 +6245,7 @@ StrengthenWeaponLog* StrengthenWeaponLog::New() const {
 }
 
 void StrengthenWeaponLog::Clear() {
-  items_.Clear();
+  strengthen_weapon_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -6264,16 +6264,16 @@ bool StrengthenWeaponLog::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list items = 1;
+      // repeated group Strengthen_weapon_info_list = 1 {
       case 1: {
-        if (tag == 10) {
-         parse_items:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_items()));
+        if (tag == 11) {
+         parse_strengthen_weapon_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(
+                1, input, add_strengthen_weapon_info_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_items;
+        if (input->ExpectTag(11)) goto parse_strengthen_weapon_info_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -6303,10 +6303,10 @@ failure:
 void StrengthenWeaponLog::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:FpdLogMessage.StrengthenWeaponLog)
-  // repeated .FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list items = 1;
-  for (int i = 0; i < this->items_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->items(i), output);
+  // repeated group Strengthen_weapon_info_list = 1 {
+  for (int i = 0; i < this->strengthen_weapon_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteGroup(
+      1, this->strengthen_weapon_info_list(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -6317,12 +6317,12 @@ void StrengthenWeaponLog::SerializeWithCachedSizes(
 int StrengthenWeaponLog::ByteSize() const {
   int total_size = 0;
 
-  // repeated .FpdLogMessage.StrengthenWeaponLog.Strengthen_weapon_info_list items = 1;
-  total_size += 1 * this->items_size();
-  for (int i = 0; i < this->items_size(); i++) {
+  // repeated group Strengthen_weapon_info_list = 1 {
+  total_size += 2 * this->strengthen_weapon_info_list_size();
+  for (int i = 0; i < this->strengthen_weapon_info_list_size(); i++) {
     total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->items(i));
+      ::google::protobuf::internal::WireFormatLite::GroupSizeNoVirtual(
+        this->strengthen_weapon_info_list(i));
   }
 
   total_size += unknown_fields().size();
@@ -6340,7 +6340,7 @@ void StrengthenWeaponLog::CheckTypeAndMergeFrom(
 
 void StrengthenWeaponLog::MergeFrom(const StrengthenWeaponLog& from) {
   GOOGLE_CHECK_NE(&from, this);
-  items_.MergeFrom(from.items_);
+  strengthen_weapon_info_list_.MergeFrom(from.strengthen_weapon_info_list_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -6352,13 +6352,13 @@ void StrengthenWeaponLog::CopyFrom(const StrengthenWeaponLog& from) {
 
 bool StrengthenWeaponLog::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->items())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->strengthen_weapon_info_list())) return false;
   return true;
 }
 
 void StrengthenWeaponLog::Swap(StrengthenWeaponLog* other) {
   if (other != this) {
-    items_.Swap(&other->items_);
+    strengthen_weapon_info_list_.Swap(&other->strengthen_weapon_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

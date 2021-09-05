@@ -133,6 +133,18 @@ public:
     // Ranks: unranked, iron, bronze, silver, gold
     std::vector<int> QuickMatchRankXp = { 0, 9250, 15000, 20000, 30000 };
 
+    // Disables all ability to invade.
+    bool DisableInvasions = false;
+
+    // Disables all ability to place summon signs.
+    bool DisableCoop = false;
+
+    // Disables all auto summoning for invasions (alrich faithful, watchdogs, etc)
+    bool DisableInvasionAutoSummon = false;
+
+    // Disables all auto summoning for coop (blue sentinels, etc)
+    bool DisableCoopAutoSummon = false;
+
     // Parameters used for determining which signs a player can see.
     RuntimeConfigMatchingParameters SummonSignMatchingParameters = {
         0.9f, -10,                                                      // LowerLimit

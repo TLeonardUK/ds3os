@@ -18,6 +18,7 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Utils/Strings.h"
 
 SignManager::SignManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -74,8 +75,17 @@ MessageHandleResult SignManager::OnMessageRecieved(GameClient* Client, const Frp
     return MessageHandleResult::Unhandled;
 }
 
-bool SignManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Host, const Frpg2RequestMessage::MatchingParameter& Match)
+bool SignManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Host, const Frpg2RequestMessage::MatchingParameter& Match, bool IsRedSign)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+
+    // Sign globally disabled?
+    bool IsDisabled = IsRedSign ? Config.DisableInvasions : Config.DisableCoop;
+    if (IsDisabled)
+    {
+        return false;
+    }
+
     // If password missmatch then no match.
     if (Host.password() != Match.password())
     {
@@ -121,7 +131,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
         uint32_t GatherCount = std::min(MaxForArea, RemainingSignCount);
 
         std::vector<std::shared_ptr<SummonSign>> AreaSigns = LiveCache.GetRecentSet(AreaId, GatherCount, [this, &Player, &Request](const std::shared_ptr<SummonSign>& Sign) { 
-            return CanMatchWith(Request->matching_parameter(), Sign->MatchingParameters); 
+            return CanMatchWith(Request->matching_parameter(), Sign->MatchingParameters, Sign->IsRedSign);
         });
         for (std::shared_ptr<SummonSign>& Sign : AreaSigns)
         {
@@ -167,6 +177,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
 
 MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestCreateSign* Request = (Frpg2RequestMessage::RequestCreateSign*)Message.Protobuf.get();
@@ -180,20 +191,15 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     Sign->PlayerStruct.assign(Request->player_struct().data(), Request->player_struct().data() + Request->player_struct().size());
     Sign->MatchingParameters = Request->matching_parameter();
 
-    // The client seems to queue up removal messages and send them periodically, but will send CreateSign instantly. This 
-    // can lead to multiple signs existing at once. We just purge here and ignore future remove requests for old id's.
-    /*for (std::shared_ptr<SummonSign> OtherSign : Client->ActiveSummonSigns)
-    {
-        LiveCache.Remove(OtherSign->OnlineAreaId, OtherSign->SignId);
-    }
-    Client->ActiveSummonSigns.clear();
-    */
-
     LiveCache.Add(Sign->OnlineAreaId, Sign->SignId, Sign);
     Client->ActiveSummonSigns.push_back(Sign);
 
     Frpg2RequestMessage::RequestCreateSignResponse Response;
     Response.set_sign_id(Sign->SignId);
+
+    std::string TypeStatisticKey = StringFormat("Sign/TotalCreated");
+    Database.AddGlobalStatistic(TypeStatisticKey, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -284,6 +290,7 @@ MessageHandleResult SignManager::Handle_RequestUpdateSign(GameClient* Client, co
 
 MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestSummonSign* Request = (Frpg2RequestMessage::RequestSummonSign*)Message.Protobuf.get();
@@ -352,6 +359,16 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
             Warning("[%s] Failed to send PushRequestRejectSign.", Client->GetName().c_str());
             return MessageHandleResult::Error;
         }
+    }
+    else
+    {
+        std::string PoolStatisticKey = StringFormat("Sign/TotalSummonsRequested/IsRedSign=%u", (uint32_t)Sign->IsRedSign);
+        Database.AddGlobalStatistic(PoolStatisticKey, 1);
+        Database.AddPlayerStatistic(PoolStatisticKey, Player.PlayerId, 1);
+
+        std::string TypeStatisticKey = StringFormat("Sign/TotalSummonsRequested");
+        Database.AddGlobalStatistic(TypeStatisticKey, 1);
+        Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
     }
 
     return MessageHandleResult::Handled;

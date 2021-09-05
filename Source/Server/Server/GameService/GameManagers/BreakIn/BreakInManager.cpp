@@ -17,6 +17,7 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 BreakInManager::BreakInManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -48,12 +49,19 @@ MessageHandleResult BreakInManager::OnMessageRecieved(GameClient* Client, const 
 
 bool BreakInManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+
+    // Invasions disabled.
+    if (Config.DisableInvasions)
+    {
+        return false;
+    }
+
     if (!Match->GetPlayerState().IsInvadable)
     {
         return false;
     }
 
-    const RuntimeConfig& Config = ServerInstance->GetConfig();
     const RuntimeConfigMatchingParameters* MatchingParams = &Config.DarkSpiritInvasionMatchingParameters;
     if (Request.covenant() == Frpg2RequestMessage::Covenant::Covenant_Mound_Makers)
     {
@@ -116,6 +124,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
 
 MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestBreakInTarget* Request = (Frpg2RequestMessage::RequestBreakInTarget*)Message.Protobuf.get();
@@ -146,6 +155,10 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
             Warning("[%s] Failed to send PushRequestBreakInTarget to target of invasion.", Client->GetName().c_str());
             bSuccess = false;
         }
+
+        std::string TypeStatisticKey = StringFormat("BreakIn/TotalInvasionsRequested");
+        Database.AddGlobalStatistic(TypeStatisticKey, 1);
+        Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
     }
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client

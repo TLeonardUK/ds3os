@@ -17,6 +17,7 @@
 #include "Server/Server.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 VisitorManager::VisitorManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -45,10 +46,19 @@ MessageHandleResult VisitorManager::OnMessageRecieved(GameClient* Client, const 
 bool VisitorManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
+    bool IsInvasion = (Match->GetPlayerState().VisitorPool != Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue);
+
     const RuntimeConfigMatchingParameters* MatchingParams = &Config.CovenantInvasionMatchingParameters;
-    if (Match->GetPlayerState().VisitorPool == Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue)
+    if (!IsInvasion)
     {
         MatchingParams = &Config.WayOfBlueMatchingParameters;
+    }
+
+    // Matching globally disabled?
+    bool IsDisabled = IsInvasion ? Config.DisableInvasionAutoSummon : Config.DisableCoopAutoSummon;
+    if (IsDisabled)
+    {
+        return false;
     }
 
     // Check matching parameters.
@@ -107,6 +117,7 @@ MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Cli
 
 MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestVisit* Request = (Frpg2RequestMessage::RequestVisit*)Message.Protobuf.get();
@@ -186,6 +197,14 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
             Warning("[%s] Disconnecting client as failed to send PushRequestRemoveVisitor response.", Client->GetName().c_str());
             return MessageHandleResult::Error;
         }
+
+        std::string PoolStatisticKey = StringFormat("Visitor/TotalVisitsRequested/Pool=%u", (uint32_t)Request->visitor_pool());
+        Database.AddGlobalStatistic(PoolStatisticKey, 1);
+        Database.AddPlayerStatistic(PoolStatisticKey, Player.PlayerId, 1);
+
+        std::string TypeStatisticKey = StringFormat("Visitor/TotalVisitsRequested");
+        Database.AddGlobalStatistic(TypeStatisticKey, 1);
+        Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
     }
 
     return MessageHandleResult::Handled;
