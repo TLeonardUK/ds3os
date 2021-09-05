@@ -1,7 +1,9 @@
 # Dark Souls 3 - Open Server
-An open source implementation of the dark souls 3 game server. Initially focused on getting matchmaking working such that private servers can be run.
+An open source implementation of the dark souls 3 game server. 
 
-:bangbang: This project is very much an early work in progress, no guarantees are given over its stability.
+Idealistically made for the purpose of allow better alternatives to playing mods than getting your account banned and using the retail ban server. As well as opening up opportunities to improve player safety and choice, by allowing them to segregate themselves off from the pool of cheaters on retail, without loosing network functionality.
+
+:bangbang: This project is still a work in progress, no guarantees are given over its stability (that said it works quite well now!).
 
 ![Build Status](https://github.com/TLeonardUK/ds3os/actions/workflows/ci.yml/badge.svg)
 
@@ -41,7 +43,8 @@ join the custom server. Within this app set the game path to your DarkSoulsIII.e
 now be able to click launch to start the game which will automatically connect to your new server.
 
 # What currently works?
-We're slowly going through and implementing all the games online functionality, this is the current state:
+Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer
+match retail server behaviour and make some general improvements to the running of unoffical servers.
 
 - [x] Login, key exchange and network transport
 - [x] Announcement messages
@@ -57,7 +60,19 @@ We're slowly going through and implementing all the games online functionality, 
 - [x] Archdragon peak bell ringing
 - [x] Undead match
 - [x] Telemetry and misc server calls (the few that are of use to us)
+
+Future roadmap:
+
 - [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
+- [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
+- [ ] Steam ticket authentication.
+- [ ] Master server support for loader (show available servers).
+- [ ] WebUI for server showing gameplay statistics / allowing admin control.
+
+# Will this ban my account on the retail server?
+So far we've had several accounts using unoffical servers, for quite a while, and have not had any account penalized on the retail server.
+
+We don't make any guarantees, but it seems safe enough.
 
 # How can I help?
 Check our the issues page, or send me a message for suggestions on what can be done.
