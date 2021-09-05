@@ -60,10 +60,13 @@ We're slowly going through and implementing all the games online functionality, 
 - [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
 
 # How can I help?
-At the moment of lot of the general structure is being put together so you might want to hold trying to contibute any large changes right now.
+Check our the issues page, or send me a message for suggestions on what can be done.
 
-However the one thing that would be very useful is figuring out all the unknown fields in the protobuf definitions and figure out what the currently hard-coded 
-constants in some of the packet headers do.
+Right now there are a few server calls we either have stubbed out or returning dummy information, implementing
+them properly, or finding out the format of the data they need to return would be worth while.
+
+There are also a lot of protobuf fields that are still unknown and use constant values when sent from the 
+server, determining what they represent would be a good improvement.
 
 # Credit
 A lot of the information needed to produce this implementation has been figured out by the community. 
