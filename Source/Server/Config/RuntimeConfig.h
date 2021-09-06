@@ -73,6 +73,37 @@ public:
     // If none is supplied then the IP will be the external ip of the server.
     std::string ServerIP = "";
 
+    // If Advertise is set this is the master server that it will be registered to.
+    // Be careful changing this, typically only one server should exist.
+    std::string MasterServerIp = "timleonard.uk";
+
+    // Port the master server lists for connections at MasterServerIp;
+    int MasterServerPort = 50020;
+
+    // If true register the server of the master servers list so others can see
+    // and join it.
+    bool Advertise = false;
+
+    // How many seconds between each update on the master server. You should keep this
+    // as high as possible to avoid saturating the master server.
+    float AdvertiseHearbeatTime = 120.0f;
+
+    // If set the user will need to enter a password to recieve the keys to enter the 
+    // server when its advertised.
+    std::string Password = "";
+
+    // Comma seperated list of the mods that can be installed when using this server.
+    // Note: This is unimplemented right now, this is for future work.
+    std::string ModsWhitelist = "";
+
+    // Comma seperated list of the mods that cannot be installed when using this server.
+    // Note: This is unimplemented right now, this is for future work.
+    std::string ModsBlacklist = "";
+
+    // Comma seperated list of the mods that have to be installed when using this server.
+    // Note: This is unimplemented right now, this is for future work.
+    std::string ModsRequiredList = "";
+
     // Network port the login server listens for connections on.
     int LoginServerPort = 50050;
 

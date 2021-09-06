@@ -27,6 +27,8 @@
 // network services that ds3 uses. 
 
 class Service;
+class NetHttpRequest;
+class NetHttpResponse;
 
 class Server
 {
@@ -58,6 +60,12 @@ public:
         return nullptr;
     }
 
+protected:
+
+    void CancelServerAdvertisement();
+    void PollServerAdvertisement();
+    bool ParseServerAdvertisementResponse(std::shared_ptr<NetHttpResponse> Response, nlohmann::json& json);
+
 private:
 
     bool QuitRecieved = false;
@@ -81,5 +89,8 @@ private:
     NetIPAddress PrivateIP;
 
     RSAKeyPair PrimaryKeyPair;
+
+    double LastMasterServerUpdate = 0.0;
+    std::shared_ptr<NetHttpRequest> MasterServerUpdateRequest;
 
 };

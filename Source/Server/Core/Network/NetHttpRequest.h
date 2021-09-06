@@ -49,6 +49,7 @@ public:
 
     void SetUrl(const std::string& Path);
     void SetMethod(NetHttpMethod Method);
+    void SetBody(const std::string& Body);
     void SetBody(const std::vector<uint8_t>& Body);
 
     bool Send();

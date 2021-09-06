@@ -212,6 +212,16 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(ServerDescription);
     SERIALIZE_VAR(ServerHostname);
     SERIALIZE_VAR(ServerIP);
+
+    SERIALIZE_VAR(MasterServerIp);
+    SERIALIZE_VAR(MasterServerPort);
+    SERIALIZE_VAR(Advertise);
+    SERIALIZE_VAR(AdvertiseHearbeatTime);
+    SERIALIZE_VAR(Password);
+    SERIALIZE_VAR(ModsWhitelist);
+    SERIALIZE_VAR(ModsBlacklist);
+    SERIALIZE_VAR(ModsRequiredList);
+
     SERIALIZE_VAR(LoginServerPort);
     SERIALIZE_VAR(AuthServerPort);
     SERIALIZE_VAR(GameServerPort);

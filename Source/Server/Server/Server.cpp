@@ -15,7 +15,9 @@
 #include "Server/GameService/GameService.h"
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Utils/Strings.h"
 #include "Core/Network/NetUtils.h"
+#include "Core/Network/NetHttpRequest.h"
 
 #include <thread>
 #include <chrono>
@@ -141,10 +143,13 @@ bool Server::Init()
 
     // Write out the server import file with the latest configuration.
     nlohmann::json Output;
-    Output["Name"]          = Config.ServerName;
-    Output["Description"]   = Config.ServerDescription;
-    Output["Hostname"]      = Config.ServerHostname;
-    Output["PublicKey"]     = PrimaryKeyPair.GetPublicString();
+    Output["Name"]              = Config.ServerName;
+    Output["Description"]       = Config.ServerDescription;
+    Output["Hostname"]          = Config.ServerHostname;
+    Output["PublicKey"]         = PrimaryKeyPair.GetPublicString();
+    Output["ModsWhitelist"]     = Config.ModsWhitelist;
+    Output["ModsBlacklist"]     = Config.ModsBlacklist;
+    Output["ModsRequiredList"]  = Config.ModsRequiredList;
 
     if (!WriteTextToFile(Ds3osconfigPath, Output.dump(4)))
     {
@@ -176,6 +181,8 @@ bool Server::Term()
 {
     Log("Terminating server ...");
 
+    CancelServerAdvertisement();
+
     for (auto& Service : Services)
     {
         if (!Service->Term())
@@ -194,6 +201,120 @@ bool Server::Term()
     return true;
 }
 
+bool Server::ParseServerAdvertisementResponse(std::shared_ptr<NetHttpResponse> Response, nlohmann::json& json)
+{
+    try
+    {
+        std::string JsonResponse;
+        JsonResponse.assign((char*)Response->GetBody().data(), Response->GetBody().size());
+
+        json = nlohmann::json::parse(JsonResponse);
+        if (!json.contains("status"))
+        {
+            Warning("Recieved error when trying to advertise server on master server. Malformed output.");
+            return false;
+        }
+        else if (json["status"] != "success")
+        {
+            if (json.contains("message"))
+            {
+                std::string message = json["message"];
+                Warning("Recieved error when trying to advertise server on master server. Error message: %s", message.c_str());
+                return false;
+            }
+            else
+            {
+                Warning("Recieved error when trying to advertise server on master server. No error message provided.");
+                return false;
+            }
+        }
+    }
+    catch (nlohmann::json::parse_error)
+    {
+        Warning("Recieved error when trying to advertise server on master server. Response was not valid json.");
+        return false;
+    }
+
+    return true;
+}
+
+void Server::CancelServerAdvertisement()
+{
+    if (!Config.Advertise)
+    {
+        return;
+    }
+
+    Log("Canceling advertisement on master server.");
+
+    std::shared_ptr<NetHttpRequest> Request = std::make_shared<NetHttpRequest>();
+    Request->SetMethod(NetHttpMethod::METHOD_DELETE);
+    Request->SetUrl(StringFormat("http://%s:%i/api/v1/servers", Config.MasterServerIp.c_str(), Config.MasterServerPort));
+    if (!Request->Send())
+    {
+        Warning("Recieved error when trying to advertise server on master server. Failed to start request.");
+    }
+    else
+    {
+        if (std::shared_ptr<NetHttpResponse> Response = Request->GetResponse(); Response && Response->GetWasSuccess())
+        {
+            nlohmann::json json;
+            ParseServerAdvertisementResponse(Response, json);
+        }
+    }
+
+    Request = nullptr;
+}
+
+void Server::PollServerAdvertisement()
+{
+    if (!Config.Advertise)
+    {
+        return;
+    }
+
+    // Waiting for current advertisement to finish.
+    if (MasterServerUpdateRequest)
+    {
+        if (!MasterServerUpdateRequest->InProgress())
+        {
+            if (std::shared_ptr<NetHttpResponse> Response = MasterServerUpdateRequest->GetResponse(); Response && Response->GetWasSuccess())
+            {
+                nlohmann::json json;
+                ParseServerAdvertisementResponse(Response, json);
+            }
+
+            LastMasterServerUpdate = GetSeconds();
+            MasterServerUpdateRequest = nullptr;
+        }
+    }
+
+    // Is it time to kick off a new one?
+    else if (GetSeconds() - LastMasterServerUpdate > Config.AdvertiseHearbeatTime)
+    {
+        nlohmann::json Body;
+        Body["hostname"] = Config.ServerHostname;
+        Body["description"] = Config.ServerDescription;
+        Body["name"] = Config.ServerName;
+        Body["public_key"] = PrimaryKeyPair.GetPublicString();
+        Body["player_count"] = (int)GetService<GameService>()->GetClients().size();
+        Body["password"] = Config.Password;
+        Body["mods_white_list"] = Config.ModsWhitelist;
+        Body["mods_black_list"] = Config.ModsBlacklist;
+        Body["mods_required_list"] = Config.ModsRequiredList;        
+
+        MasterServerUpdateRequest = std::make_shared<NetHttpRequest>();
+        MasterServerUpdateRequest->SetMethod(NetHttpMethod::POST);
+        MasterServerUpdateRequest->SetBody(Body.dump(4));
+        MasterServerUpdateRequest->SetUrl(StringFormat("http://%s:%i/api/v1/servers", Config.MasterServerIp.c_str(), Config.MasterServerPort));
+        if (!MasterServerUpdateRequest->SendAsync())
+        {
+            Warning("Recieved error when trying to advertise server on master server. Failed to start request.");
+            MasterServerUpdateRequest = nullptr;
+        }
+    }
+}
+
 void Server::RunUntilQuit()
 {
     Success("Server is now running.");
@@ -206,6 +327,8 @@ void Server::RunUntilQuit()
         {
             Service->Poll();
         }
+
+        PollServerAdvertisement();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }

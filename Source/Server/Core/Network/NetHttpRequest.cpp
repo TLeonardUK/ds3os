@@ -49,6 +49,11 @@ void NetHttpRequest::SetBody(const std::vector<uint8_t>& InBody)
     Body = InBody;
 }
 
+void NetHttpRequest::SetBody(const std::string& InBody)
+{
+    Body.assign((uint8_t*)InBody.data(), (uint8_t*)InBody.data() + InBody.size());
+}
+
 size_t NetHttpRequest::RecieveBodyFunction(void* ptr, size_t size, size_t nmemb, NetHttpResponse* Response)
 {
     size_t Offset = Response->Body.size();
@@ -64,9 +69,15 @@ bool NetHttpRequest::StartRequest()
     HandleMulti = curl_multi_init();
     Response = std::make_shared<NetHttpResponse>();
 
+    struct curl_slist* Headers = NULL;
+    Headers = curl_slist_append(Headers, "Accept: application/json");
+    Headers = curl_slist_append(Headers, "Content-Type: application/json");
+    Headers = curl_slist_append(Headers, "charset: utf-8");
+
     curl_easy_setopt(Handle, CURLOPT_URL, Url.c_str());
     curl_easy_setopt(Handle, CURLOPT_WRITEFUNCTION, RecieveBodyFunction);
     curl_easy_setopt(Handle, CURLOPT_WRITEDATA, Response.get());
+    curl_easy_setopt(Handle, CURLOPT_HTTPHEADER, Headers);
 
     switch (Method)
     {

@@ -46,7 +46,7 @@ bool AuthService::Init()
 
 bool AuthService::Term()
 {
-    return false;
+    return true;
 }
 
 void AuthService::Poll()

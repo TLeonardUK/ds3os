@@ -90,14 +90,14 @@ bool GameService::Term()
 {
     for (auto& Manager : Managers)
     {
-        if (!Manager->Init())
+        if (!Manager->Term())
         {
             Error("Failed to terminate game manager '%s'", Manager->GetName().c_str());
             return false;
         }
     }
 
-    return false;
+    return true;
 }
 
 void GameService::Poll()

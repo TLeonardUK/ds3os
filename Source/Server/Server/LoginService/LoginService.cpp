@@ -46,7 +46,7 @@ bool LoginService::Init()
 
 bool LoginService::Term()
 {
-    return false;
+    return true;
 }
 
 void LoginService::Poll()
