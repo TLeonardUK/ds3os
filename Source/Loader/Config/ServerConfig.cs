@@ -48,10 +48,32 @@ namespace Loader
     [Serializable]
     public class ServerConfig
     {
-        public string Name          { get; set; }
-        public string Description   { get; set; }
-        public string Hostname      { get; set; }
-        public string PublicKey     { get; set; }
+        public string Name                  { get; set; }
+        public string Description           { get; set; }
+        public string Hostname              { get; set; }
+        public string PublicKey             { get; set; }
+        public bool ManualImport            { get; set; }
+
+        // These attributes are only set if retrieved from master server.
+        public string IpAddress            { get; set; }
+        public int PlayerCount             { get; set; }
+        public bool PasswordRequired       { get; set; }
+        public string ModsWhiteList       { get; set; }
+        public string ModsBlackList       { get; set; }
+        public string ModsRequiredList    { get; set; }
+
+        public void CopyTransientPropsFrom(ServerConfig Source)
+        {
+            Name = Source.Name;
+            Description = Source.Description;
+            Hostname = Source.Hostname;
+            IpAddress = Source.IpAddress;
+            PlayerCount = Source.PlayerCount;
+            PasswordRequired = Source.PasswordRequired;
+            ModsWhiteList = Source.ModsWhiteList;
+            ModsBlackList = Source.ModsBlackList;
+            ModsRequiredList = Source.ModsRequiredList;
+        }
 
         public string ToJson()
         {
@@ -63,6 +85,7 @@ namespace Loader
             try
             {
                 config = JsonSerializer.Deserialize<ServerConfig>(json);
+                config.ManualImport = true;
                 return true;
             }
             catch (JsonException)

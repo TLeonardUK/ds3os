@@ -46,5 +46,17 @@ namespace Loader {
                 this["server_config_json"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://127.0.0.1:50020")]
+        public string master_server_url {
+            get {
+                return ((string)(this["master_server_url"]));
+            }
+            set {
+                this["master_server_url"] = value;
+            }
+        }
     }
 }

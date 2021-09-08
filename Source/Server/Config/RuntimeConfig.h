@@ -75,14 +75,14 @@ public:
 
     // If Advertise is set this is the master server that it will be registered to.
     // Be careful changing this, typically only one server should exist.
-    std::string MasterServerIp = "timleonard.uk";
+    std::string MasterServerIp = "127.0.0.1";
 
     // Port the master server lists for connections at MasterServerIp;
     int MasterServerPort = 50020;
 
     // If true register the server of the master servers list so others can see
     // and join it.
-    bool Advertise = false;
+    bool Advertise = true;
 
     // How many seconds between each update on the master server. You should keep this
     // as high as possible to avoid saturating the master server.

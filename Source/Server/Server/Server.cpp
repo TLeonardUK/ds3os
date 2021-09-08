@@ -293,15 +293,15 @@ void Server::PollServerAdvertisement()
     else if (GetSeconds() - LastMasterServerUpdate > Config.AdvertiseHearbeatTime)
     {
         nlohmann::json Body;
-        Body["hostname"] = Config.ServerHostname;
-        Body["description"] = Config.ServerDescription;
-        Body["name"] = Config.ServerName;
-        Body["public_key"] = PrimaryKeyPair.GetPublicString();
-        Body["player_count"] = (int)GetService<GameService>()->GetClients().size();
-        Body["password"] = Config.Password;
-        Body["mods_white_list"] = Config.ModsWhitelist;
-        Body["mods_black_list"] = Config.ModsBlacklist;
-        Body["mods_required_list"] = Config.ModsRequiredList;        
+        Body["Hostname"] = Config.ServerHostname;
+        Body["Description"] = Config.ServerDescription;
+        Body["Name"] = Config.ServerName;
+        Body["PublicKey"] = PrimaryKeyPair.GetPublicString();
+        Body["PlayerCount"] = (int)GetService<GameService>()->GetClients().size();
+        Body["Password"] = Config.Password;
+        Body["ModsWhiteList"] = Config.ModsWhitelist;
+        Body["ModsBlackList"] = Config.ModsBlacklist;
+        Body["ModsRequiredList"] = Config.ModsRequiredList;        
 
         MasterServerUpdateRequest = std::make_shared<NetHttpRequest>();
         MasterServerUpdateRequest->SetMethod(NetHttpMethod::POST);

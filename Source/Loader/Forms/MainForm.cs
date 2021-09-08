@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +26,7 @@ namespace Loader
     {
         private ServerConfigList ServerList = new ServerConfigList();
         private IntPtr RunningProcessHandle = IntPtr.Zero;
+        private Task QueryServerTask = null;
 
         public MainForm()
         {
@@ -77,7 +79,12 @@ namespace Loader
                 RemoveButton.Enabled = true;
             }
 
-            if (RunningProcessHandle != IntPtr.Zero)
+            if (!SteamUtils.IsSteamRunningAndLoggedIn())
+            {
+                LaunchEnabled = false;
+                LaunchButton.Text = "Not Logged Into Steam";
+            }
+            else if (RunningProcessHandle != IntPtr.Zero)
             {
                 LaunchEnabled = false;
                 LaunchButton.Text = "Running ...";
@@ -98,37 +105,39 @@ namespace Loader
             {
                 ListViewItem Item = new ListViewItem(new string[] {
                     Config.Name,
-                    Config.Hostname,
+                    Config.ManualImport ? "Not Advertised" : Config.PlayerCount.ToString(),
                     Config.Description
-                });
+                }, Config.PasswordRequired ? 0 : -1);
                 ImportedServerListView.Items.Add(Item);
             }
         }
 
         private void OnLoaded(object sender, EventArgs e)
         {
+            string PredictedInstallPath = SteamUtils.GetGameInstallPath("DARK SOULS III") + @"Game\DarkSoulsIII.exe";
+            if (!File.Exists(ProgramSettings.Default.exe_location) && File.Exists(PredictedInstallPath))
+            {
+                ProgramSettings.Default.exe_location = PredictedInstallPath;
+            }
+
             ExeLocationTextBox.Text = ProgramSettings.Default.exe_location;
             ServerConfigList.FromJson(ProgramSettings.Default.server_config_json, out ServerList);
 
-            ValidateUI();
-            BuildServerList();
-
-            // Debugging experiments.
-            
-            /*
-            byte[] bytes = File.ReadAllBytes(@"Y:\DS3Server\Research\server_info.bin");
-            byte[] decrypted_bytes = EncryptionUtils.Tea32Decrypt(bytes, PatchingUtils.ServerInfoTEAEncryptionKey);
-            byte[] encrypted_bytes = EncryptionUtils.Tea32Encrypt(decrypted_bytes, PatchingUtils.ServerInfoTEAEncryptionKey);
-            for (int i = 0; i < decrypted_bytes.Length; i++)
+            // Strip out any old config files downloaded from the server, we will be querying them
+            // shortly anyway.
+            foreach (ServerConfig Config in ServerList.Servers.ToArray())
             {
-                Debug.Assert(bytes[i] == encrypted_bytes[i]);
+                if (!Config.ManualImport)
+                {
+                    ServerList.Servers.Remove(Config);
+                }
             }
 
-            File.WriteAllBytes(@"Y:\DS3Server\Research\server_info.bin", EncryptionUtils.temp_test);
-            byte[] bytes = File.ReadAllBytes(@"Y:\DS3Server\Research\server_info.bin");
-            byte[] decrypted_bytes = EncryptionUtils.Tea32Decrypt(bytes, PatchingUtils.ServerInfoTEAEncryptionKey);
-            File.WriteAllBytes(@"Y:\DS3Server\Research\server_info.decrypted.bin", decrypted_bytes);
-            */
+            ValidateUI();
+            BuildServerList();
+            QueryServers();
+
+            ContinualUpdateTimer.Enabled = ShouldRunContinualUpdate();
         }
 
         private void OnBrowseForExecutable(object sender, EventArgs e)
@@ -193,9 +202,71 @@ namespace Loader
             }
         }
 
+        private void QueryServers()
+        {
+            Debug.WriteLine("Querying master server ...");
+
+            if (QueryServerTask != null && !QueryServerTask.IsCompleted)
+            {
+                return;
+            }
+
+            QueryServerTask = Task.Run(() =>
+            {
+                List<ServerConfig> Servers = MasterServerApi.ListServers();
+                this.Invoke((MethodInvoker)delegate {
+                    ProcessServerQueryResponse(Servers);
+                });
+            });
+        }
+
+        private void ProcessServerQueryResponse(List<ServerConfig> Servers)
+        {
+            foreach (ServerConfig Server in Servers)
+            {
+                bool Exists = false;
+                foreach (ServerConfig ExistingServer in ServerList.Servers)
+                {
+                    if (ExistingServer.Hostname == Server.Hostname)
+                    {
+                        ExistingServer.CopyTransientPropsFrom(Server);
+                        Exists = true;
+                        break;
+                    }
+                }
+
+                if (!Exists)
+                {
+                    ServerList.Servers.Add(Server);
+                }
+            }
+
+            BuildServerList();
+        }
+
         private void OnLaunch(object sender, EventArgs e)
         {
             ServerConfig Config = ServerList.Servers[ImportedServerListView.SelectedIndices[0]];
+
+            if (Config.PasswordRequired && string.IsNullOrEmpty(Config.PublicKey))
+            {
+                Forms.PasswordDialog Dialog = new Forms.PasswordDialog(Config);
+                if (Dialog.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(Config.PublicKey))
+                {
+                    return;
+                }
+            }
+            
+            PerformLaunch(Config);
+        }
+
+        void PerformLaunch(ServerConfig Config)
+        {
+            if (Config.PublicKey == null || Config.PublicKey.Length == 0)
+            {
+                MessageBox.Show("Unable to launch server, no public key is available.\n\nYou shouldn't see this error unless someone has miss-configured the server configuration.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(Config.Hostname, Config.PublicKey);
             if (DataBlock == null)
@@ -252,21 +323,48 @@ namespace Loader
             WinAPI.ResumeThread(ProcessInfo.hThread);
 
             RunningProcessHandle = ProcessInfo.hProcess;
-            RunningProcessUpdateTimer.Enabled = true;
+            ContinualUpdateTimer.Enabled = ShouldRunContinualUpdate();
 
             ValidateUI();
         }
 
-        private void OnProcessUpdateTimer(object sender, EventArgs e)
+        private bool ShouldRunContinualUpdate()
+        {
+            /*
+            if (RunningProcessHandle != IntPtr.Zero)
+            {
+                return true;
+            }
+
+            if (!SteamUtils.IsSteamRunningAndLoggedIn())
+            {
+                return true;
+            }
+
+            return false;
+            */
+            return true;
+        }
+
+        private void OnContinualUpdateTimer(object sender, EventArgs e)
         {
             uint ExitCode = 0;
-            if (!WinAPI.GetExitCodeProcess(RunningProcessHandle, out ExitCode) || ExitCode != (uint)ProcessExitCodes.STILL_ACTIVE)
+            if (RunningProcessHandle != IntPtr.Zero)
             {
-                RunningProcessHandle = IntPtr.Zero;
-                RunningProcessUpdateTimer.Enabled = false;
+                if (!WinAPI.GetExitCodeProcess(RunningProcessHandle, out ExitCode) || ExitCode != (uint)ProcessExitCodes.STILL_ACTIVE)
+                {
+                    RunningProcessHandle = IntPtr.Zero;
+                }
             }
 
             ValidateUI();
+
+            //ContinualUpdateTimer.Enabled = ShouldRunContinualUpdate();
+        }
+
+        private void OnServerRefreshTimer(object sender, EventArgs e)
+        {
+            QueryServers();
         }
     }
 }

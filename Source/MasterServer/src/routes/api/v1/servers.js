@@ -18,7 +18,7 @@ function RemoveServer(IpAddress)
 {
     for (i = 0; i < GActiveServers.length; i++)
     {
-        if (GActiveServers[i].ip_address == IpAddress)
+        if (GActiveServers[i].IpAddress == IpAddress)
         {
             GActiveServers.splice(i, 1);
             break;
@@ -29,17 +29,17 @@ function RemoveServer(IpAddress)
 function AddServer(IpAddress, hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list)
 {
     GActiveServers.push({
-       "ip_address": IpAddress,
-       "hostname": hostname,
-       "description": description,
-       "name": name,
-       "public_key": public_key,
-       "player_count": player_count,
-       "password": password,
-       "mods_white_list": mods_white_list,
-       "mods_black_list": mods_black_list,
-       "mods_required_list": mods_required_list,
-       "updated_time": Date.now()
+       "IpAddress": IpAddress,
+       "Hostname": hostname,
+       "Description": description,
+       "Name": name,
+       "PublicKey": public_key,
+       "PlayerCount": player_count,
+       "Password": password,
+       "ModsWhiteList": mods_white_list,
+       "ModsBlackList": mods_black_list,
+       "ModsRequiredList": mods_required_list,
+       "UpdatedTime": Date.now()
     });
 }
 
@@ -48,9 +48,9 @@ function RemoveTimedOutServers()
     var TimeoutDate = new Date(Date.now() - config.server_timeout_ms);
     for (i = 0; i < GActiveServers.length; )
     {
-        if (GActiveServers[i].updated_time < TimeoutDate)
+        if (GActiveServers[i].UpdatedTime < TimeoutDate)
         {
-            console.log(`Removing server that timed out: ip=${GActiveServers[i].ip_address}`);
+            console.log(`Removing server that timed out: ip=${GActiveServers[i].IpAddress}`);
 
             GActiveServers.splice(i, 1);
             break;
@@ -72,25 +72,25 @@ router.get('/', async (req, res) => {
     for (i = 0; i < GActiveServers.length; i++)
     {
         ServerInfo.push({
-            "ip_address": GActiveServers[i]["ip_address"],
-            "hostname": GActiveServers[i]["hostname"],
-            "description": GActiveServers[i]["description"],
-            "name": GActiveServers[i]["name"],
-            "player_count": GActiveServers[i]["player_count"],
-            "password_required": GActiveServers[i]["password"].length > 0,
-            "mods_white_list": GActiveServers[i]["mods_white_list"],
-            "mods_black_list": GActiveServers[i]["mods_black_list"],
-            "mods_required_list": GActiveServers[i]["mods_required_list"]
+            "IpAddress": GActiveServers[i]["IpAddress"],
+            "Hostname": GActiveServers[i]["Hostname"],
+            "Description": GActiveServers[i]["Description"],
+            "Name": GActiveServers[i]["Name"],
+            "PlayerCount": GActiveServers[i]["PlayerCount"],
+            "PasswordRequired": GActiveServers[i]["Password"].length > 0,
+            "ModsWhiteList": GActiveServers[i]["ModsWhiteList"],
+            "ModsBlackList": GActiveServers[i]["ModsBlackList"],
+            "ModsRequiredList": GActiveServers[i]["ModsRequiredList"]
         });
     }
 
     res.json({ "status":"success", "servers": ServerInfo });
 });
 
-// @route GET api/v1/servers/:ip_address/public_key
+// @route POST api/v1/servers/:ip_address/public_key
 // @description Get the public kley of a given server.
 // @access Public
-router.get('/:ip_address/public_key', async (req, res) => {
+router.post('/:ip_address/public_key', async (req, res) => { 
     if (!('password' in req.body))
     {
         res.json({ "status":"error", "message":"Expected password in body." });
@@ -98,15 +98,15 @@ router.get('/:ip_address/public_key', async (req, res) => {
     }
 
     var password = req.body["password"];
-
+ 
     var ServerInfo = [];    
     for (i = 0; i < GActiveServers.length; i++)
     {
-        if (GActiveServers[i].ip_address == req.params.ip_address)
+        if (GActiveServers[i].IpAddress == req.params.ip_address)
         {
-            if (password == GActiveServers[i].password)
+            if (password == GActiveServers[i].Password)
             {
-                res.json({ "status":"success", "public_key":GActiveServers[i].public_key });
+                res.json({ "status":"success", "PublicKey":GActiveServers[i].PublicKey });
             }
             else
             {
@@ -125,61 +125,61 @@ router.get('/:ip_address/public_key', async (req, res) => {
 router.post('/', async (req, res) => {
     RemoveServer(req.connection.remoteAddress);
 
-    if (!('hostname' in req.body))
+    if (!('Hostname' in req.body))
     {
         res.json({ "status":"error", "message":"Expected hostname in body." });
         return;        
     }
-    if (!('description' in req.body))
+    if (!('Description' in req.body))
     {
         res.json({ "status":"error", "message":"Expected description in body." });
         return;        
     }
-    if (!('name' in req.body))
+    if (!('Name' in req.body))
     {
         res.json({ "status":"error", "message":"Expected name in body." });
         return;        
     }
-    if (!('public_key' in req.body))
+    if (!('PublicKey' in req.body))
     {
         res.json({ "status":"error", "message":"Expected public_key in body." });
         return;        
     }
-    if (!('player_count' in req.body))
+    if (!('PlayerCount' in req.body))
     {
         res.json({ "status":"error", "message":"Expected player_count in body." });
         return;        
     }
-    if (!('password' in req.body))
+    if (!('Password' in req.body))
     {
         res.json({ "status":"error", "message":"Expected password in body." });
         return;        
     }
-    if (!('mods_white_list' in req.body))
+    if (!('ModsWhiteList' in req.body))
     {
         res.json({ "status":"error", "message":"Expected mods_white_list in body." });
         return;        
     }
-    if (!('mods_black_list' in req.body))
+    if (!('ModsBlackList' in req.body))
     {
         res.json({ "status":"error", "message":"Expected mods_black_list in body." });
         return;        
     }
-    if (!('mods_required_list' in req.body))
+    if (!('ModsRequiredList' in req.body))
     {
         res.json({ "status":"error", "message":"Expected mods_required_list in body." });
         return;        
     }
 
-    var hostname = req.body["hostname"];
-    var description = req.body["description"];
-    var name = req.body["name"];
-    var public_key = req.body["public_key"];
-    var player_count = parseInt(req.body["player_count"]);
-    var password = req.body["password"];
-    var mods_white_list = req.body["mods_white_list"];
-    var mods_black_list = req.body["mods_black_list"];
-    var mods_required_list = req.body["mods_required_list"];
+    var hostname = req.body["Hostname"];
+    var description = req.body["Description"];
+    var name = req.body["Name"];
+    var public_key = req.body["PublicKey"];
+    var player_count = parseInt(req.body["PlayerCount"]);
+    var password = req.body["Password"];
+    var mods_white_list = req.body["ModsWhiteList"];
+    var mods_black_list = req.body["ModsBlackList"];
+    var mods_required_list = req.body["ModsRequiredList"];
 
     AddServer(req.connection.remoteAddress, hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list);
     
