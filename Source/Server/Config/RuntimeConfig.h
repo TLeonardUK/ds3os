@@ -75,7 +75,7 @@ public:
 
     // If Advertise is set this is the master server that it will be registered to.
     // Be careful changing this, typically only one server should exist.
-    std::string MasterServerIp = "127.0.0.1";
+    std::string MasterServerIp = "timleonard.uk";
 
     // Port the master server lists for connections at MasterServerIp;
     int MasterServerPort = 50020;

@@ -9,7 +9,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="master_server_url" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://127.0.0.1:50020</Value>
+      <Value Profile="(Default)">http://timleonard.uk:50020</Value>
     </Setting>
   </Settings>
 </SettingsFile>
