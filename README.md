@@ -66,7 +66,7 @@ Future roadmap:
 - [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
 - [ ] Steam ticket authentication.
-- [ ] Master server support for loader (show available servers).
+- [x] Master server support for loader (show available servers).
 - [ ] WebUI for server showing gameplay statistics / allowing admin control.
 
 # Will this ban my account on the retail server?
