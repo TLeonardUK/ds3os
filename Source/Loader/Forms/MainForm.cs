@@ -248,12 +248,33 @@ namespace Loader
         {
             ServerConfig Config = ServerList.Servers[ImportedServerListView.SelectedIndices[0]];
 
-            if (Config.PasswordRequired && string.IsNullOrEmpty(Config.PublicKey))
+            if (string.IsNullOrEmpty(Config.PublicKey))
             {
-                Forms.PasswordDialog Dialog = new Forms.PasswordDialog(Config);
-                if (Dialog.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(Config.PublicKey))
+                if (Config.PasswordRequired)
                 {
-                    return;
+                    Forms.PasswordDialog Dialog = new Forms.PasswordDialog(Config);
+                    if (Dialog.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(Config.PublicKey))
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    Task GetKeyTask = Task.Run(() =>
+                    {
+                        Config.PublicKey = MasterServerApi.GetPublicKey(Config.IpAddress, "");
+                    });
+
+                    while (!GetKeyTask.IsCompleted)
+                    {
+                        Application.DoEvents();
+                    }
+
+                    if (string.IsNullOrEmpty(Config.PublicKey))
+                    {
+                        MessageBox.Show("Failed to retrieve the servers cryptographic keys.\n\nThe master server may be down or the server may be missconfigured.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
             }
             
