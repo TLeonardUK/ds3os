@@ -94,7 +94,7 @@ bool RSAKeyPair::Save(std::filesystem::path& PrivatePath, std::filesystem::path&
 	// Save private key.
 	BIO* BioPrivate = BIO_new_file(PrivatePath.string().c_str(), "w+");
 	Result = PEM_write_bio_RSAPrivateKey(BioPrivate, RsaInstance, nullptr, nullptr, 0, nullptr, nullptr);
-	BIO_free_all(BioPublic);
+	BIO_free_all(BioPrivate); 
 
 	if (Result != 1)
 	{
