@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+!Resources/Prerequisites/*.exe
 
 Debug/
 Bin/

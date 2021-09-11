@@ -3,6 +3,10 @@
  https://github.com/TLeonardUK/ds3os
 -------------------------------------------------------------------------
 
+Before running any executables, please install the files in Prerequisites 
+first, these are C++ runtimes required to run the executables, without 
+them they may not run.
+
 Contained in this folder are 2 executables.
 
 -- Server.exe --
