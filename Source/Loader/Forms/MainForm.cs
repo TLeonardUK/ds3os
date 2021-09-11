@@ -114,7 +114,7 @@ namespace Loader
 
         private void OnLoaded(object sender, EventArgs e)
         {
-            string PredictedInstallPath = SteamUtils.GetGameInstallPath("DARK SOULS III") + @"Game\DarkSoulsIII.exe";
+            string PredictedInstallPath = SteamUtils.GetGameInstallPath("DARK SOULS III") + @"\Game\DarkSoulsIII.exe";
             if (!File.Exists(ProgramSettings.Default.exe_location) && File.Exists(PredictedInstallPath))
             {
                 ProgramSettings.Default.exe_location = PredictedInstallPath;

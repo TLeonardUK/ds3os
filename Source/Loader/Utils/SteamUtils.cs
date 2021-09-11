@@ -57,8 +57,7 @@ namespace Loader
                 }
 
                 string Key = Trimmed.Substring(IndexKeyStart + 1, IndexKeyEnd - IndexKeyStart - 1);
-                int LibraryNumber = 0;
-                if (!int.TryParse(Key, out LibraryNumber))
+                if (Key != "path")
                 {
                     continue;
                 }
