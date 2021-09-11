@@ -289,7 +289,34 @@ namespace Loader
                 return;
             }
 
-            byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(Config.Hostname, Config.PublicKey);
+            string ConnectionHostname = Config.Hostname;
+            string HostnameIp = NetUtils.HostnameToIPv4(Config.Hostname);
+            string PrivateHostnameIp = NetUtils.HostnameToIPv4(Config.PrivateHostname);
+            string MachinePrivateIp = NetUtils.GetMachineIPv4(false);
+            string MachinePublicIp = NetUtils.GetMachineIPv4(true);
+
+            // If the servers public ip is the same as the machines public ip, then we are behind
+            // the same nat and should use the private hostname instead. 
+            //
+            // Note: This potentially breaks down with carrier grade NAT.
+            // ... We're sort of ignoring that right now as this helps the majority of users.
+            // Those behind CGN can manually set the ip's on the servers config to get around this.
+            if (HostnameIp == MachinePublicIp)
+            {
+                // If ip of private hostname and private ip of machine are the same
+                // then server is running on same host so just use loopback address.
+                if (PrivateHostnameIp == MachinePrivateIp)
+                {
+                    ConnectionHostname = "127.0.0.1";
+                }
+                // Otherwise just use the private address.
+                else
+                {
+                    ConnectionHostname = Config.PrivateHostname;
+                }
+            }
+
+            byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey);
             if (DataBlock == null)
             {
                 MessageBox.Show("Failed to encode server info patch. Potentially server information is too long to fit into the space available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

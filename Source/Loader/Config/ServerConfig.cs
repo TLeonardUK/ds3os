@@ -51,6 +51,7 @@ namespace Loader
         public string Name                  { get; set; }
         public string Description           { get; set; }
         public string Hostname              { get; set; }
+        public string PrivateHostname       { get; set; }
         public string PublicKey             { get; set; }
         public bool ManualImport            { get; set; }
 
@@ -67,6 +68,7 @@ namespace Loader
             Name = Source.Name;
             Description = Source.Description;
             Hostname = Source.Hostname;
+            PrivateHostname = Source.PrivateHostname;
             IpAddress = Source.IpAddress;
             PlayerCount = Source.PlayerCount;
             PasswordRequired = Source.PasswordRequired;

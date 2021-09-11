@@ -203,7 +203,7 @@ bool AuthClient::Poll()
 
                 const RuntimeConfig& RuntimeConfig = Service->GetServer()->GetConfig();
 
-                std::string ServerIP = RuntimeConfig.ServerIP;
+                std::string ServerIP = Service->GetServer()->GetPublicIP().ToString();
 
                 // If user IP is on a private network, we can assume they are on our LAN
                 // and return our internal IP address.

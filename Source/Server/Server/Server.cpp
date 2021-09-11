@@ -136,9 +136,9 @@ bool Server::Init()
     {
         Config.ServerHostname = PublicIP.ToString();
     }
-    if (Config.ServerIP == "")
+    if (Config.PrivateServerHostname == "")
     {
-        Config.ServerIP = PublicIP.ToString();
+        Config.PrivateServerHostname = PrivateIP.ToString();
     }
 
     // Write out the server import file with the latest configuration.
@@ -146,6 +146,7 @@ bool Server::Init()
     Output["Name"]              = Config.ServerName;
     Output["Description"]       = Config.ServerDescription;
     Output["Hostname"]          = Config.ServerHostname;
+    Output["PrivateHostname"]   = Config.PrivateServerHostname;
     Output["PublicKey"]         = PrimaryKeyPair.GetPublicString();
     Output["ModsWhitelist"]     = Config.ModsWhitelist;
     Output["ModsBlacklist"]     = Config.ModsBlacklist;
@@ -294,6 +295,7 @@ void Server::PollServerAdvertisement()
     {
         nlohmann::json Body;
         Body["Hostname"] = Config.ServerHostname;
+        Body["PrivateHostname"] = Config.PrivateServerHostname;
         Body["Description"] = Config.ServerDescription;
         Body["Name"] = Config.ServerName;
         Body["PublicKey"] = PrimaryKeyPair.GetPublicString();

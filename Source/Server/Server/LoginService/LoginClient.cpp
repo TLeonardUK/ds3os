@@ -77,7 +77,7 @@ bool LoginClient::Poll()
         //Log("[%s] Recieved RequestQueryLoginServerInfo, client is on steam account %s.", GetName().c_str(), Request.steam_id().c_str());
 
         const RuntimeConfig& Config = Service->GetServer()->GetConfig();
-        std::string ServerIP = Config.ServerIP;
+        std::string ServerIP = Service->GetServer()->GetPublicIP().ToString();
 
         // If user IP is on a private network, we can assume they are on our LAN
         // and return our internal IP address.

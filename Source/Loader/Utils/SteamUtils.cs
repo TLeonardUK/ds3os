@@ -113,7 +113,8 @@ namespace Loader
 
             try
             {
-                if (Process.GetProcessById(Pid) == null)
+                Process proc = Process.GetProcessById(Pid);
+                if (proc == null || proc.HasExited)
                 {
                     return false;
                 }

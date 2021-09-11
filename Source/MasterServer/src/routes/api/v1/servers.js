@@ -26,11 +26,12 @@ function RemoveServer(IpAddress)
     }
 }
 
-function AddServer(IpAddress, hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list)
+function AddServer(IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list)
 {
     GActiveServers.push({
        "IpAddress": IpAddress,
        "Hostname": hostname,
+       "PrivateHostname": private_hostname,
        "Description": description,
        "Name": name,
        "PublicKey": public_key,
@@ -74,6 +75,7 @@ router.get('/', async (req, res) => {
         ServerInfo.push({
             "IpAddress": GActiveServers[i]["IpAddress"],
             "Hostname": GActiveServers[i]["Hostname"],
+            "PrivateHostname": GActiveServers[i]["PrivateHostname"],
             "Description": GActiveServers[i]["Description"],
             "Name": GActiveServers[i]["Name"],
             "PlayerCount": GActiveServers[i]["PlayerCount"],
@@ -130,6 +132,11 @@ router.post('/', async (req, res) => {
         res.json({ "status":"error", "message":"Expected hostname in body." });
         return;        
     }
+    if (!('PrivateHostname' in req.body))
+    {
+        res.json({ "status":"error", "message":"Expected private hostname in body." });
+        return;        
+    }
     if (!('Description' in req.body))
     {
         res.json({ "status":"error", "message":"Expected description in body." });
@@ -172,6 +179,7 @@ router.post('/', async (req, res) => {
     }
 
     var hostname = req.body["Hostname"];
+    var private_hostname = req.body["PrivateHostname"];
     var description = req.body["Description"];
     var name = req.body["Name"];
     var public_key = req.body["PublicKey"];
@@ -181,7 +189,7 @@ router.post('/', async (req, res) => {
     var mods_black_list = req.body["ModsBlackList"];
     var mods_required_list = req.body["ModsRequiredList"];
 
-    AddServer(req.connection.remoteAddress, hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list);
+    AddServer(req.connection.remoteAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list);
     
     res.json({ "status":"success" });
 });
