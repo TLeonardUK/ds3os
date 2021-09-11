@@ -1,4 +1,6 @@
-# Dark Souls 3 - Open Server
+![Dark Souls 3 - Open Server](https://github.com/TLeonardUK/ds3os/blob/main/Resources/banner.png?raw=true)
+
+# What is this project?
 An open source implementation of the dark souls 3 game server. 
 
 Idealistically made for the purpose of allow better alternatives to playing mods than getting your account banned and using the retail ban server. As well as opening up opportunities to improve player safety and choice, by allowing them to segregate themselves off from the pool of cheaters on retail, without loosing network functionality.
@@ -7,40 +9,19 @@ Idealistically made for the purpose of allow better alternatives to playing mods
 
 ![Build Status](https://github.com/TLeonardUK/ds3os/actions/workflows/ci.yml/badge.svg)
 
-# Whats in the repository?
-```
-/
-├── Config/               Contains any useful configuration material, server config files and alike.
-├── Protobuf/             Contains the protobuf definitions used by the server's network traffic. Compiling them is done via the bat file in Tools/
-├── Resources/            General resources used for building and packaging - icons/readmes/etc.
-├── Source/               All source code for the project.
-│   ├── Loader/           Simple winforms app that loads DS3 such that it will connect to a custom server.
-│   ├── Server/           Source code for the main server.
-│   └── ThirdParty/       Source code for any third-party libraries used. Preference is storing source here over using vcpkg modules where practical.
-├── Tools/                Various cheat engine tables, bat files and alike used for analysis.
-```
-
 # Where can I download it?
 Downloads are available on the github releases page - https://github.com/TLeonardUK/ds3os/releases
-
-# How do I build it?
-Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely
-be moved over to something platform agnostic like cmake.
-
-Building the project should just require opening Source/DS3OpenServer.sln and building it. Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into 
-visual studio as well, as its usedfor managing a few of the dependencies.
 
 # How do I use it?
 Once built you should have a folder called Bin, there are 2 subfolders of relevance. Loader and Server. 
 
 First run the Server.exe in Server, this will start the actual custom server running on your computer. 
 
-When it runs it should write out a file to Saved\server.ds3osconfig, this is a simple json file that contains a description of your server and the needed cryptographic keys
-to join it, you can send this to people who you want to join your server.
+The first time the server runs it will emit the file Saved\config.json which contains various matchmaking parameters that you can adjust (and apply by restarting the server) to customise the server.
 
-While the server is running run the file Loader.exe in the Loader subfolder. This is a simple winform app that handles booting up the game in a way that it can 
-join the custom server. Within this app set the game path to your DarkSoulsIII.exe and import the server.ds3osconfig file that was made by the server earlier. You should
-now be able to click launch to start the game which will automatically connect to your new server.
+User can join the server by opening the Loader.exe program in the Laoder folder and finding the correct server in the list and clicking the launch button. If the server has been configured to not advertise on the master server (or if running on a LAN without an internet connection), then the server operator can distribute the Saved\server.ds3osconfig file that the server emits, which can be imported into the loader and used to directly connect to the server.
+
+Servers can also be password protected if required by setting as password in Saved\config.json, a password will need to be entered when attempting to launch the game with a protected server.
 
 # What currently works?
 Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer
@@ -73,6 +54,25 @@ Future roadmap:
 So far we've had several accounts using unoffical servers, for quite a while, and have not had any account penalized on the retail server.
 
 We don't make any guarantees, but it seems safe enough.
+
+# How do I build it?
+Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely be moved over to something platform agnostic like cmake.
+
+Building the project should just require opening Source/DS3OpenServer.sln and building it. Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into 
+visual studio as well, as its usedfor managing a few of the dependencies.
+
+# Whats in the repository?
+```
+/
+├── Config/               Contains any useful configuration material, server config files and alike.
+├── Protobuf/             Contains the protobuf definitions used by the server's network traffic. Compiling them is done via the bat file in Tools/
+├── Resources/            General resources used for building and packaging - icons/readmes/etc.
+├── Source/               All source code for the project.
+│   ├── Loader/           Simple winforms app that loads DS3 such that it will connect to a custom server.
+│   ├── Server/           Source code for the main server.
+│   └── ThirdParty/       Source code for any third-party libraries used. Preference is storing source here over using vcpkg modules where practical.
+├── Tools/                Various cheat engine tables, bat files and alike used for analysis.
+```
 
 # How can I help?
 Check our the issues page, or send me a message for suggestions on what can be done.
