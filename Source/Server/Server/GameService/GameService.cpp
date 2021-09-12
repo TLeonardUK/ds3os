@@ -198,7 +198,7 @@ void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientCo
     auto AuthStateIter = AuthenticationStates.find(AuthToken);
     if (AuthStateIter == AuthenticationStates.end())
     {
-        Log("[%s] Clients authentication token does not appear to be valid. Ignoring connection.", ClientConnection->GetName().c_str());
+        Log("[%s] Clients authentication token (0x%016llx) does not appear to be valid. Ignoring connection.", ClientConnection->GetName().c_str(), AuthToken);
         return;
     }
 
@@ -223,7 +223,7 @@ std::string GameService::GetName()
 
 void GameService::CreateAuthToken(uint64_t AuthToken, const std::vector<uint8_t>& CwcKey)
 {
-    //Log("[%s] Created authentication token 0x%016llx", Connection->GetName().c_str(), AuthToken);
+    Log("[%s] Created authentication token 0x%016llx", Connection->GetName().c_str(), AuthToken);
 
     GameClientAuthenticationState AuthState;
     AuthState.AuthToken = AuthToken;

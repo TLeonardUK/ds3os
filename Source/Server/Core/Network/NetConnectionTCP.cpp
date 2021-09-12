@@ -141,9 +141,65 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port)
         return false;
     }
 
-    // TODO: We don't currently use this for anything, so not implementing yet.
-    Ensure(false);
-    return false;
+    Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (Socket == INVALID_SOCKET_VALUE)
+    {
+        Error("[%s] Failed to create socket, error %i.", GetName().c_str(), WSAGetLastError());
+        return false;
+    }
+
+    sockaddr_in SockAddr;
+    SockAddr.sin_family = AF_INET;
+    SockAddr.sin_port = htons(Port);
+
+    hostent* HostEntry = gethostbyname(Hostname.c_str());
+    if (HostEntry == nullptr)
+    {
+        Error("[%s] Failed to resolve hostname '%s'.", GetName().c_str(), Hostname.c_str());
+        return false;
+    }
+    else
+    {
+        Ensure(HostEntry->h_addrtype == AF_INET); // Only support ipv4 right now.
+        SockAddr.sin_addr.s_addr = *(u_long*)HostEntry->h_addr_list[0];
+    }
+
+    int Result = connect(Socket, (SOCKADDR*)&SockAddr, sizeof(SockAddr));
+    if (Result == SOCKET_ERROR)
+    {
+#if defined(_WIN32)
+        int error = WSAGetLastError();
+#else
+        int error = errno;
+#endif
+
+        Error("[%s] Failed to recieve with error 0x%08x.", GetName().c_str(), error);
+        return false;
+    }
+
+    // Set socket to non-blocking mode.
+#if defined(_WIN32)
+    unsigned long mode = 1;
+    if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
+    {
+        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        return false;
+    }
+#else
+    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+    {
+        Error("[%s] Failed to get socket flags.", GetName().c_str());
+        return false;
+    }
+    flags = flags | O_NONBLOCK;
+    if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
+    {
+        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        return false;
+    }
+#endif
+
+    return true;
 }
 
 bool NetConnectionTCP::Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved)

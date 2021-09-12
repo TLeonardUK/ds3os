@@ -25,6 +25,7 @@ void WriteLog(ConsoleColor Color, const char* Level, const char* Format, ...);
 #define Success(Format, ...)    WriteLog(ConsoleColor::Green,     "Success", Format, __VA_ARGS__);
 #define Warning(Format, ...)    WriteLog(ConsoleColor::Yellow,    "Warning", Format, __VA_ARGS__);
 #define Error(Format, ...)      WriteLog(ConsoleColor::Red,       "Error", Format, __VA_ARGS__);
+#define Fatal(Format, ...)      WriteLog(ConsoleColor::Red,       "Fatal", Format, __VA_ARGS__); Ensure(false);
 
 // Some general purpose debugging/assert macros.
 #define Ensure(expr)                                \

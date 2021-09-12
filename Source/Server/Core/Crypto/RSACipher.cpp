@@ -13,9 +13,10 @@
 
 #include <openssl/err.h>
 
-RSACipher::RSACipher(RSAKeyPair* InKey, RSAPaddingMode InPaddingMode)
+RSACipher::RSACipher(RSAKeyPair* InKey, RSAPaddingMode InPaddingMode, bool InUsePublicKeyToEncrypt)
 	: Key(InKey)
 	, PaddingMode(InPaddingMode)
+	, UsePublicKeyToEncrypt(InUsePublicKeyToEncrypt)
 {
 }
 
@@ -36,7 +37,16 @@ bool RSACipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 		break;
 	}
 
-	int EncryptedLength = RSA_private_encrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
+	int EncryptedLength = 0;
+	if (UsePublicKeyToEncrypt)
+	{
+		EncryptedLength = RSA_public_encrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
+	}
+	else
+	{
+		EncryptedLength = RSA_private_encrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
+	}
+
 	if (EncryptedLength < 0)
 	{
 		std::vector<char> buffer;
@@ -72,7 +82,15 @@ bool RSACipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 		break;
 	}
 
-	int DecryptedLength = RSA_private_decrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
+	int DecryptedLength = 0;
+	if (UsePublicKeyToEncrypt)
+	{
+		DecryptedLength = RSA_public_decrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
+	}
+	else
+	{
+		DecryptedLength = RSA_private_decrypt((int)Input.size(), Input.data(), Output.data(), RsaInstance, OpenSSLPaddingMode);
+	}
 	if (DecryptedLength < 0)
 	{
 		std::vector<char> buffer;

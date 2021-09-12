@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Log protobuf messages to disk"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+local output_folder_dialog = createSelectDirectoryDialog()
+output_folder_dialog.execute()
+
+local output_folder = output_folder_dialog.FileName
+local protobuf_serialize_hook = 0x141B5DF97
+local protobuf_parse_hook = 0x141B5DD40
+local message_counter = 0
+
+local function log_message_to_disk(message_addr, data_addr, size)
+    local type = getRTTIClassName(message_addr)
+    local data = ""
+
+    if size &gt; 0 then
+        data = string.char(unpack(readBytes(data_addr, size, true)))
+    end
+
+    local name = string.format("%06d_%s.dat", message_counter, string.gsub(type, "::", "__"))
+    local file, err = io.open(output_folder .. "/" .. name, "wb")
+
+    if (err) then
+        print(err)
+        return
+    end
+
+    file:write(data)
+    file:close()
+
+    message_counter = message_counter + 1
+    debug_continueFromBreakpoint(co_run)
+end
+
+function on_serialize()
+    local message_addr = RBX
+    local size = RBP
+    local data_addr = RSI
+
+    log_message_to_disk(message_addr, data_addr, size)
+end
+
+
+function on_parse()
+    local message_addr = RCX
+    local size = R8
+    local data_addr = RDX
+
+    log_message_to_disk(message_addr, data_addr, size)
+end
+
+debug_setBreakpoint(protobuf_serialize_hook, "on_serialize")
+debug_setBreakpoint(protobuf_parse_hook, "on_parse")
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+
+debug_removeBreakpoint(protobuf_serialize_hook)
+debug_removeBreakpoint(protobuf_parse_hook)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

@@ -19,7 +19,7 @@ class RSACipher
 {
 public:
 
-    RSACipher(RSAKeyPair* Key, RSAPaddingMode PaddingMode);
+    RSACipher(RSAKeyPair* Key, RSAPaddingMode PaddingMode, bool UsePublicKeyToEncrypt);
 
     bool Encrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output) override;
     bool Decrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output) override;
@@ -27,5 +27,6 @@ public:
 private:
     RSAKeyPair* Key;
     RSAPaddingMode PaddingMode;
+    bool UsePublicKeyToEncrypt = false;
 
 };

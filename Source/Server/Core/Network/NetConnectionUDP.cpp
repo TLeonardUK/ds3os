@@ -120,6 +120,60 @@ NetIPAddress NetConnectionUDP::GetAddress()
 
 bool NetConnectionUDP::Connect(std::string Hostname, int Port)
 {
+    if (Socket != INVALID_SOCKET_VALUE)
+    {
+        return false;
+    }
+
+    Socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (Socket == INVALID_SOCKET_VALUE)
+    {
+        Error("[%s] Failed to create socket, error %i.", GetName().c_str(), WSAGetLastError());
+        return false;
+    }
+
+    // Allow forcibly reuse of socket port even if something else 
+    // is trying to use it, or its not been freed correctly.
+    int const_1 = 1;
+    if (setsockopt(Socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&const_1, sizeof(const_1)))
+    {
+        Error("[%s] Failed to set socket options: SO_REUSEADDR", GetName().c_str());
+        return false;
+    }
+
+    // Set socket to non-blocking mode.
+#if defined(_WIN32)
+    unsigned long mode = 1;
+    if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
+    {
+        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        return false;
+    }
+#else
+    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+    {
+        Error("[%s] Failed to get socket flags.", GetName().c_str());
+        return false;
+    }
+    flags = flags | O_NONBLOCK;
+    if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
+    {
+        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        return false;
+    }
+#endif
+
+    struct sockaddr_in ListenAddress;
+    ListenAddress.sin_family = AF_INET;
+    ListenAddress.sin_addr.s_addr = INADDR_ANY;
+    ListenAddress.sin_port = 0;
+
+    if (bind(Socket, (struct sockaddr*)&ListenAddress, sizeof(ListenAddress)) < 0)
+    {
+        Error("[%s] Failed to bind socket to port %i.", GetName().c_str(), Port);
+        return false;
+    }
+
     Destination.sin_port = htons(Port);
     Destination.sin_family = AF_INET;
     memset(Destination.sin_zero, 0, sizeof(Destination.sin_zero));
@@ -201,7 +255,7 @@ bool NetConnectionUDP::Send(const std::vector<uint8_t>& Buffer, int Offset, int 
         return false;
     }
 
-   // Log(">> %i", Result);
+    //Log(">> %i", Result);
 
     return true;
 }

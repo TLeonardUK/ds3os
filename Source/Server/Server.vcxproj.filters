@@ -94,6 +94,9 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{8342f788-f0cc-4d51-82ed-4e04ba562475}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{7e684113-b8bc-478f-8d1c-7dc01ed29a8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server\Server.h">
@@ -288,6 +291,9 @@
     <ClInclude Include="Core\Network\NetIPAddress.h">
       <Filter>Core\Network</Filter>
     </ClInclude>
+    <ClInclude Include="Client\Client.h">
+      <Filter>Client</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -434,6 +440,9 @@
     </ClCompile>
     <ClCompile Include="Core\Network\NetUtils.cpp">
       <Filter>Core\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Client.cpp">
+      <Filter>Client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

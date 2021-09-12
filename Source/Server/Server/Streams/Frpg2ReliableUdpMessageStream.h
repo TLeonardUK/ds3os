@@ -22,7 +22,7 @@ class Frpg2ReliableUdpMessageStream
     : public Frpg2ReliableUdpFragmentStream
 {
 public:
-    Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken);
+    Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient = false);
 
     // Short hand version of Send for protobufs, takes care of constructing the wrapper message.
     virtual bool Send(google::protobuf::MessageLite* Message, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
@@ -32,6 +32,11 @@ public:
 
     // Returns true if a packet was recieved and stores packet in OutputPacket.
     virtual bool Recieve(Frpg2ReliableUdpMessage* Message);
+
+    // This is kinda gross, we shouldn't expose this we should wrap it in a nice interface.
+    // This returns the ack sequence number of the last sent message. Higher level code
+    // can use this to manually wait for responses to specific messages.
+    uint32_t GetLastSentMessageIndex() { return LastSentMessageIndex; }
 
 protected:
 
@@ -55,5 +60,7 @@ private:
     std::unordered_map<uint32_t, Frpg2ReliableUdpMessageType> OutstandingResponses;
 
     uint32_t SentMessageCounter = 0;
+
+    uint32_t LastSentMessageIndex = 0;
 
 };

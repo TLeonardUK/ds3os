@@ -17,12 +17,20 @@
 #include "Core/Crypto/RSAKeyPair.h"
 #include "Core/Crypto/RSACipher.h"
 
-Frpg2MessageStream::Frpg2MessageStream(std::shared_ptr<NetConnection> Connection, RSAKeyPair* InEncryptionKey)
+Frpg2MessageStream::Frpg2MessageStream(std::shared_ptr<NetConnection> Connection, RSAKeyPair* InEncryptionKey, bool AsClient)
     : Frpg2PacketStream(Connection)
     , EncryptionKey(InEncryptionKey)
 {
-    EncryptionCipher = std::make_shared<RSACipher>(EncryptionKey, RSAPaddingMode::X931);
-    DecryptionCipher = std::make_shared<RSACipher>(EncryptionKey, RSAPaddingMode::PKS1_OAEP);
+    if (AsClient)
+    {
+        EncryptionCipher = std::make_shared<RSACipher>(EncryptionKey, RSAPaddingMode::PKS1_OAEP, true);
+        DecryptionCipher = std::make_shared<RSACipher>(EncryptionKey, RSAPaddingMode::X931, true);
+    }
+    else
+    {
+        EncryptionCipher = std::make_shared<RSACipher>(EncryptionKey, RSAPaddingMode::X931, false);
+        DecryptionCipher = std::make_shared<RSACipher>(EncryptionKey, RSAPaddingMode::PKS1_OAEP, false);
+    }
 }
 
 void Frpg2MessageStream::SetCipher(std::shared_ptr<Cipher> Encryption, std::shared_ptr<Cipher> Decryption)

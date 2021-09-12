@@ -8,6 +8,7 @@
  */
 
 #include "Server/Server.h"
+#include "Client/Client.h"
 #include "Core/Utils/Logging.h"
 #include "Platform/Platform.h"
 
@@ -30,17 +31,38 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    Server ServerInstance; 
-    if (!ServerInstance.Init())
+    // TODO: Split this out into a seperate application.
+    // TODO: Also do less crappy arg parsing.
+    std::string mode_arg = argc > 1 ? argv[1] : "";
+    if (mode_arg == "-client_emulator")
     {
-        Error("Server failed to initialize.");
-        return 1;
+        Client ClientInstance;
+        if (!ClientInstance.Init())
+        {
+            Error("Client emulator failed to initialize.");
+            return 1;
+        }
+        ClientInstance.RunUntilQuit();
+        if (!ClientInstance.Term())
+        {
+            Error("Client emulator failed to terminate.");
+            return 1;
+        }
     }
-    ServerInstance.RunUntilQuit();
-    if (!ServerInstance.Term())
+    else
     {
-        Error("Server failed to terminate.");
-        return 1;
+        Server ServerInstance; 
+        if (!ServerInstance.Init())
+        {
+            Error("Server failed to initialize.");
+            return 1;
+        }
+        ServerInstance.RunUntilQuit();
+        if (!ServerInstance.Term())
+        {
+            Error("Server failed to terminate.");
+            return 1;
+        }
     }
     
     if (!PlatformTerm())

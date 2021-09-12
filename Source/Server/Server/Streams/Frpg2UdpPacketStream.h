@@ -20,7 +20,7 @@ class NetConnection;
 class Frpg2UdpPacketStream
 {
 public:
-    Frpg2UdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken);
+    Frpg2UdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient = false);
 
     // Returns true if send was successful, if false is returned the send queue
     // is likely saturated or the packet is invalid.

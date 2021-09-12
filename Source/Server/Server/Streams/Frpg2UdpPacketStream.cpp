@@ -18,13 +18,21 @@
 #include "Core/Crypto/CWCServerUDPCipher.h"
 #include "Core/Crypto/CWCClientUDPCipher.h"
 
-Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& InCwcKey, uint64_t InAuthToken)
+Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& InCwcKey, uint64_t InAuthToken, bool AsClient)
     : Connection(InConnection)
     , CwcKey(InCwcKey)
     , AuthToken(InAuthToken)
 {
-    EncryptionCipher = std::make_shared<CWCServerUDPCipher>(InCwcKey, AuthToken);
-    DecryptionCipher = std::make_shared<CWCClientUDPCipher>(InCwcKey, AuthToken);
+    if (AsClient)
+    {
+        EncryptionCipher = std::make_shared<CWCClientUDPCipher>(InCwcKey, AuthToken);
+        DecryptionCipher = std::make_shared<CWCServerUDPCipher>(InCwcKey, AuthToken);
+    }
+    else
+    {
+        EncryptionCipher = std::make_shared<CWCServerUDPCipher>(InCwcKey, AuthToken);
+        DecryptionCipher = std::make_shared<CWCClientUDPCipher>(InCwcKey, AuthToken);
+    }
 
     RecieveBuffer.resize(64 * 1024);
 

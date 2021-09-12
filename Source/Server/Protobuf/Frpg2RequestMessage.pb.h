@@ -1232,14 +1232,14 @@ class GetServiceStatusResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required int64 id = 1;
+  // optional int64 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
   inline ::google::protobuf::int64 id() const;
   inline void set_id(::google::protobuf::int64 value);
 
-  // required string steam_id = 2;
+  // optional string steam_id = 2;
   inline bool has_steam_id() const;
   inline void clear_steam_id();
   static const int kSteamIdFieldNumber = 2;
@@ -1251,14 +1251,14 @@ class GetServiceStatusResponse : public ::google::protobuf::MessageLite {
   inline ::std::string* release_steam_id();
   inline void set_allocated_steam_id(::std::string* steam_id);
 
-  // required int64 unknown_1 = 3;
+  // optional int64 unknown_1 = 3;
   inline bool has_unknown_1() const;
   inline void clear_unknown_1();
   static const int kUnknown1FieldNumber = 3;
   inline ::google::protobuf::int64 unknown_1() const;
   inline void set_unknown_1(::google::protobuf::int64 value);
 
-  // required int64 app_version = 4;
+  // optional int64 app_version = 4;
   inline bool has_app_version() const;
   inline void clear_app_version();
   static const int kAppVersionFieldNumber = 4;
@@ -25857,7 +25857,7 @@ inline void GetServiceStatus::set_app_version(::google::protobuf::int64 value) {
 
 // GetServiceStatusResponse
 
-// required int64 id = 1;
+// optional int64 id = 1;
 inline bool GetServiceStatusResponse::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -25881,7 +25881,7 @@ inline void GetServiceStatusResponse::set_id(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GetServiceStatusResponse.id)
 }
 
-// required string steam_id = 2;
+// optional string steam_id = 2;
 inline bool GetServiceStatusResponse::has_steam_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -25957,7 +25957,7 @@ inline void GetServiceStatusResponse::set_allocated_steam_id(::std::string* stea
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.GetServiceStatusResponse.steam_id)
 }
 
-// required int64 unknown_1 = 3;
+// optional int64 unknown_1 = 3;
 inline bool GetServiceStatusResponse::has_unknown_1() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -25981,7 +25981,7 @@ inline void GetServiceStatusResponse::set_unknown_1(::google::protobuf::int64 va
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.GetServiceStatusResponse.unknown_1)
 }
 
-// required int64 app_version = 4;
+// optional int64 app_version = 4;
 inline bool GetServiceStatusResponse::has_app_version() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }

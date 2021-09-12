@@ -34,6 +34,9 @@ public:
     bool Load(std::filesystem::path& PrivatePath);
     bool Save(std::filesystem::path& PrivatePath, std::filesystem::path& PublicPath);
 
+    bool LoadPublicKeyFromString(const std::string& key);
+    bool LoadPrivateKeyFromString(const std::string& key);
+
     //bool Encrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output, RSAPaddingMode PaddingMode);
     //bool Decrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output, RSAPaddingMode PaddingMode);
 

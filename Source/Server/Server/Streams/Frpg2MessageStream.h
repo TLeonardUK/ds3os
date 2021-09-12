@@ -21,7 +21,7 @@ class Frpg2MessageStream
     : public Frpg2PacketStream
 {
 public:
-    Frpg2MessageStream(std::shared_ptr<NetConnection> Connection, RSAKeyPair* InEncryptionKey);
+    Frpg2MessageStream(std::shared_ptr<NetConnection> Connection, RSAKeyPair* InEncryptionKey, bool AsClient = false);
 
     // Returns true if send was successful, if false is returned the send queue
     // is likely saturated or the packet is invalid.

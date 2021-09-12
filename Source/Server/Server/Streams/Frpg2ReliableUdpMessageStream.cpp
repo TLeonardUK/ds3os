@@ -27,8 +27,8 @@
 // Path that failed packets will be written to
 #define DUMP_PATH "Z:\\ds3os\\Temp\\FailedDeserialize"
 
-Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken)
-    : Frpg2ReliableUdpFragmentStream(Connection, CwcKey, AuthToken)
+Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient)
+    : Frpg2ReliableUdpFragmentStream(Connection, CwcKey, AuthToken, AsClient)
 {
 }
 
@@ -47,6 +47,7 @@ bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& 
     else
     {
         SendMessage.Header.msg_index = SentMessageCounter++;
+        LastSentMessageIndex = SendMessage.Header.msg_index;
     }
 
     Frpg2ReliableUdpFragment Packet;

@@ -27,7 +27,7 @@ class Frpg2ReliableUdpPacketStream
     : public Frpg2UdpPacketStream
 {
 public:
-    Frpg2ReliableUdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken);
+    Frpg2ReliableUdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient = false);
 
     // Returns true if send was successful, if false is returned the send queue
     // is likely saturated or the packet is invalid.
@@ -47,6 +47,9 @@ public:
     // Gets the current connection state of this message stream.
     Frpg2ReliableUdpStreamState GetState() { return State; }
 
+    // Attempts to do the initial connection establishing handshake.
+    void Connect();
+
     // Attempts to do a graceful disconnect so the remote end doesn't send us messages in future.
     void Disconnect();
 
@@ -62,15 +65,18 @@ protected:
     void HandleOutgoing();
 
     void Handle_SYN(const Frpg2ReliableUdpPacket& Packet);
+    void Handle_SYN_ACK(const Frpg2ReliableUdpPacket& Packet);
     void Handle_DAT(const Frpg2ReliableUdpPacket& Packet);
     void Handle_HBT(const Frpg2ReliableUdpPacket& Packet);
     void Handle_FIN(const Frpg2ReliableUdpPacket& Packet);
+    void Handle_FIN_ACK(const Frpg2ReliableUdpPacket& Packet);
     void Handle_RST(const Frpg2ReliableUdpPacket& Packet);
     void Handle_DAT_ACK(const Frpg2ReliableUdpPacket& Packet);
     void Handle_ACK(const Frpg2ReliableUdpPacket& Packet);
 
     bool SendRaw(const Frpg2ReliableUdpPacket& Packet);
 
+    void Send_SYN();
     void Send_SYN_ACK(uint32_t RemoteIndex);
     void Send_ACK(uint32_t RemoteIndex);
     void Send_FIN_ACK(uint32_t RemoteIndex);

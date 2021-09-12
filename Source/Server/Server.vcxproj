@@ -91,6 +91,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Client\Client.h" />
     <ClInclude Include="Config\BuildConfig.h" />
     <ClInclude Include="Config\RuntimeConfig.h" />
     <ClInclude Include="Core\Crypto\Cipher.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Client\Client.cpp" />
     <ClCompile Include="Config\RuntimeConfig.cpp" />
     <ClCompile Include="Core\Crypto\CWCCipher.cpp" />
     <ClCompile Include="Core\Crypto\CWCClientUDPCipher.cpp" />

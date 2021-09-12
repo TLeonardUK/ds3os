@@ -79,6 +79,46 @@ bool RSAKeyPair::Load(std::filesystem::path& PrivatePath)
     return true;
 }
 
+bool RSAKeyPair::LoadPublicKeyFromString(const std::string& key)
+{
+	if (RsaInstance != nullptr)
+	{
+		Cleanup();
+	}
+
+	// Read private key.
+	BIO* BioPrivate = BIO_new_mem_buf(key.c_str(), (int)key.length());
+	RsaInstance = PEM_read_bio_RSAPublicKey(BioPrivate, &RsaInstance, nullptr, nullptr);
+	BIO_free_all(BioPrivate);
+
+	if (RsaInstance == nullptr)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool RSAKeyPair::LoadPrivateKeyFromString(const std::string& key)
+{
+	if (RsaInstance != nullptr)
+	{
+		Cleanup();
+	}
+
+	// Read private key.
+	BIO* BioPrivate = BIO_new_mem_buf(key.c_str(), (int)key.length());
+	RsaInstance = PEM_read_bio_RSAPrivateKey(BioPrivate, &RsaInstance, nullptr, nullptr);
+	BIO_free_all(BioPrivate);
+
+	if (RsaInstance == nullptr)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 bool RSAKeyPair::Save(std::filesystem::path& PrivatePath, std::filesystem::path& PublicPath)
 {
 	// Save public key.

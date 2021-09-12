@@ -56,7 +56,7 @@ message EmptyResponse {
 message RequestQueryLoginServerInfo {
     required string steam_id = 1;
     optional string f2 = 2;
-    required uint64 app_version = 3;                // Guessing a bit here, but a network protocol version would be wise to route to the right servers during updates.
+    required uint64 app_version = 3;                // app version without the period and -1. eg. app ver 1.13 = 112
 }
 
 // Send in response to RequestQueryLoginServerInfo
@@ -88,7 +88,7 @@ message RequestHandshakeResponse {
 // Sent after handshake, all seemingly constant data (apart from the steam_id). 
 // Presumably used for ensure we are connecting to a compatible server?
 message GetServiceStatus {
-    required int64 id = 1;
+    required int64 id = 1;              
     required string steam_id = 2;
     optional string unknown_1 = 3;
     required int64 app_version = 4;     // 1.15 = 114 (zero indexed)
@@ -102,11 +102,12 @@ message GetServiceStatusForXboxOne {
 // Response to GetServiceStatus, contains identical data to what is sent
 // with the exception of a black steam_id. Presumably if we connected to a dev server
 // or something we would get different responses.
+// If we are on an older version of the game an empty response is sent back for this.
 message GetServiceStatusResponse {
-    required int64 id = 1;
-    required string steam_id = 2;
-    required int64 unknown_1 = 3;
-    required int64 app_version = 4;
+    optional int64 id = 1;
+    optional string steam_id = 2;
+    optional int64 unknown_1 = 3;
+    optional int64 app_version = 4;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -1049,8 +1050,10 @@ message RequestBenchmarkThroughputResponse {
 // Game Server Messages - Regulation Files
 // ------------------------------------------------------------------------------------------------------------
 
+// Most of these have been derived from ghidra.
+
 message RequestGetRegulationFile {
-    // Unknown
+    required uint32 unknown_1 = 1;
 }
 
 message RequestGetRegulationFileResponse {
@@ -1066,12 +1069,13 @@ message RegulationFileDiffData {
 }
 
 message RegulationFileUpdateMessage {
-    // Unknown
+    //required varidic unknown_1 = 1;
+    //RegulationFileDiffData
 }
 
 message RegulationFileUpdatePushMessage {
     required PushMessageId push_message_id = 1;
-    // Unknown
+    required RegulationFileUpdateMessage update_message = 2;
 }
 
 // ------------------------------------------------------------------------------------------------------------

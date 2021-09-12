@@ -19,8 +19,8 @@
 #include "Core/Crypto/RSAKeyPair.h"
 #include "Core/Crypto/RSACipher.h"
 
-Frpg2ReliableUdpPacketStream::Frpg2ReliableUdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken)
-    : Frpg2UdpPacketStream(Connection, CwcKey, AuthToken)
+Frpg2ReliableUdpPacketStream::Frpg2ReliableUdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient)
+    : Frpg2UdpPacketStream(Connection, CwcKey, AuthToken, AsClient)
 {
     Reset();
 }
@@ -31,6 +31,11 @@ void Frpg2ReliableUdpPacketStream::Disconnect()
     {
         Send_FIN();
     }
+}
+
+void Frpg2ReliableUdpPacketStream::Connect()
+{
+    Send_SYN();
 }
 
 bool Frpg2ReliableUdpPacketStream::Send(const Frpg2ReliableUdpPacket& Input)
@@ -208,7 +213,6 @@ bool Frpg2ReliableUdpPacketStream::IsOpcodeSequenced(Frpg2ReliableUdpOpCode Opco
 
     return Opcode == Frpg2ReliableUdpOpCode::DAT ||
            Opcode == Frpg2ReliableUdpOpCode::DAT_ACK ||
-           Opcode == Frpg2ReliableUdpOpCode::SYN_ACK ||
            Opcode == Frpg2ReliableUdpOpCode::FIN_ACK;
 }
 
@@ -285,6 +289,11 @@ void Frpg2ReliableUdpPacketStream::ProcessPacket(const Frpg2ReliableUdpPacket & 
             Handle_SYN(Packet);
             break;
         }
+    case Frpg2ReliableUdpOpCode::SYN_ACK:
+        {
+            Handle_SYN_ACK(Packet);
+            break;
+        }
     case Frpg2ReliableUdpOpCode::DAT:
         {
             Handle_DAT(Packet);
@@ -316,10 +325,8 @@ void Frpg2ReliableUdpPacketStream::ProcessPacket(const Frpg2ReliableUdpPacket & 
             break;
         }
     case Frpg2ReliableUdpOpCode::FIN_ACK:
-    case Frpg2ReliableUdpOpCode::SYN_ACK:
         {
-            Error("[%s] Recieved opcode that is normally only used for outgoing connections, which we don't currently support.", Connection->GetName().c_str());
-            Ensure(false);
+            Handle_FIN_ACK(Packet);
             break;
         }
     default:
@@ -345,6 +352,26 @@ void Frpg2ReliableUdpPacketStream::Handle_SYN(const Frpg2ReliableUdpPacket& Pack
 
     // And send our ACK message as well (this seems redundent, but its what happens in ds3).
     Send_ACK(InLocalAck);
+}
+
+void Frpg2ReliableUdpPacketStream::Handle_SYN_ACK(const Frpg2ReliableUdpPacket& Packet)
+{
+    //Log("[%s] Recieved SYN, establishing handshake.", Connection->GetName().c_str());
+
+    State = Frpg2ReliableUdpStreamState::SynRecieved;
+
+    uint32_t InLocalAck, InRemoteAck;
+    Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
+
+    RemoteSequenceIndex = InLocalAck;
+
+    // And send our ACK message as well (this seems redundent, but its what happens in ds3).
+    Send_ACK(RemoteSequenceIndex);
+
+    // SYN_ACK bumps the sequence index so is a "sequenced opcode", but doesn't abid by
+    // any of the other conventions of sequenced ones. So simplest to just bump the sequence
+    // index here.
+    SequenceIndex = (SequenceIndex + 1) % MAX_ACK_VALUE;
 }
 
 void Frpg2ReliableUdpPacketStream::Handle_HBT(const Frpg2ReliableUdpPacket& Packet)
@@ -377,6 +404,12 @@ void Frpg2ReliableUdpPacketStream::Handle_FIN(const Frpg2ReliableUdpPacket& Pack
     // TODO: We probably need to send a FIN_ACK here as well.
     Send_FIN_ACK(InLocalAck);
 
+    State = Frpg2ReliableUdpStreamState::Closing;
+}
+
+void Frpg2ReliableUdpPacketStream::Handle_FIN_ACK(const Frpg2ReliableUdpPacket& Packet)
+{
+    // Don't set straight to closed, we want to wait till queues are drained first.
     State = Frpg2ReliableUdpStreamState::Closing;
 }
 
@@ -449,6 +482,30 @@ void Frpg2ReliableUdpPacketStream::Handle_DAT_ACK(const Frpg2ReliableUdpPacket& 
     RecieveQueue.push_back(Packet);
 }
 
+void Frpg2ReliableUdpPacketStream::Send_SYN()
+{
+    Frpg2ReliableUdpPacket SynRequest;
+    SynRequest.Header.SetAckCounters(SequenceIndex, 0);
+    SynRequest.Header.opcode = Frpg2ReliableUdpOpCode::SYN;
+
+    // TODO: Figure out these values, they seem to always be the same, but we 
+    // should figure out what they are regardless.
+    Frpg2ReliableUdpPacketOpCodePayload_SYN SynPayload;
+    SynPayload.unknown[0] = 0x12;
+    SynPayload.unknown[1] = 0x10;
+    SynPayload.unknown[2] = 0x20;
+    SynPayload.unknown[3] = 0x20;
+    SynPayload.unknown[4] = 0x00;
+    SynPayload.unknown[5] = 0x01;
+    SynPayload.unknown[6] = 0x00;
+    SynPayload.unknown[7] = 0x00;
+
+    SynRequest.Payload.resize(sizeof(SynPayload));
+    memcpy(SynRequest.Payload.data(), &SynPayload, sizeof(SynPayload));
+
+    Send(SynRequest);
+}
+
 void Frpg2ReliableUdpPacketStream::Send_SYN_ACK(uint32_t RemoteIndex)
 {
     Frpg2ReliableUdpPacket SynAckResponse;
@@ -473,6 +530,11 @@ void Frpg2ReliableUdpPacketStream::Send_SYN_ACK(uint32_t RemoteIndex)
     Send(SynAckResponse);
 
     RemoteSequenceIndex = RemoteIndex;
+
+    // SYN_ACK bumps the sequence index so is a "sequenced opcode", but doesn't abid by
+    // any of the other conventions of sequenced ones. So simplest to just bump the sequence
+    // index here.
+    SequenceIndex = (SequenceIndex + 1) % MAX_ACK_VALUE;
 }
 
 void Frpg2ReliableUdpPacketStream::Send_ACK(uint32_t RemoteIndex)
@@ -521,6 +583,8 @@ bool Frpg2ReliableUdpPacketStream::SendRaw(const Frpg2ReliableUdpPacket& Input)
 {
     uint32_t LocalAck, RemoteAck;
     Input.Header.GetAckCounters(LocalAck, RemoteAck);
+
+    Ensure(Input.Header.opcode != Frpg2ReliableUdpOpCode::Unset);
 
     //Log("[%s] Sent Packet: LocalAck=%i RemoteAck=%i", Connection->GetName().c_str(), LocalAck, RemoteAck);
     //EmitDebugInfo(false, Input);

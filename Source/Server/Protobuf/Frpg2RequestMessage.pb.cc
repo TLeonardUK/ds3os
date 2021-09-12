@@ -2627,7 +2627,7 @@ bool GetServiceStatusResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int64 id = 1;
+      // optional int64 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -2641,7 +2641,7 @@ bool GetServiceStatusResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // required string steam_id = 2;
+      // optional string steam_id = 2;
       case 2: {
         if (tag == 18) {
          parse_steam_id:
@@ -2654,7 +2654,7 @@ bool GetServiceStatusResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // required int64 unknown_1 = 3;
+      // optional int64 unknown_1 = 3;
       case 3: {
         if (tag == 24) {
          parse_unknown_1:
@@ -2669,7 +2669,7 @@ bool GetServiceStatusResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // required int64 app_version = 4;
+      // optional int64 app_version = 4;
       case 4: {
         if (tag == 32) {
          parse_app_version:
@@ -2709,23 +2709,23 @@ failure:
 void GetServiceStatusResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.GetServiceStatusResponse)
-  // required int64 id = 1;
+  // optional int64 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->id(), output);
   }
 
-  // required string steam_id = 2;
+  // optional string steam_id = 2;
   if (has_steam_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->steam_id(), output);
   }
 
-  // required int64 unknown_1 = 3;
+  // optional int64 unknown_1 = 3;
   if (has_unknown_1()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->unknown_1(), output);
   }
 
-  // required int64 app_version = 4;
+  // optional int64 app_version = 4;
   if (has_app_version()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->app_version(), output);
   }
@@ -2739,28 +2739,28 @@ int GetServiceStatusResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int64 id = 1;
+    // optional int64 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->id());
     }
 
-    // required string steam_id = 2;
+    // optional string steam_id = 2;
     if (has_steam_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->steam_id());
     }
 
-    // required int64 unknown_1 = 3;
+    // optional int64 unknown_1 = 3;
     if (has_unknown_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->unknown_1());
     }
 
-    // required int64 app_version = 4;
+    // optional int64 app_version = 4;
     if (has_app_version()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
@@ -2807,7 +2807,6 @@ void GetServiceStatusResponse::CopyFrom(const GetServiceStatusResponse& from) {
 }
 
 bool GetServiceStatusResponse::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }

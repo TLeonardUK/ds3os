@@ -34,6 +34,7 @@ public:
     uint16_t game_port;
     uint16_t padding    = 0x00;
 
+    // Seems to be buffer sizes or something of that description.
     uint32_t unknown_1  = 0x00008000;
     uint32_t unknown_2  = 0x00008000;
     uint32_t unknown_3  = 0x0000A000;
