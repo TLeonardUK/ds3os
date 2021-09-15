@@ -65,7 +65,7 @@ Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visu
 3. Enter command: `.\bootstrap-vcpkg.bat` and wait for it to process
 4. Enter command: `.\vcpkg integrate install` and wait for it to process
 
-Building the project should now just require opening the Source/DS3OpenServer.sln and building.
+Building the project should now require opening the Source/DS3OpenServer.sln and building it.
 
 # Whats in the repository?
 ```
