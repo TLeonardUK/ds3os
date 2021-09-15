@@ -65,12 +65,7 @@ Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visu
 3. Enter command: `.\bootstrap-vcpkg.bat` and wait for it to process
 4. Enter command: `.\vcpkg integrate install` and wait for it to process
 
-Building the project should now require opening the Source/DS3OpenServer.sln and building it.
-
-# Uninstallation
-1. Run Windows PowerShell as Administrator and `cd` into the directory, example: `cd C:\dev\vcpkg`
-2. Enter command: `.\vcpkg integrate remove`
-3. Delete the directory by entering the commands `cd C:\` and `Remove-Item 'C:\dev\vcpkg'`
+Building the project should now require opening the Source/DS3OpenServer.sln and building it. To uninstall vcpkg use the `.\vcpkg integrate remove` command.
 
 # Whats in the repository?
 ```
