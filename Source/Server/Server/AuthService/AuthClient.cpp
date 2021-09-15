@@ -75,6 +75,12 @@ bool AuthClient::Poll()
             Frpg2Message Message;
             if (MessageStream->Recieve(&Message))
             {
+                if (Message.Header.msg_type != Frpg2MessageType::RequestHandshake)
+                {
+                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected RequestHandshake.", GetName().c_str());
+                    return true;
+                }
+
                 // First request is always the handshake request. 
                 Frpg2RequestMessage::RequestHandshake Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
@@ -93,16 +99,15 @@ bool AuthClient::Poll()
 
                 // Disable cipher while we send this "hardcoded" message.
                 MessageStream->SetCipher(nullptr, nullptr);
-
-                Frpg2Message Response;
-
+                
                 // TODO: Not sure whats going on with this payload right now. 
                 // Seems to be 11 bytes followed by 16 zeros, unencrypted. Key exchange of some description?
+                Frpg2Message Response;
                 Response.Payload.resize(27);
                 FillRandomBytes(Response.Payload);
                 memset(Response.Payload.data() + 11, 0, 16);
 
-                if (!MessageStream->Send(Response, Message.Header.request_index))
+                if (!MessageStream->Send(Response, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
                     Warning("[%s] Disconnecting client as failed to send cipher validation response.", GetName().c_str());
                     return true;
@@ -124,6 +129,12 @@ bool AuthClient::Poll()
             Frpg2Message Message;
             if (MessageStream->Recieve(&Message))
             {
+                if (Message.Header.msg_type != Frpg2MessageType::GetServiceStatus)
+                {
+                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected GetServiceStatus.", GetName().c_str());
+                    return true;
+                }
+
                 Frpg2RequestMessage::GetServiceStatus Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
@@ -144,7 +155,7 @@ bool AuthClient::Poll()
                     Response.set_app_version(BuildConfig::APP_VERSION);
                 }
 
-                if (!MessageStream->Send(&Response, Message.Header.request_index))
+                if (!MessageStream->Send(&Response, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
                     Warning("[%s] Disconnecting client as failed to send GetServiceStatusResponse response.", GetName().c_str());
                     return true;
@@ -164,6 +175,11 @@ bool AuthClient::Poll()
             Frpg2Message Message;
             if (MessageStream->Recieve(&Message))
             {
+                if (Message.Header.msg_type != Frpg2MessageType::KeyMaterial)
+                {
+                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected key material.", GetName().c_str());
+                    return true;
+                }
                 if (Message.Payload.size() != 8)
                 {
                     Warning("[%s] Disconnecting client as key exchange payload was different size to expected.", GetName().c_str());
@@ -183,7 +199,7 @@ bool AuthClient::Poll()
                 //       This key however does output plaintext, but with a message tag failure. Huuum
                 GameCwcKey = KeyResponse.Payload;
 
-                if (!MessageStream->Send(KeyResponse, Message.Header.request_index))
+                if (!MessageStream->Send(KeyResponse, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
                     Warning("[%s] Disconnecting client as failed to send key exchange.", GetName().c_str());
                     return true;
@@ -201,6 +217,17 @@ bool AuthClient::Poll()
             Frpg2Message Message;
             if (MessageStream->Recieve(&Message))
             {
+                // Format Note:
+                // The message payload is stored as:
+                //      Bytes 0-15: GameCwcKey Calculated Above
+                //      Bytes 16- : SteamTicket as recieved from GetAuthSessionTicket
+
+                if (Message.Header.msg_type != Frpg2MessageType::SteamTicket)
+                {
+                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected steam ticket.", GetName().c_str());
+                    return true;
+                }
+
                 //Log("[%s] Recieved steam session ticket.", GetName().c_str());
 
                 // TODO: Could actually link to the steamapi libs and authenticate this ticket? 
@@ -230,7 +257,7 @@ bool AuthClient::Poll()
                 Response.Payload.resize(sizeof(GameInfo));
                 memcpy(Response.Payload.data(), &GameInfo, sizeof(GameInfo));
 
-                if (!MessageStream->Send(Response, Message.Header.request_index))
+                if (!MessageStream->Send(Response, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
                     Warning("[%s] Disconnecting client as failed to game server info.", GetName().c_str());
                     return true;

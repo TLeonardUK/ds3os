@@ -31,7 +31,7 @@ public:
 
     virtual std::shared_ptr<NetConnection> Accept() = 0;
 
-    virtual bool Connect(std::string Hostname, int Port) = 0;
+    virtual bool Connect(std::string Hostname, int Port, bool ForceLastIpEntry = false) = 0;
 
     virtual bool Pump() = 0;
 

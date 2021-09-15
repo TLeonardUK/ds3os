@@ -64,7 +64,13 @@ bool LoginClient::Poll()
 
     Frpg2Message Message;
     while (MessageStream->Recieve(&Message))
-    {   
+    {
+        if (Message.Header.msg_type != Frpg2MessageType::RequestQueryLoginServerInfo)
+        {
+            Warning("[%s] Disconnecting client as recieved unexpected packet type while expecting.", GetName().c_str());
+            return true;
+        }
+
         // Login server only accepts RequestQueryLoginServerInfo messages. 
         // Nice and straight forward!
         Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
@@ -91,7 +97,7 @@ bool LoginClient::Poll()
         Response.set_server_ip(ServerIP);
         Response.set_port(Config.AuthServerPort);
 
-        if (!MessageStream->Send(&Response, Message.Header.request_index))
+        if (!MessageStream->Send(&Response, Frpg2MessageType::Reply, Message.Header.msg_index))
         {
             Warning("[%s] Disconnecting client as failed to send RequestQueryLoginServerInfo response.", GetName().c_str());
             return true;

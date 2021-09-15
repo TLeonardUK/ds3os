@@ -57,6 +57,22 @@ bool Client::Init()
         return false;
     }
 
+    Log("Requesting auth session ticket ...");
+    AppTicket.resize(2048);
+    uint32 TicketLength = 0;
+    AppTicketHandle = SteamUser()->GetAuthSessionTicket(AppTicket.data(), (int)AppTicket.size(), &TicketLength);
+
+    if (AppTicketHandle != k_HAuthTicketInvalid)
+    {
+        AppTicket.resize(TicketLength);
+        Log("Recieved auth session ticket of length %i", TicketLength);
+    }
+    else
+    {
+        Error("Failed to retrieve auth session ticket.");
+        return false;
+    }
+
     ChangeState(ClientState::LoginServer_Connect);
 
     return true;
@@ -65,6 +81,12 @@ bool Client::Init()
 bool Client::Term()
 {
     Log("Terminating server ...");
+
+    if (AppTicketHandle != k_HAuthTicketInvalid)
+    {
+        SteamUser()->CancelAuthTicket(AppTicketHandle);
+        AppTicketHandle = k_HAuthTicketInvalid;
+    }
 
     return true;
 }
@@ -165,7 +187,7 @@ void Client::Handle_LoginServer_Connect()
     Log("Connecting to login server.");
 
     LoginServerConnection = std::make_shared<NetConnectionTCP>("Client Emulator - Login Server");
-    if (!LoginServerConnection->Connect(ServerIP, ServerPort))
+    if (!LoginServerConnection->Connect(ServerIP, ServerPort, true))
     {
         Fatal("Failed to connect to server at %s:%i", ServerIP, ServerPort);
     }
@@ -184,7 +206,7 @@ void Client::Handle_LoginServer_RequestServerInfo()
     Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
     Request.set_steam_id(ClientStreamId.c_str());
     Request.set_app_version(ClientAppVersion);
-    Ensure(LoginServerMessageStream->Send(&Request));
+    Ensure(LoginServerMessageStream->Send(&Request, Frpg2MessageType::RequestQueryLoginServerInfo));
 
     Frpg2Message Response;
     WaitForNextMessage(LoginServerConnection, LoginServerMessageStream, Response);
@@ -230,7 +252,7 @@ void Client::Handle_AuthServer_RequestHandshake()
 
     Frpg2RequestMessage::RequestHandshake Request;
     Request.set_aes_cwc_key(CwcKey.data(), CwcKey.size());
-    Ensure(AuthServerMessageStream->Send(&Request));
+    Ensure(AuthServerMessageStream->Send(&Request, Frpg2MessageType::RequestHandshake));
 
     AuthServerMessageStream->SetCipher(nullptr, nullptr);
 
@@ -253,15 +275,18 @@ void Client::Handle_AuthServer_RequestServiceStatus()
     Request.set_id(1);
     Request.set_steam_id(ClientStreamId.c_str(), (int)ClientStreamId.size());
     Request.set_app_version(ClientAppVersion);
-    Ensure(AuthServerMessageStream->Send(&Request));
+    Ensure(AuthServerMessageStream->Send(&Request, Frpg2MessageType::GetServiceStatus));
 
     Frpg2Message Response;
     WaitForNextMessage(AuthServerConnection, AuthServerMessageStream, Response);
 
     if (Response.Payload.size() == 0)
     {
-        Log("New version of application available or server is down for maintenance.");
+        Fatal("New version of application available or server is down for maintenance.");
     }
+
+    Frpg2RequestMessage::GetServiceStatusResponse TypedResponse;
+    Ensure(TypedResponse.ParseFromArray(Response.Payload.data(), (int)Response.Payload.size()));
 
     ChangeState(ClientState::AuthServer_ExchangeKeyData);
 
@@ -278,7 +303,7 @@ void Client::Handle_AuthServer_ExchangeKeyData()
 
     Frpg2Message KeyExchangeMessage;
     KeyExchangeMessage.Payload = HalfGameCwcKey;
-    Ensure(AuthServerMessageStream->Send(KeyExchangeMessage));
+    Ensure(AuthServerMessageStream->Send(KeyExchangeMessage, Frpg2MessageType::KeyMaterial));
 
     Frpg2Message KeyExchangeResponse;
     WaitForNextMessage(AuthServerConnection, AuthServerMessageStream, KeyExchangeResponse);
@@ -295,18 +320,19 @@ void Client::Handle_AuthServer_GetServerInfo()
 {
     Log("Sending steam ticket to auth server.");
 
-    Frpg2Message SteamTicketMessage;
-    SteamTicketMessage.Payload.resize(128); 
-    // TODO: Fill ticket information with something valid.
-    Ensure(AuthServerMessageStream->Send(SteamTicketMessage));
-
+    Frpg2Message SteamTicketMessage; 
+    SteamTicketMessage.Payload.resize(AppTicket.size() + 16);
+    memcpy(SteamTicketMessage.Payload.data(), GameServerCwcKey.data(), 16);
+    memcpy(SteamTicketMessage.Payload.data() + 16, AppTicket.data(), AppTicket.size());
+    Ensure(AuthServerMessageStream->Send(SteamTicketMessage, Frpg2MessageType::SteamTicket));
+     
     Frpg2Message GameInfoResponse;
     WaitForNextMessage(AuthServerConnection, AuthServerMessageStream, GameInfoResponse);
     Ensure(GameInfoResponse.Payload.size() == sizeof(Frpg2GameServerInfo));
 
     Frpg2GameServerInfo GameInfo;
     memcpy(&GameInfo, GameInfoResponse.Payload.data(), sizeof(Frpg2GameServerInfo));
-    GameInfo.SwapEndian();
+    GameInfo.SwapEndian(); 
 
     GameServerAuthToken = GameInfo.auth_token;
     GameServerIP = GameInfo.game_server_ip;

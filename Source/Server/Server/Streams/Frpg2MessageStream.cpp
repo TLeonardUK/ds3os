@@ -39,12 +39,12 @@ void Frpg2MessageStream::SetCipher(std::shared_ptr<Cipher> Encryption, std::shar
     DecryptionCipher = Decryption;
 }
 
-bool Frpg2MessageStream::Send(const Frpg2Message& Message, uint32_t ResponseToRequestIndex)
+bool Frpg2MessageStream::Send(const Frpg2Message& Message, Frpg2MessageType MessageType, uint32_t ResponseToRequestIndex)
 {
     // Fill in the header of the message.
     Frpg2Message SendMessage = Message;
-    SendMessage.Header.request_index = ResponseToRequestIndex;
-    //SendMessage.Header.unknown_1 = ???; // TODO: We need to figure out how to fill this in.
+    SendMessage.Header.msg_index = ResponseToRequestIndex;
+    SendMessage.Header.msg_type = MessageType;
 
     std::vector<uint8_t> DecryptedBuffer = Message.Payload;
     if (EncryptionCipher)
@@ -72,7 +72,7 @@ bool Frpg2MessageStream::Send(const Frpg2Message& Message, uint32_t ResponseToRe
     return true;
 }
 
-bool Frpg2MessageStream::Send(google::protobuf::MessageLite* Message, uint32_t ResponseToRequestIndex)
+bool Frpg2MessageStream::Send(google::protobuf::MessageLite* Message, Frpg2MessageType MessageType, uint32_t ResponseToRequestIndex)
 {
     Frpg2Message ResponseMessage;
     ResponseMessage.Payload.resize(Message->ByteSize());
@@ -83,7 +83,7 @@ bool Frpg2MessageStream::Send(google::protobuf::MessageLite* Message, uint32_t R
         return false;
     }
 
-    if (!Send(ResponseMessage, ResponseToRequestIndex))
+    if (!Send(ResponseMessage, MessageType, ResponseToRequestIndex))
     {
         return true;
     }
@@ -106,7 +106,7 @@ bool Frpg2MessageStream::Recieve(Frpg2Message* Message)
     }
 
     std::vector<uint8_t> EncryptedBuffer = Message->Payload;
-    if (DecryptionCipher)
+    if (DecryptionCipher && EncryptedBuffer.size() > 0)
     {
         if (!DecryptionCipher->Decrypt(EncryptedBuffer, Message->Payload))
         {
@@ -132,7 +132,7 @@ bool Frpg2MessageStream::PacketToMessage(const Frpg2Packet& Packet, Frpg2Message
     // This seems the correct way to determine if we a a response, its what darksouls3 
     // seems to do in the dissassembly.
     int PayloadOffset = sizeof(Frpg2MessageHeader);
-    if (Message.Header.unknown_1 == 0)
+    if (Message.Header.msg_type == Frpg2MessageType::Reply)
     {
         PayloadOffset += sizeof(Frpg2MessageResponseHeader);
 
@@ -160,7 +160,7 @@ bool Frpg2MessageStream::MessageToPacket(const Frpg2Message& Message, Frpg2Packe
     ByteSwappedMessage.ResponseHeader.SwapEndian();
 
     size_t NewSize = sizeof(Frpg2MessageHeader) + Message.Payload.size();
-    if (ByteSwappedMessage.Header.unknown_1 == 0)
+    if (ByteSwappedMessage.Header.msg_type == Frpg2MessageType::Reply)
     {
         NewSize += sizeof(Frpg2MessageResponseHeader);
     }
@@ -170,7 +170,7 @@ bool Frpg2MessageStream::MessageToPacket(const Frpg2Message& Message, Frpg2Packe
     memcpy(Packet.Payload.data(), &ByteSwappedMessage.Header, sizeof(Frpg2MessageHeader));
 
     int PayloadOffset = sizeof(Frpg2MessageHeader);
-    if (ByteSwappedMessage.Header.unknown_1 == 0)
+    if (ByteSwappedMessage.Header.msg_type == Frpg2MessageType::Reply)
     {
         PayloadOffset += sizeof(Frpg2MessageResponseHeader);
         memcpy(Packet.Payload.data() + sizeof(Frpg2MessageHeader), &ByteSwappedMessage.ResponseHeader, sizeof(Frpg2MessageResponseHeader));

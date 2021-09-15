@@ -13,6 +13,19 @@
 
 #include <vector>
 
+ // All the id's of message type we can recieve.
+enum class Frpg2MessageType
+{
+    Reply = 0x0,
+
+    // Authentication flow messages.
+    KeyMaterial = 1,
+    SteamTicket = 3,
+    GetServiceStatus = 2,
+    RequestQueryLoginServerInfo = 5,
+    RequestHandshake = 6,
+};
+
 // See ds3server_packet.bt for commentry on what each of these
 // fields appears to represent.
 #pragma pack(push,1)
@@ -20,15 +33,15 @@ struct Frpg2MessageHeader
 {
 public:
 
-    uint32_t header_size            = 12; // As far as I can tell this is always 12.
-    uint32_t unknown_1              = 0x00;               
-    uint32_t request_index          = 0x00; // Request/response messages have the same value for this.
+    uint32_t header_size        = 12; // As far as I can tell this is always 12.
+    Frpg2MessageType msg_type   = Frpg2MessageType::Reply;     
+    uint32_t msg_index          = 0x00; // Request/response messages have the same value for this.
 
     void SwapEndian()
     {
         header_size = HostOrderToBigEndian(header_size);
-        unknown_1 = HostOrderToBigEndian(unknown_1);
-        request_index = HostOrderToLittleEndian(request_index);
+        msg_type = HostOrderToBigEndian(msg_type);
+        msg_index = HostOrderToLittleEndian(msg_index);
     }
 };
 

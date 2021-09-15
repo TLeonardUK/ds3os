@@ -10,10 +10,10 @@
 #pragma once
 
 #include "Server/Streams/Frpg2PacketStream.h"
+#include "Server/Streams/Frpg2Message.h"
 
 #include "Protobuf/Protobufs.h"
 
-struct Frpg2Message;
 class RSAKeyPair;
 class Cipher;
 
@@ -25,10 +25,10 @@ public:
 
     // Returns true if send was successful, if false is returned the send queue
     // is likely saturated or the packet is invalid.
-    virtual bool Send(const Frpg2Message& Message, uint32_t ResponseToRequestIndex = 0);
+    virtual bool Send(const Frpg2Message& Message, Frpg2MessageType MessageType, uint32_t ResponseToRequestIndex = 0);
 
     // Short hand version of Send for protobufs, takes care of constructing the wrapper message.
-    virtual bool Send(google::protobuf::MessageLite* Message, uint32_t ResponseToRequestIndex = 0);
+    virtual bool Send(google::protobuf::MessageLite* Message, Frpg2MessageType MessageType, uint32_t ResponseToRequestIndex = 0);
 
     // Returns true if a packet was recieved and stores packet in OutputPacket.
     virtual bool Recieve(Frpg2Message* Message);

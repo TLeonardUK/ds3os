@@ -55,6 +55,13 @@ bool NetConnectionTCP::Listen(int Port)
         return false;        
     }
 
+    // Turn off nagles algorithm.
+    if (setsockopt(Socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&const_1, sizeof(const_1)))
+    {
+        Error("[%s] Failed to set socket options: TCP_NODELAY", GetName().c_str());
+        return false;
+    }
+
     // Set socket to non-blocking mode.
 #if defined(_WIN32)
     unsigned long mode = 1;
@@ -134,7 +141,7 @@ NetIPAddress NetConnectionTCP::GetAddress()
     return IPAddress;
 }
 
-bool NetConnectionTCP::Connect(std::string Hostname, int Port)
+bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpEntry)
 {
     if (Socket != INVALID_SOCKET_VALUE)
     {
@@ -161,7 +168,18 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port)
     else
     {
         Ensure(HostEntry->h_addrtype == AF_INET); // Only support ipv4 right now.
-        SockAddr.sin_addr.s_addr = *(u_long*)HostEntry->h_addr_list[0];
+
+        if (ForceLastIpEntry)
+        {
+            for (int i = 0; HostEntry->h_addr_list[i] != nullptr; i++)
+            {
+                SockAddr.sin_addr.s_addr = *(u_long*)HostEntry->h_addr_list[i];
+            }
+        }
+        else
+        {
+            SockAddr.sin_addr.s_addr = *(u_long*)HostEntry->h_addr_list[0];
+        }
     }
 
     int Result = connect(Socket, (SOCKADDR*)&SockAddr, sizeof(SockAddr));
@@ -174,6 +192,14 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port)
 #endif
 
         Error("[%s] Failed to recieve with error 0x%08x.", GetName().c_str(), error);
+        return false;
+    }
+
+    // Turn off nagles algorithm.
+    unsigned int const_1 = 1;
+    if (setsockopt(Socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&const_1, sizeof(const_1)))
+    {
+        Error("[%s] Failed to set socket options: TCP_NODELAY", GetName().c_str());
         return false;
     }
 

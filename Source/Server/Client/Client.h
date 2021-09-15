@@ -20,6 +20,9 @@
 #include <vector>
 #include <filesystem>
 
+#include <steam/steam_api.h>
+#include <steam/isteamuser.h>
+
 // This is a very-very-very simple client emulator. Its used to 
 // as a super simple way to server behaviour.
 // 
@@ -105,6 +108,11 @@ private:
 
     std::string AuthServerIP = "";
     int AuthServerPort = 0;
+
+    bool GotAppTicketResponse = false;
+    bool HasAppTicket = false;
+    std::vector<uint8_t> AppTicket;
+    HAuthTicket AppTicketHandle = k_HAuthTicketInvalid;
 
     std::vector<uint8_t> GameServerCwcKey;
     uint64_t GameServerAuthToken;

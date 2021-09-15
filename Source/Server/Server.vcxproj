@@ -47,11 +47,19 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
+    <IncludePath>$(SolutionDir)ThirdParty\steam\public;$(IncludePath)</IncludePath>
+    <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
+    <IncludePath>$(SolutionDir)ThirdParty\steam\public;$(IncludePath)</IncludePath>
+    <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
@@ -69,7 +77,15 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)ThirdParty\steam\redistributable_bin\win64\steam_api64.lib;$(SolutionDir)ThirdParty\steam\public\steam\lib\win64\sdkencryptedappticket64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Command>copy $(SolutionDir)ThirdParty\steam\redistributable_bin\win64\steam_api64.dll $(OutputPath)steam_api64.dll
+copy $(SolutionDir)ThirdParty\steam\public\steam\lib\win64\sdkencryptedappticket64.lib $(OutputPath)sdkencryptedappticket64.lib
+copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Command>
+      <Message>Copying steam files to output dir</Message>
+      <Outputs>$(OutputPath)steam_api64.dll</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -88,7 +104,15 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)ThirdParty\steam\redistributable_bin\win64\steam_api64.lib;$(SolutionDir)ThirdParty\steam\public\steam\lib\win64\sdkencryptedappticket64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CustomBuildStep>
+      <Command>copy $(SolutionDir)ThirdParty\steam\redistributable_bin\win64\steam_api64.dll $(OutputPath)steam_api64.dll
+copy $(SolutionDir)ThirdParty\steam\public\steam\lib\win64\sdkencryptedappticket64.lib $(OutputPath)sdkencryptedappticket64.lib
+copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Command>
+      <Message>Copying steam files to output dir</Message>
+      <Outputs>$(OutputPath)steam_api64.dll</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Client\Client.h" />

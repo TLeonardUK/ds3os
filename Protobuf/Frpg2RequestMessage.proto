@@ -100,7 +100,7 @@ message GetServiceStatusForXboxOne {
 }
 
 // Response to GetServiceStatus, contains identical data to what is sent
-// with the exception of a black steam_id. Presumably if we connected to a dev server
+// with the exception of a blank steam_id. Presumably if we connected to a dev server
 // or something we would get different responses.
 // If we are on an older version of the game an empty response is sent back for this.
 message GetServiceStatusResponse {
@@ -1057,6 +1057,9 @@ message RequestGetRegulationFile {
 }
 
 message RequestGetRegulationFileResponse {
+    // index=1 type=2 bytes?
+    required bytes unknown_1 = 1;
+    // index=
     // Unknown
 }
 
