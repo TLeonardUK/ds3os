@@ -58,7 +58,7 @@ We don't make any guarantees, but it seems safe enough.
 # How do I build it?
 Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely be moved over to something platform agnostic like cmake.
 
-Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visual studio as well, as its usedfor managing a few of the dependencies, by doing the following:
+Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visual studio as well, as it is used for managing a few of the dependencies, by doing the following:
 
 1. Clone the vcpkg repo: `git clone https://github.com/Microsoft/vcpkg.git` or download the repository as .zip file
 2. Run Windows PowerShell as Administrator and `cd` into the directory, example: `cd C:\dev\vcpkg`
