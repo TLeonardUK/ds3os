@@ -15,6 +15,8 @@
 *.so
 *.dylib
 *.dll
+!Source/ThirdParty/**.dll
+!Source/ThirdParty/**/*.dll
 
 # Fortran module files
 *.mod
@@ -25,6 +27,8 @@
 *.la
 *.a
 *.lib
+!Source/ThirdParty/**.lib
+!Source/ThirdParty/**/*.lib
 
 # Executables
 *.exe
