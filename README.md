@@ -61,16 +61,16 @@ Currently the project uses visual studio 2019 and C++17 for compilation, and as 
 Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visual studio as well, as it is used for managing a few of the dependencies, by doing the following:
 
 1. Clone the vcpkg repo: `git clone https://github.com/Microsoft/vcpkg.git` or download the repository as .zip file
-2. Run Windows PowerShell as Administrator and `cd` into the directory, example: `cd `C:\dev\vcpkg`
+2. Run Windows PowerShell as Administrator and `cd` into the directory, example: `cd C:\dev\vcpkg`
 3. Enter command: `.\bootstrap-vcpkg.bat` and wait for it to process
 4. Enter command: `.\vcpkg integrate install` and wait for it to process
 
-
 Building the project should now require opening the Source/DS3OpenServer.sln and building it.
 
-# UNINSTALATION
-1. Enter command: `.\vcpkg integrate remove`
-2. Delete the directory, for example: `C:\dev\vcpkg`
+# Uninstallation
+1. Run Windows PowerShell as Administrator and `cd` into the directory, example: `cd C:\dev\vcpkg`
+2. Enter command: `.\vcpkg integrate remove`
+3. Delete the directory by entering the commands `cd C:\` and `Remove-Item 'C:\dev\vcpkg'`
 
 # Whats in the repository?
 ```
