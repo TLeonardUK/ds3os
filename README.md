@@ -9,6 +9,9 @@ Idealistically made for the purpose of allow better alternatives to playing mods
 
 ![Build Status](https://github.com/TLeonardUK/ds3os/actions/workflows/ci.yml/badge.svg)
 
+# Can I use it with a pirated game?
+No, the server authenticate steam tickets. Please do not ask about piracy, steam emulators or the like, we have no interest in supporting it.
+
 # Where can I download it?
 Downloads are available on the github releases page - https://github.com/TLeonardUK/ds3os/releases
 
@@ -24,8 +27,7 @@ User can join the server by opening the Loader.exe program in the Laoder folder 
 Servers can also be password protected if required by setting as password in Saved\config.json, a password will need to be entered when attempting to launch the game with a protected server.
 
 # What currently works?
-Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer
-match retail server behaviour and make some general improvements to the running of unoffical servers.
+Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer match retail server behaviour and make some general improvements to the running of unoffical servers.
 
 - [x] Login, key exchange and network transport
 - [x] Announcement messages
@@ -46,14 +48,14 @@ match retail server behaviour and make some general improvements to the running 
 
 Future roadmap:
 
-- [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
+- [ ] Regulation file distribution.
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
 - [ ] WebUI for server showing gameplay statistics / allowing admin control.
 
 # Will this ban my account on the retail server?
-So far we've had several accounts using unoffical servers, for quite a while, and have not had any account penalized on the retail server.
+So far we've had several accounts using unoffical servers, for quite a while, and have not had any account penalized on the retail server. 
 
-We don't make any guarantees, but it seems safe enough.
+So it seems safe enough. The only way you are going to get banned is if you do things that would normally get you banned then go back to the retail server - cheating and the like.
 
 # How do I build it?
 Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely be moved over to something platform agnostic like cmake.
