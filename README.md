@@ -41,13 +41,13 @@ match retail server behaviour and make some general improvements to the running 
 - [x] Archdragon peak bell ringing
 - [x] Undead match
 - [x] Telemetry and misc server calls (the few that are of use to us)
+- [x] Steam ticket authentication.
+- [x] Master server support for loader (show available servers).
 
 Future roadmap:
 
 - [ ] Regulation file distribution (likely won't be implemented as it involves distributing copyrighted content)
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
-- [ ] Steam ticket authentication.
-- [x] Master server support for loader (show available servers).
 - [ ] WebUI for server showing gameplay statistics / allowing admin control.
 
 # Will this ban my account on the retail server?

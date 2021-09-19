@@ -100,6 +100,8 @@ private:
     std::vector<uint8_t> CwcKey;
     std::vector<uint8_t> GameCwcKey;
 
+    std::string SteamId;
+
     AuthClientState State = AuthClientState::WaitingForHandshakeRequest;
 
 };

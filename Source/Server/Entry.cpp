@@ -52,16 +52,13 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    if (start_as_client_emulator)
+    if (!SteamAPI_Init())
     {
-        if (!SteamAPI_Init())
-        {
-            Error("Failed to initialize steam api.");
-            return 1;
-        }
-        SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
+        Error("Failed to initialize steam api.");
+        return 1;
     }
-
+    SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
+    
     // TODO: Split this out into a seperate application.
     // TODO: Also do less crappy arg parsing.
     if (start_as_client_emulator)
@@ -95,10 +92,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    if (start_as_client_emulator)
-    {
-        SteamAPI_Shutdown();
-    }
+    SteamAPI_Shutdown();
 
     if (!PlatformTerm())
     {

@@ -29,6 +29,8 @@
 
 #include "Protobuf/Protobufs.h"
 
+#include <steam/steam_api.h>
+
 AuthClient::AuthClient(AuthService* OwningService, std::shared_ptr<NetConnection> InConnection, RSAKeyPair* InServerRSAKey)
     : Service(OwningService)
     , Connection(InConnection)
@@ -140,6 +142,8 @@ bool AuthClient::Poll()
                     return true;
                 }
 
+                SteamId = Request.steam_id();
+
                 // Note: I think empty response is sent back here if an update is available.
 
                 Frpg2RequestMessage::GetServiceStatusResponse Response;
@@ -211,6 +215,9 @@ bool AuthClient::Poll()
             Frpg2Message Message;
             if (MessageStream->Recieve(&Message))
             {
+                const RuntimeConfig& RuntimeConfig = Service->GetServer()->GetConfig();
+                std::string ServerIP = Service->GetServer()->GetPublicIP().ToString();
+
                 // Format Note:
                 // The message payload is stored as:
                 //      Bytes 0-15: GameCwcKey Calculated Above
@@ -222,12 +229,25 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                // TODO: Could actually link to the steamapi libs and authenticate this ticket? 
-                //       Not really a big issue tho.
+                // Validate the steam ticket.
+                std::vector<uint8_t> Ticket;
+                Ticket.assign(Message.Payload.data() + 16, Message.Payload.data() + 16 + (Message.Payload.size() - 16));
 
-                const RuntimeConfig& RuntimeConfig = Service->GetServer()->GetConfig();
+                uint64 SteamIdInt;
+                sscanf(SteamId.c_str(), "%016llx", &SteamIdInt);
+                CSteamID SteamIdStruct(SteamIdInt);                
 
-                std::string ServerIP = Service->GetServer()->GetPublicIP().ToString();
+                int AuthResult = SteamUser()->BeginAuthSession(Ticket.data(), (int)Ticket.size(), SteamIdStruct);
+                if (AuthResult != k_EBeginAuthSessionResultOK)
+                {
+                    WarningS(GetName().c_str(), "Disconnecting client as steam ticket authentication failed with error %i.", AuthResult);
+                    return true;
+                }
+                else
+                {
+                    LogS(GetName().c_str(), "Client steam ticket authenticated successfully.");
+                }
+                SteamUser()->EndAuthSession(SteamIdStruct);
 
                 // If user IP is on a private network, we can assume they are on our LAN
                 // and return our internal IP address.
