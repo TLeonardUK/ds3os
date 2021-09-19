@@ -38,7 +38,7 @@ namespace Loader
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Name",
             "Players",
             "Description"}, 0);
@@ -58,33 +58,43 @@ namespace Loader
             this.panel1 = new System.Windows.Forms.Panel();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.serverListRefreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.RefreshButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ImportButton
             // 
             this.ImportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ImportButton.ImageIndex = 3;
+            this.ImportButton.ImageList = this.serverListImageList;
             this.ImportButton.Location = new System.Drawing.Point(8, 404);
             this.ImportButton.Name = "ImportButton";
-            this.ImportButton.Size = new System.Drawing.Size(111, 37);
+            this.ImportButton.Size = new System.Drawing.Size(122, 37);
             this.ImportButton.TabIndex = 1;
             this.ImportButton.Text = "Import Server";
+            this.ImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ImportButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.ImportButton.UseVisualStyleBackColor = true;
             this.ImportButton.Click += new System.EventHandler(this.OnImportServerConfig);
             // 
             // LaunchButton
             // 
             this.LaunchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.LaunchButton.Location = new System.Drawing.Point(677, 404);
+            this.LaunchButton.ImageIndex = 4;
+            this.LaunchButton.ImageList = this.serverListImageList;
+            this.LaunchButton.Location = new System.Drawing.Point(751, 404);
             this.LaunchButton.Name = "LaunchButton";
-            this.LaunchButton.Size = new System.Drawing.Size(248, 37);
+            this.LaunchButton.Size = new System.Drawing.Size(174, 37);
             this.LaunchButton.TabIndex = 2;
             this.LaunchButton.Text = "Launch Game";
+            this.LaunchButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LaunchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.LaunchButton.UseVisualStyleBackColor = true;
             this.LaunchButton.Click += new System.EventHandler(this.OnLaunch);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label2.Location = new System.Drawing.Point(8, 157);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(138, 15);
@@ -104,11 +114,12 @@ namespace Loader
             // ExeLocationBrowseButton
             // 
             this.ExeLocationBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExeLocationBrowseButton.ImageIndex = 5;
+            this.ExeLocationBrowseButton.ImageList = this.serverListImageList;
             this.ExeLocationBrowseButton.Location = new System.Drawing.Point(883, 153);
             this.ExeLocationBrowseButton.Name = "ExeLocationBrowseButton";
             this.ExeLocationBrowseButton.Size = new System.Drawing.Size(42, 23);
             this.ExeLocationBrowseButton.TabIndex = 6;
-            this.ExeLocationBrowseButton.Text = "...";
             this.ExeLocationBrowseButton.UseVisualStyleBackColor = true;
             this.ExeLocationBrowseButton.Click += new System.EventHandler(this.OnBrowseForExecutable);
             // 
@@ -125,7 +136,7 @@ namespace Loader
             this.ImportedServerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ImportedServerListView.HideSelection = false;
             this.ImportedServerListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.ImportedServerListView.Location = new System.Drawing.Point(8, 190);
             this.ImportedServerListView.MultiSelect = false;
             this.ImportedServerListView.Name = "ImportedServerListView";
@@ -157,6 +168,11 @@ namespace Loader
             this.serverListImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("serverListImageList.ImageStream")));
             this.serverListImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.serverListImageList.Images.SetKeyName(0, "lock.png");
+            this.serverListImageList.Images.SetKeyName(1, "arrow_refresh.png");
+            this.serverListImageList.Images.SetKeyName(2, "cross.png");
+            this.serverListImageList.Images.SetKeyName(3, "add.png");
+            this.serverListImageList.Images.SetKeyName(4, "joystick.png");
+            this.serverListImageList.Images.SetKeyName(5, "magnifier.png");
             // 
             // BuildInfoLabel
             // 
@@ -191,11 +207,12 @@ namespace Loader
             // RemoveButton
             // 
             this.RemoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RemoveButton.Location = new System.Drawing.Point(125, 404);
+            this.RemoveButton.ImageIndex = 2;
+            this.RemoveButton.ImageList = this.serverListImageList;
+            this.RemoveButton.Location = new System.Drawing.Point(136, 404);
             this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(111, 37);
+            this.RemoveButton.Size = new System.Drawing.Size(37, 37);
             this.RemoveButton.TabIndex = 9;
-            this.RemoveButton.Text = "Remove Server";
             this.RemoveButton.UseVisualStyleBackColor = true;
             this.RemoveButton.Click += new System.EventHandler(this.OnRemoveClicked);
             // 
@@ -205,11 +222,24 @@ namespace Loader
             this.serverListRefreshTimer.Interval = 30000;
             this.serverListRefreshTimer.Tick += new System.EventHandler(this.OnServerRefreshTimer);
             // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.RefreshButton.ImageIndex = 1;
+            this.RefreshButton.ImageList = this.serverListImageList;
+            this.RefreshButton.Location = new System.Drawing.Point(179, 404);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(37, 37);
+            this.RefreshButton.TabIndex = 11;
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.OnRefreshClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 451);
+            this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.RemoveButton);
             this.Controls.Add(this.BuildInfoLabel);
@@ -245,6 +275,7 @@ namespace Loader
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.Timer serverListRefreshTimer;
         private System.Windows.Forms.ImageList serverListImageList;
+        private System.Windows.Forms.Button RefreshButton;
     }
 }
 

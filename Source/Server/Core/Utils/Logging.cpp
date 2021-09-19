@@ -24,12 +24,11 @@ void WriteLogStatic(ConsoleColor Color, const char* Level, const char* Log)
     char time_buffer[32];
     strftime(time_buffer, sizeof(time_buffer), "%Y-%m-%d %X", &current_time_tstruct);
 
-    int ret = snprintf(buffer_to_use, 256, "%s \u00B3 %-7s \u00B3 %s\n", time_buffer, Level, Log);
+    int ret = snprintf(buffer_to_use, 256, "%s \xB3 %-7s \xB3 %s\n", time_buffer, Level, Log);
     if (ret >= 256)
     {
         buffer_to_use = new char[ret + 1];
-        snprintf(buffer_to_use, 256, "%s \u00B3 %-7s \u00B3 %s\n", time_buffer, Level, Log);
-        buffer_to_use[ret] = '\0';
+        snprintf(buffer_to_use, ret + 1, "%s \xB3 %-7s \xB3 %s\n", time_buffer, Level, Log);
     }
 
     WriteToConsole(Color, buffer_to_use);
@@ -52,8 +51,7 @@ void WriteLog(ConsoleColor Color, const char* Level, const char* Format, ...)
     if (ret >= 256)
     {
         buffer_to_use = new char[ret + 1];
-        vsnprintf(buffer_to_use, ret, Format, list);
-        buffer_to_use[ret] = '\0';
+        vsnprintf(buffer_to_use, ret + 1, Format, list);
     }
 
     WriteLogStatic(Color, Level, buffer_to_use);

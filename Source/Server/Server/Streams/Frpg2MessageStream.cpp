@@ -10,9 +10,12 @@
 #include "Server/Streams/Frpg2MessageStream.h"
 #include "Server/Streams/Frpg2Message.h"
 
+#include "Config/BuildConfig.h"
+
 #include "Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 #include "Core/Crypto/RSAKeyPair.h"
 #include "Core/Crypto/RSACipher.h"
@@ -41,10 +44,18 @@ void Frpg2MessageStream::SetCipher(std::shared_ptr<Cipher> Encryption, std::shar
 
 bool Frpg2MessageStream::Send(const Frpg2Message& Message, Frpg2MessageType MessageType, uint32_t ResponseToRequestIndex)
 {
+    Frpg2Packet Packet;
+
     // Fill in the header of the message.
     Frpg2Message SendMessage = Message;
     SendMessage.Header.msg_index = ResponseToRequestIndex;
     SendMessage.Header.msg_type = MessageType;
+
+    // Disassemble if required.
+    if constexpr (BuildConfig::DISASSEMBLE_SENT_MESSAGES)
+    {
+        Packet.Disassembly = Disassemble(SendMessage);
+    }
 
     std::vector<uint8_t> DecryptedBuffer = Message.Payload;
     if (EncryptionCipher)
@@ -56,7 +67,6 @@ bool Frpg2MessageStream::Send(const Frpg2Message& Message, Frpg2MessageType Mess
         }
     }
 
-    Frpg2Packet Packet;
     if (!MessageToPacket(SendMessage, Packet))
     {
         Warning("[%s] Failed to convert message to packet payload.", Connection->GetName().c_str());
@@ -113,6 +123,15 @@ bool Frpg2MessageStream::Recieve(Frpg2Message* Message)
             Warning("[%s] Failed to decrypt message payload.", Connection->GetName().c_str());
             return false;
         }
+    }
+
+    // Disassemble if required.
+    if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)
+    {
+        Message->Disassembly = Packet.Disassembly;
+        Message->Disassembly.append(Disassemble(*Message));
+
+        Log("\n<< RECV\n%s", Message->Disassembly.c_str());
     }
 
     return true;
@@ -179,4 +198,27 @@ bool Frpg2MessageStream::MessageToPacket(const Frpg2Message& Message, Frpg2Packe
     memcpy(Packet.Payload.data() + PayloadOffset, Message.Payload.data(), Message.Payload.size());
 
     return true;
+}
+
+std::string Frpg2MessageStream::Disassemble(const Frpg2Message& Message)
+{
+    std::string Result = "";
+
+    Result += "Message:\n";
+    Result += StringFormat("\t%-30s = %u\n", "header_size", Message.Header.header_size);
+    Result += StringFormat("\t%-30s = %u\n", "msg_type", Message.Header.msg_type);
+    Result += StringFormat("\t%-30s = %u\n", "msg_index", Message.Header.msg_index);
+
+    if (Message.Header.msg_type == Frpg2MessageType::Reply)
+    {
+        Result += StringFormat("\t%-30s = %u\n", "unknown_1", Message.ResponseHeader.unknown_1);
+        Result += StringFormat("\t%-30s = %u\n", "unknown_2", Message.ResponseHeader.unknown_2);
+        Result += StringFormat("\t%-30s = %u\n", "unknown_3", Message.ResponseHeader.unknown_3);
+        Result += StringFormat("\t%-30s = %u\n", "unknown_4", Message.ResponseHeader.unknown_4);
+    }
+
+    Result += "Message Payload:\n";
+    Result += BytesToString(Message.Payload, "\t");
+
+    return Result;
 }

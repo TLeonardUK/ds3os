@@ -11,10 +11,13 @@
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpFragment.h"
 
+#include "Config/BuildConfig.h"
+
 #include "Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Utils/Strings.h"
 
 #include "Protobuf/Protobufs.h"
 
@@ -56,6 +59,12 @@ bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& 
         Warning("[%s] Failed to convert message to packet.", Connection->GetName().c_str());
         InErrorState = true;
         return false;
+    }
+
+    // Disassemble if required.
+    if constexpr (BuildConfig::DISASSEMBLE_SENT_MESSAGES)
+    {
+        Packet.Disassembly = Disassemble(SendMessage);
     }
 
     // TODO: Remove when we have a better way to handle this without breaking abstraction.
@@ -155,6 +164,15 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         Warning("[%s] Failed to convert packet payload to message.", Connection->GetName().c_str());
         InErrorState = true;
         return false;
+    }
+
+    // Disassemble if required.
+    if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)
+    {
+        Message->Disassembly = Packet.Disassembly;
+        Message->Disassembly.append(Disassemble(*Message));
+
+        Log("\n<< RECV\n%s", Message->Disassembly.c_str());
     }
 
     // TODO: Remove when we have a better way to handle this without breaking abstraction.
@@ -278,4 +296,27 @@ void Frpg2ReliableUdpMessageStream::Reset()
 
     SentMessageCounter = 0;
     OutstandingResponses.clear();
+}
+
+std::string Frpg2ReliableUdpMessageStream::Disassemble(const Frpg2ReliableUdpMessage& Message)
+{
+    std::string Result = "";
+
+    Result += "Message:\n";
+    Result += StringFormat("\t%-30s = %u\n", "header_size", Message.Header.header_size);
+    Result += StringFormat("\t%-30s = %u\n", "msg_type", Message.Header.msg_type);
+    Result += StringFormat("\t%-30s = %u\n", "msg_index", Message.Header.msg_index);
+
+    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    {
+        Result += StringFormat("\t%-30s = %u\n", "unknown_1", Message.ResponseHeader.unknown_1);
+        Result += StringFormat("\t%-30s = %u\n", "unknown_2", Message.ResponseHeader.unknown_2);
+        Result += StringFormat("\t%-30s = %u\n", "unknown_3", Message.ResponseHeader.unknown_3);
+        Result += StringFormat("\t%-30s = %u\n", "unknown_4", Message.ResponseHeader.unknown_4);
+    }
+
+    Result += "Message Payload:\n";
+    Result += BytesToString(Message.Payload, "\t");
+
+    return Result;    
 }

@@ -10,11 +10,14 @@
 #include "Server/Streams/Frpg2ReliableUdpFragmentStream.h"
 #include "Server/Streams/Frpg2ReliableUdpFragment.h"
 
+#include "Config/BuildConfig.h"
+
 #include "Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Compression.h"
+#include "Core/Utils/Strings.h"
 
 #include "Core/Crypto/RSAKeyPair.h"
 #include "Core/Crypto/RSACipher.h"
@@ -77,6 +80,13 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
             SendPacket.Header.SetAckCounters(0, Fragment.AckSequenceIndex);
         }
 
+        // Disassemble if required.
+        if constexpr (BuildConfig::DISASSEMBLE_SENT_MESSAGES)
+        {
+            SendPacket.Disassembly = Fragment.Disassembly;
+            SendPacket.Disassembly.append(Disassemble(SendFragment));
+        }
+
         if (!Frpg2ReliableUdpPacketStream::Send(SendPacket))
         {
             Warning("[%s] Failed to send fragment packet.", Connection->GetName().c_str());
@@ -120,6 +130,12 @@ bool Frpg2ReliableUdpFragmentStream::RecieveInternal(Frpg2ReliableUdpFragment* F
     // TODO: Remove when we have a better way to handle this without breaking abstraction.
     uint32_t Remote;
     Packet.Header.GetAckCounters(Fragment->AckSequenceIndex, Remote);
+
+    // Disassemble if required.
+    if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)
+    {
+        Fragment->Disassembly = Packet.Disassembly;
+    }
 
     return true;
 }
@@ -243,6 +259,12 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
                 Fragment.Header.compress_flag = false;
             }
 
+            // Disassemble if required.
+            if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)
+            {
+                Fragment.Disassembly.append(Disassemble(Fragment));
+            }
+
             RecieveQueue.push_back(Fragment);
 
             Fragments.clear();
@@ -255,4 +277,22 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
     }
 
     return false;
+}
+
+std::string Frpg2ReliableUdpFragmentStream::Disassemble(const Frpg2ReliableUdpFragment& Packet)
+{
+    std::string Result = "";
+
+    Result += "Fragment:\n";
+    Result += StringFormat("\t%-30s = %u\n", "packet_counter", Packet.Header.packet_counter);
+    Result += StringFormat("\t%-30s = %u\n", "compress_flag", Packet.Header.compress_flag);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_1", Packet.Header.unknown_1);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_2", Packet.Header.unknown_2);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_3", Packet.Header.unknown_3);
+    Result += StringFormat("\t%-30s = %u\n", "total_payload_length", Packet.Header.total_payload_length);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_4", Packet.Header.unknown_4);
+    Result += StringFormat("\t%-30s = %u\n", "fragment_index", Packet.Header.fragment_index);
+    Result += StringFormat("\t%-30s = %u\n", "fragment_length", Packet.Header.fragment_length);
+
+    return Result;
 }

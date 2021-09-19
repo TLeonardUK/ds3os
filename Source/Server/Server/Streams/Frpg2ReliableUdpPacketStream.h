@@ -48,10 +48,13 @@ public:
     Frpg2ReliableUdpStreamState GetState() { return State; }
 
     // Attempts to do the initial connection establishing handshake.
-    void Connect();
+    void Connect(const std::string& ClientSteamId);
 
     // Attempts to do a graceful disconnect so the remote end doesn't send us messages in future.
     void Disconnect();
+
+    // Diassembles a messages into a human-readable string.
+    std::string Disassemble(const Frpg2ReliableUdpPacket& Packet);
 
 protected:
 
@@ -73,12 +76,14 @@ protected:
     void Handle_RST(const Frpg2ReliableUdpPacket& Packet);
     void Handle_DAT_ACK(const Frpg2ReliableUdpPacket& Packet);
     void Handle_ACK(const Frpg2ReliableUdpPacket& Packet);
+    void Handle_RACK(const Frpg2ReliableUdpPacket& Packet);
 
     bool SendRaw(const Frpg2ReliableUdpPacket& Packet);
 
     void Send_SYN();
     void Send_SYN_ACK(uint32_t RemoteIndex);
     void Send_ACK(uint32_t RemoteIndex);
+    void Send_DAT_ACK(uint32_t LocalIndex, uint32_t RemoteIndex);
     void Send_FIN_ACK(uint32_t RemoteIndex);
     void Send_FIN();
     void Send_HBT();
@@ -100,9 +105,14 @@ protected:
     double LastPacketRecievedTime = 0.0;
     double LastAckSendTime = 0.0;
 
+    std::string SteamId = "";
+
     // Ack sequences that we have sent replies with DAT_ACK, used to determine
     // what we need to send back in HandledPacket();
     std::unordered_set<uint32_t> DatAckResponses;
+
+    // DAT packets that we except to reply to with a DAT_ACK.
+    std::unordered_set<uint32_t> ExpectedDatAckResponses;
 
     // TODO: Need to handle these rolling over. They have 12 bits so 
     //       it shouldn't happen for a while, but still needs fixing.
@@ -115,6 +125,8 @@ protected:
 
     bool IsRetransmitting = false;
     uint32_t RetransmittingIndex = 0;
+    double RetransmissionTimer = 0.0;
+    Frpg2ReliableUdpPacket RetransmitPacket;
 
     // TODO: All these should be shared pointers or something, we do way
     //       too much data shuffling with raw packets.
@@ -133,11 +145,17 @@ protected:
     // until they have been acked.
     std::vector<Frpg2ReliableUdpPacket> RetransmitBuffer; // Use priority queue.
 
+    double ResendSynTimer = 0.0;
+
     // We stop sending packets and queue them up until we start recieving acks.
-    const int MAX_PACKETS_IN_FLIGHT = 10;
+    const int MAX_PACKETS_IN_FLIGHT = 20;
 
     // We reeeeeeeaaaallly want this to be exponential backoff, but this works for now.
-    const float RETRANSMIT_INTERVAL = 0.5;
+    const float RETRANSMIT_INTERVAL = 3.0;
+
+    const float RETRANSMIT_CYCLE_INTERVAL = 0.5;
+
+    const float RESEND_SYN_INTERVAL = 0.5f;
 
     const double MIN_TIME_BETWEEN_RESEND_ACK = 0.1;
 

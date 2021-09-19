@@ -69,14 +69,16 @@ namespace Loader
                 ExeLocationTextBox.BackColor = System.Drawing.SystemColors.Control;
             }
 
+            bool HasSelectedManualServer = false;
+            if (ImportedServerListView.SelectedIndices.Count > 0)
+            {
+                HasSelectedManualServer = ServerList.Servers[ImportedServerListView.SelectedIndices[0]].ManualImport;
+            }
+            RemoveButton.Enabled = HasSelectedManualServer;
+
             if (ImportedServerListView.SelectedItems.Count <= 0)
             {
                 LaunchEnabled = false;
-                RemoveButton.Enabled = false;
-            }
-            else
-            {
-                RemoveButton.Enabled = true;
             }
 
             if (!SteamUtils.IsSteamRunningAndLoggedIn())
@@ -95,20 +97,61 @@ namespace Loader
             }
 
             LaunchButton.Enabled = LaunchEnabled;
+
+            RefreshButton.Enabled = (QueryServerTask != null);
         }
 
         private void BuildServerList()
         {
-            ImportedServerListView.Items.Clear();
-
             foreach (ServerConfig Config in ServerList.Servers)
             {
-                ListViewItem Item = new ListViewItem(new string[] {
-                    Config.Name,
-                    Config.ManualImport ? "Not Advertised" : Config.PlayerCount.ToString(),
-                    Config.Description
-                }, Config.PasswordRequired ? 0 : -1);
-                ImportedServerListView.Items.Add(Item);
+                ListViewItem ServerItem = null;
+
+                foreach (ListViewItem ViewItem in ImportedServerListView.Items)
+                {
+                    if ((string)ViewItem.Tag == Config.IpAddress)
+                    {
+                        ServerItem = ViewItem;
+                        break;
+                    }
+                }
+
+                if (ServerItem == null)
+                {
+                    ServerItem = new ListViewItem(new string[3], -1);
+                    ImportedServerListView.Items.Add(ServerItem);
+                }
+
+                ServerItem.Text = Config.Name;
+                ServerItem.Tag = Config.IpAddress;
+                ServerItem.SubItems[0].Text = Config.Name;
+                ServerItem.SubItems[1].Text = Config.ManualImport ? "Not Advertised" : Config.PlayerCount.ToString();
+                ServerItem.SubItems[2].Text = Config.Description;
+                ServerItem.ImageIndex = Config.PasswordRequired ? 0 : -1;
+            }
+
+            for (int i = 0; i < ImportedServerListView.Items.Count; /* empty */)
+            {
+                ListViewItem ViewItem = ImportedServerListView.Items[i];
+
+                bool Exists = false;
+                foreach (ServerConfig Config in ServerList.Servers)
+                {
+                    if (Config.IpAddress == (string)ViewItem.Tag)
+                    {
+                        Exists = true;
+                        break;
+                    }
+                }
+
+                if (!Exists)
+                {
+                    ImportedServerListView.Items.RemoveAt(i);
+                }
+                else
+                {
+                    i++;
+                }
             }
         }
 
@@ -238,6 +281,30 @@ namespace Loader
                 if (!Exists)
                 {
                     ServerList.Servers.Add(Server);
+                }
+            }
+
+            for (int i = 0; i < ServerList.Servers.Count; /* empty */)
+            {
+                ServerConfig ExistingServer = ServerList.Servers[i];
+
+                bool Exists = false;
+                foreach (ServerConfig Server in Servers)
+                {
+                    if (ExistingServer.Hostname == Server.Hostname)
+                    {
+                        Exists = true;
+                        break;
+                    }
+                }
+
+                if (!Exists)
+                {
+                    ServerList.Servers.RemoveAt(i);
+                }
+                else
+                {
+                    i++;
                 }
             }
 
@@ -411,6 +478,11 @@ namespace Loader
         }
 
         private void OnServerRefreshTimer(object sender, EventArgs e)
+        {
+            QueryServers();
+        }
+
+        private void OnRefreshClicked(object sender, EventArgs e)
         {
             QueryServers();
         }

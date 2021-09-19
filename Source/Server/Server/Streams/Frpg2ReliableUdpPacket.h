@@ -70,7 +70,8 @@ enum class Frpg2ReliableUdpStreamState
     SynRecieved,
     Established,
     Closing,
-    Closed
+    Closed,
+    Connecting
 };
 
 #pragma pack(push,1)
@@ -107,15 +108,59 @@ public:
 };
 static_assert(sizeof(Frpg2ReliableUdpPacketHeader) == 7, "Packet header is not expected size.");
 
-// The contents of the packet if its a SYN_ACK op.
+// The block of data that gets included before the first packet.
+struct Frpg2ReliableUdpInitialData
+{
+public:
+
+    // TODO: Figure out what these values are.
+
+    char steam_id[17];    
+    uint8_t unknown_1 = 0;
+    char steam_id_copy[17];
+
+
+};
+static_assert(sizeof(Frpg2ReliableUdpInitialData) == 35, "Opcode payload is not expected size.");
+
+// The contents of the packet if its a SYN op.
 struct Frpg2ReliableUdpPacketOpCodePayload_SYN
 {
 public:
 
-    uint8_t unknown[8];    
+    // TODO: Figure out what these values are.
+
+    uint8_t unknown_1 = 0x12;
+    uint8_t unknown_2 = 0x10;
+    uint8_t unknown_3 = 0x20;
+    uint8_t unknown_4 = 0x20;
+    uint8_t unknown_5 = 0x00;
+    uint8_t unknown_6 = 0x00;
+    uint8_t unknown_7 = 0xA0;
+    uint8_t unknown_8 = 0x00;
 
 };
 static_assert(sizeof(Frpg2ReliableUdpPacketOpCodePayload_SYN) == 8, "Opcode payload is not expected size.");
+
+
+// The contents of the packet if its a SYN_ACK op.
+struct Frpg2ReliableUdpPacketOpCodePayload_SYN_ACK
+{
+public:
+
+    // TODO: Figure out what these values are.
+
+    // SYN_ACK
+    uint8_t unknown_1 = 0x12;
+    uint8_t unknown_2 = 0x10;
+    uint8_t unknown_3 = 0x20;
+    uint8_t unknown_4 = 0x20;
+    uint8_t unknown_5 = 0x00;
+    uint8_t unknown_6 = 0x01;
+    uint8_t unknown_7 = 0x00;
+    uint8_t unknown_8 = 0x00;
+};
+static_assert(sizeof(Frpg2ReliableUdpPacketOpCodePayload_SYN_ACK) == 8, "Opcode payload is not expected size.");
 
 #pragma pack(pop)
 
@@ -127,6 +172,8 @@ public:
 
     // Length is equal to the rest of the payload minus the header.
     std::vector<uint8_t> Payload;
+
+    std::string Disassembly;
 
 private:
     friend class Frpg2ReliableUdpPacketStream;

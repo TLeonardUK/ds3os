@@ -15,6 +15,7 @@
 
 #include "Core/Utils/Endian.h"
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 
 #include "Core/Utils/File.h"
 
@@ -89,6 +90,12 @@ bool Frpg2PacketStream::Pump()
                         return true;
                     }
 
+                    // Disassemble if required.
+                    if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)
+                    {
+                        Packet.Disassembly = Disassemble(Packet);
+                    }
+
                     RecieveQueue.push_back(Packet);
 
                     PacketBuffer.resize(sizeof(uint16_t));
@@ -149,6 +156,15 @@ bool Frpg2PacketStream::Send(const Frpg2Packet& Packet)
     SendPacket.Header.payload_length = (uint32_t)Packet.Payload.size();
     SendPacket.Header.payload_length_short = (uint16_t)Packet.Payload.size();
 
+    // Disassemble if required.
+    if constexpr (BuildConfig::DISASSEMBLE_SENT_MESSAGES)
+    {
+        SendPacket.Disassembly = Disassemble(SendPacket);
+        SendPacket.Disassembly.append(Packet.Disassembly);
+
+        Log("\n>> SENT\n%s", SendPacket.Disassembly.c_str());
+    }
+
     std::vector<uint8_t> Bytes;
     if (!PacketToBytes(SendPacket, Bytes))
     {
@@ -184,4 +200,19 @@ bool Frpg2PacketStream::Recieve(Frpg2Packet* OutputPacket)
     RecieveQueue.erase(RecieveQueue.begin());
 
     return true;
+}
+
+std::string Frpg2PacketStream::Disassemble(const Frpg2Packet& Input)
+{
+    std::string Result = "";
+
+    Result += "Packet:\n";
+    Result += StringFormat("\t%-30s = %u\n", "send_counter", Input.Header.send_counter);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_1", Input.Header.unknown_1);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_2", Input.Header.unknown_2);
+    Result += StringFormat("\t%-30s = %u\n", "payload_length", Input.Header.payload_length);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_3", Input.Header.unknown_3);
+    Result += StringFormat("\t%-30s = %u\n", "payload_length_short", Input.Header.payload_length_short);
+
+    return Result;
 }

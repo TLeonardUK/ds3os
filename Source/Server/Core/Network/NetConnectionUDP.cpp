@@ -255,7 +255,14 @@ bool NetConnectionUDP::Send(const std::vector<uint8_t>& Buffer, int Offset, int 
         return false;
     }
 
-    //Log(">> %i", Result);
+   /* 
+    Log(">> %i to %i.%i.%i.%i:%i", Result, 
+        Destination.sin_addr.S_un.S_un_b.s_b1,
+        Destination.sin_addr.S_un.S_un_b.s_b2,
+        Destination.sin_addr.S_un.S_un_b.s_b3,
+        Destination.sin_addr.S_un.S_un_b.s_b4,
+        ntohs(Destination.sin_port));
+    */
 
     return true;
 }

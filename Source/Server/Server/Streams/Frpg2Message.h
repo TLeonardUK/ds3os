@@ -77,4 +77,6 @@ public:
     // as the value stored in Header.payload_length
     std::vector<uint8_t> Payload;
 
+    std::string Disassembly;
+
 };

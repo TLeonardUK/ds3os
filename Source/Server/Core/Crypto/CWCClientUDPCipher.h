@@ -25,6 +25,8 @@ public:
     bool Encrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output) override;
     bool Decrypt(const std::vector<uint8_t>& input, std::vector<uint8_t>& Output) override;
 
+    void SetPacketsHaveConnectionPrefix(bool value) { PacketsHaveConnectionPrefix = value; }
+
 private:
     std::vector<uint8_t> Key;
 
@@ -32,5 +34,7 @@ private:
     
     uint64_t AuthToken;
     std::vector<uint8_t> AuthTokenHeaderBytes;
+
+    bool PacketsHaveConnectionPrefix = false;
 
 };

@@ -59,7 +59,14 @@ private:
 
         GameServer_Connect,
         GameServer_RequestWaitForUserLogin,
-        GameServer_RequestGetAnnounceMessageList
+        GameServer_RequestGetAnnounceMessageList,
+        GameServer_RequestUpdateLoginPlayerCharacter,
+        GameServer_RequestUpdatePlayerStatus,
+        GameServer_RequestUpdatePlayerCharacter,
+        GameServer_RequestGetRightMatchingArea,
+        GameServer_Experiment,
+
+        Complete
     };
 
     void Handle_LoginServer_Connect();
@@ -74,6 +81,11 @@ private:
     void Handle_GameServer_Connect();
     void Handle_GameServer_RequestWaitForUserLogin();
     void Handle_GameServer_RequestGetAnnounceMessageList();
+    void Handle_GameServer_RequestUpdateLoginPlayerCharacter();
+    void Handle_GameServer_RequestUpdatePlayerStatus();
+    void Handle_GameServer_RequestUpdatePlayerCharacter();
+    void Handle_GameServer_RequestGetRightMatchingArea();
+    void Handle_GameServer_Experiment();
 
     void ChangeState(ClientState State);
 
@@ -103,8 +115,14 @@ private:
     std::shared_ptr<NetConnection> GameServerConnection;
     std::shared_ptr<Frpg2ReliableUdpMessageStream> GameServerMessageStream;
 
-    std::string ClientStreamId = "0110000149894187";
+    std::string ClientStreamId = "";
     int ClientAppVersion = 114;
+    int LocalCharacterId = 10;
+    int ServerCharacterId;
+
+    int ClientSoulLevel = 0;
+    int ClientSoulMemory = 0;
+    int ClientWeaponLevel = 0;
 
     std::string AuthServerIP = "";
     int AuthServerPort = 0;

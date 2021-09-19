@@ -86,7 +86,7 @@ public:
 
     // How many seconds between each update on the master server. You should keep this
     // as high as possible to avoid saturating the master server.
-    float AdvertiseHearbeatTime = 120.0f;
+    float AdvertiseHearbeatTime = 30.0f;
 
     // If set the user will need to enter a password to recieve the keys to enter the 
     // server when its advertised.

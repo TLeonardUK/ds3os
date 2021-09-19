@@ -15,6 +15,9 @@
 
 std::string BytesToHex(const std::vector<uint8_t>& Bytes);
 
+// Generates a hex editor style layout.
+std::string BytesToString(const std::vector<uint8_t>& Bytes, const std::string& LinePrefix);
+
 /** @todo */
 template<typename... Args>
 std::string StringFormat(const char* format, Args... args)

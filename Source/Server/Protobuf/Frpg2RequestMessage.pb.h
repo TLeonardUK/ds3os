@@ -260,13 +260,13 @@ class PushLoginUserInfo;
 class NotifyLoginToPushServer;
 class NotifyLogoutToPushServer;
 class RequestCheckLogin;
+class RequestCheckLoginResponse;
 class UserLoginInfo;
 class PushRequestHeader;
 class RangedLimit;
 class PlayerUserIDPair;
 class PlayerStatusUploadConfig;
 class LoginClientInfo;
-class RequestCheckLoginResponse;
 class RequestGetPlayerConnectGameServer;
 class PlayerConnectServerInfo;
 class RequestGetPlayerConnectGameServerResponse;
@@ -15637,15 +15637,27 @@ class RegulationFileUpdatePushMessage : public ::google::protobuf::MessageLite {
   inline ::Frpg2RequestMessage::PushMessageId push_message_id() const;
   inline void set_push_message_id(::Frpg2RequestMessage::PushMessageId value);
 
+  // required .Frpg2RequestMessage.RegulationFileUpdateMessage update_message = 2;
+  inline bool has_update_message() const;
+  inline void clear_update_message();
+  static const int kUpdateMessageFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::RegulationFileUpdateMessage& update_message() const;
+  inline ::Frpg2RequestMessage::RegulationFileUpdateMessage* mutable_update_message();
+  inline ::Frpg2RequestMessage::RegulationFileUpdateMessage* release_update_message();
+  inline void set_allocated_update_message(::Frpg2RequestMessage::RegulationFileUpdateMessage* update_message);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RegulationFileUpdatePushMessage)
  private:
   inline void set_has_push_message_id();
   inline void clear_has_push_message_id();
+  inline void set_has_update_message();
+  inline void clear_has_update_message();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::Frpg2RequestMessage::RegulationFileUpdateMessage* update_message_;
   int push_message_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -18143,6 +18155,18 @@ class RequestGetOnlineShopItemListResponse : public ::google::protobuf::MessageL
 
   // accessors -------------------------------------------------------
 
+  // repeated group Lineup = 2 {
+  inline int lineup_size() const;
+  inline void clear_lineup();
+  static const int kLineupFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup& lineup(int index) const;
+  inline ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup* mutable_lineup(int index);
+  inline ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup* add_lineup();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup >&
+      lineup() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup >*
+      mutable_lineup();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestGetOnlineShopItemListResponse)
  private:
 
@@ -18150,6 +18174,7 @@ class RequestGetOnlineShopItemListResponse : public ::google::protobuf::MessageL
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup > lineup_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -18489,6 +18514,18 @@ class QuickMatchSession : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // repeated group Result_list = 2 {
+  inline int result_list_size() const;
+  inline void clear_result_list();
+  static const int kResultListFieldNumber = 2;
+  inline const ::Frpg2RequestMessage::QuickMatchSession_Result_list& result_list(int index) const;
+  inline ::Frpg2RequestMessage::QuickMatchSession_Result_list* mutable_result_list(int index);
+  inline ::Frpg2RequestMessage::QuickMatchSession_Result_list* add_result_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSession_Result_list >&
+      result_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSession_Result_list >*
+      mutable_result_list();
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.QuickMatchSession)
  private:
 
@@ -18496,6 +18533,7 @@ class QuickMatchSession : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSession_Result_list > result_list_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -23800,6 +23838,87 @@ class RequestCheckLogin : public ::google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
+class RequestCheckLoginResponse : public ::google::protobuf::MessageLite {
+ public:
+  RequestCheckLoginResponse();
+  virtual ~RequestCheckLoginResponse();
+
+  RequestCheckLoginResponse(const RequestCheckLoginResponse& from);
+
+  inline RequestCheckLoginResponse& operator=(const RequestCheckLoginResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestCheckLoginResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestCheckLoginResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestCheckLoginResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestCheckLoginResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestCheckLoginResponse& from);
+  void MergeFrom(const RequestCheckLoginResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCheckLoginResponse)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestCheckLoginResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class UserLoginInfo : public ::google::protobuf::MessageLite {
  public:
   UserLoginInfo();
@@ -24293,87 +24412,6 @@ class LoginClientInfo : public ::google::protobuf::MessageLite {
 
   void InitAsDefaultInstance();
   static LoginClientInfo* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class RequestCheckLoginResponse : public ::google::protobuf::MessageLite {
- public:
-  RequestCheckLoginResponse();
-  virtual ~RequestCheckLoginResponse();
-
-  RequestCheckLoginResponse(const RequestCheckLoginResponse& from);
-
-  inline RequestCheckLoginResponse& operator=(const RequestCheckLoginResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::std::string& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::std::string* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const RequestCheckLoginResponse& default_instance();
-
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  // Returns the internal default instance pointer. This function can
-  // return NULL thus should not be used by the user. This is intended
-  // for Protobuf internal code. Please use default_instance() declared
-  // above instead.
-  static inline const RequestCheckLoginResponse* internal_default_instance() {
-    return default_instance_;
-  }
-  #endif
-
-  void Swap(RequestCheckLoginResponse* other);
-
-  // implements Message ----------------------------------------------
-
-  RequestCheckLoginResponse* New() const;
-  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const RequestCheckLoginResponse& from);
-  void MergeFrom(const RequestCheckLoginResponse& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  void DiscardUnknownFields();
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::std::string GetTypeName() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestCheckLoginResponse)
- private:
-
-  ::std::string _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
-  #else
-  friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-  #endif
-  friend void protobuf_AssignDesc_Frpg2RequestMessage_2eproto();
-  friend void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto();
-
-  void InitAsDefaultInstance();
-  static RequestCheckLoginResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -37788,6 +37826,51 @@ inline void RegulationFileUpdatePushMessage::set_push_message_id(::Frpg2RequestM
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RegulationFileUpdatePushMessage.push_message_id)
 }
 
+// required .Frpg2RequestMessage.RegulationFileUpdateMessage update_message = 2;
+inline bool RegulationFileUpdatePushMessage::has_update_message() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RegulationFileUpdatePushMessage::set_has_update_message() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RegulationFileUpdatePushMessage::clear_has_update_message() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RegulationFileUpdatePushMessage::clear_update_message() {
+  if (update_message_ != NULL) update_message_->::Frpg2RequestMessage::RegulationFileUpdateMessage::Clear();
+  clear_has_update_message();
+}
+inline const ::Frpg2RequestMessage::RegulationFileUpdateMessage& RegulationFileUpdatePushMessage::update_message() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RegulationFileUpdatePushMessage.update_message)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return update_message_ != NULL ? *update_message_ : *default_instance().update_message_;
+#else
+  return update_message_ != NULL ? *update_message_ : *default_instance_->update_message_;
+#endif
+}
+inline ::Frpg2RequestMessage::RegulationFileUpdateMessage* RegulationFileUpdatePushMessage::mutable_update_message() {
+  set_has_update_message();
+  if (update_message_ == NULL) update_message_ = new ::Frpg2RequestMessage::RegulationFileUpdateMessage;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RegulationFileUpdatePushMessage.update_message)
+  return update_message_;
+}
+inline ::Frpg2RequestMessage::RegulationFileUpdateMessage* RegulationFileUpdatePushMessage::release_update_message() {
+  clear_has_update_message();
+  ::Frpg2RequestMessage::RegulationFileUpdateMessage* temp = update_message_;
+  update_message_ = NULL;
+  return temp;
+}
+inline void RegulationFileUpdatePushMessage::set_allocated_update_message(::Frpg2RequestMessage::RegulationFileUpdateMessage* update_message) {
+  delete update_message_;
+  update_message_ = update_message;
+  if (update_message) {
+    set_has_update_message();
+  } else {
+    clear_has_update_message();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RegulationFileUpdatePushMessage.update_message)
+}
+
 // -------------------------------------------------------------------
 
 // RequestMeasureUploadBandwidth
@@ -38593,6 +38676,36 @@ inline void RequestCountRankingDataResponse::set_count(::google::protobuf::uint3
 
 // RequestGetOnlineShopItemListResponse
 
+// repeated group Lineup = 2 {
+inline int RequestGetOnlineShopItemListResponse::lineup_size() const {
+  return lineup_.size();
+}
+inline void RequestGetOnlineShopItemListResponse::clear_lineup() {
+  lineup_.Clear();
+}
+inline const ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup& RequestGetOnlineShopItemListResponse::lineup(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestGetOnlineShopItemListResponse.lineup)
+  return lineup_.Get(index);
+}
+inline ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup* RequestGetOnlineShopItemListResponse::mutable_lineup(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestGetOnlineShopItemListResponse.lineup)
+  return lineup_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup* RequestGetOnlineShopItemListResponse::add_lineup() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.RequestGetOnlineShopItemListResponse.lineup)
+  return lineup_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup >&
+RequestGetOnlineShopItemListResponse::lineup() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.RequestGetOnlineShopItemListResponse.lineup)
+  return lineup_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::RequestGetOnlineShopItemListResponse_Lineup >*
+RequestGetOnlineShopItemListResponse::mutable_lineup() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.RequestGetOnlineShopItemListResponse.lineup)
+  return &lineup_;
+}
+
 // -------------------------------------------------------------------
 
 // QuickMatchRank
@@ -38656,6 +38769,36 @@ inline void QuickMatchRank::set_xp(::google::protobuf::uint32 value) {
 // -------------------------------------------------------------------
 
 // QuickMatchSession
+
+// repeated group Result_list = 2 {
+inline int QuickMatchSession::result_list_size() const {
+  return result_list_.size();
+}
+inline void QuickMatchSession::clear_result_list() {
+  result_list_.Clear();
+}
+inline const ::Frpg2RequestMessage::QuickMatchSession_Result_list& QuickMatchSession::result_list(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.QuickMatchSession.result_list)
+  return result_list_.Get(index);
+}
+inline ::Frpg2RequestMessage::QuickMatchSession_Result_list* QuickMatchSession::mutable_result_list(int index) {
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.QuickMatchSession.result_list)
+  return result_list_.Mutable(index);
+}
+inline ::Frpg2RequestMessage::QuickMatchSession_Result_list* QuickMatchSession::add_result_list() {
+  // @@protoc_insertion_point(field_add:Frpg2RequestMessage.QuickMatchSession.result_list)
+  return result_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSession_Result_list >&
+QuickMatchSession::result_list() const {
+  // @@protoc_insertion_point(field_list:Frpg2RequestMessage.QuickMatchSession.result_list)
+  return result_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2RequestMessage::QuickMatchSession_Result_list >*
+QuickMatchSession::mutable_result_list() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2RequestMessage.QuickMatchSession.result_list)
+  return &result_list_;
+}
 
 // -------------------------------------------------------------------
 
@@ -41471,6 +41614,10 @@ inline void ManagementTextMessage::set_unknown_5(::google::protobuf::uint32 valu
 
 // -------------------------------------------------------------------
 
+// RequestCheckLoginResponse
+
+// -------------------------------------------------------------------
+
 // UserLoginInfo
 
 // -------------------------------------------------------------------
@@ -41517,10 +41664,6 @@ inline void PushRequestHeader::set_push_message_id(::Frpg2RequestMessage::PushMe
 // -------------------------------------------------------------------
 
 // LoginClientInfo
-
-// -------------------------------------------------------------------
-
-// RequestCheckLoginResponse
 
 // -------------------------------------------------------------------
 

@@ -33,7 +33,7 @@ bool CWCClientUDPCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<
     std::vector<uint8_t> IV(11, 0);
     std::vector<uint8_t> Tag(16, 0);
     std::vector<uint8_t> Payload = Input;
-    std::vector<uint8_t> PacketType = { 0 };
+    std::vector<uint8_t> PacketType = { (uint8_t)PacketsHaveConnectionPrefix };
 
     FillRandomBytes(IV);
 
@@ -58,7 +58,7 @@ bool CWCClientUDPCipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<
     memcpy(Output.data() + 8 + 11 + 16, PacketType.data(), 1);
     memcpy(Output.data() + 8 + 11 + 16 + 1, Payload.data(), Payload.size());
 
-    //Log("EncryptClient: PayloadSize=%i IV=%s Tag=%s Header=%s", Payload.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str());
+    //Log("EncryptClient: PayloadSize=%i IV=%s Tag=%s Header=%s PacketType=%i", Payload.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str(), PacketType[0]);
 
     return true;
 }
@@ -90,7 +90,7 @@ bool CWCClientUDPCipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<
     memcpy(Header.data() + 11, AuthToken.data(), 8);
     memcpy(Header.data() + 19, PacketType.data(), 1);
 
-    //Log("DecryptClient: PayloadSize=%i IV=%s Tag=%s Header=%s", Output.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str());
+    //Log("DecryptClient: PayloadSize=%i IV=%s Tag=%s Header=%s PacketType=%i", Output.size(), BytesToHex(IV).c_str(), BytesToHex(Tag).c_str(), BytesToHex(Header).c_str(), PacketType[0]);
 
     if (cwc_decrypt_message(IV.data(), 11, Header.data(), (unsigned long)Header.size(), (unsigned char*)Output.data(), (unsigned long)Output.size(), Tag.data(), 16, &CwcContext) == RETURN_ERROR)
     {

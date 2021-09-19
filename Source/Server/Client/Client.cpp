@@ -50,7 +50,13 @@ Client::~Client()
 
 bool Client::Init()
 {
-    Log("Initializing client ...");
+    ClientStreamId = StringFormat("%016llx", SteamUser()->GetSteamID().ConvertToUint64());
+
+    // We use template files from a given steam-id, you will probably get banned if you run
+    // this on any arbitrary account without replacing the templates.
+    Ensure(ClientStreamId == "011000014a0ce047"); 
+
+    Log("Initializing client '%s' ...", ClientStreamId.c_str());
     if (!PrimaryKeyPair.LoadPublicKeyFromString(ServerPublicKey))
     {
         Error("Failed to load rsa keypair.");
@@ -113,6 +119,11 @@ void Client::RunUntilQuit()
             case ClientState::GameServer_Connect:                                   Handle_GameServer_Connect();                                    break;
             case ClientState::GameServer_RequestWaitForUserLogin:                   Handle_GameServer_RequestWaitForUserLogin();                    break;
             case ClientState::GameServer_RequestGetAnnounceMessageList:             Handle_GameServer_RequestGetAnnounceMessageList();              break;
+            case ClientState::GameServer_RequestUpdateLoginPlayerCharacter:         Handle_GameServer_RequestUpdateLoginPlayerCharacter();          break;
+            case ClientState::GameServer_RequestUpdatePlayerStatus:                 Handle_GameServer_RequestUpdatePlayerStatus();                  break;
+            case ClientState::GameServer_RequestUpdatePlayerCharacter:              Handle_GameServer_RequestUpdatePlayerCharacter();               break;
+            case ClientState::GameServer_RequestGetRightMatchingArea:               Handle_GameServer_RequestGetRightMatchingArea();                break;
+            case ClientState::GameServer_Experiment:                                Handle_GameServer_Experiment();                                 break;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -161,6 +172,8 @@ void Client::SendAndAwaitWaitForReply(google::protobuf::MessageLite* Request, Fr
 
         if (GameServerMessageStream->Recieve(&Message))
         {
+            GameServerMessageStream->HandledPacket(Message.AckSequenceIndex);
+
             if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply &&
                 Message.Header.msg_index == Message.Header.msg_index)
             {
@@ -354,7 +367,7 @@ void Client::Handle_GameServer_Connect()
     }
 
     GameServerMessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(GameServerConnection, GameServerCwcKey, GameServerAuthToken, true);
-    GameServerMessageStream->Connect();
+    GameServerMessageStream->Connect(ClientStreamId);
 
     while (GameServerMessageStream->GetState() != Frpg2ReliableUdpStreamState::Established)
     {
@@ -406,6 +419,134 @@ void Client::Handle_GameServer_RequestGetAnnounceMessageList()
     Frpg2RequestMessage::RequestGetAnnounceMessageListResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
-    Log("Recieved announcements: %i changes and %i notices.", Response.changes().items_size(), Response.notices().items_size());
+    Log("Recieved announcements.");
+    Log("\tChanges=%i", Response.changes().items_size());
+    Log("\tNotices=%i", Response.notices().items_size());
+
+    /*for (int i = 0; i < Response.changes().items_size(); i++)
+    {
+        Log("=== Change %i ===", i);
+        Log("%s", Response.changes().items(i).header().c_str());
+        Log("%s", Response.changes().items(i).message().c_str());
+    }
+    for (int i = 0; i < Response.notices().items_size(); i++)
+    {
+        Log("=== Notice %i ===", i);
+        Log("%s", Response.notices().items(i).header().c_str());
+        Log("%s", Response.notices().items(i).message().c_str());
+    }*/
+
+    ChangeState(ClientState::GameServer_RequestUpdateLoginPlayerCharacter);
 }
 
+void Client::Handle_GameServer_RequestUpdateLoginPlayerCharacter()
+{
+    Log("Requesting update of login player character.");
+
+    Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter Request;
+    Request.set_character_id(LocalCharacterId);
+    Request.mutable_unknown_2()->Add(LocalCharacterId);
+
+    Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
+    SendAndAwaitWaitForReply(&Request, &Response);
+
+    ServerCharacterId = Response.character_id();
+
+    Log("Recieved update login player character response.");
+    Log("\tLocal Character Id=%i", LocalCharacterId);
+    Log("\tServer Character Id=%i", ServerCharacterId);
+    Log("\tQuick Match Brawl Rank: Rank=%i XP=%i", Response.quickmatch_brawl_rank().rank(), Response.quickmatch_brawl_rank().xp());
+    Log("\tQuick Match Dual Rank: Rank=%i XP=%i", Response.quickmatch_dual_rank().rank(), Response.quickmatch_dual_rank().xp());
+
+    ChangeState(ClientState::GameServer_RequestUpdatePlayerStatus);
+}
+
+void Client::Handle_GameServer_RequestUpdatePlayerStatus()
+{
+    Log("Requesting update of player status.");
+
+    std::vector<uint8_t> RequestTemplateBytes;
+    Ensure(ReadBytesFromFile("../../Resources/TemplateProtobufs/RequestUpdatePlayerStatus.dat", RequestTemplateBytes));
+
+    Frpg2RequestMessage::RequestUpdatePlayerStatus Request;
+    Request.ParseFromArray(RequestTemplateBytes.data(), (int)RequestTemplateBytes.size());
+
+    ClientSoulLevel = Request.status().player_status().soul_level();
+    ClientSoulMemory = Request.status().player_status().soul_memory();
+    ClientWeaponLevel = Request.status().player_status().max_weapon_level();
+
+    Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
+    SendAndAwaitWaitForReply(&Request, &Response);
+
+    Log("Recieved update player status response.");
+
+    ChangeState(ClientState::GameServer_RequestUpdatePlayerCharacter);
+}
+
+void Client::Handle_GameServer_RequestUpdatePlayerCharacter()
+{
+    Log("Requesting update of player character.");
+
+    std::vector<uint8_t> RequestTemplateBytes;
+    Ensure(ReadBytesFromFile("../../Resources/TemplateProtobufs/RequestUpdatePlayerCharacter.dat", RequestTemplateBytes));
+
+    Frpg2RequestMessage::RequestUpdatePlayerCharacter Request;
+    Request.ParseFromArray(RequestTemplateBytes.data(), (int)RequestTemplateBytes.size());
+
+    Frpg2RequestMessage::RequestUpdatePlayerCharacterResponse Response;
+    SendAndAwaitWaitForReply(&Request, &Response);
+
+    Log("Recieved update player character response.");
+
+    ChangeState(ClientState::GameServer_RequestGetRightMatchingArea);
+}
+
+void Client::Handle_GameServer_RequestGetRightMatchingArea()
+{
+    Log("Requesting right matching area.");
+
+    Frpg2RequestMessage::RequestGetRightMatchingArea Request;
+    Request.mutable_matching_parameter()->set_unknown_id_1(1350000);
+    Request.mutable_matching_parameter()->set_unknown_id_2(2);
+    Request.mutable_matching_parameter()->set_unknown_id_3(0);
+    Request.mutable_matching_parameter()->set_unknown_id_4(1);
+    Request.mutable_matching_parameter()->set_unknown_id_5(0);
+    Request.mutable_matching_parameter()->set_soul_level(ClientSoulLevel);
+    Request.mutable_matching_parameter()->set_soul_memory(ClientSoulMemory);
+    Request.mutable_matching_parameter()->set_unknown_id_9(0);
+    Request.mutable_matching_parameter()->set_password("");
+    Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
+    Request.mutable_matching_parameter()->set_weapon_level(ClientWeaponLevel);
+    Request.set_unknown(0);
+
+    Frpg2RequestMessage::RequestGetRightMatchingAreaResponse Response;
+    SendAndAwaitWaitForReply(&Request, &Response);
+
+    Log("Recieved populated matching areas.");
+    for (int i = 0; i < Response.area_info_size(); i++)
+    {
+        const Frpg2RequestMessage::RequestGetRightMatchingAreaResponse_Area_info& AreaInfo = Response.area_info(i);
+        Log("\tArea:%i Population:%i", AreaInfo.online_area_id(), AreaInfo.population());
+    }
+
+    ChangeState(ClientState::GameServer_Experiment);
+}
+
+void Client::Handle_GameServer_Experiment()
+{
+    /*
+    Log("Requesting regulation file.");
+
+    std::vector<uint8_t> RequestTemplateBytes;
+    Ensure(ReadBytesFromFile("../../Resources/TemplateProtobufs/RequestUpdatePlayerCharacter.dat", RequestTemplateBytes));
+
+    Frpg2RequestMessage::RequestGetRegulationFile Request;
+    Request.set_unknown_1(0);
+
+    Frpg2RequestMessage::RequestGetRegulationFileResponse Response;
+    SendAndAwaitWaitForReply(&Request, &Response);
+
+    Log("Recieved regulation file response");
+    */
+    ChangeState(ClientState::Complete);
+}

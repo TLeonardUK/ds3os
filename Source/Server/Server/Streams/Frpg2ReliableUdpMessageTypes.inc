@@ -213,7 +213,9 @@ DEFINE_REQUEST_RESPONSE(0x03DB,   RequestGetOnlineShopItemList,     RequestGetOn
 // -----------------------------------------------------------------------------------------------
 
 // Can't find registration in code.
-//DEFINE_REQUEST_RESPONSE(0x,   RequestGetRegulationFile,           RequestGetRegulationFile,           RequestGetRegulationFileResponse)
+//DEFINE_REQUEST_RESPONSE(0x,       RequestGetRegulationFile,           RequestGetRegulationFile,           RequestGetRegulationFileResponse)
+
+DEFINE_PUSH_MESSAGE    (0x038B,     RegulationFileUpdatePushMessage,    RegulationFileUpdatePushMessage)
 
 // -----------------------------------------------------------------------------------------------
 // Ritual Marks (No idea what this is, probably cut content).
@@ -228,4 +230,5 @@ DEFINE_REQUEST_RESPONSE(0x0463,   RequestGetMarkList,               RequestGetMa
 // -----------------------------------------------------------------------------------------------
 DEFINE_REQUEST_RESPONSE(0x03A3,   RequestBenchmarkThroughput,       RequestBenchmarkThroughput,         RequestBenchmarkThroughputResponse)
 DEFINE_PUSH_MESSAGE    (0x0389,   ManagementTextMessage,            ManagementTextMessage)
+DEFINE_PUSH_MESSAGE    (0x038D,   ServerPing,                       ServerPing)
 

@@ -44,4 +44,13 @@ public:
     inline static const bool DISCONNECT_ON_UNHANDLED_MESSAGE = true;
 #endif
 
+    // Dumps a diasssembly of each message to the output.
+    constexpr inline static const bool DISASSEMBLE_RECIEVED_MESSAGES = false;
+
+    // Dumps a diasssembly of each message to the output.
+    constexpr inline static const bool DISASSEMBLE_SENT_MESSAGES = false;
+
+    // Prints reliable udp packet stream.
+    constexpr inline static const bool EMIT_RELIABLE_UDP_PACKET_STREAM = false;
+
 };

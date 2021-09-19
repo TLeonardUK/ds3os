@@ -23,3 +23,33 @@ std::string BytesToHex(const std::vector<uint8_t>& Bytes)
 
     return ss.str();
 }
+
+bool IsCharRenderable(char c)
+{
+    return c >= 32 && c <= 126;
+}
+
+std::string BytesToString(const std::vector<uint8_t>& Bytes, const std::string& LinePrefix)
+{
+    static int column_width = 16;
+
+    std::string result = "";
+
+    for (size_t i = 0; i < Bytes.size(); i += column_width)
+    {
+        std::string hex = "";
+        std::string chars = "";
+
+        for (size_t r = i; r < i + column_width && r < Bytes.size(); r++)
+        {
+            uint8_t Byte = Bytes[r];
+
+            hex += StringFormat("%02X ", Byte);
+            chars += IsCharRenderable((char)Byte) ? (char)Byte : '.';
+        }
+
+        result += StringFormat("%s%-48s \xB3 %s\n", LinePrefix.c_str(), hex.c_str(), chars.c_str());
+    }
+
+    return result;
+}

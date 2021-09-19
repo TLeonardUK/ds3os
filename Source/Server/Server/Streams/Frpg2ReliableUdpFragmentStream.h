@@ -31,6 +31,9 @@ public:
     // Overridden so we can do package retransmission/general management.
     virtual bool Pump() override;
 
+    // Diassembles a messages into a human-readable string.
+    std::string Disassemble(const Frpg2ReliableUdpFragment& Packet);
+
 protected:
 
     virtual bool RecieveInternal(Frpg2ReliableUdpFragment* Fragment);

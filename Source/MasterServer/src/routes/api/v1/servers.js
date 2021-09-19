@@ -28,24 +28,39 @@ function RemoveServer(IpAddress)
 
 function AddServer(IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list)
 {
-    GActiveServers.push({
-       "IpAddress": IpAddress,
-       "Hostname": hostname,
-       "PrivateHostname": private_hostname,
-       "Description": description,
-       "Name": name,
-       "PublicKey": public_key,
-       "PlayerCount": player_count,
-       "Password": password,
-       "ModsWhiteList": mods_white_list,
-       "ModsBlackList": mods_black_list,
-       "ModsRequiredList": mods_required_list,
-       "UpdatedTime": Date.now()
-    });
+    var ServerObj = {
+        "IpAddress": IpAddress,
+        "Hostname": hostname,
+        "PrivateHostname": private_hostname,
+        "Description": description,
+        "Name": name,
+        "PublicKey": public_key,
+        "PlayerCount": player_count,
+        "Password": password,
+        "ModsWhiteList": mods_white_list,
+        "ModsBlackList": mods_black_list,
+        "ModsRequiredList": mods_required_list,
+        "UpdatedTime": Date.now()
+     };
+
+    for (i = 0; i < GActiveServers.length; i++)
+    {
+        if (GActiveServers[i].IpAddress == IpAddress)
+        {
+            GActiveServers[i] = ServerObj;
+            return;
+        }
+    }
+
+    GActiveServers.push(ServerObj);
+    
+    console.log(`Adding server: ip=${IpAddress} name=${name}`);
+    console.log(`Total servers is now ${GActiveServers.length}`);
 }
 
 function RemoveTimedOutServers()
 {
+    var TimeoutOccured = false;
     var TimeoutDate = new Date(Date.now() - config.server_timeout_ms);
     for (i = 0; i < GActiveServers.length; )
     {
@@ -54,12 +69,18 @@ function RemoveTimedOutServers()
             console.log(`Removing server that timed out: ip=${GActiveServers[i].IpAddress}`);
 
             GActiveServers.splice(i, 1);
+            TimeoutOccured = true;
             break;
         }
         else
         {
             i++;
         }
+    }
+
+    if (TimeoutOccured)
+    {
+        console.log(`Total servers is now ${GActiveServers.length}`);
     }
 }
 
@@ -125,8 +146,6 @@ router.post('/:ip_address/public_key', async (req, res) => {
 // @description Adds or updates the server registered to the clients ip.
 // @access Public
 router.post('/', async (req, res) => {
-    RemoveServer(req.connection.remoteAddress);
-
     if (!('Hostname' in req.body))
     {
         res.json({ "status":"error", "message":"Expected hostname in body." });

@@ -40,6 +40,9 @@ public:
     // with raw data on the stream.
     virtual void SetRecieving(bool Recieving) { IsRecieving = Recieving; }
 
+    // Diassembles a messages into a human-readable string.
+    std::string Disassemble(const Frpg2Packet& Input);
+
 protected:
 
     bool BytesToPacket(const std::vector<uint8_t>& Buffer, Frpg2Packet& Packet);

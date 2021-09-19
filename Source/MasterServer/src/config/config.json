@@ -1,4 +1,4 @@
 {
     "port": 50020,
-    "server_timeout_ms": 300000
+    "server_timeout_ms": 60000
 }

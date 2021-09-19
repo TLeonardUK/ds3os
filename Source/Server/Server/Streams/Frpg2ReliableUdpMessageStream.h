@@ -38,6 +38,9 @@ public:
     // can use this to manually wait for responses to specific messages.
     uint32_t GetLastSentMessageIndex() { return LastSentMessageIndex; }
 
+    // Diassembles a messages into a human-readable string.
+    std::string Disassemble(const Frpg2ReliableUdpMessage& Message);
+
 protected:
 
     // Returns true if send was successful, if false is returned the send queue

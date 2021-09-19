@@ -12,6 +12,7 @@
 #include "Core/Utils/Endian.h"
 
 #include <vector>
+#include <string>
 
 // See ds3server_packet.bt for commentry on what each of these
 // fields appears to represent.
@@ -47,5 +48,7 @@ public:
     // Length of this payload should be the same
     // as the value stored in Header.payload_length
     std::vector<uint8_t> Payload;
+
+    std::string Disassembly;
 
 };

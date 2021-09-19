@@ -36,6 +36,9 @@ public:
     // Changes the cipher used for encryption/descryption.
     virtual void SetCipher(std::shared_ptr<Cipher> Encryption, std::shared_ptr<Cipher> Decryption);
 
+    // Diassembles a messages into a human-readable string.
+    std::string Disassemble(const Frpg2Message& Message);
+
     std::shared_ptr<Cipher> GetEncryptionCipher() { return EncryptionCipher; }
     std::shared_ptr<Cipher> GetDecryptionCipher() { return DecryptionCipher; }
 

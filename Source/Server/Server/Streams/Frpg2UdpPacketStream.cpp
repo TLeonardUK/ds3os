@@ -13,10 +13,14 @@
 #include "Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/File.h"
 #include "Platform/Platform.h"
 
 #include "Core/Crypto/CWCServerUDPCipher.h"
 #include "Core/Crypto/CWCClientUDPCipher.h"
+
+#include <thread>
+#include <chrono>
 
 Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& InCwcKey, uint64_t InAuthToken, bool AsClient)
     : Connection(InConnection)
@@ -85,6 +89,13 @@ bool Frpg2UdpPacketStream::Pump()
                 }
             }
 
+           /* static bool dumped = false;
+            if (!dumped && Connection->IsConnected())
+            {
+                dumped = true;
+                WriteBytesToFile("Z:\\ds3os\\Research\\Packet Traces\\game_login_compare\\from-game.dat", Packet.Payload);
+            }*/
+
             RecieveQueue.push_back(Packet);
         }
         else
@@ -103,11 +114,21 @@ bool Frpg2UdpPacketStream::Send(const Frpg2UdpPacket& Packet)
     std::vector<uint8_t> DecryptedBuffer = SendPacket.Payload;
     if (EncryptionCipher)
     {
+        if (SendPacket.HasConnectionPrefix)
+        {
+            dynamic_cast<CWCClientUDPCipher*>(EncryptionCipher.get())->SetPacketsHaveConnectionPrefix(true);
+        }
+
         if (!EncryptionCipher->Encrypt(DecryptedBuffer, SendPacket.Payload))
         {
             Warning("[%s] Failed to encrypt packet payload.", Connection->GetName().c_str());
             InErrorState = true;
             return false;
+        }
+
+        if (SendPacket.HasConnectionPrefix)
+        {
+            dynamic_cast<CWCClientUDPCipher*>(EncryptionCipher.get())->SetPacketsHaveConnectionPrefix(false);
         }
     }
 

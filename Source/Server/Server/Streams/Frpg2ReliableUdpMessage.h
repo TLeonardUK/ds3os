@@ -79,6 +79,8 @@ public:
     std::shared_ptr<google::protobuf::MessageLite> Protobuf;
 
     std::vector<uint8_t> Payload;
+
+    std::string Disassembly;
 };
 
 bool Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output);

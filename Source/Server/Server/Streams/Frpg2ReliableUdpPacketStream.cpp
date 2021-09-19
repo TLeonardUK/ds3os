@@ -11,13 +11,19 @@
 #include "Server/Streams/Frpg2ReliableUdpPacket.h"
 #include "Server/Streams/Frpg2UdpPacket.h"
 
+#include "Config/BuildConfig.h"
+
 #include "Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Utils/Strings.h"
 
 #include "Core/Crypto/RSAKeyPair.h"
 #include "Core/Crypto/RSACipher.h"
+
+#include <thread>
+#include <chrono>
 
 Frpg2ReliableUdpPacketStream::Frpg2ReliableUdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient)
     : Frpg2UdpPacketStream(Connection, CwcKey, AuthToken, AsClient)
@@ -33,8 +39,12 @@ void Frpg2ReliableUdpPacketStream::Disconnect()
     }
 }
 
-void Frpg2ReliableUdpPacketStream::Connect()
+void Frpg2ReliableUdpPacketStream::Connect(const std::string& ClientSteamId)
 {
+    State = Frpg2ReliableUdpStreamState::Connecting;
+    SteamId = ClientSteamId;
+    ResendSynTimer = GetSeconds();
+
     Send_SYN();
 }
 
@@ -109,17 +119,8 @@ bool Frpg2ReliableUdpPacketStream::DecodeReliablePacket(const Frpg2UdpPacket& In
 
     int HeaderOffset = 0;
     int PayloadOffset = sizeof(Frpg2ReliableUdpPacketHeader);
-    int PayloadSize = (int)Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader);
-    if (Input.Payload[0] != 0xF5 || Input.Payload[1] != 0x02)
-    {
-        // TODO: This is a hack to find the correct packet header offset, this only occurs for the very first syn packet so we
-        //       can hard code this. We should do this a better way though.
-        HeaderOffset = (int)Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader) - sizeof(Frpg2ReliableUdpPacketOpCodePayload_SYN);
-        PayloadOffset = 0;
-
-        Ensure(Input.Payload[HeaderOffset] == 0xF5 && Input.Payload[HeaderOffset + 1] == 0x02);
-    }
-
+    int PayloadSize = (int)Input.Payload.size() - sizeof(Frpg2ReliableUdpPacketHeader);    
+    Ensure(Input.Payload[HeaderOffset] == 0xF5 && Input.Payload[HeaderOffset + 1] == 0x02);
     Output.Payload.resize(PayloadSize);
 
     memcpy(&Output.Header, Input.Payload.data() + HeaderOffset, sizeof(Frpg2ReliableUdpPacketHeader));
@@ -135,10 +136,30 @@ bool Frpg2ReliableUdpPacketStream::EncodeReliablePacket(const Frpg2ReliableUdpPa
     Frpg2ReliableUdpPacket ByteSwappedMessage = Input;
     //ByteSwappedMessage.Header.SwapEndian();
 
-    Output.Payload.resize(sizeof(Frpg2ReliableUdpPacketHeader) + Input.Payload.size());
+    Output.HasConnectionPrefix = false;
+    Output.Payload.resize(0);
 
-    memcpy(Output.Payload.data(), &ByteSwappedMessage.Header, sizeof(Frpg2ReliableUdpPacketHeader));
-    memcpy(Output.Payload.data() + sizeof(Frpg2ReliableUdpPacketHeader), Input.Payload.data(), Input.Payload.size());
+    // Before the SYN we have to append the steam id data.
+    if (Input.Header.opcode == Frpg2ReliableUdpOpCode::SYN)
+    {
+        Frpg2ReliableUdpInitialData InitialData;
+        strcpy(InitialData.steam_id, SteamId.c_str());
+        strcpy(InitialData.steam_id_copy, SteamId.c_str());
+
+        Output.Payload.resize(sizeof(Frpg2ReliableUdpInitialData));
+        memcpy(Output.Payload.data(), &InitialData, sizeof(Frpg2ReliableUdpInitialData));
+
+        Output.HasConnectionPrefix = true;
+
+        //Warning("[%s] Sending initial connection data.", Connection->GetName().c_str());
+    }
+
+    size_t Offset = Output.Payload.size();
+
+    Output.Payload.resize(Offset + sizeof(Frpg2ReliableUdpPacketHeader) + Input.Payload.size());
+
+    memcpy(Output.Payload.data() + Offset, &ByteSwappedMessage.Header, sizeof(Frpg2ReliableUdpPacketHeader));
+    memcpy(Output.Payload.data() + Offset + sizeof(Frpg2ReliableUdpPacketHeader), Input.Payload.data(), Input.Payload.size());
 
     return true;
 }
@@ -154,12 +175,39 @@ void Frpg2ReliableUdpPacketStream::HandleIncoming()
             break;
         }
 
+        // This is the initial packet that contains the connection data before it.
+        // Strip this data off, we don't really care about it, just some steam id's.
+        if (Packet.Payload.size() > sizeof(Frpg2ReliableUdpInitialData) && Packet.Payload[0] != 0xF5 && Packet.Payload[0] != 0x25)
+        {
+            Frpg2ReliableUdpInitialData InitialData;
+            memcpy(&InitialData, Packet.Payload.data(), sizeof(Frpg2ReliableUdpInitialData));
+
+            std::vector<uint8_t> StrippedPayload;
+            StrippedPayload.resize(Packet.Payload.size() - sizeof(Frpg2ReliableUdpInitialData));
+            memcpy(StrippedPayload.data(), Packet.Payload.data() + sizeof(Frpg2ReliableUdpInitialData), StrippedPayload.size());
+            Packet.Payload = StrippedPayload;
+
+            //Warning("[%s] Initial connection data recieve, steam-id: %s", Connection->GetName().c_str(), InitialData.steam_id);
+        }
+
         Frpg2ReliableUdpPacket ReliablePacket;
         if (!DecodeReliablePacket(Packet, ReliablePacket))
         {
             Warning("[%s] Failed to convert packet payload to message.", Connection->GetName().c_str());
             InErrorState = true;
             continue;
+        }
+
+        // Disassemble if required.
+        if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)
+        {
+            ReliablePacket.Disassembly = Disassemble(ReliablePacket);
+
+            if (ReliablePacket.Header.opcode != Frpg2ReliableUdpOpCode::DAT &&
+                ReliablePacket.Header.opcode != Frpg2ReliableUdpOpCode::DAT_ACK)
+            {
+                Log("\n<< RECV\n%s", ReliablePacket.Disassembly.c_str());
+            }
         }
 
         HandleIncomingPacket(ReliablePacket);
@@ -223,8 +271,10 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
     uint32_t LocalAck, RemoteAck;
     Packet.Header.GetAckCounters(LocalAck, RemoteAck);
 
-//    Log("[%s] Recieved Packet: LocalAck=%i RemoteAck=%i", Connection->GetName().c_str(), LocalAck, RemoteAck);
-    //EmitDebugInfo(true, Packet);
+    if constexpr (BuildConfig::EMIT_RELIABLE_UDP_PACKET_STREAM)
+    {
+        EmitDebugInfo(true, Packet);
+    }
 
     // Check sequence index to prune duplicate / out of order for relevant packets.
     if (IsOpcodeSequenced(Packet.Header.opcode))
@@ -317,6 +367,11 @@ void Frpg2ReliableUdpPacketStream::ProcessPacket(const Frpg2ReliableUdpPacket & 
     case Frpg2ReliableUdpOpCode::ACK:
         {
             Handle_ACK(Packet);
+            break;
+        }
+    case Frpg2ReliableUdpOpCode::RACK:
+        {
+            Handle_RACK(Packet);
             break;
         }
     case Frpg2ReliableUdpOpCode::DAT_ACK:
@@ -448,12 +503,26 @@ void Frpg2ReliableUdpPacketStream::Handle_ACK(const Frpg2ReliableUdpPacket& Pack
         SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
     }
 }
+void Frpg2ReliableUdpPacketStream::Handle_RACK(const Frpg2ReliableUdpPacket& Packet)
+{
+    // I'm like 95% sure that RACK is "Reject ACK", its telling us the ACK recieved was invalid I think?
+    // I think we can just ignore this ...
+
+    Log("[%s] Recieved RACK - Ignoring ...", Connection->GetName().c_str());
+}
 
 void Frpg2ReliableUdpPacketStream::Handle_DAT(const Frpg2ReliableUdpPacket& Packet)
 {
     //Log("[%s] Recieved DAT.", Connection->GetName().c_str());
 
+    uint32_t InLocalAck, InRemoteAck;
+    Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
+
+    ExpectedDatAckResponses.insert(InLocalAck);
+
     RecieveQueue.push_back(Packet);
+
+    Send_ACK(InLocalAck);
 }
 
 void Frpg2ReliableUdpPacketStream::Handle_DAT_ACK(const Frpg2ReliableUdpPacket& Packet)
@@ -475,9 +544,8 @@ void Frpg2ReliableUdpPacketStream::Handle_DAT_ACK(const Frpg2ReliableUdpPacket& 
         SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
     }
     
-    // TODO: From our perspective do we actually need to do anything special with DAT_ACK? 
-    //       Filter up that a packet is a reply to another or something? Most of our traffic
-    //       goes through the message stream anyway which already handles this.
+    // Send an ACK for this DAT_ACK.
+    Send_ACK(InLocalAck);
 
     RecieveQueue.push_back(Packet);
 }
@@ -488,17 +556,7 @@ void Frpg2ReliableUdpPacketStream::Send_SYN()
     SynRequest.Header.SetAckCounters(SequenceIndex, 0);
     SynRequest.Header.opcode = Frpg2ReliableUdpOpCode::SYN;
 
-    // TODO: Figure out these values, they seem to always be the same, but we 
-    // should figure out what they are regardless.
     Frpg2ReliableUdpPacketOpCodePayload_SYN SynPayload;
-    SynPayload.unknown[0] = 0x12;
-    SynPayload.unknown[1] = 0x10;
-    SynPayload.unknown[2] = 0x20;
-    SynPayload.unknown[3] = 0x20;
-    SynPayload.unknown[4] = 0x00;
-    SynPayload.unknown[5] = 0x01;
-    SynPayload.unknown[6] = 0x00;
-    SynPayload.unknown[7] = 0x00;
 
     SynRequest.Payload.resize(sizeof(SynPayload));
     memcpy(SynRequest.Payload.data(), &SynPayload, sizeof(SynPayload));
@@ -514,15 +572,7 @@ void Frpg2ReliableUdpPacketStream::Send_SYN_ACK(uint32_t RemoteIndex)
 
     // TODO: Figure out these values, they seem to always be the same, but we 
     // should figure out what they are regardless.
-    Frpg2ReliableUdpPacketOpCodePayload_SYN SynPayload;
-    SynPayload.unknown[0] = 0x12;
-    SynPayload.unknown[1] = 0x10;
-    SynPayload.unknown[2] = 0x20;
-    SynPayload.unknown[3] = 0x20;
-    SynPayload.unknown[4] = 0x00;
-    SynPayload.unknown[5] = 0x01;
-    SynPayload.unknown[6] = 0x00;
-    SynPayload.unknown[7] = 0x00;
+    Frpg2ReliableUdpPacketOpCodePayload_SYN_ACK SynPayload;
 
     SynAckResponse.Payload.resize(sizeof(SynPayload));
     memcpy(SynAckResponse.Payload.data(), &SynPayload, sizeof(SynPayload));
@@ -542,6 +592,18 @@ void Frpg2ReliableUdpPacketStream::Send_ACK(uint32_t RemoteIndex)
     Frpg2ReliableUdpPacket AckResponse;
     AckResponse.Header.SetAckCounters(0, RemoteIndex);
     AckResponse.Header.opcode = Frpg2ReliableUdpOpCode::ACK;
+
+    Send(AckResponse);
+
+    RemoteSequenceIndexAcked = RemoteIndex;
+    LastAckSendTime = GetSeconds();
+}
+
+void Frpg2ReliableUdpPacketStream::Send_DAT_ACK(uint32_t LocalIndex, uint32_t RemoteIndex)
+{
+    Frpg2ReliableUdpPacket AckResponse;
+    AckResponse.Header.SetAckCounters(LocalIndex, RemoteIndex);
+    AckResponse.Header.opcode = Frpg2ReliableUdpOpCode::DAT_ACK;
 
     Send(AckResponse);
 
@@ -586,8 +648,10 @@ bool Frpg2ReliableUdpPacketStream::SendRaw(const Frpg2ReliableUdpPacket& Input)
 
     Ensure(Input.Header.opcode != Frpg2ReliableUdpOpCode::Unset);
 
-    //Log("[%s] Sent Packet: LocalAck=%i RemoteAck=%i", Connection->GetName().c_str(), LocalAck, RemoteAck);
-    //EmitDebugInfo(false, Input);
+    if constexpr (BuildConfig::EMIT_RELIABLE_UDP_PACKET_STREAM)
+    {
+        EmitDebugInfo(false, Input);
+    }
 
     Frpg2UdpPacket Packet;
     if (!EncodeReliablePacket(Input, Packet))
@@ -595,6 +659,15 @@ bool Frpg2ReliableUdpPacketStream::SendRaw(const Frpg2ReliableUdpPacket& Input)
         Warning("[%s] Failed to convert message to packet payload.", Connection->GetName().c_str());
         InErrorState = true;
         return false;
+    }
+
+    // Disassemble if required.
+    if constexpr (BuildConfig::DISASSEMBLE_SENT_MESSAGES)
+    {
+        Packet.Disassembly = Input.Disassembly;
+        Packet.Disassembly.append(Disassemble(Input));
+
+        Log("\n>> SENT\n%s", Packet.Disassembly.c_str());
     }
 
     if (!Frpg2UdpPacketStream::Send(Packet))
@@ -646,9 +719,9 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
 
     // If we have not had ack of packets in the retransmit queue for long enough, retransmit 
     // the first one and hope it gets acked soon.
+    double CurrentTime = GetSeconds();
     if (!IsRetransmitting)
     {
-        double CurrentTime = GetSeconds();
         for (auto iter = RetransmitBuffer.begin(); iter != RetransmitBuffer.end(); iter++)
         {
             Frpg2ReliableUdpPacket& Packet = *iter;
@@ -659,22 +732,34 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
             double ElapsedTime = (CurrentTime - Packet.SendTime);
             if (ElapsedTime > RETRANSMIT_INTERVAL)
             {
-                Log("[%s] Starting retransmit as we have unacknowledged packets.", Connection->GetName().c_str());
+                Log("[%s] Starting retransmit as we have unacknowledged packets (packet %i).", Connection->GetName().c_str(), InLocalAck);
 
                 SendRaw(Packet);
 
                 IsRetransmitting = true;
                 RetransmittingIndex = InLocalAck;
+                RetransmitPacket = Packet;
+                RetransmissionTimer = GetSeconds();
             }
         } 
     }
     // TODO: Handle overflow - This is super crude,  do it in a better way.
-    else if (RetransmittingIndex > MAX_ACK_VALUE_TOP_QUART && SequenceIndexAcked < MAX_ACK_VALUE_BOTTOM_QUART ||
-             SequenceIndexAcked >= RetransmittingIndex)
+    else
     {
-        Log("[%s] Recovered from retransmit.", Connection->GetName().c_str());
+        double ElapsedTime = (CurrentTime - RetransmissionTimer);
 
-        IsRetransmitting = false;
+        if (RetransmittingIndex > MAX_ACK_VALUE_TOP_QUART && SequenceIndexAcked < MAX_ACK_VALUE_BOTTOM_QUART ||
+            SequenceIndexAcked >= RetransmittingIndex)
+        {
+            Log("[%s] Recovered from retransmit.", Connection->GetName().c_str());
+            IsRetransmitting = false;
+        }
+        else if (ElapsedTime > RETRANSMIT_CYCLE_INTERVAL)
+        {
+            Log("[%s] Resending retransmission packet.", Connection->GetName().c_str());
+            RetransmissionTimer = GetSeconds();
+            SendRaw(RetransmitPacket);
+        }
     }
 
     // Do not send any packets if we have a lot of packets waiting for ack.
@@ -714,6 +799,18 @@ bool Frpg2ReliableUdpPacketStream::Pump()
         return true;
     }
 
+    // If connecting periodically resend the syn until we get a response. This helps punch a
+    // hole through NAT if required.
+    if (State == Frpg2ReliableUdpStreamState::Connecting)
+    {
+        double ResendElapsed = GetSeconds() - ResendSynTimer;
+        if (ResendElapsed > RESEND_SYN_INTERVAL)
+        {
+            Send_SYN();
+            ResendSynTimer = GetSeconds();
+        }
+    }
+
     // If closing and its taken too long then don't bother trying to gracefully disconnect.
     if (CloseTimer > 0.0f && State == Frpg2ReliableUdpStreamState::Closing)
     {        
@@ -745,6 +842,43 @@ void Frpg2ReliableUdpPacketStream::HandledPacket(uint32_t AckSequence)
         DatAckResponses.erase(iter);
         return;
     }
+    
+    bool NeedsDatAck = false;
+    if (auto iter = ExpectedDatAckResponses.find(AckSequence); iter != ExpectedDatAckResponses.end())
+    {
+        ExpectedDatAckResponses.erase(iter);
+        NeedsDatAck = true;
+    }
 
-    Send_ACK(AckSequence);
+    if (false)//NeedsDatAck)
+    {
+        Send_DAT_ACK(SequenceIndex, AckSequence);
+    }
+    else
+    {
+        Send_ACK(AckSequence);
+    }
+}
+
+std::string Frpg2ReliableUdpPacketStream::Disassemble(const Frpg2ReliableUdpPacket& Message)
+{
+    std::string Result = "";
+
+    uint32_t LocalAck, RemoteAck;
+    Message.Header.GetAckCounters(LocalAck, RemoteAck);
+
+    Result += "Reliable-Packet:\n";
+    Result += StringFormat("\t%-30s = %u\n", "header_size", Message.Header.magic_number);
+    Result += StringFormat("\t%-30s = %u\n", "local_ack", LocalAck);
+    Result += StringFormat("\t%-30s = %u\n", "remote_ack", RemoteAck);
+    Result += StringFormat("\t%-30s = %u\n", "opcode", Message.Header.opcode);
+    Result += StringFormat("\t%-30s = %u\n", "unknown_1", Message.Header.unknown_1);
+
+    if (Message.Header.opcode != Frpg2ReliableUdpOpCode::DAT &&
+        Message.Header.opcode != Frpg2ReliableUdpOpCode::DAT_ACK)
+    {
+        Result += "Packet Payload:\n";
+        Result += BytesToString(Message.Payload, "\t");
+    }
+    return Result;
 }
