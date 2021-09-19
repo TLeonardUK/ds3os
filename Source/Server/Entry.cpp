@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 
     if (!SteamAPI_Init())
     {
-        Error("Failed to initialize steam api.");
+        Error("Failed to initialize steam api, please ensure steam is running.");
         return 1;
     }
     SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
