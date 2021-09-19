@@ -444,6 +444,9 @@
     <ClCompile Include="Client\Client.cpp">
       <Filter>Client</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Network\NetIPAddress.cpp">
+      <Filter>Core\Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.props" />

@@ -192,6 +192,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClCompile Include="Core\Network\NetConnectionTCP.cpp" />
     <ClCompile Include="Core\Network\NetConnectionUDP.cpp" />
     <ClCompile Include="Core\Network\NetHttpRequest.cpp" />
+    <ClCompile Include="Core\Network\NetIPAddress.cpp" />
     <ClCompile Include="Core\Network\NetUtils.cpp" />
     <ClCompile Include="Core\Utils\Compression.cpp" />
     <ClCompile Include="Core\Utils\File.cpp" />

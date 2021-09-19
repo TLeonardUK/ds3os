@@ -71,7 +71,7 @@ public:
 
     // Hostname of the server that should be used for connecting if behind the same external ip.
     // If none is supplied then this will be the private ip of the server.
-    std::string PrivateServerHostname = "";
+    std::string ServerPrivateHostname = "";
 
     // If Advertise is set this is the master server that it will be registered to.
     // Be careful changing this, typically only one server should exist.

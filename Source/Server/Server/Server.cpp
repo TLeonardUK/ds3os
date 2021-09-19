@@ -59,21 +59,6 @@ bool Server::Init()
 {
     Log("Initializing server ...");
 
-    // Grab the external server IP address from a webapi.
-    if (!::GetMachineIPv4(PublicIP, true))
-    {
-        Error("Failed to resolve public ip address of server.");
-        return false;
-    }
-    if (!::GetMachineIPv4(PrivateIP, false))
-    {
-        Error("Failed to resolve private ip address of server.");
-        return false;
-    }
-
-    Log("Public ip address: %s", PublicIP.ToString().c_str());
-    Log("Private ip address: %s", PrivateIP.ToString().c_str());
-
     // Generate folder we are going to save everything into.
     if (!std::filesystem::is_directory(SavedPath))
     {
@@ -134,19 +119,49 @@ bool Server::Init()
     // Fill in IP information of server if not provided.
     if (Config.ServerHostname == "")
     {
-        Config.ServerHostname = PublicIP.ToString();
+        if (!::GetMachineIPv4(PublicIP, true))
+        {
+            Error("Failed to resolve public ip address of server.");
+            return false;
+        }
     }
-    if (Config.PrivateServerHostname == "")
+    else
     {
-        Config.PrivateServerHostname = PrivateIP.ToString();
+        // Convert hostname into IP.
+        if (!NetIPAddress::FromHostname(Config.ServerHostname, PublicIP))
+        {
+            Error("Failed to resolve ip from hostname '%s'.", Config.ServerHostname.c_str());
+            return false;
+        }
     }
+
+    if (Config.ServerPrivateHostname == "")
+    {
+        if (!::GetMachineIPv4(PrivateIP, false))
+        {
+            Error("Failed to resolve private ip address of server.");
+            return false;
+        }
+    }
+    else
+    {
+        // Convert hostname into IP.
+        if (!NetIPAddress::FromHostname(Config.ServerPrivateHostname, PrivateIP))
+        {
+            Error("Failed to resolve ip from hostname '%s'.", Config.ServerPrivateHostname.c_str());
+            return false;
+        }
+    }
+
+    Log("Public ip address: %s", PublicIP.ToString().c_str());
+    Log("Private ip address: %s", PrivateIP.ToString().c_str());
 
     // Write out the server import file with the latest configuration.
     nlohmann::json Output;
     Output["Name"]              = Config.ServerName;
     Output["Description"]       = Config.ServerDescription;
-    Output["Hostname"]          = Config.ServerHostname;
-    Output["PrivateHostname"]   = Config.PrivateServerHostname;
+    Output["Hostname"]          = Config.ServerHostname.length() > 0 ? Config.ServerHostname : PublicIP.ToString();
+    Output["PrivateHostname"]   = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PublicIP.ToString();
     Output["PublicKey"]         = PrimaryKeyPair.GetPublicString();
     Output["ModsWhitelist"]     = Config.ModsWhitelist;
     Output["ModsBlacklist"]     = Config.ModsBlacklist;
@@ -294,8 +309,8 @@ void Server::PollServerAdvertisement()
     else if (GetSeconds() - LastMasterServerUpdate > Config.AdvertiseHearbeatTime)
     {
         nlohmann::json Body;
-        Body["Hostname"] = Config.ServerHostname;
-        Body["PrivateHostname"] = Config.PrivateServerHostname;
+        Body["Hostname"] = Config.ServerHostname.length() > 0 ? Config.ServerHostname : PublicIP.ToString();
+        Body["PrivateHostname"] = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PublicIP.ToString();
         Body["Description"] = Config.ServerDescription;
         Body["Name"] = Config.ServerName;
         Body["PublicKey"] = PrimaryKeyPair.GetPublicString();

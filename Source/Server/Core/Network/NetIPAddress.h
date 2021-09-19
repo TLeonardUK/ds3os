@@ -61,6 +61,8 @@ public:
         return false;
     }
 
+    static bool FromHostname(const std::string& Input, NetIPAddress& Output);
+
 private:
     uint8_t Bytes[4];
 
