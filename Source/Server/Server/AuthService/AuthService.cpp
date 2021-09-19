@@ -75,7 +75,7 @@ void AuthService::Poll()
 
 void AuthService::HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection)
 {
-    Log("[%s] Client connected.", ClientConnection->GetName().c_str());
+    LogS(ClientConnection->GetName().c_str(), "Client connected.");
 
     std::shared_ptr<AuthClient> Client = std::make_shared<AuthClient>(this, ClientConnection, ServerRSAKey);
     Clients.push_back(Client);

@@ -115,7 +115,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetBreakInTargetListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetBreakInTargetListResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -135,7 +135,7 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
     std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());
     if (!TargetClient)
     {
-        Warning("[%s] Client attempted to target unknown (or disconnected) client for invasion %i.", Client->GetName().c_str(), Request->player_id());
+        WarningS(Client->GetName().c_str(), "Client attempted to target unknown (or disconnected) client for invasion %i.", Request->player_id());
         bSuccess = false;
     }
 
@@ -152,7 +152,7 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
 
         if (!TargetClient->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestBreakInTarget to target of invasion.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send PushRequestBreakInTarget to target of invasion.");
             bSuccess = false;
         }
 
@@ -166,7 +166,7 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
     Frpg2RequestMessage::RequestBreakInTargetResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestBreakInTargetResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestBreakInTargetResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -186,7 +186,7 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
 
         if (!Client->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestRejectBreakInTarget.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectBreakInTarget.");
             return MessageHandleResult::Error;
         }
     }
@@ -204,7 +204,7 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
     std::shared_ptr<GameClient> InvaderClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());
     if (!InvaderClient)
     {
-        Warning("[%s] Client rejected breakin from unknown (or disconnected) client %i.", Client->GetName().c_str(), Request->player_id());
+        WarningS(Client->GetName().c_str(), "Client rejected breakin from unknown (or disconnected) client %i.", Request->player_id());
         return MessageHandleResult::Handled;
     }
 
@@ -218,7 +218,7 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
 
     if (!InvaderClient->MessageStream->Send(&PushMessage))
     {
-        Warning("[%s] Failed to send PushRequestRejectBreakInTarget to invader client %s.", Client->GetName().c_str(), InvaderClient->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectBreakInTarget to invader client %s.", InvaderClient->GetName().c_str());
     }
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
@@ -226,7 +226,7 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
     Frpg2RequestMessage::RequestRejectBreakInTargetResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRejectBreakInTargetResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectBreakInTargetResponse response.");
         return MessageHandleResult::Error;
     }
 

@@ -38,7 +38,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         std::vector<uint8_t> UncompressPayload = Payload;
         if (!Compress(UncompressPayload, Payload))
         {
-            Warning("[%s] Failed to compress packet data.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to compress packet data.");
             InErrorState = true;
             return false;
         }
@@ -67,7 +67,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
         Frpg2ReliableUdpPacket SendPacket;
         if (!EncodeFragment(SendFragment, SendPacket))
         {
-            Warning("[%s] Failed to encode fragment to packet.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to encode fragment to packet.");
             InErrorState = true;
             return false;
         }
@@ -89,7 +89,7 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
 
         if (!Frpg2ReliableUdpPacketStream::Send(SendPacket))
         {
-            Warning("[%s] Failed to send fragment packet.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to send fragment packet.");
             InErrorState = true;
             return false;
         }
@@ -122,7 +122,7 @@ bool Frpg2ReliableUdpFragmentStream::RecieveInternal(Frpg2ReliableUdpFragment* F
 
     if (!DecodeFragment(Packet, *Fragment))
     {
-        Warning("[%s] Failed to convert packet payload to Fragment.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to convert packet payload to Fragment.");
         InErrorState = true;
         return false;
     }
@@ -144,7 +144,7 @@ bool Frpg2ReliableUdpFragmentStream::DecodeFragment(const Frpg2ReliableUdpPacket
 {
     if (Packet.Payload.size() < sizeof(Frpg2ReliableUdpFragmentHeader))
     {
-        Warning("[%s] Packet payload is less than the minimum size of a Fragment, failed to deserialize.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Packet payload is less than the minimum size of a Fragment, failed to deserialize.");
         InErrorState = true;
         return false;
     }
@@ -251,7 +251,7 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
                 std::vector<uint8_t> UncompressPayload = Fragment.Payload;
                 if (!Decompress(UncompressPayload, Fragment.Payload, Fragment.PayloadDecompressedLength))
                 {
-                    Warning("[%s] Failed to decompress packet data.", Connection->GetName().c_str());
+                    WarningS(Connection->GetName().c_str(), "Failed to decompress packet data.");
                     InErrorState = true;
                     return true;
                 }

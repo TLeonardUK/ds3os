@@ -45,7 +45,7 @@ bool NetConnectionUDP::Listen(int Port)
     Socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (Socket == INVALID_SOCKET_VALUE)
     {
-        Error("[%s] Failed to create socket, error %i.", GetName().c_str(), WSAGetLastError());
+        ErrorS(GetName().c_str(), "Failed to create socket, error %i.", WSAGetLastError());
         return false;
     }
 
@@ -54,7 +54,7 @@ bool NetConnectionUDP::Listen(int Port)
     int const_1 = 1;
     if (setsockopt(Socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&const_1, sizeof(const_1)))
     {
-        Error("[%s] Failed to set socket options: SO_REUSEADDR", GetName().c_str());
+        Error(GetName().c_str(), "Failed to set socket options: SO_REUSEADDR");
         return false;        
     }
 
@@ -63,19 +63,19 @@ bool NetConnectionUDP::Listen(int Port)
     unsigned long mode = 1;
     if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #else
     if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
-        Error("[%s] Failed to get socket flags.", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
     }
     flags = flags | O_NONBLOCK;
     if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #endif
@@ -87,7 +87,7 @@ bool NetConnectionUDP::Listen(int Port)
 
     if (bind(Socket, (struct sockaddr*)&ListenAddress, sizeof(ListenAddress)) < 0)
     {
-        Error("[%s] Failed to bind socket to port %i.", GetName().c_str(), Port);
+        ErrorS(GetName().c_str(), "Failed to bind socket to port %i.", Port);
         return false;
     }
 
@@ -128,7 +128,7 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     Socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (Socket == INVALID_SOCKET_VALUE)
     {
-        Error("[%s] Failed to create socket, error %i.", GetName().c_str(), WSAGetLastError());
+        ErrorS(GetName().c_str(), "Failed to create socket, error %i.", WSAGetLastError());
         return false;
     }
 
@@ -137,7 +137,7 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     int const_1 = 1;
     if (setsockopt(Socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&const_1, sizeof(const_1)))
     {
-        Error("[%s] Failed to set socket options: SO_REUSEADDR", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to set socket options: SO_REUSEADDR");
         return false;
     }
 
@@ -146,19 +146,19 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     unsigned long mode = 1;
     if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #else
     if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
-        Error("[%s] Failed to get socket flags.", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
     }
     flags = flags | O_NONBLOCK;
     if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #endif
@@ -170,7 +170,7 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
 
     if (bind(Socket, (struct sockaddr*)&ListenAddress, sizeof(ListenAddress)) < 0)
     {
-        Error("[%s] Failed to bind socket to port %i.", GetName().c_str(), Port);
+        ErrorS(GetName().c_str(), "Failed to bind socket to port %i.", Port);
         return false;
     }
 
@@ -193,7 +193,7 @@ bool NetConnectionUDP::Peek(std::vector<uint8_t>& Buffer, int Offset, int Count,
     std::vector<uint8_t>& NextPacket = RecieveQueue[0];
     if (Count > NextPacket.size())
     {
-        Error("[%s] Unable to peek udp packet. Peek size is larger than datagram size.", GetName().c_str());
+        ErrorS(GetName().c_str(), "Unable to peek udp packet. Peek size is larger than datagram size.");
         return false;
     }
 
@@ -214,7 +214,7 @@ bool NetConnectionUDP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
     std::vector<uint8_t> NextPacket = RecieveQueue[0];
     if (NextPacket.size() > Count)
     {
-        Error("[%s] Unable to recieve next udp packet, packet is larger than buffer. Packets must be recieved in their entirety.", GetName().c_str());
+        ErrorS(GetName().c_str(), "Unable to recieve next udp packet, packet is larger than buffer. Packets must be recieved in their entirety.");
         return false;
     }
     RecieveQueue.erase(RecieveQueue.begin());
@@ -246,17 +246,17 @@ bool NetConnectionUDP::Send(const std::vector<uint8_t>& Buffer, int Offset, int 
             return false;
         }
 
-        Error("[%s] Failed to send with error 0x%08x.", GetName().c_str(), error);
+        ErrorS(GetName().c_str(), "Failed to send with error 0x%08x.", error);
         return false;
     }
     else if (Result != Count)
     {
-        Error("[%s] Failed to send packet in its entirety, wanted to send %i but sent %i. Datagram larger than MTU?", GetName().c_str(), Count, Result);
+        ErrorS(GetName().c_str(), "Failed to send packet in its entirety, wanted to send %i but sent %i. Datagram larger than MTU?", Count, Result);
         return false;
     }
 
    /* 
-    Log(">> %i to %i.%i.%i.%i:%i", Result, 
+    LogS(GetName().c_str(), ">> %i to %i.%i.%i.%i:%i", Result, 
         Destination.sin_addr.S_un.S_un_b.s_b1,
         Destination.sin_addr.S_un.S_un_b.s_b2,
         Destination.sin_addr.S_un.S_un_b.s_b3,
@@ -332,7 +332,7 @@ bool NetConnectionUDP::Pump()
                 return false;
             }
 
-            Error("[%s] Failed to recieve with error 0x%08x.", GetName().c_str(), error);
+            ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
             return false;
         }
         else if (Result > 0)
@@ -362,7 +362,7 @@ bool NetConnectionUDP::Pump()
                 {
                     std::vector<char> ClientName;
                     ClientName.resize(64);
-                    snprintf(ClientName.data(), ClientName.size(), "%s{%s:%i}", Name.c_str(), inet_ntoa(SourceAddress.sin_addr), SourceAddress.sin_port);
+                    snprintf(ClientName.data(), ClientName.size(), "%s:%s:%i", Name.c_str(), inet_ntoa(SourceAddress.sin_addr), SourceAddress.sin_port);
 
                     NetIPAddress NetClientAddress(
                         SourceAddress.sin_addr.S_un.S_un_b.s_b1,
@@ -381,7 +381,7 @@ bool NetConnectionUDP::Pump()
                 RecieveQueue.push_back(Packet);
             }
 
-            //Log("<< %i", Result);
+            //LogS(GetName().c_str(), "<< %i", Result);
         }
     }
 

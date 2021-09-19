@@ -44,26 +44,26 @@ bool AuthClient::Poll()
     double TimeSinceLastMessage = GetSeconds() - LastMessageRecievedTime;
     if (TimeSinceLastMessage >= BuildConfig::CLIENT_TIMEOUT)
     {
-        Warning("[%s] Client timed out.", GetName().c_str());
+        WarningS(GetName().c_str(), "Client timed out.");
         return true;
     }
 
     // Client disconnected.
     if (Connection->Pump())
     {
-        Warning("[%s] Disconnecting client as connection was in an error state.", GetName().c_str());
+        Warning(GetName().c_str(), "Disconnecting client as connection was in an error state.");
         return true;
     }
     if (!Connection->IsConnected())
     {
-        Log("[%s] Client disconnected.", GetName().c_str());
+        LogS(GetName().c_str(), "Client disconnected.");
         return true;
     }
 
     // Pump the message stream and handle any messages that come in.
     if (MessageStream->Pump())
     {
-        Warning("[%s] Disconnecting client as message stream was in an error state.", GetName().c_str());
+        WarningS(GetName().c_str(), "Disconnecting client as message stream was in an error state.");
         return true;
     }
     
@@ -77,7 +77,7 @@ bool AuthClient::Poll()
             {
                 if (Message.Header.msg_type != Frpg2MessageType::RequestHandshake)
                 {
-                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected RequestHandshake.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected RequestHandshake.");
                     return true;
                 }
 
@@ -85,7 +85,7 @@ bool AuthClient::Poll()
                 Frpg2RequestMessage::RequestHandshake Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
-                    Warning("[%s] Disconnecting client as recieved unexpected message, expecting RequestHandshake.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting RequestHandshake.");
                     return true;
                 }
 
@@ -94,8 +94,6 @@ bool AuthClient::Poll()
                 uint8_t* string_ptr = reinterpret_cast<uint8_t*>(string.data());
 
                 CwcKey.assign(string_ptr, string_ptr + string.length());
-
-                //Log("[%s] Recieved handshake request, Key=%s", GetName().c_str(), BytesToHex(CwcKey).c_str());
 
                 // Disable cipher while we send this "hardcoded" message.
                 MessageStream->SetCipher(nullptr, nullptr);
@@ -109,7 +107,7 @@ bool AuthClient::Poll()
 
                 if (!MessageStream->Send(Response, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
-                    Warning("[%s] Disconnecting client as failed to send cipher validation response.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as failed to send cipher validation response.");
                     return true;
                 }
 
@@ -131,18 +129,16 @@ bool AuthClient::Poll()
             {
                 if (Message.Header.msg_type != Frpg2MessageType::GetServiceStatus)
                 {
-                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected GetServiceStatus.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected GetServiceStatus.");
                     return true;
                 }
 
                 Frpg2RequestMessage::GetServiceStatus Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
-                    Warning("[%s] Disconnecting client as recieved unexpected message, expecting GetServiceStatus.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting GetServiceStatus.");
                     return true;
                 }
-
-                //Log("[%s] Recieved service status request.", GetName().c_str());
 
                 // Note: I think empty response is sent back here if an update is available.
 
@@ -157,7 +153,7 @@ bool AuthClient::Poll()
 
                 if (!MessageStream->Send(&Response, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
-                    Warning("[%s] Disconnecting client as failed to send GetServiceStatusResponse response.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as failed to send GetServiceStatusResponse response.");
                     return true;
                 }
 
@@ -177,12 +173,12 @@ bool AuthClient::Poll()
             {
                 if (Message.Header.msg_type != Frpg2MessageType::KeyMaterial)
                 {
-                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected key material.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected key material.");
                     return true;
                 }
                 if (Message.Payload.size() != 8)
                 {
-                    Warning("[%s] Disconnecting client as key exchange payload was different size to expected.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as key exchange payload was different size to expected.");
                     return true;
                 }
 
@@ -193,15 +189,13 @@ bool AuthClient::Poll()
                 FillRandomBytes(KeyResponse.Payload); 
                 memcpy(KeyResponse.Payload.data(), Message.Payload.data(), 8);
 
-                //Log("[%s] Recieved key exchange bytes, game session key = %s", GetName().c_str(), BytesToHex(KeyResponse.Payload).c_str());
-
                 // Note: Supposedly the "normal" cwc key should work for the game session - it doesn't seem to though.
                 //       This key however does output plaintext, but with a message tag failure. Huuum
                 GameCwcKey = KeyResponse.Payload;
 
                 if (!MessageStream->Send(KeyResponse, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
-                    Warning("[%s] Disconnecting client as failed to send key exchange.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as failed to send key exchange.");
                     return true;
                 }
 
@@ -224,11 +218,9 @@ bool AuthClient::Poll()
 
                 if (Message.Header.msg_type != Frpg2MessageType::SteamTicket)
                 {
-                    Warning("[%s] Disconnecting client as recieved unexpected packet type while expected steam ticket.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected steam ticket.");
                     return true;
                 }
-
-                //Log("[%s] Recieved steam session ticket.", GetName().c_str());
 
                 // TODO: Could actually link to the steamapi libs and authenticate this ticket? 
                 //       Not really a big issue tho.
@@ -241,7 +233,7 @@ bool AuthClient::Poll()
                 // and return our internal IP address.
                 if (Connection->GetAddress().IsPrivateNetwork())
                 {
-                    Log("[%s] Directing auth client to our private ip as appears to be on private subnet.", GetName().c_str());
+                    LogS(GetName().c_str(), "Directing auth client to our private ip as appears to be on private subnet.");
                     ServerIP = Service->GetServer()->GetPrivateIP().ToString();
                 }
 
@@ -259,7 +251,7 @@ bool AuthClient::Poll()
 
                 if (!MessageStream->Send(Response, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
-                    Warning("[%s] Disconnecting client as failed to game server info.", GetName().c_str());
+                    WarningS(GetName().c_str(), "Disconnecting client as failed to game server info.");
                     return true;
                 }
 
@@ -269,7 +261,7 @@ bool AuthClient::Poll()
 
                 LastMessageRecievedTime = GetSeconds();
 
-                Log("[%s] Authentication complete.", GetName().c_str());
+                LogS(GetName().c_str(), "Authentication complete.");
                 State = AuthClientState::Complete;
             }
             break;

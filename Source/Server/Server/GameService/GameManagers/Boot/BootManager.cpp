@@ -48,11 +48,11 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
     // Resolve steam id to player id. If no player recorded with it, create a new one.
     if (!ServerInstance->GetDatabase().FindOrCreatePlayer(State.SteamId, State.PlayerId))
     {
-        Warning("[%s] Failed to find or create player with steam id '%s' in database.", Client->GetName().c_str(), State.SteamId.c_str());
+        WarningS(Client->GetName().c_str(), "Failed to find or create player with steam id '%s' in database.", State.SteamId.c_str());
         return MessageHandleResult::Error;
     }
 
-    Log("[%s] Steam id '%s' has logged in as player %i.", Client->GetName().c_str(), State.SteamId.c_str(), State.PlayerId);
+    LogS(Client->GetName().c_str(), "Steam id '%s' has logged in as player %i.", State.SteamId.c_str(), State.PlayerId);
 
     // Send back response with our new player id.
     Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;
@@ -60,7 +60,7 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
     Response.set_player_id(State.PlayerId); 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestWaitForUserLoginResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestWaitForUserLoginResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -96,7 +96,7 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
 
     if (!Client->MessageStream->Send(&UploadInfoPushMessage))
     {
-        Warning("[%s] Disconnecting client as failed to send UploadInfoPushMessage response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send UploadInfoPushMessage response.");
         return MessageHandleResult::Error;
     }
 
@@ -140,7 +140,7 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestWaitForUserLoginResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestWaitForUserLoginResponse response.");
         return MessageHandleResult::Error;
     }
 

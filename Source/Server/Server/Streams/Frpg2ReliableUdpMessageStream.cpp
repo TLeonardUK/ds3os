@@ -56,7 +56,7 @@ bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& 
     Frpg2ReliableUdpFragment Packet;
     if (!EncodeMessage(SendMessage, Packet))
     {
-        Warning("[%s] Failed to convert message to packet.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to convert message to packet.");
         InErrorState = true;
         return false;
     }
@@ -98,7 +98,7 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
     {
         if (!Protobuf_To_ReliableUdpMessageType(Message, ResponseMessage.Header.msg_type))
         {
-            Warning("[%s] Failed to determine message type by protobuf.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to determine message type by protobuf.");
             InErrorState = true;
             return false;
         }
@@ -111,7 +111,7 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
 
     if (!Message->SerializeToArray(ResponseMessage.Payload.data(), (int)ResponseMessage.Payload.size()))
     {
-        Warning("[%s] Failed to serialize protobuf payload.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to serialize protobuf payload.");
         InErrorState = true;
         return false;
     }
@@ -120,8 +120,6 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
     {
         return true;
     }
-
-    //Log("[%s] >> %s", Connection->GetName().c_str(), Message->GetTypeName().c_str());
 
     return true;
 }
@@ -146,8 +144,6 @@ bool Frpg2ReliableUdpMessageStream::SendRawProtobuf(const std::vector<uint8_t>& 
         return true;
     }
 
-    //Log("[%s] >> %s", Connection->GetName().c_str(), Message->GetTypeName().c_str());
-
     return true;
 }
 
@@ -161,7 +157,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
 
     if (!DecodeMessage(Packet, *Message))
     {
-        Warning("[%s] Failed to convert packet payload to message.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to convert packet payload to message.");
         InErrorState = true;
         return false;
     }
@@ -191,7 +187,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         }
         else
         {
-            Warning("[%s] Recieved unexpected response for message, dropping: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+            WarningS(Connection->GetName().c_str(), "Recieved unexpected response for message, dropping: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
             InErrorState = true;
             return false;
         }
@@ -201,7 +197,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
 
     if (!ReliableUdpMessageType_To_Protobuf(MessageType, IsResponse, Message->Protobuf))
     {
-        Warning("[%s] Failed to create protobuf instance for message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+        WarningS(Connection->GetName().c_str(), "Failed to create protobuf instance for message: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
 
 #if defined(DUMP_FAILED_PACKETS_TO_DISK)
         char buffer[128];
@@ -215,7 +211,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
 
     if (!Message->Protobuf->ParseFromArray(Message->Payload.data(), (int)Message->Payload.size()))
     {
-        Warning("[%s] Failed to deserialize protobuf instance for message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), MessageType, Message->Header.msg_index);
+        WarningS(Connection->GetName().c_str(), "Failed to deserialize protobuf instance for message: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
 
 #if defined(DUMP_FAILED_PACKETS_TO_DISK)
         char buffer[128];
@@ -227,9 +223,6 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         return false;
     }
 
-    //Log("[%s] << %s", Connection->GetName().c_str(), Message->Protobuf->GetTypeName().c_str());
-    //Log("[%s] Recieving message: type=0x%08x index=0x%08x", Connection->GetName().c_str(), Message->Header.msg_type, Message->Header.msg_index)
-
     return true;
 }
 
@@ -237,7 +230,7 @@ bool Frpg2ReliableUdpMessageStream::DecodeMessage(const Frpg2ReliableUdpFragment
 {
     if (Packet.Payload.size() < sizeof(Frpg2ReliableUdpMessageHeader))
     {
-        Warning("[%s] Packet payload is less than the minimum size of a message, failed to deserialize.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Packet payload is less than the minimum size of a message, failed to deserialize.");
         InErrorState = true;
         return false;
     }

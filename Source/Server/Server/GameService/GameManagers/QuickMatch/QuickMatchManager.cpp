@@ -34,7 +34,7 @@ void QuickMatchManager::OnLostPlayer(GameClient* Client)
 
         if (Match->HostPlayerId == Client->GetPlayerState().PlayerId)
         {
-            Log("[%s] Cleaned up undead match due to disconnecting client.", Client->GetName().c_str());
+            LogS(Client->GetName().c_str(), "Cleaned up undead match due to disconnecting client.");
             Iter = Matches.erase(Iter);
         }
         else
@@ -181,7 +181,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestCountRankingDataResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestCountRankingDataResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -206,7 +206,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRegisterQuickMatchResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRegisterQuickMatchResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -235,7 +235,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestUnregisterQuickMatch(GameCl
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestUnregisterQuickMatchResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestUnregisterQuickMatchResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -251,7 +251,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestUpdateQuickMatch(GameClient
     Frpg2RequestMessage::RequestUpdateQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestUpdateQuickMatchResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestUpdateQuickMatchResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -283,7 +283,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
 
             if (!HostClient->MessageStream->Send(&PushMessage))
             {
-                Warning("[%s] Failed to send PushRequestJoinQuickMatch to host of quick match.", Client->GetName().c_str());
+                WarningS(Client->GetName().c_str(), "Failed to send PushRequestJoinQuickMatch to host of quick match.");
                 bSuccess = false;
             }
             else
@@ -306,7 +306,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
 
         if (!Client->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestRejectQuickMatch to player attempting to join quick match.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectQuickMatch to player attempting to join quick match.");
             bSuccess = false;
         }
 
@@ -316,7 +316,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
     Frpg2RequestMessage::RequestJoinQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestJoinQuickMatchResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestJoinQuickMatchResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -339,14 +339,14 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
 
         if (!TargetClient->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestAcceptQuickMatch to target of quick match join.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send PushRequestAcceptQuickMatch to target of quick match join.");
         }
     }
 
     Frpg2RequestMessage::RequestAcceptQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestAcceptQuickMatchResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestAcceptQuickMatchResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -368,14 +368,14 @@ MessageHandleResult QuickMatchManager::Handle_RequestRejectQuickMatch(GameClient
 
         if (!TargetClient->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestAcceptQuickMatch to target of quick match join.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send PushRequestAcceptQuickMatch to target of quick match join.");
         }
     }
 
     Frpg2RequestMessage::RequestRejectQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRejectQuickMatchResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectQuickMatchResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -401,7 +401,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchStart(GameCli
     Frpg2RequestMessage::RequestSendQuickMatchStartResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestSendQuickMatchStartResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestSendQuickMatchStartResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -422,7 +422,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     std::shared_ptr<Character> Character = Database.FindCharacter(State.PlayerId, State.CharacterId);
     if (!Character)
     {
-        Warning("[%s] Disconnecting client as failed to find current character during QuickMatchResult.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to find current character during QuickMatchResult.");
         return MessageHandleResult::Error;
     }
 
@@ -471,12 +471,12 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     Response.mutable_new_local_rank()->set_rank(Rank);
     Response.mutable_new_local_rank()->set_xp(XP);
 
-    Log("[%s] Player finished undead match, ranked up to: rank=%i xp=%i (from rank=%i xp=%i)", Client->GetName().c_str(), Rank, XP, OriginalRank, OriginalXP);
+    LogS(Client->GetName().c_str(), "Player finished undead match, ranked up to: rank=%i xp=%i (from rank=%i xp=%i)", Rank, XP, OriginalRank, OriginalXP);
 
     // Update character state.
     if (!Database.UpdateCharacterQuickMatchRank(State.PlayerId, State.CharacterId, Character->QuickMatchDuelRank, Character->QuickMatchDuelXp, Character->QuickMatchBrawlRank, Character->QuickMatchBrawlXp))
     {
-        Warning("[%s] Disconnecting client as failed to update their quick match result.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to update their quick match result.");
         return MessageHandleResult::Error;
     }
 
@@ -486,7 +486,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestSendQuickMatchResultResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestSendQuickMatchResultResponse response.");
         return MessageHandleResult::Error;
     }
 

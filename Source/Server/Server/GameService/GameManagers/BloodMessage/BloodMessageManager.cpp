@@ -50,7 +50,7 @@ bool BloodMessageManager::Init()
 
     if (MessageCount > 0)
     {
-        Log("[%s] Primed live cache with %i blood messages.", GetName().c_str(), MessageCount);
+        LogS(GetName().c_str(), "Primed live cache with %i blood messages.", MessageCount);
     }
 
     return true;
@@ -121,7 +121,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReentryBloodMessage(GameC
             }
             else
             {
-                Log("[%s] Requesting client to recreate message %i.", Client->GetName().c_str(), Id);
+                LogS(Client->GetName().c_str(), "Requesting client to recreate message %i.", Id);
                 RecreateMessageIds->Add(Id);
             }
         }
@@ -129,7 +129,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReentryBloodMessage(GameC
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestReentryBloodMessageResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestReentryBloodMessageResponse response.");
         return MessageHandleResult::Error;
     }
     
@@ -158,11 +158,11 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
         std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((OnlineAreaId)MessageInfo.online_area_id(), Player.PlayerId, Player.SteamId, Request->character_id(), MessageData);
         if (!BloodMessage)
         {
-            Warning("[%s] Failed to recreate blood message.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to recreate blood message.");
             continue;
         }
 
-        Log("[%s] Recreated message %i.", Client->GetName().c_str(), BloodMessage->MessageId);
+        LogS(Client->GetName().c_str(), "Recreated message %i.", BloodMessage->MessageId);
 
         LiveCache.Add(BloodMessage->OnlineAreaId, BloodMessage->MessageId, BloodMessage);
         CreatedMessageIds->Add(BloodMessage->MessageId);
@@ -170,7 +170,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestReCreateBloodMessageListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestReCreateBloodMessageListResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -212,7 +212,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageEvaluation
         // If we can't find it, just return 0 evaluation, this shouldn't happen in practice.
         else
         {
-            Warning("[%s] Client requested evaluation of unknown message id '%u', returning 0.", Client->GetName().c_str(), MessageInfo.message_id());
+            WarningS(Client->GetName().c_str(), "Client requested evaluation of unknown message id '%u', returning 0.", MessageInfo.message_id());
             EvalData.set_good(0);
             EvalData.set_poor(0);
         }
@@ -220,7 +220,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageEvaluation
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetBloodMessageEvaluationResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetBloodMessageEvaluationResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -247,7 +247,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
     }
     else
     {
-        Warning("[%s] Disconnecting client as failed to create blood message.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to create blood message.");
         return MessageHandleResult::Error;
     }
 
@@ -257,7 +257,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestCreateBloodMessageResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestCreateBloodMessageResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -271,7 +271,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
 
     Frpg2RequestMessage::RequestRemoveBloodMessage* Request = (Frpg2RequestMessage::RequestRemoveBloodMessage*)Message.Protobuf.get();
 
-    Log("[%s] Removing blood message %i.", Client->GetName().c_str(), Request->message_id());
+    LogS(Client->GetName().c_str(), "Removing blood message %i.", Request->message_id());
 
     if (Database.RemoveOwnBloodMessage(Player.PlayerId, Request->message_id()))
     {
@@ -279,7 +279,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
     }
     else
     {
-        Warning("[%s] Failed to remove blood message.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to remove blood message.");
     }
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
@@ -287,7 +287,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
     Frpg2RequestMessage::RequestRemoveBloodMessageResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRemoveBloodMessageResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRemoveBloodMessageResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -321,9 +321,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
             {
                 continue;
             }
-
-            //Log("[%s] Returning blood message %i in area %i.", Client->GetName().c_str(), AreaMsg->MessageId, AreaMsg->OnlineAreaId);
-
+            
             Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
             Data.set_player_id(AreaMsg->PlayerId);
             Data.set_character_id(AreaMsg->CharacterId); 
@@ -340,7 +338,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetBloodMessageListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetBloodMessageListResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -369,7 +367,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
     // If we can't find it, just return 0 evaluation, this shouldn't happen in practice.
     else
     {
-        Warning("[%s] Disconnecting client as attempted to evaluate unknown unknown message id '%u'.", Client->GetName().c_str(), Request->message_id());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as attempted to evaluate unknown unknown message id '%u'.", Request->message_id());
         return MessageHandleResult::Error;
     }
 
@@ -377,7 +375,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
     {
         if (ActiveMessage->PlayerId == Player.PlayerId)
         {
-            Warning("[%s] Disconnecting client as attempted to evaluate own message id '%u'.", Client->GetName().c_str(), Request->message_id());
+            WarningS(Client->GetName().c_str(), "Disconnecting client as attempted to evaluate own message id '%u'.", Request->message_id());
             return MessageHandleResult::Error;
         }
 
@@ -394,15 +392,15 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
 
         if (!Database.SetBloodMessageEvaluation(Request->message_id(), ActiveMessage->RatingPoor, ActiveMessage->RatingGood))
         {
-            Warning("[%s] Failed to update message evaluation for message id '%u'.", Client->GetName().c_str(), Request->message_id());
+            WarningS(Client->GetName().c_str(), "Failed to update message evaluation for message id '%u'.", Request->message_id());
         }
 
-        Log("[%s] Evaluating blood message %i as %s.", Client->GetName().c_str(), ActiveMessage->MessageId, Request->was_poor() ? "poor" : "good");
+        LogS(Client->GetName().c_str(), "Evaluating blood message %i as %s.", ActiveMessage->MessageId, Request->was_poor() ? "poor" : "good");
 
         // Send push message to originating player if they are online.
         if (std::shared_ptr<GameClient> OriginClient = GameServiceInstance->FindClientByPlayerId(ActiveMessage->PlayerId))
         {
-            Log("[%s] Sending push message for evaluation of blood message %i to player %i.", Client->GetName().c_str(), ActiveMessage->MessageId, ActiveMessage->PlayerId);
+            LogS(Client->GetName().c_str(), "Sending push message for evaluation of blood message %i to player %i.", ActiveMessage->MessageId, ActiveMessage->PlayerId);
 
             Frpg2RequestMessage::PushRequestEvaluateBloodMessage EvaluatePushMessage;
             EvaluatePushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestEvaluateBloodMessage);
@@ -413,7 +411,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
 
             if (!OriginClient->MessageStream->Send(&EvaluatePushMessage))
             {
-                Warning("[%s] Failed to send push message for evaluation of blood message %i to player %i..", Client->GetName().c_str(), ActiveMessage->MessageId, ActiveMessage->PlayerId);
+                WarningS(Client->GetName().c_str(), "Failed to send push message for evaluation of blood message %i to player %i..", ActiveMessage->MessageId, ActiveMessage->PlayerId);
             }
         }
     }
@@ -427,7 +425,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
     Frpg2RequestMessage::RequestEvaluateBloodMessageResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestEvaluateBloodMessageResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestEvaluateBloodMessageResponse response.");
         return MessageHandleResult::Error;
     }
 

@@ -47,7 +47,7 @@ bool Frpg2PacketStream::Pump()
                 int BytesRecieved = 0;
                 if (!Connection->Recieve(PacketBuffer, PacketBytesRecieved, (int)PacketBuffer.size() - PacketBytesRecieved, BytesRecieved))
                 {
-                    Warning("[%s] Failed to recieve on connection.", Connection->GetName().c_str());
+                    WarningS(Connection->GetName().c_str(), "Failed to recieve on connection.");
                     InErrorState = true;
                     return true;
                 }
@@ -67,13 +67,13 @@ bool Frpg2PacketStream::Pump()
                     uint16_t PacketLength = BigEndianToHostOrder(*reinterpret_cast<uint16_t*>(PacketBuffer.data()));
                     if (PacketLength == 0)
                     {
-                        Warning("[%s] Recieved packet length of 0, this is invalid.", Connection->GetName().c_str());
+                        WarningS(Connection->GetName().c_str(), "Recieved packet length of 0, this is invalid.");
                         InErrorState = true;
                         return true;
                     }
                     if (PacketLength > BuildConfig::MAX_PACKET_LENGTH)
                     {
-                        Warning("[%s] Recieved packet length of %i, this is greater than the max packet length.", Connection->GetName().c_str(), PacketLength);
+                        WarningS(Connection->GetName().c_str(), "Recieved packet length of %i, this is greater than the max packet length.", PacketLength);
                         InErrorState = true;
                         return true;
                     }
@@ -85,7 +85,7 @@ bool Frpg2PacketStream::Pump()
                     Frpg2Packet Packet;
                     if (!BytesToPacket(PacketBuffer, Packet))
                     {
-                        Warning("[%s] Failed to parse recieved packet.", Connection->GetName().c_str());
+                        WarningS(Connection->GetName().c_str(), "Failed to parse recieved packet.");
                         InErrorState = true;
                         return true;
                     }
@@ -117,7 +117,7 @@ bool Frpg2PacketStream::BytesToPacket(const std::vector<uint8_t>& Buffer, Frpg2P
 
     if (Packet.Header.payload_length > BuildConfig::MAX_PACKET_LENGTH - sizeof(Frpg2PacketHeader) - sizeof(uint16_t))
     {
-        Warning("[%s] Packet payload length is greater than maximum packet length. Unable to deserialize.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Packet payload length is greater than maximum packet length. Unable to deserialize.");
         InErrorState = true;
         return false;
     }
@@ -135,7 +135,7 @@ bool Frpg2PacketStream::PacketToBytes(const Frpg2Packet& Packet, std::vector<uin
 
     if (Packet.Header.payload_length > BuildConfig::MAX_PACKET_LENGTH - sizeof(Frpg2PacketHeader) - sizeof(uint16_t))
     {
-        Warning("[%s] Packet payload length is greater than maximum packet length. Unable to serialize.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Packet payload length is greater than maximum packet length. Unable to serialize.");
         InErrorState = true;
         return false;
     }
@@ -168,7 +168,7 @@ bool Frpg2PacketStream::Send(const Frpg2Packet& Packet)
     std::vector<uint8_t> Bytes;
     if (!PacketToBytes(SendPacket, Bytes))
     {
-        Warning("[%s] Failed to send packet, unable to serialize.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to send packet, unable to serialize.");
         InErrorState = true;
         return false;
     }
@@ -181,7 +181,7 @@ bool Frpg2PacketStream::Send(const Frpg2Packet& Packet)
 
     if (!Connection->Send(BytesWithHeader, 0, (int)BytesWithHeader.size()))
     {
-        Warning("[%s] Failed to send packet,.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to send packet,.");
         InErrorState = true;
         return false;
     }

@@ -57,7 +57,7 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
 
     if (!Database.RegisterScore(Request->board_id(), Player.PlayerId, Request->character_id(), Request->score(), Data))
     {
-        Warning("[%s] Failed to register score in database.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to register score in database.");
         return MessageHandleResult::Error;
     }
 
@@ -69,7 +69,7 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
     Frpg2RequestMessage::RequestRegisterRankingDataResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRegisterRankingDataResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRegisterRankingDataResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -98,7 +98,7 @@ MessageHandleResult RankingManager::Handle_RequestGetRankingData(GameClient* Cli
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetRankingDataResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetRankingDataResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -136,7 +136,7 @@ MessageHandleResult RankingManager::Handle_RequestGetCharacterRankingData(GameCl
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetCharacterRankingDataResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetCharacterRankingDataResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -156,7 +156,7 @@ MessageHandleResult RankingManager::Handle_RequestCountRankingData(GameClient* C
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestCountRankingDataResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestCountRankingDataResponse response.");
         return MessageHandleResult::Error;
     }
 

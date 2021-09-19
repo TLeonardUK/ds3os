@@ -108,7 +108,7 @@ MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Cli
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetVisitorListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetVisitorListResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -128,7 +128,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());
     if (!TargetClient)
     {
-        Warning("[%s] Client attempted to target unknown (or disconnected) client for visit %i.", Client->GetName().c_str(), Request->player_id());
+        WarningS(Client->GetName().c_str(), "Client attempted to target unknown (or disconnected) client for visit %i.", Request->player_id());
         bSuccess = false;
     }
 
@@ -146,7 +146,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
 
         if (!TargetClient->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestBreakInTarget to target of visit.", Client->GetName().c_str());
+            WarningS(TargetClient->GetName().c_str(), "Failed to send PushRequestBreakInTarget to target of visit.");
             bSuccess = false;
         }
     }
@@ -156,7 +156,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     Frpg2RequestMessage::RequestVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestVisitResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestVisitResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -176,7 +176,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
 
         if (!Client->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestRejectVisit.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectVisit.");
             return MessageHandleResult::Error;
         }
     }
@@ -194,7 +194,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
 
         if (!Client->MessageStream->Send(&PushMessage, &Message))
         {
-            Warning("[%s] Disconnecting client as failed to send PushRequestRemoveVisitor response.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send PushRequestRemoveVisitor response.");
             return MessageHandleResult::Error;
         }
 
@@ -220,7 +220,7 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
     std::shared_ptr<GameClient> InitiatorClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());
     if (!InitiatorClient)
     {
-        Warning("[%s] Client rejected visit from unknown (or disconnected) client %i.", Client->GetName().c_str(), Request->player_id());
+        WarningS(Client->GetName().c_str(), "Client rejected visit from unknown (or disconnected) client %i.", Request->player_id());
         return MessageHandleResult::Handled;
     }
 
@@ -234,7 +234,7 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
 
     if (!InitiatorClient->MessageStream->Send(&PushMessage))
     {
-        Warning("[%s] Failed to send PushRequestRejectBreakInTarget to invader client %s.", Client->GetName().c_str(), InitiatorClient->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectBreakInTarget to invader client %s.", InitiatorClient->GetName().c_str());
     }
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
@@ -242,7 +242,7 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
     Frpg2RequestMessage::RequestRejectVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRejectVisitResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectVisitResponse response.");
         return MessageHandleResult::Error;
     }
 

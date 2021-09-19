@@ -94,7 +94,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
 
         if (!OtherClient->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send push message for bell ring to player '%s'", Client->GetName().c_str(), OtherClient->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send push message for bell ring to player '%s'", OtherClient->GetName().c_str());
         }
     }
 
@@ -105,7 +105,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
     Frpg2RequestMessage::RequestNotifyRingBellResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestNotifyRingBellResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestNotifyRingBellResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -128,13 +128,13 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
         std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(PlayerId);
         if (!TargetClient)
         {
-            Warning("[%s] Client attempted to send message to other client %i, but client doesn't exist.", Client->GetName().c_str(), PlayerId);
+            WarningS(Client->GetName().c_str(), "Client attempted to send message to other client %i, but client doesn't exist.", PlayerId);
         }
         else
         {
             if (!TargetClient->MessageStream->SendRawProtobuf(MessageData))
             {
-                Warning("[%s] Failed to send raw protobuf from RequestSendMessageToPlayers to %s.", Client->GetName().c_str(), TargetClient->GetName().c_str());
+                WarningS(Client->GetName().c_str(), "Failed to send raw protobuf from RequestSendMessageToPlayers to %s.", TargetClient->GetName().c_str());
             }
         }
     }
@@ -144,7 +144,7 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
     Frpg2RequestMessage::RequestSendMessageToPlayersResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestSendMessageToPlayersResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestSendMessageToPlayersResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -161,7 +161,7 @@ MessageHandleResult MiscManager::Handle_RequestMeasureUploadBandwidth(GameClient
     Frpg2RequestMessage::RequestMeasureUploadBandwidthResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestMeasureUploadBandwidthResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestMeasureUploadBandwidthResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -178,7 +178,7 @@ MessageHandleResult MiscManager::Handle_RequestMeasureDownloadBandwidth(GameClie
     Frpg2RequestMessage::RequestMeasureDownloadBandwidthResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestMeasureDownloadBandwidthResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestMeasureDownloadBandwidthResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -195,7 +195,7 @@ MessageHandleResult MiscManager::Handle_RequestGetOnlineShopItemList(GameClient*
     Frpg2RequestMessage::RequestGetOnlineShopItemListResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetOnlineShopItemListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetOnlineShopItemListResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -212,7 +212,7 @@ MessageHandleResult MiscManager::Handle_RequestBenchmarkThroughput(GameClient* C
     Frpg2RequestMessage::RequestBenchmarkThroughputResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestBenchmarkThroughputResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestBenchmarkThroughputResponse response.");
         return MessageHandleResult::Error;
     }
 

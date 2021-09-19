@@ -75,7 +75,7 @@ void LoginService::Poll()
 
 void LoginService::HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection)
 {
-    Log("[%s] Client connected.", ClientConnection->GetName().c_str());
+    LogS(ClientConnection->GetName().c_str(), "Client connected.");
 
     std::shared_ptr<LoginClient> Client = std::make_shared<LoginClient>(this, ClientConnection, ServerRSAKey);
     Clients.push_back(Client);

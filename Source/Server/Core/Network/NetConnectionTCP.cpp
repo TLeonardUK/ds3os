@@ -42,7 +42,7 @@ bool NetConnectionTCP::Listen(int Port)
     Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (Socket == INVALID_SOCKET_VALUE)
     {
-        Error("[%s] Failed to create socket, error %i.", GetName().c_str(), WSAGetLastError());
+        ErrorS(GetName().c_str(), "Failed to create socket, error %i.",  WSAGetLastError());
         return false;
     }
 
@@ -51,14 +51,14 @@ bool NetConnectionTCP::Listen(int Port)
     int const_1 = 1;
     if (setsockopt(Socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&const_1, sizeof(const_1)))
     {
-        Error("[%s] Failed to set socket options: SO_REUSEADDR", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to set socket options: SO_REUSEADDR");
         return false;        
     }
 
     // Turn off nagles algorithm.
     if (setsockopt(Socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&const_1, sizeof(const_1)))
     {
-        Error("[%s] Failed to set socket options: TCP_NODELAY", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to set socket options: TCP_NODELAY");
         return false;
     }
 
@@ -67,19 +67,19 @@ bool NetConnectionTCP::Listen(int Port)
     unsigned long mode = 1;
     if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #else
     if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
-        Error("[%s] Failed to get socket flags.", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
     }
     flags = flags | O_NONBLOCK;
     if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #endif
@@ -91,13 +91,13 @@ bool NetConnectionTCP::Listen(int Port)
 
     if (bind(Socket, (struct sockaddr*)&ListenAddress, sizeof(ListenAddress)) < 0)
     {
-        Error("[%s] Failed to bind socket to port %i.", GetName().c_str(), Port);
+        ErrorS(GetName().c_str(), "Failed to bind socket to port %i.", Port);
         return false;
     }
 
     if (listen(Socket, 64) < 0)
     {
-        Error("[%s] Failed to listen on socket on port %i.", GetName().c_str(), Port);
+        ErrorS(GetName().c_str(), "Failed to listen on socket on port %i.", Port);
         return false;
     }
 
@@ -119,7 +119,7 @@ std::shared_ptr<NetConnection> NetConnectionTCP::Accept()
     {
         std::vector<char> ClientName;
         ClientName.resize(64);
-        snprintf(ClientName.data(), ClientName.size(), "%s{%s:%i}", Name.c_str(), inet_ntoa(ClientAddress.sin_addr), ClientAddress.sin_port);
+        snprintf(ClientName.data(), ClientName.size(), "%s:%s:%i", Name.c_str(), inet_ntoa(ClientAddress.sin_addr), ClientAddress.sin_port);
 
         // TODO: Keep track of these clients and disconnect them when 
         //       this socket is disconnected.
@@ -151,7 +151,7 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     Socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (Socket == INVALID_SOCKET_VALUE)
     {
-        Error("[%s] Failed to create socket, error %i.", GetName().c_str(), WSAGetLastError());
+        ErrorS(GetName().c_str(), "Failed to create socket, error %i.", WSAGetLastError());
         return false;
     }
 
@@ -162,7 +162,7 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     hostent* HostEntry = gethostbyname(Hostname.c_str());
     if (HostEntry == nullptr)
     {
-        Error("[%s] Failed to resolve hostname '%s'.", GetName().c_str(), Hostname.c_str());
+        ErrorS(GetName().c_str(), "Failed to resolve hostname '%s'.", Hostname.c_str());
         return false;
     }
     else
@@ -191,7 +191,7 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         int error = errno;
 #endif
 
-        Error("[%s] Failed to recieve with error 0x%08x.", GetName().c_str(), error);
+        ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
         return false;
     }
 
@@ -199,7 +199,7 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     unsigned int const_1 = 1;
     if (setsockopt(Socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&const_1, sizeof(const_1)))
     {
-        Error("[%s] Failed to set socket options: TCP_NODELAY", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to set socket options: TCP_NODELAY");
         return false;
     }
 
@@ -208,19 +208,19 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     unsigned long mode = 1;
     if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #else
     if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
-        Error("[%s] Failed to get socket flags.", GetName().c_str());
+        ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
     }
     flags = flags | O_NONBLOCK;
     if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
     {
-        Error("[%s] Failed to set socket to non blocking with error 0x%08x", GetName().c_str(), result);
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
 #endif
@@ -263,7 +263,7 @@ bool NetConnectionTCP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
             return true;
         }
 
-        Error("[%s] Failed to recieve with error 0x%08x.", GetName().c_str(), error);
+        ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
         return false;
     }
     else if (Result == 0)
@@ -287,7 +287,7 @@ bool NetConnectionTCP::Send(const std::vector<uint8_t>& Buffer, int Offset, int 
 
     if (NewQueueSize > BuildConfig::MAX_SEND_QUEUE_SIZE)
     {
-        Warning("[%s] Failed to send packet, send queue is saturated.", GetName().c_str());
+        WarningS(GetName().c_str(), "Failed to send packet, send queue is saturated.");
         return false;
     }
 
@@ -326,7 +326,7 @@ bool NetConnectionTCP::SendPartial(const std::vector<uint8_t>& Buffer, int Offse
             return true;
         }
 
-        Error("[%s] Failed to send with error 0x%08x.", GetName().c_str(), error);
+        ErrorS(GetName().c_str(), "Failed to send with error 0x%08x.", error);
         return false;
     }
 
@@ -381,10 +381,10 @@ bool NetConnectionTCP::Pump()
     while (SendQueue.size() > 0)
     {
         int BytesSent = 0;
-        //Log("[%s] SEND %i", GetName().c_str(), SendQueue.size());
+        //LogS(GetName().c_str(), "SEND %i", SendQueue.size());
         if (!SendPartial(SendQueue, 0, (int)SendQueue.size(), BytesSent))
         {
-            Warning("[%s] Failed to send on connection.", GetName().c_str());
+            WarningS(GetName().c_str(), "Failed to send on connection.");
             return true;
         }
 

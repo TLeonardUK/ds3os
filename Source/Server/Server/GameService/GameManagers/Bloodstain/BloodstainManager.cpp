@@ -46,7 +46,7 @@ bool BloodstainManager::Init()
 
     if (StainCount > 0)
     {
-        Log("[%s] Primed live cache with %i blood stains.", GetName().c_str(), StainCount);
+        LogS(GetName().c_str(), "Primed live cache with %i blood stains.", StainCount);
     }
 
     return true;
@@ -88,7 +88,7 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
     }
     else
     {
-        Warning("[%s] Disconnecting client as failed to create blood stain.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to create blood stain.");
         return MessageHandleResult::Error;
     }
 
@@ -126,8 +126,6 @@ MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClien
                 continue;
             }
 
-            //Log("[%s] Returning blood stain %i in area %i.", Client->GetName().c_str(), AreaMsg->BloodstainId, AreaMsg->OnlineAreaId);
-
             Frpg2RequestMessage::BloodstainInfo& Data = *Response.mutable_bloodstains()->Add();
             Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);
             Data.set_bloodstain_id((uint32_t)AreaMsg->BloodstainId);
@@ -139,7 +137,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClien
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestCreateBloodMessageResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestCreateBloodMessageResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -169,7 +167,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetDeadingGhost(GameClient*
     // Doesn't exist, no go.
     else
     {
-        Warning("[%s] Disconnecting client as failed to retrieve bloodstain '%i'", Client->GetName().c_str(), Request->bloodstain_id());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to retrieve bloodstain '%i'", Request->bloodstain_id());
         return MessageHandleResult::Error;
     }
 
@@ -180,7 +178,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetDeadingGhost(GameClient*
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetDeadingGhostResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetDeadingGhostResponse response.");
         return MessageHandleResult::Error;
     }
 

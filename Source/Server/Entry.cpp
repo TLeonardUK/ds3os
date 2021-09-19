@@ -18,7 +18,7 @@
 
 extern "C" void __cdecl SteamWarningHook(int nSeverity, const char* pchDebugText)
 {
-    Log("[Steam] %i: %s", nSeverity, pchDebugText);
+    LogS("Steam", "%i: %s", nSeverity, pchDebugText);
 }
 
 int main(int argc, char* argv[])
@@ -32,7 +32,17 @@ int main(int argc, char* argv[])
     std::filesystem::path exe_directory = std::filesystem::path(argv[0]).parent_path();
     std::filesystem::current_path(exe_directory);
 
-    Log("Dark Souls 3 - Open Server");
+    Log(R"--(    ____             __      _____             __        _____)--");
+    Log(R"--(   / __ \____ ______/ /__   / ___/____  __  __/ /____   |__  /)--");
+    Log(R"--(  / / / / __ `/ ___/ //_/   \__ \/ __ \/ / / / / ___/    /_ < )--");
+    Log(R"--( / /_/ / /_/ / /  / ,<     ___/ / /_/ / /_/ / (__  )   ___/ / )--");
+    Log(R"--(/_____/\__,_/_/  /_/|_|   /____/\____/\__,_/_/____/   /____/  )--");
+    Log(R"--(  / __ \____  ___  ____     / ___/___  ______   _____  _____  )--");
+    Log(R"--( / / / / __ \/ _ \/ __ \    \__ \/ _ \/ ___/ | / / _ \/ ___/  )--");
+    Log(R"--(/ /_/ / /_/ /  __/ / / /   ___/ /  __/ /   | |/ /  __/ /      )--");
+    Log(R"--(\____/ .___/\___/_/ /_/   /____/\___/_/    |___/\___/_/       )--");
+    Log(R"--(    /_/                                                       )--");
+    Log("");
     Log("https://github.com/tleonarduk/ds3os");
     Log("");
 

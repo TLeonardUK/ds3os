@@ -120,7 +120,7 @@ void GameService::Poll()
 
         if (Client->Poll())
         {
-            Log("[%s] Disconnecting client connection.", Client->GetName().c_str());
+            LogS(Client->GetName().c_str(), "Disconnecting client connection.");
             DisconnectingClients.push_back(Client);
 
             Client->MessageStream->Disconnect();
@@ -142,7 +142,7 @@ void GameService::Poll()
 
         if (Client->MessageStream->GetState() == Frpg2ReliableUdpStreamState::Closed)
         {
-            Log("[%s] Client disconnected.", Client->GetName().c_str());
+            LogS(Client->GetName().c_str(), "Client disconnected.");
 
             // Let all managers know this client has been disconnected, they
             // may need to clean things up.
@@ -186,25 +186,23 @@ void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientCo
     Buffer.resize(sizeof(uint64_t));
     if (!ClientConnection->Peek(Buffer, 0, sizeof(AuthToken), BytesRecieved) || BytesRecieved != sizeof(AuthToken))
     {
-        Log("[%s] Failed to peek authentication token, or not enough data available. Ignoring connection.", ClientConnection->GetName().c_str());
+        LogS(ClientConnection->GetName().c_str(), "Failed to peek authentication token, or not enough data available. Ignoring connection.");
         return;
     }
 
     AuthToken = *reinterpret_cast<uint64_t*>(Buffer.data());
 
-    Log("[%s] Client connected.", ClientConnection->GetName().c_str());
+    LogS(ClientConnection->GetName().c_str(), "Client connected.");
 
     // Check we have an authentication state for this client.
     auto AuthStateIter = AuthenticationStates.find(AuthToken);
     if (AuthStateIter == AuthenticationStates.end())
     {
-        Log("[%s] Clients authentication token (0x%016llx) does not appear to be valid. Ignoring connection.", ClientConnection->GetName().c_str(), AuthToken);
+        LogS(ClientConnection->GetName().c_str(), "Clients authentication token (0x%016llx) does not appear to be valid. Ignoring connection.", AuthToken);
         return;
     }
 
     GameClientAuthenticationState& AuthState = (*AuthStateIter).second;
-
-    //Log("[%s] Client will use cipher key %s", ClientConnection->GetName().c_str(), BytesToHex(AuthState.CwcKey).c_str());
 
     std::shared_ptr<GameClient> Client = std::make_shared<GameClient>(this, ClientConnection, AuthState.CwcKey, AuthState.AuthToken);
     Clients.push_back(Client);
@@ -223,7 +221,7 @@ std::string GameService::GetName()
 
 void GameService::CreateAuthToken(uint64_t AuthToken, const std::vector<uint8_t>& CwcKey)
 {
-    Log("[%s] Created authentication token 0x%016llx", Connection->GetName().c_str(), AuthToken);
+    LogS(Connection->GetName().c_str(), "Created authentication token 0x%016llx", AuthToken);
 
     GameClientAuthenticationState AuthState;
     AuthState.AuthToken = AuthToken;

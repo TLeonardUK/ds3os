@@ -99,7 +99,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyProtoBufLog(GameClient* 
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -114,7 +114,7 @@ void LoggingManager::Handle_UseMagicLog(GameClient* Client, Frpg2RequestMessage:
     FpdLogMessage::UseMagicLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse UseMagicLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse UseMagicLog.");
         return;
     }
 
@@ -143,7 +143,7 @@ void LoggingManager::Handle_ActGestureLog(GameClient* Client, Frpg2RequestMessag
     FpdLogMessage::ActGestureLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse ActGestureLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse ActGestureLog.");
         return;
     }
 
@@ -172,7 +172,7 @@ void LoggingManager::Handle_UseItemLog(GameClient* Client, Frpg2RequestMessage::
     FpdLogMessage::UseItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse UseItemLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse UseItemLog.");
         return;
     }
 
@@ -201,7 +201,7 @@ void LoggingManager::Handle_PurchaseItemLog(GameClient* Client, Frpg2RequestMess
     FpdLogMessage::PurchaseItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse PurchaseItemLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse PurchaseItemLog.");
         return;
     }
 
@@ -230,7 +230,7 @@ void LoggingManager::Handle_GetItemLog(GameClient* Client, Frpg2RequestMessage::
     FpdLogMessage::GetItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse GetItemLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse GetItemLog.");
         return;
     }
 
@@ -259,7 +259,7 @@ void LoggingManager::Handle_DropItemLog(GameClient* Client, Frpg2RequestMessage:
     FpdLogMessage::DropItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse DropItemLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse DropItemLog.");
         return;
     }
 
@@ -288,7 +288,7 @@ void LoggingManager::Handle_LeaveItemLog(GameClient* Client, Frpg2RequestMessage
     FpdLogMessage::LeaveItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse LeaveItemLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse LeaveItemLog.");
         return;
     }
 
@@ -317,7 +317,7 @@ void LoggingManager::Handle_SaleItemLog(GameClient* Client, Frpg2RequestMessage:
     FpdLogMessage::SaleItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse SaleItemLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse SaleItemLog.");
         return;
     }
 
@@ -346,7 +346,7 @@ void LoggingManager::Handle_StrengthenWeaponLog(GameClient* Client, Frpg2Request
     FpdLogMessage::StrengthenWeaponLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
-        Warning("[%s] Failed to parse StrengthenWeaponLog.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Failed to parse StrengthenWeaponLog.");
         return;
     }
 
@@ -393,7 +393,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillEnemy(GameClient* Cl
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -409,7 +409,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyDisconnectSession(GameCl
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -430,7 +430,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyRegisterCharacter(GameCl
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -455,7 +455,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyDie(GameClient* Client, 
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -471,7 +471,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillBoss(GameClient* Cli
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -487,7 +487,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyJoinMultiplay(GameClient
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -515,7 +515,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyLeaveMultiplay(GameClien
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -531,7 +531,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifySummonSignResult(GameCli
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -547,7 +547,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyCreateSignResult(GameCli
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -563,7 +563,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyBreakInResult(GameClient
     Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send EmptyResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
 

@@ -59,7 +59,7 @@ bool Frpg2UdpPacketStream::Pump()
         RecieveBuffer.resize(RecieveBuffer.capacity());
         if (!Connection->Recieve(RecieveBuffer, 0, (int)RecieveBuffer.size(), BytesRecieved))
         {
-            Warning("[%s] Failed to recieve on connection.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to recieve on connection.");
             InErrorState = true;
             return true;
         }
@@ -73,7 +73,7 @@ bool Frpg2UdpPacketStream::Pump()
             Frpg2UdpPacket Packet;
             if (!BytesToPacket(RecieveBuffer, Packet))
             {
-                Warning("[%s] Failed to parse recieved packet.", Connection->GetName().c_str());
+                WarningS(Connection->GetName().c_str(), "Failed to parse recieved packet.");
                 InErrorState = true;
                 return true;
             }
@@ -83,7 +83,7 @@ bool Frpg2UdpPacketStream::Pump()
                 std::vector<uint8_t> EncryptedBuffer = Packet.Payload;
                 if (!DecryptionCipher->Decrypt(EncryptedBuffer, Packet.Payload))
                 {
-                    Warning("[%s] Failed to decrypt packet payload.", Connection->GetName().c_str());
+                    WarningS(Connection->GetName().c_str(), "Failed to decrypt packet payload.");
                     InErrorState = true;
                     return false;
                 }
@@ -121,7 +121,7 @@ bool Frpg2UdpPacketStream::Send(const Frpg2UdpPacket& Packet)
 
         if (!EncryptionCipher->Encrypt(DecryptedBuffer, SendPacket.Payload))
         {
-            Warning("[%s] Failed to encrypt packet payload.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to encrypt packet payload.");
             InErrorState = true;
             return false;
         }
@@ -135,14 +135,14 @@ bool Frpg2UdpPacketStream::Send(const Frpg2UdpPacket& Packet)
     std::vector<uint8_t> Bytes;
     if (!PacketToBytes(SendPacket, Bytes))
     {
-        Warning("[%s] Failed to send packet, unable to serialize.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to send packet, unable to serialize.");
         InErrorState = true;
         return false;
     }
 
     if (!Connection->Send(Bytes, 0, (int)Bytes.size()))
     {
-        Warning("[%s] Failed to send packet,.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to send packet.");
         InErrorState = true;
         return false;
     }

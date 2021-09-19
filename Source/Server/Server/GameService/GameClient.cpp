@@ -41,26 +41,26 @@ bool GameClient::Poll()
     double TimeSinceLastMessage = GetSeconds() - LastMessageRecievedTime;
     if (TimeSinceLastMessage >= BuildConfig::CLIENT_TIMEOUT)
     {
-        Warning("[%s] Client timed out.", GetName().c_str());
+        WarningS(GetName().c_str(), "Client timed out.");
         return true;
     }
 
     // Client disconnected.
     if (Connection->Pump())
     {
-        Warning("[%s] Disconnecting client as connection was in an error state.", GetName().c_str());
+        WarningS(GetName().c_str(), "Disconnecting client as connection was in an error state.");
         return true;
     }
     if (!Connection->IsConnected())
     {
-        Log("[%s] Client disconnected.", GetName().c_str());
+        LogS(GetName().c_str(), "Client disconnected.");
         return true;
     }
 
     // Pump the message stream and handle any messages that come in.
     if (MessageStream->Pump())
     {
-        Warning("[%s] Disconnecting client as message stream closed.", GetName().c_str());
+        WarningS(GetName().c_str(), "Disconnecting client as message stream closed.");
         return true;
     }
 
@@ -72,12 +72,12 @@ bool GameClient::Poll()
         {
             if (BuildConfig::DISCONNECT_ON_UNHANDLED_MESSAGE)
             {
-                Warning("[%s] Disconnecting client as failed to handle message.", GetName().c_str());
+                WarningS(GetName().c_str(), "Disconnecting client as failed to handle message.");
                 return true;
             }
             else
             {
-                Warning("[%s] Failed to handle message, ignoring and hoping nothing breaks ...", GetName().c_str());
+                WarningS(GetName().c_str(), "Failed to handle message, ignoring and hoping nothing breaks ...");
             }
         }
 

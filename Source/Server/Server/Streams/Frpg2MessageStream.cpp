@@ -62,20 +62,20 @@ bool Frpg2MessageStream::Send(const Frpg2Message& Message, Frpg2MessageType Mess
     {
         if (!EncryptionCipher->Encrypt(DecryptedBuffer, SendMessage.Payload))
         {
-            Warning("[%s] Failed to encrypt message payload.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to encrypt message payload.");
             return false;
         }
     }
 
     if (!MessageToPacket(SendMessage, Packet))
     {
-        Warning("[%s] Failed to convert message to packet payload.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to convert message to packet payload.");
         return false;
     }
 
     if (!Frpg2PacketStream::Send(Packet))
     {
-        Warning("[%s] Failed to send.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to send.");
         return false;
     }
 
@@ -89,7 +89,7 @@ bool Frpg2MessageStream::Send(google::protobuf::MessageLite* Message, Frpg2Messa
 
     if (!Message->SerializeToArray(ResponseMessage.Payload.data(), (int)ResponseMessage.Payload.size()))
     {
-        Warning("[%s] Failed to serialize protobuf payload.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to serialize protobuf payload.");
         return false;
     }
 
@@ -111,7 +111,7 @@ bool Frpg2MessageStream::Recieve(Frpg2Message* Message)
 
     if (!PacketToMessage(Packet, *Message))
     {
-        Warning("[%s] Failed to convert packet payload to message.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Failed to convert packet payload to message.");
         return false;
     }
 
@@ -120,7 +120,7 @@ bool Frpg2MessageStream::Recieve(Frpg2Message* Message)
     {
         if (!DecryptionCipher->Decrypt(EncryptedBuffer, Message->Payload))
         {
-            Warning("[%s] Failed to decrypt message payload.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Failed to decrypt message payload.");
             return false;
         }
     }
@@ -141,7 +141,7 @@ bool Frpg2MessageStream::PacketToMessage(const Frpg2Packet& Packet, Frpg2Message
 {
     if (Packet.Payload.size() < sizeof(Frpg2MessageHeader))
     {
-        Warning("[%s] Packet payload is less than the minimum size of a message, failed to deserialize.", Connection->GetName().c_str());
+        WarningS(Connection->GetName().c_str(), "Packet payload is less than the minimum size of a message, failed to deserialize.");
         return false;
     }
 
@@ -157,7 +157,7 @@ bool Frpg2MessageStream::PacketToMessage(const Frpg2Packet& Packet, Frpg2Message
 
         if (Packet.Payload.size() < sizeof(Frpg2MessageHeader) + sizeof(Frpg2MessageResponseHeader))
         {
-            Warning("[%s] Packet payload is less than the minimum size of a message, failed to deserialize.", Connection->GetName().c_str());
+            WarningS(Connection->GetName().c_str(), "Packet payload is less than the minimum size of a message, failed to deserialize.");
             return false;
         }
 

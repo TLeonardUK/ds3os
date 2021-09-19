@@ -46,7 +46,7 @@ bool GhostManager::Init()
 
     if (GhostCount > 0)
     {
-        Log("[%s] Primed live cache with %i ghosts.", GetName().c_str(), GhostCount);
+        LogS(GetName().c_str(), "Primed live cache with %i ghosts.", GhostCount);
     }
 
     return true;
@@ -82,7 +82,7 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
     }
     else
     {
-        Warning("[%s] Disconnecting client as failed to create ghost.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to create ghost.");
         return MessageHandleResult::Error;
     }
 
@@ -95,7 +95,7 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
     Frpg2RequestMessage::RequestCreateGhostDataResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestCreateGhostDataResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestCreateGhostDataResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -130,8 +130,6 @@ MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Cli
                 continue;
             }
 
-            //Log("[%s] Returning ghost %i in area %i.", Client->GetName().c_str(), AreaMsg->GhostId, AreaMsg->OnlineAreaId);
-
             Frpg2RequestMessage::GhostData& Data = *Response.mutable_ghosts()->Add();
             Data.set_unknown_1(1);                                                      // TODO: Figure out what this is.
             Data.set_ghost_id((uint32_t)AreaMsg->GhostId);
@@ -143,7 +141,7 @@ MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Cli
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetGhostDataListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetGhostDataListResponse response.");
         return MessageHandleResult::Error;
     }
 

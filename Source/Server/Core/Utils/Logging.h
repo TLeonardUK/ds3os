@@ -18,14 +18,21 @@
 #define STRINGIFY(x) STRINGIFY2(x)
 
 // Writes a given entry into the output log.
-void WriteLog(ConsoleColor Color, const char* Level, const char* Format, ...);
+void WriteLog(ConsoleColor Color, const char* Source, const char* Level, const char* Format, ...);
 
 // Various macros for different log levels.
-#define Log(Format, ...)        WriteLog(ConsoleColor::Grey,      "Log", Format, __VA_ARGS__);
-#define Success(Format, ...)    WriteLog(ConsoleColor::Green,     "Success", Format, __VA_ARGS__);
-#define Warning(Format, ...)    WriteLog(ConsoleColor::Yellow,    "Warning", Format, __VA_ARGS__);
-#define Error(Format, ...)      WriteLog(ConsoleColor::Red,       "Error", Format, __VA_ARGS__);
-#define Fatal(Format, ...)      WriteLog(ConsoleColor::Red,       "Fatal", Format, __VA_ARGS__); Ensure(false);
+#define Log(Format, ...)                        WriteLog(ConsoleColor::Grey,      "", "Log", Format, __VA_ARGS__);
+#define Success(Format, ...)                    WriteLog(ConsoleColor::Green,     "", "Success", Format, __VA_ARGS__);
+#define Warning(Format, ...)                    WriteLog(ConsoleColor::Yellow,    "", "Warning", Format, __VA_ARGS__);
+#define Error(Format, ...)                      WriteLog(ConsoleColor::Red,       "", "Error", Format, __VA_ARGS__);
+#define Fatal(Format, ...)                      WriteLog(ConsoleColor::Red,       "", "Fatal", Format, __VA_ARGS__); Ensure(false);
+
+// Same as the ones above but allows you to define the values of the "Source" column.
+#define LogS(Source, Format, ...)               WriteLog(ConsoleColor::Grey,      Source, "Log", Format, __VA_ARGS__);
+#define SuccessS(Source, Format, ...)           WriteLog(ConsoleColor::Green,     Source, "Success", Format, __VA_ARGS__);
+#define WarningS(Source, Format, ...)           WriteLog(ConsoleColor::Yellow,    Source, "Warning", Format, __VA_ARGS__);
+#define ErrorS(Source, Format, ...)             WriteLog(ConsoleColor::Red,       Source, "Error", Format, __VA_ARGS__);
+#define FatalS(Source, Format, ...)             WriteLog(ConsoleColor::Red,       Source, "Fatal", Format, __VA_ARGS__); Ensure(false);
 
 // Some general purpose debugging/assert macros.
 #define Ensure(expr)                                \

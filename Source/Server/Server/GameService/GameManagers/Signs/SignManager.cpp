@@ -141,8 +141,6 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
                 continue;
             }
 
-            //Log("[%s] Returning sign %i in area %i.", Client->GetName().c_str(), Sign->SignId, Sign->OnlineAreaId);
-
             // If client already has sign data we only need to return a limited set of data.
             if (ClientExistingSignId.count(Sign->SignId) > 0)
             {
@@ -168,7 +166,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetSignListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetSignListResponse response.");
         return MessageHandleResult::Error;
     }
     
@@ -203,7 +201,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetSignListResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetSignListResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -217,7 +215,7 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
     std::shared_ptr<SummonSign> Sign = LiveCache.Find((OnlineAreaId)Request->online_area_id(), Request->sign_id());
     if (!Sign)
     {
-        Warning("[%s] Client as attempted to remove non-existant summon sign, %i, has probably already been cleaned up by CreateSummonSign.", Client->GetName().c_str(), Request->sign_id());
+        WarningS(Client->GetName().c_str(), "Client as attempted to remove non-existant summon sign, %i, has probably already been cleaned up by CreateSummonSign.", Request->sign_id());
         return MessageHandleResult::Handled;
     }
 
@@ -227,7 +225,7 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
     }
     else
     {
-        Warning("[%s] Disconnecting client as attempted to remove summon sign that didn't belong to them, %i.", Client->GetName().c_str(), Request->sign_id());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as attempted to remove summon sign that didn't belong to them, %i.", Request->sign_id());
         return MessageHandleResult::Error;
     }
 
@@ -245,13 +243,13 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
 
             if (!OtherClient->MessageStream->Send(&PushMessage))
             {
-                Warning("[%s] Failed to send PushRequestRemoveSign to summoner.", Client->GetName().c_str());
+                WarningS(Client->GetName().c_str(), "Failed to send PushRequestRemoveSign to summoner.");
                 return MessageHandleResult::Error;
             }
         }
         else
         {
-            Warning("[%s] PlayerId summoning sign no longer exists, nothing to reject.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "PlayerId summoning sign no longer exists, nothing to reject.");
         }
 
         Sign->BeingSummonedByPlayerId = 0;
@@ -262,7 +260,7 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
     Frpg2RequestMessage::RequestRemoveSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRemoveSignResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRemoveSignResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -281,7 +279,7 @@ MessageHandleResult SignManager::Handle_RequestUpdateSign(GameClient* Client, co
     Frpg2RequestMessage::RequestUpdateSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestUpdateSignResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestUpdateSignResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -301,14 +299,14 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
     std::shared_ptr<SummonSign> Sign = LiveCache.Find((OnlineAreaId)Request->online_area_id(), Request->sign_info().sign_id());
     if (!Sign)
     {
-        Warning("[%s] Client attempted to use invalid summon sign, sending back rejection, %i.", Client->GetName().c_str(), Request->sign_info().sign_id());
+        WarningS(Client->GetName().c_str(), "Client attempted to use invalid summon sign, sending back rejection, %i.", Request->sign_info().sign_id());
         bSuccess = false;
     }
 
     // Sign is already being summoned, send rejection.
     if (Sign && Sign->BeingSummonedByPlayerId != 0)
     {
-        Warning("[%s] Client attempted to use summon sign that is already being summoned, sending back rejection, %i.", Client->GetName().c_str(), Request->sign_info().sign_id());
+        WarningS(Client->GetName().c_str(), "Client attempted to use summon sign that is already being summoned, sending back rejection, %i.", Request->sign_info().sign_id());
         bSuccess = false;        
     }
 
@@ -328,7 +326,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
 
         if (!OriginClient->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestSummonSign.", OriginClient->GetName().c_str());
+            WarningS(OriginClient->GetName().c_str(), "Failed to send PushRequestSummonSign.");
             bSuccess = false;
         }
         else
@@ -342,7 +340,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
     Frpg2RequestMessage::RequestSummonSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestSummonSignResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestSummonSignResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -356,7 +354,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
 
         if (!Client->MessageStream->Send(&PushMessage))
         {
-            Warning("[%s] Failed to send PushRequestRejectSign.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectSign.");
             return MessageHandleResult::Error;
         }
     }
@@ -382,7 +380,7 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
     std::shared_ptr<SummonSign> Sign = LiveCache.Find(Request->sign_id());
     if (!Sign)
     {
-        Warning("[%s] Client attempted to reject summoning for invalid sign, %i.", Client->GetName().c_str(), Request->sign_id());
+        WarningS(Client->GetName().c_str(), "Client attempted to reject summoning for invalid sign, %i.", Request->sign_id());
         return MessageHandleResult::Error;
     }
 
@@ -398,13 +396,13 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
 
             if (!OtherClient->MessageStream->Send(&PushMessage))
             {
-                Warning("[%s] Failed to send PushRequestRejectSign to summoner.", Client->GetName().c_str());
+                WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectSign to summoner.");
                 return MessageHandleResult::Error;
             }
         }
         else
         {
-            Warning("[%s] PlayerId summoning sign no longer exists, nothing to reject.", Client->GetName().c_str());
+            WarningS(Client->GetName().c_str(), "PlayerId summoning sign no longer exists, nothing to reject.");
         }        
 
         Sign->BeingSummonedByPlayerId = 0;
@@ -415,7 +413,7 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
     Frpg2RequestMessage::RequestRejectSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestRejectSignResponse response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectSignResponse response.");
         return MessageHandleResult::Error;
     }
 
@@ -487,7 +485,7 @@ MessageHandleResult SignManager::Handle_RequestGetRightMatchingArea(GameClient* 
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
-        Warning("[%s] Disconnecting client as failed to send RequestGetRightMatchingArea response.", Client->GetName().c_str());
+        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetRightMatchingArea response.");
         return MessageHandleResult::Error;
     }
 
