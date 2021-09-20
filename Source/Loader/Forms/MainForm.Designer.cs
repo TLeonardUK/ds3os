@@ -38,12 +38,13 @@ namespace Loader
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Name",
             "Players",
             "Description"}, 0);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ImportButton = new System.Windows.Forms.Button();
+            this.serverListImageList = new System.Windows.Forms.ImageList(this.components);
             this.LaunchButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.ExeLocationTextBox = new System.Windows.Forms.TextBox();
@@ -52,13 +53,13 @@ namespace Loader
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            this.serverListImageList = new System.Windows.Forms.ImageList(this.components);
             this.BuildInfoLabel = new System.Windows.Forms.Label();
             this.ContinualUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.serverListRefreshTimer = new System.Windows.Forms.Timer(this.components);
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.GithubLink = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // ImportButton
@@ -75,6 +76,21 @@ namespace Loader
             this.ImportButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.ImportButton.UseVisualStyleBackColor = true;
             this.ImportButton.Click += new System.EventHandler(this.OnImportServerConfig);
+            // 
+            // serverListImageList
+            // 
+            this.serverListImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.serverListImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("serverListImageList.ImageStream")));
+            this.serverListImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.serverListImageList.Images.SetKeyName(0, "lock.png");
+            this.serverListImageList.Images.SetKeyName(1, "arrow_refresh.png");
+            this.serverListImageList.Images.SetKeyName(2, "cross.png");
+            this.serverListImageList.Images.SetKeyName(3, "add.png");
+            this.serverListImageList.Images.SetKeyName(4, "joystick.png");
+            this.serverListImageList.Images.SetKeyName(5, "magnifier.png");
+            this.serverListImageList.Images.SetKeyName(6, "bullet_star.png");
+            this.serverListImageList.Images.SetKeyName(7, "star.png");
+            this.serverListImageList.Images.SetKeyName(8, "world.png");
             // 
             // LaunchButton
             // 
@@ -162,18 +178,6 @@ namespace Loader
             this.columnHeader2.Text = "Description";
             this.columnHeader2.Width = 500;
             // 
-            // serverListImageList
-            // 
-            this.serverListImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.serverListImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("serverListImageList.ImageStream")));
-            this.serverListImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.serverListImageList.Images.SetKeyName(0, "lock.png");
-            this.serverListImageList.Images.SetKeyName(1, "arrow_refresh.png");
-            this.serverListImageList.Images.SetKeyName(2, "cross.png");
-            this.serverListImageList.Images.SetKeyName(3, "add.png");
-            this.serverListImageList.Images.SetKeyName(4, "joystick.png");
-            this.serverListImageList.Images.SetKeyName(5, "magnifier.png");
-            // 
             // BuildInfoLabel
             // 
             this.BuildInfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -186,7 +190,7 @@ namespace Loader
             // 
             // ContinualUpdateTimer
             // 
-            this.ContinualUpdateTimer.Interval = 1000;
+            this.ContinualUpdateTimer.Interval = 5000;
             this.ContinualUpdateTimer.Tick += new System.EventHandler(this.OnContinualUpdateTimer);
             // 
             // panel1
@@ -234,11 +238,28 @@ namespace Loader
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.OnRefreshClicked);
             // 
+            // GithubLink
+            // 
+            this.GithubLink.ActiveLinkColor = System.Drawing.Color.Gray;
+            this.GithubLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.GithubLink.AutoSize = true;
+            this.GithubLink.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.GithubLink.LinkColor = System.Drawing.Color.Gray;
+            this.GithubLink.Location = new System.Drawing.Point(342, 412);
+            this.GithubLink.Name = "GithubLink";
+            this.GithubLink.Size = new System.Drawing.Size(247, 20);
+            this.GithubLink.TabIndex = 12;
+            this.GithubLink.TabStop = true;
+            this.GithubLink.Text = "http://github.com/tleonarduk/ds3os";
+            this.GithubLink.VisitedLinkColor = System.Drawing.Color.Gray;
+            this.GithubLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickGithubLink);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 451);
+            this.Controls.Add(this.GithubLink);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.RemoveButton);
@@ -276,6 +297,7 @@ namespace Loader
         private System.Windows.Forms.Timer serverListRefreshTimer;
         private System.Windows.Forms.ImageList serverListImageList;
         private System.Windows.Forms.Button RefreshButton;
+        private System.Windows.Forms.LinkLabel GithubLink;
     }
 }
 
