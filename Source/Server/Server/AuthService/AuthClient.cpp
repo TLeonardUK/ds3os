@@ -30,6 +30,7 @@
 #include "Protobuf/Protobufs.h"
 
 #include <steam/steam_api.h>
+#include <steam/steam_gameserver.h>
 
 AuthClient::AuthClient(AuthService* OwningService, std::shared_ptr<NetConnection> InConnection, RSAKeyPair* InServerRSAKey)
     : Service(OwningService)
@@ -237,7 +238,7 @@ bool AuthClient::Poll()
                 sscanf(SteamId.c_str(), "%016llx", &SteamIdInt);
                 CSteamID SteamIdStruct(SteamIdInt);                
 
-                int AuthResult = SteamUser()->BeginAuthSession(Ticket.data(), (int)Ticket.size(), SteamIdStruct);
+                int AuthResult = SteamGameServer()->BeginAuthSession(Ticket.data(), (int)Ticket.size(), SteamIdStruct);
                 if (AuthResult != k_EBeginAuthSessionResultOK)
                 {
                     WarningS(GetName().c_str(), "Disconnecting client as steam ticket authentication failed with error %i.", AuthResult);
@@ -247,7 +248,7 @@ bool AuthClient::Poll()
                 {
                     LogS(GetName().c_str(), "Client steam ticket authenticated successfully.");
                 }
-                SteamUser()->EndAuthSession(SteamIdStruct);
+                SteamGameServer()->EndAuthSession(SteamIdStruct);
 
                 // If user IP is on a private network, we can assume they are on our LAN
                 // and return our internal IP address.

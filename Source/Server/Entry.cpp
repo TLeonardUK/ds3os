@@ -15,6 +15,7 @@
 #include <filesystem>
 
 #include <steam/steam_api.h>
+#include <steam/steam_gameserver.h>
 
 extern "C" void __cdecl SteamWarningHook(int nSeverity, const char* pchDebugText)
 {
@@ -52,13 +53,27 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    if (!SteamAPI_Init())
+    if (start_as_client_emulator)
     {
-        Error("Failed to initialize steam api, please ensure steam is running.");
-        return 1;
+        if (!SteamAPI_Init())
+        {
+            Error("Failed to initialize steam api, please ensure steam is running.");
+            return 1;
+        }
+        SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
+
     }
-    SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
-    
+    else
+    {
+        // Ports etc are irrelevant, we're only using the api to do authentication. 
+        if (!SteamGameServer_Init(0, 50000, 50000, eServerModeAuthentication, "1.0.0.0"))
+        {
+            Error("Failed to initialize steam game server api.");
+            return 1;
+        }
+        SteamGameServerUtils()->SetWarningMessageHook(&SteamWarningHook);
+    }
+
     // TODO: Split this out into a seperate application.
     // TODO: Also do less crappy arg parsing.
     if (start_as_client_emulator)
@@ -92,7 +107,14 @@ int main(int argc, char* argv[])
         }
     }
 
-    SteamAPI_Shutdown();
+    if (start_as_client_emulator)
+    {
+        SteamAPI_Shutdown();
+    }
+    else
+    {
+        SteamGameServer_Shutdown();
+    }
 
     if (!PlatformTerm())
     {

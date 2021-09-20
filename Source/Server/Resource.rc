@@ -81,7 +81,7 @@ BEGIN
             VALUE "FileDescription", "Dark Souls III - Open Server"
             VALUE "FileVersion", "1.0.0.0"
             VALUE "InternalName", "Server.exe"
-            VALUE "LegalCopyright", "Copyright (C) Tim Leonard  2021"
+            VALUE "LegalCopyright", "Copyright (C) Tim Leonard 2021"
             VALUE "OriginalFilename", "Server.exe"
             VALUE "ProductName", "Dark Souls III - Open Server"
             VALUE "ProductVersion", "1.0.0.0"
