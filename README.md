@@ -12,7 +12,7 @@ Idealistically made for the purpose of allow better alternatives to playing mods
 # Can I use it with a pirated game?
 No, the server authenticates steam tickets. Please do not ask about piracy, steam emulators or the like, we have no interest in supporting them. 
 
-FROM SOFTWARE deserves you support too for the excellent work they do, please buy their games if you can.
+FROM SOFTWARE deserves your support too for the excellent work they do, please buy their games if you can.
 
 # Where can I download it?
 Downloads are available on the github releases page - https://github.com/TLeonardUK/ds3os/releases
