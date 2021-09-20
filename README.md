@@ -108,4 +108,5 @@ https://github.com/AmirBohd/ModEngine2
 Graphics and icons provided by:
 
 Campfire icon made by ultimatearm from www.flaticon.com
+
 Various UI icons made by Mark James from http://www.famfamfam.com/lab/icons/silk/
