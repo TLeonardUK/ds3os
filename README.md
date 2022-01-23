@@ -24,7 +24,7 @@ First run the Server.exe in Server, this will start the actual custom server run
 
 The first time the server runs it will emit the file Saved\config.json which contains various matchmaking parameters that you can adjust (and apply by restarting the server) to customise the server.
 
-User can join the server by opening the Loader.exe program in the Laoder folder and finding the correct server in the list and clicking the launch button. If the server has been configured to not advertise on the master server (or if running on a LAN without an internet connection), then the server operator can distribute the Saved\server.ds3osconfig file that the server emits, which can be imported into the loader and used to directly connect to the server.
+User can join the server by opening the Loader.exe program in the Loader folder and finding the correct server in the list and clicking the launch button. If the server has been configured to not advertise on the master server (or if running on a LAN without an internet connection), then the server operator can distribute the Saved\server.ds3osconfig file that the server emits, which can be imported into the loader and used to directly connect to the server.
 
 Servers can also be password protected if required by setting as password in Saved\config.json, a password will need to be entered when attempting to launch the game with a protected server.
 
