@@ -93,6 +93,16 @@ them properly, or finding out the format of the data they need to return would b
 There are also a lot of protobuf fields that are still unknown and use constant values when sent from the 
 server, determining what they represent would be a good improvement.
 
+# FAQ
+## I launch the game but its unable to connect.
+There are a few different causes of this, the simplest one is to make sure you're running as admin, the launcher needs to patch the games memory to get it to connect to the new server, this requires admin privileges.
+
+If the server is being hosted by yourself and the above doesn't solve your issue, try these steps:
+
+Ensure these ports are forwarded on your router, both for tcp and udp: 50000, 50010, 50050, 50020 
+
+Its possible you don't have the configuration for the server setup correctly. After running the server once make sure to open the configuration file (Saved/config.json) and make sure its setup correctly (it will attempt to autoconfigure itself, but may get incorrect values if you have multiple network adapters). The most critical settings to get correct are ServerHostname and ServerPrivateHostname, these should be set to your WAN IP (the one you get from sites like https://whatismyip.com), and your LAN IP (the one you get from running ipconfig) respectively. If you are using LAN emulation software (eg. hamachi) you will need to set these to the appropriate hamachi IP.
+
 # Credit
 A lot of the information needed to produce this implementation has been figured out by the community. 
 Especially the members of the ?ServerName? souls modding discord.
