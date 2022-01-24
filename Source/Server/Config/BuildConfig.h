@@ -53,4 +53,8 @@ public:
     // Prints reliable udp packet stream.
     constexpr inline static const bool EMIT_RELIABLE_UDP_PACKET_STREAM = false;
 
+    // Writes messages that fail to deserialize to the local directory.
+    constexpr inline static const bool DUMP_FAILED_DISASSEMBLED_PACKETS = true;
+
+
 };

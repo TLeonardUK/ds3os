@@ -23,13 +23,6 @@
 
 #include <google/protobuf/unknown_field_set.h>
 
-// Any protobufs that fail to deserialize will be written to disk to be
-// looked into later.
-#define DUMP_FAILED_PACKETS_TO_DISK
-
-// Path that failed packets will be written to
-#define DUMP_PATH "Z:\\ds3os\\Temp\\FailedDeserialize"
-
 Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient)
     : Frpg2ReliableUdpFragmentStream(Connection, CwcKey, AuthToken, AsClient)
 {
@@ -199,11 +192,12 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
     {
         WarningS(Connection->GetName().c_str(), "Failed to create protobuf instance for message: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
 
-#if defined(DUMP_FAILED_PACKETS_TO_DISK)
-        char buffer[128];
-        snprintf(buffer, 128, DUMP_PATH "\\0x%04x.no_handler.bin", (int)MessageType);
-        WriteBytesToFile(buffer, Message->Payload);
-#endif
+        if constexpr (BuildConfig::DUMP_FAILED_DISASSEMBLED_PACKETS)
+        {            
+            std::filesystem::path file_path = StringFormat("Debug\\Packets\\No Handler\\0x%04x\\%i.bin", (int)MessageType, DumpMessageIndex++);
+            std::filesystem::create_directories(file_path.parent_path());
+            WriteBytesToFile(file_path, Message->Payload);
+        }
 
         InErrorState = true;
         return false;
@@ -213,11 +207,12 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
     {
         WarningS(Connection->GetName().c_str(), "Failed to deserialize protobuf instance for message: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
 
-#if defined(DUMP_FAILED_PACKETS_TO_DISK)
-        char buffer[128];
-        snprintf(buffer, 128, DUMP_PATH "\\0x%04x.failed_deserialization.bin", (int)MessageType);
-        WriteBytesToFile(buffer, Message->Payload);
-#endif
+        if constexpr (BuildConfig::DUMP_FAILED_DISASSEMBLED_PACKETS)
+        {
+            std::filesystem::path file_path = StringFormat("Debug\\Packets\\Failed Deserialize\\0x%04x\\%i.bin", (int)MessageType, DumpMessageIndex++);
+            std::filesystem::create_directories(file_path.parent_path());
+            WriteBytesToFile(file_path, Message->Payload);
+        }
 
         InErrorState = true;
         return false;

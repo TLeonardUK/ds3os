@@ -66,4 +66,6 @@ private:
 
     uint32_t LastSentMessageIndex = 0;
 
+    static inline size_t DumpMessageIndex = 0;
+
 };
