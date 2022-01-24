@@ -161,7 +161,7 @@ bool Server::Init()
     Output["Name"]              = Config.ServerName;
     Output["Description"]       = Config.ServerDescription;
     Output["Hostname"]          = Config.ServerHostname.length() > 0 ? Config.ServerHostname : PublicIP.ToString();
-    Output["PrivateHostname"]   = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PublicIP.ToString();
+    Output["PrivateHostname"]   = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PrivateIP.ToString();
     Output["PublicKey"]         = PrimaryKeyPair.GetPublicString();
     Output["ModsWhitelist"]     = Config.ModsWhitelist;
     Output["ModsBlacklist"]     = Config.ModsBlacklist;

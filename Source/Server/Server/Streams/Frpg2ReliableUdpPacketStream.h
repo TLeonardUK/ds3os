@@ -126,6 +126,7 @@ protected:
     bool IsRetransmitting = false;
     uint32_t RetransmittingIndex = 0;
     double RetransmissionTimer = 0.0;
+    uint32_t RetransmitAttempts = 0;
     Frpg2ReliableUdpPacket RetransmitPacket;
 
     // TODO: All these should be shared pointers or something, we do way
@@ -151,9 +152,11 @@ protected:
     const int MAX_PACKETS_IN_FLIGHT = 20;
 
     // We reeeeeeeaaaallly want this to be exponential backoff, but this works for now.
-    const float RETRANSMIT_INTERVAL = 3.0;
+    const float RETRANSMIT_INTERVAL = 5.0;
 
-    const float RETRANSMIT_CYCLE_INTERVAL = 0.5;
+    const float RETRANSMIT_CYCLE_INTERVAL = 0.25;
+
+    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 32;
 
     const float RESEND_SYN_INTERVAL = 0.5f;
 

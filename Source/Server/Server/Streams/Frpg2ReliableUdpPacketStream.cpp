@@ -288,13 +288,13 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
         //       when ack values overflow.
         if (LocalAck != GetNextRemoteSequenceIndex())
         {
-            WarningS(Connection->GetName().c_str(), "Ignoring incoming packet, out of sequence (incoming=%i head=%i). ", LocalAck, RemoteSequenceIndex);
+            VerboseS(Connection->GetName().c_str(), "Ignoring incoming packet, out of sequence (incoming=%i head=%i).", LocalAck, RemoteSequenceIndex);
             IsInCorrectSequence = true;
         }
 
         if (GetPacketIndexByLocalSequence(PendingRecieveQueue, LocalAck) >= 0)
         {
-            WarningS(Connection->GetName().c_str(), "Ignoring incoming packet, duplicate that we already have. ");
+            VerboseS(Connection->GetName().c_str(), "Ignoring incoming packet, duplicate that we already have.");
             IsInCorrectSequence = true;
         }
 
@@ -710,6 +710,7 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
                 IsRetransmitting = true;
                 RetransmittingIndex = InLocalAck;
                 RetransmitPacket = Packet;
+                RetransmitAttempts = 0;
                 RetransmissionTimer = GetSeconds();
             }
         } 
@@ -729,7 +730,18 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
         {
             LogS(Connection->GetName().c_str(), "Resending retransmission packet.");
             RetransmissionTimer = GetSeconds();
-            SendRaw(RetransmitPacket);
+
+            RetransmitAttempts++;
+            if (RetransmitAttempts > RETRANSMIT_MAX_ATTEMPTS)
+            {
+                WarningS(Connection->GetName().c_str(), "Attempted retransmission of packet max number of times, assuming connection has died.");
+                InErrorState = true;
+                return;
+            }
+            else
+            {
+                SendRaw(RetransmitPacket);
+            }
         }
     }
 
