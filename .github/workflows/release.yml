@@ -79,7 +79,7 @@ jobs:
       run: ${{github.workspace}}/Tools/Package.bat
 
     - name: Zip Release
-      uses: papeloto/action-zip@v1
+      uses: vimtor/action-zip@v1
       with:
         files: DS3OS/
         dest: Binaries.zip
