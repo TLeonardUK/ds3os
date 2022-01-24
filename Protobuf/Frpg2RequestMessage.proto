@@ -834,8 +834,8 @@ message RequestGetBreakInTargetList {
 }
 
 message RequestGetBreakInTargetListResponse {
-    required uint32 map_id = 1;
-    required uint32 online_area_id = 2;
+    optional uint32 map_id = 1;
+    optional uint32 online_area_id = 2;
     repeated BreakInTargetData target_data = 3;
 }
 

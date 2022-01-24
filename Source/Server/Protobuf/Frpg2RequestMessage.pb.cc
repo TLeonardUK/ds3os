@@ -27787,7 +27787,7 @@ bool RequestGetBreakInTargetListResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 map_id = 1;
+      // optional uint32 map_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -27801,7 +27801,7 @@ bool RequestGetBreakInTargetListResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 online_area_id = 2;
+      // optional uint32 online_area_id = 2;
       case 2: {
         if (tag == 16) {
          parse_online_area_id:
@@ -27855,12 +27855,12 @@ failure:
 void RequestGetBreakInTargetListResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestGetBreakInTargetListResponse)
-  // required uint32 map_id = 1;
+  // optional uint32 map_id = 1;
   if (has_map_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->map_id(), output);
   }
 
-  // required uint32 online_area_id = 2;
+  // optional uint32 online_area_id = 2;
   if (has_online_area_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id(), output);
   }
@@ -27880,14 +27880,14 @@ int RequestGetBreakInTargetListResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 map_id = 1;
+    // optional uint32 map_id = 1;
     if (has_map_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->map_id());
     }
 
-    // required uint32 online_area_id = 2;
+    // optional uint32 online_area_id = 2;
     if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -27937,7 +27937,6 @@ void RequestGetBreakInTargetListResponse::CopyFrom(const RequestGetBreakInTarget
 }
 
 bool RequestGetBreakInTargetListResponse::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   if (!::google::protobuf::internal::AllAreInitialized(this->target_data())) return false;
   return true;

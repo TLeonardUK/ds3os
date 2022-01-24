@@ -11972,14 +11972,14 @@ class RequestGetBreakInTargetListResponse : public ::google::protobuf::MessageLi
 
   // accessors -------------------------------------------------------
 
-  // required uint32 map_id = 1;
+  // optional uint32 map_id = 1;
   inline bool has_map_id() const;
   inline void clear_map_id();
   static const int kMapIdFieldNumber = 1;
   inline ::google::protobuf::uint32 map_id() const;
   inline void set_map_id(::google::protobuf::uint32 value);
 
-  // required uint32 online_area_id = 2;
+  // optional uint32 online_area_id = 2;
   inline bool has_online_area_id() const;
   inline void clear_online_area_id();
   static const int kOnlineAreaIdFieldNumber = 2;
@@ -34910,7 +34910,7 @@ inline void RequestGetBreakInTargetList::set_unknown_5(::google::protobuf::uint3
 
 // RequestGetBreakInTargetListResponse
 
-// required uint32 map_id = 1;
+// optional uint32 map_id = 1;
 inline bool RequestGetBreakInTargetListResponse::has_map_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -34934,7 +34934,7 @@ inline void RequestGetBreakInTargetListResponse::set_map_id(::google::protobuf::
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestGetBreakInTargetListResponse.map_id)
 }
 
-// required uint32 online_area_id = 2;
+// optional uint32 online_area_id = 2;
 inline bool RequestGetBreakInTargetListResponse::has_online_area_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }

@@ -34,8 +34,14 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
+using namespace std::chrono_literals;
+
 Client::Client()
 {
+    // TODO: Move this stuff into a RuntimeConfig type class.
+    SavedPath = std::filesystem::current_path() / std::filesystem::path("ClientSaved");
+    DatabasePath = SavedPath / std::filesystem::path("database.sqlite");
+
     // Register for Ctrl+C notifications, its the only way the server shuts down right now.
     CtrlSignalHandle = PlatformEvents::OnCtrlSignal.Register([=]() {
         Warning("Quit signal recieved, starting shutdown.");        
@@ -54,9 +60,27 @@ bool Client::Init()
 
     // We use template files from a given steam-id, you will probably get banned if you run
     // this on any arbitrary account without replacing the templates.
-    Ensure(ClientStreamId == "011000014a0ce047"); 
+    Ensure(ClientStreamId == "011000014a0ce047");
 
     Log("Initializing client '%s' ...", ClientStreamId.c_str());
+
+    // Generate folder we are going to save everything into.
+    if (!std::filesystem::is_directory(SavedPath))
+    {
+        if (!std::filesystem::create_directories(SavedPath))
+        {
+            Error("Failed to create save path: %s", SavedPath.string().c_str());
+            return false;
+        }
+    }
+
+    // Open connection to our database.
+    if (!Database.Open(DatabasePath))
+    {
+        Error("Failed to open database at '%s'.", DatabasePath.string().c_str());
+        return false;
+    }
+
     if (!PrimaryKeyPair.LoadPublicKeyFromString(ServerPublicKey))
     {
         Error("Failed to load rsa keypair.");
@@ -94,6 +118,12 @@ bool Client::Term()
         AppTicketHandle = k_HAuthTicketInvalid;
     }
 
+    if (!Database.Close())
+    {
+        Error("Failed to close database.");
+        return false;
+    }
+
     return true;
 }
 
@@ -124,6 +154,7 @@ void Client::RunUntilQuit()
             case ClientState::GameServer_RequestUpdatePlayerCharacter:              Handle_GameServer_RequestUpdatePlayerCharacter();               break;
             case ClientState::GameServer_RequestGetRightMatchingArea:               Handle_GameServer_RequestGetRightMatchingArea();                break;
             case ClientState::GameServer_Experiment:                                Handle_GameServer_Experiment();                                 break;
+            case ClientState::GameServer_GatherStatistics:                          Handle_GameServer_GatherStatistics();                           break;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -529,7 +560,7 @@ void Client::Handle_GameServer_RequestGetRightMatchingArea()
         Log("\tArea:%i Population:%i", AreaInfo.online_area_id(), AreaInfo.population());
     }
 
-    ChangeState(ClientState::GameServer_Experiment);
+    ChangeState(ClientState::GameServer_GatherStatistics);
 }
 
 void Client::Handle_GameServer_Experiment()
@@ -549,4 +580,99 @@ void Client::Handle_GameServer_Experiment()
     Log("Recieved regulation file response");
     */
     ChangeState(ClientState::Complete);
+}
+
+void Client::Handle_GameServer_GatherStatistics()
+{
+    std::vector<OnlineAreaId> OnlineAreaIds = *GetEnumValues<OnlineAreaId>();
+
+    // Go through each area and each level/weapon config and find out how many people 
+    // are available for coop/invasion at each combination.
+    for (int Level = 150; Level <= 200; Level += 10)
+    {
+        for (int WeaponLevel = 0; WeaponLevel <= 10; WeaponLevel += 1)
+        {
+            Log("===== Level:%i WeaponLevel:%i =====", Level, WeaponLevel);
+
+            for (OnlineAreaId Area : OnlineAreaIds)
+            {
+                if (Area == OnlineAreaId::None)
+                {
+                    continue;
+                }
+
+                int32 AreaMapId = ((int32)Area / 10000) * 10000;
+
+                // Get sign statistics.
+                {
+                    Frpg2RequestMessage::RequestGetSignList Request;
+                    Request.set_unknown_id_1(0);
+                    Request.set_max_signs(100);
+                    Request.mutable_sign_get_flags()->set_unknown_id_1(1);
+                    Request.mutable_sign_get_flags()->set_unknown_id_2(1);
+                    Request.mutable_sign_get_flags()->set_unknown_id_3(0);
+
+                    Frpg2RequestMessage::SignDomainGetInfo* DomainInfo = Request.mutable_search_areas()->Add();
+                    DomainInfo->set_max_signs(100);
+                    DomainInfo->set_online_area_id((int32)Area);
+
+                    Request.mutable_matching_parameter()->set_unknown_id_1(1350000);
+                    Request.mutable_matching_parameter()->set_unknown_id_2(2);
+                    Request.mutable_matching_parameter()->set_unknown_id_3(0);
+                    Request.mutable_matching_parameter()->set_unknown_id_4(1);
+                    Request.mutable_matching_parameter()->set_unknown_id_5(0);
+                    Request.mutable_matching_parameter()->set_soul_level(Level);
+                    Request.mutable_matching_parameter()->set_soul_memory(Level * 100000); // Huuum, this might cause some issues.
+                    Request.mutable_matching_parameter()->set_unknown_id_9(0);
+                    Request.mutable_matching_parameter()->set_password("");
+                    Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
+                    Request.mutable_matching_parameter()->set_weapon_level(WeaponLevel);
+
+                    Frpg2RequestMessage::RequestGetSignListResponse Response;
+                    SendAndAwaitWaitForReply(&Request, &Response);
+
+                    int SignCount = Response.has_get_sign_result() ? Response.get_sign_result().sign_data_size() : 0;
+                    if (SignCount > 0)
+                    {
+                        Log("Area:%i Level:%i WeaponLevel:%i: Got %i signs", Area, Level, WeaponLevel, SignCount);
+                        Database.AddMatchingSample("ActiveSigns", StringFormat("%i", (int32)Area), SignCount, Level, WeaponLevel);
+                    }
+                }
+
+                // Get invasion statistics.
+                {
+                    Frpg2RequestMessage::RequestGetBreakInTargetList Request;
+                    Request.set_map_id(AreaMapId);
+                    Request.set_online_area_id((int32)Area);
+                    Request.set_max_targets(100);
+                    Request.set_unknown_5(0);
+
+                    Request.mutable_matching_parameter()->set_unknown_id_1(1350000);
+                    Request.mutable_matching_parameter()->set_unknown_id_2(2);
+                    Request.mutable_matching_parameter()->set_unknown_id_3(0);
+                    Request.mutable_matching_parameter()->set_unknown_id_4(1);
+                    Request.mutable_matching_parameter()->set_unknown_id_5(0);
+                    Request.mutable_matching_parameter()->set_soul_level(Level);
+                    Request.mutable_matching_parameter()->set_soul_memory(Level * 100000); // Huuum, this might cause some issues.
+                    Request.mutable_matching_parameter()->set_unknown_id_9(0);
+                    Request.mutable_matching_parameter()->set_password("");
+                    Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
+                    Request.mutable_matching_parameter()->set_weapon_level(WeaponLevel);
+
+                    Frpg2RequestMessage::RequestGetBreakInTargetListResponse Response;
+                    SendAndAwaitWaitForReply(&Request, &Response);
+
+                    int TargetCount = Response.target_data_size();
+                    if (TargetCount > 0)
+                    {
+                        Log("Area:%i Level:%i WeaponLevel:%i: Got %i break in targets", Area, Level, WeaponLevel, TargetCount);
+                        Database.AddMatchingSample("ActiveBreakInTargets", StringFormat("%i", (int32)Area), TargetCount, Level, WeaponLevel);
+                    }
+                }
+
+                // Don't hammer the server.
+                std::this_thread::sleep_for(200ms);
+            }
+        }
+    }
 }

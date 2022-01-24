@@ -65,6 +65,7 @@ private:
         GameServer_RequestUpdatePlayerCharacter,
         GameServer_RequestGetRightMatchingArea,
         GameServer_Experiment,
+        GameServer_GatherStatistics,
 
         Complete
     };
@@ -86,6 +87,7 @@ private:
     void Handle_GameServer_RequestUpdatePlayerCharacter();
     void Handle_GameServer_RequestGetRightMatchingArea();
     void Handle_GameServer_Experiment();
+    void Handle_GameServer_GatherStatistics();
 
     void ChangeState(ClientState State);
 
@@ -103,9 +105,6 @@ private:
 
     RSAKeyPair PrimaryKeyPair;
 
-    std::filesystem::path SavedPath;
-    std::filesystem::path ClientPublicKeyPath;
-
     std::shared_ptr<NetConnection> LoginServerConnection;
     std::shared_ptr<Frpg2MessageStream> LoginServerMessageStream;
 
@@ -114,6 +113,11 @@ private:
 
     std::shared_ptr<NetConnection> GameServerConnection;
     std::shared_ptr<Frpg2ReliableUdpMessageStream> GameServerMessageStream;
+
+    ServerDatabase Database;
+
+    std::filesystem::path SavedPath;
+    std::filesystem::path DatabasePath;
 
     std::string ClientStreamId = "";
     int ClientAppVersion = 114;

@@ -55,6 +55,14 @@ bool PlatformInit()
         return false;
     }
 
+    // Disable quick-edit on the output console. It results in the application
+    // pausing if the user tries to select something in the window. Causes more
+    // problems than it solves ...
+    DWORD previousMode;
+    HANDLE hStdout = GetStdHandle(STD_INPUT_HANDLE);
+    GetConsoleMode(hStdout, &previousMode);
+    SetConsoleMode(hStdout, ENABLE_EXTENDED_FLAGS | (previousMode & ~ENABLE_QUICK_EDIT_MODE));
+
     return true;
 }
 

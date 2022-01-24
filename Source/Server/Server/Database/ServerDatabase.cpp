@@ -126,6 +126,17 @@ bool ServerDatabase::CreateTables()
         "   PRIMARY KEY (Name, Scope)"                                              \
         ");"
     );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS MatchingSamples("                               \
+        "   SampleId            INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   Name                STRING,"                                            \
+        "   Scope               STRING,"                                            \
+        "   Count               INTEGER,"                                           \
+        "   Level               INTEGER,"                                           \
+        "   WeaponLevel         INTEGER,"                                           \
+        "   CreatedTime         TEXT"                                               \
+        ");"
+    );
 
     for (const std::string& statement : tables)
     {
@@ -629,6 +640,11 @@ bool ServerDatabase::UpdateCharacterQuickMatchRank(uint32_t PlayerId, uint32_t C
     }
 
     return true;
+}
+
+void ServerDatabase::AddMatchingSample(const std::string& Name, const std::string& Scope, int64_t Count, uint32_t Level, uint32_t WeaponLevel)
+{
+    RunStatement("INSERT INTO MatchingSamples(Name, Scope, Count, Level, WeaponLevel, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, datetime('now'))", { Name, Scope, Count, Level, WeaponLevel }, nullptr);
 }
 
 void ServerDatabase::AddStatistic(const std::string& Name, const std::string& Scope, int64_t Count)

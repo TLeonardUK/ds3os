@@ -137,6 +137,14 @@ public:
     void SetPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count);
     int64_t GetPlayerStatistic(const std::string& Name, uint32_t PlayerId);
 
+    // ----------------------------------------------------------------
+    // Sample interface
+    // ----------------------------------------------------------------
+
+    // This acts in the same way as a statistic except a new instance is created each call
+    // to act as a sample at the current point in time.
+    void AddMatchingSample(const std::string& Name, const std::string& Scope, int64_t Count, uint32_t Level, uint32_t WeaponLevel);
+
 protected:
 
     using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>, int64_t>;
