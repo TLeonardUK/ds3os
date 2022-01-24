@@ -60,7 +60,7 @@ So far we've had several accounts using unoffical servers, for quite a while, an
 So it seems safe enough. The only way you are going to get banned is if you do things that would normally get you banned then go back to the retail server - cheating and the like.
 
 # FAQ
-## I launch the game but its unable to connect.
+## I launch the game but its unable to connect?
 There are a few different causes of this, the simplest one is to make sure you're running as admin, the launcher needs to patch the games memory to get it to connect to the new server, this requires admin privileges.
 
 If the server is being hosted by yourself and the above doesn't solve your issue, try these steps:
@@ -68,6 +68,11 @@ If the server is being hosted by yourself and the above doesn't solve your issue
 Ensure these ports are forwarded on your router, both for tcp and udp: 50000, 50010, 50050, 50020 
 
 Its possible you don't have the configuration for the server setup correctly. After running the server once make sure to open the configuration file (Saved/config.json) and make sure its setup correctly (it will attempt to autoconfigure itself, but may get incorrect values if you have multiple network adapters). The most critical settings to get correct are ServerHostname and ServerPrivateHostname, these should be set to your WAN IP (the one you get from sites like https://whatismyip.com), and your LAN IP (the one you get from running ipconfig) respectively. If you are using LAN emulation software (eg. hamachi) you will need to set these to the appropriate hamachi IP.
+
+## What do all the properties in the config file mean?
+The settings are all documented in the source code in this file, in future I'll write some more detailed documentation.
+
+https://github.com/TLeonardUK/ds3os/blob/main/Source/Server/Config/RuntimeConfig.h
 
 # How do I build it?
 Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely be moved over to something platform agnostic like cmake.
