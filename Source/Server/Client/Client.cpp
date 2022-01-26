@@ -502,9 +502,13 @@ void Client::Handle_GameServer_RequestUpdatePlayerStatus()
     Frpg2RequestMessage::RequestUpdatePlayerStatus Request;
     Request.ParseFromArray(RequestTemplateBytes.data(), (int)RequestTemplateBytes.size());
 
-    ClientSoulLevel = Request.status().player_status().soul_level();
-    ClientSoulMemory = Request.status().player_status().soul_memory();
-    ClientWeaponLevel = Request.status().player_status().max_weapon_level();
+    std::string bytes = Request.status();
+    Frpg2PlayerData::AllStatus status;
+    status.ParseFromArray(bytes.data(), (int)bytes.size());
+
+    ClientSoulLevel = status.player_status().soul_level();
+    ClientSoulMemory = status.player_status().soul_memory();
+    ClientWeaponLevel = status.player_status().max_weapon_level();
 
     Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);

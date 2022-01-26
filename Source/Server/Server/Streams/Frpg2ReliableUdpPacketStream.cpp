@@ -302,7 +302,7 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
         {   
             // Send an ACK, its possible that the remote is retransmitting packets as
             // a previously sent ACK has dropped.
-            Log("Sending ack as not sent in a while.");
+            Verbose("Sending ack as not sent in a while.");
 
             Send_ACK(RemoteSequenceIndexAcked);
 
@@ -703,7 +703,7 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
             double ElapsedTime = (CurrentTime - Packet.SendTime);
             if (ElapsedTime > RETRANSMIT_INTERVAL)
             {
-                LogS(Connection->GetName().c_str(), "Starting retransmit as we have unacknowledged packets (packet %i).", InLocalAck);
+                VerboseS(Connection->GetName().c_str(), "Starting retransmit as we have unacknowledged packets (packet %i).", InLocalAck);
 
                 SendRaw(Packet);
 
@@ -723,12 +723,12 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
         if (RetransmittingIndex > MAX_ACK_VALUE_TOP_QUART && SequenceIndexAcked < MAX_ACK_VALUE_BOTTOM_QUART ||
             SequenceIndexAcked >= RetransmittingIndex)
         {
-            LogS(Connection->GetName().c_str(), "Recovered from retransmit.");
+            VerboseS(Connection->GetName().c_str(), "Recovered from retransmit.");
             IsRetransmitting = false;
         }
         else if (ElapsedTime > RETRANSMIT_CYCLE_INTERVAL)
         {
-            LogS(Connection->GetName().c_str(), "Resending retransmission packet.");
+            LogS(Connection->GetName().c_str(), "Retransmitting packet, initial retransmit has not been acknowledged.");
             RetransmissionTimer = GetSeconds();
 
             RetransmitAttempts++;

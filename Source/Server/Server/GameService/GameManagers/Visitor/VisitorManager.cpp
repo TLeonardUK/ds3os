@@ -228,7 +228,10 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
     Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
     PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectVisit);
     PushMessage.set_player_id(Player.PlayerId);
-    PushMessage.set_visitor_pool(Request->visitor_pool());
+    if (Request->has_visitor_pool())
+    {
+        PushMessage.set_visitor_pool(Request->visitor_pool());
+    }
     PushMessage.set_steam_id(Player.SteamId);
     PushMessage.set_unknown_5(0);
 

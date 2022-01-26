@@ -154,7 +154,7 @@ protected:
     // We reeeeeeeaaaallly want this to be exponential backoff, but this works for now.
     const float RETRANSMIT_INTERVAL = 5.0;
 
-    const float RETRANSMIT_CYCLE_INTERVAL = 0.25;
+    const float RETRANSMIT_CYCLE_INTERVAL = 0.5;
 
     const uint32_t RETRANSMIT_MAX_ATTEMPTS = 32;
 

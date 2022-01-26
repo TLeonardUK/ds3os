@@ -194,7 +194,8 @@ message RequestUpdateLoginPlayerCharacterResponse {
 }
 
 message RequestUpdatePlayerStatus {
-    required Frpg2PlayerData.AllStatus status = 1;
+    required bytes status = 1;
+    //required Frpg2PlayerData.AllStatus status = 1;
 }
 
 message RequestUpdatePlayerStatusResponse {
@@ -1003,7 +1004,7 @@ message PushRequestVisit {
 // fields might be optional.
 message RequestRejectVisit {
     required uint32 player_id = 1;                         
-    required VisitorPool visitor_pool = 2;              // total guess might be unknown_5 
+    optional VisitorPool visitor_pool = 2;              // total guess might be unknown_5 
     required uint32 map_id = 3;
     required uint32 online_area_id = 4;
     required uint32 unknown_5 = 5;                      // 0  
@@ -1477,6 +1478,7 @@ enum QuickMatchResult{
     QuickMatchResult_Win = 0;
     QuickMatchResult_Lose = 1;
     QuickMatchResult_Draw = 2;
+    QuickMatchResult_Disconnect = 3;                    // Needs confirmation.
 }
 
 message RequestSendQuickMatchResult {
@@ -1487,7 +1489,7 @@ message RequestSendQuickMatchResult {
     required bool local_won = 4;                        // 0, 1     1 if win, 0 if lose, 0 if draw
     required QuickMatchRank remote_rank = 5;            // lose{ 0, 0 }                         win{ 0, 0 } { 0, 0 } { 0, 0 } { 0, 0 } { 0, 0 }
     required QuickMatchRank local_rank = 6;             // lose{ 0, 0 } { 0, 750 } { 0, 1500 }  win{ 0, 2250 } { 0, 4500 } { 0, 6750 } { 0, 9000 } { 1, 2000 }
-    required string unknown_7 = 7;                      // Looks like a timestamp + player_id "202108171531370006872049"
+    optional string unknown_7 = 7;                      // Looks like a timestamp + player_id "202108171531370006872049"
 }
 
 message RequestSendQuickMatchResultResponse {

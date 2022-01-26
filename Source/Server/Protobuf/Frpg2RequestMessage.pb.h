@@ -384,11 +384,12 @@ const int QuickMatchGameMode_ARRAYSIZE = QuickMatchGameMode_MAX + 1;
 enum QuickMatchResult {
   QuickMatchResult_Win = 0,
   QuickMatchResult_Lose = 1,
-  QuickMatchResult_Draw = 2
+  QuickMatchResult_Draw = 2,
+  QuickMatchResult_Disconnect = 3
 };
 bool QuickMatchResult_IsValid(int value);
 const QuickMatchResult QuickMatchResult_MIN = QuickMatchResult_Win;
-const QuickMatchResult QuickMatchResult_MAX = QuickMatchResult_Draw;
+const QuickMatchResult QuickMatchResult_MAX = QuickMatchResult_Disconnect;
 const int QuickMatchResult_ARRAYSIZE = QuickMatchResult_MAX + 1;
 
 // ===================================================================
@@ -2651,14 +2652,17 @@ class RequestUpdatePlayerStatus : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required .Frpg2PlayerData.AllStatus status = 1;
+  // required bytes status = 1;
   inline bool has_status() const;
   inline void clear_status();
   static const int kStatusFieldNumber = 1;
-  inline const ::Frpg2PlayerData::AllStatus& status() const;
-  inline ::Frpg2PlayerData::AllStatus* mutable_status();
-  inline ::Frpg2PlayerData::AllStatus* release_status();
-  inline void set_allocated_status(::Frpg2PlayerData::AllStatus* status);
+  inline const ::std::string& status() const;
+  inline void set_status(const ::std::string& value);
+  inline void set_status(const char* value);
+  inline void set_status(const void* value, size_t size);
+  inline ::std::string* mutable_status();
+  inline ::std::string* release_status();
+  inline void set_allocated_status(::std::string* status);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestUpdatePlayerStatus)
  private:
@@ -2669,7 +2673,7 @@ class RequestUpdatePlayerStatus : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::Frpg2PlayerData::AllStatus* status_;
+  ::std::string* status_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -14328,7 +14332,7 @@ class RequestRejectVisit : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 player_id() const;
   inline void set_player_id(::google::protobuf::uint32 value);
 
-  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
+  // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
   inline bool has_visitor_pool() const;
   inline void clear_visitor_pool();
   static const int kVisitorPoolFieldNumber = 2;
@@ -21597,7 +21601,7 @@ class RequestSendQuickMatchResult : public ::google::protobuf::MessageLite {
   inline ::Frpg2RequestMessage::QuickMatchRank* release_local_rank();
   inline void set_allocated_local_rank(::Frpg2RequestMessage::QuickMatchRank* local_rank);
 
-  // required string unknown_7 = 7;
+  // optional string unknown_7 = 7;
   inline bool has_unknown_7() const;
   inline void clear_unknown_7();
   static const int kUnknown7FieldNumber = 7;
@@ -27120,7 +27124,7 @@ inline void RequestUpdateLoginPlayerCharacterResponse::set_allocated_quickmatch_
 
 // RequestUpdatePlayerStatus
 
-// required .Frpg2PlayerData.AllStatus status = 1;
+// required bytes status = 1;
 inline bool RequestUpdatePlayerStatus::has_status() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -27131,36 +27135,67 @@ inline void RequestUpdatePlayerStatus::clear_has_status() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void RequestUpdatePlayerStatus::clear_status() {
-  if (status_ != NULL) status_->::Frpg2PlayerData::AllStatus::Clear();
+  if (status_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    status_->clear();
+  }
   clear_has_status();
 }
-inline const ::Frpg2PlayerData::AllStatus& RequestUpdatePlayerStatus::status() const {
+inline const ::std::string& RequestUpdatePlayerStatus::status() const {
   // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestUpdatePlayerStatus.status)
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  return status_ != NULL ? *status_ : *default_instance().status_;
-#else
-  return status_ != NULL ? *status_ : *default_instance_->status_;
-#endif
+  return *status_;
 }
-inline ::Frpg2PlayerData::AllStatus* RequestUpdatePlayerStatus::mutable_status() {
+inline void RequestUpdatePlayerStatus::set_status(const ::std::string& value) {
   set_has_status();
-  if (status_ == NULL) status_ = new ::Frpg2PlayerData::AllStatus;
+  if (status_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    status_ = new ::std::string;
+  }
+  status_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestUpdatePlayerStatus.status)
+}
+inline void RequestUpdatePlayerStatus::set_status(const char* value) {
+  set_has_status();
+  if (status_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    status_ = new ::std::string;
+  }
+  status_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.RequestUpdatePlayerStatus.status)
+}
+inline void RequestUpdatePlayerStatus::set_status(const void* value, size_t size) {
+  set_has_status();
+  if (status_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    status_ = new ::std::string;
+  }
+  status_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.RequestUpdatePlayerStatus.status)
+}
+inline ::std::string* RequestUpdatePlayerStatus::mutable_status() {
+  set_has_status();
+  if (status_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    status_ = new ::std::string;
+  }
   // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestUpdatePlayerStatus.status)
   return status_;
 }
-inline ::Frpg2PlayerData::AllStatus* RequestUpdatePlayerStatus::release_status() {
+inline ::std::string* RequestUpdatePlayerStatus::release_status() {
   clear_has_status();
-  ::Frpg2PlayerData::AllStatus* temp = status_;
-  status_ = NULL;
-  return temp;
+  if (status_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = status_;
+    status_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
 }
-inline void RequestUpdatePlayerStatus::set_allocated_status(::Frpg2PlayerData::AllStatus* status) {
-  delete status_;
-  status_ = status;
+inline void RequestUpdatePlayerStatus::set_allocated_status(::std::string* status) {
+  if (status_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete status_;
+  }
   if (status) {
     set_has_status();
+    status_ = status;
   } else {
     clear_has_status();
+    status_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestUpdatePlayerStatus.status)
 }
@@ -37225,7 +37260,7 @@ inline void RequestRejectVisit::set_player_id(::google::protobuf::uint32 value) 
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestRejectVisit.player_id)
 }
 
-// required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
+// optional .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
 inline bool RequestRejectVisit::has_visitor_pool() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -41138,7 +41173,7 @@ inline void RequestSendQuickMatchResult::set_allocated_local_rank(::Frpg2Request
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestSendQuickMatchResult.local_rank)
 }
 
-// required string unknown_7 = 7;
+// optional string unknown_7 = 7;
 inline bool RequestSendQuickMatchResult::has_unknown_7() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }

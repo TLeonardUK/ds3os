@@ -102,16 +102,30 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
 
     PlayerState& State = Client->GetPlayerState();
 
-    // Keep track of the players character id.
-    if (Request->status().has_player_status() && Request->status().player_status().has_character_id())
+    // Merge the delta into the current state.
+    std::string bytes = Request->status();
+
+    Frpg2PlayerData::AllStatus status;
+    if (!status.ParseFromArray(bytes.data(), (int)bytes.size()))
     {
-        State.CharacterId = Request->status().player_status().character_id();
+        WarningS(Client->GetName().c_str(), "Failed to parse Frpg2PlayerData::AllStatus from RequestUpdatePlayerStatus.");
+
+        // Don't take this as an error, it will resolve itself on next send.
+        return MessageHandleResult::Handled;
+    }
+
+    State.PlayerStatus.MergeFrom(status);
+
+    // Keep track of the players character id.
+    if (State.PlayerStatus.player_status().has_character_id())
+    {
+        State.CharacterId = State.PlayerStatus.player_status().character_id();
     }
 
     // Keep track of the players character name, useful for logging.
-    if (Request->status().has_player_status() && Request->status().player_status().has_name())
+    if (State.PlayerStatus.player_status().has_name())
     {
-        std::string NewCharacterName = Request->status().player_status().name();
+        std::string NewCharacterName = State.PlayerStatus.player_status().name();
         if (State.CharacterName != NewCharacterName)
         {
             State.CharacterName = NewCharacterName;
@@ -126,9 +140,9 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     }
 
     // Print a log if user has changed online location.
-    if (Request->status().has_player_location())
+    if (State.PlayerStatus.has_player_location())
     {
-        OnlineAreaId AreaId = static_cast<OnlineAreaId>(Request->status().player_location().online_area_id());
+        OnlineAreaId AreaId = static_cast<OnlineAreaId>(State.PlayerStatus.player_location().online_area_id());
         if (AreaId != State.CurrentArea && AreaId != OnlineAreaId::None)
         {
             LogS(Client->GetName().c_str(), "User has entered '%s'", GetEnumString(AreaId).c_str());
@@ -137,12 +151,12 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     }
 
     // Grab some matchmaking values.
-    if (Request->status().has_player_status())
+    if (State.PlayerStatus.has_player_status())
     {
         // Grab invadability state.
-        if (Request->status().player_status().has_is_invadable())
+        if (State.PlayerStatus.player_status().has_is_invadable())
         {
-            bool NewState = Request->status().player_status().is_invadable();
+            bool NewState = State.PlayerStatus.player_status().is_invadable();
             if (NewState != State.IsInvadable)
             {
                 LogS(Client->GetName().c_str(), "User is now %s", NewState ? "invadable" : "no longer invadable");
@@ -151,30 +165,30 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         }
 
         // Grab soul level / weapon level.
-        if (Request->status().player_status().has_soul_level())
+        if (State.PlayerStatus.player_status().has_soul_level())
         {
-            State.SoulLevel = Request->status().player_status().soul_level();
+            State.SoulLevel = State.PlayerStatus.player_status().soul_level();
         }
-        if (Request->status().player_status().has_max_weapon_level())
+        if (State.PlayerStatus.player_status().has_max_weapon_level())
         {
-            State.MaxWeaponLevel = Request->status().player_status().max_weapon_level();
+            State.MaxWeaponLevel = State.PlayerStatus.player_status().max_weapon_level();
         }
 
         // Grab whatever visitor pool they should be in.
         Frpg2RequestMessage::VisitorPool NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_None;
-        if (Request->status().player_status().has_can_summon_for_way_of_blue() && Request->status().player_status().can_summon_for_way_of_blue())
+        if (State.PlayerStatus.player_status().has_can_summon_for_way_of_blue() && State.PlayerStatus.player_status().can_summon_for_way_of_blue())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue;
         }
-        if (Request->status().player_status().has_can_summon_for_watchdog_of_farron() && Request->status().player_status().can_summon_for_watchdog_of_farron())
+        if (State.PlayerStatus.player_status().has_can_summon_for_watchdog_of_farron() && State.PlayerStatus.player_status().can_summon_for_watchdog_of_farron())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Watchdog_of_Farron;
         }
-        if (Request->status().player_status().has_can_summon_for_aldritch_faithful() && Request->status().player_status().can_summon_for_aldritch_faithful())
+        if (State.PlayerStatus.player_status().has_can_summon_for_aldritch_faithful() && State.PlayerStatus.player_status().can_summon_for_aldritch_faithful())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Aldrich_Faithful;
         }
-        if (Request->status().player_status().has_can_summon_for_spear_of_church() && Request->status().player_status().can_summon_for_spear_of_church())
+        if (State.PlayerStatus.player_status().has_can_summon_for_spear_of_church() && State.PlayerStatus.player_status().can_summon_for_spear_of_church())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Spear_of_the_Church;
         }
@@ -184,31 +198,6 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
             State.VisitorPool = NewVisitorPool;
         }
     }
-
-    // DEBUG DEBUG DEBUG
-    #define CHECK_PLAYER_STATUS_DIFF(GroupName, FieldName) if (State.PlayerStatus.has_##GroupName() && State.PlayerStatus.GroupName().has_##FieldName() && Request->status().has_##GroupName() && Request->status().GroupName().has_##FieldName() && State.PlayerStatus.GroupName().FieldName() != Request->status().GroupName().FieldName()) \
-                                                    WarningS(Client->GetName().c_str(), "Changed %s.%s to %i.", #GroupName, #FieldName, Request->status().GroupName().FieldName());
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_1)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_2)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_6)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_9)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_13)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_14)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_32)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_33)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_63)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_75)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_76)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_78)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_79)
-    CHECK_PLAYER_STATUS_DIFF(player_status, unknown_80)
-    CHECK_PLAYER_STATUS_DIFF(play_data, unknown_4)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_59)
-    CHECK_PLAYER_STATUS_DIFF(equipment, unknown_60)
-    // DEBUG DEBUG DEBUG
-
-    // Merge the delta into the current state.
-    State.PlayerStatus.MergeFrom(Request->status());
 
     Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

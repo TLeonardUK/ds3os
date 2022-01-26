@@ -34,7 +34,7 @@ void QuickMatchManager::OnLostPlayer(GameClient* Client)
 
         if (Match->HostPlayerId == Client->GetPlayerState().PlayerId)
         {
-            LogS(Client->GetName().c_str(), "Cleaned up undead match due to disconnecting client.");
+            LogS(Client->GetName().c_str(), "Unregistered quick match hosted by player %u, as player has disconnected.", Match->HostPlayerId);
             Iter = Matches.erase(Iter);
         }
         else
@@ -202,6 +202,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
     NewMatch->AreaId = (OnlineAreaId)Request->online_area_id();
     NewMatch->HasStarted = false;
 
+    LogS(Client->GetName().c_str(), "Registered new quick match hosted by player %u", NewMatch->HostPlayerId);
     Matches.push_back(NewMatch);
 
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -221,10 +222,12 @@ MessageHandleResult QuickMatchManager::Handle_RequestUnregisterQuickMatch(GameCl
     for (auto Iter = Matches.begin(); Iter != Matches.end(); /* empty */)
     {
         std::shared_ptr<Match> Match = *Iter;
-        if (          Match->GameMode == Request->mode() &&
+        if (          Match->HostPlayerId == Client->GetPlayerState().PlayerId &&
+                      Match->GameMode == Request->mode() &&
                       Match->MapId == Request->map_id() &&
             (uint32_t)Match->AreaId == Request->online_area_id())
         {
+            LogS(Client->GetName().c_str(), "Unregistered quick match hosted by player %u", Match->HostPlayerId);
             Iter = Matches.erase(Iter);
         }
         else
@@ -393,6 +396,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchStart(GameCli
         std::shared_ptr<Match> Match = *Iter;
         if (Match->HostPlayerId == Player.PlayerId)
         {
+            LogS(Client->GetName().c_str(), "Unregistered quick match hosted by player %u, as it has started.", Match->HostPlayerId);
             Matches.erase(Iter);
             break;
         }
@@ -450,6 +454,11 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
         case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Lose:
         {
             XP += Config.QuickMatchLoseXp;
+            break;
+        }
+        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Disconnect:
+        {
+            // No XP gained.
             break;
         }
     }

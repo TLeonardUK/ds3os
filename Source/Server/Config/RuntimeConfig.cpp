@@ -246,6 +246,7 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_STRUCT_VAR(DarkSpiritInvasionMatchingParameters);
     SERIALIZE_STRUCT_VAR(MoundMakerInvasionMatchingParameters);
     SERIALIZE_STRUCT_VAR(CovenantInvasionMatchingParameters);
+    SERIALIZE_STRUCT_VAR(UndeadMatchMatchingParameters);
 
     return true;
 }
