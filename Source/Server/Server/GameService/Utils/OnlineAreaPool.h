@@ -174,7 +174,7 @@ public:
     {
         for (auto Pair : AreaMap)
         {
-            std::shared_ptr<Area> AreaInstance = Pair->second();
+            std::shared_ptr<Area> AreaInstance = Pair.second;
             TrimArea(AreaInstance);
         }
     }

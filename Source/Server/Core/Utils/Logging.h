@@ -24,7 +24,7 @@ void WriteLog(ConsoleColor Color, const char* Source, const char* Level, const c
 #if defined(_DEBUG)
 #define Verbose(Format, ...)                    WriteLog(ConsoleColor::Grey,      "", "Verbose", Format, __VA_ARGS__);
 #else
-#define Verbose(Source, Format, ...)           
+#define Verbose(Format, ...)           
 #endif
 #define Log(Format, ...)                        WriteLog(ConsoleColor::Grey,      "", "Log", Format, __VA_ARGS__);
 #define Success(Format, ...)                    WriteLog(ConsoleColor::Green,     "", "Success", Format, __VA_ARGS__);
