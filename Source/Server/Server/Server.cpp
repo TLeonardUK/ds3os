@@ -247,7 +247,7 @@ bool Server::ParseServerAdvertisementResponse(std::shared_ptr<NetHttpResponse> R
     }
     catch (nlohmann::json::parse_error)
     {
-        Warning("Recieved error when trying to advertise server on master server. Response was not valid json.");
+        Log("Unable to parse result when trying to advertise server on master server. Response was not valid json. This isn't an issue, the master server is probably just down or overloaded.");
         return false;
     }
 
