@@ -125,6 +125,13 @@ void GameService::Poll()
 
             Client->MessageStream->Disconnect();
 
+            // Let all managers know this client is being disconnected, they
+            // may need to clean things up.
+            for (auto& Manager : Managers)
+            {
+                Manager->OnLostPlayer(Client.get());
+            }
+
             iter = Clients.erase(iter);
         }
         else
@@ -143,13 +150,6 @@ void GameService::Poll()
         if (Client->MessageStream->GetState() == Frpg2ReliableUdpStreamState::Closed)
         {
             LogS(Client->GetName().c_str(), "Client disconnected.");
-
-            // Let all managers know this client has been disconnected, they
-            // may need to clean things up.
-            for (auto& Manager : Managers)
-            {
-                Manager->OnLostPlayer(Client.get());
-            }
 
             iter = DisconnectingClients.erase(iter);
         }
