@@ -28,7 +28,7 @@ User can join the server by opening the Loader.exe program in the Loader folder 
 
 Servers can also be password protected if required by setting as password in Saved\config.json, a password will need to be entered when attempting to launch the game with a protected server.
 
-**NOTE**: The **steam** client (no need login) must be installed when you run the **Server.exe**. Otherwise, **Server.exe** will crash. 
+**NOTE**: The **steam** client (no login needed) must be installed when you run the **Server.exe**. Otherwise, **Server.exe** will fail to initialize.
 
 # What currently works?
 Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer match retail server behaviour and make some general improvements to the running of unoffical servers.
