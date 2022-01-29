@@ -39,7 +39,7 @@ public:
 #else
     using SocketType = int;
     using SocketLenType = socklen_t;
-    const SocketType INVALID_SOCKET_VALUE = 0;
+    const SocketType INVALID_SOCKET_VALUE = -1;
 #endif
 
 public:
