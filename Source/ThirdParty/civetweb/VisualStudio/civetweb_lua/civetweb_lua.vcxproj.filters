@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\civetweb.c" />
+    <ClCompile Include="..\..\src\main.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\civetweb.h" />
+    <ClInclude Include="..\..\src\third_party\civetweb_lua.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\resources\res.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\resources\systray.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\handle_form.inl" />
+    <None Include="..\..\src\md5.inl" />
+    <None Include="..\..\src\mod_http2.inl" />
+    <None Include="..\..\src\mod_lua_shared.inl" />
+    <None Include="..\..\src\response.inl" />
+    <None Include="..\..\src\mod_zlib.inl" />
+    <None Include="..\..\src\sha1.inl" />
+    <None Include="..\..\src\mod_duktape.inl" />
+    <None Include="..\..\src\mod_lua.inl" />
+    <None Include="..\..\src\timer.inl" />
+    <None Include="..\..\src\mod_mbedtls.inl" />
+    <None Include="..\..\src\openssl_dl.inl" />
+  </ItemGroup>
+</Project>

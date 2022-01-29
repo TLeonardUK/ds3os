@@ -37,12 +37,16 @@ public:
 
     PlayerState& GetPlayerState() { return State; }
 
+    double GetConnectionDuration() { return GetSeconds() - ConnectTime; }
+
 public:
 
     std::shared_ptr<NetConnection> Connection;
     std::shared_ptr<Frpg2ReliableUdpMessageStream> MessageStream;
 
     std::vector<std::shared_ptr<SummonSign>> ActiveSummonSigns;
+
+    double ConnectTime = GetSeconds();
 
 protected:
 

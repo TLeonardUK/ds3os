@@ -32,6 +32,8 @@ public:
     virtual void Poll() override;
 
     virtual void OnLostPlayer(GameClient* Client) override;
+    
+    size_t GetLiveCount() { return Matches.size(); }
 
 protected:
     MessageHandleResult Handle_RequestSearchQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message);

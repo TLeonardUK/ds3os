@@ -15,6 +15,7 @@
 #include <vector>
 #include <unordered_map>
 #include <functional>
+#include <mutex>
 
 class Server;
 class GameClient;
@@ -57,6 +58,20 @@ public:
     void RefreshAuthToken(uint64_t AuthToken);
 
     const std::vector<std::shared_ptr<GameManager>>& GetManagers() { return Managers; }
+
+    template <typename T>
+    std::shared_ptr<T> GetManager()
+    {
+        for (auto Manager : Managers)
+        {
+            if (std::shared_ptr<T> Result = std::dynamic_pointer_cast<T>(Manager))
+            {
+                return Result;
+            }
+        }
+
+        return nullptr;
+    }
 
     std::shared_ptr<GameClient> FindClientByPlayerId(uint32_t PlayerId);
     std::vector<std::shared_ptr<GameClient>> FindClients(std::function<bool(const std::shared_ptr<GameClient>&)> Predicate);

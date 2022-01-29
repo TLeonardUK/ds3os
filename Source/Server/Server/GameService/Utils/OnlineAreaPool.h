@@ -96,6 +96,17 @@ public:
         return nullptr;
     }
 
+    size_t GetTotalEntries()
+    {
+        size_t Total = 0;
+        for (auto AreaPair : AreaMap)
+        {
+            std::shared_ptr<Area> AreaInstance = AreaPair.second;
+            Total += AreaInstance->Entries.size();
+        }
+        return Total;
+    }
+
     std::vector<std::shared_ptr<ValueType>> GetRandomSet(OnlineAreaId AreaId, int MaxCount)
     {
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);

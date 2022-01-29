@@ -33,6 +33,8 @@ public:
 
     virtual std::string GetName() override;
 
+    size_t GetLiveCount() { return LiveCache.GetTotalEntries(); }
+
 protected:
     MessageHandleResult Handle_RequestReentryBloodMessage(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestGetBloodMessageEvaluation(GameClient* Client, const Frpg2ReliableUdpMessage& Message);

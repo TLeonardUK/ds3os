@@ -49,7 +49,7 @@
     <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <IncludePath>$(SolutionDir)ThirdParty\steam\public;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ThirdParty\steam\public;$(SolutionDir)ThirdParty\civitweb\include;$(SolutionDir)ThirdParty\civitweb;$(IncludePath)</IncludePath>
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -58,7 +58,7 @@
     <IntDir>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</IntDir>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <IncludePath>$(SolutionDir)ThirdParty\steam\public;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ThirdParty\steam\public;$(SolutionDir)ThirdParty\civitweb\include;$(SolutionDir)ThirdParty\civitweb;$(IncludePath)</IncludePath>
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
@@ -68,7 +68,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_DEBUG;_CONSOLE;NO_SSL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -86,6 +86,12 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
       <Message>Copying steam files to output dir</Message>
       <Outputs>$(OutputPath)steam_api64.dll</Outputs>
     </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)WebUI $(OutputPath)WebUI\ /Y</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copying WebUI Contents</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -93,7 +99,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;NDEBUG;_CONSOLE;NO_SSL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -113,6 +119,12 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
       <Message>Copying steam files to output dir</Message>
       <Outputs>$(OutputPath)steam_api64.dll</Outputs>
     </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)WebUI $(OutputPath)WebUI\ /Y</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copying WebUI Contents</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Client\Client.h" />
@@ -180,6 +192,11 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClInclude Include="Server\Streams\Frpg2ReliableUdpPacketStream.h" />
     <ClInclude Include="Server\Streams\Frpg2UdpPacket.h" />
     <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h" />
+    <ClInclude Include="Server\WebUIService\Handlers\AuthHandler.h" />
+    <ClInclude Include="Server\WebUIService\Handlers\PlayersHandler.h" />
+    <ClInclude Include="Server\WebUIService\Handlers\StatisticsHandler.h" />
+    <ClInclude Include="Server\WebUIService\Handlers\WebUIHandler.h" />
+    <ClInclude Include="Server\WebUIService\WebUIService.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client\Client.cpp" />
@@ -233,6 +250,11 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacket.cpp" />
     <ClCompile Include="Server\Streams\Frpg2ReliableUdpPacketStream.cpp" />
     <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp" />
+    <ClCompile Include="Server\WebUIService\Handlers\AuthHandler.cpp" />
+    <ClCompile Include="Server\WebUIService\Handlers\PlayersHandler.cpp" />
+    <ClCompile Include="Server\WebUIService\Handlers\StatisticsHandler.cpp" />
+    <ClCompile Include="Server\WebUIService\Handlers\WebUIHandler.cpp" />
+    <ClCompile Include="Server\WebUIService\WebUIService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Utils\EnumDef.inc" />
@@ -255,6 +277,9 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     </ProjectReference>
     <ProjectReference Include="..\ThirdParty\aes_modes\aes_modes.vcxproj">
       <Project>{c52e07d5-7560-4b7a-8365-be3f6ae4eecb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\civetweb\civetweb.vcxproj">
+      <Project>{58059bfe-2a69-43e9-883f-963ea95a9504}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ThirdParty\protobuf-2.6.1rc1\vsprojects\libprotobuf-lite.vcxproj">
       <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>

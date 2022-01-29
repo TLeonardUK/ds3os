@@ -32,6 +32,8 @@ public:
 
     virtual std::string GetName() override;
 
+    size_t GetLiveCount() { return LiveCache.GetTotalEntries(); }
+
 protected:
     MessageHandleResult Handle_RequestCreateGhostData(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestGetGhostDataList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);

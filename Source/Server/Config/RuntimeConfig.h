@@ -113,6 +113,15 @@ public:
     // Network port the game server listens for connections on.
     int GameServerPort = 50010;
 
+    // Network port the admin web-ui server listens for connections on.
+    int WebUIServerPort = 50005;
+
+    // Username to login into web-ui with.
+    std::string WebUIServerUsername = "";
+
+    // Password to login into web-ui with.
+    std::string WebUIServerPassword = "";
+
     // Announcements that show up when a user joins the game.
     std::vector<RuntimeConfigAnnouncement> Announcements = {
         { "Welcome to DS3OS", "\nYou have connected to an unofficial, work-in-progress, Dark Souls III server. Stability is not guaranteed, but welcome!\n\nMore information on this project is available here:\nhttps://github.com/tleonarduk/ds3os" }

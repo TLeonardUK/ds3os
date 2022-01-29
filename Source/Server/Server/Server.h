@@ -60,6 +60,8 @@ public:
         return nullptr;
     }
 
+    double GetUpdateTime() { return UpdateTime; };
+
 protected:
 
     void CancelServerAdvertisement();
@@ -89,6 +91,8 @@ private:
     NetIPAddress PrivateIP;
 
     RSAKeyPair PrimaryKeyPair;
+
+    double UpdateTime = 0.0;
 
     double LastMasterServerUpdate = 0.0;
     std::shared_ptr<NetHttpRequest> MasterServerUpdateRequest;

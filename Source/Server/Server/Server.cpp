@@ -13,6 +13,7 @@
 #include "Server/LoginService/LoginService.h"
 #include "Server/AuthService/AuthService.h"
 #include "Server/GameService/GameService.h"
+#include "Server/WebUIService/WebUIService.h"
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
@@ -48,6 +49,7 @@ Server::Server()
     Services.push_back(std::make_shared<LoginService>(this, &PrimaryKeyPair));
     Services.push_back(std::make_shared<AuthService>(this, &PrimaryKeyPair));
     Services.push_back(std::make_shared<GameService>(this, &PrimaryKeyPair));
+    Services.push_back(std::make_shared<WebUIService>(this));
 }
 
 Server::~Server()
@@ -340,12 +342,16 @@ void Server::RunUntilQuit()
     // This suffices for now.
     while (!QuitRecieved)
     {
+        double StartTime = GetSeconds();
+
         for (auto& Service : Services)
         {
             Service->Poll();
         }
 
         PollServerAdvertisement();
+
+        UpdateTime = GetSeconds() - StartTime;
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }

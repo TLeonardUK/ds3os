@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <vector>
+
 // Abstract class that just holds various build-time 
 // configuration variables. Might be worth dumping this
 // into a json file at some point in future so it can 
@@ -56,5 +58,7 @@ public:
     // Writes messages that fail to deserialize to the local directory.
     constexpr inline static const bool DUMP_FAILED_DISASSEMBLED_PACKETS = true;
 
+    // How many seconds of inactivity before a webui authentication token expires.
+    inline static const double WEBUI_AUTH_TIMEOUT = 60.0 * 60.0;
 
 };

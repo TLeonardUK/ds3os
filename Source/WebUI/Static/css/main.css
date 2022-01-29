@@ -1,0 +1,59 @@
+/*
+ * Dark Souls 3 - Open Server
+ * Copyright (C) 2021 Tim Leonard
+ *
+ * This program is free software; licensed under the MIT license.
+ * You should have received a copy of the license along with this program.
+ * If not, see <https://opensource.org/licenses/MIT>.
+ */
+
+.fullwidth 
+{
+    width: 100%;
+}
+
+.elementPadding
+{
+    padding: 20px;
+}
+
+.elementPaddingMargin
+{
+    padding: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+.loadingBarContainer
+{
+    width: 100px;
+    height: auto;
+    margin: 0 auto;
+    padding: 200px;
+    position: relative;
+}
+
+.loadingBar
+{
+    width: 100px;
+    height: 100px;
+}
+
+dialog + .backdrop 
+{
+    background: rgba(0,0,0,0.8);
+}
+
+.authDialog
+{
+    width: 500px;
+}
+
+.page-content
+{
+    text-align: center;
+    margin-top: 50px;
+}

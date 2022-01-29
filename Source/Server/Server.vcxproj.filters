@@ -97,6 +97,12 @@
     <Filter Include="Client">
       <UniqueIdentifier>{7e684113-b8bc-478f-8d1c-7dc01ed29a8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Server\WebUIService">
+      <UniqueIdentifier>{3d2ebc93-da4c-4c4c-ba7a-2543ec86edee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\WebUIService\Handlers">
+      <UniqueIdentifier>{b6af42db-3d47-41e2-8baf-21d120f89ea9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server\Server.h">
@@ -294,6 +300,21 @@
     <ClInclude Include="Client\Client.h">
       <Filter>Client</Filter>
     </ClInclude>
+    <ClInclude Include="Server\WebUIService\WebUIService.h">
+      <Filter>Server\WebUIService</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\WebUIService\Handlers\AuthHandler.h">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\WebUIService\Handlers\WebUIHandler.h">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\WebUIService\Handlers\PlayersHandler.h">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\WebUIService\Handlers\StatisticsHandler.h">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -446,6 +467,21 @@
     </ClCompile>
     <ClCompile Include="Core\Network\NetIPAddress.cpp">
       <Filter>Core\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\WebUIService\WebUIService.cpp">
+      <Filter>Server\WebUIService</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\WebUIService\Handlers\AuthHandler.cpp">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\WebUIService\Handlers\WebUIHandler.cpp">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\WebUIService\Handlers\PlayersHandler.cpp">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\WebUIService\Handlers\StatisticsHandler.cpp">
+      <Filter>Server\WebUIService\Handlers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

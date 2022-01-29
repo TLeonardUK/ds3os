@@ -271,6 +271,17 @@ bool ServerDatabase::FindOrCreatePlayer(const std::string& SteamId, uint32_t& Pl
     return true;
 }
 
+size_t ServerDatabase::GetTotalPlayers()
+{
+    uint32_t Result = 0;
+
+    RunStatement("SELECT COUNT(*) FROM Players", { }, [&Result](sqlite3_stmt* statement) {
+        Result = sqlite3_column_int(statement, 0);
+    });
+
+    return Result;
+}
+
 std::shared_ptr<BloodMessage> ServerDatabase::FindBloodMessage(uint32_t MessageId)
 {
     std::shared_ptr<BloodMessage> Result = nullptr;

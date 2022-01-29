@@ -38,6 +38,9 @@ public:
     // Return value is the new player's id.
     bool FindOrCreatePlayer(const std::string& SteamId, uint32_t& PlayerId);
 
+    // Gets total number of players in the database.
+    size_t GetTotalPlayers();
+
     // ----------------------------------------------------------------
     // Character interface
     // ----------------------------------------------------------------

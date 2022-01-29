@@ -33,6 +33,8 @@ public:
 
     virtual void OnLostPlayer(GameClient* Client) override;
 
+    size_t GetLiveCount() { return LiveCache.GetTotalEntries(); }
+
 protected:
     bool CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Client, const Frpg2RequestMessage::MatchingParameter& Match, bool IsRedSign);
 

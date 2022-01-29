@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "ThirdParty\zlib\zli
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite", "ThirdParty\sqlite\sqlite.vcxproj", "{38059BFE-2A69-43E9-883F-963EA95A9504}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "civetweb", "ThirdParty\civetweb\civetweb.vcxproj", "{58059BFE-2A69-43E9-883F-963EA95A9504}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -59,6 +61,10 @@ Global
 		{38059BFE-2A69-43E9-883F-963EA95A9504}.Debug|x64.Build.0 = Debug|x64
 		{38059BFE-2A69-43E9-883F-963EA95A9504}.Release|x64.ActiveCfg = Release|x64
 		{38059BFE-2A69-43E9-883F-963EA95A9504}.Release|x64.Build.0 = Release|x64
+		{58059BFE-2A69-43E9-883F-963EA95A9504}.Debug|x64.ActiveCfg = Debug|x64
+		{58059BFE-2A69-43E9-883F-963EA95A9504}.Debug|x64.Build.0 = Debug|x64
+		{58059BFE-2A69-43E9-883F-963EA95A9504}.Release|x64.ActiveCfg = Release|x64
+		{58059BFE-2A69-43E9-883F-963EA95A9504}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{1B43E5F7-D447-4FCF-AC9B-4767AB47DB8B} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
 		{CF5B60DB-4966-40C6-B777-1B9FDF965296} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
 		{38059BFE-2A69-43E9-883F-963EA95A9504} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
+		{58059BFE-2A69-43E9-883F-963EA95A9504} = {E09623AD-DC36-4187-A1B0-05B24CED8294}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19CD1652-43B0-4E11-A1A4-A2D1A2D19477}

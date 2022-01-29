@@ -225,6 +225,9 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(LoginServerPort);
     SERIALIZE_VAR(AuthServerPort);
     SERIALIZE_VAR(GameServerPort);
+    SERIALIZE_VAR(WebUIServerPort);
+    SERIALIZE_VAR(WebUIServerUsername);
+    SERIALIZE_VAR(WebUIServerPassword);
     SERIALIZE_VAR(Announcements);
     SERIALIZE_VAR(BloodMessageMaxLivePoolEntriesPerArea);
     SERIALIZE_VAR(BloodMessagePrimeCountPerArea);
