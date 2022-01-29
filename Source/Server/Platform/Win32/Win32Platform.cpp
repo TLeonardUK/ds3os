@@ -51,7 +51,7 @@ bool PlatformInit()
     WSADATA wsaData;
     if (int Result = WSAStartup(MAKEWORD(2, 2), &wsaData); Result != 0) 
     {
-        Error("WSAStartup failed with error 0x%08x.", Result);
+        LogError("WSAStartup failed with error 0x%08x.", Result);
         return false;
     }
 
@@ -70,7 +70,7 @@ bool PlatformTerm()
 {
     if (int Result = WSACleanup(); Result != 0)
     {
-        Error("WSACleanup failed with error 0x%08x.", Result);
+        LogError("WSACleanup failed with error 0x%08x.", Result);
         return false;
     }
 

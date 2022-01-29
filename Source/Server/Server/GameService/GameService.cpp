@@ -68,7 +68,7 @@ bool GameService::Init()
     int Port = ServerInstance->GetConfig().GameServerPort;
     if (!Connection->Listen(Port))
     {
-        Error("Game service failed to listen on port %i.", Port);
+        LogError("Game service failed to listen on port %i.", Port);
         return false;
     }
 
@@ -78,7 +78,7 @@ bool GameService::Init()
     {
         if (!Manager->Init())
         {
-            Error("Failed to initialize game manager '%s'", Manager->GetName().c_str());
+            LogError("Failed to initialize game manager '%s'", Manager->GetName().c_str());
             return false;
         }
     }
@@ -92,7 +92,7 @@ bool GameService::Term()
     {
         if (!Manager->Term())
         {
-            Error("Failed to terminate game manager '%s'", Manager->GetName().c_str());
+            LogError("Failed to terminate game manager '%s'", Manager->GetName().c_str());
             return false;
         }
     }

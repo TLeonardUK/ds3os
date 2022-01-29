@@ -14,8 +14,8 @@
 // To keep things a bit cleaner we import all the files through this header and cpp.
 #pragma warning(disable: 4267 4244 4018)
 
-#include "FpdLogMessage.pb.h"
-#include "Frpg2PlayerData.pb.h"
-#include "Frpg2RequestMessage.pb.h"
+#include <FpdLogMessage.pb.h>
+#include <Frpg2PlayerData.pb.h>
+#include <Frpg2RequestMessage.pb.h>
 
 #pragma warning(default: 4267 4244 4018)

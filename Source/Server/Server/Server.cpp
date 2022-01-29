@@ -23,7 +23,7 @@
 #include <chrono>
 #include <fstream>
 
-#include "ThirdParty/nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
@@ -64,7 +64,7 @@ bool Server::Init()
     {
         if (!std::filesystem::create_directories(SavedPath))
         {
-            Error("Failed to create save path: %s", SavedPath.string().c_str());
+            LogError("Failed to create save path: %s", SavedPath.string().c_str());
             return false;
         }
     }
@@ -74,7 +74,7 @@ bool Server::Init()
     {
         if (!Config.Load(ConfigPath))
         {
-            Error("Failed to load configuration file: %s", ConfigPath.string().c_str());
+            LogError("Failed to load configuration file: %s", ConfigPath.string().c_str());
             return false;
         }
     }
@@ -82,7 +82,7 @@ bool Server::Init()
     {
         if (!Config.Save(ConfigPath))
         {
-            Error("Failed to save configuration file: %s", ConfigPath.string().c_str());
+            LogError("Failed to save configuration file: %s", ConfigPath.string().c_str());
             return false;
         }
     }
@@ -94,12 +94,12 @@ bool Server::Init()
         Log("Generating new key pair for server as none exists on disk.");
         if (!PrimaryKeyPair.Generate())
         {
-            Error("Failed to generate rsa keypair.");
+            LogError("Failed to generate rsa keypair.");
             return false;            
         }
         if (!PrimaryKeyPair.Save(PrivateKeyPath, PublicKeyPath))
         {
-            Error("Failed to save rsa keypair to: %s and %s", PrivateKeyPath.string().c_str(), PublicKeyPath.string().c_str());
+            LogError("Failed to save rsa keypair to: %s and %s", PrivateKeyPath.string().c_str(), PublicKeyPath.string().c_str());
             return false;
         }
 
@@ -109,7 +109,7 @@ bool Server::Init()
     {
         if (!PrimaryKeyPair.Load(PrivateKeyPath))
         {
-            Error("Failed to load rsa keypair from: %s and %s", PrivateKeyPath.string().c_str(), PublicKeyPath.string().c_str());
+            LogError("Failed to load rsa keypair from: %s and %s", PrivateKeyPath.string().c_str(), PublicKeyPath.string().c_str());
             return false;
         }
 
@@ -121,7 +121,7 @@ bool Server::Init()
     {
         if (!::GetMachineIPv4(PublicIP, true))
         {
-            Error("Failed to resolve public ip address of server.");
+            LogError("Failed to resolve public ip address of server.");
             return false;
         }
     }
@@ -130,7 +130,7 @@ bool Server::Init()
         // Convert hostname into IP.
         if (!NetIPAddress::FromHostname(Config.ServerHostname, PublicIP))
         {
-            Error("Failed to resolve ip from hostname '%s'.", Config.ServerHostname.c_str());
+            LogError("Failed to resolve ip from hostname '%s'.", Config.ServerHostname.c_str());
             return false;
         }
     }
@@ -139,7 +139,7 @@ bool Server::Init()
     {
         if (!::GetMachineIPv4(PrivateIP, false))
         {
-            Error("Failed to resolve private ip address of server.");
+            LogError("Failed to resolve private ip address of server.");
             return false;
         }
     }
@@ -148,7 +148,7 @@ bool Server::Init()
         // Convert hostname into IP.
         if (!NetIPAddress::FromHostname(Config.ServerPrivateHostname, PrivateIP))
         {
-            Error("Failed to resolve ip from hostname '%s'.", Config.ServerPrivateHostname.c_str());
+            LogError("Failed to resolve ip from hostname '%s'.", Config.ServerPrivateHostname.c_str());
             return false;
         }
     }
@@ -169,14 +169,14 @@ bool Server::Init()
 
     if (!WriteTextToFile(Ds3osconfigPath, Output.dump(4)))
     {
-        Error("Failed to write ds3osconfig file to: %s", Ds3osconfigPath.string().c_str());
+        LogError("Failed to write ds3osconfig file to: %s", Ds3osconfigPath.string().c_str());
         return false;
     }
 
     // Open connection to our database.
     if (!Database.Open(DatabasePath))
     {
-        Error("Failed to open database at '%s'.", DatabasePath.string().c_str());
+        LogError("Failed to open database at '%s'.", DatabasePath.string().c_str());
         return false;
     }
 
@@ -185,7 +185,7 @@ bool Server::Init()
     {
         if (!Service->Init())
         {
-            Error("Failed to initialize '%s' service.", Service->GetName().c_str());
+            LogError("Failed to initialize '%s' service.", Service->GetName().c_str());
             return false;
         }
     }
@@ -203,14 +203,14 @@ bool Server::Term()
     {
         if (!Service->Term())
         {
-            Error("Failed to terminate '%s' service.", Service->GetName().c_str());
+            LogError("Failed to terminate '%s' service.", Service->GetName().c_str());
             return false;
         }
     }
 
     if (!Database.Close())
     {
-        Error("Failed to close database.");
+        LogError("Failed to close database.");
         return false;
     }
 

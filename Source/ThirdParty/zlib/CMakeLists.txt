@@ -123,12 +123,6 @@ set(ZLIB_SRCS
     zutil.c
 )
 
-if(NOT MINGW)
-    set(ZLIB_DLL_SRCS
-        win32/zlib1.rc # If present will override custom build rule below.
-    )
-endif()
-
 if(CMAKE_COMPILER_IS_GNUCC)
     if(ASM686)
         set(ZLIB_ASMS contrib/asm686/match.S)
@@ -178,8 +172,7 @@ if(MINGW)
                             -D GCC_WINDRES
                             -I ${CMAKE_CURRENT_SOURCE_DIR}
                             -I ${CMAKE_CURRENT_BINARY_DIR}
-                            -o ${CMAKE_CURRENT_BINARY_DIR}/zlib1rc.obj
-                            -i ${CMAKE_CURRENT_SOURCE_DIR}/win32/zlib1.rc)
+                            -o ${CMAKE_CURRENT_BINARY_DIR}/zlib1rc.obj)
     set(ZLIB_DLL_SRCS ${CMAKE_CURRENT_BINARY_DIR}/zlib1rc.obj)
 endif(MINGW)
 
@@ -247,3 +240,136 @@ if(HAVE_OFF64_T)
     target_link_libraries(minigzip64 zlib)
     set_target_properties(minigzip64 PROPERTIES COMPILE_FLAGS "-D_FILE_OFFSET_BITS=64")
 endif()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set(PROJECT_NAME zlib)
+
+################################################################################
+# Source groups
+################################################################################
+set(no_group_source_files
+    "adler32.c"
+    "compress.c"
+    "crc32.c"
+    "crc32.h"
+    "deflate.c"
+    "deflate.h"
+    "gzclose.c"
+    "gzguts.h"
+    "gzlib.c"
+    "gzread.c"
+    "gzwrite.c"
+    "infback.c"
+    "inffast.c"
+    "inffast.h"
+    "inffixed.h"
+    "inflate.c"
+    "inflate.h"
+    "inftrees.c"
+    "inftrees.h"
+    "trees.c"
+    "trees.h"
+    "uncompr.c"
+    "zconf.h"
+    "zlib.h"
+    "zutil.c"
+    "zutil.h"
+)
+source_group("" FILES ${no_group_source_files})
+
+set(ALL_FILES
+    ${no_group_source_files}
+)
+
+################################################################################
+# Target
+################################################################################
+add_library(${PROJECT_NAME} STATIC ${ALL_FILES})
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "ThirdParty")
+
+use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
+set(ROOT_NAMESPACE zlib)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    VS_GLOBAL_KEYWORD "Win32Proj"
+)
+################################################################################
+# Output directory
+################################################################################
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    OUTPUT_DIRECTORY_DEBUG   "${CMAKE_SOURCE_DIR}//../Bin/$ENV{MSBuildProjectName}/"
+    OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}//../Bin/$ENV{MSBuildProjectName}/"
+)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    INTERPROCEDURAL_OPTIMIZATION_RELEASE "TRUE"
+)
+################################################################################
+# Compile definitions
+################################################################################
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    "$<$<CONFIG:Debug>:"
+        "_DEBUG"
+    ">"
+    "$<$<CONFIG:Release>:"
+        "NDEBUG"
+    ">"
+    "_CRT_NONSTDC_NO_DEPRECATE=1;"
+    "_CRT_SECURE_NO_WARNINGS=1;"
+    "_CONSOLE;"
+    "UNICODE;"
+    "_UNICODE"
+)
+
+################################################################################
+# Compile and link options
+################################################################################
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        $<$<CONFIG:Debug>:
+            /Od
+        >
+        $<$<CONFIG:Release>:
+            /O2;
+            /Oi;
+            /Gy
+        >
+        /permissive-;
+        /sdl;
+        /W3;
+        ${DEFAULT_CXX_DEBUG_INFORMATION_FORMAT};
+        /wd4267;
+        ${DEFAULT_CXX_EXCEPTION_HANDLING}
+    )
+    target_link_options(${PROJECT_NAME} PRIVATE
+        $<$<CONFIG:Release>:
+            /OPT:REF;
+            /OPT:ICF
+        >
+        /SUBSYSTEM:CONSOLE
+    )
+endif()
+

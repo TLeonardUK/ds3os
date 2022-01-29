@@ -55,7 +55,7 @@ bool RSACipher::Encrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 		ERR_load_crypto_strings();
 		ERR_error_string_n(ERR_get_error(), buffer.data(), buffer.size());
 
-		Error("Failed to encrypt RSA message with error: [%lu](%s)", EncryptedLength, buffer.data());
+		LogError("Failed to encrypt RSA message with error: [%lu](%s)", EncryptedLength, buffer.data());
 
 		return false;
 	}
@@ -99,7 +99,7 @@ bool RSACipher::Decrypt(const std::vector<uint8_t>& Input, std::vector<uint8_t>&
 		ERR_load_crypto_strings();
 		ERR_error_string_n(ERR_get_error(), buffer.data(), buffer.size());
 
-		Error("Failed to decrypt RSA message with error: [%lu](%s)", DecryptedLength, buffer.data());
+		LogError("Failed to decrypt RSA message with error: [%lu](%s)", DecryptedLength, buffer.data());
 
 		return false;
 	}

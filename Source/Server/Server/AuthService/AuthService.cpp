@@ -35,7 +35,7 @@ bool AuthService::Init()
     int Port = ServerInstance->GetConfig().AuthServerPort;
     if (!Connection->Listen(Port))
     {
-        Error("Auth service failed to listen on port %i.", Port);
+        LogError("Auth service failed to listen on port %i.", Port);
         return false;
     }
 

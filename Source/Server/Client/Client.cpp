@@ -29,7 +29,7 @@
 #include <chrono>
 #include <fstream>
 
-#include "ThirdParty/nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
@@ -69,7 +69,7 @@ bool Client::Init()
     {
         if (!std::filesystem::create_directories(SavedPath))
         {
-            Error("Failed to create save path: %s", SavedPath.string().c_str());
+            LogError("Failed to create save path: %s", SavedPath.string().c_str());
             return false;
         }
     }
@@ -77,13 +77,13 @@ bool Client::Init()
     // Open connection to our database.
     if (!Database.Open(DatabasePath))
     {
-        Error("Failed to open database at '%s'.", DatabasePath.string().c_str());
+        LogError("Failed to open database at '%s'.", DatabasePath.string().c_str());
         return false;
     }
 
     if (!PrimaryKeyPair.LoadPublicKeyFromString(ServerPublicKey))
     {
-        Error("Failed to load rsa keypair.");
+        LogError("Failed to load rsa keypair.");
         return false;
     }
 
@@ -99,7 +99,7 @@ bool Client::Init()
     }
     else
     {
-        Error("Failed to retrieve auth session ticket.");
+        LogError("Failed to retrieve auth session ticket.");
         return false;
     }
 
@@ -120,7 +120,7 @@ bool Client::Term()
 
     if (!Database.Close())
     {
-        Error("Failed to close database.");
+        LogError("Failed to close database.");
         return false;
     }
 

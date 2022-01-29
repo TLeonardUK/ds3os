@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 
     if (!PlatformInit())
     {
-        Error("Failed to initialize platform specific functionality.");
+        LogError("Failed to initialize platform specific functionality.");
         return 1;
     }
 
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     {
         if (!SteamAPI_Init())
         {
-            Error("Failed to initialize steam api, please ensure steam is running.");
+            LogError("Failed to initialize steam api, please ensure steam is running.");
             return 1;
         }
         SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
@@ -65,12 +65,14 @@ int main(int argc, char* argv[])
     }
     else
     {
+
         // Ports etc are irrelevant, we're only using the api to do authentication. 
         if (!SteamGameServer_Init(0, 50000, 50000, eServerModeAuthentication, "1.0.0.0"))
         {
-            Error("Failed to initialize steam game server api.");
+            LogError("Failed to initialize steam game server api.");
             return 1;
         }
+
         SteamGameServerUtils()->SetWarningMessageHook(&SteamWarningHook);
     }
 
@@ -81,13 +83,13 @@ int main(int argc, char* argv[])
         Client ClientInstance;
         if (!ClientInstance.Init())
         {
-            Error("Client emulator failed to initialize.");
+            LogError("Client emulator failed to initialize.");
             return 1;
         }
         ClientInstance.RunUntilQuit();
         if (!ClientInstance.Term())
         {
-            Error("Client emulator failed to terminate.");
+            LogError("Client emulator failed to terminate.");
             return 1;
         }
     }
@@ -96,13 +98,13 @@ int main(int argc, char* argv[])
         Server ServerInstance; 
         if (!ServerInstance.Init())
         {
-            Error("Server failed to initialize.");
+            LogError("Server failed to initialize.");
             return 1;
         }
         ServerInstance.RunUntilQuit();
         if (!ServerInstance.Term())
         {
-            Error("Server failed to terminate.");
+            LogError("Server failed to terminate.");
             return 1;
         }
     }
@@ -118,7 +120,7 @@ int main(int argc, char* argv[])
 
     if (!PlatformTerm())
     {
-        Error("Failed to tidy up platform specific functionality.");
+        LogError("Failed to tidy up platform specific functionality.");
         return 1;
     }
 

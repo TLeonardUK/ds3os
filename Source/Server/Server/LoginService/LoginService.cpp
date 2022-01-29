@@ -35,7 +35,7 @@ bool LoginService::Init()
     int Port = ServerInstance->GetConfig().LoginServerPort;
     if (!Connection->Listen(Port))
     {
-        Error("Login service failed to listen on port %i.", Port);
+        LogError("Login service failed to listen on port %i.", Port);
         return false;
     }
 

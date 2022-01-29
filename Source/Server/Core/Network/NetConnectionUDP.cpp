@@ -54,7 +54,7 @@ bool NetConnectionUDP::Listen(int Port)
     int const_1 = 1;
     if (setsockopt(Socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&const_1, sizeof(const_1)))
     {
-        Error(GetName().c_str(), "Failed to set socket options: SO_REUSEADDR");
+        LogError(GetName().c_str(), "Failed to set socket options: SO_REUSEADDR");
         return false;        
     }
 

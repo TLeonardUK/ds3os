@@ -9,7 +9,7 @@
 
 #include "Server/Database/ServerDatabase.h"
 #include "Core/Utils/Logging.h"
-#include "ThirdParty/sqlite/sqlite3.h"
+#include <sqlite/sqlite3.h>
 
 ServerDatabase::ServerDatabase()
 {
@@ -23,7 +23,7 @@ bool ServerDatabase::Open(const std::filesystem::path& path)
 {
     if (int result = sqlite3_open(path.string().c_str(), &db_handle); result != SQLITE_OK)
     {
-        Error("sqlite_open failed with error: %s", sqlite3_errmsg(db_handle));
+        LogError("sqlite_open failed with error: %s", sqlite3_errmsg(db_handle));
         return false;
     }
 
@@ -143,7 +143,7 @@ bool ServerDatabase::CreateTables()
         char* errorMessage = nullptr;
         if (int result = sqlite3_exec(db_handle, statement.c_str(), nullptr, 0, &errorMessage); result != SQLITE_OK)
         {
-            Error("Failed to create tables for server database with error: %s", errorMessage);
+            LogError("Failed to create tables for server database with error: %s", errorMessage);
             sqlite3_free(errorMessage);
             return false;
         }
@@ -158,7 +158,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
     sqlite3_stmt* statement = nullptr;
     if (int result = sqlite3_prepare_v2(db_handle, sql.c_str(), (int)sql.length(), &statement, nullptr); result != SQLITE_OK)
     {
-        Error("sqlite3_prepare_v2 failed with error: %s", sqlite3_errstr(result));
+        LogError("sqlite3_prepare_v2 failed with error: %s", sqlite3_errstr(result));
         return false;
     }
     for (int i = 0; i < Values.size(); i++)
@@ -168,7 +168,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
         {
             if (int result = sqlite3_bind_text(statement, i + 1, CastValue->c_str(), (int)CastValue->length(), SQLITE_STATIC); result != SQLITE_OK)
             {
-                Error("sqlite3_bind_text failed with error: %s", sqlite3_errstr(result));
+                LogError("sqlite3_bind_text failed with error: %s", sqlite3_errstr(result));
                 sqlite3_finalize(statement);
                 return false;
             }
@@ -177,7 +177,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
         {
             if (int result = sqlite3_bind_int(statement, i + 1, *CastValue); result != SQLITE_OK)
             {
-                Error("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
+                LogError("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
                 sqlite3_finalize(statement);
                 return false;
             }
@@ -186,7 +186,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
         {
             if (int result = sqlite3_bind_int64(statement, i + 1, *CastValue); result != SQLITE_OK)
             {
-                Error("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
+                LogError("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
                 sqlite3_finalize(statement);
                 return false;
             }
@@ -196,7 +196,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
             // Eeeeeh, this is a shitty way to handle this, but it technically doesn't truncate the value.
             if (int result = sqlite3_bind_int64(statement, i + 1, *CastValue); result != SQLITE_OK)
             {
-                Error("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
+                LogError("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
                 sqlite3_finalize(statement);
                 return false;
             }
@@ -205,7 +205,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
         {
             if (int result = sqlite3_bind_double(statement, i + 1, *CastValue); result != SQLITE_OK)
             {
-                Error("sqlite3_bind_double failed with error: %s", sqlite3_errstr(result));
+                LogError("sqlite3_bind_double failed with error: %s", sqlite3_errstr(result));
                 sqlite3_finalize(statement);
                 return false;
             }
@@ -214,7 +214,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
         {
             if (int result = sqlite3_bind_blob(statement, i + 1, CastValue->data(), (int)CastValue->size(), SQLITE_STATIC); result != SQLITE_OK)
             {
-                Error("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
+                LogError("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
                 sqlite3_finalize(statement);
                 return false;
             }
@@ -236,13 +236,13 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
         }
         else
         {
-            Error("sqlite3_step failed with error: %s", sqlite3_errstr(result));
+            LogError("sqlite3_step failed with error: %s", sqlite3_errstr(result));
             return false;
         }
     }
     if (int result = sqlite3_finalize(statement); result != SQLITE_OK)
     {
-        Error("sqlite3_finalize failed with error: %s", sqlite3_errstr(result));
+        LogError("sqlite3_finalize failed with error: %s", sqlite3_errstr(result));
         return false;
     }
     return true;

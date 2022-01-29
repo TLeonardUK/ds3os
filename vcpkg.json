@@ -1,0 +1,11 @@
+{
+  "name": "ds3os-server",
+  "version": "0.1.0",
+  "dependencies": [
+    "openssl",
+    "curl",
+    "zlib",
+    "protobuf",
+    "sqlite3"
+  ]
+}

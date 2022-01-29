@@ -72,7 +72,7 @@ private:
     std::string Url = "/";
     std::shared_ptr<NetHttpResponse> Response;
 
-    CURL* Handle;
-    CURLM* HandleMulti;
+    CURL* Handle{};
+    CURLM* HandleMulti{};
 
 };
