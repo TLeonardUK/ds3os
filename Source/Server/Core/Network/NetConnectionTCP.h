@@ -18,9 +18,15 @@
 #else
 #include <unistd.h>
 #include <sys/socket.h>
-#include <stdlib.h>
+#include <netdb.h>
+#include <netinet/tcp.h>
 #include <netinet/in.h>
+#include <fcntl.h>
+
+#define SOCKET_ERROR (-1)
 #endif
+
+#include <stdlib.h>
 
 class NetConnectionTCP
     : public NetConnection

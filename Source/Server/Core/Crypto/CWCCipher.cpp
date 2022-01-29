@@ -14,6 +14,8 @@
 #include "Core/Utils/Endian.h"
 #include "Core/Utils/Strings.h"
 
+#include <cstring>
+
 CWCCipher::CWCCipher(const std::vector<uint8_t>& InKey)
     : Key(InKey)
 {

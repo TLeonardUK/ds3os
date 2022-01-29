@@ -12,6 +12,14 @@
 #include "Config/BuildConfig.h"
 #include "Core/Crypto/Cipher.h"
 
+#include <cstring>
+
+#ifdef __linux__
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#endif
+
 NetConnectionTCP::NetConnectionTCP(const std::string& InName)
     : Name(InName)
 {
@@ -71,7 +79,8 @@ bool NetConnectionTCP::Listen(int Port)
         return false;
     }
 #else
-    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+    int flags;
+    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
         ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
@@ -124,12 +133,21 @@ std::shared_ptr<NetConnection> NetConnectionTCP::Accept()
         // TODO: Keep track of these clients and disconnect them when 
         //       this socket is disconnected.
 
+#ifdef _WIN32
         NetIPAddress NetClientAddress(
-            ClientAddress.sin_addr.S_un.S_un_b.s_b1, 
-            ClientAddress.sin_addr.S_un.S_un_b.s_b2, 
-            ClientAddress.sin_addr.S_un.S_un_b.s_b3, 
-            ClientAddress.sin_addr.S_un.S_un_b.s_b4);
-
+            ClientAddress.sin_addr.S_un.S_un_b.s_b1,
+            ClientAddress.sin_addr.S_un.S_un_b.s_b2,
+            ClientAddress.sin_addr.S_un.S_un_b.s_b3,
+            ClientAddress.sin_addr.S_un.S_un_b.s_b4
+        );
+#else
+        NetIPAddress NetClientAddress(
+            (ClientAddress.sin_addr.s_addr >> 24) & 0xFF,
+            (ClientAddress.sin_addr.s_addr >> 16) & 0xFF,
+            (ClientAddress.sin_addr.s_addr >> 8) & 0xFF,
+            ClientAddress.sin_addr.s_addr & 0xFF
+        );
+#endif
         return std::make_shared<NetConnectionTCP>(NewSocket, ClientName.data(), NetClientAddress);
     }
 
@@ -182,7 +200,7 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         }
     }
 
-    int Result = connect(Socket, (SOCKADDR*)&SockAddr, sizeof(SockAddr));
+    int Result = connect(Socket, (sockaddr*)&SockAddr, sizeof(SockAddr));
     if (Result == SOCKET_ERROR)
     {
 #if defined(_WIN32)
@@ -212,7 +230,8 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         return false;
     }
 #else
-    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+    int flags;
+    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
         ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
@@ -342,7 +361,11 @@ bool NetConnectionTCP::Disconnect()
         return false;
     }
 
+#ifdef _WIN32
     closesocket(Socket);
+#else
+    close(Socket);
+#endif
     Socket = INVALID_SOCKET_VALUE;
     
     return false;
@@ -366,7 +389,11 @@ bool NetConnectionTCP::IsConnected()
     }
 
     int error_code;
+#ifdef _WIN32
     int error_code_size = sizeof(error_code);
+#else
+    socklen_t error_code_size = sizeof(error_code);
+#endif
     if (getsockopt(Socket, SOL_SOCKET, SO_ERROR, (char*)&error_code, &error_code_size) < 0)
     {
         return false;

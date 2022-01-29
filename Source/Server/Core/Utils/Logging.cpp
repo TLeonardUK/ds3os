@@ -12,6 +12,7 @@
 
 #include <ctime>
 #include <cstdarg>
+#include <cstdio>
 
 void WriteLogStatic(ConsoleColor Color, const char* Source, const char* Level, const char* Log)
 {

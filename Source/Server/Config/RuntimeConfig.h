@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <climits>
 #include <string>
 #include <filesystem>
 #include <nlohmann/json.hpp>

@@ -14,6 +14,8 @@
 #include "Core/Utils/Endian.h"
 #include "Core/Utils/Strings.h"
 
+#include <cstring>
+
 // Basically the same as CWCCipher except for different header verification.
 
 CWCServerUDPCipher::CWCServerUDPCipher(const std::vector<uint8_t>& InKey, uint64_t InAuthToken)
