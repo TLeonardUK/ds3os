@@ -32,7 +32,6 @@ bool AuthHandler::handleGet(CivetServer* Server, struct mg_connection* Connectio
     }
 
     nlohmann::json json;
-
     RespondJson(Connection, json);
 
     return true;

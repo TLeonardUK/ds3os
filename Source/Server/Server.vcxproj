@@ -194,6 +194,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClInclude Include="Server\Streams\Frpg2UdpPacketStream.h" />
     <ClInclude Include="Server\WebUIService\Handlers\AuthHandler.h" />
     <ClInclude Include="Server\WebUIService\Handlers\PlayersHandler.h" />
+    <ClInclude Include="Server\WebUIService\Handlers\SettingsHandler.h" />
     <ClInclude Include="Server\WebUIService\Handlers\StatisticsHandler.h" />
     <ClInclude Include="Server\WebUIService\Handlers\WebUIHandler.h" />
     <ClInclude Include="Server\WebUIService\WebUIService.h" />
@@ -252,6 +253,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClCompile Include="Server\Streams\Frpg2UdpPacketStream.cpp" />
     <ClCompile Include="Server\WebUIService\Handlers\AuthHandler.cpp" />
     <ClCompile Include="Server\WebUIService\Handlers\PlayersHandler.cpp" />
+    <ClCompile Include="Server\WebUIService\Handlers\SettingsHandler.cpp" />
     <ClCompile Include="Server\WebUIService\Handlers\StatisticsHandler.cpp" />
     <ClCompile Include="Server\WebUIService\Handlers\WebUIHandler.cpp" />
     <ClCompile Include="Server\WebUIService\WebUIService.cpp" />

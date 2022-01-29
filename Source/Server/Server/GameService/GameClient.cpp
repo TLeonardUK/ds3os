@@ -45,6 +45,13 @@ bool GameClient::Poll()
         return true;
     }
 
+    // If we've got a delayed disconnect pending, check if we should disconnect them now.
+    if (DisconnectTime > 0.0 && GetSeconds() > DisconnectTime)
+    {
+        WarningS(GetName().c_str(), "Disconnecting client (due to flagged delayed disconnect).");
+        return true;
+    }
+
     // Client disconnected.
     if (Connection->Pump())
     {

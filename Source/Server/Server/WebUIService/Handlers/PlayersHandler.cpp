@@ -11,6 +11,7 @@
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/WebUIService/Handlers/PlayersHandler.h"
+#include "Server/Core/Network/NetConnection.h"
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Strings.h"
@@ -73,7 +74,7 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
 
             auto playerJson = nlohmann::json::object();
             playerJson["steamId"] = Info.State.SteamId;
-            playerJson["characterId"] = Info.State.PlayerId;
+            playerJson["playerId"] = Info.State.PlayerId;
             playerJson["characterName"] = Info.State.CharacterName;            
             playerJson["deathCount"] = logInfo.death_count();
             playerJson["multiplayCount"] = logInfo.multiplay_count();
@@ -140,6 +141,7 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
                     break;
                 }
             }
+
             playerJson["connectionTime"] = StringFormat("%i:%i:%i", Hours, Minutes, Seconds);
 
             playerArray.push_back(playerJson);
@@ -149,6 +151,50 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
     }
 
     RespondJson(Connection, json);
+
+    return true;
+}
+
+bool PlayersHandler::handleDelete(CivetServer* Server, struct mg_connection* Connection)
+{
+    if (!Service->IsAuthenticated(Connection))
+    {
+        mg_send_http_error(Connection, 401, "Token invalid.");
+        return true;
+    }
+
+    nlohmann::json json;
+    if (!ReadJson(Server, Connection, json) ||
+        !json.contains("playerId") ||
+        !json.contains("ban"))
+    {
+        mg_send_http_error(Connection, 400, "Malformed body.");
+        return true;
+    }
+
+    uint32_t playerId = json["playerId"];
+    bool ban = json["ban"];
+
+    ServerDatabase& Database = Service->GetServer()->GetDatabase();
+    std::shared_ptr<GameService> Game = Service->GetServer()->GetService<GameService>();    
+    if (std::shared_ptr<GameClient> Client = Game->FindClientByPlayerId(playerId))
+    {
+        if (ban)
+        {
+            LogS("WebUI", "Banning player: %i", Client->GetPlayerState().PlayerId);
+
+            Database.BanPlayer(Client->GetPlayerState().SteamId);
+        }
+        else
+        {
+            LogS("WebUI", "Disconnected player: %i", Client->GetPlayerState().PlayerId);
+        }
+
+        Client->Connection->Disconnect();
+    }
+
+    nlohmann::json responseJson;
+    RespondJson(Connection, responseJson);
 
     return true;
 }

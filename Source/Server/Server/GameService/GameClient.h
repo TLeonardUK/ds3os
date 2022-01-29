@@ -48,6 +48,11 @@ public:
 
     double ConnectTime = GetSeconds();
 
+    // When > 0 and current time surpasses it, the client is disconnected.
+    double DisconnectTime = 0.0f;
+
+    bool Banned = false;
+
 protected:
 
     bool HandleMessage(const Frpg2ReliableUdpMessage& Message);

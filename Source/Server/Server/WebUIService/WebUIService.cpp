@@ -12,6 +12,7 @@
 #include "Server/WebUIService/Handlers/AuthHandler.h"
 #include "Server/WebUIService/Handlers/PlayersHandler.h"
 #include "Server/WebUIService/Handlers/StatisticsHandler.h"
+#include "Server/WebUIService/Handlers/SettingsHandler.h"
 
 #include "Server/Server.h"
 #include "Core/Utils/Logging.h"
@@ -27,6 +28,7 @@ WebUIService::WebUIService(Server* OwningServer)
     Handlers.push_back(std::make_shared<AuthHandler>(this));
     Handlers.push_back(std::make_shared<PlayersHandler>(this));
     Handlers.push_back(std::make_shared<StatisticsHandler>(this));
+    Handlers.push_back(std::make_shared<SettingsHandler>(this));
 }
 
 WebUIService::~WebUIService()

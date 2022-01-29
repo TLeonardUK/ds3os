@@ -40,7 +40,10 @@ public:
     bool Term();
     void RunUntilQuit();
 
+    void SaveConfig();
+
     const RuntimeConfig& GetConfig()    { return Config; }
+    RuntimeConfig& GetMutableConfig()   { return Config; }
     ServerDatabase& GetDatabase()       { return Database; }
 
     NetIPAddress GetPublicIP()          { return PublicIP; }

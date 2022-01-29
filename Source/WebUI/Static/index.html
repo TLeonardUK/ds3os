@@ -156,26 +156,42 @@
                                         <input class="mdl-textfield__input" type="text" id="server-description">
                                         <label class="mdl-textfield__label" for="server-description">Server Description</label>
                                     </div>
-
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label fullWidth">
+                                        <input class="mdl-textfield__input" type="text" id="server-password">
+                                        <label class="mdl-textfield__label" for="server-password">Password</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label fullWidth">
+                                        <input class="mdl-textfield__input" type="text" id="server-private-hostname">
+                                        <label class="mdl-textfield__label" for="server-private-hostname">Private Hostname</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label fullWidth">
+                                        <input class="mdl-textfield__input" type="text" id="server-public-hostname">
+                                        <label class="mdl-textfield__label" for="server-public-hostname">Public Hostname</label>
+                                    </div>
                                 </div>
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--6-col mdl-grid">
 
-                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-coop">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="advertise" id="advertise-check">
+                                        <input type="checkbox" id="advertise" class="mdl-switch__input">
+                                        <span class="mdl-switch__label">Advertise On Master Server</span>
+                                    </label>
+
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-coop" id="disable-coop-check">
                                         <input type="checkbox" id="disable-coop" class="mdl-switch__input">
                                         <span class="mdl-switch__label">Disable Co-Op</span>
                                     </label>
                                     
-                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-invasions">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-invasions" id="disable-invasions-check">
                                         <input type="checkbox" id="disable-invasions" class="mdl-switch__input">
                                         <span class="mdl-switch__label">Disable Invasions</span>
                                     </label>
                                     
-                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-auto-summon-coop">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-auto-summon-coop" id="disable-auto-summon-coop-check">
                                         <input type="checkbox" id="disable-auto-summon-coop" class="mdl-switch__input">
                                         <span class="mdl-switch__label">Disable Auto-Summon Co-Op</span>
                                     </label>
 
-                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-auto-summon-invasions">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="disable-auto-summon-invasions" id="disable-auto-summon-invasions-check">
                                         <input type="checkbox" id="disable-auto-summon-invasions" class="mdl-switch__input">
                                         <span class="mdl-switch__label">Disable Auto-Summon Invasions</span>
                                     </label>                                    
@@ -185,7 +201,7 @@
                             <div class="mdl-grid"  style="width: 1100px;">
                                 <div class="mdl-cell mdl-cell--12-col mdl-grid">
                                     <div class="mdl-layout-spacer"></div>
-                                    <button type="button" id="apply-settings-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Apply Settings</button>
+                                    <button type="button" id="apply-settings-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="saveSettings()">Apply Settings</button>
                                 </div>
                             </div>
                         </main>

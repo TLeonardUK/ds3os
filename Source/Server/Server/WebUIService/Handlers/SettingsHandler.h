@@ -14,31 +14,21 @@
 
 #include <mutex>
 
-// /players
+// /statistics
 //
-//		GET	- Gets a list of players and their current states.
+//		GET		- Gets current settings state for server.
+//		POST	- Sets current settings state for server.
 
-class PlayersHandler : public WebUIHandler
+class SettingsHandler : public WebUIHandler
 {
 public:
-	PlayersHandler(WebUIService* InService);
+	SettingsHandler(WebUIService* InService);
 
 	virtual bool handleGet(CivetServer* Server, struct mg_connection* Connection) override;
-	virtual bool handleDelete(CivetServer* Server, struct mg_connection* Connection) override;
+	virtual bool handlePost(CivetServer* Server, struct mg_connection* Connection) override;
 
 	virtual void Register(CivetServer* Server) override;
 
-	virtual void GatherData() override;
-
 protected:
-
-	struct PlayerInfo
-	{
-		PlayerState State; 
-		double ConnectionDuration;
-	};
-
-	std::mutex DataMutex;
-	std::vector<PlayerInfo> PlayerInfos;
 
 };

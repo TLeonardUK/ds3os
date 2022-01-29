@@ -116,8 +116,24 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
     Frpg2RequestMessage::AnnounceMessageDataList* Notices = Response.mutable_notices();
     Frpg2RequestMessage::AnnounceMessageDataList* Changes = Response.mutable_changes();
 
+    std::vector<RuntimeConfigAnnouncement> Announcements;
+    if (ServerInstance->GetDatabase().IsPlayerBanned(Client->GetPlayerState().SteamId))
+    {
+        RuntimeConfigAnnouncement Announcement;
+        Announcement.Header = "Banned";
+        Announcement.Body = "Your account has been banned from this server.";
+        Announcements.push_back(Announcement);
+
+        Client->Banned = true;
+        Client->DisconnectTime = GetSeconds() + 2.0f;
+    }
+    else
+    {
+        Announcements = ServerInstance->GetConfig().Announcements;
+    }
+
     int Index = 0;
-    for (const RuntimeConfigAnnouncement& Announcement : ServerInstance->GetConfig().Announcements)
+    for (const RuntimeConfigAnnouncement& Announcement : Announcements)
     {
         Frpg2RequestMessage::AnnounceMessageData* Data = Changes->add_items();
         Data->set_unknown_1(1);

@@ -9,7 +9,6 @@
 
 var gRefreshStatisticsInterval;
 var gRefreshPlayersInterval;
-var gRefreshSettingsInterval;
 
 var gActivePlayersChart;
 
@@ -151,8 +150,6 @@ function authenticate(username, password)
     {
         dialog.close();       
 
-        console.log("Json: ", JSON.stringify(data));
-
         storeAuthToken(data["token"]);
 
         console.log('Request succeeded with JSON response', data);
@@ -199,7 +196,6 @@ function startDataRefresh()
 {
     gRefreshStatisticsInterval = setInterval(refreshStatisticsTab, 5000);
     gRefreshPlayersInterval = setInterval(refreshPlayersTab, 5000);
-    gRefreshSettingsInterval = setInterval(refreshSettingsTab, 5000);
 
     refreshStatisticsTab();
     refreshPlayersTab();
@@ -211,19 +207,56 @@ function stopDataRefresh()
 {
     clearInterval(gRefreshStatisticsInterval);
     clearInterval(gRefreshPlayersInterval);
-    clearInterval(gRefreshSettingsInterval);
 }
 
 // Disconnects the given player-id.
 function disconnectUser(playerId)
 {
-    // TODO
+    console.log("Disconnecting user " + playerId);
+
+    fetch("/players", 
+    {
+        method: 'delete',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        },
+        body: JSON.stringify({ 
+            "playerId": playerId,
+            "ban": false
+        })
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed');                
+        reauthenticate();           
+    });
 }
 
 // Bans the given player-id.
-function bansUser(playerId)
+function banUser(playerId)
 {
-    // TODO
+    console.log("Banning user " + playerId);
+
+    fetch("/players", 
+    {
+        method: 'delete',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        },
+        body: JSON.stringify({ 
+            "playerId": playerId,
+            "ban": true
+        })
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed');                
+        reauthenticate();           
+    });
 }
 
 // Retrieves data from the server to update the statistics tab.
@@ -340,11 +373,9 @@ function refreshPlayersTab()
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="disconnectUser(${player["playerId"]})">
                             Disconnect
                         </button>
-                        <!--
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="banUser(${player["playerId"]})">
                             Ban
                         </button>
-                        -->
                     </td>
                 </tr>
             `;
@@ -362,4 +393,88 @@ function refreshPlayersTab()
 // Retrieves data from the server to update the settings tab.
 function refreshSettingsTab()
 {
+    fetch("/settings", 
+    {
+        method: 'get',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        }
+    })
+    .then(response => 
+    {        
+        return response.json();
+    })
+    .then(function (data) 
+    {
+        setMaterialTextField(document.querySelector("#server-name"), data.serverName);
+        setMaterialTextField(document.querySelector("#server-description"), data.serverDescription);
+        setMaterialTextField(document.querySelector("#server-password"), data.password);
+        setMaterialTextField(document.querySelector("#server-private-hostname"), data.privateHostname);
+        setMaterialTextField(document.querySelector("#server-public-hostname"), data.publicHostname);
+
+        setMaterialCheckState(document.querySelector("#advertise"), data.advertise);
+        setMaterialCheckState(document.querySelector("#disable-coop"), data.disableCoop);
+        setMaterialCheckState(document.querySelector("#disable-invasions"), data.disableInvasions);
+        setMaterialCheckState(document.querySelector("#disable-auto-summon-coop"), data.disableAutoSummonCoop);
+        setMaterialCheckState(document.querySelector("#disable-auto-summon-invasions"), data.disableAutoSummonInvasions);
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed', error);                
+        reauthenticate();           
+    });
+}
+
+// Posts all the settings to the server.
+function saveSettings()
+{
+    fetch("/settings", 
+    {
+        method: 'post',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        },
+        body: JSON.stringify({ 
+            "serverName": document.querySelector("#server-name").value, 
+            "serverDescription": document.querySelector("#server-description").value,
+            "password": document.querySelector("#server-password").value,
+            "privateHostname": document.querySelector("#server-private-hostname").value,
+            "publicHostname": document.querySelector("#server-public-hostname").value,
+            
+            "advertise": document.querySelector("#advertise").checked,
+            "disableCoop": document.querySelector("#disable-coop").checked,
+            "disableInvasions": document.querySelector("#disable-invasions").checked,
+            "disableAutoSummonCoop": document.querySelector("#disable-auto-summon-coop").checked,
+            "disableAutoSummonInvasions": document.querySelector("#disable-auto-summon-invasions").checked,
+        })
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed');                
+        reauthenticate();           
+    });
+}
+
+function setMaterialCheckState(element, state)
+{
+    if (element.checked != state)
+    {
+        if (state)
+        {
+            element.parentNode.MaterialSwitch.on();
+        }
+        else
+        {
+            element.parentNode.MaterialSwitch.off();
+        }
+    }
+}
+
+function setMaterialTextField(element, text)
+{
+    element.parentNode.MaterialTextfield.change(text);
 }

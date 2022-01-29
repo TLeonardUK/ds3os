@@ -137,6 +137,12 @@ bool ServerDatabase::CreateTables()
         "   CreatedTime         TEXT"                                               \
         ");"
     );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS Bans("                                          \
+        "   BanId               INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   PlayerSteamId       CHAR(50)"                                           \
+        ");"
+    );
 
     for (const std::string& statement : tables)
     {
@@ -280,6 +286,27 @@ size_t ServerDatabase::GetTotalPlayers()
     });
 
     return Result;
+}
+
+void ServerDatabase::BanPlayer(const std::string& SteamId)
+{
+    if (IsPlayerBanned(SteamId))
+    {
+        return;
+    }
+
+    RunStatement("INSERT INTO Bans(PlayerSteamId) VALUES(?1)", { SteamId }, nullptr);
+}
+
+bool ServerDatabase::IsPlayerBanned(const std::string& SteamId)
+{
+    uint32_t Result = 0;
+
+    RunStatement("SELECT COUNT(*) FROM Bans WHERE PlayerSteamId=?1", { SteamId }, [&Result](sqlite3_stmt* statement) {
+        Result = sqlite3_column_int(statement, 0);
+    });
+
+    return Result > 0;
 }
 
 std::shared_ptr<BloodMessage> ServerDatabase::FindBloodMessage(uint32_t MessageId)

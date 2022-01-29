@@ -42,6 +42,16 @@ public:
     size_t GetTotalPlayers();
 
     // ----------------------------------------------------------------
+    // Bans interface
+    // ----------------------------------------------------------------
+
+    // Marks the player as banned in the database.
+    void BanPlayer(const std::string& SteamId);
+
+    // Checks if the given steam-id is banned.
+    bool IsPlayerBanned(const std::string& SteamId);
+
+    // ----------------------------------------------------------------
     // Character interface
     // ----------------------------------------------------------------
 

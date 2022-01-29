@@ -356,3 +356,11 @@ void Server::RunUntilQuit()
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
+
+void Server::SaveConfig()
+{
+    if (!Config.Save(ConfigPath))
+    {
+        Error("Failed to save configuration file: %s", ConfigPath.string().c_str());
+    }
+}
