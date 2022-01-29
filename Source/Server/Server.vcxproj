@@ -87,7 +87,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
       <Outputs>$(OutputPath)steam_api64.dll</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>xcopy $(SolutionDir)WebUI $(OutputPath)WebUI\ /Y</Command>
+      <Command>xcopy $(SolutionDir)WebUI $(OutputPath)WebUI\ /Y /E</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copying WebUI Contents</Message>
@@ -120,7 +120,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
       <Outputs>$(OutputPath)steam_api64.dll</Outputs>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>xcopy $(SolutionDir)WebUI $(OutputPath)WebUI\ /Y</Command>
+      <Command>xcopy $(SolutionDir)WebUI $(OutputPath)WebUI\ /Y /E</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copying WebUI Contents</Message>
