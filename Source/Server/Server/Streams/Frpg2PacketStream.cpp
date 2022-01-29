@@ -19,6 +19,8 @@
 
 #include "Core/Utils/File.h"
 
+#include <cstring>
+
 Frpg2PacketStream::Frpg2PacketStream(std::shared_ptr<NetConnection> InConnection)
     : Connection(InConnection)
 {

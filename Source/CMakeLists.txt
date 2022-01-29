@@ -10,7 +10,7 @@ if (WIN32)
     set(STEAM_LIB "win64/steam_api64.lib")
 elseif(APPLE)
 elseif(UNIX)
-    set(STEAM_SHLIB "linux64/steam_api64.so")
+    set(STEAM_SHLIB "linux64/libsteam_api.so")
 endif()
 
 set_target_properties(steam_api PROPERTIES

@@ -22,6 +22,8 @@
 #include <thread>
 #include <chrono>
 
+#include <cstring>
+
 Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& InCwcKey, uint64_t InAuthToken, bool AsClient)
     : Connection(InConnection)
     , CwcKey(InCwcKey)
