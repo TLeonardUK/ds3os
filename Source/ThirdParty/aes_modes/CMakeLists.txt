@@ -1,9 +1,18 @@
 set(PROJECT_NAME aes_modes)
 
+find_program(YASM_EXE NAMES yasm)
+add_custom_command(OUTPUT aes_amd64.o COMMAND ${YASM_EXE}
+        ARGS -DINTEL_AES_POSSIBLE=1 -f elf64 -o aes_amd64.o "${CMAKE_CURRENT_SOURCE_DIR}/../aes/aes_amd64.asm")
 ################################################################################
 # Source groups
 ################################################################################
 set(no_group_source_files
+    "../aes/aes_ni.c"
+    "../aes/aeskey.c"
+    "../aes/aes_modes.c"
+    "../aes/aestab.c"
+    "../aes/aes_amd64.asm"
+    "aes_amd64.o"
     "cwc.c"
     "cwc.h"
     "mode_hdr.h"
@@ -49,7 +58,9 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     "_CRT_SECURE_NO_WARNINGS;"
     "_CONSOLE;"
     "UNICODE;"
-    "_UNICODE"
+    "_UNICODE;"
+    "ASM_AMD64_C;"
+    "INTEL_AES_POSSIBLE"
 )
 
 
