@@ -48,6 +48,9 @@ bool SettingsHandler::handleGet(CivetServer* Server, struct mg_connection* Conne
     json["disableInvasions"] = Config.DisableInvasions;
     json["disableAutoSummonCoop"] = Config.DisableCoopAutoSummon;
     json["disableAutoSummonInvasions"] = Config.DisableInvasionAutoSummon;
+    json["disableWeaponLevelMatching"] = IsWeaponLevelMatchingDisabled();
+    json["disableSoulLevelMatching"] = IsSoulLevelMatchingDisabled();
+    
     RespondJson(Connection, json);
 
     return true;
@@ -110,6 +113,30 @@ bool SettingsHandler::handlePost(CivetServer* Server, struct mg_connection* Conn
     {
         Config.DisableInvasionAutoSummon = json["disableAutoSummonInvasions"];
     }
+    if (json.contains("disableWeaponLevelMatching"))
+    {
+        if (json["disableWeaponLevelMatching"] != IsWeaponLevelMatchingDisabled())
+        {
+            Config.SummonSignMatchingParameters.DisableWeaponLevelMatching = json["disableWeaponLevelMatching"];
+            Config.WayOfBlueMatchingParameters.DisableWeaponLevelMatching = json["disableWeaponLevelMatching"];
+            Config.DarkSpiritInvasionMatchingParameters.DisableWeaponLevelMatching = json["disableWeaponLevelMatching"];
+            Config.MoundMakerInvasionMatchingParameters.DisableWeaponLevelMatching = json["disableWeaponLevelMatching"];
+            Config.CovenantInvasionMatchingParameters.DisableWeaponLevelMatching = json["disableWeaponLevelMatching"];
+            Config.UndeadMatchMatchingParameters.DisableWeaponLevelMatching = json["disableWeaponLevelMatching"];
+        }
+    }
+    if (json.contains("disableSoulLevelMatching"))
+    {
+        if (json["disableSoulLevelMatching"] != IsSoulLevelMatchingDisabled())
+        {
+            Config.SummonSignMatchingParameters.DisableLevelMatching = json["disableSoulLevelMatching"];
+            Config.WayOfBlueMatchingParameters.DisableLevelMatching = json["disableSoulLevelMatching"];
+            Config.DarkSpiritInvasionMatchingParameters.DisableLevelMatching = json["disableSoulLevelMatching"];
+            Config.MoundMakerInvasionMatchingParameters.DisableLevelMatching = json["disableSoulLevelMatching"];
+            Config.CovenantInvasionMatchingParameters.DisableLevelMatching = json["disableSoulLevelMatching"];
+            Config.UndeadMatchMatchingParameters.DisableLevelMatching = json["disableSoulLevelMatching"];
+        }
+    }
 
     Service->GetServer()->SaveConfig();
 
@@ -118,4 +145,30 @@ bool SettingsHandler::handlePost(CivetServer* Server, struct mg_connection* Conn
     RespondJson(Connection, json);
 
     return true;
+}
+
+bool SettingsHandler::IsWeaponLevelMatchingDisabled()
+{
+    RuntimeConfig& Config = Service->GetServer()->GetMutableConfig();
+
+    return
+        Config.SummonSignMatchingParameters.DisableWeaponLevelMatching ||
+        Config.WayOfBlueMatchingParameters.DisableWeaponLevelMatching ||
+        Config.DarkSpiritInvasionMatchingParameters.DisableWeaponLevelMatching ||
+        Config.MoundMakerInvasionMatchingParameters.DisableWeaponLevelMatching ||
+        Config.CovenantInvasionMatchingParameters.DisableWeaponLevelMatching ||
+        Config.UndeadMatchMatchingParameters.DisableWeaponLevelMatching;
+}
+
+bool SettingsHandler::IsSoulLevelMatchingDisabled()
+{
+    RuntimeConfig& Config = Service->GetServer()->GetMutableConfig();
+
+    return
+        Config.SummonSignMatchingParameters.DisableLevelMatching ||
+        Config.WayOfBlueMatchingParameters.DisableLevelMatching ||
+        Config.DarkSpiritInvasionMatchingParameters.DisableLevelMatching ||
+        Config.MoundMakerInvasionMatchingParameters.DisableLevelMatching ||
+        Config.CovenantInvasionMatchingParameters.DisableLevelMatching ||
+        Config.UndeadMatchMatchingParameters.DisableLevelMatching;
 }

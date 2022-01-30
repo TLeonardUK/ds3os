@@ -30,5 +30,7 @@ public:
 	virtual void Register(CivetServer* Server) override;
 
 protected:
+	bool IsWeaponLevelMatchingDisabled();
+	bool IsSoulLevelMatchingDisabled();
 
 };
