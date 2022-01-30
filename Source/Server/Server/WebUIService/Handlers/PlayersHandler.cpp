@@ -77,45 +77,47 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
             playerJson["soulLevel"] = Info.State.SoulLevel;            
             playerJson["souls"] = playerStatus.souls();
             playerJson["soulMemory"] = playerStatus.soul_memory();
-            playerJson["covenant"] = GetEnumString<CovenantId>((CovenantId)playerStatus.covenant());
+
+            std::string covenantString = GetEnumString<CovenantId>((CovenantId)playerStatus.covenant());
 
             switch ((CovenantId)playerStatus.covenant())
             {
             case CovenantId::Blade_of_the_Darkmoon:
             case CovenantId::Blue_Sentinels:
                 {
-                    if (playerStatus.can_summon_for_way_of_blue())
+                    if (playerStatus.has_can_summon_for_way_of_blue() && playerStatus.can_summon_for_way_of_blue())
                     {
-                        playerJson["covenant"] += " (Summonable)";
+                        covenantString += " (Summonable)";
                     }
                     break;
                 }
             case CovenantId::Watchdogs_of_Farron:
                 {
-                    if (playerStatus.can_summon_for_watchdog_of_farron())
+                    if (playerStatus.has_can_summon_for_watchdog_of_farron() && playerStatus.can_summon_for_watchdog_of_farron())
                     {
-                        playerJson["covenant"] += " (Summonable)";
+                        covenantString += " (Summonable)";
                     }
                     break;
                 }
             case CovenantId::Aldrich_Faithfuls:
                 {
-                    if (playerStatus.can_summon_for_aldritch_faithful())
+                    if (playerStatus.has_can_summon_for_aldritch_faithful() && playerStatus.can_summon_for_aldritch_faithful())
                     {
-                        playerJson["covenant"] += " (Summonable)";
+                        covenantString += " (Summonable)";
                     }
                     break;
                 }
             case CovenantId::Spears_of_the_Church:
                 {
-                    if (playerStatus.can_summon_for_spear_of_church())
+                    if (playerStatus.has_can_summon_for_spear_of_church() && playerStatus.can_summon_for_spear_of_church())
                     {
-                        playerJson["covenant"] += " (Summonable)";
+                        covenantString += " (Summonable)";
                     }
                     break;
                 }
             }
 
+            playerJson["covenant"] = covenantString;
             playerJson["location"] = GetEnumString<OnlineAreaId>(Info.State.CurrentArea);
             playerJson["status"] = "Unknown";
 
