@@ -133,6 +133,9 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
         std::vector<std::shared_ptr<SummonSign>> AreaSigns = LiveCache.GetRecentSet(AreaId, GatherCount, [this, &Player, &Request](const std::shared_ptr<SummonSign>& Sign) { 
             return CanMatchWith(Request->matching_parameter(), Sign->MatchingParameters, Sign->IsRedSign);
         });
+
+        Frpg2RequestMessage::GetSignResult* SignResult = Response.mutable_get_sign_result();
+
         for (std::shared_ptr<SummonSign>& Sign : AreaSigns)
         {
             // Filter players own signs.
@@ -144,13 +147,13 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
             // If client already has sign data we only need to return a limited set of data.
             if (ClientExistingSignId.count(Sign->SignId) > 0)
             {
-                Frpg2RequestMessage::SignInfo* SignInfo = Response.mutable_get_sign_result()->add_sign_info_without_data();
+                Frpg2RequestMessage::SignInfo* SignInfo = SignResult->add_sign_info_without_data();
                 SignInfo->set_player_id(Sign->PlayerId);
                 SignInfo->set_sign_id(Sign->SignId);
             }
             else
             {
-                Frpg2RequestMessage::SignData* SignData = Response.mutable_get_sign_result()->add_sign_data();
+                Frpg2RequestMessage::SignData* SignData = SignResult->add_sign_data();
                 SignData->mutable_sign_info()->set_player_id(Sign->PlayerId);
                 SignData->mutable_sign_info()->set_sign_id(Sign->SignId);
                 SignData->set_online_area_id((uint32_t)Sign->OnlineAreaId);

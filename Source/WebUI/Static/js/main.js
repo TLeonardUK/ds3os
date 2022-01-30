@@ -368,6 +368,7 @@ function refreshPlayersTab()
                     <td>${player["covenant"]}</td>
                     <td>${player["status"]}</td>
                     <td>${player["location"]}</td>
+                    <td>${player["playTime"]}</td>
                     <td>${player["connectionTime"]}</td>
                     <td>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="disconnectUser(${player["playerId"]})">

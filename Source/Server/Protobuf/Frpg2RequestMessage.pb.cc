@@ -21650,6 +21650,7 @@ const int MatchingParameter::kUnknownId9FieldNumber;
 const int MatchingParameter::kPasswordFieldNumber;
 const int MatchingParameter::kCovenantFieldNumber;
 const int MatchingParameter::kWeaponLevelFieldNumber;
+const int MatchingParameter::kUnknownId15FieldNumber;
 #endif  // !_MSC_VER
 
 MatchingParameter::MatchingParameter()
@@ -21683,6 +21684,7 @@ void MatchingParameter::SharedCtor() {
   password_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   covenant_ = 0;
   weapon_level_ = 0u;
+  unknown_id_15_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -21697,6 +21699,9 @@ void MatchingParameter::SharedDtor() {
   }
   if (password_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete password_;
+  }
+  if (unknown_id_15_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_id_15_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -21746,12 +21751,17 @@ void MatchingParameter::Clear() {
       }
     }
   }
-  if (_has_bits_[8 / 32] & 3840) {
+  if (_has_bits_[8 / 32] & 7936) {
     ZR_(covenant_, weapon_level_);
     unknown_id_9_ = 0u;
     if (has_password()) {
       if (password_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         password_->clear();
+      }
+    }
+    if (has_unknown_id_15()) {
+      if (unknown_id_15_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        unknown_id_15_->clear();
       }
     }
   }
@@ -21954,6 +21964,19 @@ bool MatchingParameter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(122)) goto parse_unknown_id_15;
+        break;
+      }
+
+      // optional string unknown_id_15 = 15;
+      case 15: {
+        if (tag == 122) {
+         parse_unknown_id_15:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_unknown_id_15()));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -22044,6 +22067,12 @@ void MatchingParameter::SerializeWithCachedSizes(
   // required uint32 weapon_level = 14;
   if (has_weapon_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(14, this->weapon_level(), output);
+  }
+
+  // optional string unknown_id_15 = 15;
+  if (has_unknown_id_15()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      15, this->unknown_id_15(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -22140,6 +22169,13 @@ int MatchingParameter::ByteSize() const {
           this->weapon_level());
     }
 
+    // optional string unknown_id_15 = 15;
+    if (has_unknown_id_15()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->unknown_id_15());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -22195,6 +22231,9 @@ void MatchingParameter::MergeFrom(const MatchingParameter& from) {
     if (from.has_weapon_level()) {
       set_weapon_level(from.weapon_level());
     }
+    if (from.has_unknown_id_15()) {
+      set_unknown_id_15(from.unknown_id_15());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -22225,6 +22264,7 @@ void MatchingParameter::Swap(MatchingParameter* other) {
     std::swap(password_, other->password_);
     std::swap(covenant_, other->covenant_);
     std::swap(weapon_level_, other->weapon_level_);
+    std::swap(unknown_id_15_, other->unknown_id_15_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -23235,7 +23275,7 @@ bool RequestGetSignListResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+      // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -23272,7 +23312,7 @@ failure:
 void RequestGetSignListResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.RequestGetSignListResponse)
-  // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+  // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
   if (has_get_sign_result()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       1, this->get_sign_result(), output);
@@ -23287,7 +23327,7 @@ int RequestGetSignListResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+    // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
     if (has_get_sign_result()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -23325,6 +23365,7 @@ void RequestGetSignListResponse::CopyFrom(const RequestGetSignListResponse& from
 }
 
 bool RequestGetSignListResponse::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   if (has_get_sign_result()) {
     if (!this->get_sign_result().IsInitialized()) return false;

@@ -59,6 +59,7 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
         for (PlayerInfo& Info : PlayerInfos)
         {
             if (!Info.State.PlayerStatus.has_player_status() ||
+                !Info.State.PlayerStatus.has_play_data() ||
                 Info.State.PlayerId == 0)
             {
                 continue;
@@ -66,11 +67,6 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
 
             const Frpg2PlayerData::PlayerStatus& playerStatus = Info.State.PlayerStatus.player_status();
             const Frpg2PlayerData::LogInfo& logInfo = Info.State.PlayerStatus.log_info();
-
-            uint64_t Total = (uint64_t)Info.ConnectionDuration;
-            uint64_t Seconds = Total % 60;
-            uint64_t Minutes = (Total / 60) % 60;
-            uint64_t Hours = (Total / 60) / 60;
 
             auto playerJson = nlohmann::json::object();
             playerJson["steamId"] = Info.State.SteamId;
@@ -82,18 +78,61 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
             playerJson["souls"] = playerStatus.souls();
             playerJson["soulMemory"] = playerStatus.soul_memory();
             playerJson["covenant"] = GetEnumString<CovenantId>((CovenantId)playerStatus.covenant());
+
+            switch ((CovenantId)playerStatus.covenant())
+            {
+            case CovenantId::Blade_of_the_Darkmoon:
+            case CovenantId::Blue_Sentinels:
+                {
+                    if (playerStatus.can_summon_for_way_of_blue())
+                    {
+                        playerJson["covenant"] += " (Summonable)";
+                    }
+                    break;
+                }
+            case CovenantId::Watchdogs_of_Farron:
+                {
+                    if (playerStatus.can_summon_for_watchdog_of_farron())
+                    {
+                        playerJson["covenant"] += " (Summonable)";
+                    }
+                    break;
+                }
+            case CovenantId::Aldrich_Faithfuls:
+                {
+                    if (playerStatus.can_summon_for_aldritch_faithful())
+                    {
+                        playerJson["covenant"] += " (Summonable)";
+                    }
+                    break;
+                }
+            case CovenantId::Spears_of_the_Church:
+                {
+                    if (playerStatus.can_summon_for_spear_of_church())
+                    {
+                        playerJson["covenant"] += " (Summonable)";
+                    }
+                    break;
+                }
+            }
+
             playerJson["location"] = GetEnumString<OnlineAreaId>(Info.State.CurrentArea);
             playerJson["status"] = "Unknown";
 
             switch (playerStatus.world_type())
             {
+            case Frpg2PlayerData::WorldType::WorldType_None:
+                {
+                    playerJson["status"] = "Loading or in menus";
+                    break;
+                }
             case Frpg2PlayerData::WorldType::WorldType_Multiplayer:
                 {
-                    if (playerStatus.net_mode() == Frpg2PlayerData::NetMode::NetMode_Host)
+                    if (playerStatus.net_mode() == Frpg2PlayerData::NetMode::NetMode_None)
                     {
-                        playerJson["status"] = "Hosting other players";
+                        playerJson["status"] = "Multiplayer alone";
                     }
-                    else
+                    else if (playerStatus.net_mode() == Frpg2PlayerData::NetMode::NetMode_Host)
                     {
                         InvasionTypeId TypeId = (InvasionTypeId)playerStatus.invasion_type();
                         switch (TypeId)
@@ -111,10 +150,10 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
                         case InvasionTypeId::Blue_Sentinel:
                         case InvasionTypeId::Red_Hunter:
                         case InvasionTypeId::Force_Join_Session:
-                            {
-                                playerJson["status"] = "Cooperating as a " + GetEnumString<InvasionTypeId>(TypeId);
-                                break;
-                            }
+                        {
+                            playerJson["status"] = "Hosting cooperation with " + GetEnumString<InvasionTypeId>(TypeId);
+                            break;
+                        }
                         case InvasionTypeId::Invade_Red:
                         case InvasionTypeId::Covenant_Spear_of_the_Church:
                         case InvasionTypeId::Guardian_of_Rosaria:
@@ -122,11 +161,15 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
                         case InvasionTypeId::Covenant_Aldrich_Faithful:
                         case InvasionTypeId::Invade_Sunlight_Dark:
                         case InvasionTypeId::Invade_Purple_Dark:
-                            {
-                                playerJson["status"] = "Invading as a " + GetEnumString<InvasionTypeId>(TypeId);
-                                break;
-                            }
+                        {
+                            playerJson["status"] = "Being invaded by " + GetEnumString<InvasionTypeId>(TypeId);
+                            break;
                         }
+                        }
+                    }
+                    else if (playerStatus.net_mode() == Frpg2PlayerData::NetMode::NetMode_Client)
+                    {
+                        playerJson["status"] = "In another world";
                     }
                     break;
                 }
@@ -135,14 +178,23 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
                     std::string status = "Playing solo";
                     if (playerStatus.is_invadable())
                     {
-                        status += ", Invadable";
+                        status += " (Invadable)";
                     }
                     playerJson["status"] = status;
                     break;
                 }
             }
 
-            playerJson["connectionTime"] = StringFormat("%i:%i:%i", Hours, Minutes, Seconds);
+            auto SecondsToString = [](double Time) {
+                uint64_t Total = (uint64_t)Time;
+                uint64_t Seconds = Total % 60;
+                uint64_t Minutes = (Total / 60) % 60;
+                uint64_t Hours = (Total / 60) / 60;
+                return StringFormat("%i:%i:%i", Hours, Minutes, Seconds);
+            };
+
+            playerJson["connectionTime"] = SecondsToString(Info.ConnectionDuration);
+            playerJson["playTime"] = SecondsToString(Info.State.PlayerStatus.play_data().play_time_seconds());
 
             playerArray.push_back(playerJson);
         }

@@ -87,8 +87,8 @@ bool LoginClient::Poll()
         // and return our internal IP address.
         if (Connection->GetAddress().IsPrivateNetwork())
         {
-            LogS(GetName().c_str(), "Directing login client to our private ip as appears to be on private subnet.");
             ServerIP = Service->GetServer()->GetPrivateIP().ToString();
+            LogS(GetName().c_str(), "Directing login client to our private ip (%s) as appears to be on private subnet.", ServerIP.c_str());
         }
 
         Frpg2RequestMessage::RequestQueryLoginServerInfoResponse Response;

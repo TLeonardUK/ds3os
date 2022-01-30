@@ -9521,6 +9521,18 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 weapon_level() const;
   inline void set_weapon_level(::google::protobuf::uint32 value);
 
+  // optional string unknown_id_15 = 15;
+  inline bool has_unknown_id_15() const;
+  inline void clear_unknown_id_15();
+  static const int kUnknownId15FieldNumber = 15;
+  inline const ::std::string& unknown_id_15() const;
+  inline void set_unknown_id_15(const ::std::string& value);
+  inline void set_unknown_id_15(const char* value);
+  inline void set_unknown_id_15(const char* value, size_t size);
+  inline ::std::string* mutable_unknown_id_15();
+  inline ::std::string* release_unknown_id_15();
+  inline void set_allocated_unknown_id_15(::std::string* unknown_id_15);
+
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.MatchingParameter)
  private:
   inline void set_has_unknown_id_1();
@@ -9547,6 +9559,8 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   inline void clear_has_covenant();
   inline void set_has_weapon_level();
   inline void clear_has_weapon_level();
+  inline void set_has_unknown_id_15();
+  inline void clear_has_unknown_id_15();
 
   ::std::string _unknown_fields_;
 
@@ -9564,6 +9578,7 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   ::std::string* password_;
   int covenant_;
   ::google::protobuf::uint32 weapon_level_;
+  ::std::string* unknown_id_15_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -10001,7 +10016,7 @@ class RequestGetSignListResponse : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+  // required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
   inline bool has_get_sign_result() const;
   inline void clear_get_sign_result();
   static const int kGetSignResultFieldNumber = 1;
@@ -33242,6 +33257,82 @@ inline void MatchingParameter::set_weapon_level(::google::protobuf::uint32 value
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.weapon_level)
 }
 
+// optional string unknown_id_15 = 15;
+inline bool MatchingParameter::has_unknown_id_15() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void MatchingParameter::set_has_unknown_id_15() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void MatchingParameter::clear_has_unknown_id_15() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void MatchingParameter::clear_unknown_id_15() {
+  if (unknown_id_15_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_id_15_->clear();
+  }
+  clear_has_unknown_id_15();
+}
+inline const ::std::string& MatchingParameter::unknown_id_15() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.unknown_id_15)
+  return *unknown_id_15_;
+}
+inline void MatchingParameter::set_unknown_id_15(const ::std::string& value) {
+  set_has_unknown_id_15();
+  if (unknown_id_15_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_id_15_ = new ::std::string;
+  }
+  unknown_id_15_->assign(value);
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.unknown_id_15)
+}
+inline void MatchingParameter::set_unknown_id_15(const char* value) {
+  set_has_unknown_id_15();
+  if (unknown_id_15_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_id_15_ = new ::std::string;
+  }
+  unknown_id_15_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.MatchingParameter.unknown_id_15)
+}
+inline void MatchingParameter::set_unknown_id_15(const char* value, size_t size) {
+  set_has_unknown_id_15();
+  if (unknown_id_15_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_id_15_ = new ::std::string;
+  }
+  unknown_id_15_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Frpg2RequestMessage.MatchingParameter.unknown_id_15)
+}
+inline ::std::string* MatchingParameter::mutable_unknown_id_15() {
+  set_has_unknown_id_15();
+  if (unknown_id_15_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_id_15_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.MatchingParameter.unknown_id_15)
+  return unknown_id_15_;
+}
+inline ::std::string* MatchingParameter::release_unknown_id_15() {
+  clear_has_unknown_id_15();
+  if (unknown_id_15_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = unknown_id_15_;
+    unknown_id_15_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void MatchingParameter::set_allocated_unknown_id_15(::std::string* unknown_id_15) {
+  if (unknown_id_15_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_id_15_;
+  }
+  if (unknown_id_15) {
+    set_has_unknown_id_15();
+    unknown_id_15_ = unknown_id_15;
+  } else {
+    clear_has_unknown_id_15();
+    unknown_id_15_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.MatchingParameter.unknown_id_15)
+}
+
 // -------------------------------------------------------------------
 
 // SignGetFlags
@@ -33576,7 +33667,7 @@ inline void RequestGetSignList::set_allocated_sign_get_flags(::Frpg2RequestMessa
 
 // RequestGetSignListResponse
 
-// optional .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
+// required .Frpg2RequestMessage.GetSignResult get_sign_result = 1;
 inline bool RequestGetSignListResponse::has_get_sign_result() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
