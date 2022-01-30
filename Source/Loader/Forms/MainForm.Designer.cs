@@ -56,6 +56,7 @@ namespace Loader
             this.BuildInfoLabel = new System.Windows.Forms.Label();
             this.ContinualUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.DiscordLink = new System.Windows.Forms.LinkLabel();
             this.GithubLink = new System.Windows.Forms.LinkLabel();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.serverListRefreshTimer = new System.Windows.Forms.Timer(this.components);
@@ -63,7 +64,12 @@ namespace Loader
             this.minimumPlayersBox = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.hidePasswordedBox = new System.Windows.Forms.CheckBox();
-            this.DiscordLink = new System.Windows.Forms.LinkLabel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.privateIpBox = new System.Windows.Forms.Label();
+            this.publicIpBox = new System.Windows.Forms.Label();
+            this.serverIpBox = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minimumPlayersBox)).BeginInit();
             this.SuspendLayout();
@@ -73,9 +79,9 @@ namespace Loader
             this.ImportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ImportButton.ImageIndex = 3;
             this.ImportButton.ImageList = this.serverListImageList;
-            this.ImportButton.Location = new System.Drawing.Point(8, 404);
+            this.ImportButton.Location = new System.Drawing.Point(8, 425);
             this.ImportButton.Name = "ImportButton";
-            this.ImportButton.Size = new System.Drawing.Size(122, 37);
+            this.ImportButton.Size = new System.Drawing.Size(122, 58);
             this.ImportButton.TabIndex = 1;
             this.ImportButton.Text = "Import Server";
             this.ImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -103,9 +109,9 @@ namespace Loader
             this.LaunchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LaunchButton.ImageIndex = 4;
             this.LaunchButton.ImageList = this.serverListImageList;
-            this.LaunchButton.Location = new System.Drawing.Point(751, 404);
+            this.LaunchButton.Location = new System.Drawing.Point(751, 425);
             this.LaunchButton.Name = "LaunchButton";
-            this.LaunchButton.Size = new System.Drawing.Size(174, 37);
+            this.LaunchButton.Size = new System.Drawing.Size(174, 58);
             this.LaunchButton.TabIndex = 2;
             this.LaunchButton.Text = "Launch Game";
             this.LaunchButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -165,7 +171,7 @@ namespace Loader
             this.ImportedServerListView.Location = new System.Drawing.Point(8, 190);
             this.ImportedServerListView.MultiSelect = false;
             this.ImportedServerListView.Name = "ImportedServerListView";
-            this.ImportedServerListView.Size = new System.Drawing.Size(917, 200);
+            this.ImportedServerListView.Size = new System.Drawing.Size(917, 229);
             this.ImportedServerListView.SmallImageList = this.serverListImageList;
             this.ImportedServerListView.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.ImportedServerListView.TabIndex = 7;
@@ -220,6 +226,25 @@ namespace Loader
             this.panel1.Size = new System.Drawing.Size(943, 127);
             this.panel1.TabIndex = 10;
             // 
+            // DiscordLink
+            // 
+            this.DiscordLink.ActiveLinkColor = System.Drawing.Color.White;
+            this.DiscordLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.DiscordLink.AutoSize = true;
+            this.DiscordLink.BackColor = System.Drawing.Color.Transparent;
+            this.DiscordLink.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DiscordLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.DiscordLink.ForeColor = System.Drawing.Color.White;
+            this.DiscordLink.LinkColor = System.Drawing.Color.White;
+            this.DiscordLink.Location = new System.Drawing.Point(164, 83);
+            this.DiscordLink.Name = "DiscordLink";
+            this.DiscordLink.Size = new System.Drawing.Size(95, 21);
+            this.DiscordLink.TabIndex = 13;
+            this.DiscordLink.TabStop = true;
+            this.DiscordLink.Text = "Join Discord";
+            this.DiscordLink.VisitedLinkColor = System.Drawing.Color.Gray;
+            this.DiscordLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickDiscordLink);
+            // 
             // GithubLink
             // 
             this.GithubLink.ActiveLinkColor = System.Drawing.Color.White;
@@ -244,9 +269,9 @@ namespace Loader
             this.RemoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RemoveButton.ImageIndex = 2;
             this.RemoveButton.ImageList = this.serverListImageList;
-            this.RemoveButton.Location = new System.Drawing.Point(136, 404);
+            this.RemoveButton.Location = new System.Drawing.Point(136, 425);
             this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(37, 37);
+            this.RemoveButton.Size = new System.Drawing.Size(37, 58);
             this.RemoveButton.TabIndex = 9;
             this.RemoveButton.UseVisualStyleBackColor = true;
             this.RemoveButton.Click += new System.EventHandler(this.OnRemoveClicked);
@@ -262,9 +287,9 @@ namespace Loader
             this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RefreshButton.ImageIndex = 1;
             this.RefreshButton.ImageList = this.serverListImageList;
-            this.RefreshButton.Location = new System.Drawing.Point(179, 404);
+            this.RefreshButton.Location = new System.Drawing.Point(180, 425);
             this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(37, 37);
+            this.RefreshButton.Size = new System.Drawing.Size(37, 58);
             this.RefreshButton.TabIndex = 11;
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.OnRefreshClicked);
@@ -272,7 +297,7 @@ namespace Loader
             // minimumPlayersBox
             // 
             this.minimumPlayersBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.minimumPlayersBox.Location = new System.Drawing.Point(333, 402);
+            this.minimumPlayersBox.Location = new System.Drawing.Point(325, 428);
             this.minimumPlayersBox.Name = "minimumPlayersBox";
             this.minimumPlayersBox.Size = new System.Drawing.Size(53, 23);
             this.minimumPlayersBox.TabIndex = 12;
@@ -282,7 +307,7 @@ namespace Loader
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(231, 405);
+            this.label1.Location = new System.Drawing.Point(223, 431);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.TabIndex = 13;
@@ -293,7 +318,7 @@ namespace Loader
             this.hidePasswordedBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.hidePasswordedBox.AutoSize = true;
             this.hidePasswordedBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.hidePasswordedBox.Location = new System.Drawing.Point(230, 427);
+            this.hidePasswordedBox.Location = new System.Drawing.Point(223, 458);
             this.hidePasswordedBox.Name = "hidePasswordedBox";
             this.hidePasswordedBox.Size = new System.Drawing.Size(117, 19);
             this.hidePasswordedBox.TabIndex = 14;
@@ -301,30 +326,77 @@ namespace Loader
             this.hidePasswordedBox.UseVisualStyleBackColor = true;
             this.hidePasswordedBox.CheckedChanged += new System.EventHandler(this.FilterPropertyChanged);
             // 
-            // DiscordLink
+            // label3
             // 
-            this.DiscordLink.ActiveLinkColor = System.Drawing.Color.White;
-            this.DiscordLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.DiscordLink.AutoSize = true;
-            this.DiscordLink.BackColor = System.Drawing.Color.Transparent;
-            this.DiscordLink.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DiscordLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DiscordLink.ForeColor = System.Drawing.Color.White;
-            this.DiscordLink.LinkColor = System.Drawing.Color.White;
-            this.DiscordLink.Location = new System.Drawing.Point(164, 83);
-            this.DiscordLink.Name = "DiscordLink";
-            this.DiscordLink.Size = new System.Drawing.Size(95, 21);
-            this.DiscordLink.TabIndex = 13;
-            this.DiscordLink.TabStop = true;
-            this.DiscordLink.Text = "Join Discord";
-            this.DiscordLink.VisitedLinkColor = System.Drawing.Color.Gray;
-            this.DiscordLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickDiscordLink);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Location = new System.Drawing.Point(542, 427);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 23);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Server IP";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Location = new System.Drawing.Point(542, 446);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(102, 15);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Private IP";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.Location = new System.Drawing.Point(542, 465);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 15);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Public IP";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // privateIpBox
+            // 
+            this.privateIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.privateIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.privateIpBox.Location = new System.Drawing.Point(650, 446);
+            this.privateIpBox.Name = "privateIpBox";
+            this.privateIpBox.Size = new System.Drawing.Size(99, 19);
+            this.privateIpBox.TabIndex = 21;
+            this.privateIpBox.Text = "255.255.255.255";
+            // 
+            // publicIpBox
+            // 
+            this.publicIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.publicIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.publicIpBox.Location = new System.Drawing.Point(650, 465);
+            this.publicIpBox.Name = "publicIpBox";
+            this.publicIpBox.Size = new System.Drawing.Size(99, 19);
+            this.publicIpBox.TabIndex = 22;
+            this.publicIpBox.Text = "255.255.255.255";
+            // 
+            // serverIpBox
+            // 
+            this.serverIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.serverIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.serverIpBox.Location = new System.Drawing.Point(650, 427);
+            this.serverIpBox.Name = "serverIpBox";
+            this.serverIpBox.Size = new System.Drawing.Size(99, 19);
+            this.serverIpBox.TabIndex = 23;
+            this.serverIpBox.Text = "255.255.255.255";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 451);
+            this.ClientSize = new System.Drawing.Size(934, 487);
+            this.Controls.Add(this.serverIpBox);
+            this.Controls.Add(this.publicIpBox);
+            this.Controls.Add(this.privateIpBox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.hidePasswordedBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.minimumPlayersBox);
@@ -373,6 +445,12 @@ namespace Loader
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox hidePasswordedBox;
         private System.Windows.Forms.LinkLabel DiscordLink;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label privateIpBox;
+        private System.Windows.Forms.Label publicIpBox;
+        private System.Windows.Forms.Label serverIpBox;
     }
 }
 

@@ -28,11 +28,17 @@ namespace Loader
         private IntPtr RunningProcessHandle = IntPtr.Zero;
         private Task QueryServerTask = null;
 
+        private string MachinePrivateIp = "";
+        private string MachinePublicIp = "";
+
         public MainForm()
         {
             InitializeComponent();
 
             ImportedServerListView.ListViewItemSorter = new ServerListSorter();
+
+            MachinePrivateIp = NetUtils.GetMachineIPv4(false);
+            MachinePublicIp = NetUtils.GetMachineIPv4(true);
         }
 
         private void SaveConfig()
@@ -76,7 +82,7 @@ namespace Loader
             bool HasSelectedManualServer = false;
             if (ImportedServerListView.SelectedIndices.Count > 0)
             {
-                HasSelectedManualServer = ServerList.Servers[ImportedServerListView.SelectedIndices[0]].ManualImport;
+                HasSelectedManualServer = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string).ManualImport;
             }
             RemoveButton.Enabled = HasSelectedManualServer;
 
@@ -229,6 +235,9 @@ namespace Loader
             QueryServers();
 
             ContinualUpdateTimer.Enabled = ShouldRunContinualUpdate();
+
+            privateIpBox.Text = MachinePrivateIp;
+            publicIpBox.Text = MachinePublicIp;
         }
 
         private void OnBrowseForExecutable(object sender, EventArgs e)
@@ -276,21 +285,56 @@ namespace Loader
             }
         }
 
+        private ServerConfig CurrentServerConfig;
+
         private void OnSelectedServerChanged(object sender, EventArgs e)
         {
+            if (ImportedServerListView.SelectedItems.Count > 0)
+            {
+                CurrentServerConfig = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string);
+            }
+
             ValidateUI();
+            UpdateServerIp();
         }
 
         private void OnRemoveClicked(object sender, EventArgs e)
         {
             if (ImportedServerListView.SelectedItems.Count > 0)
             {
-                ServerList.Servers.RemoveAt(ImportedServerListView.SelectedIndices[0]);
+                ServerConfig Config = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string);
+
+                for (int i = 0; i < ServerList.Servers.Count; i++)
+                {
+                    if (ServerList.Servers[i].Hostname == Config.Hostname)
+                    {
+                        ServerList.Servers.RemoveAt(i);
+                        break;
+                    }
+                }
 
                 BuildServerList();
                 SaveConfig();
                 ValidateUI();
             }
+        }
+
+        private void UpdateServerIp()
+        {
+            ServerConfig UpdateConfig = CurrentServerConfig;
+
+            QueryServerTask = Task.Run(() =>
+            {
+                string Ip = ResolveConnectIp(UpdateConfig);
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    if (CurrentServerConfig != null && CurrentServerConfig.Hostname == UpdateConfig.Hostname)
+                    {
+                        serverIpBox.Text = Ip;
+                    }
+                });
+            });
         }
 
         private void QueryServers()
@@ -408,9 +452,22 @@ namespace Loader
             BuildServerList();
         }
 
+        private ServerConfig GetConfigFromHostname(string Hostname)
+        {
+            for (int i = 0; i < ServerList.Servers.Count; i++)
+            {
+                if (ServerList.Servers[i].Hostname == Hostname)
+                {
+                    return ServerList.Servers[i];
+                }
+            }
+
+            return null;
+        }
+
         private void OnLaunch(object sender, EventArgs e)
         {
-            ServerConfig Config = ServerList.Servers[ImportedServerListView.SelectedIndices[0]];
+            ServerConfig Config = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string);
 
             if (string.IsNullOrEmpty(Config.PublicKey))
             {
@@ -445,19 +502,11 @@ namespace Loader
             PerformLaunch(Config);
         }
 
-        void PerformLaunch(ServerConfig Config)
+        string ResolveConnectIp(ServerConfig Config)
         {
-            if (Config.PublicKey == null || Config.PublicKey.Length == 0)
-            {
-                MessageBox.Show("Unable to launch server, no public key is available.\n\nYou shouldn't see this error unless someone has miss-configured the server configuration.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             string ConnectionHostname = Config.Hostname;
             string HostnameIp = NetUtils.HostnameToIPv4(Config.Hostname);
             string PrivateHostnameIp = NetUtils.HostnameToIPv4(Config.PrivateHostname);
-            string MachinePrivateIp = NetUtils.GetMachineIPv4(false);
-            string MachinePublicIp = NetUtils.GetMachineIPv4(true);
 
             // If the servers public ip is the same as the machines public ip, then we are behind
             // the same nat and should use the private hostname instead. 
@@ -479,6 +528,19 @@ namespace Loader
                     ConnectionHostname = Config.PrivateHostname;
                 }
             }
+
+            return ConnectionHostname;
+        }
+
+        void PerformLaunch(ServerConfig Config)
+        {
+            if (Config.PublicKey == null || Config.PublicKey.Length == 0)
+            {
+                MessageBox.Show("Unable to launch server, no public key is available.\n\nYou shouldn't see this error unless someone has miss-configured the server configuration.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string ConnectionHostname = ResolveConnectIp(Config);
 
             byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey);
             if (DataBlock == null)
@@ -616,13 +678,31 @@ namespace Loader
             ListViewItem a = (ListViewItem)x;
             ListViewItem b = (ListViewItem)y;
 
-            int aPlayerCount = 0;
-            int bPlayerCount = 0;
+            if (a.ImageIndex == b.ImageIndex)
+            {
+                int aPlayerCount = 0;
+                int bPlayerCount = 0;
 
-            int.TryParse(a.SubItems[1].Text, out aPlayerCount);
-            int.TryParse(b.SubItems[1].Text, out bPlayerCount);
+                int.TryParse(a.SubItems[1].Text, out aPlayerCount);
+                int.TryParse(b.SubItems[1].Text, out bPlayerCount);
 
-            return bPlayerCount - aPlayerCount;
+                return bPlayerCount - aPlayerCount;
+            }
+            else
+            {
+                if (a.ImageIndex == 7)
+                {
+                    return -1;
+                }
+                else if (b.ImageIndex == 7)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return b.ImageIndex - a.ImageIndex;
+                }
+            }
         }
     }
 }

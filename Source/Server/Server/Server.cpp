@@ -312,7 +312,7 @@ void Server::PollServerAdvertisement()
     {
         nlohmann::json Body;
         Body["Hostname"] = Config.ServerHostname.length() > 0 ? Config.ServerHostname : PublicIP.ToString();
-        Body["PrivateHostname"] = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PublicIP.ToString();
+        Body["PrivateHostname"] = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PrivateIP.ToString();
         Body["Description"] = Config.ServerDescription;
         Body["Name"] = Config.ServerName;
         Body["PublicKey"] = PrimaryKeyPair.GetPublicString();
