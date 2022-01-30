@@ -728,7 +728,7 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
         }
         else if (ElapsedTime > RETRANSMIT_CYCLE_INTERVAL)
         {
-            LogS(Connection->GetName().c_str(), "Retransmitting packet, initial retransmit has not been acknowledged.");
+            LogS(Connection->GetName().c_str(), "Retransmitting packet, initial retransmit has not been acknowledged: RetransmittingIndex=%u SequenceIndexAcked=%u MAX_ACK_VALUE_TOP_QUART=%u MAX_ACK_VALUE_BOTTOM_QUART=%u RetransmitAttempts=%u ElapsedTime=%f", RetransmittingIndex, SequenceIndexAcked, MAX_ACK_VALUE_TOP_QUART, MAX_ACK_VALUE_BOTTOM_QUART, RetransmitAttempts, ElapsedTime);
             RetransmissionTimer = GetSeconds();
 
             RetransmitAttempts++;

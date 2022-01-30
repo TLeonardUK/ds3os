@@ -383,8 +383,8 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
     std::shared_ptr<SummonSign> Sign = LiveCache.Find(Request->sign_id());
     if (!Sign)
     {
-        WarningS(Client->GetName().c_str(), "Client attempted to reject summoning for invalid sign, %i.", Request->sign_id());
-        return MessageHandleResult::Error;
+        WarningS(Client->GetName().c_str(), "Client attempted to reject summoning for invalid sign (or sign cancelled), %i.", Request->sign_id());
+        return MessageHandleResult::Handled;
     }
 
     // Send PushRequestRejectSign response to whichever client attempted to summon them.

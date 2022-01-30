@@ -62,7 +62,15 @@ bool WebUIService::Init()
     Options.push_back("listening_ports");
     Options.push_back(StringFormat("%i", Port));
 
-    WebServer = std::make_shared<CivetServer>(Options);
+    try
+    {
+        WebServer = std::make_shared<CivetServer>(Options);
+    }
+    catch (CivetException&)
+    {
+        ErrorS("WebUI", "Failed to create civet webserver.");
+        return false;
+    }
 
     for (auto Handler : Handlers)
     {

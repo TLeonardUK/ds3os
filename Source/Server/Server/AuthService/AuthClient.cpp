@@ -80,7 +80,7 @@ bool AuthClient::Poll()
             {
                 if (Message.Header.msg_type != Frpg2MessageType::RequestHandshake)
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected RequestHandshake.");
+                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type (%i) while expected RequestHandshake.", Message.Header.msg_type);
                     return true;
                 }
 
@@ -194,8 +194,6 @@ bool AuthClient::Poll()
                 FillRandomBytes(KeyResponse.Payload); 
                 memcpy(KeyResponse.Payload.data(), Message.Payload.data(), 8);
 
-                // Note: Supposedly the "normal" cwc key should work for the game session - it doesn't seem to though.
-                //       This key however does output plaintext, but with a message tag failure. Huuum
                 GameCwcKey = KeyResponse.Payload;
 
                 if (!MessageStream->Send(KeyResponse, Frpg2MessageType::Reply, Message.Header.msg_index))
