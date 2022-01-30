@@ -123,7 +123,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
         std::unordered_set<uint32_t> ClientExistingSignId;
         for (int j = 0; j < Area.already_have_signs_size(); j++)
         {
-            ClientExistingSignId.insert(Area.already_have_signs(i).sign_id());
+            ClientExistingSignId.insert(Area.already_have_signs(j).sign_id());
         }
 
         OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();

@@ -485,7 +485,7 @@ void Frpg2ReliableUdpPacketStream::Handle_RACK(const Frpg2ReliableUdpPacket& Pac
     // I'm like 95% sure that RACK is "Reject ACK", its telling us the ACK recieved was invalid I think?
     // I think we can just ignore this ...
 
-    Log(Connection->GetName().c_str(), "Recieved RACK - Ignoring ...");
+    LogS(Connection->GetName().c_str(), "Recieved RACK - Ignoring ...");
 }
 
 void Frpg2ReliableUdpPacketStream::Handle_DAT(const Frpg2ReliableUdpPacket& Packet)

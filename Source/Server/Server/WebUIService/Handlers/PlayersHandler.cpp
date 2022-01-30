@@ -91,7 +91,7 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
                 {
                     if (playerStatus.net_mode() == Frpg2PlayerData::NetMode::NetMode_Host)
                     {
-                        playerJson["status"] = "Cooperating with another player";
+                        playerJson["status"] = "Hosting other players";
                     }
                     else
                     {
