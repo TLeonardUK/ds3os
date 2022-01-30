@@ -49,12 +49,12 @@ Most of the games core functionality works now, with some degree of variance to 
 - [x] Telemetry and misc server calls (the few that are of use to us)
 - [x] Steam ticket authentication.
 - [x] Master server support for loader (show available servers).
+- [x] WebUI for server showing gameplay statistics / allowing admin control.
 
 Future roadmap:
 
 - [ ] Regulation file distribution.
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
-- [ ] WebUI for server showing gameplay statistics / allowing admin control.
 
 # Will this ban my account on the retail server?
 So far we've had several accounts using unoffical servers, for quite a while, and have not had any account penalized on the retail server. 
