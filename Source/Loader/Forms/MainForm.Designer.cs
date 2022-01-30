@@ -39,7 +39,7 @@ namespace Loader
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Name",
             "Players",
             "Description"}, 0);
@@ -56,10 +56,16 @@ namespace Loader
             this.BuildInfoLabel = new System.Windows.Forms.Label();
             this.ContinualUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.GithubLink = new System.Windows.Forms.LinkLabel();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.serverListRefreshTimer = new System.Windows.Forms.Timer(this.components);
             this.RefreshButton = new System.Windows.Forms.Button();
-            this.GithubLink = new System.Windows.Forms.LinkLabel();
+            this.minimumPlayersBox = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.hidePasswordedBox = new System.Windows.Forms.CheckBox();
+            this.DiscordLink = new System.Windows.Forms.LinkLabel();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minimumPlayersBox)).BeginInit();
             this.SuspendLayout();
             // 
             // ImportButton
@@ -144,20 +150,24 @@ namespace Loader
             this.ImportedServerListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ImportedServerListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ImportedServerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader4,
             this.columnHeader2});
             this.ImportedServerListView.FullRowSelect = true;
+            this.ImportedServerListView.GridLines = true;
             this.ImportedServerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ImportedServerListView.HideSelection = false;
+            listViewItem1.StateImageIndex = 0;
             this.ImportedServerListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.ImportedServerListView.Location = new System.Drawing.Point(8, 190);
             this.ImportedServerListView.MultiSelect = false;
             this.ImportedServerListView.Name = "ImportedServerListView";
             this.ImportedServerListView.Size = new System.Drawing.Size(917, 200);
             this.ImportedServerListView.SmallImageList = this.serverListImageList;
+            this.ImportedServerListView.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.ImportedServerListView.TabIndex = 7;
             this.ImportedServerListView.UseCompatibleStateImageBehavior = false;
             this.ImportedServerListView.View = System.Windows.Forms.View.Details;
@@ -201,12 +211,33 @@ namespace Loader
             this.panel1.BackgroundImage = global::Loader.Properties.Resources.banner2;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.DiscordLink);
+            this.panel1.Controls.Add(this.GithubLink);
             this.panel1.Location = new System.Drawing.Point(-2, -2);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(5);
             this.panel1.Size = new System.Drawing.Size(943, 127);
             this.panel1.TabIndex = 10;
+            // 
+            // GithubLink
+            // 
+            this.GithubLink.ActiveLinkColor = System.Drawing.Color.White;
+            this.GithubLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.GithubLink.AutoSize = true;
+            this.GithubLink.BackColor = System.Drawing.Color.Transparent;
+            this.GithubLink.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.GithubLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.GithubLink.ForeColor = System.Drawing.Color.White;
+            this.GithubLink.LinkColor = System.Drawing.Color.White;
+            this.GithubLink.Location = new System.Drawing.Point(65, 83);
+            this.GithubLink.Name = "GithubLink";
+            this.GithubLink.Size = new System.Drawing.Size(93, 21);
+            this.GithubLink.TabIndex = 12;
+            this.GithubLink.TabStop = true;
+            this.GithubLink.Text = "Visit GitHub";
+            this.GithubLink.VisitedLinkColor = System.Drawing.Color.Gray;
+            this.GithubLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickGithubLink);
             // 
             // RemoveButton
             // 
@@ -238,28 +269,65 @@ namespace Loader
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.OnRefreshClicked);
             // 
-            // GithubLink
+            // minimumPlayersBox
             // 
-            this.GithubLink.ActiveLinkColor = System.Drawing.Color.Gray;
-            this.GithubLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.GithubLink.AutoSize = true;
-            this.GithubLink.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.GithubLink.LinkColor = System.Drawing.Color.Gray;
-            this.GithubLink.Location = new System.Drawing.Point(342, 412);
-            this.GithubLink.Name = "GithubLink";
-            this.GithubLink.Size = new System.Drawing.Size(247, 20);
-            this.GithubLink.TabIndex = 12;
-            this.GithubLink.TabStop = true;
-            this.GithubLink.Text = "http://github.com/tleonarduk/ds3os";
-            this.GithubLink.VisitedLinkColor = System.Drawing.Color.Gray;
-            this.GithubLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickGithubLink);
+            this.minimumPlayersBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.minimumPlayersBox.Location = new System.Drawing.Point(333, 402);
+            this.minimumPlayersBox.Name = "minimumPlayersBox";
+            this.minimumPlayersBox.Size = new System.Drawing.Size(53, 23);
+            this.minimumPlayersBox.TabIndex = 12;
+            this.minimumPlayersBox.ValueChanged += new System.EventHandler(this.FilterPropertyChanged);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(231, 405);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 15);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Minimum Players";
+            // 
+            // hidePasswordedBox
+            // 
+            this.hidePasswordedBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.hidePasswordedBox.AutoSize = true;
+            this.hidePasswordedBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.hidePasswordedBox.Location = new System.Drawing.Point(230, 427);
+            this.hidePasswordedBox.Name = "hidePasswordedBox";
+            this.hidePasswordedBox.Size = new System.Drawing.Size(117, 19);
+            this.hidePasswordedBox.TabIndex = 14;
+            this.hidePasswordedBox.Text = "Hide Passworded";
+            this.hidePasswordedBox.UseVisualStyleBackColor = true;
+            this.hidePasswordedBox.CheckedChanged += new System.EventHandler(this.FilterPropertyChanged);
+            // 
+            // DiscordLink
+            // 
+            this.DiscordLink.ActiveLinkColor = System.Drawing.Color.White;
+            this.DiscordLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.DiscordLink.AutoSize = true;
+            this.DiscordLink.BackColor = System.Drawing.Color.Transparent;
+            this.DiscordLink.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DiscordLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.DiscordLink.ForeColor = System.Drawing.Color.White;
+            this.DiscordLink.LinkColor = System.Drawing.Color.White;
+            this.DiscordLink.Location = new System.Drawing.Point(164, 83);
+            this.DiscordLink.Name = "DiscordLink";
+            this.DiscordLink.Size = new System.Drawing.Size(95, 21);
+            this.DiscordLink.TabIndex = 13;
+            this.DiscordLink.TabStop = true;
+            this.DiscordLink.Text = "Join Discord";
+            this.DiscordLink.VisitedLinkColor = System.Drawing.Color.Gray;
+            this.DiscordLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickDiscordLink);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 451);
-            this.Controls.Add(this.GithubLink);
+            this.Controls.Add(this.hidePasswordedBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.minimumPlayersBox);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.RemoveButton);
@@ -275,6 +343,9 @@ namespace Loader
             this.Name = "MainForm";
             this.Text = "Dark Souls III - Open Server Loader";
             this.Load += new System.EventHandler(this.OnLoaded);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minimumPlayersBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,6 +369,10 @@ namespace Loader
         private System.Windows.Forms.ImageList serverListImageList;
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.LinkLabel GithubLink;
+        private System.Windows.Forms.NumericUpDown minimumPlayersBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox hidePasswordedBox;
+        private System.Windows.Forms.LinkLabel DiscordLink;
     }
 }
 

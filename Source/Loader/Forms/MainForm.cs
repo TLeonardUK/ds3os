@@ -31,12 +31,16 @@ namespace Loader
         public MainForm()
         {
             InitializeComponent();
+
+            ImportedServerListView.ListViewItemSorter = new ServerListSorter();
         }
 
         private void SaveConfig()
         {
             ProgramSettings.Default.exe_location = ExeLocationTextBox.Text;
             ProgramSettings.Default.server_config_json = ServerList.ToJson();
+            ProgramSettings.Default.hide_passworded = hidePasswordedBox.Checked;
+            ProgramSettings.Default.minimum_players = (int)minimumPlayersBox.Value;
 
             ProgramSettings.Default.Save();
         }
@@ -101,10 +105,32 @@ namespace Loader
             RefreshButton.Enabled = (QueryServerTask != null);
         }
 
+        private bool ShouldShowServer(ServerConfig Config)
+        {
+            if (Config.ManualImport)
+            {
+                return true;
+            }
+            if (Config.PasswordRequired && ProgramSettings.Default.hide_passworded)
+            {
+                return false;
+            }
+            if (Config.PlayerCount < ProgramSettings.Default.minimum_players)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private void BuildServerList()
         {
             foreach (ServerConfig Config in ServerList.Servers)
             {
+                if (!ShouldShowServer(Config))
+                {
+                    continue;
+                }
+
                 ListViewItem ServerItem = null;
 
                 foreach (ListViewItem ViewItem in ImportedServerListView.Items)
@@ -148,8 +174,13 @@ namespace Loader
                 ListViewItem ViewItem = ImportedServerListView.Items[i];
 
                 bool Exists = false;
+
                 foreach (ServerConfig Config in ServerList.Servers)
                 {
+                    if (!ShouldShowServer(Config))
+                    {
+                        continue;
+                    }
                     if (Config.Hostname == (string)ViewItem.Tag)
                     {
                         Exists = true;
@@ -166,6 +197,8 @@ namespace Loader
                     i++;
                 }
             }
+
+            ImportedServerListView.Sort();
         }
 
         private void OnLoaded(object sender, EventArgs e)
@@ -177,6 +210,8 @@ namespace Loader
             }
 
             ExeLocationTextBox.Text = ProgramSettings.Default.exe_location;
+            hidePasswordedBox.Checked = ProgramSettings.Default.hide_passworded;
+            minimumPlayersBox.Value = ProgramSettings.Default.minimum_players;
             ServerConfigList.FromJson(ProgramSettings.Default.server_config_json, out ServerList);
 
             // Strip out any old config files downloaded from the server, we will be querying them
@@ -267,11 +302,21 @@ namespace Loader
                 return;
             }
 
+            RefreshButton.Enabled = false;
+
             QueryServerTask = Task.Run(() =>
             {
                 List<ServerConfig> Servers = MasterServerApi.ListServers();
-                this.Invoke((MethodInvoker)delegate {
-                    ProcessServerQueryResponse(Servers);
+                if (Servers != null)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        ProcessServerQueryResponse(Servers);
+                    });
+                }
+                this.Invoke((MethodInvoker)delegate
+                {
+                    RefreshButton.Enabled = true;
                 });
             });
         }
@@ -546,6 +591,38 @@ namespace Loader
                 FileName = "https://github.com/tleonarduk/ds3os",
                 UseShellExecute = true
             });
+        }
+
+        private void FilterPropertyChanged(object sender, EventArgs e)
+        {
+            SaveConfig();
+            BuildServerList();
+        }
+
+        private void ClickDiscordLink(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://discord.gg/AVaNS26v",
+                UseShellExecute = true
+            });
+        }
+    }
+
+    class ServerListSorter : System.Collections.IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            ListViewItem a = (ListViewItem)x;
+            ListViewItem b = (ListViewItem)y;
+
+            int aPlayerCount = 0;
+            int bPlayerCount = 0;
+
+            int.TryParse(a.SubItems[1].Text, out aPlayerCount);
+            int.TryParse(b.SubItems[1].Text, out bPlayerCount);
+
+            return bPlayerCount - aPlayerCount;
         }
     }
 }

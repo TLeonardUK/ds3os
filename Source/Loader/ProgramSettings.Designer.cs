@@ -58,5 +58,29 @@ namespace Loader {
                 this["master_server_url"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool hide_passworded {
+            get {
+                return ((bool)(this["hide_passworded"]));
+            }
+            set {
+                this["hide_passworded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int minimum_players {
+            get {
+                return ((int)(this["minimum_players"]));
+            }
+            set {
+                this["minimum_players"] = value;
+            }
+        }
     }
 }

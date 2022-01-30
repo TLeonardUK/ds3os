@@ -105,9 +105,9 @@ namespace Loader
             {
                 return Result.Servers;
             }
-            else;
+            else
             {
-                return new List<ServerConfig>();
+                return null;
             }
         }
 
