@@ -127,9 +127,15 @@ public:
         { "Welcome to DS3OS", "\nYou have connected to an unofficial, work-in-progress, Dark Souls III server. Stability is not guaranteed, but welcome!\n\nMore information on this project is available here:\nhttps://github.com/tleonarduk/ds3os" }
     };
 
+    // How often (in seconds) between each database trim.
+    double DatabaseTrimInterval = 60 * 60;
+
     // Maximum number of blood messages to store per area in the cache.
     // If greater than this value are added, the oldest will be removed.
-    int BloodMessageMaxLivePoolEntriesPerArea = 100;
+    int BloodMessageMaxLivePoolEntriesPerArea = 50;
+
+    // Maximum number of blood messages to store in database. More than this will be trimmed.
+    int BloodMessageMaxDatabaseEntries = 50000;
 
     // How many blood messages to insert into the live pool from the database
     // when the server starts. Saves the game looking empty until enough players
@@ -138,16 +144,22 @@ public:
 
     // Maximum number of blood stains to store per area in the cache.
     // If greater than this value are added, the oldest will be removed.
-    int BloodstainMaxLivePoolEntriesPerArea = 100;
+    int BloodstainMaxLivePoolEntriesPerArea = 50;
 
     // How many blood stains to insert into the live pool from the database
     // when the server starts. Saves the game looking empty until enough players
     // re-enter their messages.
     int BloodstainPrimeCountPerArea = 50;
 
+    // Maximum number of bloodstains to store in database. More than this will be trimmed.
+    int BloodstainMaxDatabaseEntries = 1000;
+
     // Maximum number of ghoststo store per area in the cache.
     // If greater than this value are added, the oldest will be removed.
-    int GhostMaxLivePoolEntriesPerArea = 100;
+    int GhostMaxLivePoolEntriesPerArea = 50;
+
+    // Maximum number of ghosts to store in database. More than this will be trimmed.
+    int GhostMaxDatabaseEntries = 1000;
 
     // How many ghosts to insert into the live pool from the database
     // when the server starts. Saves the game looking empty until enough players

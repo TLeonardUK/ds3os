@@ -61,4 +61,8 @@ public:
     // How many seconds of inactivity before a webui authentication token expires.
     inline static const double WEBUI_AUTH_TIMEOUT = 60.0 * 60.0;
 
+    // If enabled we will store per-player stats in the database. Be warned this bloats the DB a -lot-
+    // if we have many players.
+    inline static const bool STORE_PER_PLAYER_STATISTICS = false;
+
 };

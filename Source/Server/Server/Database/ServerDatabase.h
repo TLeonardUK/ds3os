@@ -29,6 +29,9 @@ public:
     bool Open(const std::filesystem::path& path);
     bool Close();
 
+    // Trims any neccessary internal tables.
+    void Trim();
+
     // ----------------------------------------------------------------
     // Player data interface
     // ----------------------------------------------------------------
@@ -84,6 +87,9 @@ public:
     // Updates the evaluation ratings of a blood message.
     bool SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor, uint32_t Good);
 
+    // Removes the oldest blood messages in the database until we are under max entries.
+    void TrimBloodMessages(size_t MaxEntries);
+
     // ----------------------------------------------------------------
     // Blood stain interface
     // ----------------------------------------------------------------
@@ -98,6 +104,9 @@ public:
     // Creates a new blood stain with the given data and returns a representation of it.
     std::shared_ptr<Bloodstain> CreateBloodstain(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData);
 
+    // Removes the oldest blood stains in the database until we are under max entries.
+    void TrimBloodStains(size_t MaxEntries);
+
     // ----------------------------------------------------------------
     // Ghosts interface
     // ----------------------------------------------------------------
@@ -107,6 +116,9 @@ public:
 
     // Creates a new ghost with the given data and returns a representation of it.
     std::shared_ptr<Ghost> CreateGhost(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
+
+    // Removes the oldest ghosts in the database until we are under max entries.
+    void TrimGhosts(size_t MaxEntries);
 
     // ----------------------------------------------------------------
     // Rankings interface
@@ -167,6 +179,8 @@ protected:
     bool RunStatement(const std::string& sql, const std::vector<DatabaseValue>& Values, RowCallback Callback);
 
     bool CreateTables();
+
+    void TrimTable(const std::string& TableName, const std::string& IdColumn, size_t MaxEntries);
 
 private:
     sqlite3* db_handle = nullptr;

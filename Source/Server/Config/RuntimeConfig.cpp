@@ -229,13 +229,17 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(WebUIServerUsername);
     SERIALIZE_VAR(WebUIServerPassword);
     SERIALIZE_VAR(Announcements);
+    SERIALIZE_VAR(DatabaseTrimInterval);
     SERIALIZE_VAR(BloodMessageMaxLivePoolEntriesPerArea);
+    SERIALIZE_VAR(BloodMessageMaxDatabaseEntries);
     SERIALIZE_VAR(BloodMessagePrimeCountPerArea);
     SERIALIZE_VAR(BloodstainMaxLivePoolEntriesPerArea);
+    SERIALIZE_VAR(BloodstainMaxDatabaseEntries);
     SERIALIZE_VAR(BloodstainPrimeCountPerArea);
     SERIALIZE_VAR(GhostMaxLivePoolEntriesPerArea);
     SERIALIZE_VAR(GhostPrimeCountPerArea);
-    SERIALIZE_VAR(SummonSignMaxEntriesPerArea);
+    SERIALIZE_VAR(GhostPrimeCountPerArea);
+    SERIALIZE_VAR(GhostMaxDatabaseEntries);
     SERIALIZE_VAR(QuickMatchWinXp);
     SERIALIZE_VAR(QuickMatchLoseXp);
     SERIALIZE_VAR(QuickMatchDrawXp);

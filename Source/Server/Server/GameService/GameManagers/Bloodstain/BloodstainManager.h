@@ -26,6 +26,7 @@ public:
     BloodstainManager(Server* InServerInstance);
 
     virtual bool Init() override;
+    virtual void TrimDatabase() override;
 
     virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) override;
 

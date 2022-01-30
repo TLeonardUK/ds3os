@@ -8,6 +8,7 @@
  */
 
 #include "Server/Database/ServerDatabase.h"
+#include "Config/BuildConfig.h"
 #include "Core/Utils/Logging.h"
 #include "ThirdParty/sqlite/sqlite3.h"
 
@@ -34,6 +35,8 @@ bool ServerDatabase::Open(const std::filesystem::path& path)
         Log("Failed to create database tables.");
         return false;
     }
+
+    Trim();
 
     return true;
 }
@@ -390,6 +393,11 @@ bool ServerDatabase::SetBloodMessageEvaluation(uint32_t MessageId, uint32_t Poor
     return sqlite3_changes(db_handle) > 0;
 }
 
+void ServerDatabase::TrimBloodMessages(size_t MaxEntries)
+{
+    TrimTable("BloodMessages", "MessageId", MaxEntries);
+}
+
 std::shared_ptr<Bloodstain> ServerDatabase::FindBloodstain(uint32_t BloodstainId)
 {
     std::shared_ptr<Bloodstain> Result;
@@ -452,6 +460,11 @@ std::shared_ptr<Bloodstain> ServerDatabase::CreateBloodstain(OnlineAreaId AreaId
     return Result;
 }
 
+void ServerDatabase::TrimBloodStains(size_t MaxEntries)
+{
+    TrimTable("Bloodstains", "BloodstainId", MaxEntries);
+}
+
 std::vector<std::shared_ptr<Ghost>> ServerDatabase::FindRecentGhosts(OnlineAreaId AreaId, int Count)
 {
     std::vector<std::shared_ptr<Ghost>> Result;
@@ -487,6 +500,11 @@ std::shared_ptr<Ghost> ServerDatabase::CreateGhost(OnlineAreaId AreaId, uint32_t
     Result->Data = Data;
 
     return Result;
+}
+
+void ServerDatabase::TrimGhosts(size_t MaxEntries)
+{
+    TrimTable("Ghosts", "GhostId", MaxEntries);
 }
 
 std::shared_ptr<Ranking> ServerDatabase::RegisterScore(uint32_t BoardId, uint32_t PlayerId, uint32_t CharacterId, uint32_t Score, const std::vector<uint8_t>& Data)
@@ -745,14 +763,24 @@ int64_t ServerDatabase::GetGlobalStatistic(const std::string& Name)
 
 void ServerDatabase::AddPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count)
 {
+    if constexpr (BuildConfig::STORE_PER_PLAYER_STATISTICS)
+    {
+        return;
+    }
+
     char Scope[64];
     snprintf(Scope, 64, "Player/%u", PlayerId);
 
-    return AddStatistic(Name, Scope, Count);
+    AddStatistic(Name, Scope, Count);
 }
 
 void ServerDatabase::SetPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count)
 {
+    if constexpr (BuildConfig::STORE_PER_PLAYER_STATISTICS)
+    {
+        return;
+    }
+
     char Scope[64];
     snprintf(Scope, 64, "Player/%u", PlayerId);
 
@@ -761,8 +789,39 @@ void ServerDatabase::SetPlayerStatistic(const std::string& Name, uint32_t Player
 
 int64_t ServerDatabase::GetPlayerStatistic(const std::string& Name, uint32_t PlayerId)
 {
+    if constexpr (BuildConfig::STORE_PER_PLAYER_STATISTICS)
+    {
+        return 0;
+    }
+
     char Scope[64];
     snprintf(Scope, 64, "Player/%u", PlayerId);
 
     return GetStatistic(Name, Scope);
+}
+
+void ServerDatabase::TrimTable(const std::string& TableName, const std::string& IdColumn, size_t MaxEntries)
+{
+    size_t TotalEntries = 0;
+
+    RunStatement("SELECT COUNT(*) FROM " + TableName, { }, [&TotalEntries](sqlite3_stmt* statement) {
+        TotalEntries = sqlite3_column_int(statement, 0);
+    });
+
+    if (TotalEntries <= MaxEntries)
+    {
+        return;
+    }
+
+    size_t ToRemove = TotalEntries - MaxEntries;
+
+    RunStatement("DELETE FROM " + TableName + " WHERE " + IdColumn + " IN (SELECT " + IdColumn + " FROM " + TableName + " ORDER BY " + IdColumn + " ASC LIMIT ?1)", { (int32_t)ToRemove }, nullptr);
+}
+
+void ServerDatabase::Trim()
+{
+    if constexpr (!BuildConfig::STORE_PER_PLAYER_STATISTICS)
+    {
+        RunStatement("DELETE FROM Statistics WHERE Scope LIKE \"Player/%\"", {}, nullptr);
+    }
 }

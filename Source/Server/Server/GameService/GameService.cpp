@@ -83,6 +83,8 @@ bool GameService::Init()
         }
     }
 
+    TrimDatabase();
+
     return true;
 }
 
@@ -100,6 +102,20 @@ bool GameService::Term()
     return true;
 }
 
+void GameService::TrimDatabase()
+{
+    Log("Trimming database entries.");
+
+    for (auto& Manager : Managers)
+    {
+        Manager->TrimDatabase();
+    }
+
+    GetServer()->GetDatabase().Trim();
+
+    NextDatabaseTrim = GetSeconds() + GetServer()->GetConfig().DatabaseTrimInterval;
+}
+
 void GameService::Poll()
 {
     Connection->Pump();
@@ -112,6 +128,11 @@ void GameService::Poll()
     while (std::shared_ptr<NetConnection> ClientConnection = Connection->Accept())
     {
         HandleClientConnection(ClientConnection);
+    }
+
+    if (GetSeconds() > NextDatabaseTrim)
+    {
+        TrimDatabase();
     }
 
     for (auto iter = Clients.begin(); iter != Clients.end(); /* empty */)

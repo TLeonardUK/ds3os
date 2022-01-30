@@ -60,6 +60,15 @@ void BloodMessageManager::Poll()
 {
 }
 
+void BloodMessageManager::TrimDatabase()
+{
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+
+    int MaxEntries = ServerInstance->GetConfig().BloodMessageMaxDatabaseEntries;
+
+    Database.TrimBloodMessages(MaxEntries);
+}
+
 MessageHandleResult BloodMessageManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestReentryBloodMessage)
@@ -254,7 +263,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
     std::string TypeStatisticKey = StringFormat("BloodMessage/TotalCreated");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
     Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
-
+    
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestCreateBloodMessageResponse response.");

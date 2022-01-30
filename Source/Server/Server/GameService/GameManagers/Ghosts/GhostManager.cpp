@@ -52,6 +52,15 @@ bool GhostManager::Init()
     return true;
 }
 
+void GhostManager::TrimDatabase()
+{
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+
+    int MaxEntries = ServerInstance->GetConfig().GhostMaxDatabaseEntries;
+
+    Database.TrimGhosts(MaxEntries);
+}
+
 MessageHandleResult GhostManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestCreateGhostData)

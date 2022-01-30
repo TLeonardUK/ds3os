@@ -34,6 +34,9 @@ public:
     virtual bool Term() { return true; };
     virtual void Poll() { };
 
+    // Called periodically to trim out any excessive entries in the storage database.
+    virtual void TrimDatabase() { };
+
     // Called when we have a new player the game manager may way to record information about.
     // Note that this is not the same as the client connecting, we can gain/lose players if they
     // for example: change their character.

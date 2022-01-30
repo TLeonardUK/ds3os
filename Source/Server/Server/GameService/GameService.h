@@ -81,6 +81,8 @@ protected:
 
     void HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection);
 
+    void TrimDatabase();
+
 private:
     Server* ServerInstance;
 
@@ -94,5 +96,7 @@ private:
     std::unordered_map<uint64_t, GameClientAuthenticationState> AuthenticationStates;
 
     RSAKeyPair* ServerRSAKey;
+
+    double NextDatabaseTrim = 0.0f;
 
 };

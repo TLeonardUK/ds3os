@@ -52,6 +52,15 @@ bool BloodstainManager::Init()
     return true;
 }
 
+void BloodstainManager::TrimDatabase()
+{
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+
+    int MaxEntries = ServerInstance->GetConfig().BloodstainMaxDatabaseEntries;
+
+    Database.TrimBloodStains(MaxEntries);
+}
+
 MessageHandleResult BloodstainManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::RequestCreateBloodstain)
