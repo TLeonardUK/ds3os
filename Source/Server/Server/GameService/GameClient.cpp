@@ -18,6 +18,7 @@
 #include "Platform/Platform.h"
 
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Strings.h"
 #include "Core/Network/NetConnection.h"
 
 #include "Config/BuildConfig.h"
@@ -127,4 +128,28 @@ bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
 std::string GameClient::GetName()
 {
     return Connection->GetName();
+}
+
+void GameClient::SendTextMessage(const std::string& TextMessage)
+{
+    Frpg2RequestMessage::ManagementTextMessage Message;
+    Message.set_push_message_id(Frpg2RequestMessage::PushID_ManagementTextMessage);
+    Message.set_unknown_2(TextMessage);
+    Message.set_unknown_4(0);
+    Message.set_unknown_5(0);
+
+    // Date makes no difference, just hard-code for now.
+    Frpg2PlayerData::DateTime* DateTime = Message.mutable_unknown_3();
+    DateTime->set_year(2021);
+    DateTime->set_month(1);
+    DateTime->set_day(1);
+    DateTime->set_hours(0);
+    DateTime->set_minutes(0);
+    DateTime->set_seconds(0);
+    DateTime->set_tzdiff(0);
+
+    if (!MessageStream->Send(&Message))
+    {
+        WarningS(GetName().c_str(), "Failed to send game client text message.");
+    }
 }

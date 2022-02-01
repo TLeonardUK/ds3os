@@ -39,6 +39,9 @@ public:
 
     double GetConnectionDuration() { return GetSeconds() - ConnectTime; }
 
+    // Sends a text message displayed at the top of the users screen.
+    void SendTextMessage(const std::string& Message);
+
 public:
 
     std::shared_ptr<NetConnection> Connection;

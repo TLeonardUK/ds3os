@@ -318,6 +318,9 @@
     <ClInclude Include="Server\WebUIService\Handlers\SettingsHandler.h">
       <Filter>Server\WebUIService\Handlers</Filter>
     </ClInclude>
+    <ClInclude Include="Server\WebUIService\Handlers\MessageHandler.h">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -487,6 +490,9 @@
       <Filter>Server\WebUIService\Handlers</Filter>
     </ClCompile>
     <ClCompile Include="Server\WebUIService\Handlers\SettingsHandler.cpp">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\WebUIService\Handlers\MessageHandler.cpp">
       <Filter>Server\WebUIService\Handlers</Filter>
     </ClCompile>
   </ItemGroup>

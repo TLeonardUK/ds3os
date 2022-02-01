@@ -184,11 +184,13 @@ function reauthenticate()
     }
     dialog.showModal();
 
-    button.addEventListener('click', function() 
+    var handler = function() 
     {
+        button.removeEventListener('client', handler);
         button.disabled = true;
         authenticate(usernameBox.value, passwordBox.value);
-    });
+    };
+    button.addEventListener('click', handler);
 }
 
 // Starts async loading data to populate the page data.
@@ -257,6 +259,89 @@ function banUser(playerId)
         console.log('Request failed');                
         reauthenticate();           
     });
+}
+
+// Sends a message to a given user.
+function sendUserMessageInternal(playerId, message)
+{
+    console.log("Sending to user ("+playerId+"): "+message);
+
+    fetch("/message", 
+    {
+        method: 'post',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        },
+        body: JSON.stringify({ 
+            "playerId": playerId,
+            "message": message
+        })
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed');                
+        reauthenticate();           
+    });
+}
+
+function sendUserMessage(playerId)
+{    
+    var dialog = document.querySelector("#send-message-dialog");   
+    var sendButton = document.querySelector('#send-message-button');   
+    var cancelButton = document.querySelector('#cancel-send-message-button');
+    var messageBox = document.querySelector('#send-message-text');
+    
+    if (!dialog.showModal) 
+    {
+        dialogPolyfill.registerDialog(dialog);
+    }
+    dialog.showModal();
+
+    var sendHandler = function() 
+    {
+        sendButton.removeEventListener('click', sendHandler);
+        sendUserMessageInternal(playerId, messageBox.value);
+        dialog.close();
+    };
+    var cancelHandler = function() 
+    {
+        cancelButton.removeEventListener('click', cancelHandler);
+        dialog.close();
+    };
+
+    sendButton.addEventListener('click', sendHandler);
+    cancelButton.addEventListener('click', cancelHandler);
+}
+
+function sendMessageToAllUsers()
+{
+    var dialog = document.querySelector("#send-message-dialog");   
+    var sendButton = document.querySelector('#send-message-button');   
+    var cancelButton = document.querySelector('#cancel-send-message-button');
+    var messageBox = document.querySelector('#send-message-text');
+    
+    if (!dialog.showModal) 
+    {
+        dialogPolyfill.registerDialog(dialog);
+    }
+    dialog.showModal();
+
+    var sendHandler = function() 
+    {
+        sendButton.removeEventListener('click', sendHandler);
+        sendUserMessageInternal(0, messageBox.value);
+        dialog.close();
+    };
+    var cancelHandler = function() 
+    {
+        cancelButton.removeEventListener('click', cancelHandler);
+        dialog.close();
+    };
+
+    sendButton.addEventListener('click', sendHandler);
+    cancelButton.addEventListener('click', cancelHandler);
 }
 
 // Retrieves data from the server to update the statistics tab.
@@ -376,6 +461,9 @@ function refreshPlayersTab()
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="banUser(${player["playerId"]})">
                             Ban
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="sendUserMessage(${player["playerId"]})">
+                            Message
                         </button>
                     </td>
                 </tr>

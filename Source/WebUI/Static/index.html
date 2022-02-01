@@ -22,6 +22,7 @@
         <meta name="theme-color" content="#263238">
     </head>
     <body>
+
         <!-- Authentication dialog -->
         <dialog class="mdl-dialog authDialog" id="auth-dialog">
             <h4 class="mdl-dialog__title">Login</h4>
@@ -41,6 +42,24 @@
             </div>
             <div class="mdl-dialog__actions">
                 <button type="button" id="auth-login-button" class="mdl-button close">Login</button>
+            </div>
+        </dialog>
+        
+        <!-- Send message dialog -->
+        <dialog class="mdl-dialog authDialog" id="send-message-dialog">
+            <h4 class="mdl-dialog__title">Send Message</h4>
+            <div class="mdl-dialog__content">      
+                <p>
+                    This message will be sent and displayed at the top of the players screen for around 15 seconds.
+                </p>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label fullWidth">
+                    <input class="mdl-textfield__input" type="text" id="send-message-text">
+                    <label class="mdl-textfield__label" for="send-message-text">Message</label>
+                </div>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" id="send-message-button" class="mdl-button close">Send</button>
+                <button type="button" id="cancel-send-message-button" class="mdl-button close">Cancel</button>
             </div>
         </dialog>
 
@@ -114,29 +133,34 @@
                 <section class="mdl-layout__tab-panel" id="players-tab">
                     <div class="page-content">
 
-                            <div class="elementPaddingMargin">
-                                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullwidth">
-                                    <thead>
-                                        <tr>
-                                            <th class="mdl-data-table__cell--non-numeric">Steam Id</th>
-                                            <th class="mdl-data-table__cell--non-numeric">Character Name</th>
-                                            <th>Soul Level</th>
-                                            <th>Souls</th>
-                                            <th>Soul Memory</th>
-                                            <th>Death Count</th>
-                                            <th>Multiplayer Count</th>
-                                            <th>Covenant</th>
-                                            <th>Status</th>
-                                            <th>Location</th>
-                                            <th>Play Time</th>
-                                            <th>Connection Time</th>
-                                            <th>Options</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="players-table-body">
-                                    </tbody>
-                                </table>
+                        <div class="elementPaddingMargin" style="padding:0px;">
+                            <div style="text-align:right; padding-bottom: 20px;">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="sendMessageToAllUsers()">
+                                    Send All Message
+                                </button>
                             </div>
+                            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th class="mdl-data-table__cell--non-numeric">Steam Id</th>
+                                        <th class="mdl-data-table__cell--non-numeric">Character Name</th>
+                                        <th>Soul Level</th>
+                                        <th>Souls</th>
+                                        <th>Soul Memory</th>
+                                        <th>Death Count</th>
+                                        <th>Multiplayer Count</th>
+                                        <th>Covenant</th>
+                                        <th>Status</th>
+                                        <th>Location</th>
+                                        <th>Play Time</th>
+                                        <th>Connection Time</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="players-table-body">
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </section>
