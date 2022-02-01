@@ -22,7 +22,7 @@ file(GLOB_RECURSE CORE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR} Core/*.cpp)
 if (WIN32)
     set(PLATFORM_SOURCES Platform/Win32/Win32Platform.cpp)
 elseif (UNIX)
-    set(PLATFORM_SOURCES PLATFORM/Linux/LinuxPlatform.cpp)
+    set(PLATFORM_SOURCES Platform/Linux/LinuxPlatform.cpp)
 endif()
 
 message (INFO "Platform sources: ${PLATFORM_SOURCES}")
