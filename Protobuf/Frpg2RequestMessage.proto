@@ -224,27 +224,6 @@ message RequestGetPlayerCharacterResponse {
     required bytes  character_data = 3;         // Seems to contain profile information.
 }
 
-// Note: I can't think of anywhere the below requests would get sent. I suspect these might be 
-// management artifacts.
-
-message RequestGetLoginPlayerCharacter {
-    // index=1 type=0
-}
-
-message RequestGetLoginPlayerCharacterResponse {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=2
-}
-
-message RequestGetPlayerCharacterList {
-    // index=1 type=2 // Repeated PlayerCharacterId's
-}
-
-message RequestGetPlayerCharacterListResponse {
-    // index=1 type=2 // Repeated PlayerCharacterData's
-}
-
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Blood Messages
 // ------------------------------------------------------------------------------------------------------------
@@ -686,7 +665,7 @@ message SignData {
 
 message MatchingParameter {
     required uint32 unknown_id_1 = 1;                     // 1350000            // index=1 type=0
-    required uint32 unknown_id_2 = 2;                     // 2                  // index=2 type=0
+    required uint32 unknown_id_2 = 2;                     // 2                  // index=2 type=0           // NAT TYPE
     required uint32 unknown_id_3 = 3;                     // 1,0                // index=3 type=0
     required uint32 unknown_id_4 = 4;                     // 1                  // index=4 type=0
     required uint32 unknown_id_5 = 5;                     // 0                  // index=5 type=0
@@ -1049,21 +1028,6 @@ message PushRequestNotifyRingBell {
 }
 
 // ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Misc
-// ------------------------------------------------------------------------------------------------------------
-
-message RequestBenchmarkThroughput {
-    // index=1 type=0
-    // index=2 type=2
-    // index=3 type=0
-}
-
-message RequestBenchmarkThroughputResponse {
-    // index=1 type=0
-    // index=2 type=2
-}
-
-// ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Regulation Files
 // ------------------------------------------------------------------------------------------------------------
 
@@ -1102,8 +1066,37 @@ message RegulationFileUpdatePushMessage {
 }
 
 // ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Networking
+// Game Server Messages - Management artifacts
 // ------------------------------------------------------------------------------------------------------------
+
+message RequestBenchmarkThroughput {
+    // index=1 type=0
+    // index=2 type=2
+    // index=3 type=0
+}
+
+message RequestBenchmarkThroughputResponse {
+    // index=1 type=0
+    // index=2 type=2
+}
+
+message RequestGetLoginPlayerCharacter {
+    // index=1 type=0
+}
+
+message RequestGetLoginPlayerCharacterResponse {
+    // index=1 type=0
+    // index=2 type=0
+    // index=3 type=2
+}
+
+message RequestGetPlayerCharacterList {
+    // index=1 type=2 // Repeated PlayerCharacterId's
+}
+
+message RequestGetPlayerCharacterListResponse {
+    // index=1 type=2 // Repeated PlayerCharacterData's
+}
 
 message RequestMeasureUploadBandwidth {
     // index=1 type=0
@@ -1228,29 +1221,6 @@ message RequestGetCurrentRank {
 message RequestGetCurrentRankResponse {
     // index=1 type=2 
     // index=2 type=2
-}
-
-// ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Online shop - This for showing DLC?
-// ------------------------------------------------------------------------------------------------------------
-
-message RequestGetOnlineShopItemList {
-    // index=1 type=0 
-}
-
-message RequestGetOnlineShopItemListResponse {
-    // index=1 type=0 
-    repeated group Lineup = 2 {
-        // index=1 type=0
-        // index=2 type=0
-        // index=3 type=0
-        // index=4 type=0
-        // index=5 type=5
-        // index=6 type=0
-        // index=7 type=0
-        // index=8 type=0
-        // index=9 type=0
-    }
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -1574,7 +1544,81 @@ message RequestGetMarkListResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Misc, most of these seem like artifacts from management tools?
+// Game Server Messages - Misc
+// ------------------------------------------------------------------------------------------------------------
+
+message PushRequestHeader {
+    required PushMessageId push_message_id = 1;
+}
+
+message RangedLimit {
+    // index=1 type=0
+    // index=2 type=0
+}
+
+message PlayerUserIDPair {
+    // index=1 type=0
+    // index=2 type=2
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Management tool artifacts?
+// ------------------------------------------------------------------------------------------------------------
+
+// Show a scrolling message box at the top of the screen with a given message on it.
+message ManagementTextMessage {
+    required PushMessageId push_message_id = 1;
+    required string message = 2;
+    required Frpg2PlayerData.DateTime timestamp = 3;        // Seems to do nothing.
+    required uint32 unknown_4 = 4;                          // Seems to do nothing.
+    required uint32 unknown_5 = 5;                          // Seems to do nothing.
+}
+
+message NRLogUploadRequest {
+    required uint32 unknown_1 = 1;
+    required uint32 unknown_2 = 2;
+}
+
+message NRLoggingMessage {
+    required uint32 unknown_1 = 1;
+    required bytes unknown_2 = 2;
+}
+
+// Does nothing, client doesn't respond to it in any way.
+message ServerPing {
+    required uint32 unknown_1 = 1;
+}
+
+message PlayerStatusUploadConfig {
+    // index=1 type=0 or 2 (looks like repeated ints?)
+    // index=2 type=0
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Online shop - This for showing DLC?
+// ------------------------------------------------------------------------------------------------------------
+
+message RequestGetOnlineShopItemList {
+    // index=1 type=0 
+}
+
+message RequestGetOnlineShopItemListResponse {
+    // index=1 type=0 
+    repeated group Lineup = 2 {
+        // index=1 type=0
+        // index=2 type=0
+        // index=3 type=0
+        // index=4 type=0
+        // index=5 type=5
+        // index=6 type=0
+        // index=7 type=0
+        // index=8 type=0
+        // index=9 type=0
+    }
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Generally useless junk for our purposes. 
 // ------------------------------------------------------------------------------------------------------------
 
 message LoginForXboxOne {
@@ -1601,45 +1645,10 @@ message GetConnectGameServerPortIdResponse {
     // index=4 type=2
 }
 
-message UserLogout {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=0
-}
-
-message ManagementTextMessage {
-    required PushMessageId push_message_id = 1;
-    required string unknown_2 = 2;
-    required string unknown_3 = 3;
-    required uint32 unknown_4 = 4;
-    required uint32 unknown_5 = 5;
-}
-
-message NRLogUploadRequest {
-    // index=1 type=0
-    // index=2 type=0
-}
-
-message NRLoggingMessage {
-    // index=1 type=0
-    // index=2 type=2
-}
-
-message ServerPing {
-    // index=1 type=0
-}
-
-message NotifyClientServerInfoToPushServer {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-}
-
-message PushLoginUserInfo {
-    // index=1 type=0
-    // index=2 type=0
-}
+// ------------------------------------------------------------------------------------------------------------
+// We have basically no need to implement any of the below, this is all management tool related
+// stuff, which we have our own webui solution for.
+// ------------------------------------------------------------------------------------------------------------
 
 message NotifyLoginToPushServer {
     // index=1 type=2 // Looks like repeated instance of PushLoginUserInfo
@@ -1649,36 +1658,16 @@ message NotifyLogoutToPushServer {
     // index=1 type=2
 }
 
-message RequestCheckLogin {
-    // index=1 type=0 or 2 (looks like repeated ints?)
-}
-
-message RequestCheckLoginResponse {
-    // index=1 type=2 // Looks like repeated UserLoginInfo
-}
-
 message UserLoginInfo {
     // index=1 type=0
     // index=2 type=0
 }
 
-message PushRequestHeader {
-    required PushMessageId push_message_id = 1;
-}
-
-message RangedLimit {
+message UserLogout {
     // index=1 type=0
     // index=2 type=0
-}
-
-message PlayerUserIDPair {
-    // index=1 type=0
-    // index=2 type=2
-}
-
-message PlayerStatusUploadConfig {
-    // index=1 type=0 or 2 (looks like repeated ints?)
-    // index=2 type=0
+    // index=3 type=0
+    // index=4 type=0
 }
 
 message LoginClientInfo {
@@ -1688,6 +1677,25 @@ message LoginClientInfo {
     // index=4 type=2
     // index=5 type=2
     // index=6 type=2
+}
+
+message NotifyClientServerInfoToPushServer {
+    required uint32 unknown_1 = 1;
+    required uint32 unknown_2 = 2;
+    required uint32 unknown_3 = 3;
+}
+
+message PushLoginUserInfo {
+    required uint32 unknown_1 = 1;
+    required uint32 unknown_2 = 2;
+}
+
+message RequestCheckLogin {
+    // index=1 type=0 or 2 (looks like repeated ints?)
+}
+
+message RequestCheckLoginResponse {
+    // index=1 type=2 // Looks like repeated UserLoginInfo
 }
 
 message RequestGetPlayerConnectGameServer {

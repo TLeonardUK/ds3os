@@ -148,7 +148,7 @@ message PlayerStatus {
     optional ResistanceInfo armor_resistance_info = 60;
     optional ResistanceInfo base_resistance_info = 61;
 
-    repeated int32 unknown_62 = 62;                         // Whole range of values, no obvious pattern. Seems to go up then down in a triangle shape.
+    repeated int32 unknown_62 = 62;                         // This is anti-cheat data.
 
     optional int32 unknown_63 = 63;                         // 98
     optional int32 estus_flask_max = 64;                    

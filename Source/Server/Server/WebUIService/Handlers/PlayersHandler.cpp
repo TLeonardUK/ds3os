@@ -150,12 +150,12 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
                         case InvasionTypeId::Summon_Purple_Dark:
                         case InvasionTypeId::Covenant_Blade_of_the_Darkmoon:
                         case InvasionTypeId::Blue_Sentinel:
-                        case InvasionTypeId::Red_Hunter:
                         case InvasionTypeId::Force_Join_Session:
                         {
                             playerJson["status"] = "Hosting cooperation with " + GetEnumString<InvasionTypeId>(TypeId);
                             break;
                         }
+                        case InvasionTypeId::Red_Hunter:
                         case InvasionTypeId::Invade_Red:
                         case InvasionTypeId::Covenant_Spear_of_the_Church:
                         case InvasionTypeId::Guardian_of_Rosaria:
