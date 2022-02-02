@@ -53,10 +53,10 @@ bool NetIPAddress::FromHostname(const std::string& Input, NetIPAddress& Output)
         );
 #else
         Output = NetIPAddress(
-            (addr_in->sin_addr.s_addr >> 24) & 0xFF,
-            (addr_in->sin_addr.s_addr >> 16) & 0xFF,
+            (addr_in->sin_addr.s_addr) & 0xFF,
             (addr_in->sin_addr.s_addr >> 8) & 0xFF,
-            addr_in->sin_addr.s_addr & 0xFF
+            (addr_in->sin_addr.s_addr >> 16) & 0xFF,
+            (addr_in->sin_addr.s_addr >> 24) & 0xFF
         );
 #endif
         return true;

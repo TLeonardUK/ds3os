@@ -126,6 +126,27 @@ std::shared_ptr<NetConnection> NetConnectionTCP::Accept()
     SocketType NewSocket = accept(Socket, (struct sockaddr*)&ClientAddress, (SocketLenType*)&AddressLength);
     if (NewSocket != INVALID_SOCKET_VALUE)
     {
+#if defined(_WIN32)
+      unsigned long mode = 1;
+      if (int result = ioctlsocket(NewSocket, FIONBIO, &mode); result != 0)
+      {
+        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
+        return false;
+      }
+#else
+        int flags;
+        if (flags = fcntl(NewSocket, F_GETFL, 0); flags == -1)
+        {
+          ErrorS(GetName().c_str(), "Failed to get socket flags.");
+          return nullptr;
+        }
+        flags = flags | O_NONBLOCK;
+        if (int result = fcntl(NewSocket, F_SETFL, flags); result != 0)
+        {
+          ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
+          return nullptr;
+        }
+#endif
         std::vector<char> ClientName;
         ClientName.resize(64);
         snprintf(ClientName.data(), ClientName.size(), "%s:%s:%i", Name.c_str(), inet_ntoa(ClientAddress.sin_addr), ClientAddress.sin_port);
@@ -142,10 +163,10 @@ std::shared_ptr<NetConnection> NetConnectionTCP::Accept()
         );
 #else
         NetIPAddress NetClientAddress(
-            (ClientAddress.sin_addr.s_addr >> 24) & 0xFF,
-            (ClientAddress.sin_addr.s_addr >> 16) & 0xFF,
+            (ClientAddress.sin_addr.s_addr) & 0xFF,
             (ClientAddress.sin_addr.s_addr >> 8) & 0xFF,
-            ClientAddress.sin_addr.s_addr & 0xFF
+            (ClientAddress.sin_addr.s_addr >> 16) & 0xFF,
+            (ClientAddress.sin_addr.s_addr >> 24) & 0xFF
         );
 #endif
         return std::make_shared<NetConnectionTCP>(NewSocket, ClientName.data(), NetClientAddress);

@@ -385,10 +385,10 @@ bool NetConnectionUDP::Pump()
                     );
 #else
                     NetIPAddress NetClientAddress(
-                        (SourceAddress.sin_addr.s_addr >> 24) & 0xFF,
-                        (SourceAddress.sin_addr.s_addr >> 16) & 0xFF,
+                        (SourceAddress.sin_addr.s_addr) & 0xFF,
                         (SourceAddress.sin_addr.s_addr >> 8) & 0xFF,
-                        SourceAddress.sin_addr.s_addr & 0xFF
+                        (SourceAddress.sin_addr.s_addr >> 16) & 0xFF,
+                        (SourceAddress.sin_addr.s_addr >> 24) & 0xFF
                     );
 #endif
                     std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(Socket, SourceAddress, ClientName.data(), NetClientAddress);
