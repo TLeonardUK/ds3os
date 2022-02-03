@@ -61,7 +61,7 @@ void WriteToConsole(ConsoleColor Color, const char* Message)
       07  // Grey
   };
 
-  printf("\u001b[%dm%s\u001b[0m", (int)Color, Message);
+  printf("%s", Message);
 }
 
 double GetSeconds()

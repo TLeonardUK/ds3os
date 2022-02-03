@@ -1,5 +1,3 @@
-
-
 include(CMake/Utils.cmake)
 
 add_library(steam_api SHARED IMPORTED)

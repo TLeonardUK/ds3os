@@ -4,7 +4,7 @@ set(Protobuf_USE_STATIC_LIBS ON)
 
 find_package(Protobuf REQUIRED)
 find_package(unofficial-sqlite3 CONFIG REQUIRED)
-find_package(curl CONFIG REQUIRED)
+find_package(CURL CONFIG REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 
@@ -24,14 +24,6 @@ if (WIN32)
 elseif (UNIX)
     set(PLATFORM_SOURCES Platform/Linux/LinuxPlatform.cpp)
 endif()
-
-message (INFO "Platform sources: ${PLATFORM_SOURCES}")
-message (INFO "Platform sources: ${PROTOBUF_SOURCES}")
-message (INFO "Platform sources:         ${CLIENT_SOURCES}")
-message (INFO "Platform sources:${CONFIG_SOURCES}")
-message (INFO "Platform sources: ${CORE_SOURCES}")
-message (INFO "Platform sources:  ${SERVER_SOURCES}")
-message (INFO "Platform sources: ${PLATFORM_SOURCES}")
 
 add_executable(${PROJECT_NAME}
         ${PROTOBUF_SOURCES}

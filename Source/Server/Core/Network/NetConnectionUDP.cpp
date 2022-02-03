@@ -16,6 +16,8 @@
 
 #ifdef __linux__
 #include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 #endif
 
 NetConnectionUDP::NetConnectionUDP(const std::string& InName)
@@ -326,7 +328,11 @@ bool NetConnectionUDP::Pump()
         socklen_t SourceAddressSize = sizeof(struct sockaddr);
         sockaddr_in SourceAddress = { 0 };
 
-        int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), 0, (sockaddr*)&SourceAddress, &SourceAddressSize);
+        int flags = 0;
+#ifdef __unix__
+        flags |= MSG_DONTWAIT;
+#endif
+        int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), flags, (sockaddr*)&SourceAddress, &SourceAddressSize);
         if (Result < 0)
         {
     #if defined(_WIN32)
