@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Dark Souls 3 - Open Server
  * Copyright (C) 2021 Tim Leonard
  *

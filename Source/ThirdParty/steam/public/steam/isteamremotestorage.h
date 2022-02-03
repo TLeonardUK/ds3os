@@ -1,4 +1,4 @@
-//====== Copyright � 1996-2008, Valve Corporation, All rights reserved. =======
+﻿//====== Copyright � 1996-2008, Valve Corporation, All rights reserved. =======
 //
 // Purpose: public interface to user remote file storage in Steam
 //
