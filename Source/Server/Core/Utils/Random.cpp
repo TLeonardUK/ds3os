@@ -36,3 +36,10 @@ void FillRandomBytes(uint8_t* Buffer, int Count)
 		Buffer[i] = distribution(generator);
 	}
 }
+
+double FRandRange(double min, double max)
+{
+	double range = max - min;
+	double weight = (static_cast<double>(rand()) / RAND_MAX);
+	return min + (weight * range);
+}

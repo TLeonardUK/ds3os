@@ -97,6 +97,8 @@ private:
 
     double UpdateTime = 0.0;
 
+    double NextSpikeTime = 0.0;
+
     double LastMasterServerUpdate = 0.0;
     std::shared_ptr<NetHttpRequest> MasterServerUpdateRequest;
 

@@ -65,4 +65,25 @@ public:
     // if we have many players.
     inline static const bool STORE_PER_PLAYER_STATISTICS = false;
 
+    // Allows you to emulate CPU spikes, to track down disconnect issues.
+    inline static const bool EMULATE_SPIKES = false;
+
+    inline static const double SPIKE_INTERVAL_MIN = 1000.0 * 10.0;
+    inline static const double SPIKE_INTERVAL_MAX = 1000.0 * 30.0;
+
+    inline static const double SPIKE_LENGTH_MIN = 1000.0 * 5.0;
+    inline static const double SPIKE_LENGTH_MAX = 1000.0 * 20.0;
+
+    // Emulates dropped udp packets.
+    inline static const bool EMULATE_DROPPED_PACKETS = false;
+
+    inline static const double DROP_PACKET_PROBABILITY = 0.1f;
+
+    // Emulates latency.
+    inline static const bool EMULATE_LATENCY = false;
+
+    inline static const double LATENCY_MINIMUM = 300.0f;
+    inline static const double LATENCY_VARIANCE = 10.0f;
+
+
 };

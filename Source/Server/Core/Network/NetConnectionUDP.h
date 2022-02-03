@@ -64,7 +64,18 @@ public:
     virtual std::string GetName() override;
     virtual void Rename(const std::string& Name) override;
 
+protected:
+    struct PendingPacket
+    {
+        std::vector<uint8_t> Data;
+        sockaddr_in SourceAddress;
+        double ProcessTime = 0.0f;
+    };
+
+    void ProcessPacket(const PendingPacket& Packet);
+
 private:
+
     std::string Name;
     NetIPAddress IPAddress;
 
@@ -74,6 +85,8 @@ private:
     bool bChild = false;
 
     sockaddr_in Destination = {};
+
+    std::vector<PendingPacket> PendingPackets;
 
     std::vector<uint8_t> RecieveBuffer;
     std::vector<std::vector<uint8_t>> RecieveQueue;
