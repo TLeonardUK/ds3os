@@ -91,33 +91,34 @@ Some basic setting you might need to change yourself:
 
 ```c++
 {
-    "Advertise": true,//Showing your server in the Loader.exe
+    "Advertise": true,// Showing your server in the Loader.exe
     "Announcements": [
             {
                 "Body": "The message in the menu when you logged in",
                 "Header": "The title"
             }
         ],
-    "AuthServerPort": 50000,//The port that the Authtication service run on.
-    "WebUIServerPort": 50005,//The port that the WebUI service run on.
-    "GameServerPort": 50010,//The port that the Gameserver service run on.
-    "MasterServerPort": 50020,//Don't change this.
-    "LoginServerPort": 50050,//The port that the Login service run on
-    //The "AuthServerPort","GameServerPort","LoginServerPort" needs to be accessible on WAN if you want player
-    //that is not on the same LAN the server is on to join the server.And if you want to control you Server using the web control panel,
-    //then your "WebUIServerPort" must be accessible too. 
-    "DisableCoop": false,//Sets to false to be able to place summon signs.
-    "DisableCoopAutoSummon": false,//Sets to false to enable auto summoning for coop(blue sentinels,etc)
-    "DisableInvasions": false,//Sets to false to enable invade.
-    "DisableInvasionAutoSummon": false,//Sets to false to enable auto summoning for invasions(alrich faithful, watchdogs, etc).
-    "Password": "",//If set the user will need to enter a password to recieve the keys to enter the server when its advertised.
+    "AuthServerPort": 50000,// The port that the Authtication service run on.
+    "WebUIServerPort": 50005,// The port that the WebUI service run on.
+    "GameServerPort": 50010,// The port that the Gameserver service run on.
+    "MasterServerPort": 50020,// Don't change this.
+    "LoginServerPort": 50050,// The port that the Login service run on
+    // The "AuthServerPort","GameServerPort","LoginServerPort" needs to be accessible on WAN if you want player
+    // that is not on the same LAN the server is on to join the server.And if you want to control you Server using the web control panel,
+    // then your "WebUIServerPort" must be accessible too. 
+    "DisableCoop": false,// Sets to false to be able to place summon signs.
+    "DisableCoopAutoSummon": false,// Sets to false to enable auto summoning for coop(blue sentinels,etc)
+    "DisableInvasions": false,// Sets to false to enable invade.
+    "DisableInvasionAutoSummon": false,// Sets to false to enable auto summoning for invasions(alrich faithful, watchdogs, etc).
+    "Password": "",// If set the user will need to enter a password to recieve the keys to enter the server when its advertised.
     "ServerDescription": "The description shown in the Loader.exe",
-    "ServerHostname": "",// Hostname of the server that should be used for connecting.If none is supplied then this wil be the external ip of the server.
+    "ServerHostname": "",// Hostname of the server that should be used for connecting.
+                        // If none is supplied then this wil be the external ip of the server.
     "ServerName": "The server name shown in the Loader.exe",
-    "ServerPrivateHostname": "",// Hostname of the server that should be used for connecting if behind the same external ip.If none is supplied then 
-                              //this will be the private ip of the server.
-    "WebUIServerPassword": "",//Password for the Web control panel.
-    "WebUIServerUsername": ""//Username for the Web control panel.
+    "ServerPrivateHostname": "",// Hostname of the server that should be used for connecting if behind the same external ip. 
+                              // If none is supplied then this will be the private ip of the server.
+    "WebUIServerPassword": "",// Password for the Web control panel.
+    "WebUIServerUsername": ""// Username for the Web control panel.
 }
 ```
 
