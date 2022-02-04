@@ -9,6 +9,7 @@
 
 #include "Core/Network/NetConnectionUDP.h"
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/Random.h"
 #include "Config/BuildConfig.h"
 #include "Core/Crypto/Cipher.h"
 
@@ -299,6 +300,51 @@ bool NetConnectionUDP::IsConnected()
     return true;
 }
 
+void NetConnectionUDP::ProcessPacket(const PendingPacket& Packet)
+{
+    if (bListening)
+    {
+        // See if this came from a source we have an existing connection for.
+        bool bRoutedPacket = false;
+        for (auto ConnectionWeakPtr : ChildConnections)
+        {
+            if (std::shared_ptr<NetConnectionUDP> Connection = ConnectionWeakPtr.lock())
+            {
+                if (Connection->Destination.sin_addr.S_un.S_addr == Packet.SourceAddress.sin_addr.S_un.S_addr &&
+                    Connection->Destination.sin_port == Packet.SourceAddress.sin_port)
+                {
+                    Connection->RecieveQueue.push_back(Packet.Data);
+                    bRoutedPacket = true;
+                    break;
+                }
+            }
+        }
+
+        // Otherwise create a new connection and use that.
+        if (!bRoutedPacket)
+        {
+            std::vector<char> ClientName;
+            ClientName.resize(64);
+            snprintf(ClientName.data(), ClientName.size(), "%s:%s:%i", Name.c_str(), inet_ntoa(Packet.SourceAddress.sin_addr), Packet.SourceAddress.sin_port);
+
+            NetIPAddress NetClientAddress(
+                Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b1,
+                Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b2,
+                Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b3,
+                Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b4);
+
+            std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(Socket, Packet.SourceAddress, ClientName.data(), NetClientAddress);
+            NewConnection->RecieveQueue.push_back(Packet.Data);
+            NewConnections.push_back(NewConnection);
+            ChildConnections.push_back(NewConnection);
+        }
+    }
+    else
+    {
+        RecieveQueue.push_back(Packet.Data);
+    }
+}
+
 bool NetConnectionUDP::Pump()
 {
     if (Socket == INVALID_SOCKET_VALUE)
@@ -339,49 +385,50 @@ bool NetConnectionUDP::Pump()
         {
             std::vector<uint8_t> Packet(RecieveBuffer.data(), RecieveBuffer.data() + Result);
 
-            if (bListening)
+            bool bDropPacket = false;
+
+            if constexpr (BuildConfig::EMULATE_DROPPED_PACKETS)
             {
-                // See if this came from a source we have an existing connection for.
-                bool bRoutedPacket = false;
-                for (auto ConnectionWeakPtr : ChildConnections)
+                if (FRandRange(0.0f, 1.0f) <= BuildConfig::DROP_PACKET_PROBABILITY)
                 {
-                    if (std::shared_ptr<NetConnectionUDP> Connection = ConnectionWeakPtr.lock())
-                    {
-                        if (Connection->Destination.sin_addr.S_un.S_addr == SourceAddress.sin_addr.S_un.S_addr &&
-                            Connection->Destination.sin_port == SourceAddress.sin_port)
-                        {
-                            Connection->RecieveQueue.push_back(Packet);
-                            bRoutedPacket = true;
-                            break;
-                        }
-                    }
-                }
-
-                // Otherwise create a new connection and use that.
-                if (!bRoutedPacket)
-                {
-                    std::vector<char> ClientName;
-                    ClientName.resize(64);
-                    snprintf(ClientName.data(), ClientName.size(), "%s:%s:%i", Name.c_str(), inet_ntoa(SourceAddress.sin_addr), SourceAddress.sin_port);
-
-                    NetIPAddress NetClientAddress(
-                        SourceAddress.sin_addr.S_un.S_un_b.s_b1,
-                        SourceAddress.sin_addr.S_un.S_un_b.s_b2,
-                        SourceAddress.sin_addr.S_un.S_un_b.s_b3,
-                        SourceAddress.sin_addr.S_un.S_un_b.s_b4);
-
-                    std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(Socket, SourceAddress, ClientName.data(), NetClientAddress);
-                    NewConnection->RecieveQueue.push_back(Packet);
-                    NewConnections.push_back(NewConnection);
-                    ChildConnections.push_back(NewConnection);
+                    bDropPacket = true;
                 }
             }
-            else
+
+            if (!bDropPacket)
             {
-                RecieveQueue.push_back(Packet);
+                double Latency = BuildConfig::LATENCY_MINIMUM + FRandRange(-BuildConfig::LATENCY_VARIANCE, BuildConfig::LATENCY_VARIANCE);
+
+                PendingPacket Pending;
+                Pending.Data = Packet;
+                Pending.SourceAddress = SourceAddress;
+                Pending.ProcessTime = GetSeconds() + (Latency / 1000.0f);
+
+                if constexpr (BuildConfig::EMULATE_LATENCY)
+                {
+                    PendingPackets.push_back(Pending);
+                }
+                else
+                {
+                    ProcessPacket(Pending);
+                }
             }
 
             //LogS(GetName().c_str(), "<< %i", Result);
+        }
+    }
+
+    // Recieve pending packets.
+    for (auto iter = PendingPackets.begin(); iter != PendingPackets.end(); /* empty */)
+    {
+        if (GetSeconds() > iter->ProcessTime)
+        {
+            ProcessPacket(*iter);
+            iter = PendingPackets.erase(iter);
+        }
+        else
+        {
+            iter++;
         }
     }
 

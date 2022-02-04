@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
     else
     {
         // Ports etc are irrelevant, we're only using the api to do authentication. 
-        if (!SteamGameServer_Init(0, 50000, 50000, eServerModeAuthentication, "1.0.0.0"))
+        if (!SteamGameServer_Init(0, 50001, 50002, eServerModeAuthentication, "1.0.0.0"))
         {
             Error("Failed to initialize steam game server api.");
             return 1;

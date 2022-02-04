@@ -16,3 +16,5 @@
 
 void FillRandomBytes(std::vector<uint8_t>& Output);
 void FillRandomBytes(uint8_t* Buffer, int Count);
+
+double FRandRange(double min, double max);

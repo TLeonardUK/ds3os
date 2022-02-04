@@ -16,6 +16,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -26,6 +27,7 @@ namespace Loader
     {
         private ServerConfigList ServerList = new ServerConfigList();
         private IntPtr RunningProcessHandle = IntPtr.Zero;
+        private uint RunningProcessId = 0;
         private Task QueryServerTask = null;
 
         private string MachinePrivateIp = "";
@@ -95,12 +97,14 @@ namespace Loader
             {
                 LaunchEnabled = false;
                 LaunchButton.Text = "Not Logged Into Steam";
-            }
+            } 
+#if RELEASE
             else if (RunningProcessHandle != IntPtr.Zero)
             {
                 LaunchEnabled = false;
                 LaunchButton.Text = "Running ...";
             }
+#endif
             else
             {
                 LaunchButton.Text = "Launch Game";
@@ -540,6 +544,14 @@ namespace Loader
                 return;
             }
 
+            // Try and kill existing process mutex if we can.
+            if (RunningProcessHandle != IntPtr.Zero)
+            {
+#if DEBUG
+                KillNamedMutexIfExists();
+#endif
+            }
+
             string ConnectionHostname = ResolveConnectIp(Config);
 
             byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey);
@@ -597,6 +609,7 @@ namespace Loader
             WinAPI.ResumeThread(ProcessInfo.hThread);
 
             RunningProcessHandle = ProcessInfo.hProcess;
+            RunningProcessId = ProcessInfo.dwProcessId;
             ContinualUpdateTimer.Enabled = ShouldRunContinualUpdate();
 
             ValidateUI();
@@ -620,11 +633,22 @@ namespace Loader
             return true;
         }
 
+        // Kills the named mutex that dark souls 3 uses to only open a single instance.
+        private void KillNamedMutexIfExists()
+        {
+            Process ExistingProcess = Process.GetProcessById((int)RunningProcessId);
+            if (ExistingProcess != null)
+            {
+                WinAPIProcesses.KillMutex(ExistingProcess, "\\BaseNamedObjects\\DarkSoulsIIIMutex");
+            }
+        }
+
         private void OnContinualUpdateTimer(object sender, EventArgs e)
         {
             uint ExitCode = 0;
             if (RunningProcessHandle != IntPtr.Zero)
             {
+                // Check if process has finished.
                 if (!WinAPI.GetExitCodeProcess(RunningProcessHandle, out ExitCode) || ExitCode != (uint)ProcessExitCodes.STILL_ACTIVE)
                 {
                     RunningProcessHandle = IntPtr.Zero;

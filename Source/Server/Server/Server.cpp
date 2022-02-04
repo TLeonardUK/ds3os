@@ -8,6 +8,7 @@
  */
 
 #include "Server/Server.h"
+#include "Server/Config/BuildConfig.h"
 #include "Server/Database/ServerDatabase.h"
 #include "Server/Service.h"
 #include "Server/LoginService/LoginService.h"
@@ -17,6 +18,7 @@
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
+#include "Core/Utils/Random.h"
 #include "Core/Network/NetUtils.h"
 #include "Core/Network/NetHttpRequest.h"
 
@@ -352,6 +354,26 @@ void Server::RunUntilQuit()
         PollServerAdvertisement();
 
         UpdateTime = GetSeconds() - StartTime;
+        if (UpdateTime > 0.5f)
+        {
+            Warning("Update took %.2f seconds, this is abnormally long.", UpdateTime);
+        }
+
+        // Emulate frametime spikes.
+        if constexpr (BuildConfig::EMULATE_SPIKES)
+        {
+            if (GetSeconds() > NextSpikeTime)
+            {
+                double DurationMs = FRandRange(BuildConfig::SPIKE_LENGTH_MIN, BuildConfig::SPIKE_LENGTH_MAX);
+                double IntervalMs = FRandRange(BuildConfig::SPIKE_INTERVAL_MIN, BuildConfig::SPIKE_INTERVAL_MAX);
+
+                Log("Emulating spike of %.2f ms", DurationMs);
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<size_t>(DurationMs)));
+
+                NextSpikeTime = GetSeconds() + (IntervalMs / 1000.0);
+            }
+        }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
