@@ -90,7 +90,6 @@ https://github.com/TLeonardUK/ds3os/blob/main/Source/Server/Config/RuntimeConfig
 Some basic setting you might need to change yourself:
 
 ```c++
-/*
 {
     "Advertise": true,//Showing your server in the Loader.exe
     "Announcements": [
@@ -130,10 +129,7 @@ Some basic setting you might need to change yourself:
     "WebUIServerPassword": "",//Password for the Web control panel.
     "WebUIServerUsername": ""//Username for the Web control panel.
 }
-*/
 ```
-
-
 
 # How do I build it?
 
