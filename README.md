@@ -87,9 +87,10 @@ The settings are all documented in the source code in this file, in future I'll 
 
 https://github.com/TLeonardUK/ds3os/blob/main/Source/Server/Config/RuntimeConfig.h
 
-Some basic setting:
+Some basic setting you might need to change yourself:
 
-```json
+```c++
+/*
 {
     "Advertise": true,//Showing your server in the Loader.exe
     "Announcements": [
@@ -129,6 +130,7 @@ Some basic setting:
     "WebUIServerPassword": "",//Password for the Web control panel.
     "WebUIServerUsername": ""//Username for the Web control panel.
 }
+*/
 ```
 
 
