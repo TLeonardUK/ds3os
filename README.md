@@ -1,6 +1,7 @@
 ![Dark Souls 3 - Open Server](https://github.com/TLeonardUK/ds3os/blob/main/Resources/banner.png?raw=true)
 
 # What is this project?
+
 An open source implementation of the dark souls 3 game server. 
 
 Idealistically made for the purpose of allow better alternatives to playing mods than getting your account banned and using the retail ban server. As well as opening up opportunities to improve player safety and choice, by allowing them to segregate themselves off from the pool of cheaters on retail, without loosing network functionality.
@@ -10,14 +11,17 @@ Idealistically made for the purpose of allow better alternatives to playing mods
 ![Build Status](https://github.com/TLeonardUK/ds3os/actions/workflows/ci.yml/badge.svg)
 
 # Can I use it with a pirated game?
+
 No, the server authenticates steam tickets. Please do not ask about piracy, steam emulators or the like, we have no interest in supporting them. 
 
 FROM SOFTWARE deserves your support too for the excellent work they do, please buy their games if you can.
 
 # Where can I download it?
+
 Downloads are available on the github releases page - https://github.com/TLeonardUK/ds3os/releases
 
 # How do I use it?
+
 Once built you should have a folder called Bin, there are 2 subfolders of relevance. Loader and Server. 
 
 First run the Server.exe in Server, this will start the actual custom server running on your computer. 
@@ -31,6 +35,7 @@ Servers can also be password protected if required by setting as password in Sav
 **NOTE**: The **steam** client (no login needed) must be installed when you run the **Server.exe**. Otherwise, **Server.exe** will fail to initialize.
 
 # What currently works?
+
 Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer match retail server behaviour and make some general improvements to the running of unoffical servers.
 
 - [x] Login, key exchange and network transport
@@ -57,12 +62,15 @@ Future roadmap:
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
 
 # Will this ban my account on the retail server?
+
 So far we've had several accounts using unoffical servers, for quite a while, and have not had any account penalized on the retail server. 
 
 So it seems safe enough. The only way you are going to get banned is if you do things that would normally get you banned then go back to the retail server - cheating and the like.
 
 # FAQ
+
 ## I launch the game but its unable to connect?
+
 There are a few different causes of this, the simplest one is to make sure you're running as admin, the launcher needs to patch the games memory to get it to connect to the new server, this requires admin privileges.
 
 If the server is being hosted by yourself and the above doesn't solve your issue, try these steps:
@@ -74,11 +82,59 @@ If the server is being hosted by yourself and the above doesn't solve your issue
 3. Its possible you don't have the configuration for the server setup correctly. After running the server once make sure to open the configuration file (Saved/config.json) and make sure its setup correctly (it will attempt to autoconfigure itself, but may get incorrect values if you have multiple network adapters). The most critical settings to get correct are ServerHostname and ServerPrivateHostname, these should be set to your WAN IP (the one you get from sites like https://whatismyip.com), and your LAN IP (the one you get from running ipconfig) respectively. If you are using LAN emulation software (eg. hamachi) you will need to set these to the appropriate hamachi IP.
 
 ## What do all the properties in the config file mean?
+
 The settings are all documented in the source code in this file, in future I'll write some more detailed documentation.
 
 https://github.com/TLeonardUK/ds3os/blob/main/Source/Server/Config/RuntimeConfig.h
 
+Some basic setting:
+
+```json
+{
+    "Advertise": true,//Showing your server in the Loader.exe
+    "Announcements": [
+            {
+                "Body": "The message in the menu when you logged in",
+                "Header": "The title"
+            }
+        ],
+    "AuthServerPort": 50000,//The port that the Authtication service run on.
+    "WebUIServerPort": 50005,//The port that the WebUI service run on.
+    "GameServerPort": 50010,//The port that the Gameserver service run on.
+    "MasterServerPort": 50020,//Don't change this.
+    "LoginServerPort": 50050,//The port that the Login service run on
+    //The "AuthServerPort","GameServerPort","LoginServerPort"
+    //needs to be accessible on WAN if you want player
+    //that is not on the same LAN the server is on to join the server.
+    //And if you want to control you Server using the web control panel,
+    //then your "WebUIServerPort" must be accessible too. 
+    "DisableCoop": false,//Sets to false to be able to place summon signs.
+    "DisableCoopAutoSummon": false,//Sets to false to enable auto 
+                               //summoning for coop(blue sentinels,etc)
+    "DisableInvasions": false,//Sets to false to enable invade.
+    "DisableInvasionAutoSummon": false,//Sets to false to enable auto 
+                                    //summoning for invasions
+                                    //(alrich faithful, watchdogs, etc).
+    "Password": "",//If set the user will need to enter a password to 
+                //recieve the keys to enter the server when its advertised.
+    "ServerDescription": "The description shown in the Loader.exe",
+    "ServerHostname": "",// Hostname of the server that should be used for 
+                         //connecting.If none is supplied then this wil be 
+                         //the external ip of the server.
+    "ServerName": "The server name shown in the Loader.exe",
+    "ServerPrivateHostname": "",// Hostname of the server that should be 
+                               //used for connecting if behind the same 
+                               //external ip.If none is supplied then 
+                              //this will be the private ip of the server.
+    "WebUIServerPassword": "",//Password for the Web control panel.
+    "WebUIServerUsername": ""//Username for the Web control panel.
+}
+```
+
+
+
 # How do I build it?
+
 Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely be moved over to something platform agnostic like cmake.
 
 Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visual studio as well, as it is used for managing a few of the dependencies, by doing the following:
@@ -91,6 +147,7 @@ Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visu
 Building the project should now require opening the Source/DS3OpenServer.sln and building it. To uninstall vcpkg use the `.\vcpkg integrate remove` command.
 
 # Whats in the repository?
+
 ```
 /
 ├── Config/               Contains any useful configuration material, server config files and alike.
@@ -104,6 +161,7 @@ Building the project should now require opening the Source/DS3OpenServer.sln and
 ```
 
 # How can I help?
+
 Check our the issues page, or send me a message for suggestions on what can be done.
 
 Right now there are a few server calls we either have stubbed out or returning dummy information, implementing
@@ -113,6 +171,7 @@ There are also a lot of protobuf fields that are still unknown and use constant 
 server, determining what they represent would be a good improvement.
 
 # Credit
+
 A lot of the information needed to produce this implementation has been figured out by the community. 
 Especially the members of the ?ServerName? souls modding discord.
 
