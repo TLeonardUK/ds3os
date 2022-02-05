@@ -32,12 +32,15 @@ namespace Loader
 
         private string MachinePrivateIp = "";
         private string MachinePublicIp = "";
+        private int columnSortLastClickedItem = 1;
+        private bool columnSortRowsAscending = true;
 
         public MainForm()
         {
             InitializeComponent();
 
-            ImportedServerListView.ListViewItemSorter = new ServerListSorter();
+            ImportedServerListView.ListViewItemSorter = new ServerListSorter(1, true);
+            ImportedServerListView.ColumnClick += new ColumnClickEventHandler(handleColumnClick);
 
             MachinePrivateIp = NetUtils.GetMachineIPv4(false);
             MachinePublicIp = NetUtils.GetMachineIPv4(true);
@@ -51,6 +54,17 @@ namespace Loader
             ProgramSettings.Default.minimum_players = (int)minimumPlayersBox.Value;
 
             ProgramSettings.Default.Save();
+        }
+
+        public void handleColumnClick(object o, ColumnClickEventArgs e)
+        {
+            bool newAscending = e.Column == columnSortLastClickedItem
+                ? (columnSortRowsAscending ? false : true)
+                : true;
+            columnSortLastClickedItem = e.Column;
+            columnSortRowsAscending = newAscending;
+            ImportedServerListView.ListViewItemSorter = new ServerListSorter(e.Column, newAscending);
+            ImportedServerListView.Sort();
         }
 
         private void ValidateUI()
@@ -697,6 +711,15 @@ namespace Loader
 
     class ServerListSorter : System.Collections.IComparer
     {
+        public int column = 1;
+        public bool asc = true;
+
+        public ServerListSorter(int column, bool asc)
+        {
+            this.column = column;
+            this.asc = asc;
+        }
+
         public int Compare(object x, object y)
         {
             ListViewItem a = (ListViewItem)x;
@@ -706,11 +729,21 @@ namespace Loader
             {
                 int aPlayerCount = 0;
                 int bPlayerCount = 0;
+                if (int.TryParse(a.SubItems[this.column].Text, out aPlayerCount)
+                    && int.TryParse(b.SubItems[this.column].Text, out bPlayerCount))
 
-                int.TryParse(a.SubItems[1].Text, out aPlayerCount);
-                int.TryParse(b.SubItems[1].Text, out bPlayerCount);
+                {
+                    return asc
+                        ? bPlayerCount - aPlayerCount
+                        : aPlayerCount - bPlayerCount;
+                }
+                else
+                {
+                    return asc
+                        ? string.Compare(a.SubItems[this.column].Text, b.SubItems[this.column].Text)
+                        : string.Compare(b.SubItems[this.column].Text, a.SubItems[this.column].Text);
+                }
 
-                return bPlayerCount - aPlayerCount;
             }
             else
             {

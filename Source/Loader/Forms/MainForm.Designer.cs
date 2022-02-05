@@ -163,7 +163,6 @@ namespace Loader
             this.columnHeader2});
             this.ImportedServerListView.FullRowSelect = true;
             this.ImportedServerListView.GridLines = true;
-            this.ImportedServerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ImportedServerListView.HideSelection = false;
             listViewItem1.StateImageIndex = 0;
             this.ImportedServerListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
