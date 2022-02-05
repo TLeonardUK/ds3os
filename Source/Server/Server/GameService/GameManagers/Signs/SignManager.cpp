@@ -114,6 +114,8 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
 
     uint32_t RemainingSignCount = Request->max_signs();
 
+    Frpg2RequestMessage::GetSignResult* SignResult = Response.mutable_get_sign_result();
+
     // Grab as many recent signs as we can from the cache that match our matching criteria.
     for (int i = 0; i < Request->search_areas_size() && RemainingSignCount > 0; i++)
     {
@@ -133,8 +135,6 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
         std::vector<std::shared_ptr<SummonSign>> AreaSigns = LiveCache.GetRecentSet(AreaId, GatherCount, [this, &Player, &Request](const std::shared_ptr<SummonSign>& Sign) { 
             return CanMatchWith(Request->matching_parameter(), Sign->MatchingParameters, Sign->IsRedSign);
         });
-
-        Frpg2RequestMessage::GetSignResult* SignResult = Response.mutable_get_sign_result();
 
         for (std::shared_ptr<SummonSign>& Sign : AreaSigns)
         {

@@ -10,6 +10,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 // Abstract class that just holds various build-time 
 // configuration variables. Might be worth dumping this
@@ -85,5 +86,9 @@ public:
     inline static const double LATENCY_MINIMUM = 300.0f;
     inline static const double LATENCY_VARIANCE = 10.0f;
 
+    // When running as a client emulator this is how many clients to spawn.
+    inline static const size_t CLIENT_EMULATOR_COUNT = 128;
+
+    constexpr inline static const bool AUTH_ENABLED = true;
 
 };

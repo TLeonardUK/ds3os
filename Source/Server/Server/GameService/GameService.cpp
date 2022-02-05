@@ -274,6 +274,18 @@ std::shared_ptr<GameClient> GameService::FindClientByPlayerId(uint32_t PlayerId)
     return nullptr;
 }
 
+std::shared_ptr<GameClient> GameService::FindClientBySteamId(const std::string& SteamId)
+{
+    for (std::shared_ptr<GameClient>& Client : Clients)
+    {
+        if (Client->GetPlayerState().SteamId == SteamId)
+        {
+            return Client;
+        }
+    }
+    return nullptr;
+}
+
 std::vector<std::shared_ptr<GameClient>> GameService::FindClients(std::function<bool(const std::shared_ptr<GameClient>&)> Predicate)
 {
     std::vector<std::shared_ptr<GameClient>> Result;

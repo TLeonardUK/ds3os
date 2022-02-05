@@ -180,5 +180,6 @@ private:
 
     // Use for internal bookkeeping when sending/recieving the packet.
     double SendTime;
+    double RawSendTime;
 
 };

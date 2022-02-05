@@ -40,7 +40,7 @@ public:
     Client();
     ~Client();
 
-    bool Init();
+    bool Init(bool DisablePersistentData = false, size_t InstanceId = 0);
     bool Term();
     void RunUntilQuit();
 
@@ -64,7 +64,7 @@ private:
         GameServer_RequestUpdatePlayerStatus,
         GameServer_RequestUpdatePlayerCharacter,
         GameServer_RequestGetRightMatchingArea,
-        GameServer_Experiment,
+        GameServer_Idle,
         GameServer_GatherStatistics,
 
         Complete
@@ -86,7 +86,7 @@ private:
     void Handle_GameServer_RequestUpdatePlayerStatus();
     void Handle_GameServer_RequestUpdatePlayerCharacter();
     void Handle_GameServer_RequestGetRightMatchingArea();
-    void Handle_GameServer_Experiment();
+    void Handle_GameServer_Idle();
     void Handle_GameServer_GatherStatistics();
 
     void ChangeState(ClientState State);
@@ -94,6 +94,16 @@ private:
     void WaitForNextMessage(std::shared_ptr<NetConnection> Connection, std::shared_ptr<Frpg2MessageStream> Stream, Frpg2Message& Output);
     void SendAndAwaitWaitForReply(google::protobuf::MessageLite* Request, Frpg2ReliableUdpMessage& Response);
     void SendAndAwaitWaitForReply(google::protobuf::MessageLite* Request, google::protobuf::MessageLite* Response);
+
+    std::string GetName();
+
+    template <typename ...Args>
+    void Abort(const char* Format, Args... args)
+    {
+        ErrorS(GetName().c_str(), Format, args...);
+        throw std::exception();
+    }
+
 
 private:
 
@@ -118,6 +128,9 @@ private:
 
     std::filesystem::path SavedPath;
     std::filesystem::path DatabasePath;
+
+    bool DisablePersistentData = false;
+    size_t InstanceId = 0;
 
     std::string ClientStreamId = "";
     int ClientAppVersion = 114;
@@ -147,6 +160,6 @@ private:
     //std::string ServerPublicKey = "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEA1Nuliw8Rvkt40+0OKoW0JpuSIU/ErQwjzRicZV9JDrCikiTIqoAh\nvBj3DcHwGX1d6T5PY27E4SHa24eRxDetMPEYKeclUeJ0jB07lCtH9Y0zMWl1PMfo\nlIgcm5VKfz+Ua+Ny6klgx1y3ODxMS9g0k11t1WsFtccr464lfP4i1Fgz1/C2Jmgu\n7EV+YdIYkOqT+NJtJG5Z75guq/rTQ85/tVuBKa9dvGIaAqG+nTVlJ2+vzKhjPVXJ\n6AwzWdAbG802uzNC9pk+LEQ+YZXCZSHPMNKz6IwXjlagqDxl2w0rg6dEEFxRY0lm\nS0nqh01eO9pYZA2k0TmpeWHhrKJrnvrKFwIDAQAB\n-----END RSA PUBLIC KEY-----\n";
 
     std::string ServerIP = "127.0.0.1";
-    std::string ServerPublicKey = "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAntQkh+BNWZBEJYjwoFBXAKj1BhJebYMUf8yK5eJQ11JSWVnT8HyF\nsYHNESXzFwUCKvGn3XF+EImks47iNCetEGj87nyALSdqAjaQT29uzN4eDTV+pyUF\n40wWjhZR+sk2NgSe9f395xoHAXJiFGE9f9LLa+U4DA5TEruTEyhYg4Nb0a7rzdP7\nrCcCGZxM59VPlTRRaUlJpA8JZaLW7mtCwN5vUcYBLzMdeidR6hbY87+on9P4s32g\nf8BzFNJ2G9s50zjiCz+vGKXueZYy2qgXyA1jnOpChqbFbs/TKZJnsH9Q8Jbl3zM/\nPwJRFFJpnGMO+JTCHKLycvzt1OIJf850TwIDAQAB\n-----END RSA PUBLIC KEY-----\n";
+    std::string ServerPublicKey = "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAwUq7HWSq4/nYAsZPxp6QT/3noTvB6YnnVo3EgAI6eRhuztMvikZ6\nzMvjirSEeqENlDHWH5jDrTjK/KYvIcqLU+MaSzMTs/oNxjstlAfqDY9fuQqjagHM\nRHubAh4ubKfcsoO8tI1GB9rD9b++aA2AYIKhP1w/N9qZQmBqB2xaAL7//Ok6aoup\nUd2IRo2m6U3QsjKkYqg5PkiDWJnwlUkTKRsRfwcgEtGHI3ee7mRDZIvEdHjFfwGh\nl279Eq9LrTXG5aN0aXmd4DGmPFch4eI51/L6Vki4DXpmpyNfI7EQiunW2ezA9Qe3\nuueV4NlBwSJBx6IcT35m1yjW+OwvjbHq2wIDAQAB\n-----END RSA PUBLIC KEY-----\n";
 
 };

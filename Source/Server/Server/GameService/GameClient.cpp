@@ -104,6 +104,8 @@ bool GameClient::Poll()
 
 bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
 {
+    //WarningS(GetName().c_str(), "-> %s", Message.Protobuf->GetTypeName().c_str());
+
     const std::vector<std::shared_ptr<GameManager>>& Managers = Service->GetManagers();
     for (auto& Manager : Managers)
     {
@@ -134,12 +136,12 @@ void GameClient::SendTextMessage(const std::string& TextMessage)
 {
     Frpg2RequestMessage::ManagementTextMessage Message;
     Message.set_push_message_id(Frpg2RequestMessage::PushID_ManagementTextMessage);
-    Message.set_unknown_2(TextMessage);
+    Message.set_message(TextMessage);
     Message.set_unknown_4(0);
     Message.set_unknown_5(0);
 
     // Date makes no difference, just hard-code for now.
-    Frpg2PlayerData::DateTime* DateTime = Message.mutable_unknown_3();
+    Frpg2PlayerData::DateTime* DateTime = Message.mutable_timestamp();
     DateTime->set_year(2021);
     DateTime->set_month(1);
     DateTime->set_day(1);

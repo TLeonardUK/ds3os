@@ -9,10 +9,12 @@
 
 #include "Server/Server.h"
 #include "Client/Client.h"
+#include "Config/BuildConfig.h"
 #include "Core/Utils/Logging.h"
 #include "Platform/Platform.h"
 
 #include <filesystem>
+#include <thread>
 
 #include <steam/steam_api.h>
 #include <steam/steam_gameserver.h>
@@ -78,17 +80,34 @@ int main(int argc, char* argv[])
     // TODO: Also do less crappy arg parsing.
     if (start_as_client_emulator)
     {
-        Client ClientInstance;
-        if (!ClientInstance.Init())
+        std::array<std::thread, BuildConfig::CLIENT_EMULATOR_COUNT> ClientThreads;
+
+        for (size_t i = 0; i < BuildConfig::CLIENT_EMULATOR_COUNT; i++)
         {
-            Error("Client emulator failed to initialize.");
-            return 1;
+            ClientThreads[i] = std::thread([i]() {
+
+                Client ClientInstance;
+
+                if (!ClientInstance.Init(true, i))
+                {
+                    Error("Client emulator failed to initialize.");
+                    return;
+                }
+
+                ClientInstance.RunUntilQuit();
+                
+                if (!ClientInstance.Term())
+                {
+                    Error("Client emulator failed to terminate.");
+                    return;
+                }
+
+            });            
         }
-        ClientInstance.RunUntilQuit();
-        if (!ClientInstance.Term())
+
+        for (size_t i = 0; i < BuildConfig::CLIENT_EMULATOR_COUNT; i++)
         {
-            Error("Client emulator failed to terminate.");
-            return 1;
+            ClientThreads[i].join();
         }
     }
     else

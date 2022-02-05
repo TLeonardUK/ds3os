@@ -117,7 +117,7 @@ protected:
     // TODO: Need to handle these rolling over. They have 12 bits so 
     //       it shouldn't happen for a while, but still needs fixing.
 
-    uint32_t SequenceIndex = START_SEQUENCE_INDEX;
+    uint32_t SequenceIndex = 0;
     uint32_t SequenceIndexAcked = 0;
 
     uint32_t RemoteSequenceIndex = 0;
@@ -149,18 +149,18 @@ protected:
     double ResendSynTimer = 0.0;
 
     // We stop sending packets and queue them up until we start recieving acks.
-    const int MAX_PACKETS_IN_FLIGHT = 20;
+    const int MAX_PACKETS_IN_FLIGHT = 64;
 
     // We reeeeeeeaaaallly want this to be exponential backoff, but this works for now.
-    const float RETRANSMIT_INTERVAL = 5.0;
+    const float RETRANSMIT_INTERVAL = 0.5f;             // 500ms
 
-    const float RETRANSMIT_CYCLE_INTERVAL = 0.5;
+    const float RETRANSMIT_CYCLE_INTERVAL = 0.2f;       // 200ms
 
-    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 32;
+    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 64;        
 
     const float RESEND_SYN_INTERVAL = 0.5f;
 
-    const double MIN_TIME_BETWEEN_RESEND_ACK = 0.1;
+    const double MIN_TIME_BETWEEN_RESEND_ACK = 0.05;
 
     // How many seconds to wait for a graceful disconnection.
     const double CONNECTION_CLOSE_TIMEOUT = 3.0;
@@ -174,10 +174,9 @@ protected:
     // Bottom quater ack range, used to handle overflows.
     const uint32_t MAX_ACK_VALUE_BOTTOM_QUART = (4096 / 4) * 1;
 
-    // Starting sequence index. TCP protocol expects this to be 
-    // randomised but there isn't really any benefit to that.
-    const uint32_t START_SEQUENCE_INDEX = 4000;
-
     double CloseTimer = 0.0f;
+
+    uint32_t LastPacketLocalAck = 0;
+    uint32_t LastPacketRemoteAck = 0;
 
 };

@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <memory>
 #include <unordered_set>
+#include <mutex>
 
 template <typename... Parameters>
 class Delegate
@@ -59,6 +60,8 @@ public:
     DelegatePtr Register(const typename DelegateClass::CallbackFunctionType& Function)
     {
         auto Deleter = [this](DelegateClass* ToDelete) mutable {
+            std::scoped_lock lock(Mutex);
+
             if (auto iter = DelegateSet.find(ToDelete); iter != DelegateSet.end())
             {
                 DelegateSet.erase(iter);
@@ -71,6 +74,8 @@ public:
                 OnLastUnregistered();
             }
         };
+
+        std::scoped_lock lock(Mutex);
 
         DelegatePtr Result(new DelegateClass(Function), Deleter);
 
@@ -87,6 +92,8 @@ public:
     template<typename... Parameters>
     void Broadcast(Parameters... Args)
     {
+        std::scoped_lock lock(Mutex);
+
         // We generate a copy of the map before iterating over it to prevent issues in situations
         // where we unregister during the invokation. This needs handling in a better way, this
         // is a waste of performance. 
@@ -99,21 +106,29 @@ public:
 
     void HookFirstRegistered(const HookFunction& Function)
     {
+        std::scoped_lock lock(Mutex);
+
         FirstRegisteredHook = Function;
     }
 
     void UnhookFirstRegistered()
     {
+        std::scoped_lock lock(Mutex);
+
         FirstRegisteredHook = nullptr;
     }
 
     void HookLastUnregistered(const HookFunction& Function)
     {
+        std::scoped_lock lock(Mutex);
+
         LastUnregisteredHook = Function;
     }
 
     void UnhookLastUnregistered()
     {
+        std::scoped_lock lock(Mutex);
+
         LastUnregisteredHook = nullptr;
     }
 
@@ -121,6 +136,8 @@ protected:
 
     void OnFirstRegistered() 
     {
+        std::scoped_lock lock(Mutex);
+
         if (FirstRegisteredHook)
         {
             FirstRegisteredHook();
@@ -129,6 +146,8 @@ protected:
     
     void OnLastUnregistered()
     {
+        std::scoped_lock lock(Mutex);
+
         if (LastUnregisteredHook)
         {
             LastUnregisteredHook();
@@ -136,6 +155,7 @@ protected:
     }
 
 private:
+    std::recursive_mutex Mutex;
     std::unordered_set<DelegateClass*> DelegateSet;
     HookFunction FirstRegisteredHook;
     HookFunction LastUnregisteredHook;

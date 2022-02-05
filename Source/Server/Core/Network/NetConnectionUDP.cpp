@@ -81,6 +81,19 @@ bool NetConnectionUDP::Listen(int Port)
     }
 #endif
 
+    // Boost buffer sizes 
+    int BufferSize = 16 * 1024 * 1024;
+    if (setsockopt(Socket, SOL_SOCKET, SO_RCVBUF, (const char*)&BufferSize, sizeof(BufferSize)))
+    {
+        Error(GetName().c_str(), "Failed to set socket options: SO_RCVBUF");
+        return false;
+    }
+    if (setsockopt(Socket, SOL_SOCKET, SO_SNDBUF, (const char*)&BufferSize, sizeof(BufferSize)))
+    {
+        Error(GetName().c_str(), "Failed to set socket options: SO_SNDBUF");
+        return false;
+    }
+
     struct sockaddr_in ListenAddress;
     ListenAddress.sin_family = AF_INET;
     ListenAddress.sin_addr.s_addr = INADDR_ANY;
@@ -163,6 +176,19 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         return false;
     }
 #endif
+
+    // Boost buffer sizes 
+    int BufferSize = 16 * 1024 * 1024;
+    if (setsockopt(Socket, SOL_SOCKET, SO_RCVBUF, (const char*)&BufferSize, sizeof(BufferSize)))
+    {
+        Error(GetName().c_str(), "Failed to set socket options: SO_RCVBUF");
+        return false;
+    }
+    if (setsockopt(Socket, SOL_SOCKET, SO_SNDBUF, (const char*)&BufferSize, sizeof(BufferSize)))
+    {
+        Error(GetName().c_str(), "Failed to set socket options: SO_SNDBUF");
+        return false;
+    }
 
     struct sockaddr_in ListenAddress;
     ListenAddress.sin_family = AF_INET;
@@ -354,67 +380,70 @@ bool NetConnectionUDP::Pump()
     
     if (!bChild)
     {
-        // Recieve any pending datagrams and route to the appropriate child recieve queue.
-
-        socklen_t SourceAddressSize = sizeof(struct sockaddr);
-        sockaddr_in SourceAddress = { 0 };
-
-        int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), 0, (sockaddr*)&SourceAddress, &SourceAddressSize);
-        if (Result < 0)
+        while (true)
         {
-    #if defined(_WIN32)
-            int error = WSAGetLastError();
-    #else
-            int error = errno;
-    #endif
+            // Recieve any pending datagrams and route to the appropriate child recieve queue.
 
-            // Blocking is fine, just return.
-    #if defined(_WIN32)
-            if (error == WSAEWOULDBLOCK)
-    #else        
-            if (error == EWOULDBLOCK || error == EAGAIN)
-    #endif
+            socklen_t SourceAddressSize = sizeof(struct sockaddr);
+            sockaddr_in SourceAddress = { 0 };
+
+            int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), 0, (sockaddr*)&SourceAddress, &SourceAddressSize);
+            if (Result < 0)
             {
+        #if defined(_WIN32)
+                int error = WSAGetLastError();
+        #else
+                int error = errno;
+        #endif
+
+                // Blocking is fine, just return.
+        #if defined(_WIN32)
+                if (error == WSAEWOULDBLOCK)
+        #else        
+                if (error == EWOULDBLOCK || error == EAGAIN)
+        #endif
+                {
+                    break;
+                }
+
+                ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
                 return false;
             }
-
-            ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
-            return false;
-        }
-        else if (Result > 0)
-        {
-            std::vector<uint8_t> Packet(RecieveBuffer.data(), RecieveBuffer.data() + Result);
-
-            bool bDropPacket = false;
-
-            if constexpr (BuildConfig::EMULATE_DROPPED_PACKETS)
+            else if (Result > 0)
             {
-                if (FRandRange(0.0f, 1.0f) <= BuildConfig::DROP_PACKET_PROBABILITY)
+                std::vector<uint8_t> Packet(RecieveBuffer.data(), RecieveBuffer.data() + Result);
+
+                bool bDropPacket = false;
+
+                if constexpr (BuildConfig::EMULATE_DROPPED_PACKETS)
                 {
-                    bDropPacket = true;
+                    if (FRandRange(0.0f, 1.0f) <= BuildConfig::DROP_PACKET_PROBABILITY)
+                    {
+                        bDropPacket = true;
+                    }
                 }
+
+                if (!bDropPacket)
+                {
+                    double Latency = BuildConfig::LATENCY_MINIMUM + FRandRange(-BuildConfig::LATENCY_VARIANCE, BuildConfig::LATENCY_VARIANCE);
+
+                    PendingPacket Pending;
+                    Pending.Data = Packet;
+                    Pending.SourceAddress = SourceAddress;
+                    Pending.ProcessTime = GetSeconds() + (Latency / 1000.0f);
+
+                    if constexpr (BuildConfig::EMULATE_LATENCY)
+                    {
+                        PendingPackets.push_back(Pending);
+                    }
+                    else
+                    {
+                        ProcessPacket(Pending);
+                    }
+                }
+
+                //LogS(GetName().c_str(), "<< %i", Result);
             }
-
-            if (!bDropPacket)
-            {
-                double Latency = BuildConfig::LATENCY_MINIMUM + FRandRange(-BuildConfig::LATENCY_VARIANCE, BuildConfig::LATENCY_VARIANCE);
-
-                PendingPacket Pending;
-                Pending.Data = Packet;
-                Pending.SourceAddress = SourceAddress;
-                Pending.ProcessTime = GetSeconds() + (Latency / 1000.0f);
-
-                if constexpr (BuildConfig::EMULATE_LATENCY)
-                {
-                    PendingPackets.push_back(Pending);
-                }
-                else
-                {
-                    ProcessPacket(Pending);
-                }
-            }
-
-            //LogS(GetName().c_str(), "<< %i", Result);
         }
     }
 

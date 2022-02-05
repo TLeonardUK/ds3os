@@ -236,17 +236,20 @@ bool AuthClient::Poll()
                 sscanf(SteamId.c_str(), "%016llx", &SteamIdInt);
                 CSteamID SteamIdStruct(SteamIdInt);                
 
-                int AuthResult = SteamGameServer()->BeginAuthSession(Ticket.data(), (int)Ticket.size(), SteamIdStruct);
-                if (AuthResult != k_EBeginAuthSessionResultOK)
+                if constexpr (BuildConfig::AUTH_ENABLED)
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as steam ticket authentication failed with error %i.", AuthResult);
-                    return true;
+                    int AuthResult = SteamGameServer()->BeginAuthSession(Ticket.data(), (int)Ticket.size(), SteamIdStruct);
+                    if (AuthResult != k_EBeginAuthSessionResultOK)
+                    {
+                        WarningS(GetName().c_str(), "Disconnecting client as steam ticket authentication failed with error %i.", AuthResult);
+                        return true;
+                    }
+                    else
+                    {
+                        LogS(GetName().c_str(), "Client steam ticket authenticated successfully.");
+                    }
+                    SteamGameServer()->EndAuthSession(SteamIdStruct);
                 }
-                else
-                {
-                    LogS(GetName().c_str(), "Client steam ticket authenticated successfully.");
-                }
-                SteamGameServer()->EndAuthSession(SteamIdStruct);
 
                 // If user IP is on a private network, we can assume they are on our LAN
                 // and return our internal IP address.

@@ -9,6 +9,7 @@
 
 #include "Server/GameService/GameManagers/Boot/BootManager.h"
 #include "Server/GameService/GameClient.h"
+#include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
 
@@ -17,6 +18,8 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Strings.h"
+
+#include "Core/Network/NetConnection.h"
 
 BootManager::BootManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)
@@ -43,7 +46,24 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
     PlayerState& State = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestWaitForUserLogin* Request = (Frpg2RequestMessage::RequestWaitForUserLogin*)Message.Protobuf.get();
-    State.SteamId = Request->steam_id();
+    
+    std::string SteamId = Request->steam_id();
+
+#ifdef _DEBUG
+
+    // In debug if a stream id is already signed in we make a duplicate player profile, this allows us to have multiple of the 
+    // same steam id connected without screwin up logic everywhere else.
+    std::shared_ptr<GameService> Service = ServerInstance->GetService<GameService>();
+    std::string BaseSteamId = SteamId;
+    size_t ProfileInstance = 1;
+    while (Service->FindClientBySteamId(SteamId) != nullptr)
+    {
+        SteamId = StringFormat("%s_%i", BaseSteamId.c_str(), ProfileInstance++);
+    }
+
+#endif
+
+    State.SteamId = SteamId;
 
     // Resolve steam id to player id. If no player recorded with it, create a new one.
     if (!ServerInstance->GetDatabase().FindOrCreatePlayer(State.SteamId, State.PlayerId))
@@ -53,6 +73,9 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
     }
 
     LogS(Client->GetName().c_str(), "Steam id '%s' has logged in as player %i.", State.SteamId.c_str(), State.PlayerId);
+    LogS(Client->GetName().c_str(), "Renaming connection to '%s'.", State.SteamId.c_str());
+
+    Client->Connection->Rename(State.SteamId);
 
     // Send back response with our new player id.
     Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;

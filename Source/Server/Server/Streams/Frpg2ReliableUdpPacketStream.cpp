@@ -60,6 +60,7 @@ bool Frpg2ReliableUdpPacketStream::Send(const Frpg2ReliableUdpPacket& Input)
     {
         Frpg2ReliableUdpPacket SentPacket = Input;
         SentPacket.SendTime = GetSeconds();
+        SentPacket.RawSendTime = 0.0f;
 
         // Opcode note set, we fill in the opcode and ack counters then
         // otherwise we assume the sender has dealt with it.
@@ -143,6 +144,8 @@ bool Frpg2ReliableUdpPacketStream::EncodeReliablePacket(const Frpg2ReliableUdpPa
     if (Input.Header.opcode == Frpg2ReliableUdpOpCode::SYN)
     {
         Frpg2ReliableUdpInitialData InitialData;
+        Ensure(SteamId.size() <= sizeof(InitialData.steam_id));
+
         strcpy(InitialData.steam_id, SteamId.c_str());
         strcpy(InitialData.steam_id_copy, SteamId.c_str());
 
@@ -227,6 +230,7 @@ void Frpg2ReliableUdpPacketStream::HandleIncoming()
         }
         else
         {
+            WarningS(Connection->GetName().c_str(), "Ignoring packet %i not expected next remote sequence index %i, this isn't expected it should have been handled before being added to receive queue.", Local, GetNextRemoteSequenceIndex());
             break;
         }
     }
@@ -264,6 +268,9 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
 
     uint32_t LocalAck, RemoteAck;
     Packet.Header.GetAckCounters(LocalAck, RemoteAck);
+
+    LastPacketLocalAck = LocalAck;
+    LastPacketRemoteAck = RemoteAck;
 
     if constexpr (BuildConfig::EMIT_RELIABLE_UDP_PACKET_STREAM)
     {
@@ -422,6 +429,8 @@ void Frpg2ReliableUdpPacketStream::Handle_HBT(const Frpg2ReliableUdpPacket& Pack
     uint32_t InLocalAck, InRemoteAck;
     Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
 
+    uint32_t SequenceIndexAckedOriginal = SequenceIndexAcked;
+    
     // TODO: Handle overflow - This is super crude,  do it in a better way.
     if (SequenceIndexAcked > MAX_ACK_VALUE_TOP_QUART && InRemoteAck < MAX_ACK_VALUE_BOTTOM_QUART)
     {
@@ -516,7 +525,7 @@ void Frpg2ReliableUdpPacketStream::Handle_DAT_ACK(const Frpg2ReliableUdpPacket& 
     {
         SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
     }
-    
+
     // Send an ACK for this DAT_ACK.
     Send_ACK(InLocalAck);
 
@@ -616,9 +625,6 @@ void Frpg2ReliableUdpPacketStream::Send_HBT()
 
 bool Frpg2ReliableUdpPacketStream::SendRaw(const Frpg2ReliableUdpPacket& Input)
 {
-    uint32_t LocalAck, RemoteAck;
-    Input.Header.GetAckCounters(LocalAck, RemoteAck);
-
     Ensure(Input.Header.opcode != Frpg2ReliableUdpOpCode::Unset);
 
     if constexpr (BuildConfig::EMIT_RELIABLE_UDP_PACKET_STREAM)
@@ -655,7 +661,7 @@ bool Frpg2ReliableUdpPacketStream::SendRaw(const Frpg2ReliableUdpPacket& Input)
 
 void Frpg2ReliableUdpPacketStream::Reset()
 {
-    SequenceIndex = START_SEQUENCE_INDEX;
+    SequenceIndex = rand() % 4096;
     SequenceIndexAcked = 0;
     RemoteSequenceIndex = 0;
     RemoteSequenceIndexAcked = 0;
@@ -693,17 +699,18 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
     double CurrentTime = GetSeconds();
     if (!IsRetransmitting)
     {
-        for (auto iter = RetransmitBuffer.begin(); iter != RetransmitBuffer.end(); iter++)
+        if (RetransmitBuffer.size() > 0)
         {
-            Frpg2ReliableUdpPacket& Packet = *iter;
+            Frpg2ReliableUdpPacket& Packet = RetransmitBuffer[0];
 
             uint32_t InLocalAck, InRemoteAck;
             Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
 
             double ElapsedTime = (CurrentTime - Packet.SendTime);
+            double RawElapsedTime = (CurrentTime - Packet.RawSendTime);
             if (ElapsedTime > RETRANSMIT_INTERVAL)
             {
-                VerboseS(Connection->GetName().c_str(), "Starting retransmit as we have unacknowledged packets (packet %i).", InLocalAck);
+                VerboseS(Connection->GetName().c_str(), "Starting retransmit as we have unacknowledged packets (packet %i, last-ack %i, sent %.2f s, raw sent %.2f s).", InLocalAck, SequenceIndexAcked, ElapsedTime, RawElapsedTime);
 
                 SendRaw(Packet);
 
@@ -719,6 +726,7 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
     else
     {
         double ElapsedTime = (CurrentTime - RetransmissionTimer);
+        double ElapsedLastPacketTime = (CurrentTime - LastPacketRecievedTime);
 
         if (RetransmittingIndex > MAX_ACK_VALUE_TOP_QUART && SequenceIndexAcked < MAX_ACK_VALUE_BOTTOM_QUART ||
             SequenceIndexAcked >= RetransmittingIndex)
@@ -728,7 +736,9 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
         }
         else if (ElapsedTime > RETRANSMIT_CYCLE_INTERVAL)
         {
-            LogS(Connection->GetName().c_str(), "Retransmitting packet, initial retransmit has not been acknowledged: RetransmittingIndex=%u SequenceIndexAcked=%u MAX_ACK_VALUE_TOP_QUART=%u MAX_ACK_VALUE_BOTTOM_QUART=%u RetransmitAttempts=%u ElapsedTime=%f", RetransmittingIndex, SequenceIndexAcked, MAX_ACK_VALUE_TOP_QUART, MAX_ACK_VALUE_BOTTOM_QUART, RetransmitAttempts, ElapsedTime);
+            LogS(Connection->GetName().c_str(), 
+                "Retransmitting packet, initial retransmit has not been acknowledged: RetransmittingIndex=%u SequenceIndexAcked=%u RetransmitAttempts=%u ElapsedTime=%f LastHeardFrom=%f LastPacketLocalAck=%u LastPacketRemoteAck=%u", 
+                RetransmittingIndex, SequenceIndexAcked, RetransmitAttempts, ElapsedTime, ElapsedLastPacketTime, LastPacketLocalAck, LastPacketRemoteAck);
             RetransmissionTimer = GetSeconds();
 
             RetransmitAttempts++;
@@ -749,6 +759,7 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
     while (!IsRetransmitting && SendQueue.size() > 0 && RetransmitBuffer.size() < MAX_PACKETS_IN_FLIGHT)
     {
         Frpg2ReliableUdpPacket Packet = SendQueue[0];
+        Packet.RawSendTime = GetSeconds();
         SendQueue.erase(SendQueue.begin());
         RetransmitBuffer.push_back(Packet);
 

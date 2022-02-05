@@ -74,6 +74,11 @@ public:
     }
 
     std::shared_ptr<GameClient> FindClientByPlayerId(uint32_t PlayerId);
+
+    // Be very careful using this, we manipulate steam-ids in debug to allow multiple 
+    // instance of the same player to be active in the game. Use FindClientByPlayerId instead.
+    std::shared_ptr<GameClient> FindClientBySteamId(const std::string& SteamId);
+    
     std::vector<std::shared_ptr<GameClient>> FindClients(std::function<bool(const std::shared_ptr<GameClient>&)> Predicate);
     std::vector<std::shared_ptr<GameClient>> GetClients() { return Clients; }
 
