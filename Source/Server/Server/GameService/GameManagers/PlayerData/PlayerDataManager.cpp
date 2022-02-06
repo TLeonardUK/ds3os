@@ -145,7 +145,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         OnlineAreaId AreaId = static_cast<OnlineAreaId>(State.PlayerStatus.player_location().online_area_id());
         if (AreaId != State.CurrentArea && AreaId != OnlineAreaId::None)
         {
-            LogS(Client->GetName().c_str(), "User has entered '%s'", GetEnumString(AreaId).c_str());
+            VerboseS(Client->GetName().c_str(), "User has entered '%s'", GetEnumString(AreaId).c_str());
             State.CurrentArea = AreaId;
         }
     }
@@ -159,7 +159,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
             bool NewState = State.PlayerStatus.player_status().is_invadable();
             if (NewState != State.IsInvadable)
             {
-                LogS(Client->GetName().c_str(), "User is now %s", NewState ? "invadable" : "no longer invadable");
+                VerboseS(Client->GetName().c_str(), "User is now %s", NewState ? "invadable" : "no longer invadable");
                 State.IsInvadable = NewState;
             }
         }

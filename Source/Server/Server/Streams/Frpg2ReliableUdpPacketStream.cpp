@@ -280,16 +280,13 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
     // Check sequence index to prune duplicate / out of order for relevant packets.
     if (IsOpcodeSequenced(Packet.Header.opcode))
     {
+        bool IsInCorrectSequence = false;
+
         if (State != Frpg2ReliableUdpStreamState::Established)
         {
-            // TODO: Handle situation where the handshake is completed but we recieve a following
-            // packet out of order.
-            WarningS(Connection->GetName().c_str(), "Recieved sequenced packets before connection is established, this is not allowed. ");
-            InErrorState = true;
-            return;
+            WarningS(Connection->GetName().c_str(), "Recieved sequenced packet (type %i) before connection is established, this is not allowed, dropping packet.", Packet.Header.opcode);
+            IsInCorrectSequence = true;
         }
-
-        bool IsInCorrectSequence = false;
 
         // TODO: Fix this so we can queue up out of order packets and handle them when recieved. We had this before but causes issues
         //       when ack values overflow.
@@ -494,7 +491,7 @@ void Frpg2ReliableUdpPacketStream::Handle_RACK(const Frpg2ReliableUdpPacket& Pac
     // I'm like 95% sure that RACK is "Reject ACK", its telling us the ACK recieved was invalid I think?
     // I think we can just ignore this ...
 
-    LogS(Connection->GetName().c_str(), "Recieved RACK - Ignoring ...");
+    VerboseS(Connection->GetName().c_str(), "Recieved RACK - Ignoring ...");
 }
 
 void Frpg2ReliableUdpPacketStream::Handle_DAT(const Frpg2ReliableUdpPacket& Packet)
@@ -736,7 +733,7 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
         }
         else if (ElapsedTime > RETRANSMIT_CYCLE_INTERVAL)
         {
-            LogS(Connection->GetName().c_str(), 
+            VerboseS(Connection->GetName().c_str(), 
                 "Retransmitting packet, initial retransmit has not been acknowledged: RetransmittingIndex=%u SequenceIndexAcked=%u RetransmitAttempts=%u ElapsedTime=%f LastHeardFrom=%f LastPacketLocalAck=%u LastPacketRemoteAck=%u", 
                 RetransmittingIndex, SequenceIndexAcked, RetransmitAttempts, ElapsedTime, ElapsedLastPacketTime, LastPacketLocalAck, LastPacketRemoteAck);
             RetransmissionTimer = GetSeconds();

@@ -188,7 +188,7 @@ void GameService::Poll()
         double ElapsedTime = GetSeconds() - Pair.second.LastRefreshTime;
         if (ElapsedTime > BuildConfig::AUTH_TICKET_TIMEOUT)
         {
-            Log("Authentication token 0x%016llx has expired.", Pair.second.AuthToken);
+            Verbose("Authentication token 0x%016llx has expired.", Pair.second.AuthToken);
             iter = AuthenticationStates.erase(iter);
         }
         else
@@ -242,7 +242,7 @@ std::string GameService::GetName()
 
 void GameService::CreateAuthToken(uint64_t AuthToken, const std::vector<uint8_t>& CwcKey)
 {
-    LogS(Connection->GetName().c_str(), "Created authentication token 0x%016llx", AuthToken);
+    VerboseS(Connection->GetName().c_str(), "Created authentication token 0x%016llx", AuthToken);
 
     GameClientAuthenticationState AuthState;
     AuthState.AuthToken = AuthToken;

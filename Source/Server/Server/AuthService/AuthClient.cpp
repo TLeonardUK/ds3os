@@ -246,7 +246,7 @@ bool AuthClient::Poll()
                     }
                     else
                     {
-                        LogS(GetName().c_str(), "Client steam ticket authenticated successfully.");
+                        VerboseS(GetName().c_str(), "Client steam ticket authenticated successfully.");
                     }
                     SteamGameServer()->EndAuthSession(SteamIdStruct);
                 }
@@ -283,7 +283,7 @@ bool AuthClient::Poll()
 
                 LastMessageRecievedTime = GetSeconds();
 
-                LogS(GetName().c_str(), "Authentication complete.");
+                VerboseS(GetName().c_str(), "Authentication complete.");
                 State = AuthClientState::Complete;
             }
             break;

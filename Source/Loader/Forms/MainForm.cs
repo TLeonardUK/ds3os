@@ -689,7 +689,7 @@ namespace Loader
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "https://discord.gg/AVaNS26v",
+                FileName = "https://discord.gg/Qu9rKqvQA4",
                 UseShellExecute = true
             });
         }

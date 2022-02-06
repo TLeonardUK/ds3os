@@ -287,6 +287,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
             LogS(Client->GetName().c_str(), "RequestJoinQuickMatch: Attempting to join match hosted by %s", HostClient->GetName().c_str());
        
             Log(" unknown_7 = %i", Request->unknown_7());
+            Log(" join_character_id = %i", Request->character_id());
 
             Frpg2RequestMessage::PushRequestJoinQuickMatch PushMessage;
             PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestJoinQuickMatch);
