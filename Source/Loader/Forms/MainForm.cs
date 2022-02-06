@@ -582,7 +582,7 @@ namespace Loader
 
             bool Result = WinAPI.CreateProcess(
                 null,
-                ExeLocation,
+                "\"" + ExeLocation + "\"",
                 IntPtr.Zero,
                 IntPtr.Zero,
                 false,
