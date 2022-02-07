@@ -67,10 +67,10 @@ bool GetMachineIPv4(NetIPAddress& Output, bool GetPublicAddress)
         );
 #else
         Output = NetIPAddress(
-            (Addr->s_addr >> 24) & 0xFF,
-            (Addr->s_addr >> 16) & 0xFF,
+            Addr->s_addr & 0xFF,
             (Addr->s_addr >> 8) & 0xFF,
-            Addr->s_addr & 0xFF
+            (Addr->s_addr >> 16) & 0xFF,
+            (Addr->s_addr >> 24) & 0xF
         );
 #endif
 
