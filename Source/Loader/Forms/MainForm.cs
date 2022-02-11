@@ -723,6 +723,10 @@ namespace Loader
             ServerListSorter Sorter = ImportedServerListView.ListViewItemSorter as ServerListSorter;
             if (Sorter.SortColumn != e.Column)
             {
+                if (Sorter.SortColumn != -1)
+                {
+                    ImportedServerListView.Columns[Sorter.SortColumn].Text = ColumnNames[Sorter.SortColumn];
+                }
                 Sorter.SortColumn = e.Column;
             }
             
