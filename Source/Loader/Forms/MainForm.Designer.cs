@@ -70,6 +70,8 @@ namespace Loader
             this.privateIpBox = new System.Windows.Forms.Label();
             this.publicIpBox = new System.Windows.Forms.Label();
             this.serverIpBox = new System.Windows.Forms.Label();
+            this.filterBox = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minimumPlayersBox)).BeginInit();
             this.SuspendLayout();
@@ -79,9 +81,9 @@ namespace Loader
             this.ImportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ImportButton.ImageIndex = 3;
             this.ImportButton.ImageList = this.serverListImageList;
-            this.ImportButton.Location = new System.Drawing.Point(8, 425);
+            this.ImportButton.Location = new System.Drawing.Point(8, 414);
             this.ImportButton.Name = "ImportButton";
-            this.ImportButton.Size = new System.Drawing.Size(122, 58);
+            this.ImportButton.Size = new System.Drawing.Size(122, 35);
             this.ImportButton.TabIndex = 1;
             this.ImportButton.Text = "Import Server";
             this.ImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -103,15 +105,17 @@ namespace Loader
             this.serverListImageList.Images.SetKeyName(6, "bullet_star.png");
             this.serverListImageList.Images.SetKeyName(7, "star.png");
             this.serverListImageList.Images.SetKeyName(8, "world.png");
+            this.serverListImageList.Images.SetKeyName(9, "folder_magnify.png");
+            this.serverListImageList.Images.SetKeyName(10, "award_star_gold_2.png");
             // 
             // LaunchButton
             // 
             this.LaunchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LaunchButton.ImageIndex = 4;
             this.LaunchButton.ImageList = this.serverListImageList;
-            this.LaunchButton.Location = new System.Drawing.Point(751, 425);
+            this.LaunchButton.Location = new System.Drawing.Point(751, 414);
             this.LaunchButton.Name = "LaunchButton";
-            this.LaunchButton.Size = new System.Drawing.Size(174, 58);
+            this.LaunchButton.Size = new System.Drawing.Size(174, 35);
             this.LaunchButton.TabIndex = 2;
             this.LaunchButton.Text = "Launch Game";
             this.LaunchButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -123,7 +127,7 @@ namespace Loader
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(8, 157);
+            this.label2.Location = new System.Drawing.Point(8, 118);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(138, 15);
             this.label2.TabIndex = 4;
@@ -133,20 +137,21 @@ namespace Loader
             // 
             this.ExeLocationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExeLocationTextBox.Location = new System.Drawing.Point(152, 153);
+            this.ExeLocationTextBox.Location = new System.Drawing.Point(8, 138);
             this.ExeLocationTextBox.Name = "ExeLocationTextBox";
             this.ExeLocationTextBox.ReadOnly = true;
-            this.ExeLocationTextBox.Size = new System.Drawing.Size(724, 23);
+            this.ExeLocationTextBox.Size = new System.Drawing.Size(868, 23);
             this.ExeLocationTextBox.TabIndex = 5;
             // 
             // ExeLocationBrowseButton
             // 
             this.ExeLocationBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExeLocationBrowseButton.ImageIndex = 5;
+            this.ExeLocationBrowseButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.ExeLocationBrowseButton.ImageIndex = 9;
             this.ExeLocationBrowseButton.ImageList = this.serverListImageList;
-            this.ExeLocationBrowseButton.Location = new System.Drawing.Point(883, 153);
+            this.ExeLocationBrowseButton.Location = new System.Drawing.Point(883, 137);
             this.ExeLocationBrowseButton.Name = "ExeLocationBrowseButton";
-            this.ExeLocationBrowseButton.Size = new System.Drawing.Size(42, 23);
+            this.ExeLocationBrowseButton.Size = new System.Drawing.Size(42, 25);
             this.ExeLocationBrowseButton.TabIndex = 6;
             this.ExeLocationBrowseButton.UseVisualStyleBackColor = true;
             this.ExeLocationBrowseButton.Click += new System.EventHandler(this.OnBrowseForExecutable);
@@ -163,20 +168,20 @@ namespace Loader
             this.columnHeader2});
             this.ImportedServerListView.FullRowSelect = true;
             this.ImportedServerListView.GridLines = true;
-            this.ImportedServerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ImportedServerListView.HideSelection = false;
             listViewItem1.StateImageIndex = 0;
             this.ImportedServerListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-            this.ImportedServerListView.Location = new System.Drawing.Point(8, 190);
+            this.ImportedServerListView.Location = new System.Drawing.Point(8, 199);
             this.ImportedServerListView.MultiSelect = false;
             this.ImportedServerListView.Name = "ImportedServerListView";
-            this.ImportedServerListView.Size = new System.Drawing.Size(917, 229);
+            this.ImportedServerListView.Size = new System.Drawing.Size(917, 209);
             this.ImportedServerListView.SmallImageList = this.serverListImageList;
             this.ImportedServerListView.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.ImportedServerListView.TabIndex = 7;
             this.ImportedServerListView.UseCompatibleStateImageBehavior = false;
             this.ImportedServerListView.View = System.Windows.Forms.View.Details;
+            this.ImportedServerListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.OnColumnClicked);
             this.ImportedServerListView.SelectedIndexChanged += new System.EventHandler(this.OnSelectedServerChanged);
             // 
             // columnHeader1
@@ -198,7 +203,7 @@ namespace Loader
             // 
             this.BuildInfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.BuildInfoLabel.Location = new System.Drawing.Point(152, 130);
+            this.BuildInfoLabel.Location = new System.Drawing.Point(152, 115);
             this.BuildInfoLabel.Name = "BuildInfoLabel";
             this.BuildInfoLabel.Size = new System.Drawing.Size(724, 20);
             this.BuildInfoLabel.TabIndex = 8;
@@ -223,7 +228,7 @@ namespace Loader
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(943, 127);
+            this.panel1.Size = new System.Drawing.Size(943, 113);
             this.panel1.TabIndex = 10;
             // 
             // DiscordLink
@@ -236,14 +241,14 @@ namespace Loader
             this.DiscordLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.DiscordLink.ForeColor = System.Drawing.Color.White;
             this.DiscordLink.LinkColor = System.Drawing.Color.White;
-            this.DiscordLink.Location = new System.Drawing.Point(164, 83);
+            this.DiscordLink.Location = new System.Drawing.Point(164, 74);
             this.DiscordLink.Name = "DiscordLink";
             this.DiscordLink.Size = new System.Drawing.Size(95, 21);
             this.DiscordLink.TabIndex = 13;
             this.DiscordLink.TabStop = true;
             this.DiscordLink.Text = "Join Discord";
             this.DiscordLink.VisitedLinkColor = System.Drawing.Color.Gray;
-            this.DiscordLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickDiscordLink);
+            this.DiscordLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnClickDiscordLink);
             // 
             // GithubLink
             // 
@@ -255,23 +260,23 @@ namespace Loader
             this.GithubLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.GithubLink.ForeColor = System.Drawing.Color.White;
             this.GithubLink.LinkColor = System.Drawing.Color.White;
-            this.GithubLink.Location = new System.Drawing.Point(65, 83);
+            this.GithubLink.Location = new System.Drawing.Point(65, 74);
             this.GithubLink.Name = "GithubLink";
             this.GithubLink.Size = new System.Drawing.Size(93, 21);
             this.GithubLink.TabIndex = 12;
             this.GithubLink.TabStop = true;
             this.GithubLink.Text = "Visit GitHub";
             this.GithubLink.VisitedLinkColor = System.Drawing.Color.Gray;
-            this.GithubLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ClickGithubLink);
+            this.GithubLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnClickGithubLink);
             // 
             // RemoveButton
             // 
             this.RemoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RemoveButton.ImageIndex = 2;
             this.RemoveButton.ImageList = this.serverListImageList;
-            this.RemoveButton.Location = new System.Drawing.Point(136, 425);
+            this.RemoveButton.Location = new System.Drawing.Point(136, 414);
             this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(37, 58);
+            this.RemoveButton.Size = new System.Drawing.Size(37, 35);
             this.RemoveButton.TabIndex = 9;
             this.RemoveButton.UseVisualStyleBackColor = true;
             this.RemoveButton.Click += new System.EventHandler(this.OnRemoveClicked);
@@ -287,27 +292,25 @@ namespace Loader
             this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RefreshButton.ImageIndex = 1;
             this.RefreshButton.ImageList = this.serverListImageList;
-            this.RefreshButton.Location = new System.Drawing.Point(180, 425);
+            this.RefreshButton.Location = new System.Drawing.Point(180, 414);
             this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(37, 58);
+            this.RefreshButton.Size = new System.Drawing.Size(37, 35);
             this.RefreshButton.TabIndex = 11;
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.OnRefreshClicked);
             // 
             // minimumPlayersBox
             // 
-            this.minimumPlayersBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.minimumPlayersBox.Location = new System.Drawing.Point(325, 428);
+            this.minimumPlayersBox.Location = new System.Drawing.Point(131, 169);
             this.minimumPlayersBox.Name = "minimumPlayersBox";
             this.minimumPlayersBox.Size = new System.Drawing.Size(53, 23);
             this.minimumPlayersBox.TabIndex = 12;
-            this.minimumPlayersBox.ValueChanged += new System.EventHandler(this.FilterPropertyChanged);
+            this.minimumPlayersBox.ValueChanged += new System.EventHandler(this.OnFilterPropertyChanged);
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(223, 431);
+            this.label1.Location = new System.Drawing.Point(190, 173);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.TabIndex = 13;
@@ -315,23 +318,21 @@ namespace Loader
             // 
             // hidePasswordedBox
             // 
-            this.hidePasswordedBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.hidePasswordedBox.AutoSize = true;
-            this.hidePasswordedBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.hidePasswordedBox.Location = new System.Drawing.Point(223, 458);
+            this.hidePasswordedBox.Location = new System.Drawing.Point(8, 172);
             this.hidePasswordedBox.Name = "hidePasswordedBox";
             this.hidePasswordedBox.Size = new System.Drawing.Size(117, 19);
             this.hidePasswordedBox.TabIndex = 14;
             this.hidePasswordedBox.Text = "Hide Passworded";
             this.hidePasswordedBox.UseVisualStyleBackColor = true;
-            this.hidePasswordedBox.CheckedChanged += new System.EventHandler(this.FilterPropertyChanged);
+            this.hidePasswordedBox.CheckedChanged += new System.EventHandler(this.OnFilterPropertyChanged);
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(542, 427);
+            this.label3.Location = new System.Drawing.Point(238, 424);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 23);
+            this.label3.Size = new System.Drawing.Size(61, 23);
             this.label3.TabIndex = 15;
             this.label3.Text = "Server IP";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -339,7 +340,7 @@ namespace Loader
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(542, 446);
+            this.label4.Location = new System.Drawing.Point(365, 424);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 15);
             this.label4.TabIndex = 17;
@@ -349,7 +350,7 @@ namespace Loader
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(542, 465);
+            this.label5.Location = new System.Drawing.Point(520, 424);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(102, 15);
             this.label5.TabIndex = 19;
@@ -360,7 +361,7 @@ namespace Loader
             // 
             this.privateIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.privateIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.privateIpBox.Location = new System.Drawing.Point(650, 446);
+            this.privateIpBox.Location = new System.Drawing.Point(473, 424);
             this.privateIpBox.Name = "privateIpBox";
             this.privateIpBox.Size = new System.Drawing.Size(99, 19);
             this.privateIpBox.TabIndex = 21;
@@ -370,7 +371,7 @@ namespace Loader
             // 
             this.publicIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.publicIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.publicIpBox.Location = new System.Drawing.Point(650, 465);
+            this.publicIpBox.Location = new System.Drawing.Point(628, 424);
             this.publicIpBox.Name = "publicIpBox";
             this.publicIpBox.Size = new System.Drawing.Size(99, 19);
             this.publicIpBox.TabIndex = 22;
@@ -380,17 +381,38 @@ namespace Loader
             // 
             this.serverIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.serverIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.serverIpBox.Location = new System.Drawing.Point(650, 427);
+            this.serverIpBox.Location = new System.Drawing.Point(307, 424);
             this.serverIpBox.Name = "serverIpBox";
             this.serverIpBox.Size = new System.Drawing.Size(99, 19);
             this.serverIpBox.TabIndex = 23;
             this.serverIpBox.Text = "255.255.255.255";
             // 
+            // filterBox
+            // 
+            this.filterBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterBox.Location = new System.Drawing.Point(549, 168);
+            this.filterBox.Name = "filterBox";
+            this.filterBox.Size = new System.Drawing.Size(376, 23);
+            this.filterBox.TabIndex = 24;
+            this.filterBox.TextChanged += new System.EventHandler(this.OnFilterPropertyChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.BackgroundImage = global::Loader.Properties.Resources.magnifier;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel2.Location = new System.Drawing.Point(520, 168);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(23, 23);
+            this.panel2.TabIndex = 25;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 487);
+            this.ClientSize = new System.Drawing.Size(934, 458);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.filterBox);
             this.Controls.Add(this.serverIpBox);
             this.Controls.Add(this.publicIpBox);
             this.Controls.Add(this.privateIpBox);
@@ -451,6 +473,8 @@ namespace Loader
         private System.Windows.Forms.Label privateIpBox;
         private System.Windows.Forms.Label publicIpBox;
         private System.Windows.Forms.Label serverIpBox;
+        private System.Windows.Forms.TextBox filterBox;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

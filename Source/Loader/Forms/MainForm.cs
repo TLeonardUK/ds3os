@@ -33,6 +33,10 @@ namespace Loader
         private string MachinePrivateIp = "";
         private string MachinePublicIp = "";
 
+        private string[] ColumnNames = { "Server Name", "Player Count", "Description" };
+        
+        public static string OfficialServer = "142.44.247.246";
+
         public MainForm()
         {
             InitializeComponent();
@@ -84,7 +88,7 @@ namespace Loader
             bool HasSelectedManualServer = false;
             if (ImportedServerListView.SelectedIndices.Count > 0)
             {
-                HasSelectedManualServer = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string).ManualImport;
+                HasSelectedManualServer = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname).ManualImport;
             }
             RemoveButton.Enabled = HasSelectedManualServer;
 
@@ -121,14 +125,27 @@ namespace Loader
             {
                 return true;
             }
-            if (Config.PasswordRequired && ProgramSettings.Default.hide_passworded)
+
+            string filter = filterBox.Text.ToLower();
+            if (!string.IsNullOrWhiteSpace(filter))
             {
-                return false;
+                if (!Config.Name.ToLower().Contains(filter) && !Config.Description.ToLower().Contains(filter))
+                {
+                    return false;
+                }
             }
-            if (Config.PlayerCount < ProgramSettings.Default.minimum_players)
+            else
             {
-                return false;
+                if (Config.PasswordRequired && ProgramSettings.Default.hide_passworded)
+                {
+                    return false;
+                }
+                if (Config.PlayerCount < ProgramSettings.Default.minimum_players)
+                {
+                    return false;
+                }
             }
+
             return true;
         }
 
@@ -145,7 +162,7 @@ namespace Loader
 
                 foreach (ListViewItem ViewItem in ImportedServerListView.Items)
                 {
-                    if ((string)ViewItem.Tag == Config.Hostname)
+                    if ((ViewItem.Tag as ServerConfig).Hostname == Config.Hostname)
                     {
                         ServerItem = ViewItem;
                         break;
@@ -158,13 +175,20 @@ namespace Loader
                     ImportedServerListView.Items.Add(ServerItem);
                 }
 
-                ServerItem.Text = Config.Name;
-                ServerItem.Tag = Config.Hostname;
-                ServerItem.SubItems[0].Text = Config.Name;
-                ServerItem.SubItems[1].Text = Config.ManualImport ? "Not Advertised" : Config.PlayerCount.ToString();
-                ServerItem.SubItems[2].Text = Config.Description;
+                bool IsOfficial = (Config.Hostname == OfficialServer);
 
-                if (Config.PasswordRequired)
+                ServerItem.Text = Config.Name;
+                ServerItem.Tag = Config;
+                ServerItem.SubItems[0].Text = Config.Name;
+                ServerItem.SubItems[1].Text = Config.ManualImport ? "Not Available For Manual Import" : Config.PlayerCount.ToString();
+                ServerItem.SubItems[2].Text = Config.Description;
+                ServerItem.BackColor = (IsOfficial ? Color.PaleGoldenrod : Color.Transparent);
+
+                if (IsOfficial)
+                {
+                    ServerItem.ImageIndex = 10;
+                }
+                else if (Config.PasswordRequired)
                 {
                     ServerItem.ImageIndex = 0;
                 }
@@ -191,7 +215,7 @@ namespace Loader
                     {
                         continue;
                     }
-                    if (Config.Hostname == (string)ViewItem.Tag)
+                    if (Config.Hostname == (ViewItem.Tag as ServerConfig).Hostname)
                     {
                         Exists = true;
                         break;
@@ -295,7 +319,7 @@ namespace Loader
         {
             if (ImportedServerListView.SelectedItems.Count > 0)
             {
-                CurrentServerConfig = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string);
+                CurrentServerConfig = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname);
             }
 
             ValidateUI();
@@ -306,7 +330,7 @@ namespace Loader
         {
             if (ImportedServerListView.SelectedItems.Count > 0)
             {
-                ServerConfig Config = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string);
+                ServerConfig Config = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname);
 
                 for (int i = 0; i < ServerList.Servers.Count; i++)
                 {
@@ -471,7 +495,7 @@ namespace Loader
 
         private void OnLaunch(object sender, EventArgs e)
         {
-            ServerConfig Config = GetConfigFromHostname(ImportedServerListView.SelectedItems[0].Tag as string);
+            ServerConfig Config = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname);
 
             if (string.IsNullOrEmpty(Config.PublicKey))
             {
@@ -670,7 +694,7 @@ namespace Loader
             QueryServers();
         }
 
-        private void ClickGithubLink(object sender, LinkLabelLinkClickedEventArgs e)
+        private void OnClickGithubLink(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(new ProcessStartInfo
             {
@@ -679,13 +703,13 @@ namespace Loader
             });
         }
 
-        private void FilterPropertyChanged(object sender, EventArgs e)
+        private void OnFilterPropertyChanged(object sender, EventArgs e)
         {
             SaveConfig();
             BuildServerList();
         }
 
-        private void ClickDiscordLink(object sender, LinkLabelLinkClickedEventArgs e)
+        private void OnClickDiscordLink(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(new ProcessStartInfo
             {
@@ -693,39 +717,95 @@ namespace Loader
                 UseShellExecute = true
             });
         }
+
+        private void OnColumnClicked(object sender, ColumnClickEventArgs e)
+        {
+            ServerListSorter Sorter = ImportedServerListView.ListViewItemSorter as ServerListSorter;
+            if (Sorter.SortColumn != e.Column)
+            {
+                Sorter.SortColumn = e.Column;
+            }
+            
+            Sorter.SortOrder = (Sorter.SortOrder + 1) % 3;
+
+            if (Sorter.SortOrder == 0)
+            {
+                ImportedServerListView.Columns[Sorter.SortColumn].Text = ColumnNames[Sorter.SortColumn];
+            }
+            else if (Sorter.SortOrder == 1)
+            {
+                ImportedServerListView.Columns[Sorter.SortColumn].Text = "↑ " + ColumnNames[Sorter.SortColumn];
+            }
+            else
+            {
+                ImportedServerListView.Columns[Sorter.SortColumn].Text = "↓ " + ColumnNames[Sorter.SortColumn];
+            }
+            ImportedServerListView.Sort();
+        }
     }
 
     class ServerListSorter : System.Collections.IComparer
     {
+        public int SortColumn = 1;
+        public int SortOrder = 0; // 0="Smart" Order, 1=Ascending, 2=Descending
+
         public int Compare(object x, object y)
         {
-            ListViewItem a = (ListViewItem)x;
-            ListViewItem b = (ListViewItem)y;
+            ServerConfig a = (x as ListViewItem).Tag as ServerConfig;
+            ServerConfig b = (y as ListViewItem).Tag as ServerConfig;
 
-            if (a.ImageIndex == b.ImageIndex)
+            if (a == null || b == null)
             {
-                int aPlayerCount = 0;
-                int bPlayerCount = 0;
-
-                int.TryParse(a.SubItems[1].Text, out aPlayerCount);
-                int.TryParse(b.SubItems[1].Text, out bPlayerCount);
-
-                return bPlayerCount - aPlayerCount;
+                return 0;
             }
-            else
+
+            if (SortOrder == 0)
             {
-                if (a.ImageIndex == 7)
+                // Official server is always first.
+                if (a.Hostname == MainForm.OfficialServer)
                 {
                     return -1;
                 }
-                else if (b.ImageIndex == 7)
+                if (b.Hostname == MainForm.OfficialServer)
                 {
                     return 1;
                 }
+
+                // Imported comes before public which comes before private.
+                if (a.ManualImport != b.ManualImport)
+                {
+                    return (b.ManualImport ? 1 : 0) - (a.ManualImport ? 1 : 0);
+                }
+                if (a.PasswordRequired != b.PasswordRequired)
+                {
+                    return (b.ManualImport ? 1 : 0) - (a.ManualImport ? 1 : 0);
+                }
+
+                // Sort in each group by player count.
+                return b.PlayerCount - a.PlayerCount;
+            }
+            else
+            {
+                int Result = 0;
+                if (SortColumn == 0)
+                {
+                    Result = a.Name.CompareTo(b.Name);
+                }
+                else if (SortColumn == 1)
+                {
+                    Result = b.PlayerCount - a.PlayerCount;
+                }
                 else
                 {
-                    return b.ImageIndex - a.ImageIndex;
+                    Result = a.Description.CompareTo(b.Description);
                 }
+
+                if (SortOrder == 2)
+                {
+                    Result = -Result;
+                }
+
+                return Result;
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Loader {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
     internal sealed partial class ProgramSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static ProgramSettings defaultInstance = ((ProgramSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ProgramSettings())));
@@ -73,7 +73,7 @@ namespace Loader {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public int minimum_players {
             get {
                 return ((int)(this["minimum_players"]));

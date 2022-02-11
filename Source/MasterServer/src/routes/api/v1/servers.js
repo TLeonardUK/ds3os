@@ -14,6 +14,30 @@ const config = require("../../../config/config.json")
 
 var GActiveServers = [];
 
+// Use lowercase patterns only.
+var GFilters = [ ];
+
+function IsServerFilter(ServerInfo)
+{
+    return  IsFiltered(ServerInfo['Name']) || 
+            IsFiltered(ServerInfo['Description']) || 
+            IsFiltered(ServerInfo['Hostname']);
+}
+
+function IsFiltered(Name)
+{
+    var NameLower = Name.toLowerCase();
+    for (i = 0; i < GFilters.length; i++)
+    {
+        if (NameLower.includes(GFilters[i]))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function RemoveServer(IpAddress)
 {
     for (i = 0; i < GActiveServers.length; i++)
@@ -42,6 +66,11 @@ function AddServer(IpAddress, hostname, private_hostname, description, name, pub
         "ModsRequiredList": mods_required_list,
         "UpdatedTime": Date.now()
      };
+
+    if (IsServerFilter(ServerObj))
+    {
+        return;
+    }
 
     for (i = 0; i < GActiveServers.length; i++)
     {
