@@ -29,7 +29,7 @@ public:
     inline static const double AUTH_TICKET_TIMEOUT = 30.0;
 
     // Maximum length of a packet in an Frpg2PacketStream.
-    inline static const int MAX_PACKET_LENGTH = 2048;
+    inline static const int MAX_PACKET_LENGTH = 8192;
 
     // Maximum backlog of data in a packet streams send queue. Sending
     // packets beyond this will result in disconnect.

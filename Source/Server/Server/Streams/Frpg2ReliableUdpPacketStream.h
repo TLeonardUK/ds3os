@@ -62,6 +62,7 @@ protected:
     bool EncodeReliablePacket(const Frpg2ReliableUdpPacket& Message, Frpg2UdpPacket& Packet);
 
     void HandleIncoming();
+    void ConsumeIncomingPackets();
     void HandleIncomingPacket(const Frpg2ReliableUdpPacket& Packet);
     void ProcessPacket(const Frpg2ReliableUdpPacket& Packet);
 
@@ -149,18 +150,18 @@ protected:
     double ResendSynTimer = 0.0;
 
     // We stop sending packets and queue them up until we start recieving acks.
-    const int MAX_PACKETS_IN_FLIGHT = 64;
+    const int MAX_PACKETS_IN_FLIGHT = 32;
 
     // We reeeeeeeaaaallly want this to be exponential backoff, but this works for now.
     const float RETRANSMIT_INTERVAL = 0.5f;             // 500ms
 
     const float RETRANSMIT_CYCLE_INTERVAL = 0.2f;       // 200ms
 
-    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 64;        
+    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 32;        
 
     const float RESEND_SYN_INTERVAL = 0.5f;
 
-    const double MIN_TIME_BETWEEN_RESEND_ACK = 0.1;
+    const double MIN_TIME_BETWEEN_RESEND_ACK = 0.15;
 
     // How many seconds to wait for a graceful disconnection.
     const double CONNECTION_CLOSE_TIMEOUT = 3.0;

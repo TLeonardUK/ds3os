@@ -13,6 +13,8 @@
 
 #include "Protobuf/Protobufs.h"
 
+#include <unordered_set>
+
 // Blood message stored in the database or live cache.
 struct BloodMessage
 {
@@ -71,6 +73,11 @@ struct SummonSign
     std::vector<uint8_t> PlayerStruct;
 
     uint32_t BeingSummonedByPlayerId = 0;
+
+    // These are all the players that are aware of this sign via
+    // requesting it. We use this to send removal messages when the 
+    // sign is destroyed.
+    std::unordered_set<uint32_t> AwarePlayerIds;
 };
 
 // Individual ranking in a leaderboard.

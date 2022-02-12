@@ -32,9 +32,34 @@ void SignManager::OnLostPlayer(GameClient* Client)
     // Remove all the players signs from the cache.
     for (std::shared_ptr<SummonSign> Sign : Client->ActiveSummonSigns)
     {
-        LiveCache.Remove(Sign->OnlineAreaId, Sign->SignId);
+        RemoveSignAndNotifyAware(Sign);
     }
     Client->ActiveSummonSigns.clear();
+}
+
+void SignManager::RemoveSignAndNotifyAware(const std::shared_ptr<SummonSign>& Sign)
+{
+    LiveCache.Remove((OnlineAreaId)Sign->OnlineAreaId, Sign->SignId);
+
+    // Tell anyone who is aware of this sign that its been removed.
+    for (uint32_t AwarePlayerId : Sign->AwarePlayerIds)
+    {
+        if (std::shared_ptr<GameClient> OtherClient = GameServiceInstance->FindClientByPlayerId(AwarePlayerId))
+        {
+            Frpg2RequestMessage::PushRequestRemoveSign PushMessage;
+            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRemoveSign);
+            PushMessage.mutable_message()->set_player_id(Sign->PlayerId);
+            PushMessage.mutable_message()->set_sign_id(Sign->SignId);
+
+            if (!OtherClient->MessageStream->Send(&PushMessage))
+            {
+                WarningS(OtherClient->GetName().c_str(), "Failed to send PushRequestRemoveSign to aware player.");
+            }
+        }
+    }
+
+    Sign->BeingSummonedByPlayerId = 0;
+    Sign->AwarePlayerIds.clear();
 }
 
 void SignManager::Poll()
@@ -163,6 +188,9 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
                 SignData->set_is_red_sign(Sign->IsRedSign);
             }
 
+            // Make sure user is marked as aware of the sign so we can clear up when the sign is removed.
+            Sign->AwarePlayerIds.insert(Player.GetPlayerId());
+
             RemainingSignCount--;
         }
     }
@@ -232,31 +260,8 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
         return MessageHandleResult::Error;
     }
 
-    LiveCache.Remove((OnlineAreaId)Request->online_area_id(), Request->sign_id());
-
-    // If anyone is trying to summon this sign right now, send them a notice that its been removed.
-    if (Sign->BeingSummonedByPlayerId != 0)
-    {
-        if (std::shared_ptr<GameClient> OtherClient = GameServiceInstance->FindClientByPlayerId(Sign->BeingSummonedByPlayerId))
-        {
-            Frpg2RequestMessage::PushRequestRemoveSign PushMessage;
-            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRemoveSign);
-            PushMessage.mutable_message()->set_player_id(Sign->PlayerId);
-            PushMessage.mutable_message()->set_sign_id(Sign->SignId);
-
-            if (!OtherClient->MessageStream->Send(&PushMessage))
-            {
-                WarningS(Client->GetName().c_str(), "Failed to send PushRequestRemoveSign to summoner.");
-                return MessageHandleResult::Error;
-            }
-        }
-        else
-        {
-            WarningS(Client->GetName().c_str(), "PlayerId summoning sign no longer exists, nothing to reject.");
-        }
-
-        Sign->BeingSummonedByPlayerId = 0;
-    }
+    // Tell anyone who is aware of this sign that its been removed.
+    RemoveSignAndNotifyAware(Sign);
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.

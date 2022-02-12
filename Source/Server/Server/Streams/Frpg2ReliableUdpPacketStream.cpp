@@ -210,20 +210,27 @@ void Frpg2ReliableUdpPacketStream::HandleIncoming()
         }
 
         HandleIncomingPacket(ReliablePacket);
+
+        ConsumeIncomingPackets();
     }
 
+    ConsumeIncomingPackets();
+}
+
+void Frpg2ReliableUdpPacketStream::ConsumeIncomingPackets()
+{
     // Process as many packets as we can off the pending queue.
     while (PendingRecieveQueue.size() > 0)
     {
         Frpg2ReliableUdpPacket& Next = PendingRecieveQueue[0];
-        
+
         uint32_t Local, Remote;
         Next.Header.GetAckCounters(Local, Remote);
 
         if (Local == GetNextRemoteSequenceIndex())
         {
             ProcessPacket(Next);
-      
+
             PendingRecieveQueue.erase(PendingRecieveQueue.begin());
 
             RemoteSequenceIndex = (RemoteSequenceIndex + 1) % MAX_ACK_VALUE;
