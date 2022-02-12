@@ -33,13 +33,6 @@ void PlayersHandler::GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClie
 
     Info.ConnectionDuration = Client->GetConnectionDuration();
 
-    if (!State.GetPlayerStatus().has_player_status() ||
-        !State.GetPlayerStatus().has_play_data() ||
-        State.GetPlayerId() == 0)
-    {
-        return;
-    }
-
     auto Status = State.GetPlayerStatus().player_status();
     auto LogInfo = State.GetPlayerStatus().log_info();
 
@@ -167,8 +160,23 @@ void PlayersHandler::GatherData()
     std::shared_ptr<GameService> Game = Service->GetServer()->GetService<GameService>();
     std::vector<std::shared_ptr<GameClient>> Clients = Game->GetClients();
 
-    // Add new clients.
+    std::vector<std::shared_ptr<GameClient>> ValidClients;
     for (auto Client : Clients)
+    {
+        auto State = Client->GetPlayerState();
+
+        if (!State.GetPlayerStatus().has_player_status() ||
+            !State.GetPlayerStatus().has_play_data() ||
+            State.GetPlayerId() == 0)
+        {
+            continue;
+        }
+
+        ValidClients.push_back(Client);
+    }
+
+    // Add new clients.
+    for (auto Client : ValidClients)
     {
         auto Iter = std::find_if(PlayerInfos.begin(), PlayerInfos.end(), [&Client](PlayerInfo& Info)
         {        
@@ -191,13 +199,13 @@ void PlayersHandler::GatherData()
     }
 
     // Remove clients who have left.
-    auto iter = std::remove_if(PlayerInfos.begin(), PlayerInfos.end(), [&Clients](PlayerInfo& Info)
+    auto iter = std::remove_if(PlayerInfos.begin(), PlayerInfos.end(), [&ValidClients](PlayerInfo& Info)
     {    
-        auto Iter = std::find_if(Clients.begin(), Clients.end(), [Info](std::shared_ptr<GameClient>& Client){        
+        auto Iter = std::find_if(ValidClients.begin(), ValidClients.end(), [Info](std::shared_ptr<GameClient>& Client){
             return Info.SteamId == Client->GetPlayerState().GetSteamId();
         });
 
-        return Iter == Clients.end();
+        return Iter == ValidClients.end();
     });
     PlayerInfos.erase(iter, PlayerInfos.end());
 }
