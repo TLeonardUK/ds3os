@@ -40,7 +40,14 @@ void StatisticsHandler::GatherData()
     std::vector<std::shared_ptr<GameClient>> Clients = Game->GetClients();
 
     // Grab record of statistics over time.
-    if (GetSeconds() > NextSampleTime)
+    bool ShouldSample = Clients.size() != PreviousSampleClientSize;
+
+    if (GetSeconds() >= MustSampleTime)
+    {
+        ShouldSample = true;
+    }
+
+    if (ShouldSample && GetSeconds() >= NextSampleTime)
     {
         time_t RawTime;
         struct tm* LocalTime;
@@ -55,7 +62,9 @@ void StatisticsHandler::GatherData()
         NewSample.ActivePlayers = Clients.size();
 
         Samples.push_back(NewSample);
-        NextSampleTime = GetSeconds() + SampleInterval;
+        NextSampleTime = GetSeconds() + MinSampleInterval;
+        MustSampleTime = GetSeconds() + MaxSampleInterval;
+        PreviousSampleClientSize = Clients.size();
 
         if (Samples.size() > MaxSamples)
         {
@@ -73,20 +82,19 @@ void StatisticsHandler::GatherData()
     std::shared_ptr<GhostManager> Ghosts = Game->GetManager<GhostManager>();
 
     Statistics.clear();
-    Statistics["Active Players"] = Clients.size();
-    Statistics["Unique Players"] = UniquePlayerCount;
-    Statistics["Live Blood Messages"] = BloodMessages->GetLiveCount();
-    Statistics["Live Blood Stains"] = Bloodstains->GetLiveCount();
-    Statistics["Live Undead Matches"] = QuickMatches->GetLiveCount();
-    Statistics["Live Summon Signs"] = Signs->GetLiveCount();
-    Statistics["Live Ghosts"] = Ghosts->GetLiveCount();
-    Statistics["Update Time (MS)"] = static_cast<size_t>(Service->GetServer()->GetUpdateTime() * 1000.0f);
+    Statistics["Active Players"] = std::to_string(Clients.size());
+    Statistics["Unique Players"] = std::to_string(UniquePlayerCount);
+    Statistics["Live Blood Messages"] = std::to_string(BloodMessages->GetLiveCount());
+    Statistics["Live Blood Stains"] = std::to_string(Bloodstains->GetLiveCount());
+    Statistics["Live Undead Matches"] = std::to_string(QuickMatches->GetLiveCount());
+    Statistics["Live Summon Signs"] = std::to_string(Signs->GetLiveCount());
+    Statistics["Live Ghosts"] = std::to_string(Ghosts->GetLiveCount());
 
     // Grab some populated areas stats.
     PopulatedAreas.clear();
     for (auto& Client : Clients)
     {
-        PopulatedAreas[Client->GetPlayerState().CurrentArea]++;
+        PopulatedAreas[Client->GetPlayerState().GetCurrentArea()]++;
     }
 }
 
@@ -135,6 +143,8 @@ bool StatisticsHandler::handleGet(CivetServer* Server, struct mg_connection* Con
     }
 
     RespondJson(Connection, json);
+
+    MarkAsNeedsDataGather();
 
     return true;
 }

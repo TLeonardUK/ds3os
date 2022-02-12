@@ -91,7 +91,7 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
     GhostData.assign(Request->ghost_data().data(), Request->ghost_data().data() + Request->ghost_data().size());
 
-    if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((OnlineAreaId)Request->online_area_id(), Player.PlayerId, Player.SteamId, Data, GhostData))
+    if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
     {
         LiveCache.Add(ActiveStain->OnlineAreaId, ActiveStain->BloodstainId, ActiveStain);
     }
@@ -103,7 +103,7 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
 
     std::string TypeStatisticKey = StringFormat("Bloodstain/TotalCreated");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
     return MessageHandleResult::Handled;
 }
@@ -130,7 +130,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClien
         for (std::shared_ptr<Bloodstain>& AreaMsg : AreaStains)
         {
             // Filter players own messages.
-            if (AreaMsg->PlayerId == Player.PlayerId)
+            if (AreaMsg->PlayerId == Player.GetPlayerId())
             {
                 continue;
             }

@@ -10,6 +10,7 @@
 #include "Server/Database/ServerDatabase.h"
 #include "Config/BuildConfig.h"
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/DebugObjects.h"
 #include "ThirdParty/sqlite/sqlite3.h"
 
 ServerDatabase::ServerDatabase()
@@ -164,6 +165,9 @@ bool ServerDatabase::CreateTables()
 
 bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<DatabaseValue>& Values, RowCallback Callback)
 {
+    DebugTimerScope Scope(Debug::DatabaseQueryTime);
+    Debug::DatabaseQueries.Add(1.0f);
+
     sqlite3_stmt* statement = nullptr;
     if (int result = sqlite3_prepare_v2(db_handle, sql.c_str(), (int)sql.length(), &statement, nullptr); result != SQLITE_OK)
     {
@@ -705,6 +709,11 @@ void ServerDatabase::AddMatchingSample(const std::string& Name, const std::strin
 
 void ServerDatabase::AddStatistic(const std::string& Name, const std::string& Scope, int64_t Count)
 {
+    if constexpr (!BuildConfig::DATABASE_STAT_GATHERING_ENABLED)
+    {
+        return;
+    }
+
     if (!RunStatement("UPDATE Statistics SET Value = Value + ?3 WHERE Name = ?1 AND Scope = ?2", { Name, Scope, Count }, nullptr))
     {
         return;
@@ -721,6 +730,11 @@ void ServerDatabase::AddStatistic(const std::string& Name, const std::string& Sc
 
 void ServerDatabase::SetStatistic(const std::string& Name, const std::string& Scope, int64_t Count)
 {
+    if constexpr (!BuildConfig::DATABASE_STAT_GATHERING_ENABLED)
+    {
+        return;
+    }
+
     if (!RunStatement("UPDATE Statistics SET Value = ?3 WHERE Name = ?1 AND Scope = ?2", { Name, Scope, Count }, nullptr))
     {
         return;
@@ -737,6 +751,11 @@ void ServerDatabase::SetStatistic(const std::string& Name, const std::string& Sc
 
 int64_t ServerDatabase::GetStatistic(const std::string& Name, const std::string& Scope)
 {
+    if constexpr (!BuildConfig::DATABASE_STAT_GATHERING_ENABLED)
+    {
+        return 0;
+    }
+
     int64_t Result;
 
     RunStatement("SELECT Value FROM Statistics WHERE Name = ?1 AND Scope = ?2 LIMIT 1", { Name, Scope }, [&Result](sqlite3_stmt* statement) {
@@ -763,7 +782,12 @@ int64_t ServerDatabase::GetGlobalStatistic(const std::string& Name)
 
 void ServerDatabase::AddPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count)
 {
-    if constexpr (BuildConfig::STORE_PER_PLAYER_STATISTICS)
+    if constexpr (!BuildConfig::DATABASE_STAT_GATHERING_ENABLED)
+    {
+        return;
+    }
+
+    if constexpr (!BuildConfig::STORE_PER_PLAYER_STATISTICS)
     {
         return;
     }
@@ -776,7 +800,12 @@ void ServerDatabase::AddPlayerStatistic(const std::string& Name, uint32_t Player
 
 void ServerDatabase::SetPlayerStatistic(const std::string& Name, uint32_t PlayerId, int64_t Count)
 {
-    if constexpr (BuildConfig::STORE_PER_PLAYER_STATISTICS)
+    if constexpr (!BuildConfig::DATABASE_STAT_GATHERING_ENABLED)
+    {
+        return;
+    }
+
+    if constexpr (!BuildConfig::STORE_PER_PLAYER_STATISTICS)
     {
         return;
     }
@@ -789,7 +818,12 @@ void ServerDatabase::SetPlayerStatistic(const std::string& Name, uint32_t Player
 
 int64_t ServerDatabase::GetPlayerStatistic(const std::string& Name, uint32_t PlayerId)
 {
-    if constexpr (BuildConfig::STORE_PER_PLAYER_STATISTICS)
+    if constexpr (!BuildConfig::DATABASE_STAT_GATHERING_ENABLED)
+    {
+        return 0;
+    }
+
+    if constexpr (!BuildConfig::STORE_PER_PLAYER_STATISTICS)
     {
         return 0;
     }

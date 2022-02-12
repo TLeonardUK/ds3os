@@ -81,14 +81,14 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
     };
 
     std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([Client, Request, NotifyLocations](const std::shared_ptr<GameClient>& OtherClient) {
-        return NotifyLocations.count(OtherClient->GetPlayerState().CurrentArea) > 0;
+        return NotifyLocations.count(OtherClient->GetPlayerState().GetCurrentArea()) > 0;
     });
 
     for (std::shared_ptr<GameClient>& OtherClient : PotentialTargets)
     {
         Frpg2RequestMessage::PushRequestNotifyRingBell PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestNotifyRingBell);
-        PushMessage.set_player_id(Player.PlayerId);
+        PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_online_area_id(Request->online_area_id());
         PushMessage.set_data(Request->data().data(), Request->data().size());
 
@@ -100,7 +100,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
 
     std::string TypeStatisticKey = StringFormat("Bell/TotalBellRings");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
     Frpg2RequestMessage::RequestNotifyRingBellResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

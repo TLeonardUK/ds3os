@@ -63,8 +63,6 @@ public:
         return nullptr;
     }
 
-    double GetUpdateTime() { return UpdateTime; };
-
 protected:
 
     void CancelServerAdvertisement();
@@ -94,8 +92,6 @@ private:
     NetIPAddress PrivateIP;
 
     RSAKeyPair PrimaryKeyPair;
-
-    double UpdateTime = 0.0;
 
     double NextSpikeTime = 0.0;
 

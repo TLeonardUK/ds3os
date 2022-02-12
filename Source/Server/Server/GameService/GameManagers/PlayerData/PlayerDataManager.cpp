@@ -62,17 +62,17 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
 
     Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
 
-    std::shared_ptr<Character> Character = Database.FindCharacter(State.PlayerId, Request->character_id());
+    std::shared_ptr<Character> Character = Database.FindCharacter(State.GetPlayerId(), Request->character_id());
     if (!Character)
     {
         std::vector<uint8_t> Data;        
-        if (!Database.CreateOrUpdateCharacter(State.PlayerId, Request->character_id(), Data))
+        if (!Database.CreateOrUpdateCharacter(State.GetPlayerId(), Request->character_id(), Data))
         {
             WarningS(Client->GetName().c_str(), "Disconnecting client as failed to find or update character %i.", Request->character_id());
             return MessageHandleResult::Error;
         }
 
-        Character = Database.FindCharacter(State.PlayerId, Request->character_id());
+        Character = Database.FindCharacter(State.GetPlayerId(), Request->character_id());
         Ensure(Character);
     }
 
@@ -114,23 +114,24 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         return MessageHandleResult::Handled;
     }
 
-    State.PlayerStatus.MergeFrom(status);
+    State.GetPlayerStatus_Mutable().MergeFrom(status);
+    State.Mutated();
 
     // Keep track of the players character id.
-    if (State.PlayerStatus.player_status().has_character_id())
+    if (State.GetPlayerStatus().player_status().has_character_id())
     {
-        State.CharacterId = State.PlayerStatus.player_status().character_id();
+        State.SetCharacterId(State.GetPlayerStatus().player_status().character_id());
     }
 
     // Keep track of the players character name, useful for logging.
-    if (State.PlayerStatus.player_status().has_name())
+    if (State.GetPlayerStatus().player_status().has_name())
     {
-        std::string NewCharacterName = State.PlayerStatus.player_status().name();
-        if (State.CharacterName != NewCharacterName)
+        std::string NewCharacterName = State.GetPlayerStatus().player_status().name();
+        if (State.GetCharacterName() != NewCharacterName)
         {
-            State.CharacterName = NewCharacterName;
+            State.SetCharacterName(NewCharacterName);
 
-            std::string NewConnectionName = StringFormat("%i:%s", State.PlayerId, State.CharacterName.c_str());
+            std::string NewConnectionName = StringFormat("%i:%s", State.GetPlayerId(), State.GetCharacterName().c_str());
 
             LogS(Client->GetName().c_str(), "Renaming connection to '%s'.", NewConnectionName.c_str());
 
@@ -140,62 +141,62 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     }
 
     // Print a log if user has changed online location.
-    if (State.PlayerStatus.has_player_location())
+    if (State.GetPlayerStatus().has_player_location())
     {
-        OnlineAreaId AreaId = static_cast<OnlineAreaId>(State.PlayerStatus.player_location().online_area_id());
-        if (AreaId != State.CurrentArea && AreaId != OnlineAreaId::None)
+        OnlineAreaId AreaId = static_cast<OnlineAreaId>(State.GetPlayerStatus().player_location().online_area_id());
+        if (AreaId != State.GetCurrentArea() && AreaId != OnlineAreaId::None)
         {
             VerboseS(Client->GetName().c_str(), "User has entered '%s'", GetEnumString(AreaId).c_str());
-            State.CurrentArea = AreaId;
+            State.SetCurrentArea(AreaId);
         }
     }
 
     // Grab some matchmaking values.
-    if (State.PlayerStatus.has_player_status())
+    if (State.GetPlayerStatus().has_player_status())
     {
         // Grab invadability state.
-        if (State.PlayerStatus.player_status().has_is_invadable())
+        if (State.GetPlayerStatus().player_status().has_is_invadable())
         {
-            bool NewState = State.PlayerStatus.player_status().is_invadable();
-            if (NewState != State.IsInvadable)
+            bool NewState = State.GetPlayerStatus().player_status().is_invadable();
+            if (NewState != State.GetIsInvadable())
             {
                 VerboseS(Client->GetName().c_str(), "User is now %s", NewState ? "invadable" : "no longer invadable");
-                State.IsInvadable = NewState;
+                State.SetIsInvadable(NewState);
             }
         }
 
         // Grab soul level / weapon level.
-        if (State.PlayerStatus.player_status().has_soul_level())
+        if (State.GetPlayerStatus().player_status().has_soul_level())
         {
-            State.SoulLevel = State.PlayerStatus.player_status().soul_level();
+            State.SetSoulLevel(State.GetPlayerStatus().player_status().soul_level());
         }
-        if (State.PlayerStatus.player_status().has_max_weapon_level())
+        if (State.GetPlayerStatus().player_status().has_max_weapon_level())
         {
-            State.MaxWeaponLevel = State.PlayerStatus.player_status().max_weapon_level();
+            State.SetMaxWeaponLevel(State.GetPlayerStatus().player_status().max_weapon_level());
         }
 
         // Grab whatever visitor pool they should be in.
         Frpg2RequestMessage::VisitorPool NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_None;
-        if (State.PlayerStatus.player_status().has_can_summon_for_way_of_blue() && State.PlayerStatus.player_status().can_summon_for_way_of_blue())
+        if (State.GetPlayerStatus().player_status().has_can_summon_for_way_of_blue() && State.GetPlayerStatus().player_status().can_summon_for_way_of_blue())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue;
         }
-        if (State.PlayerStatus.player_status().has_can_summon_for_watchdog_of_farron() && State.PlayerStatus.player_status().can_summon_for_watchdog_of_farron())
+        if (State.GetPlayerStatus().player_status().has_can_summon_for_watchdog_of_farron() && State.GetPlayerStatus().player_status().can_summon_for_watchdog_of_farron())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Watchdog_of_Farron;
         }
-        if (State.PlayerStatus.player_status().has_can_summon_for_aldritch_faithful() && State.PlayerStatus.player_status().can_summon_for_aldritch_faithful())
+        if (State.GetPlayerStatus().player_status().has_can_summon_for_aldritch_faithful() && State.GetPlayerStatus().player_status().can_summon_for_aldritch_faithful())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Aldrich_Faithful;
         }
-        if (State.PlayerStatus.player_status().has_can_summon_for_spear_of_church() && State.PlayerStatus.player_status().can_summon_for_spear_of_church())
+        if (State.GetPlayerStatus().player_status().has_can_summon_for_spear_of_church() && State.GetPlayerStatus().player_status().can_summon_for_spear_of_church())
         {
             NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Spear_of_the_Church;
         }
 
-        if (NewVisitorPool != State.VisitorPool)
+        if (NewVisitorPool != State.GetVisitorPool())
         {
-            State.VisitorPool = NewVisitorPool;
+            State.SetVisitorPool(NewVisitorPool);
         }
     }
 
@@ -219,7 +220,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameC
     std::vector<uint8_t> Data;
     Data.assign(Request->character_data().data(), Request->character_data().data() + Request->character_data().size());
 
-    if (!Database.CreateOrUpdateCharacter(State.PlayerId, Request->character_id(), Data))
+    if (!Database.CreateOrUpdateCharacter(State.GetPlayerId(), Request->character_id(), Data))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to find or update character %i.", Request->character_id());
         return MessageHandleResult::Error;

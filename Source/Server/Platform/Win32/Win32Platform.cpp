@@ -11,6 +11,7 @@
 #include "Core/Utils/Logging.h"
 
 #include <windows.h>
+#include <chrono>
 
 #if defined(_WIN32)
 // Link to the windows socket library.
@@ -102,4 +103,27 @@ void WriteToConsole(ConsoleColor Color, const char* Message)
 double GetSeconds()
 {
     return (double)GetTickCount64() / 1000.0;
+}
+
+double GetHighResolutionSeconds()
+{
+    static bool RetrievedFrequency = false;
+    static LARGE_INTEGER Frequency;
+    static LARGE_INTEGER Epoch;
+    if (!RetrievedFrequency)
+    {
+        QueryPerformanceFrequency(&Frequency);
+        QueryPerformanceCounter(&Epoch);
+        RetrievedFrequency = true;
+    }
+
+    LARGE_INTEGER Current;
+    QueryPerformanceCounter(&Current);
+
+    LARGE_INTEGER ElapsedMicroseconds;
+    ElapsedMicroseconds.QuadPart = Current.QuadPart - Epoch.QuadPart;
+    ElapsedMicroseconds.QuadPart *= 1000000;
+    ElapsedMicroseconds.QuadPart /= Frequency.QuadPart;
+
+    return (double)ElapsedMicroseconds.QuadPart / 1000000.0;
 }

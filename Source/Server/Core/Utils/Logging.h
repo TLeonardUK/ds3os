@@ -17,6 +17,17 @@
 #define STRINGIFY2(x) #x
 #define STRINGIFY(x) STRINGIFY2(x)
 
+struct LogMessage
+{
+    double Time;
+    std::string Source;
+    std::string Level;
+    std::string Message;
+};
+
+// Gets the most recent log messages, so they can be displayed in webui or other places.
+std::list<LogMessage> GetRecentLogs();
+
 // Writes a given entry into the output log.
 void WriteLog(ConsoleColor Color, const char* Source, const char* Level, const char* Format, ...);
 

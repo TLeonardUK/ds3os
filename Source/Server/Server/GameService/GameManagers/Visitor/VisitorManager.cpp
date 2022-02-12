@@ -46,7 +46,7 @@ MessageHandleResult VisitorManager::OnMessageRecieved(GameClient* Client, const 
 bool VisitorManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
-    bool IsInvasion = (Match->GetPlayerState().VisitorPool != Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue);
+    bool IsInvasion = (Match->GetPlayerState().GetVisitorPool() != Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue);
 
     const RuntimeConfigMatchingParameters* MatchingParams = &Config.CovenantInvasionMatchingParameters;
     if (!IsInvasion)
@@ -64,7 +64,7 @@ bool VisitorManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& 
     // Check matching parameters.
     if (!MatchingParams->CheckMatch(
             Request.soul_level(), Request.weapon_level(),
-            Match->GetPlayerState().SoulLevel, Match->GetPlayerState().MaxWeaponLevel,
+            Match->GetPlayerState().GetSoulLevel(), Match->GetPlayerState().GetMaxWeaponLevel(),
             Request.password().size() > 0
         ))
     {
@@ -83,7 +83,7 @@ MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Cli
         {
             return false;
         }
-        if (Request->visitor_pool() != OtherClient->GetPlayerState().VisitorPool)
+        if (Request->visitor_pool() != OtherClient->GetPlayerState().GetVisitorPool())
         {
             return false;
         }
@@ -102,8 +102,8 @@ MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Cli
         std::shared_ptr<GameClient> OtherClient = PotentialTargets[i];
 
         Frpg2RequestMessage::VisitorData* Data = Response.add_visitors();
-        Data->set_player_id(OtherClient->GetPlayerState().PlayerId);
-        Data->set_player_steam_id(OtherClient->GetPlayerState().SteamId);
+        Data->set_player_id(OtherClient->GetPlayerState().GetPlayerId());
+        Data->set_player_steam_id(OtherClient->GetPlayerState().GetSteamId());
     }
 
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -137,8 +137,8 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     {
         Frpg2RequestMessage::PushRequestVisit PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestVisit);
-        PushMessage.set_player_id(Player.PlayerId);
-        PushMessage.set_player_steam_id(Player.SteamId);
+        PushMessage.set_player_id(Player.GetPlayerId());
+        PushMessage.set_player_steam_id(Player.GetSteamId());
         PushMessage.set_data(Request->data());
         PushMessage.set_visitor_pool(Request->visitor_pool());
         PushMessage.set_map_id(Request->map_id());
@@ -165,13 +165,13 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     {
         Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectVisit);
-        PushMessage.set_player_id(Player.PlayerId);
+        PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_visitor_pool(Request->visitor_pool());   
-        PushMessage.set_steam_id(Player.SteamId);
+        PushMessage.set_steam_id(Player.GetSteamId());
         PushMessage.set_unknown_5(0);
         if (TargetClient)
         {
-            PushMessage.set_steam_id(TargetClient->GetPlayerState().SteamId);
+            PushMessage.set_steam_id(TargetClient->GetPlayerState().GetSteamId());
         }
 
         if (!Client->MessageStream->Send(&PushMessage))
@@ -188,7 +188,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
         PushMessage.set_player_id(Request->player_id());
         if (TargetClient)
         {
-            PushMessage.set_player_steam_id(TargetClient->GetPlayerState().SteamId);
+            PushMessage.set_player_steam_id(TargetClient->GetPlayerState().GetSteamId());
         }
         PushMessage.set_visitor_pool(Request->visitor_pool());
 
@@ -200,11 +200,11 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
 
         std::string PoolStatisticKey = StringFormat("Visitor/TotalVisitsRequested/Pool=%u", (uint32_t)Request->visitor_pool());
         Database.AddGlobalStatistic(PoolStatisticKey, 1);
-        Database.AddPlayerStatistic(PoolStatisticKey, Player.PlayerId, 1);
+        Database.AddPlayerStatistic(PoolStatisticKey, Player.GetPlayerId(), 1);
 
         std::string TypeStatisticKey = StringFormat("Visitor/TotalVisitsRequested");
         Database.AddGlobalStatistic(TypeStatisticKey, 1);
-        Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+        Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
     }
 
     return MessageHandleResult::Handled;
@@ -227,12 +227,12 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
     // Reject the visit
     Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
     PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectVisit);
-    PushMessage.set_player_id(Player.PlayerId);
+    PushMessage.set_player_id(Player.GetPlayerId());
     if (Request->has_visitor_pool())
     {
         PushMessage.set_visitor_pool(Request->visitor_pool());
     }
-    PushMessage.set_steam_id(Player.SteamId);
+    PushMessage.set_steam_id(Player.GetSteamId());
     PushMessage.set_unknown_5(0);
 
     if (!InitiatorClient->MessageStream->Send(&PushMessage))

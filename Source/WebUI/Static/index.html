@@ -78,6 +78,7 @@
                     <a href="#stats-tab" class="mdl-layout__tab is-active">Statistics</a>
                     <a href="#players-tab" class="mdl-layout__tab">Players</a>
                     <a href="#settings-tab" class="mdl-layout__tab">Settings</a>
+                    <a href="#debug-tab" class="mdl-layout__tab">Debug</a>
                 </div>
                 
             </header>
@@ -145,10 +146,7 @@
                                         <th class="mdl-data-table__cell--non-numeric">Steam Id</th>
                                         <th class="mdl-data-table__cell--non-numeric">Character Name</th>
                                         <th>Soul Level</th>
-                                        <th>Souls</th>
                                         <th>Soul Memory</th>
-                                        <th>Death Count</th>
-                                        <th>Multiplayer Count</th>
                                         <th>Covenant</th>
                                         <th>Status</th>
                                         <th>Location</th>
@@ -244,6 +242,64 @@
                     </div>
                 </section>
 
+                <!-- ------------------------------------------------ Debug TAB ------------------------------------------------ -->
+                <section class="mdl-layout__tab-panel" id="debug-tab">
+                    <div class="page-content">
+                        
+                        <main class="mdl-layout__content">
+                            <div class="mdl-grid">
+                                <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--12-col mdl-grid">
+                                    
+                                    <table class="mdl-data-table mdl-js-data-table mdl-data-table fullwidth">
+                                        <thead>
+                                            <tr>
+                                                <th class="mdl-data-table__cell--non-numeric">Timer</th>
+                                                <th>Latest</th>
+                                                <th>Average (Last Minute)</th>
+                                                <th>Peak (Last Minute)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="debug-timer-table-body">
+                                        </tbody>
+                                    </table>                                    
+
+                                </div>
+                                <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--12-col mdl-grid">
+                                    
+                                    <table class="mdl-data-table mdl-js-data-table mdl-data-table fullwidth">
+                                        <thead>
+                                            <tr>
+                                                <th class="mdl-data-table__cell--non-numeric">Counter</th>
+                                                <th>Average (Per Hour)</th>
+                                                <th>Total (Lifetime)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="debug-counter-table-body">
+                                        </tbody>
+                                    </table>                                    
+
+                                </div>
+                                <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--12-col mdl-grid">
+                                    
+                                    <table class="mdl-data-table mdl-js-data-table mdl-data-table fullwidth">
+                                        <thead>
+                                            <tr>
+                                                <th class="mdl-data-table__cell--non-numeric">Level</th>
+                                                <th style="text-align:left;">Source</th>
+                                                <th style="text-align:left;">Message</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="debug-log-table-body">
+                                        </tbody>
+                                    </table>                                    
+
+                                </div>
+                            </div>
+                        </main>
+
+                    </div>
+                </section>
+                
             </main>
 
             <!-- Footer -->

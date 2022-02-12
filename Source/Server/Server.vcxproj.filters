@@ -321,6 +321,18 @@
     <ClInclude Include="Server\WebUIService\Handlers\MessageHandler.h">
       <Filter>Server\WebUIService\Handlers</Filter>
     </ClInclude>
+    <ClInclude Include="Server\WebUIService\Handlers\DebugStatisticsHandler.h">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\DebugCounter.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\DebugTimer.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Utils\DebugObjects.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -495,6 +507,18 @@
     <ClCompile Include="Server\WebUIService\Handlers\MessageHandler.cpp">
       <Filter>Server\WebUIService\Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="Server\WebUIService\Handlers\DebugStatisticsHandler.cpp">
+      <Filter>Server\WebUIService\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\DebugCounter.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\DebugTimer.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\DebugObjects.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.props" />
@@ -529,6 +553,9 @@
     </None>
     <None Include="Server\GameService\Utils\Ids\TeamTypeId.inc">
       <Filter>Server\GameService\Utils\Ids</Filter>
+    </None>
+    <None Include="Core\Utils\DebugObjects.inc">
+      <Filter>Core\Utils</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

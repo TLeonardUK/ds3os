@@ -15,6 +15,7 @@
 #include "Core/Network/NetConnection.h"
 #include "Core/Network/NetConnectionTCP.h"
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/DebugObjects.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
@@ -51,6 +52,8 @@ bool LoginService::Term()
 
 void LoginService::Poll()
 {
+    DebugTimerScope Scope(Debug::LoginService_PollTime);
+
     Connection->Pump();
 
     while (std::shared_ptr<NetConnection> ClientConnection = Connection->Accept())
@@ -76,6 +79,8 @@ void LoginService::Poll()
 void LoginService::HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection)
 {
     LogS(ClientConnection->GetName().c_str(), "Client connected.");
+
+    Debug::LoginConnections.Add(1);
 
     std::shared_ptr<LoginClient> Client = std::make_shared<LoginClient>(this, ClientConnection, ServerRSAKey);
     Clients.push_back(Client);

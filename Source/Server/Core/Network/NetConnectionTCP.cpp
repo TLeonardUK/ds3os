@@ -9,6 +9,7 @@
 
 #include "Core/Network/NetConnectionTCP.h"
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/DebugObjects.h"
 #include "Config/BuildConfig.h"
 #include "Core/Crypto/Cipher.h"
 
@@ -271,6 +272,8 @@ bool NetConnectionTCP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
         HasDisconnected = true;
     }
 
+    Debug::TcpBytesRecieved.Add(Result);
+
     BytesRecieved = Result;
     return true;
 }
@@ -329,6 +332,8 @@ bool NetConnectionTCP::SendPartial(const std::vector<uint8_t>& Buffer, int Offse
         ErrorS(GetName().c_str(), "Failed to send with error 0x%08x.", error);
         return false;
     }
+
+    Debug::TcpBytesSent.Add(Result);
 
     BytesSent = Result;
 

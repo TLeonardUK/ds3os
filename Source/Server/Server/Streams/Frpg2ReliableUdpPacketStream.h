@@ -160,7 +160,7 @@ protected:
 
     const float RESEND_SYN_INTERVAL = 0.5f;
 
-    const double MIN_TIME_BETWEEN_RESEND_ACK = 0.05;
+    const double MIN_TIME_BETWEEN_RESEND_ACK = 0.1;
 
     // How many seconds to wait for a graceful disconnection.
     const double CONNECTION_CLOSE_TIMEOUT = 3.0;

@@ -91,4 +91,16 @@ public:
 
     constexpr inline static const bool AUTH_ENABLED = true;
 
+    // How long with now data gathering requests before we timeout and stop
+    // gathering data for perf.
+    inline static const double WEBUI_GATHER_DATA_TIMEOUT = 10.0f; 
+
+    // Minimum time between each data gather for the webui.
+    inline static const double WEBUI_GATHER_DATA_MIN_INTERVAL = 3.0f;
+
+    // Enables or disables player/global statistics gathering. This adds a good
+    // bit of database overhead, so don't use it unless you are actually using
+    // the statistics its generating.
+    constexpr inline static const bool DATABASE_STAT_GATHERING_ENABLED = false;
+
 };

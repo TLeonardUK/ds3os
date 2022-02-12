@@ -41,13 +41,17 @@ protected:
 
 	std::vector<Sample> Samples;
 	double NextSampleTime = 0.0;
+	double MustSampleTime = 0.0;
 
-	std::unordered_map<std::string, size_t> Statistics;
+	std::unordered_map<std::string, std::string> Statistics;
 	std::map<OnlineAreaId, size_t> PopulatedAreas; 
 
 	size_t UniquePlayerCount = 0;
 
-	constexpr static inline double SampleInterval = 1.0f * 60.0f;
-	constexpr static inline size_t MaxSamples = 60 * 24; // 24 hours of samples.
+	size_t PreviousSampleClientSize = 0;
+
+	constexpr static inline double MinSampleInterval = 60.0f;
+	constexpr static inline double MaxSampleInterval = 30 * 60.0f;
+	constexpr static inline size_t MaxSamples = 60 * 24 * 7; // One week of samples.
 
 };

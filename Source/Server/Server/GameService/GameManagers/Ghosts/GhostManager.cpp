@@ -85,7 +85,7 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
 
-    if (std::shared_ptr<Ghost> ActiveGhost = Database.CreateGhost((OnlineAreaId)Request->online_area_id(), Player.PlayerId, Player.SteamId, Data))
+    if (std::shared_ptr<Ghost> ActiveGhost = Database.CreateGhost((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data))
     {
         LiveCache.Add(ActiveGhost->OnlineAreaId, ActiveGhost->GhostId, ActiveGhost);
     }
@@ -97,7 +97,7 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
 
     std::string TypeStatisticKey = StringFormat("Ghosts/TotalGhostsCreated");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
@@ -134,7 +134,7 @@ MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Cli
         for (std::shared_ptr<Ghost>& AreaMsg : ActiveGhosts)
         {
             // Filter players own messages.
-            if (AreaMsg->PlayerId == Player.PlayerId)
+            if (AreaMsg->PlayerId == Player.GetPlayerId())
             {
                 continue;
             }

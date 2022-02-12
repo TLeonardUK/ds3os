@@ -9,6 +9,7 @@
 
 var gRefreshStatisticsInterval;
 var gRefreshPlayersInterval;
+var gRefreshDebugInterval;
 
 var gActivePlayersChart;
 
@@ -198,10 +199,12 @@ function startDataRefresh()
 {
     gRefreshStatisticsInterval = setInterval(refreshStatisticsTab, 5000);
     gRefreshPlayersInterval = setInterval(refreshPlayersTab, 5000);
+    gRefreshDebugInterval = setInterval(refreshDebugTab, 5000);
 
     refreshStatisticsTab();
     refreshPlayersTab();
     refreshSettingsTab();
+    refreshDebugTab();
 }
 
 // Stops async loading data for the page data.
@@ -209,6 +212,7 @@ function stopDataRefresh()
 {
     clearInterval(gRefreshStatisticsInterval);
     clearInterval(gRefreshPlayersInterval);
+    clearInterval(gRefreshDebugInterval);
 }
 
 // Disconnects the given player-id.
@@ -446,10 +450,7 @@ function refreshPlayersTab()
                     <td class="mdl-data-table__cell--non-numeric">${player["steamId"]}</td>
                     <td class="mdl-data-table__cell--non-numeric">${player["characterName"]}</td>
                     <td>${player["soulLevel"]}</td>
-                    <td>${player["souls"]}</td>
                     <td>${player["soulMemory"]}</td>
-                    <td>${player["deathCount"]}</td>
-                    <td>${player["multiplayCount"]}</td>
                     <td>${player["covenant"]}</td>
                     <td>${player["status"]}</td>
                     <td>${player["location"]}</td>
@@ -570,4 +571,79 @@ function setMaterialCheckState(element, state)
 function setMaterialTextField(element, text)
 {
     element.parentNode.MaterialTextfield.change(text);
+}
+
+// Retrieves data from the server to update the debug statistics tab.
+function refreshDebugTab()
+{
+    fetch("/debug_statistics", 
+    {
+        method: 'get',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        }
+    })
+    .then(response => 
+    {        
+        return response.json();
+    })
+    .then(function (data) 
+    {
+        var timerTable = document.querySelector("#debug-timer-table-body");   
+        var counterTable = document.querySelector("#debug-counter-table-body");   
+        var logTable = document.querySelector("#debug-log-table-body");   
+
+        // Update the timer list.      
+        var newHtml = "";
+        for (var i = 0; i < data.timers.length; i++) 
+        {
+            var stat = data.timers[i];
+            newHtml += `        
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">${stat["name"]}</td>
+                    <td>${stat["current"]}</td>
+                    <td>${stat["average"]}</td>
+                    <td>${stat["peak"]}</td>
+                </tr>
+            `;
+        }
+        timerTable.innerHTML = newHtml;
+        
+        // Update the counter list.      
+        newHtml = "";
+        for (var i = 0; i < data.counters.length; i++) 
+        {
+            var stat = data.counters[i];
+            newHtml += `        
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">${stat["name"]}</td>
+                    <td>${stat["average_rate"]}</td>
+                    <td>${stat["total_lifetime"]}</td>
+                </tr>
+            `;
+        }
+        counterTable.innerHTML = newHtml;
+        
+        // Update the debug log list.    
+        newHtml = "";
+        for (var i = 0; i < data.logs.length; i++) 
+        {
+            var stat = data.logs[i];
+            newHtml += `        
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">${stat["level"]}</td>
+                    <td style="text-align:left;">${stat["source"]}</td>
+                    <td style="text-align:left;">${stat["message"]}</td>
+                </tr>
+            `;
+        }
+        logTable.innerHTML = newHtml;
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed (debug_statistics): ' + error);                
+        reauthenticate();           
+    });
 }

@@ -139,7 +139,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
         for (std::shared_ptr<SummonSign>& Sign : AreaSigns)
         {
             // Filter players own signs.
-            if (Sign->PlayerId == Player.PlayerId)
+            if (Sign->PlayerId == Player.GetPlayerId())
             {
                 continue;
             }
@@ -186,8 +186,8 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     std::shared_ptr<SummonSign> Sign = std::make_shared<SummonSign>();
     Sign->SignId = NextSignId++;
     Sign->OnlineAreaId = (OnlineAreaId)Request->online_area_id();
-    Sign->PlayerId = Player.PlayerId;
-    Sign->PlayerSteamId = Player.SteamId;
+    Sign->PlayerId = Player.GetPlayerId();
+    Sign->PlayerSteamId = Player.GetSteamId();
     Sign->IsRedSign = Request->is_red_sign();
     Sign->PlayerStruct.assign(Request->player_struct().data(), Request->player_struct().data() + Request->player_struct().size());
     Sign->MatchingParameters = Request->matching_parameter();
@@ -200,7 +200,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
 
     std::string TypeStatisticKey = StringFormat("Sign/TotalCreated");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -321,8 +321,8 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
 
         Frpg2RequestMessage::PushRequestSummonSign PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestSummonSign);
-        PushMessage.mutable_message()->set_player_id(Player.PlayerId);
-        PushMessage.mutable_message()->set_steam_id(Player.SteamId);
+        PushMessage.mutable_message()->set_player_id(Player.GetPlayerId());
+        PushMessage.mutable_message()->set_steam_id(Player.GetSteamId());
         PushMessage.mutable_message()->mutable_sign_info()->set_sign_id(Sign->SignId);
         PushMessage.mutable_message()->mutable_sign_info()->set_player_id(Sign->PlayerId);
         PushMessage.mutable_message()->set_player_struct(Request->player_struct().data(), Request->player_struct().size());
@@ -334,7 +334,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
         }
         else
         {
-            Sign->BeingSummonedByPlayerId = Player.PlayerId;
+            Sign->BeingSummonedByPlayerId = Player.GetPlayerId();
         }
     }
 
@@ -365,11 +365,11 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
     {
         std::string PoolStatisticKey = StringFormat("Sign/TotalSummonsRequested/IsRedSign=%u", (uint32_t)Sign->IsRedSign);
         Database.AddGlobalStatistic(PoolStatisticKey, 1);
-        Database.AddPlayerStatistic(PoolStatisticKey, Player.PlayerId, 1);
+        Database.AddPlayerStatistic(PoolStatisticKey, Player.GetPlayerId(), 1);
 
         std::string TypeStatisticKey = StringFormat("Sign/TotalSummonsRequested");
         Database.AddGlobalStatistic(TypeStatisticKey, 1);
-        Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+        Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
     }
 
     return MessageHandleResult::Handled;
@@ -444,9 +444,9 @@ MessageHandleResult SignManager::Handle_RequestGetRightMatchingArea(GameClient* 
 
     for (std::shared_ptr<GameClient>& OtherClient : GameServiceInstance->GetClients())
     {
-        int OtherSoulLevel = OtherClient->GetPlayerState().SoulLevel;
-        int OtherWeaponLevel = OtherClient->GetPlayerState().MaxWeaponLevel;
-        OnlineAreaId OtherArea = OtherClient->GetPlayerState().CurrentArea;
+        int OtherSoulLevel = OtherClient->GetPlayerState().GetSoulLevel();
+        int OtherWeaponLevel = OtherClient->GetPlayerState().GetMaxWeaponLevel();
+        OnlineAreaId OtherArea = OtherClient->GetPlayerState().GetCurrentArea();
 
         if (OtherArea == OnlineAreaId::None)
         {

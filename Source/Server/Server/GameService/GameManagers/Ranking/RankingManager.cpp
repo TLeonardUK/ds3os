@@ -55,7 +55,7 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
 
-    if (!Database.RegisterScore(Request->board_id(), Player.PlayerId, Request->character_id(), Request->score(), Data))
+    if (!Database.RegisterScore(Request->board_id(), Player.GetPlayerId(), Request->character_id(), Request->score(), Data))
     {
         WarningS(Client->GetName().c_str(), "Failed to register score in database.");
         return MessageHandleResult::Error;
@@ -63,7 +63,7 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
 
     std::string TypeStatisticKey = StringFormat("Ranking/TotalRegistrations");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
     // Empty response.
     Frpg2RequestMessage::RequestRegisterRankingDataResponse Response;
@@ -114,10 +114,10 @@ MessageHandleResult RankingManager::Handle_RequestGetCharacterRankingData(GameCl
     Frpg2RequestMessage::RequestGetCharacterRankingDataResponse Response;
     Frpg2RequestMessage::RankingData& ResponseData = *Response.mutable_data();
 
-    std::shared_ptr<Ranking> CharRanking = Database.GetCharacterRanking(Request->board_id(), Player.PlayerId, Request->character_id());
+    std::shared_ptr<Ranking> CharRanking = Database.GetCharacterRanking(Request->board_id(), Player.GetPlayerId(), Request->character_id());
     if (CharRanking)
     {
-        ResponseData.set_player_id(Player.PlayerId);
+        ResponseData.set_player_id(Player.GetPlayerId());
         ResponseData.set_character_id(Request->character_id());
         ResponseData.set_serial_rank(CharRanking->SerialRank);
         ResponseData.set_rank(CharRanking->Rank);
@@ -126,7 +126,7 @@ MessageHandleResult RankingManager::Handle_RequestGetCharacterRankingData(GameCl
     }
     else
     {
-        ResponseData.set_player_id(Player.PlayerId);
+        ResponseData.set_player_id(Player.GetPlayerId());
         ResponseData.set_character_id(Request->character_id());
         ResponseData.set_serial_rank(0);
         ResponseData.set_rank(0);

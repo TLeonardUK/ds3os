@@ -63,24 +63,27 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
 
 #endif
 
-    State.SteamId = SteamId;
+    State.SetSteamId(SteamId);
 
     // Resolve steam id to player id. If no player recorded with it, create a new one.
-    if (!ServerInstance->GetDatabase().FindOrCreatePlayer(State.SteamId, State.PlayerId))
+    uint32_t NewPlayerId = 0;
+    if (!ServerInstance->GetDatabase().FindOrCreatePlayer(State.GetSteamId(), NewPlayerId))
     {
-        WarningS(Client->GetName().c_str(), "Failed to find or create player with steam id '%s' in database.", State.SteamId.c_str());
+        WarningS(Client->GetName().c_str(), "Failed to find or create player with steam id '%s' in database.", State.GetSteamId().c_str());
         return MessageHandleResult::Error;
     }
 
-    LogS(Client->GetName().c_str(), "Steam id '%s' has logged in as player %i.", State.SteamId.c_str(), State.PlayerId);
-    LogS(Client->GetName().c_str(), "Renaming connection to '%s'.", State.SteamId.c_str());
+    State.SetPlayerId(NewPlayerId);
 
-    Client->Connection->Rename(State.SteamId);
+    LogS(Client->GetName().c_str(), "Steam id '%s' has logged in as player %i.", State.GetSteamId().c_str(), State.GetPlayerId());
+    LogS(Client->GetName().c_str(), "Renaming connection to '%s'.", State.GetSteamId().c_str());
+
+    Client->Connection->Rename(State.GetSteamId());
 
     // Send back response with our new player id.
     Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;
-    Response.set_steam_id(State.SteamId);
-    Response.set_player_id(State.PlayerId); 
+    Response.set_steam_id(State.GetSteamId());
+    Response.set_player_id(State.GetPlayerId()); 
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestWaitForUserLoginResponse response.");
@@ -125,7 +128,7 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
 
     std::string TypeStatisticKey = StringFormat("Player/TotalLogins");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, State.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, State.GetPlayerId(), 1);
 
     return MessageHandleResult::Handled;
 }
@@ -140,7 +143,7 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
     Frpg2RequestMessage::AnnounceMessageDataList* Changes = Response.mutable_changes();
 
     std::vector<RuntimeConfigAnnouncement> Announcements;
-    if (ServerInstance->GetDatabase().IsPlayerBanned(Client->GetPlayerState().SteamId))
+    if (ServerInstance->GetDatabase().IsPlayerBanned(Client->GetPlayerState().GetSteamId()))
     {
         RuntimeConfigAnnouncement Announcement;
         Announcement.Header = "Banned";

@@ -26,6 +26,12 @@ public:
 	// multithreading as most of the server data isn't thread-safe.
 	virtual void GatherData() {};
 
+	// Determines if GatherData needs to be called for this handler.
+	virtual bool NeedsDataGather();
+
+	// Marks this handler as needing data gather callbacks as data has been requested.
+	virtual void MarkAsNeedsDataGather();
+
 protected:
 	void RespondJson(struct mg_connection* Connection, nlohmann::json& Json);
 
@@ -34,4 +40,7 @@ protected:
 protected:
 	WebUIService* Service;
 	
+	double LastMarkedAsNeedingDataGather = 0.0f;
+	double LastDataGather = 0.0f;
+
 };

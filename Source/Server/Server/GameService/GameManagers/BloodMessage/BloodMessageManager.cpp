@@ -164,7 +164,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
         MessageData.assign(MessageInfo.message_data().data(), MessageInfo.message_data().data() + MessageInfo.message_data().size());
 
         // Create the message in the database.
-        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((OnlineAreaId)MessageInfo.online_area_id(), Player.PlayerId, Player.SteamId, Request->character_id(), MessageData);
+        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((OnlineAreaId)MessageInfo.online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData);
         if (!BloodMessage)
         {
             WarningS(Client->GetName().c_str(), "Failed to recreate blood message.");
@@ -248,7 +248,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
     std::vector<uint8_t> MessageData;
     MessageData.assign(Request->message_data().data(), Request->message_data().data() + Request->message_data().size());
 
-    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((OnlineAreaId)Request->online_area_id(), Player.PlayerId, Player.SteamId, Request->character_id(), MessageData))
+    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData))
     {
         Response.set_message_id(ActiveMessage->MessageId);
 
@@ -262,7 +262,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
 
     std::string TypeStatisticKey = StringFormat("BloodMessage/TotalCreated");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
     
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -282,7 +282,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
 
     LogS(Client->GetName().c_str(), "Removing blood message %i.", Request->message_id());
 
-    if (Database.RemoveOwnBloodMessage(Player.PlayerId, Request->message_id()))
+    if (Database.RemoveOwnBloodMessage(Player.GetPlayerId(), Request->message_id()))
     {
         LiveCache.Remove((OnlineAreaId)Request->online_area_id(), Request->message_id());
     }
@@ -326,7 +326,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
         for (std::shared_ptr<BloodMessage>& AreaMsg : AreaMessages)
         {
             // Filter players own messages.
-            if (AreaMsg->PlayerId == Player.PlayerId)
+            if (AreaMsg->PlayerId == Player.GetPlayerId())
             {
                 continue;
             }
@@ -382,7 +382,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
 
     if (ActiveMessage != nullptr)
     {
-        if (ActiveMessage->PlayerId == Player.PlayerId)
+        if (ActiveMessage->PlayerId == Player.GetPlayerId())
         {
             WarningS(Client->GetName().c_str(), "Disconnecting client as attempted to evaluate own message id '%u'.", Request->message_id());
             return MessageHandleResult::Error;
@@ -413,8 +413,8 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
 
             Frpg2RequestMessage::PushRequestEvaluateBloodMessage EvaluatePushMessage;
             EvaluatePushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestEvaluateBloodMessage);
-            EvaluatePushMessage.set_player_id(Player.PlayerId);
-            EvaluatePushMessage.set_player_steam_id(Player.SteamId);
+            EvaluatePushMessage.set_player_id(Player.GetPlayerId());
+            EvaluatePushMessage.set_player_steam_id(Player.GetSteamId());
             EvaluatePushMessage.set_message_id(ActiveMessage->MessageId);
             EvaluatePushMessage.set_was_poor(Request->was_poor());
 
@@ -427,7 +427,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
 
     std::string TypeStatisticKey = StringFormat("BloodMessage/TotalEvaluated");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.

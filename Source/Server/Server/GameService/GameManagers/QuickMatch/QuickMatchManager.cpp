@@ -32,7 +32,7 @@ void QuickMatchManager::OnLostPlayer(GameClient* Client)
     {
         std::shared_ptr<Match> Match = *Iter;
 
-        if (Match->HostPlayerId == Client->GetPlayerState().PlayerId)
+        if (Match->HostPlayerId == Client->GetPlayerState().GetPlayerId())
         {
             LogS(Client->GetName().c_str(), "Unregistered quick match hosted by player %u, as player has disconnected.", Match->HostPlayerId);
             Iter = Matches.erase(Iter);
@@ -197,8 +197,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
     Frpg2RequestMessage::RequestRegisterQuickMatchResponse Response;
 
     std::shared_ptr<Match> NewMatch = std::make_shared<Match>();
-    NewMatch->HostPlayerId = Client->GetPlayerState().PlayerId;
-    NewMatch->HostPlayerSteamId = Client->GetPlayerState().SteamId;
+    NewMatch->HostPlayerId = Client->GetPlayerState().GetPlayerId();
+    NewMatch->HostPlayerSteamId = Client->GetPlayerState().GetSteamId();
     NewMatch->GameMode = Request->mode();
     NewMatch->MatchingParams = Request->matching_parameter();
     NewMatch->MapId = Request->map_id();
@@ -227,7 +227,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestUnregisterQuickMatch(GameCl
     for (auto Iter = Matches.begin(); Iter != Matches.end(); /* empty */)
     {
         std::shared_ptr<Match> Match = *Iter;
-        if (          Match->HostPlayerId == Client->GetPlayerState().PlayerId &&
+        if (          Match->HostPlayerId == Client->GetPlayerState().GetPlayerId() &&
                       Match->GameMode == Request->mode() &&
                       Match->MapId == Request->map_id() &&
             (uint32_t)Match->AreaId == Request->online_area_id())
@@ -291,8 +291,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
 
             Frpg2RequestMessage::PushRequestJoinQuickMatch PushMessage;
             PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestJoinQuickMatch);
-            PushMessage.mutable_message()->set_join_player_id(Player.PlayerId);
-            PushMessage.mutable_message()->set_join_player_steam_id(Player.SteamId);
+            PushMessage.mutable_message()->set_join_player_id(Player.GetPlayerId());
+            PushMessage.mutable_message()->set_join_player_steam_id(Player.GetSteamId());
             PushMessage.mutable_message()->set_join_character_id(Request->character_id());
             PushMessage.mutable_message()->set_online_area_id((uint32_t)ExistingMatch->AreaId);
             PushMessage.mutable_message()->set_unknown_5(0);                                            // TODO: Figure out - MAYBE GAMEMODE?
@@ -348,8 +348,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
 
         Frpg2RequestMessage::PushRequestAcceptQuickMatch PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestAcceptQuickMatch);
-        PushMessage.mutable_message()->set_host_player_id(Player.PlayerId);
-        PushMessage.mutable_message()->set_host_player_steam_id(Player.SteamId);
+        PushMessage.mutable_message()->set_host_player_id(Player.GetPlayerId());
+        PushMessage.mutable_message()->set_host_player_steam_id(Player.GetSteamId());
         PushMessage.mutable_message()->set_metadata(Request->data().data(), Request->data().size());
 
         if (!TargetClient->MessageStream->Send(&PushMessage))
@@ -381,7 +381,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestRejectQuickMatch(GameClient
 
         Frpg2RequestMessage::PushRequestRejectQuickMatch PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectQuickMatch);
-        PushMessage.mutable_message()->set_host_player_id(Player.PlayerId);
+        PushMessage.mutable_message()->set_host_player_id(Player.GetPlayerId());
         PushMessage.mutable_message()->set_unknown_2(0);
 
         if (!TargetClient->MessageStream->Send(&PushMessage))
@@ -411,7 +411,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchStart(GameCli
     for (auto Iter = Matches.begin(); Iter != Matches.end(); Iter++)
     {
         std::shared_ptr<Match> Match = *Iter;
-        if (Match->HostPlayerId == Player.PlayerId)
+        if (Match->HostPlayerId == Player.GetPlayerId())
         {
             LogS(Client->GetName().c_str(), "Unregistered quick match hosted by player %u, as it has started.", Match->HostPlayerId);
             Matches.erase(Iter);
@@ -442,7 +442,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     LogS(Client->GetName().c_str(), "RequestSendQuickMatchResult: Sending quick match results hosted by self.");
 
     // Grab the players character to get their current rank data.
-    std::shared_ptr<Character> Character = Database.FindCharacter(State.PlayerId, State.CharacterId);
+    std::shared_ptr<Character> Character = Database.FindCharacter(State.GetPlayerId(), State.GetCharacterId());
     if (!Character)
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to find current character during QuickMatchResult.");
@@ -502,7 +502,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     LogS(Client->GetName().c_str(), "Player finished undead match, ranked up to: rank=%i xp=%i (from rank=%i xp=%i)", Rank, XP, OriginalRank, OriginalXP);
 
     // Update character state.
-    if (!Database.UpdateCharacterQuickMatchRank(State.PlayerId, State.CharacterId, Character->QuickMatchDuelRank, Character->QuickMatchDuelXp, Character->QuickMatchBrawlRank, Character->QuickMatchBrawlXp))
+    if (!Database.UpdateCharacterQuickMatchRank(State.GetPlayerId(), State.GetCharacterId(), Character->QuickMatchDuelRank, Character->QuickMatchDuelXp, Character->QuickMatchBrawlRank, Character->QuickMatchBrawlXp))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to update their quick match result.");
         return MessageHandleResult::Error;
@@ -510,7 +510,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
 
     std::string TypeStatisticKey = StringFormat("QuickMatch/TotalMatches");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
-    Database.AddPlayerStatistic(TypeStatisticKey, State.PlayerId, 1);
+    Database.AddPlayerStatistic(TypeStatisticKey, State.GetPlayerId(), 1);
 
     if (!Client->MessageStream->Send(&Response, &Message))
     {

@@ -15,6 +15,7 @@
 #include "Core/Network/NetConnection.h"
 #include "Core/Network/NetConnectionTCP.h"
 #include "Core/Utils/Logging.h"
+#include "Core/Utils/DebugObjects.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
@@ -51,6 +52,8 @@ bool AuthService::Term()
 
 void AuthService::Poll()
 {
+    DebugTimerScope Scope(Debug::AuthService_PollTime);
+
     Connection->Pump();
 
     while (std::shared_ptr<NetConnection> ClientConnection = Connection->Accept())
@@ -76,6 +79,8 @@ void AuthService::Poll()
 void AuthService::HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection)
 {
     LogS(ClientConnection->GetName().c_str(), "Client connected.");
+
+    Debug::AuthConnections.Add(1);
 
     std::shared_ptr<AuthClient> Client = std::make_shared<AuthClient>(this, ClientConnection, ServerRSAKey);
     Clients.push_back(Client);

@@ -18,6 +18,7 @@
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
+#include "Core/Utils/DebugObjects.h"
 
 #include "Protobuf/Protobufs.h"
 
@@ -34,16 +35,22 @@ bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& 
     if (SendMessage.Header.msg_type == Frpg2ReliableUdpMessageType::Push)
     {
         SendMessage.Header.msg_index = 0xFFFFFFFF;
+
+        Debug::PushMessagesSent.Add(1);
     }
     else if (ResponseTo != nullptr)
     {
         SendMessage.Header.msg_index = ResponseTo->Header.msg_index;
         SendMessage.Header.msg_type = Frpg2ReliableUdpMessageType::Reply;
+
+        Debug::ResponsesSent.Add(1);
     }
     else
     {
         SendMessage.Header.msg_index = SentMessageCounter++;
         LastSentMessageIndex = SendMessage.Header.msg_index;
+
+        Debug::ResponsesSent.Add(1);
     }
 
     Frpg2ReliableUdpFragment Packet;
@@ -154,6 +161,8 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         InErrorState = true;
         return false;
     }
+
+    Debug::RequestsRecieved.Add(1);
 
     // Disassemble if required.
     if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)

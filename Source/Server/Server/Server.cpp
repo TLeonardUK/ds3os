@@ -19,6 +19,7 @@
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
 #include "Core/Utils/Random.h"
+#include "Core/Utils/DebugObjects.h"
 #include "Core/Network/NetUtils.h"
 #include "Core/Network/NetHttpRequest.h"
 
@@ -344,19 +345,15 @@ void Server::RunUntilQuit()
     // This suffices for now.
     while (!QuitRecieved)
     {
-        double StartTime = GetSeconds();
-
-        for (auto& Service : Services)
         {
-            Service->Poll();
-        }
+            DebugTimerScope Scope(Debug::UpdateTime);
 
-        PollServerAdvertisement();
+            for (auto& Service : Services)
+            {
+                Service->Poll();
+            }
 
-        UpdateTime = GetSeconds() - StartTime;
-        if (UpdateTime > 0.5f)
-        {
-            Warning("Update took %.2f seconds, this is abnormally long.", UpdateTime);
+            PollServerAdvertisement();
         }
 
         // Emulate frametime spikes.

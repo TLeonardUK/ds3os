@@ -9,6 +9,10 @@
 
 #include "Server/WebUIService/Handlers/WebUIHandler.h"
 
+#include "Platform/Platform.h"
+
+#include "Config/BuildConfig.h"
+
 WebUIHandler::WebUIHandler(WebUIService* InService)
     : Service(InService)
 {
@@ -36,4 +40,28 @@ bool WebUIHandler::ReadJson(CivetServer* Server, struct mg_connection* Connectio
     }
 
     return true;
+}
+
+bool WebUIHandler::NeedsDataGather()
+{
+    double Time = GetSeconds();
+
+    if (Time - LastDataGather < BuildConfig::WEBUI_GATHER_DATA_MIN_INTERVAL)
+    {
+        return false;
+    }
+
+    if (Time - LastMarkedAsNeedingDataGather > BuildConfig::WEBUI_GATHER_DATA_TIMEOUT)
+    {
+        return false;
+    }
+
+    LastDataGather = GetSeconds();
+
+    return true;
+}
+
+void WebUIHandler::MarkAsNeedsDataGather()
+{
+    LastMarkedAsNeedingDataGather = GetSeconds();
 }

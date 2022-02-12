@@ -71,3 +71,8 @@ void WriteToConsole(ConsoleColor Color, const char* Message);
 // Be aware that this value is not guaranteed high-precision, don't
 // use it for any realtime calculations.
 double GetSeconds();
+
+// This is similar to GetSeconds but uses a high resolution timer suitable for
+// performance timings. There is an overhead for using this, so
+// prefer use of GetSeconds where possible.
+double GetHighResolutionSeconds();

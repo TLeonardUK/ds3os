@@ -57,7 +57,7 @@ bool BreakInManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& 
         return false;
     }
 
-    if (!Match->GetPlayerState().IsInvadable)
+    if (!Match->GetPlayerState().GetIsInvadable())
     {
         return false;
     }
@@ -71,7 +71,7 @@ bool BreakInManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& 
     // Check matching parameters.
     if (!MatchingParams->CheckMatch(
             Request.soul_level(), Request.weapon_level(), 
-            Match->GetPlayerState().SoulLevel, Match->GetPlayerState().MaxWeaponLevel,
+            Match->GetPlayerState().GetSoulLevel(), Match->GetPlayerState().GetMaxWeaponLevel(),
             Request.password().size() > 0
         ))
     {
@@ -90,7 +90,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
         {
             return false;
         }
-        if (OtherClient->GetPlayerState().CurrentArea != (OnlineAreaId)Request->online_area_id())
+        if (OtherClient->GetPlayerState().GetCurrentArea() != (OnlineAreaId)Request->online_area_id())
         {
             return false;
         }
@@ -109,8 +109,8 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
         std::shared_ptr<GameClient> OtherClient = PotentialTargets[i];
 
         Frpg2RequestMessage::BreakInTargetData* Data = Response.add_target_data();
-        Data->set_player_id(OtherClient->GetPlayerState().PlayerId);
-        Data->set_steam_id(OtherClient->GetPlayerState().SteamId);
+        Data->set_player_id(OtherClient->GetPlayerState().GetPlayerId());
+        Data->set_steam_id(OtherClient->GetPlayerState().GetSteamId());
     }
 
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -144,8 +144,8 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
     {
         Frpg2RequestMessage::PushRequestBreakInTarget PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestBreakInTarget);
-        PushMessage.set_player_id(Player.PlayerId);
-        PushMessage.set_steam_id(Player.SteamId);
+        PushMessage.set_player_id(Player.GetPlayerId());
+        PushMessage.set_steam_id(Player.GetSteamId());
         PushMessage.set_unknown_4(0);
         PushMessage.set_map_id(Request->map_id());
         PushMessage.set_online_area_id(Request->online_area_id());
@@ -158,7 +158,7 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
 
         std::string TypeStatisticKey = StringFormat("BreakIn/TotalInvasionsRequested");
         Database.AddGlobalStatistic(TypeStatisticKey, 1);
-        Database.AddPlayerStatistic(TypeStatisticKey, Player.PlayerId, 1);
+        Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
     }
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
@@ -175,13 +175,13 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
     {
         Frpg2RequestMessage::PushRequestRejectBreakInTarget PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectBreakInTarget);
-        PushMessage.set_player_id(Player.PlayerId);
+        PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_unknown_3(1);     // TODO: Figure out
-        PushMessage.set_steam_id(Player.SteamId);
+        PushMessage.set_steam_id(Player.GetSteamId());
         PushMessage.set_unknown_5(0);
         if (TargetClient)
         {
-            PushMessage.set_steam_id(TargetClient->GetPlayerState().SteamId);
+            PushMessage.set_steam_id(TargetClient->GetPlayerState().GetSteamId());
         }
 
         if (!Client->MessageStream->Send(&PushMessage))
@@ -211,9 +211,9 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
     // Reject the break in.
     Frpg2RequestMessage::PushRequestRejectBreakInTarget PushMessage;
     PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectBreakInTarget);
-    PushMessage.set_player_id(Player.PlayerId);
+    PushMessage.set_player_id(Player.GetPlayerId());
     PushMessage.set_unknown_3(1);     // TODO: Figure out
-    PushMessage.set_steam_id(Player.SteamId);
+    PushMessage.set_steam_id(Player.GetSteamId());
     PushMessage.set_unknown_5(0);
 
     if (!InvaderClient->MessageStream->Send(&PushMessage))

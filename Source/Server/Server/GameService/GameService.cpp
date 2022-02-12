@@ -31,6 +31,7 @@
 #include "Core/Network/NetConnectionUDP.h"
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Strings.h"
+#include "Core/Utils/DebugObjects.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
@@ -118,6 +119,8 @@ void GameService::TrimDatabase()
 
 void GameService::Poll()
 {
+    DebugTimerScope Scope(Debug::GameService_PollTime);
+
     Connection->Pump();
 
     for (auto& Manager : Managers)
@@ -225,6 +228,8 @@ void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientCo
 
     GameClientAuthenticationState& AuthState = (*AuthStateIter).second;
 
+    Debug::GameConnections.Add(1);
+
     std::shared_ptr<GameClient> Client = std::make_shared<GameClient>(this, ClientConnection, AuthState.CwcKey, AuthState.AuthToken);
     Clients.push_back(Client);
 
@@ -266,7 +271,7 @@ std::shared_ptr<GameClient> GameService::FindClientByPlayerId(uint32_t PlayerId)
 {
     for (std::shared_ptr<GameClient>& Client : Clients)
     {
-        if (Client->GetPlayerState().PlayerId == PlayerId)
+        if (Client->GetPlayerState().GetPlayerId() == PlayerId)
         {
             return Client;
         }
@@ -278,7 +283,7 @@ std::shared_ptr<GameClient> GameService::FindClientBySteamId(const std::string& 
 {
     for (std::shared_ptr<GameClient>& Client : Clients)
     {
-        if (Client->GetPlayerState().SteamId == SteamId)
+        if (Client->GetPlayerState().GetSteamId() == SteamId)
         {
             return Client;
         }

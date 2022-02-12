@@ -14,6 +14,8 @@
 
 #include <mutex>
 
+class GameClient;
+
 // /players
 //
 //		GET	- Gets a list of players and their current states.
@@ -34,9 +36,25 @@ protected:
 
 	struct PlayerInfo
 	{
-		PlayerState State; 
+		//PlayerState State; 
+
+		std::string SteamId;
+		uint32_t PlayerId;
+		std::string CharacterName;
+		size_t DeathCount;
+		size_t MultiplayCount;
+		size_t SoulLevel;
+		size_t Souls;
+		size_t SoulMemory;
+		std::string CovenantState;
+		OnlineAreaId OnlineArea;
+		std::string Status;
+		double PlayTime;
+
 		double ConnectionDuration;
 	};
+
+	void GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClient> Client);
 
 	std::mutex DataMutex;
 	std::vector<PlayerInfo> PlayerInfos;

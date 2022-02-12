@@ -10,6 +10,7 @@
 #include "Core/Network/NetConnectionUDP.h"
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Random.h"
+#include "Core/Utils/DebugObjects.h"
 #include "Config/BuildConfig.h"
 #include "Core/Crypto/Cipher.h"
 
@@ -291,6 +292,8 @@ bool NetConnectionUDP::Send(const std::vector<uint8_t>& Buffer, int Offset, int 
         ntohs(Destination.sin_port));
     */
 
+    Debug::UdpBytesSent.Add(Count);
+
     return true;
 }
 
@@ -441,6 +444,8 @@ bool NetConnectionUDP::Pump()
                         ProcessPacket(Pending);
                     }
                 }
+
+                Debug::UdpBytesRecieved.Add(Result);
 
                 //LogS(GetName().c_str(), "<< %i", Result);
             }
