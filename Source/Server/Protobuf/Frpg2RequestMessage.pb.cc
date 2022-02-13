@@ -866,6 +866,7 @@ bool VisitorPool_IsValid(int value) {
   switch(value) {
     case -1:
     case 0:
+    case 1:
     case 2:
     case 3:
     case 4:
@@ -21046,15 +21047,15 @@ void SignData::Swap(SignData* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MatchingParameter::kUnknownId1FieldNumber;
+const int MatchingParameter::kRegulationVersionFieldNumber;
 const int MatchingParameter::kUnknownId2FieldNumber;
-const int MatchingParameter::kUnknownId3FieldNumber;
-const int MatchingParameter::kUnknownId4FieldNumber;
+const int MatchingParameter::kAllowCrossRegionFieldNumber;
+const int MatchingParameter::kNatTypeFieldNumber;
 const int MatchingParameter::kUnknownId5FieldNumber;
 const int MatchingParameter::kSoulLevelFieldNumber;
 const int MatchingParameter::kSoulMemoryFieldNumber;
 const int MatchingParameter::kUnknownStringFieldNumber;
-const int MatchingParameter::kUnknownId9FieldNumber;
+const int MatchingParameter::kClearCountFieldNumber;
 const int MatchingParameter::kPasswordFieldNumber;
 const int MatchingParameter::kCovenantFieldNumber;
 const int MatchingParameter::kWeaponLevelFieldNumber;
@@ -21080,15 +21081,15 @@ MatchingParameter::MatchingParameter(const MatchingParameter& from)
 void MatchingParameter::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  unknown_id_1_ = 0u;
+  regulation_version_ = 0u;
   unknown_id_2_ = 0u;
-  unknown_id_3_ = 0u;
-  unknown_id_4_ = 0u;
+  allow_cross_region_ = 0u;
+  nat_type_ = 0u;
   unknown_id_5_ = 0u;
   soul_level_ = 0u;
   soul_memory_ = 0u;
   unknown_string_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  unknown_id_9_ = 0u;
+  clear_count_ = 0u;
   password_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   covenant_ = 0;
   weapon_level_ = 0u;
@@ -21151,7 +21152,7 @@ void MatchingParameter::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(unknown_id_1_, soul_level_);
+    ZR_(regulation_version_, soul_level_);
     soul_memory_ = 0u;
     if (has_unknown_string()) {
       if (unknown_string_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -21161,7 +21162,7 @@ void MatchingParameter::Clear() {
   }
   if (_has_bits_[8 / 32] & 7936) {
     ZR_(covenant_, weapon_level_);
-    unknown_id_9_ = 0u;
+    clear_count_ = 0u;
     if (has_password()) {
       if (password_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         password_->clear();
@@ -21195,13 +21196,13 @@ bool MatchingParameter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_id_1 = 1;
+      // required uint32 regulation_version = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_id_1_)));
-          set_has_unknown_id_1();
+                 input, &regulation_version_)));
+          set_has_regulation_version();
         } else {
           goto handle_unusual;
         }
@@ -21220,33 +21221,33 @@ bool MatchingParameter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_id_3;
+        if (input->ExpectTag(24)) goto parse_allow_cross_region;
         break;
       }
 
-      // required uint32 unknown_id_3 = 3;
+      // required uint32 allow_cross_region = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_id_3:
+         parse_allow_cross_region:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_id_3_)));
-          set_has_unknown_id_3();
+                 input, &allow_cross_region_)));
+          set_has_allow_cross_region();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_id_4;
+        if (input->ExpectTag(32)) goto parse_nat_type;
         break;
       }
 
-      // required uint32 unknown_id_4 = 4;
+      // required uint32 nat_type = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_id_4:
+         parse_nat_type:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_id_4_)));
-          set_has_unknown_id_4();
+                 input, &nat_type_)));
+          set_has_nat_type();
         } else {
           goto handle_unusual;
         }
@@ -21308,18 +21309,18 @@ bool MatchingParameter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_unknown_id_9;
+        if (input->ExpectTag(72)) goto parse_clear_count;
         break;
       }
 
-      // required uint32 unknown_id_9 = 9;
+      // required uint32 clear_count = 9;
       case 9: {
         if (tag == 72) {
-         parse_unknown_id_9:
+         parse_clear_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_id_9_)));
-          set_has_unknown_id_9();
+                 input, &clear_count_)));
+          set_has_clear_count();
         } else {
           goto handle_unusual;
         }
@@ -21414,9 +21415,9 @@ failure:
 void MatchingParameter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.MatchingParameter)
-  // required uint32 unknown_id_1 = 1;
-  if (has_unknown_id_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_id_1(), output);
+  // required uint32 regulation_version = 1;
+  if (has_regulation_version()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->regulation_version(), output);
   }
 
   // required uint32 unknown_id_2 = 2;
@@ -21424,14 +21425,14 @@ void MatchingParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_id_2(), output);
   }
 
-  // required uint32 unknown_id_3 = 3;
-  if (has_unknown_id_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_id_3(), output);
+  // required uint32 allow_cross_region = 3;
+  if (has_allow_cross_region()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->allow_cross_region(), output);
   }
 
-  // required uint32 unknown_id_4 = 4;
-  if (has_unknown_id_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_id_4(), output);
+  // required uint32 nat_type = 4;
+  if (has_nat_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->nat_type(), output);
   }
 
   // required uint32 unknown_id_5 = 5;
@@ -21455,9 +21456,9 @@ void MatchingParameter::SerializeWithCachedSizes(
       8, this->unknown_string(), output);
   }
 
-  // required uint32 unknown_id_9 = 9;
-  if (has_unknown_id_9()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->unknown_id_9(), output);
+  // required uint32 clear_count = 9;
+  if (has_clear_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->clear_count(), output);
   }
 
   // required string password = 10;
@@ -21492,11 +21493,11 @@ int MatchingParameter::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_id_1 = 1;
-    if (has_unknown_id_1()) {
+    // required uint32 regulation_version = 1;
+    if (has_regulation_version()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_id_1());
+          this->regulation_version());
     }
 
     // required uint32 unknown_id_2 = 2;
@@ -21506,18 +21507,18 @@ int MatchingParameter::ByteSize() const {
           this->unknown_id_2());
     }
 
-    // required uint32 unknown_id_3 = 3;
-    if (has_unknown_id_3()) {
+    // required uint32 allow_cross_region = 3;
+    if (has_allow_cross_region()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_id_3());
+          this->allow_cross_region());
     }
 
-    // required uint32 unknown_id_4 = 4;
-    if (has_unknown_id_4()) {
+    // required uint32 nat_type = 4;
+    if (has_nat_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_id_4());
+          this->nat_type());
     }
 
     // required uint32 unknown_id_5 = 5;
@@ -21550,11 +21551,11 @@ int MatchingParameter::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required uint32 unknown_id_9 = 9;
-    if (has_unknown_id_9()) {
+    // required uint32 clear_count = 9;
+    if (has_clear_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_id_9());
+          this->clear_count());
     }
 
     // required string password = 10;
@@ -21601,17 +21602,17 @@ void MatchingParameter::CheckTypeAndMergeFrom(
 void MatchingParameter::MergeFrom(const MatchingParameter& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_id_1()) {
-      set_unknown_id_1(from.unknown_id_1());
+    if (from.has_regulation_version()) {
+      set_regulation_version(from.regulation_version());
     }
     if (from.has_unknown_id_2()) {
       set_unknown_id_2(from.unknown_id_2());
     }
-    if (from.has_unknown_id_3()) {
-      set_unknown_id_3(from.unknown_id_3());
+    if (from.has_allow_cross_region()) {
+      set_allow_cross_region(from.allow_cross_region());
     }
-    if (from.has_unknown_id_4()) {
-      set_unknown_id_4(from.unknown_id_4());
+    if (from.has_nat_type()) {
+      set_nat_type(from.nat_type());
     }
     if (from.has_unknown_id_5()) {
       set_unknown_id_5(from.unknown_id_5());
@@ -21627,8 +21628,8 @@ void MatchingParameter::MergeFrom(const MatchingParameter& from) {
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_unknown_id_9()) {
-      set_unknown_id_9(from.unknown_id_9());
+    if (from.has_clear_count()) {
+      set_clear_count(from.clear_count());
     }
     if (from.has_password()) {
       set_password(from.password());
@@ -21660,15 +21661,15 @@ bool MatchingParameter::IsInitialized() const {
 
 void MatchingParameter::Swap(MatchingParameter* other) {
   if (other != this) {
-    std::swap(unknown_id_1_, other->unknown_id_1_);
+    std::swap(regulation_version_, other->regulation_version_);
     std::swap(unknown_id_2_, other->unknown_id_2_);
-    std::swap(unknown_id_3_, other->unknown_id_3_);
-    std::swap(unknown_id_4_, other->unknown_id_4_);
+    std::swap(allow_cross_region_, other->allow_cross_region_);
+    std::swap(nat_type_, other->nat_type_);
     std::swap(unknown_id_5_, other->unknown_id_5_);
     std::swap(soul_level_, other->soul_level_);
     std::swap(soul_memory_, other->soul_memory_);
     std::swap(unknown_string_, other->unknown_string_);
-    std::swap(unknown_id_9_, other->unknown_id_9_);
+    std::swap(clear_count_, other->clear_count_);
     std::swap(password_, other->password_);
     std::swap(covenant_, other->covenant_);
     std::swap(weapon_level_, other->weapon_level_);
@@ -33280,7 +33281,7 @@ bool PushRequestRejectVisit::MergePartialFromCodedStream(
         break;
       }
 
-      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+      // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
       case 3: {
         if (tag == 24) {
          parse_visitor_pool:
@@ -33365,7 +33366,7 @@ void PushRequestRejectVisit::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->player_id(), output);
   }
 
-  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+  // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
   if (has_visitor_pool()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->visitor_pool(), output);
@@ -33404,7 +33405,7 @@ int PushRequestRejectVisit::ByteSize() const {
           this->player_id());
     }
 
-    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+    // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
     if (has_visitor_pool()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
@@ -33467,7 +33468,7 @@ void PushRequestRejectVisit::CopyFrom(const PushRequestRejectVisit& from) {
 }
 
 bool PushRequestRejectVisit::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
+  if ((_has_bits_[0] & 0x0000001b) != 0x0000001b) return false;
 
   return true;
 }

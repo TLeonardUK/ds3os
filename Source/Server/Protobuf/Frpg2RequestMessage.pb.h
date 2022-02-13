@@ -357,6 +357,7 @@ const int Covenant_ARRAYSIZE = Covenant_MAX + 1;
 enum VisitorPool {
   VisitorPool_None = -1,
   VisitorPool_Way_of_Blue = 0,
+  VisitorPool_Debug = 1,
   VisitorPool_Watchdog_of_Farron = 2,
   VisitorPool_Aldrich_Faithful = 3,
   VisitorPool_Spear_of_the_Church = 4
@@ -9103,12 +9104,12 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_id_1 = 1;
-  inline bool has_unknown_id_1() const;
-  inline void clear_unknown_id_1();
-  static const int kUnknownId1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_id_1() const;
-  inline void set_unknown_id_1(::google::protobuf::uint32 value);
+  // required uint32 regulation_version = 1;
+  inline bool has_regulation_version() const;
+  inline void clear_regulation_version();
+  static const int kRegulationVersionFieldNumber = 1;
+  inline ::google::protobuf::uint32 regulation_version() const;
+  inline void set_regulation_version(::google::protobuf::uint32 value);
 
   // required uint32 unknown_id_2 = 2;
   inline bool has_unknown_id_2() const;
@@ -9117,19 +9118,19 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_id_2() const;
   inline void set_unknown_id_2(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_id_3 = 3;
-  inline bool has_unknown_id_3() const;
-  inline void clear_unknown_id_3();
-  static const int kUnknownId3FieldNumber = 3;
-  inline ::google::protobuf::uint32 unknown_id_3() const;
-  inline void set_unknown_id_3(::google::protobuf::uint32 value);
+  // required uint32 allow_cross_region = 3;
+  inline bool has_allow_cross_region() const;
+  inline void clear_allow_cross_region();
+  static const int kAllowCrossRegionFieldNumber = 3;
+  inline ::google::protobuf::uint32 allow_cross_region() const;
+  inline void set_allow_cross_region(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_id_4 = 4;
-  inline bool has_unknown_id_4() const;
-  inline void clear_unknown_id_4();
-  static const int kUnknownId4FieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown_id_4() const;
-  inline void set_unknown_id_4(::google::protobuf::uint32 value);
+  // required uint32 nat_type = 4;
+  inline bool has_nat_type() const;
+  inline void clear_nat_type();
+  static const int kNatTypeFieldNumber = 4;
+  inline ::google::protobuf::uint32 nat_type() const;
+  inline void set_nat_type(::google::protobuf::uint32 value);
 
   // required uint32 unknown_id_5 = 5;
   inline bool has_unknown_id_5() const;
@@ -9164,12 +9165,12 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   inline ::std::string* release_unknown_string();
   inline void set_allocated_unknown_string(::std::string* unknown_string);
 
-  // required uint32 unknown_id_9 = 9;
-  inline bool has_unknown_id_9() const;
-  inline void clear_unknown_id_9();
-  static const int kUnknownId9FieldNumber = 9;
-  inline ::google::protobuf::uint32 unknown_id_9() const;
-  inline void set_unknown_id_9(::google::protobuf::uint32 value);
+  // required uint32 clear_count = 9;
+  inline bool has_clear_count() const;
+  inline void clear_clear_count();
+  static const int kClearCountFieldNumber = 9;
+  inline ::google::protobuf::uint32 clear_count() const;
+  inline void set_clear_count(::google::protobuf::uint32 value);
 
   // required string password = 10;
   inline bool has_password() const;
@@ -9211,14 +9212,14 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.MatchingParameter)
  private:
-  inline void set_has_unknown_id_1();
-  inline void clear_has_unknown_id_1();
+  inline void set_has_regulation_version();
+  inline void clear_has_regulation_version();
   inline void set_has_unknown_id_2();
   inline void clear_has_unknown_id_2();
-  inline void set_has_unknown_id_3();
-  inline void clear_has_unknown_id_3();
-  inline void set_has_unknown_id_4();
-  inline void clear_has_unknown_id_4();
+  inline void set_has_allow_cross_region();
+  inline void clear_has_allow_cross_region();
+  inline void set_has_nat_type();
+  inline void clear_has_nat_type();
   inline void set_has_unknown_id_5();
   inline void clear_has_unknown_id_5();
   inline void set_has_soul_level();
@@ -9227,8 +9228,8 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
   inline void clear_has_soul_memory();
   inline void set_has_unknown_string();
   inline void clear_has_unknown_string();
-  inline void set_has_unknown_id_9();
-  inline void clear_has_unknown_id_9();
+  inline void set_has_clear_count();
+  inline void clear_has_clear_count();
   inline void set_has_password();
   inline void clear_has_password();
   inline void set_has_covenant();
@@ -9242,15 +9243,15 @@ class MatchingParameter : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_id_1_;
+  ::google::protobuf::uint32 regulation_version_;
   ::google::protobuf::uint32 unknown_id_2_;
-  ::google::protobuf::uint32 unknown_id_3_;
-  ::google::protobuf::uint32 unknown_id_4_;
+  ::google::protobuf::uint32 allow_cross_region_;
+  ::google::protobuf::uint32 nat_type_;
   ::google::protobuf::uint32 unknown_id_5_;
   ::google::protobuf::uint32 soul_level_;
   ::std::string* unknown_string_;
   ::google::protobuf::uint32 soul_memory_;
-  ::google::protobuf::uint32 unknown_id_9_;
+  ::google::protobuf::uint32 clear_count_;
   ::std::string* password_;
   int covenant_;
   ::google::protobuf::uint32 weapon_level_;
@@ -14161,7 +14162,7 @@ class PushRequestRejectVisit : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 player_id() const;
   inline void set_player_id(::google::protobuf::uint32 value);
 
-  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+  // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
   inline bool has_visitor_pool() const;
   inline void clear_visitor_pool();
   static const int kVisitorPoolFieldNumber = 3;
@@ -32945,28 +32946,28 @@ inline void SignData::set_is_red_sign(::google::protobuf::uint32 value) {
 
 // MatchingParameter
 
-// required uint32 unknown_id_1 = 1;
-inline bool MatchingParameter::has_unknown_id_1() const {
+// required uint32 regulation_version = 1;
+inline bool MatchingParameter::has_regulation_version() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MatchingParameter::set_has_unknown_id_1() {
+inline void MatchingParameter::set_has_regulation_version() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void MatchingParameter::clear_has_unknown_id_1() {
+inline void MatchingParameter::clear_has_regulation_version() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void MatchingParameter::clear_unknown_id_1() {
-  unknown_id_1_ = 0u;
-  clear_has_unknown_id_1();
+inline void MatchingParameter::clear_regulation_version() {
+  regulation_version_ = 0u;
+  clear_has_regulation_version();
 }
-inline ::google::protobuf::uint32 MatchingParameter::unknown_id_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.unknown_id_1)
-  return unknown_id_1_;
+inline ::google::protobuf::uint32 MatchingParameter::regulation_version() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.regulation_version)
+  return regulation_version_;
 }
-inline void MatchingParameter::set_unknown_id_1(::google::protobuf::uint32 value) {
-  set_has_unknown_id_1();
-  unknown_id_1_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.unknown_id_1)
+inline void MatchingParameter::set_regulation_version(::google::protobuf::uint32 value) {
+  set_has_regulation_version();
+  regulation_version_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.regulation_version)
 }
 
 // required uint32 unknown_id_2 = 2;
@@ -32993,52 +32994,52 @@ inline void MatchingParameter::set_unknown_id_2(::google::protobuf::uint32 value
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.unknown_id_2)
 }
 
-// required uint32 unknown_id_3 = 3;
-inline bool MatchingParameter::has_unknown_id_3() const {
+// required uint32 allow_cross_region = 3;
+inline bool MatchingParameter::has_allow_cross_region() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void MatchingParameter::set_has_unknown_id_3() {
+inline void MatchingParameter::set_has_allow_cross_region() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void MatchingParameter::clear_has_unknown_id_3() {
+inline void MatchingParameter::clear_has_allow_cross_region() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void MatchingParameter::clear_unknown_id_3() {
-  unknown_id_3_ = 0u;
-  clear_has_unknown_id_3();
+inline void MatchingParameter::clear_allow_cross_region() {
+  allow_cross_region_ = 0u;
+  clear_has_allow_cross_region();
 }
-inline ::google::protobuf::uint32 MatchingParameter::unknown_id_3() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.unknown_id_3)
-  return unknown_id_3_;
+inline ::google::protobuf::uint32 MatchingParameter::allow_cross_region() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.allow_cross_region)
+  return allow_cross_region_;
 }
-inline void MatchingParameter::set_unknown_id_3(::google::protobuf::uint32 value) {
-  set_has_unknown_id_3();
-  unknown_id_3_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.unknown_id_3)
+inline void MatchingParameter::set_allow_cross_region(::google::protobuf::uint32 value) {
+  set_has_allow_cross_region();
+  allow_cross_region_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.allow_cross_region)
 }
 
-// required uint32 unknown_id_4 = 4;
-inline bool MatchingParameter::has_unknown_id_4() const {
+// required uint32 nat_type = 4;
+inline bool MatchingParameter::has_nat_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void MatchingParameter::set_has_unknown_id_4() {
+inline void MatchingParameter::set_has_nat_type() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void MatchingParameter::clear_has_unknown_id_4() {
+inline void MatchingParameter::clear_has_nat_type() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void MatchingParameter::clear_unknown_id_4() {
-  unknown_id_4_ = 0u;
-  clear_has_unknown_id_4();
+inline void MatchingParameter::clear_nat_type() {
+  nat_type_ = 0u;
+  clear_has_nat_type();
 }
-inline ::google::protobuf::uint32 MatchingParameter::unknown_id_4() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.unknown_id_4)
-  return unknown_id_4_;
+inline ::google::protobuf::uint32 MatchingParameter::nat_type() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.nat_type)
+  return nat_type_;
 }
-inline void MatchingParameter::set_unknown_id_4(::google::protobuf::uint32 value) {
-  set_has_unknown_id_4();
-  unknown_id_4_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.unknown_id_4)
+inline void MatchingParameter::set_nat_type(::google::protobuf::uint32 value) {
+  set_has_nat_type();
+  nat_type_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.nat_type)
 }
 
 // required uint32 unknown_id_5 = 5;
@@ -33189,28 +33190,28 @@ inline void MatchingParameter::set_allocated_unknown_string(::std::string* unkno
   // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.MatchingParameter.unknown_string)
 }
 
-// required uint32 unknown_id_9 = 9;
-inline bool MatchingParameter::has_unknown_id_9() const {
+// required uint32 clear_count = 9;
+inline bool MatchingParameter::has_clear_count() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
-inline void MatchingParameter::set_has_unknown_id_9() {
+inline void MatchingParameter::set_has_clear_count() {
   _has_bits_[0] |= 0x00000100u;
 }
-inline void MatchingParameter::clear_has_unknown_id_9() {
+inline void MatchingParameter::clear_has_clear_count() {
   _has_bits_[0] &= ~0x00000100u;
 }
-inline void MatchingParameter::clear_unknown_id_9() {
-  unknown_id_9_ = 0u;
-  clear_has_unknown_id_9();
+inline void MatchingParameter::clear_clear_count() {
+  clear_count_ = 0u;
+  clear_has_clear_count();
 }
-inline ::google::protobuf::uint32 MatchingParameter::unknown_id_9() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.unknown_id_9)
-  return unknown_id_9_;
+inline ::google::protobuf::uint32 MatchingParameter::clear_count() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.MatchingParameter.clear_count)
+  return clear_count_;
 }
-inline void MatchingParameter::set_unknown_id_9(::google::protobuf::uint32 value) {
-  set_has_unknown_id_9();
-  unknown_id_9_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.unknown_id_9)
+inline void MatchingParameter::set_clear_count(::google::protobuf::uint32 value) {
+  set_has_clear_count();
+  clear_count_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.MatchingParameter.clear_count)
 }
 
 // required string password = 10;
@@ -37582,7 +37583,7 @@ inline void PushRequestRejectVisit::set_player_id(::google::protobuf::uint32 val
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.PushRequestRejectVisit.player_id)
 }
 
-// required .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
+// optional .Frpg2RequestMessage.VisitorPool visitor_pool = 3;
 inline bool PushRequestRejectVisit::has_visitor_pool() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }

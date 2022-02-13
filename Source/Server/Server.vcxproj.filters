@@ -333,6 +333,9 @@
     <ClInclude Include="Core\Utils\DebugObjects.h">
       <Filter>Core\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Utils\DiffTracker.h">
+      <Filter>Core\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">
@@ -517,6 +520,9 @@
       <Filter>Core\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Core\Utils\DebugObjects.cpp">
+      <Filter>Core\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utils\DiffTracker.cpp">
       <Filter>Core\Utils</Filter>
     </ClCompile>
   </ItemGroup>

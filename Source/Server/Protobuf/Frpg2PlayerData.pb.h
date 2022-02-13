@@ -590,12 +590,12 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // optional uint32 regulation_version = 1;
+  inline bool has_regulation_version() const;
+  inline void clear_regulation_version();
+  static const int kRegulationVersionFieldNumber = 1;
+  inline ::google::protobuf::uint32 regulation_version() const;
+  inline void set_regulation_version(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_2 = 2;
   inline bool has_unknown_2() const;
@@ -1040,17 +1040,17 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::Frpg2PlayerData::ResistanceInfo* release_base_resistance_info();
   inline void set_allocated_base_resistance_info(::Frpg2PlayerData::ResistanceInfo* base_resistance_info);
 
-  // repeated int32 unknown_62 = 62;
-  inline int unknown_62_size() const;
-  inline void clear_unknown_62();
-  static const int kUnknown62FieldNumber = 62;
-  inline ::google::protobuf::int32 unknown_62(int index) const;
-  inline void set_unknown_62(int index, ::google::protobuf::int32 value);
-  inline void add_unknown_62(::google::protobuf::int32 value);
+  // repeated int32 anticheat_data = 62;
+  inline int anticheat_data_size() const;
+  inline void clear_anticheat_data();
+  static const int kAnticheatDataFieldNumber = 62;
+  inline ::google::protobuf::int32 anticheat_data(int index) const;
+  inline void set_anticheat_data(int index, ::google::protobuf::int32 value);
+  inline void add_anticheat_data(::google::protobuf::int32 value);
   inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      unknown_62() const;
+      anticheat_data() const;
   inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_unknown_62();
+      mutable_anticheat_data();
 
   // optional int32 unknown_63 = 63;
   inline bool has_unknown_63() const;
@@ -1180,8 +1180,8 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:Frpg2PlayerData.PlayerStatus)
  private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
+  inline void set_has_regulation_version();
+  inline void clear_has_regulation_version();
   inline void set_has_unknown_2();
   inline void clear_has_unknown_2();
   inline void set_has_cross_region_matchmaking_disabled();
@@ -1339,7 +1339,7 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[3];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 regulation_version_;
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::int32 soul_level_;
   ::google::protobuf::uint32 sinner_points_;
@@ -1401,7 +1401,7 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   ::google::protobuf::int32 attack_power_l_weapon_3_;
   ::google::protobuf::int32 unknown_63_;
   ::Frpg2PlayerData::ResistanceInfo* base_resistance_info_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > unknown_62_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > anticheat_data_;
   ::google::protobuf::int32 estus_flask_max_;
   ::google::protobuf::int32 ashen_estus_flask_max_;
   float max_equip_load_;
@@ -3942,28 +3942,28 @@ inline void AllStatus::set_allocated_unknown_1(::Frpg2PlayerData::UnknownStruct1
 
 // PlayerStatus
 
-// optional uint32 unknown_1 = 1;
-inline bool PlayerStatus::has_unknown_1() const {
+// optional uint32 regulation_version = 1;
+inline bool PlayerStatus::has_regulation_version() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void PlayerStatus::set_has_unknown_1() {
+inline void PlayerStatus::set_has_regulation_version() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void PlayerStatus::clear_has_unknown_1() {
+inline void PlayerStatus::clear_has_regulation_version() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void PlayerStatus::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void PlayerStatus::clear_regulation_version() {
+  regulation_version_ = 0u;
+  clear_has_regulation_version();
 }
-inline ::google::protobuf::uint32 PlayerStatus::unknown_1() const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerStatus.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 PlayerStatus::regulation_version() const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerStatus.regulation_version)
+  return regulation_version_;
 }
-inline void PlayerStatus::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerStatus.unknown_1)
+inline void PlayerStatus::set_regulation_version(::google::protobuf::uint32 value) {
+  set_has_regulation_version();
+  regulation_version_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerStatus.regulation_version)
 }
 
 // optional uint32 unknown_2 = 2;
@@ -5557,34 +5557,34 @@ inline void PlayerStatus::set_allocated_base_resistance_info(::Frpg2PlayerData::
   // @@protoc_insertion_point(field_set_allocated:Frpg2PlayerData.PlayerStatus.base_resistance_info)
 }
 
-// repeated int32 unknown_62 = 62;
-inline int PlayerStatus::unknown_62_size() const {
-  return unknown_62_.size();
+// repeated int32 anticheat_data = 62;
+inline int PlayerStatus::anticheat_data_size() const {
+  return anticheat_data_.size();
 }
-inline void PlayerStatus::clear_unknown_62() {
-  unknown_62_.Clear();
+inline void PlayerStatus::clear_anticheat_data() {
+  anticheat_data_.Clear();
 }
-inline ::google::protobuf::int32 PlayerStatus::unknown_62(int index) const {
-  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerStatus.unknown_62)
-  return unknown_62_.Get(index);
+inline ::google::protobuf::int32 PlayerStatus::anticheat_data(int index) const {
+  // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayerStatus.anticheat_data)
+  return anticheat_data_.Get(index);
 }
-inline void PlayerStatus::set_unknown_62(int index, ::google::protobuf::int32 value) {
-  unknown_62_.Set(index, value);
-  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerStatus.unknown_62)
+inline void PlayerStatus::set_anticheat_data(int index, ::google::protobuf::int32 value) {
+  anticheat_data_.Set(index, value);
+  // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayerStatus.anticheat_data)
 }
-inline void PlayerStatus::add_unknown_62(::google::protobuf::int32 value) {
-  unknown_62_.Add(value);
-  // @@protoc_insertion_point(field_add:Frpg2PlayerData.PlayerStatus.unknown_62)
+inline void PlayerStatus::add_anticheat_data(::google::protobuf::int32 value) {
+  anticheat_data_.Add(value);
+  // @@protoc_insertion_point(field_add:Frpg2PlayerData.PlayerStatus.anticheat_data)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-PlayerStatus::unknown_62() const {
-  // @@protoc_insertion_point(field_list:Frpg2PlayerData.PlayerStatus.unknown_62)
-  return unknown_62_;
+PlayerStatus::anticheat_data() const {
+  // @@protoc_insertion_point(field_list:Frpg2PlayerData.PlayerStatus.anticheat_data)
+  return anticheat_data_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-PlayerStatus::mutable_unknown_62() {
-  // @@protoc_insertion_point(field_mutable_list:Frpg2PlayerData.PlayerStatus.unknown_62)
-  return &unknown_62_;
+PlayerStatus::mutable_anticheat_data() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2PlayerData.PlayerStatus.anticheat_data)
+  return &anticheat_data_;
 }
 
 // optional int32 unknown_63 = 63;

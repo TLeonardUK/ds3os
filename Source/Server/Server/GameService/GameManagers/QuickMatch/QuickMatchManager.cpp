@@ -19,6 +19,7 @@
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
+#include "Core/Utils/DiffTracker.h"
 
 QuickMatchManager::QuickMatchManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -152,6 +153,20 @@ MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient
 {
     Frpg2RequestMessage::RequestSearchQuickMatch* Request = (Frpg2RequestMessage::RequestSearchQuickMatch*)Message.Protobuf.get();
     Frpg2RequestMessage::RequestSearchQuickMatchResponse Response;
+
+#ifdef _DEBUG
+    static DiffTracker Tracker;
+    Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_id_2", Request->matching_parameter().unknown_id_2());
+    Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_id_5", Request->matching_parameter().unknown_id_5());
+    if (Request->matching_parameter().has_unknown_string())
+    {
+        Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_string", Request->matching_parameter().unknown_string());
+    }
+    if (Request->matching_parameter().has_unknown_id_15())
+    {
+        Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_id_15", Request->matching_parameter().unknown_id_15());
+    }
+#endif
 
     int ResultCount = 0;
     for (std::shared_ptr<Match>& Iter : Matches)

@@ -19,6 +19,7 @@
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
+#include "Core/Utils/DiffTracker.h"
 
 SignManager::SignManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -136,6 +137,24 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
 
     Frpg2RequestMessage::RequestGetSignList* Request = (Frpg2RequestMessage::RequestGetSignList*)Message.Protobuf.get();
     Frpg2RequestMessage::RequestGetSignListResponse Response;
+
+#ifdef _DEBUG
+    static DiffTracker Tracker;
+    Tracker.Field(Player.GetCharacterName().c_str(), "MatchingParameters.unknown_id_2", Request->matching_parameter().unknown_id_2());
+    Tracker.Field(Player.GetCharacterName().c_str(), "MatchingParameters.unknown_id_5", Request->matching_parameter().unknown_id_5());
+    if (Request->matching_parameter().has_unknown_string())
+    {
+        Tracker.Field(Player.GetCharacterName().c_str(), "MatchingParameters.unknown_string", Request->matching_parameter().unknown_string());
+    }
+    if (Request->matching_parameter().has_unknown_id_15())
+    {
+        Tracker.Field(Player.GetCharacterName().c_str(), "MatchingParameters.unknown_id_15", Request->matching_parameter().unknown_id_15());
+    }
+    Tracker.Field(Player.GetCharacterName().c_str(), "RequestGetSignList.unknown_id_1", Request->unknown_id_1());
+    Tracker.Field(Player.GetCharacterName().c_str(), "SignGetFlags.unknown_id_1", Request->sign_get_flags().unknown_id_1());
+    Tracker.Field(Player.GetCharacterName().c_str(), "SignGetFlags.unknown_id_2", Request->sign_get_flags().unknown_id_2());
+    Tracker.Field(Player.GetCharacterName().c_str(), "SignGetFlags.unknown_id_3", Request->sign_get_flags().unknown_id_3());
+#endif
 
     uint32_t RemainingSignCount = Request->max_signs();
 

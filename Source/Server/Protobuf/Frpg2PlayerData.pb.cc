@@ -1277,7 +1277,7 @@ void AllStatus::Swap(AllStatus* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int PlayerStatus::kUnknown1FieldNumber;
+const int PlayerStatus::kRegulationVersionFieldNumber;
 const int PlayerStatus::kUnknown2FieldNumber;
 const int PlayerStatus::kCrossRegionMatchmakingDisabledFieldNumber;
 const int PlayerStatus::kSoulLevelFieldNumber;
@@ -1338,7 +1338,7 @@ const int PlayerStatus::kDefenseInfoFieldNumber;
 const int PlayerStatus::kCutrateInfoFieldNumber;
 const int PlayerStatus::kArmorResistanceInfoFieldNumber;
 const int PlayerStatus::kBaseResistanceInfoFieldNumber;
-const int PlayerStatus::kUnknown62FieldNumber;
+const int PlayerStatus::kAnticheatDataFieldNumber;
 const int PlayerStatus::kUnknown63FieldNumber;
 const int PlayerStatus::kEstusFlaskMaxFieldNumber;
 const int PlayerStatus::kAshenEstusFlaskMaxFieldNumber;
@@ -1402,7 +1402,7 @@ PlayerStatus::PlayerStatus(const PlayerStatus& from)
 void PlayerStatus::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  regulation_version_ = 0u;
   unknown_2_ = 0u;
   cross_region_matchmaking_disabled_ = false;
   soul_level_ = 0;
@@ -1535,7 +1535,7 @@ void PlayerStatus::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(unknown_1_, can_summon_for_way_of_blue_);
+    ZR_(regulation_version_, can_summon_for_way_of_blue_);
     cross_region_matchmaking_disabled_ = false;
   }
   if (_has_bits_[8 / 32] & 65280) {
@@ -1594,7 +1594,7 @@ void PlayerStatus::Clear() {
 
   played_areas_.Clear();
   unknown_18_.Clear();
-  unknown_62_.Clear();
+  anticheat_data_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -1613,13 +1613,13 @@ bool PlayerStatus::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 unknown_1 = 1;
+      // optional uint32 regulation_version = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &regulation_version_)));
+          set_has_regulation_version();
         } else {
           goto handle_unusual;
         }
@@ -2539,25 +2539,25 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(496)) goto parse_unknown_62;
+        if (input->ExpectTag(496)) goto parse_anticheat_data;
         break;
       }
 
-      // repeated int32 unknown_62 = 62;
+      // repeated int32 anticheat_data = 62;
       case 62: {
         if (tag == 496) {
-         parse_unknown_62:
+         parse_anticheat_data:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 2, 496, input, this->mutable_unknown_62())));
+                 2, 496, input, this->mutable_anticheat_data())));
         } else if (tag == 498) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_unknown_62())));
+                 input, this->mutable_anticheat_data())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(496)) goto parse_unknown_62;
+        if (input->ExpectTag(496)) goto parse_anticheat_data;
         if (input->ExpectTag(504)) goto parse_unknown_63;
         break;
       }
@@ -2857,9 +2857,9 @@ failure:
 void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Frpg2PlayerData.PlayerStatus)
-  // optional uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // optional uint32 regulation_version = 1;
+  if (has_regulation_version()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->regulation_version(), output);
   }
 
   // optional uint32 unknown_2 = 2;
@@ -3172,10 +3172,10 @@ void PlayerStatus::SerializeWithCachedSizes(
       61, this->base_resistance_info(), output);
   }
 
-  // repeated int32 unknown_62 = 62;
-  for (int i = 0; i < this->unknown_62_size(); i++) {
+  // repeated int32 anticheat_data = 62;
+  for (int i = 0; i < this->anticheat_data_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(
-      62, this->unknown_62(i), output);
+      62, this->anticheat_data(i), output);
   }
 
   // optional int32 unknown_63 = 63;
@@ -3277,11 +3277,11 @@ int PlayerStatus::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // optional uint32 regulation_version = 1;
+    if (has_regulation_version()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->regulation_version());
     }
 
     // optional uint32 unknown_2 = 2;
@@ -3842,14 +3842,14 @@ int PlayerStatus::ByteSize() const {
     total_size += 2 * this->unknown_18_size() + data_size;
   }
 
-  // repeated int32 unknown_62 = 62;
+  // repeated int32 anticheat_data = 62;
   {
     int data_size = 0;
-    for (int i = 0; i < this->unknown_62_size(); i++) {
+    for (int i = 0; i < this->anticheat_data_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->unknown_62(i));
+        Int32Size(this->anticheat_data(i));
     }
-    total_size += 2 * this->unknown_62_size() + data_size;
+    total_size += 2 * this->anticheat_data_size() + data_size;
   }
 
   total_size += unknown_fields().size();
@@ -3869,10 +3869,10 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
   GOOGLE_CHECK_NE(&from, this);
   played_areas_.MergeFrom(from.played_areas_);
   unknown_18_.MergeFrom(from.unknown_18_);
-  unknown_62_.MergeFrom(from.unknown_62_);
+  anticheat_data_.MergeFrom(from.anticheat_data_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_regulation_version()) {
+      set_regulation_version(from.regulation_version());
     }
     if (from.has_unknown_2()) {
       set_unknown_2(from.unknown_2());
@@ -4137,7 +4137,7 @@ bool PlayerStatus::IsInitialized() const {
 
 void PlayerStatus::Swap(PlayerStatus* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(regulation_version_, other->regulation_version_);
     std::swap(unknown_2_, other->unknown_2_);
     std::swap(cross_region_matchmaking_disabled_, other->cross_region_matchmaking_disabled_);
     std::swap(soul_level_, other->soul_level_);
@@ -4198,7 +4198,7 @@ void PlayerStatus::Swap(PlayerStatus* other) {
     std::swap(cutrate_info_, other->cutrate_info_);
     std::swap(armor_resistance_info_, other->armor_resistance_info_);
     std::swap(base_resistance_info_, other->base_resistance_info_);
-    unknown_62_.Swap(&other->unknown_62_);
+    anticheat_data_.Swap(&other->anticheat_data_);
     std::swap(unknown_63_, other->unknown_63_);
     std::swap(estus_flask_max_, other->estus_flask_max_);
     std::swap(ashen_estus_flask_max_, other->ashen_estus_flask_max_);

@@ -76,7 +76,7 @@ enum NetMode {
 }
 
 message PlayerStatus {
-    optional uint32 unknown_1 = 1;                           // 135000
+    optional uint32 regulation_version = 1;                
     optional uint32 unknown_2 = 2;                           // 2
 
     optional bool cross_region_matchmaking_disabled = 3;
@@ -148,7 +148,7 @@ message PlayerStatus {
     optional ResistanceInfo armor_resistance_info = 60;
     optional ResistanceInfo base_resistance_info = 61;
 
-    repeated int32 unknown_62 = 62;                         // This is anti-cheat data.
+    repeated int32 anticheat_data = 62;                         // This is anti-cheat data.
 
     optional int32 unknown_63 = 63;                         // 98
     optional int32 estus_flask_max = 64;                    

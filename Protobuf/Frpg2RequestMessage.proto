@@ -664,19 +664,31 @@ message SignData {
 }
 
 message MatchingParameter {
-    required uint32 unknown_id_1 = 1;                     // 1350000            // index=1 type=0
-    required uint32 unknown_id_2 = 2;                     // 2                  // index=2 type=0           // NAT TYPE
-    required uint32 unknown_id_3 = 3;                     // 1,0                // index=3 type=0
-    required uint32 unknown_id_4 = 4;                     // 1                  // index=4 type=0
-    required uint32 unknown_id_5 = 5;                     // 0                  // index=5 type=0
-    required uint32 soul_level = 6;                                             // index=6 type=0
-    required uint32 soul_memory = 7;                                            // index=7 type=0
-    optional string unknown_string = 8;                                         // Not in code?
-    required uint32 unknown_id_9 = 9;                     // 0, 1, 7            // index=9 type=0
-    required string password = 10;                                              // index=10 type=2
-    required Covenant covenant = 11;                                            // index=11 type=0
-    required uint32 weapon_level = 14;                                          // index=14 type=0
-    optional string unknown_id_15 = 15;                                         // index=15 type=2
+
+    // Possible unknowns:
+    //      region
+    //      players in other world (invasion prioritisation etc)
+
+    required uint32 regulation_version = 1;         
+
+    required uint32 unknown_id_2 = 2;                     // 2                  
+    
+    required uint32 allow_cross_region = 3;               
+    required uint32 nat_type = 4;                     
+
+    required uint32 unknown_id_5 = 5;                     // 0                  
+
+    required uint32 soul_level = 6;                                             
+    required uint32 soul_memory = 7;                                            
+
+    optional string unknown_string = 8;                   // Never seen used, but exists in parsing code.                     
+    required uint32 clear_count = 9;                     
+
+    required string password = 10;                                              
+    required Covenant covenant = 11;                                            
+    required uint32 weapon_level = 14;                                          
+    
+    optional string unknown_id_15 = 15;                   // Never seen used, but exists in parsing code.
 }
 
 message SignGetFlags {
@@ -928,7 +940,7 @@ enum VisitorPool
 {
     VisitorPool_None                    = -1;   // Not used in network, just handy sentinel value for server code.
     VisitorPool_Way_of_Blue             = 0;    // This grabs darkmoon & blue sentinels
-                                                // No idea what 1 is, doesn't look like its used anywhere.
+    VisitorPool_Debug                   = 1;    // Only seen this used when messing with debug functionality.
     VisitorPool_Watchdog_of_Farron      = 2;
     VisitorPool_Aldrich_Faithful        = 3;
     VisitorPool_Spear_of_the_Church     = 4;
@@ -979,11 +991,9 @@ message PushRequestVisit {
     required uint32 online_area_id = 7;
 }
 
-// TODO: We occassionally see failed parses for this message. Looks like one of these
-// fields might be optional.
 message RequestRejectVisit {
-    required uint32 player_id = 1;                         
-    optional VisitorPool visitor_pool = 2;              // total guess might be unknown_5 
+    required uint32 player_id = 1;                                        
+    required uint32 unknown_2 = 2;                      // 1
     required uint32 map_id = 3;
     required uint32 online_area_id = 4;
     required uint32 unknown_5 = 5;                      // 0  
@@ -994,7 +1004,7 @@ message PushRequestRejectVisit {
     
     // Unknown - The fields in this have been figured out based on reading ghidra and looking at BreakIn code, not seen in the wild.
     required uint32 player_id = 2;
-    required VisitorPool visitor_pool = 3;              // total guess might be unknown_5   
+    optional VisitorPool visitor_pool = 3;              // total guess might be unknown_5   
     required string steam_id = 4;                           
     required uint32 unknown_5 = 5;                         
 }

@@ -135,6 +135,11 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     // If success sent push to target client.
     if (bSuccess && TargetClient)
     {
+#ifdef _DEBUG
+        LogS(Client->GetName().c_str(), "Sending push requesting visit to player: %s", TargetClient->GetName().c_str());
+        Log("visitor_pool: %i", Request->visitor_pool());
+#endif
+
         Frpg2RequestMessage::PushRequestVisit PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestVisit);
         PushMessage.set_player_id(Player.GetPlayerId());
@@ -163,11 +168,15 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     // Otherwise send rejection to client.
     if (!bSuccess)
     {
+#ifdef _DEBUG
+        LogS(Client->GetName().c_str(), "Sending push rejecting visit of player, as could not be found.");
+#endif
+
         Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectVisit);
-        PushMessage.set_player_id(Player.GetPlayerId());
+        PushMessage.set_player_id(Request->player_id());
         PushMessage.set_visitor_pool(Request->visitor_pool());   
-        PushMessage.set_steam_id(Player.GetSteamId());
+        PushMessage.set_steam_id("");
         PushMessage.set_unknown_5(0);
         if (TargetClient)
         {
@@ -223,6 +232,12 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
         WarningS(Client->GetName().c_str(), "Client rejected visit from unknown (or disconnected) client %i.", Request->player_id());
         return MessageHandleResult::Handled;
     }
+
+#ifdef _DEBUG
+    LogS(Client->GetName().c_str(), "Recieved rejection of visit requested by player: %s", InitiatorClient->GetName().c_str());
+    Log("visitor_pool: %i", Request->visitor_pool());
+    Log("unknown_5: %i", Request->unknown_5());
+#endif
 
     // Reject the visit
     Frpg2RequestMessage::PushRequestRejectVisit PushMessage;

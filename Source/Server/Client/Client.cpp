@@ -577,14 +577,14 @@ void Client::Handle_GameServer_RequestGetRightMatchingArea()
     LogS(GetName().c_str(), "Requesting right matching area.");
 
     Frpg2RequestMessage::RequestGetRightMatchingArea Request;
-    Request.mutable_matching_parameter()->set_unknown_id_1(1350000);
+    Request.mutable_matching_parameter()->set_regulation_version(1350000);
     Request.mutable_matching_parameter()->set_unknown_id_2(2);
-    Request.mutable_matching_parameter()->set_unknown_id_3(0);
-    Request.mutable_matching_parameter()->set_unknown_id_4(1);
+    Request.mutable_matching_parameter()->set_allow_cross_region(0);
+    Request.mutable_matching_parameter()->set_nat_type(1);
     Request.mutable_matching_parameter()->set_unknown_id_5(0);
     Request.mutable_matching_parameter()->set_soul_level(ClientSoulLevel);
     Request.mutable_matching_parameter()->set_soul_memory(ClientSoulMemory);
-    Request.mutable_matching_parameter()->set_unknown_id_9(0);
+    Request.mutable_matching_parameter()->set_clear_count(0);
     Request.mutable_matching_parameter()->set_password("");
     Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
     Request.mutable_matching_parameter()->set_weapon_level(ClientWeaponLevel);
@@ -633,15 +633,15 @@ void Client::Handle_GameServer_Idle()
                     Flags->set_unknown_id_3(0);
                     
                     Frpg2RequestMessage::MatchingParameter* Params = Request.mutable_matching_parameter();
-                    Params->set_unknown_id_1(1350000);
+                    Params->set_regulation_version(1350000);
                     Params->set_unknown_id_2(2);
-                    Params->set_unknown_id_3(0);
-                    Params->set_unknown_id_4(1);
+                    Params->set_allow_cross_region(0);
+                    Params->set_nat_type(1);
                     Params->set_unknown_id_5(0);
                     Params->set_soul_level(128);
                     Params->set_soul_memory(10000);
                     Params->set_unknown_string("");
-                    Params->set_unknown_id_9(0);
+                    Params->set_clear_count(0);
                     Params->set_password("");
                     Params->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
                     Params->set_weapon_level(1);
@@ -741,14 +741,14 @@ void Client::Handle_GameServer_GatherStatistics()
                     DomainInfo->set_max_signs(100);
                     DomainInfo->set_online_area_id((int32)Area);
 
-                    Request.mutable_matching_parameter()->set_unknown_id_1(1350000);
+                    Request.mutable_matching_parameter()->set_regulation_version(1350000);
                     Request.mutable_matching_parameter()->set_unknown_id_2(2);
-                    Request.mutable_matching_parameter()->set_unknown_id_3(0);
-                    Request.mutable_matching_parameter()->set_unknown_id_4(1);
+                    Request.mutable_matching_parameter()->set_allow_cross_region(0);
+                    Request.mutable_matching_parameter()->set_nat_type(1);
                     Request.mutable_matching_parameter()->set_unknown_id_5(0);
                     Request.mutable_matching_parameter()->set_soul_level(Level);
                     Request.mutable_matching_parameter()->set_soul_memory(Level * 100000); // Huuum, this might cause some issues.
-                    Request.mutable_matching_parameter()->set_unknown_id_9(0);
+                    Request.mutable_matching_parameter()->set_clear_count(0);
                     Request.mutable_matching_parameter()->set_password("");
                     Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
                     Request.mutable_matching_parameter()->set_weapon_level(WeaponLevel);
@@ -772,14 +772,14 @@ void Client::Handle_GameServer_GatherStatistics()
                     Request.set_max_targets(100);
                     Request.set_unknown_5(0);
 
-                    Request.mutable_matching_parameter()->set_unknown_id_1(1350000);
+                    Request.mutable_matching_parameter()->set_regulation_version(1350000);
                     Request.mutable_matching_parameter()->set_unknown_id_2(2);
-                    Request.mutable_matching_parameter()->set_unknown_id_3(0);
-                    Request.mutable_matching_parameter()->set_unknown_id_4(1);
+                    Request.mutable_matching_parameter()->set_allow_cross_region(0);
+                    Request.mutable_matching_parameter()->set_nat_type(1);
                     Request.mutable_matching_parameter()->set_unknown_id_5(0);
                     Request.mutable_matching_parameter()->set_soul_level(Level);
                     Request.mutable_matching_parameter()->set_soul_memory(Level * 100000); // Huuum, this might cause some issues.
-                    Request.mutable_matching_parameter()->set_unknown_id_9(0);
+                    Request.mutable_matching_parameter()->set_clear_count(0);
                     Request.mutable_matching_parameter()->set_password("");
                     Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
                     Request.mutable_matching_parameter()->set_weapon_level(WeaponLevel);

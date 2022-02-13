@@ -146,6 +146,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClInclude Include="Core\Utils\DebugCounter.h" />
     <ClInclude Include="Core\Utils\DebugObjects.h" />
     <ClInclude Include="Core\Utils\DebugTimer.h" />
+    <ClInclude Include="Core\Utils\DiffTracker.h" />
     <ClInclude Include="Core\Utils\Endian.h" />
     <ClInclude Include="Core\Utils\Enum.h" />
     <ClInclude Include="Core\Utils\Event.h" />
@@ -221,6 +222,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClCompile Include="Core\Utils\DebugCounter.cpp" />
     <ClCompile Include="Core\Utils\DebugObjects.cpp" />
     <ClCompile Include="Core\Utils\DebugTimer.cpp" />
+    <ClCompile Include="Core\Utils\DiffTracker.cpp" />
     <ClCompile Include="Core\Utils\File.cpp" />
     <ClCompile Include="Core\Utils\Logging.cpp" />
     <ClCompile Include="Core\Utils\Random.cpp" />

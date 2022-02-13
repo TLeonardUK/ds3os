@@ -18,6 +18,7 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Strings.h"
+#include "Core/Utils/DiffTracker.h"
 
 BreakInManager::BreakInManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
@@ -98,6 +99,20 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
     });
 
     // TODO: Sort potential targets based on prioritization (more summons etc)
+
+#ifdef _DEBUG
+    static DiffTracker Tracker;
+    Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_id_2", Request->matching_parameter().unknown_id_2());
+    Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_id_5", Request->matching_parameter().unknown_id_5());
+    if (Request->matching_parameter().has_unknown_string())
+    {
+        Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_string", Request->matching_parameter().unknown_string());
+    }
+    if (Request->matching_parameter().has_unknown_id_15())
+    {
+        Tracker.Field(Client->GetPlayerState().GetCharacterName().c_str(), "MatchingParameters.unknown_id_15", Request->matching_parameter().unknown_id_15());
+    }
+#endif
 
     Frpg2RequestMessage::RequestGetBreakInTargetListResponse Response;
     Response.set_map_id(Request->map_id());
