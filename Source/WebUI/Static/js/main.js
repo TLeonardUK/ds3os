@@ -511,6 +511,7 @@ function refreshSettingsTab()
         setMaterialCheckState(document.querySelector("#disable-auto-summon-invasions"), data.disableAutoSummonInvasions);
         setMaterialCheckState(document.querySelector("#disable-weapon-level-matching"), data.disableWeaponLevelMatching);
         setMaterialCheckState(document.querySelector("#disable-soul-level-matching"), data.disableSoulLevelMatching);
+        setMaterialCheckState(document.querySelector("#ignore-invasion-area-filter"), data.ignoreInvasionAreaFilter);        
     })
     .catch(function (error) 
     {
@@ -544,6 +545,7 @@ function saveSettings()
             "disableAutoSummonInvasions": document.querySelector("#disable-auto-summon-invasions").checked,
             "disableWeaponLevelMatching": document.querySelector("#disable-weapon-level-matching").checked,
             "disableSoulLevelMatching": document.querySelector("#disable-soul-level-matching").checked,    
+            "ignoreInvasionAreaFilter": document.querySelector("#ignore-invasion-area-filter").checked,    
         })
     })
     .catch(function (error) 

@@ -50,6 +50,7 @@ bool SettingsHandler::handleGet(CivetServer* Server, struct mg_connection* Conne
     json["disableAutoSummonInvasions"] = Config.DisableInvasionAutoSummon;
     json["disableWeaponLevelMatching"] = IsWeaponLevelMatchingDisabled();
     json["disableSoulLevelMatching"] = IsSoulLevelMatchingDisabled();
+    json["ignoreInvasionAreaFilter"] = Config.IgnoreInvasionAreaFilter;
     
     RespondJson(Connection, json);
 
@@ -112,6 +113,10 @@ bool SettingsHandler::handlePost(CivetServer* Server, struct mg_connection* Conn
     if (json.contains("disableAutoSummonInvasions"))
     {
         Config.DisableInvasionAutoSummon = json["disableAutoSummonInvasions"];
+    }
+    if (json.contains("ignoreInvasionAreaFilter"))
+    {
+        Config.IgnoreInvasionAreaFilter = json["ignoreInvasionAreaFilter"];
     }
     if (json.contains("disableWeaponLevelMatching"))
     {

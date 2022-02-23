@@ -84,16 +84,41 @@ bool BreakInManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& 
 
 MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    PlayerState& Player = Client->GetPlayerState();
+
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+
     Frpg2RequestMessage::RequestGetBreakInTargetList* Request = (Frpg2RequestMessage::RequestGetBreakInTargetList*)Message.Protobuf.get();
     
-    std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([this, Client, Request](const std::shared_ptr<GameClient>& OtherClient) {
+    std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([this, Client, Request, Config, Player](const std::shared_ptr<GameClient>& OtherClient) {
         if (Client == OtherClient.get())
         {
             return false;
         }
-        if (OtherClient->GetPlayerState().GetCurrentArea() != (OnlineAreaId)Request->online_area_id())
+        if (Config.IgnoreInvasionAreaFilter)
+        {          
+            bool InValidArea = false;
+            for (size_t i = 0; i < Player.GetPlayerStatus().player_status().played_areas_size(); i++)
+            {
+                OnlineAreaId AreaId = (OnlineAreaId)Player.GetPlayerStatus().player_status().played_areas((int)i);
+                if (OtherClient->GetPlayerState().GetCurrentArea() == AreaId)
+                {
+                    InValidArea = true;
+                    break;
+                }
+            }
+                
+            if (!InValidArea)
+            {
+                return false;
+            }
+        }
+        else
         {
-            return false;
+            if (OtherClient->GetPlayerState().GetCurrentArea() != (OnlineAreaId)Request->online_area_id())
+            {
+                return false;
+            }
         }
         return CanMatchWith(Request->matching_parameter(), OtherClient); 
     });

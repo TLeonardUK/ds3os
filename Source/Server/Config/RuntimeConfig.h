@@ -197,6 +197,10 @@ public:
     // Disables all auto summoning for coop (blue sentinels, etc)
     bool DisableCoopAutoSummon = false;
 
+    // If enabled invasion attempts will search all locations, not just the filtered list
+    // that is supplied by the client.
+    bool IgnoreInvasionAreaFilter = false;
+
     // Parameters used for determining which signs a player can see.
     RuntimeConfigMatchingParameters SummonSignMatchingParameters = {
         0.9f, -10,                                                      // LowerLimit
