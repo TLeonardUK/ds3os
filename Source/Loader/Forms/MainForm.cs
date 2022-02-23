@@ -41,6 +41,7 @@ namespace Loader
         {
             InitializeComponent();
 
+            ImportedServerListView.Items.Clear();
             ImportedServerListView.ListViewItemSorter = new ServerListSorter();
 
             MachinePrivateIp = NetUtils.GetMachineIPv4(false);
