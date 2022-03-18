@@ -15,6 +15,9 @@
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
 
+#include "Config/BuildConfig.h"
+#include "Server/GameService/Utils/NRSSRSanitizer.h"
+
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/Strings.h"
 
@@ -90,6 +93,27 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
     std::vector<uint8_t> GhostData;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
     GhostData.assign(Request->ghost_data().data(), Request->ghost_data().data() + Request->ghost_data().size());
+
+    // There is no NRSSR struct in bloodstain or ghost data, but we still make sure the size-delimited entry list is valid.
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(Data.data(), Data.size());
+        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "Bloodstain metadata recieved from client is invalid (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            return MessageHandleResult::Handled;
+        }
+        ValidationResult = NRSSRSanitizer::IsValidEntryList(GhostData.data(), GhostData.size());
+        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "Ghost data recieved from client is invalid (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            return MessageHandleResult::Handled;
+        }
+    }
 
     if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
     {

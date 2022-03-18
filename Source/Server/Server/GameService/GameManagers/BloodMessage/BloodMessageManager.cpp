@@ -17,6 +17,9 @@
 #include "Server/Server.h"
 #include "Server/Database/ServerDatabase.h"
 
+#include "Config/BuildConfig.h"
+#include "Server/GameService/Utils/NRSSRSanitizer.h"
+
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
@@ -247,6 +250,20 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
 
     std::vector<uint8_t> MessageData;
     MessageData.assign(Request->message_data().data(), Request->message_data().data() + Request->message_data().size());
+
+    // There is no NRSSR struct in blood messsage data, but we still make sure the size-delimited entry list is valid.
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(MessageData.data(), MessageData.size());
+        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "Blood message data recieved from client is invalid (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            // Simply ignore the request. Perhaps sending a response with an invalid sign id or disconnecting the client would be better?
+            return MessageHandleResult::Handled;
+        }
+    }
 
     if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData))
     {

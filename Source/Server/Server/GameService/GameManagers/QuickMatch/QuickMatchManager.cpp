@@ -16,6 +16,9 @@
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
 
+#include "Config/BuildConfig.h"
+#include "Server/GameService/Utils/NRSSRSanitizer.h"
+
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
 #include "Core/Utils/Strings.h"
@@ -357,7 +360,22 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
 
     Frpg2RequestMessage::RequestAcceptQuickMatch* Request = (Frpg2RequestMessage::RequestAcceptQuickMatch*)Message.Protobuf.get();
 
-    if (std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->join_player_id()))
+    bool ShouldProcessRequest = true;
+    // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(Request->data().data(), Request->data().size());
+        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "RequestAcceptQuickMatch message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            ShouldProcessRequest = false;
+        }
+    }
+
+    std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->join_player_id());
+    if (ShouldProcessRequest && TargetClient != nullptr)
     {    
         LogS(Client->GetName().c_str(), "RequestAcceptQuickMatch: Accepting join request from %s", TargetClient->GetName().c_str());
 
