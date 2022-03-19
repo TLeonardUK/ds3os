@@ -78,7 +78,7 @@ public:
 		// The NRSSR host name string is either longer than the client's buffer or is not null-terminated.
 		NRSSR_NameString_Overflow,
 		// The amount of data left in the NRSSR struct after the name string is abnormal.
-		NRSSR_RemainingData_Mismatch,
+		NRSSR_RemainingDataSize_Mismatch,
 		// NRSSR session size field does not match with the expected value.
 		NRSSR_SessionSize_Abnormal
 	};
@@ -89,7 +89,7 @@ public:
 	{
 		// Go over the entries in the entry list and make sure any NRSSR entry is valid
 		size_t i = 0;
-		for (size_t entry_sz = 0, j = 0; i + 8 <= size; i += entry_sz + 8, j++)
+		for (size_t entry_sz = 0; i + 8 <= size; i += entry_sz + 8)
 		{
 			entry_sz = *(uint32_t*)(entry_list + i + 4);
 			if (i + 8 + entry_sz > size) return ValidationResult::EntryList_SizeMismatch;
@@ -116,7 +116,7 @@ public:
 	// Verify if some data has correct NRSessionSearchResult signature and version number.
 	static bool CheckNRSSRSignatureAndVersion(const uint8_t* data, size_t size)
 	{
-		if (size < 7) return false;
+		if (size < 6) return false;
 		uint32_t sig = *(uint32_t*)(data + 0);
 		uint16_t ver = *(uint16_t*)(data + 4);
 		return sig == SIGNATURE && ver == VERSION_NUMBER;
@@ -128,8 +128,11 @@ public:
 		// Check if signature and version number matches
 		if (!CheckNRSSRSignatureAndVersion(nrssr_data, size)) return ValidationResult::NRSSR_SignatureOrVersion_Mismatch;
 
-		// Check property list
+		// Make sure that we have enough data to read the property count field 
+		if (size < 7) return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;;
 		uint8_t prop_cnt = *(uint8_t*)(nrssr_data + 6);
+
+		// Parse the property list and verify each entry has a valid type and length
 		size_t pos = 7, len;
 		for (int i = 0; i < prop_cnt; i++)
 		{	// We don't care about the ID or unknown value, just check sizes
@@ -165,10 +168,10 @@ public:
 
 		// Check host online id and session data size
 		if (size - pos != sizeof(SESSION_DATA_SIZE) + HOST_ONLINE_ID_SIZE + SESSION_DATA_SIZE) 
-			return ValidationResult::NRSSR_RemainingData_Mismatch;
+			return ValidationResult::NRSSR_RemainingDataSize_Mismatch;
 		
 		// One single big endian number when everything else is little endian, this is weird
-		uint16_t data_size = (uint16_t)nrssr_data[pos + 8] << 8 | (uint16_t)nrssr_data[pos + 9];
+		uint16_t data_size = (uint16_t)nrssr_data[pos + HOST_ONLINE_ID_SIZE] << 8 | (uint16_t)nrssr_data[pos + HOST_ONLINE_ID_SIZE + 1];
 		return (data_size == SESSION_DATA_SIZE) ? ValidationResult::Valid : ValidationResult::NRSSR_SessionSize_Abnormal;
 	}
 };
