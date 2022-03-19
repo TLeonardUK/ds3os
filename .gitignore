@@ -49,3 +49,4 @@ Dumps/
 enc_temp_folder/
 Publish/
 DS3OS/
+node_modules/
