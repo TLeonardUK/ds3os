@@ -318,6 +318,12 @@ void Server::PollServerAdvertisement()
     {
         return;
     }
+    if constexpr (!BuildConfig::SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS || !BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        Warning("Security fixes for RequestSendMessageToPlayers or the NRSSR RCE exploit are disabled. As such, the server will not be listed publicly.");
+        Config.Advertise = false;
+        return;
+    }
 
     // Waiting for current advertisement to finish.
     if (MasterServerUpdateRequest)

@@ -336,6 +336,9 @@
     <ClInclude Include="Core\Utils\DiffTracker.h">
       <Filter>Core\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Server\GameService\Utils\NRSSRSanitizer.h">
+      <Filter>Server\GameService\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server\Server.cpp">

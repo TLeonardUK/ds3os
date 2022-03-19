@@ -179,6 +179,7 @@ copy $(SolutionDir)..\Resources\steam_appid.txt $(OutputPath)steam_appid.txt</Co
     <ClInclude Include="Server\GameService\GameService.h" />
     <ClInclude Include="Server\GameService\PlayerState.h" />
     <ClInclude Include="Server\GameService\Utils\GameIds.h" />
+    <ClInclude Include="Server\GameService\Utils\NRSSRSanitizer.h" />
     <ClInclude Include="Server\GameService\Utils\OnlineAreaPool.h" />
     <ClInclude Include="Server\LoginService\LoginClient.h" />
     <ClInclude Include="Server\LoginService\LoginService.h" />
