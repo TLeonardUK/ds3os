@@ -50,6 +50,16 @@ public:
     inline static const bool DISCONNECT_ON_UNHANDLED_MESSAGE = true;
 #endif
 
+    // CVE-2022-24125 (RequestSendMessageToPlayers abuse) and CVE-2022-24126 (NRSessionSearchResult RCE) serverside fixes.
+    // These should only be disabled on a debug build for testing purposes.
+#if defined(_DEBUG)
+    constexpr inline static const bool SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS = false;
+    constexpr inline static const bool NRSSR_SANITY_CHECKS = false;
+#else
+    constexpr inline static const bool SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS = true;
+    constexpr inline static const bool NRSSR_SANITY_CHECKS = true;
+#endif
+
     // Dumps a diasssembly of each message to the output.
     constexpr inline static const bool DISASSEMBLE_RECIEVED_MESSAGES = false;
 
