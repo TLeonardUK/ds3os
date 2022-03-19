@@ -22,7 +22,7 @@ var GOldestSupportedVersion = 2;
 function IsServerFilter(ServerInfo)
 {
     if (ServerInfo['Version'] < GOldestSupportedVersion) {
-        return;
+        return true;
     }
 
     return  IsFiltered(ServerInfo['Name']) || 
