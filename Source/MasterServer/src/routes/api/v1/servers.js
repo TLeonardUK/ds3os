@@ -15,10 +15,16 @@ const config = require("../../../config/config.json")
 var GActiveServers = [];
 
 // Use lowercase patterns only.
-var GFilters = [ ];
+var GFilters = [];
+
+var GOldestSupportedVersion = 2;
 
 function IsServerFilter(ServerInfo)
 {
+    if (ServerInfo['Version'] < GOldestSupportedVersion) {
+        return true;
+    }
+
     return  IsFiltered(ServerInfo['Name']) || 
             IsFiltered(ServerInfo['Description']) || 
             IsFiltered(ServerInfo['Hostname']);
@@ -50,7 +56,7 @@ function RemoveServer(IpAddress)
     }
 }
 
-function AddServer(IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list)
+function AddServer(IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version)
 {
     var ServerObj = {
         "IpAddress": IpAddress,
@@ -64,7 +70,8 @@ function AddServer(IpAddress, hostname, private_hostname, description, name, pub
         "ModsWhiteList": mods_white_list,
         "ModsBlackList": mods_black_list,
         "ModsRequiredList": mods_required_list,
-        "UpdatedTime": Date.now()
+        "UpdatedTime": Date.now(),
+        "Version": version
      };
 
     if (IsServerFilter(ServerObj))
@@ -236,8 +243,9 @@ router.post('/', async (req, res) => {
     var mods_white_list = req.body["ModsWhiteList"];
     var mods_black_list = req.body["ModsBlackList"];
     var mods_required_list = req.body["ModsRequiredList"];
+    var version = ('ServerVersion' in req.body) ? parseInt(req.body['ServerVersion']) : 1;
 
-    AddServer(req.connection.remoteAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list);
+    AddServer(req.connection.remoteAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version);
     
     res.json({ "status":"success" });
 });

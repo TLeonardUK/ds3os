@@ -129,38 +129,43 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
 
 MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestGetGhostDataList* Request = (Frpg2RequestMessage::RequestGetGhostDataList*)Message.Protobuf.get();
     Frpg2RequestMessage::RequestGetGhostDataListResponse Response;
+    Response.mutable_ghosts();
 
     uint32_t RemainingGhostCount = Request->max_ghosts();
 
-    // Grab a random set of stains from the live cache.
-    for (int i = 0; i < Request->search_areas_size() && RemainingGhostCount > 0; i++)
+    if (!Config.DisableGhosts)
     {
-        const Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
-
-        OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
-        uint32_t MaxForArea = Area.max_items();
-        uint32_t GatherCount = std::min(MaxForArea, RemainingGhostCount);
-
-        std::vector<std::shared_ptr<Ghost>> ActiveGhosts = LiveCache.GetRandomSet(AreaId, GatherCount);
-        for (std::shared_ptr<Ghost>& AreaMsg : ActiveGhosts)
+        // Grab a random set of stains from the live cache.
+        for (int i = 0; i < Request->search_areas_size() && RemainingGhostCount > 0; i++)
         {
-            // Filter players own messages.
-            if (AreaMsg->PlayerId == Player.GetPlayerId())
+            const Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
+
+            OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
+            uint32_t MaxForArea = Area.max_items();
+            uint32_t GatherCount = std::min(MaxForArea, RemainingGhostCount);
+
+            std::vector<std::shared_ptr<Ghost>> ActiveGhosts = LiveCache.GetRandomSet(AreaId, GatherCount);
+            for (std::shared_ptr<Ghost>& AreaMsg : ActiveGhosts)
             {
-                continue;
+                // Filter players own messages.
+                if (AreaMsg->PlayerId == Player.GetPlayerId())
+                {
+                    continue;
+                }
+
+                Frpg2RequestMessage::GhostData& Data = *Response.mutable_ghosts()->Add();
+                Data.set_unknown_1(1);                                                      // TODO: Figure out what this is.
+                Data.set_ghost_id((uint32_t)AreaMsg->GhostId);
+                Data.set_data(AreaMsg->Data.data(), AreaMsg->Data.size());
+
+                RemainingGhostCount--;
             }
-
-            Frpg2RequestMessage::GhostData& Data = *Response.mutable_ghosts()->Add();
-            Data.set_unknown_1(1);                                                      // TODO: Figure out what this is.
-            Data.set_ghost_id((uint32_t)AreaMsg->GhostId);
-            Data.set_data(AreaMsg->Data.data(), AreaMsg->Data.size());
-
-            RemainingGhostCount--;
         }
     }
 

@@ -45,6 +45,9 @@ bool SettingsHandler::handleGet(CivetServer* Server, struct mg_connection* Conne
     json["privateHostname"] = Config.ServerPrivateHostname;
     json["advertise"] = Config.Advertise;
     json["disableCoop"] = Config.DisableCoop;
+    json["disableBloodMessages"] = Config.DisableBloodMessages;
+    json["disableBloodStains"] = Config.DisableBloodStains;
+    json["disableGhosts"] = Config.DisableGhosts;
     json["disableInvasions"] = Config.DisableInvasions;
     json["disableAutoSummonCoop"] = Config.DisableCoopAutoSummon;
     json["disableAutoSummonInvasions"] = Config.DisableInvasionAutoSummon;
@@ -105,6 +108,18 @@ bool SettingsHandler::handlePost(CivetServer* Server, struct mg_connection* Conn
     if (json.contains("disableInvasions"))
     {
         Config.DisableInvasions = json["disableInvasions"];
+    }
+    if (json.contains("disableBloodMessages"))
+    {
+        Config.DisableBloodMessages = json["disableBloodMessages"];
+    }
+    if (json.contains("disableBloodStains"))
+    {
+        Config.DisableBloodStains = json["disableBloodStains"];
+    }
+    if (json.contains("disableGhosts"))
+    {
+        Config.DisableGhosts = json["disableGhosts"];
     }
     if (json.contains("disableAutoSummonCoop"))
     {

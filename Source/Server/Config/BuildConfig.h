@@ -22,6 +22,9 @@ public:
     
     BuildConfig() = delete;
 
+    // Version to give to the master-server when trying to advertise, used to hard-cut-off older server versions from advertising.
+    inline static const int MASTER_SERVER_CLIENT_VERSION = 2;
+
     // How many seconds without messages causes a client to timeout.
     inline static const double CLIENT_TIMEOUT = 60.0;
 

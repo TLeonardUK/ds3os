@@ -159,6 +159,13 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
     }
 
     int Index = 0;
+
+    // Temporary warning for the exploit disclosure
+    RuntimeConfigAnnouncement DisclosureAnnouncement;
+    DisclosureAnnouncement.Header = "======EXPLOIT WARNING======";
+    DisclosureAnnouncement.Body = "CVE-2022-24126 has recently been disclosed publically with proof of concept exploits. It is not advised to play online without Blue Sentinel, unless you are playing on a server only accessible by those you trust.\n";
+    Announcements.insert(Announcements.begin(), DisclosureAnnouncement);
+    
     for (const RuntimeConfigAnnouncement& Announcement : Announcements)
     {
         Frpg2RequestMessage::AnnounceMessageData* Data = Changes->add_items();
