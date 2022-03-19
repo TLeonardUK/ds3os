@@ -152,8 +152,9 @@ public:
 				pos += 8;
 				break;
 			case 4: // Case 4 : Null-terminated wide string field
-				len = wcsnlen_s((wchar_t*)(nrssr_data + pos), size - pos);
-				if (len == size - pos || len >= MAX_PROP_WSTR_SIZE) return ValidationResult::NRSSR_PropertyString_Overflow;
+				size_t max_wstr_len = (size - pos) / 2;
+				len = wcsnlen_s((wchar_t*)(nrssr_data + pos), max_wstr_len);
+				if (len >= max_wstr_len || len >= MAX_PROP_WSTR_SIZE) return ValidationResult::NRSSR_PropertyString_Overflow;
 				pos += 2 * (len + 1);
 				break;
 			default:
@@ -162,8 +163,9 @@ public:
 		}
 
 		// Check host name
-		len = wcsnlen_s((wchar_t*)(nrssr_data + pos), size - pos);
-		if (len == size - pos || len >= MAX_NAME_WSTR_SIZE) return ValidationResult::NRSSR_NameString_Overflow;
+		size_t max_wstr_len = (size - pos) / 2;
+		len = wcsnlen_s((wchar_t*)(nrssr_data + pos), max_wstr_len);
+		if (len >= max_wstr_len || len >= MAX_NAME_WSTR_SIZE) return ValidationResult::NRSSR_NameString_Overflow;
 		pos += 2 * (len + 1);
 
 		// Check host online id and session data size
