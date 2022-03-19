@@ -246,6 +246,9 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(QuickMatchRankXp);
     SERIALIZE_VAR(DisableInvasions);
     SERIALIZE_VAR(DisableCoop);
+    SERIALIZE_VAR(DisableBloodMessages);
+    SERIALIZE_VAR(DisableBloodStains);
+    SERIALIZE_VAR(DisableGhosts);
     SERIALIZE_VAR(DisableInvasionAutoSummon);
     SERIALIZE_VAR(DisableCoopAutoSummon);
     SERIALIZE_VAR(IgnoreInvasionAreaFilter)

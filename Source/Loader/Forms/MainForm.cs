@@ -595,7 +595,28 @@ namespace Loader
 
             string ExeLocation = ExeLocationTextBox.Text;
             string ExeDirectory = Path.GetDirectoryName(ExeLocation);
+                        
+            if (!File.Exists(Path.Combine(ExeDirectory, "BlueSentinelPref.ini")) ||
+                !File.Exists(Path.Combine(ExeDirectory, "xinput1_3.dll")))
+            {
+                DialogResult result = MessageBox.Show(
+@"It looks like you may not have the BlueSentinel mod installed.
+                                
+This is advised as CVE-2022-24126 has now been publically disclosed with proof of concept exploits.
+                                
+Only play without if you trust the people with access to the server.
+                                
+Do you want to launch the game unprotected?", 
+                "Warning", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Warning);
 
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+            
             string AppIdFile = Path.Combine(ExeDirectory, "steam_appid.txt");
             if (!File.Exists(AppIdFile))
             {

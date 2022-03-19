@@ -110,37 +110,42 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
 
 MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestGetBloodstainList* Request = (Frpg2RequestMessage::RequestGetBloodstainList*)Message.Protobuf.get();
     Frpg2RequestMessage::RequestGetBloodstainListResponse Response;
+    Response.mutable_bloodstains();
 
     uint32_t RemainingStainCount = Request->max_stains();
 
-    // Grab a random set of stains from the live cache.
-    for (int i = 0; i < Request->search_areas_size() && RemainingStainCount > 0; i++)
+    if (!Config.DisableBloodStains)
     {
-        const Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
-
-        OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
-        uint32_t MaxForArea = Area.max_items();
-        uint32_t GatherCount = std::min(MaxForArea, RemainingStainCount);
-
-        std::vector<std::shared_ptr<Bloodstain>> AreaStains = LiveCache.GetRandomSet(AreaId, GatherCount);
-        for (std::shared_ptr<Bloodstain>& AreaMsg : AreaStains)
+        // Grab a random set of stains from the live cache.
+        for (int i = 0; i < Request->search_areas_size() && RemainingStainCount > 0; i++)
         {
-            // Filter players own messages.
-            if (AreaMsg->PlayerId == Player.GetPlayerId())
-            {
-                continue;
-            }
+            const Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
 
-            Frpg2RequestMessage::BloodstainInfo& Data = *Response.mutable_bloodstains()->Add();
-            Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);
-            Data.set_bloodstain_id((uint32_t)AreaMsg->BloodstainId);
-            Data.set_data(AreaMsg->Data.data(), AreaMsg->Data.size());
+            OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
+            uint32_t MaxForArea = Area.max_items();
+            uint32_t GatherCount = std::min(MaxForArea, RemainingStainCount);
+
+            std::vector<std::shared_ptr<Bloodstain>> AreaStains = LiveCache.GetRandomSet(AreaId, GatherCount);
+            for (std::shared_ptr<Bloodstain>& AreaMsg : AreaStains)
+            {
+                // Filter players own messages.
+                if (AreaMsg->PlayerId == Player.GetPlayerId())
+                {
+                    continue;
+                }
+
+                Frpg2RequestMessage::BloodstainInfo& Data = *Response.mutable_bloodstains()->Add();
+                Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);
+                Data.set_bloodstain_id((uint32_t)AreaMsg->BloodstainId);
+                Data.set_data(AreaMsg->Data.data(), AreaMsg->Data.size());
             
-            RemainingStainCount--;
+                RemainingStainCount--;
+            }
         }
     }
 

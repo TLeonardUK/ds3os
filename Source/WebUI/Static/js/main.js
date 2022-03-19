@@ -506,6 +506,9 @@ function refreshSettingsTab()
 
         setMaterialCheckState(document.querySelector("#advertise"), data.advertise);
         setMaterialCheckState(document.querySelector("#disable-coop"), data.disableCoop);
+        setMaterialCheckState(document.querySelector("#disable-blood-messages"), data.disableBloodMessages);
+        setMaterialCheckState(document.querySelector("#disable-blood-stains"), data.disableBloodStains);
+        setMaterialCheckState(document.querySelector("#disable-ghosts"), data.disableGhosts);
         setMaterialCheckState(document.querySelector("#disable-invasions"), data.disableInvasions);
         setMaterialCheckState(document.querySelector("#disable-auto-summon-coop"), data.disableAutoSummonCoop);
         setMaterialCheckState(document.querySelector("#disable-auto-summon-invasions"), data.disableAutoSummonInvasions);
@@ -540,6 +543,9 @@ function saveSettings()
             
             "advertise": document.querySelector("#advertise").checked,
             "disableCoop": document.querySelector("#disable-coop").checked,
+            "disableBloodMessages": document.querySelector("#disable-blood-messages").checked,
+            "disableBloodStains": document.querySelector("#disable-blood-stains").checked,
+            "disableGhosts": document.querySelector("#disable-ghosts").checked,
             "disableInvasions": document.querySelector("#disable-invasions").checked,
             "disableAutoSummonCoop": document.querySelector("#disable-auto-summon-coop").checked,
             "disableAutoSummonInvasions": document.querySelector("#disable-auto-summon-invasions").checked,

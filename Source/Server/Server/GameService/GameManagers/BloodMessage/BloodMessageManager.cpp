@@ -305,43 +305,48 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
 
 MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestGetBloodMessageList* Request = (Frpg2RequestMessage::RequestGetBloodMessageList*)Message.Protobuf.get();
     Frpg2RequestMessage::RequestGetBloodMessageListResponse Response;
+    Response.mutable_messages();
 
     uint32_t RemainingMessageCount = Request->max_messages();
 
-    // Grab a random set of message from the live cache.
-    for (int i = 0; i < Request->search_areas_size() && RemainingMessageCount > 0; i++)
+    if (!Config.DisableBloodMessages)
     {
-        const Frpg2RequestMessage::BloodMessageDomainLimitData& Area = Request->search_areas(i);
-
-        OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
-        uint32_t MaxForArea = Area.max_type_1() + Area.max_type_2(); // TODO: we need to figure out the difference between these two types.
-        uint32_t GatherCount = std::min(MaxForArea, RemainingMessageCount);
-
-        std::vector<std::shared_ptr<BloodMessage>> AreaMessages = LiveCache.GetRandomSet(AreaId, GatherCount);
-        for (std::shared_ptr<BloodMessage>& AreaMsg : AreaMessages)
+        // Grab a random set of message from the live cache.
+        for (int i = 0; i < Request->search_areas_size() && RemainingMessageCount > 0; i++)
         {
-            // Filter players own messages.
-            if (AreaMsg->PlayerId == Player.GetPlayerId())
-            {
-                continue;
-            }
-            
-            Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
-            Data.set_player_id(AreaMsg->PlayerId);
-            Data.set_character_id(AreaMsg->CharacterId); 
-            Data.set_message_id(AreaMsg->MessageId);
-            Data.set_good(AreaMsg->RatingGood);
-            Data.set_message_data(AreaMsg->Data.data(), AreaMsg->Data.size());
-            Data.set_player_steam_id(AreaMsg->PlayerSteamId);
-            Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);
-            Data.set_poor(AreaMsg->RatingPoor);
+            const Frpg2RequestMessage::BloodMessageDomainLimitData& Area = Request->search_areas(i);
 
-            RemainingMessageCount--;
+            OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
+            uint32_t MaxForArea = Area.max_type_1() + Area.max_type_2(); // TODO: we need to figure out the difference between these two types.
+            uint32_t GatherCount = std::min(MaxForArea, RemainingMessageCount);
+
+            std::vector<std::shared_ptr<BloodMessage>> AreaMessages = LiveCache.GetRandomSet(AreaId, GatherCount);
+            for (std::shared_ptr<BloodMessage>& AreaMsg : AreaMessages)
+            {
+                // Filter players own messages.
+                if (AreaMsg->PlayerId == Player.GetPlayerId())
+                {
+                    continue;
+                }
+            
+                Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
+                Data.set_player_id(AreaMsg->PlayerId);
+                Data.set_character_id(AreaMsg->CharacterId); 
+                Data.set_message_id(AreaMsg->MessageId);
+                Data.set_good(AreaMsg->RatingGood);
+                Data.set_message_data(AreaMsg->Data.data(), AreaMsg->Data.size());
+                Data.set_player_steam_id(AreaMsg->PlayerSteamId);
+                Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);
+                Data.set_poor(AreaMsg->RatingPoor);
+
+                RemainingMessageCount--;
+            }
         }
     }
 

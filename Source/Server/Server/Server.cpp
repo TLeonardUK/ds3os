@@ -194,6 +194,31 @@ bool Server::Init()
             return false;
         }
     }
+    
+#define WriteState(State, bEnabled) WriteLog(bEnabled ? ConsoleColor::Green : ConsoleColor::Red, "", "Log", "%-25s: %s", State, bEnabled ? "Enabled" : "Disabled");
+    WriteState("Blood Messages", !Config.DisableBloodMessages);
+    WriteState("Blood Stains", !Config.DisableBloodStains);
+    WriteState("Blood Ghosts", !Config.DisableGhosts);
+    WriteState("Invasions (Auto Summon)", !Config.DisableCoopAutoSummon);
+    WriteState("Invasions", !Config.DisableInvasions);
+    WriteState("Coop (Auto Summon)", !Config.DisableCoopAutoSummon);
+    WriteState("Coop", !Config.DisableCoop);
+#undef WriteState
+
+    if (!Config.DisableBloodMessages || !Config.DisableBloodStains || !Config.DisableGhosts)
+    {
+        Error(
+            "\n\n"
+            "=============================================== WARNING ===============================================\n"
+            " Blood messages, stains, ghosts and other serialized data that is client-generated and client-parsed\n"
+            " are vulnerable to CVE-2022-24125 and CVE-2022-24126.\n"
+            "\n"
+            " Until FROM SOFTWARE patch the client it is not advised to run with these enabled, unless you are only\n"
+            " permitting access to the server to only people you trust.\n"
+            "=======================================================================================================\n"
+            "\n\n"
+        );
+    }
 
     return true;
 }
@@ -324,6 +349,7 @@ void Server::PollServerAdvertisement()
         Body["ModsWhiteList"] = Config.ModsWhitelist;
         Body["ModsBlackList"] = Config.ModsBlacklist;
         Body["ModsRequiredList"] = Config.ModsRequiredList;        
+        Body["ServerVersion"] = BuildConfig::MASTER_SERVER_CLIENT_VERSION;
 
         MasterServerUpdateRequest = std::make_shared<NetHttpRequest>();
         MasterServerUpdateRequest->SetMethod(NetHttpMethod::POST);
