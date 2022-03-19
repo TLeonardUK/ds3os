@@ -49,6 +49,3 @@ Dumps/
 enc_temp_folder/
 Publish/
 DS3OS/
-node_modules/
-/Source/ThirdParty/zlib/out/build/x64-Debug
-/Source/ThirdParty/zlib/zconf.h.included
