@@ -234,9 +234,9 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     Frpg2RequestMessage::RequestCreateSign* Request = (Frpg2RequestMessage::RequestCreateSign*)Message.Protobuf.get();
 
     // There is no NRSSR struct in the sign metadata, but we still make sure the size-delimited entry list is valid.
-    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
     {
-        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(Request->player_struct().data(), Request->player_struct().size());
+        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
             WarningS(Client->GetName().c_str(), "RequestCreateSign message recieved from client contains ill formated binary data (error code %i).",
@@ -342,7 +342,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
     // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
     if (BuildConfig::NRSSR_SANITY_CHECKS)
     {
-        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(Request->player_struct().data(), Request->player_struct().size());
+        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
             WarningS(Client->GetName().c_str(), "RequestSummonSign message recieved from client contains ill formated binary data (error code %i).",

@@ -128,7 +128,7 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
     // The game seems to only use this function in the BreakIn (invasions) implementation.
     // Hence we should make sure that a malicious client does not use this send arbitrary data to other players.
     bool ShouldProcessRequest = true;
-    if (BuildConfig::SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS)
+    if constexpr (BuildConfig::SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS)
     {
         // The request should contain a PushRequestBreakInTarget message
         Frpg2RequestMessage::PushRequestAllowBreakInTarget EmbdeddedMsg;
@@ -146,9 +146,9 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
             ShouldProcessRequest = false;
         }
         // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
-        else if (BuildConfig::NRSSR_SANITY_CHECKS)
+        else if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
         {
-            auto ValidationResult = NRSSRSanitizer::IsValidEntryList(EmbdeddedMsg.player_struct().data(), EmbdeddedMsg.player_struct().size());
+            auto ValidationResult = NRSSRSanitizer::ValidateEntryList(EmbdeddedMsg.player_struct().data(), EmbdeddedMsg.player_struct().size());
             if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
             {
                 WarningS(Client->GetName().c_str(), "PushRequestAllowBreakInTarget message recieved from client contains ill formated binary data (error code %i).",

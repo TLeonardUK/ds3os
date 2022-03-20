@@ -85,95 +85,95 @@ public:
 
 	// Verify if length-delimited entry list data used to store session join information is valid.
 	// Will also validate any NRSSR data stored in the entries.
-	static ValidationResult IsValidEntryList(const uint8_t* entry_list, size_t size)
+	static ValidationResult ValidateEntryList(const uint8_t* EntryList, size_t Size)
 	{
 		// Go over the entries in the entry list and make sure any NRSSR entry is valid
 		size_t i = 0;
-		for (size_t entry_sz = 0; i + 8 <= size; i += entry_sz + 8)
+		for (size_t EntrySize = 0; i + 8 <= Size; i += EntrySize + 8)
 		{
-			entry_sz = *(uint32_t*)(entry_list + i + 4);
-			if (i + 8 + entry_sz > size) return ValidationResult::EntryList_SizeMismatch;
+			EntrySize = *reinterpret_cast<const uint32_t*>(EntryList + i + 4);
+			if (i + 8 + EntrySize > Size) return ValidationResult::EntryList_SizeMismatch;
 
-			const uint8_t* entry_data = entry_list + i + 8;
+			const uint8_t* EntryData = EntryList + i + 8;
 			// Use the NRSSR signature and version to detect NRSSR data inside the entry list.
 			// This may result in valid packets getting flagged, but from my testing it has never happened.
-			if (CheckNRSSRSignatureAndVersion(entry_data, entry_sz))
+			if (CheckNRSSRSignatureAndVersion(EntryData, EntrySize))
 			{
-				ValidationResult res = IsValidNRSSRData(entry_data, entry_sz);
-				if (res != ValidationResult::Valid) return res;
+				ValidationResult Result = ValidateNRSSRData(EntryData, EntrySize);
+				if (Result != ValidationResult::Valid) return Result;
 			}
 		}
 		// Make sure there is no data left is the buffer after the final entry, i.e. every byte has been
 		// accounted for
-		return (i == size) ? ValidationResult::Valid : ValidationResult::EntryList_SizeMismatch;
+		return (i == Size) ? ValidationResult::Valid : ValidationResult::EntryList_SizeMismatch;
 	}
 
-	static ValidationResult IsValidEntryList(const char* entry_list, size_t size)
+	static ValidationResult ValidateEntryList(const char* EntryList, size_t Size)
 	{
-		return IsValidEntryList((const uint8_t*)entry_list, size);
+		return ValidateEntryList(reinterpret_cast<const uint8_t*>(EntryList), Size);
 	}
 
 	// Verify if some data has correct NRSessionSearchResult signature and version number.
-	static bool CheckNRSSRSignatureAndVersion(const uint8_t* data, size_t size)
+	static bool CheckNRSSRSignatureAndVersion(const uint8_t* Data, size_t Size)
 	{
-		if (size < 6) return false;
-		uint32_t sig = *(uint32_t*)(data + 0);
-		uint16_t ver = *(uint16_t*)(data + 4);
-		return sig == SIGNATURE && ver == VERSION_NUMBER;
+		if (Size < 6) return false;
+		uint32_t Signature = *reinterpret_cast<const uint32_t*>(Data + 0);
+		uint16_t Version = *reinterpret_cast<const uint16_t*>(Data + 4);
+		return Signature == SIGNATURE && Version == VERSION_NUMBER;
 	}
 
 	// Verify if serialized NRSessionSearchResult data is valid. 
-	static ValidationResult IsValidNRSSRData(const uint8_t* nrssr_data, size_t size)
+	static ValidationResult ValidateNRSSRData(const uint8_t* NRSSRData, size_t Size)
 	{
 		// Check if signature and version number matches
-		if (!CheckNRSSRSignatureAndVersion(nrssr_data, size)) return ValidationResult::NRSSR_SignatureOrVersion_Mismatch;
+		if (!CheckNRSSRSignatureAndVersion(NRSSRData, Size)) return ValidationResult::NRSSR_SignatureOrVersion_Mismatch;
 
 		// Make sure that we have enough data to read the property count field 
-		if (size < 7) return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;;
-		uint8_t prop_cnt = *(uint8_t*)(nrssr_data + 6);
+		if (Size < 7) return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;;
+		uint8_t PropertyCount = NRSSRData[6];
 
 		// Parse the property list and verify each entry has a valid type and length
-		size_t pos = 7, len;
-		for (int i = 0; i < prop_cnt; i++)
+		size_t Position = 7, StrLength, NumWideCharLeft;
+		for (int i = 0; i < PropertyCount; i++)
 		{	// We don't care about the ID or unknown value, just check sizes
-			if (size - pos < 6) return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;
-			uint8_t type = nrssr_data[pos + 4];
-			pos += 6;
+			if (Size - Position < 6) return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;
+			uint8_t Type = NRSSRData[Position + 4];
+			Position += 6;
 
-			switch (type)
+			switch (Type)
 			{
 			case 1: // Case 1 : 4 byte field
-				if (size - pos < 4) return ValidationResult::NRSSR_Property4Byte_InsufficientData;
-				pos += 4;
+				if (Size - Position < 4) return ValidationResult::NRSSR_Property4Byte_InsufficientData;
+				Position += 4;
 				break;
 			case 2:
 			case 3: // Cases 2-3 : 8 byte field (perhaps signed/unsigned?)
-				if (size - pos < 8) return ValidationResult::NRSSR_Property8Byte_InsufficientData;
-				pos += 8;
+				if (Size - Position < 8) return ValidationResult::NRSSR_Property8Byte_InsufficientData;
+				Position += 8;
 				break;
 			case 4: // Case 4 : Null-terminated wide string field
-				size_t max_wstr_len = (size - pos) / 2;
-				len = wcsnlen_s((wchar_t*)(nrssr_data + pos), max_wstr_len);
-				if (len >= max_wstr_len || len >= MAX_PROP_WSTR_SIZE) return ValidationResult::NRSSR_PropertyString_Overflow;
-				pos += 2 * (len + 1);
+				NumWideCharLeft = (Size - Position) / 2;
+				StrLength = wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+				if (StrLength >= NumWideCharLeft || StrLength >= MAX_PROP_WSTR_SIZE) return ValidationResult::NRSSR_PropertyString_Overflow;
+				Position += 2 * (StrLength + 1);
 				break;
 			default:
 				return ValidationResult::NRSSR_PropertyMetadata_InvalidType;
 			}
 		}
 
-		// Check host name
-		size_t max_wstr_len = (size - pos) / 2;
-		len = wcsnlen_s((wchar_t*)(nrssr_data + pos), max_wstr_len);
-		if (len >= max_wstr_len || len >= MAX_NAME_WSTR_SIZE) return ValidationResult::NRSSR_NameString_Overflow;
-		pos += 2 * (len + 1);
+		// Check if the host name is null terminated and has valid length
+		NumWideCharLeft = (Size - Position) / 2;
+		StrLength = wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+		if (StrLength >= NumWideCharLeft || StrLength >= MAX_NAME_WSTR_SIZE) return ValidationResult::NRSSR_NameString_Overflow;
+		Position += 2 * (StrLength + 1);
 
 		// Check host online id and session data size
-		if (size - pos != sizeof(SESSION_DATA_SIZE) + HOST_ONLINE_ID_SIZE + SESSION_DATA_SIZE) 
+		if (Size - Position != sizeof(SESSION_DATA_SIZE) + HOST_ONLINE_ID_SIZE + SESSION_DATA_SIZE) 
 			return ValidationResult::NRSSR_RemainingDataSize_Mismatch;
 		
-		// One single big endian number when everything else is little endian, this is weird
-		uint16_t data_size = (uint16_t)nrssr_data[pos + HOST_ONLINE_ID_SIZE] << 8 | (uint16_t)nrssr_data[pos + HOST_ONLINE_ID_SIZE + 1];
-		return (data_size == SESSION_DATA_SIZE) ? ValidationResult::Valid : ValidationResult::NRSSR_SessionSize_Abnormal;
+		// Read the big-endian sessin data size field and make sure it matches the normal value for the game
+		uint16_t SessionDataSize = _byteswap_ushort(*reinterpret_cast<const uint16_t*>(Position + HOST_ONLINE_ID_SIZE));
+		return (SessionDataSize == SESSION_DATA_SIZE) ? ValidationResult::Valid : ValidationResult::NRSSR_SessionSize_Abnormal;
 	}
 };
