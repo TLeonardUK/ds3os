@@ -340,7 +340,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
     bool bSuccess = true;
 
     // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
-    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
     {
         auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
