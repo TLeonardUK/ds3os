@@ -252,9 +252,9 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
     MessageData.assign(Request->message_data().data(), Request->message_data().data() + Request->message_data().size());
 
     // There is no NRSSR struct in blood messsage data, but we still make sure the size-delimited entry list is valid.
-    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
     {
-        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(MessageData.data(), MessageData.size());
+        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(MessageData.data(), MessageData.size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
             WarningS(Client->GetName().c_str(), "Blood message data recieved from client is invalid (error code %i).",

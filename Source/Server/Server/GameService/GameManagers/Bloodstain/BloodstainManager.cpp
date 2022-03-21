@@ -95,9 +95,9 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
     GhostData.assign(Request->ghost_data().data(), Request->ghost_data().data() + Request->ghost_data().size());
 
     // There is no NRSSR struct in bloodstain or ghost data, but we still make sure the size-delimited entry list is valid.
-    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
     {
-        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(Data.data(), Data.size());
+        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Data.data(), Data.size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
             WarningS(Client->GetName().c_str(), "Bloodstain metadata recieved from client is invalid (error code %i).",
@@ -105,7 +105,7 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
 
             return MessageHandleResult::Handled;
         }
-        ValidationResult = NRSSRSanitizer::IsValidEntryList(GhostData.data(), GhostData.size());
+        ValidationResult = NRSSRSanitizer::ValidateEntryList(GhostData.data(), GhostData.size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
             WarningS(Client->GetName().c_str(), "Ghost data recieved from client is invalid (error code %i).",

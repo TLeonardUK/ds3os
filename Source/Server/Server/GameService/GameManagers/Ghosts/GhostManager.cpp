@@ -89,9 +89,9 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
 
     // There is no NRSSR struct in ghost data, but we still make sure the size-delimited entry list is valid.
-    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
     {
-        auto ValidationResult = NRSSRSanitizer::IsValidEntryList(Data.data(), Data.size());
+        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Data.data(), Data.size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
             WarningS(Client->GetName().c_str(), "Ghost data recieved from client is invalid (error code %i).",
