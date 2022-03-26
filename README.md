@@ -1,4 +1,4 @@
-![Dark Souls 3 - Open Server](https://github.com/TLeonardUK/ds3os/blob/main/Resources/banner.png?raw=true)
+![Dark Souls 3 - Open Server](./Resources/Banner.png?raw=true)
 
 # What is this project?
 An open source implementation of the dark souls 3 game server. 
