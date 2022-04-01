@@ -199,7 +199,7 @@ bool Server::Init()
     WriteState("Blood Messages", !Config.DisableBloodMessages);
     WriteState("Blood Stains", !Config.DisableBloodStains);
     WriteState("Blood Ghosts", !Config.DisableGhosts);
-    WriteState("Invasions (Auto Summon)", !Config.DisableCoopAutoSummon);
+    WriteState("Invasions (Auto Summon)", !Config.DisableInvasionAutoSummon);
     WriteState("Invasions", !Config.DisableInvasions);
     WriteState("Coop (Auto Summon)", !Config.DisableCoopAutoSummon);
     WriteState("Coop", !Config.DisableCoop);
