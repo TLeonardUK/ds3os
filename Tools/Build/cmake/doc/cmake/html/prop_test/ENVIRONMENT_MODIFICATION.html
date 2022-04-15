@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  <title>ENVIRONMENT_MODIFICATION &mdash; CMake 3.22.1 Documentation</title>
+
+    <link rel="stylesheet" href="../_static/cmake.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/cmake-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="FAIL_REGULAR_EXPRESSION" href="FAIL_REGULAR_EXPRESSION.html" />
+    <link rel="prev" title="ENVIRONMENT" href="ENVIRONMENT.html" />
+  
+ 
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="FAIL_REGULAR_EXPRESSION.html" title="FAIL_REGULAR_EXPRESSION"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ENVIRONMENT.html" title="ENVIRONMENT"
+             accesskey="P">previous</a> |</li>
+  <li>
+    <img src="../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="../manual/cmake-properties.7.html" accesskey="U">cmake-properties(7)</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="environment-modification">
+<span id="prop_test:ENVIRONMENT_MODIFICATION"></span><h1>ENVIRONMENT_MODIFICATION<a class="headerlink" href="#environment-modification" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.22.</span></p>
+</div>
+<p>Specify environment variables that should be modified for running a test. Note
+that the operations performed by this property are performed after the
+<span class="target" id="index-0-prop_test:ENVIRONMENT"></span><a class="reference internal" href="ENVIRONMENT.html#prop_test:ENVIRONMENT" title="ENVIRONMENT"><code class="xref cmake cmake-prop_test docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code></a> property is already applied.</p>
+<p>If set to a list of environment variables and values of the form
+<code class="docutils literal notranslate"><span class="pre">MYVAR=OP:VALUE</span></code>, where <code class="docutils literal notranslate"><span class="pre">MYVAR</span></code> is the case-sensitive name of an
+environment variable to be modified. Entries are considered in the
+order specified in the property's value. The <code class="docutils literal notranslate"><span class="pre">OP</span></code> may be one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reset</span></code>: Reset to the unmodified value, ignoring all modifications to
+<code class="docutils literal notranslate"><span class="pre">MYVAR</span></code> prior to this entry. Note that this will reset the variable to
+the value set by <span class="target" id="index-1-prop_test:ENVIRONMENT"></span><a class="reference internal" href="ENVIRONMENT.html#prop_test:ENVIRONMENT" title="ENVIRONMENT"><code class="xref cmake cmake-prop_test docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code></a>, if it was set, and otherwise
+to its state from the rest of the CTest execution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code>: Replaces the current value of <code class="docutils literal notranslate"><span class="pre">MYVAR</span></code> with <code class="docutils literal notranslate"><span class="pre">VALUE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unset</span></code>: Unsets the current value of <code class="docutils literal notranslate"><span class="pre">MYVAR</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string_append</span></code>: Appends <code class="docutils literal notranslate"><span class="pre">VALUE</span></code> to the current value of <code class="docutils literal notranslate"><span class="pre">MYVAR</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string_prepend</span></code>: Prepends <code class="docutils literal notranslate"><span class="pre">VALUE</span></code> to the current value of <code class="docutils literal notranslate"><span class="pre">MYVAR</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path_list_append</span></code>: Appends <code class="docutils literal notranslate"><span class="pre">VALUE</span></code> to the current value of <code class="docutils literal notranslate"><span class="pre">MYVAR</span></code>
+using the host platform's path list separator (<code class="docutils literal notranslate"><span class="pre">;</span></code> on Windows and <code class="docutils literal notranslate"><span class="pre">:</span></code>
+elsewhere).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path_list_prepend</span></code>: Prepends <code class="docutils literal notranslate"><span class="pre">VALUE</span></code> to the current value of
+<code class="docutils literal notranslate"><span class="pre">MYVAR</span></code> using the host platform's path list separator (<code class="docutils literal notranslate"><span class="pre">;</span></code> on Windows
+and <code class="docutils literal notranslate"><span class="pre">:</span></code> elsewhere).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmake_list_append</span></code>: Appends <code class="docutils literal notranslate"><span class="pre">VALUE</span></code> to the current value of <code class="docutils literal notranslate"><span class="pre">MYVAR</span></code>
+using <code class="docutils literal notranslate"><span class="pre">;</span></code> as the separator.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmake_list_prepend</span></code>: Prepends <code class="docutils literal notranslate"><span class="pre">VALUE</span></code> to the current value of
+<code class="docutils literal notranslate"><span class="pre">MYVAR</span></code> using <code class="docutils literal notranslate"><span class="pre">;</span></code> as the separator.</p></li>
+</ul>
+</div></blockquote>
+<p>Unrecognized <code class="docutils literal notranslate"><span class="pre">OP</span></code> values will result in the test failing before it is
+executed. This is so that future operations may be added without changing
+valid behavior of existing tests.</p>
+<p>The environment changes from this property do not affect other tests.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ENVIRONMENT.html"
+                        title="previous chapter">ENVIRONMENT</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="FAIL_REGULAR_EXPRESSION.html"
+                        title="next chapter">FAIL_REGULAR_EXPRESSION</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/prop_test/ENVIRONMENT_MODIFICATION.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="FAIL_REGULAR_EXPRESSION.html" title="FAIL_REGULAR_EXPRESSION"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ENVIRONMENT.html" title="ENVIRONMENT"
+             >previous</a> |</li>
+  <li>
+    <img src="../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="../manual/cmake-properties.7.html" >cmake-properties(7)</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2000-2021 Kitware, Inc. and Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

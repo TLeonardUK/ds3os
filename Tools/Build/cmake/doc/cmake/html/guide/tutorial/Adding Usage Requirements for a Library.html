@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  <title>Step 3: Adding Usage Requirements for a Library &mdash; CMake 3.22.1 Documentation</title>
+
+    <link rel="stylesheet" href="../../_static/cmake.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/cmake-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Step 4: Installing and Testing" href="Installing and Testing.html" />
+    <link rel="prev" title="Step 2: Adding a Library" href="Adding a Library.html" />
+  
+ 
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Installing and Testing.html" title="Step 4: Installing and Testing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Adding a Library.html" title="Step 2: Adding a Library"
+             accesskey="P">previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="step-3-adding-usage-requirements-for-a-library">
+<span id="guide:tutorial/Adding Usage Requirements for a Library"></span><h1>Step 3: Adding Usage Requirements for a Library<a class="headerlink" href="#step-3-adding-usage-requirements-for-a-library" title="Permalink to this headline">¶</a></h1>
+<p>Usage requirements allow for far better control over a library or executable's
+link and include line while also giving more control over the transitive
+property of targets inside CMake. The primary commands that leverage usage
+requirements are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><span class="target" id="index-0-command:target_compile_definitions"></span><a class="reference internal" href="../../command/target_compile_definitions.html#command:target_compile_definitions" title="target_compile_definitions"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_compile_definitions()</span></code></a></p></li>
+<li><p><span class="target" id="index-0-command:target_compile_options"></span><a class="reference internal" href="../../command/target_compile_options.html#command:target_compile_options" title="target_compile_options"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_compile_options()</span></code></a></p></li>
+<li><p><span class="target" id="index-0-command:target_include_directories"></span><a class="reference internal" href="../../command/target_include_directories.html#command:target_include_directories" title="target_include_directories"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_include_directories()</span></code></a></p></li>
+<li><p><span class="target" id="index-0-command:target_link_libraries"></span><a class="reference internal" href="../../command/target_link_libraries.html#command:target_link_libraries" title="target_link_libraries"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_link_libraries()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>Let's refactor our code from <a class="reference internal" href="Adding a Library.html#guide:tutorial/Adding a Library" title="tutorial/Adding a Library"><code class="xref cmake cmake-guide docutils literal notranslate"><span class="pre">Adding</span> <span class="pre">a</span> <span class="pre">Library</span></code></a> to use the
+modern CMake approach of usage requirements. We first state that anybody
+linking to <code class="docutils literal notranslate"><span class="pre">MathFunctions</span></code> needs to include the current source directory,
+while <code class="docutils literal notranslate"><span class="pre">MathFunctions</span></code> itself doesn't. So this can become an <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code>
+usage requirement.</p>
+<p>Remember <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> means things that consumers require but the producer
+doesn't. Add the following lines to the end of
+<code class="docutils literal notranslate"><span class="pre">MathFunctions/CMakeLists.txt</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="mathfunctions-cmakelists-txt-target-include-directories-interface">
+<div class="code-block-caption"><span class="caption-text">MathFunctions/CMakeLists.txt</span><a class="headerlink" href="#mathfunctions-cmakelists-txt-target-include-directories-interface" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">target_include_directories(</span><span class="nb">MathFunctions</span><span class="w"></span>
+<span class="w">          </span><span class="no">INTERFACE</span><span class="w"> </span><span class="o">${</span><span class="nt">CMAKE_CURRENT_SOURCE_DIR</span><span class="o">}</span><span class="w"></span>
+<span class="w">          </span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Now that we've specified usage requirements for <code class="docutils literal notranslate"><span class="pre">MathFunctions</span></code> we can safely
+remove our uses of the <code class="docutils literal notranslate"><span class="pre">EXTRA_INCLUDES</span></code> variable from the top-level
+<code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>, here:</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-remove-extra-includes">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-remove-extra-includes" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">if(</span><span class="no">USE_MYMATH</span><span class="nf">)</span><span class="w"></span>
+<span class="w">  </span><span class="nf">add_subdirectory(</span><span class="nb">MathFunctions</span><span class="nf">)</span><span class="w"></span>
+<span class="w">  </span><span class="nf">list(</span><span class="no">APPEND</span><span class="w"> </span><span class="no">EXTRA_LIBS</span><span class="w"> </span><span class="nb">MathFunctions</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">endif()</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>And here:</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-target-include-directories-remove-extra-includes">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-target-include-directories-remove-extra-includes" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">target_include_directories(</span><span class="nb">Tutorial</span><span class="w"> </span><span class="no">PUBLIC</span><span class="w"></span>
+<span class="w">                           </span><span class="s">&quot;${PROJECT_BINARY_DIR}&quot;</span><span class="w"></span>
+<span class="w">                           </span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Once this is done, run the <span class="target" id="index-0-manual:cmake(1)"></span><a class="reference internal" href="../../manual/cmake.1.html#manual:cmake(1)" title="cmake(1)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">cmake</span></code></a> executable or the
+<span class="target" id="index-0-manual:cmake-gui(1)"></span><a class="reference internal" href="../../manual/cmake-gui.1.html#manual:cmake-gui(1)" title="cmake-gui(1)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">cmake-gui</span></code></a> to configure the project and then build it
+with your chosen build tool or by using <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">.</span></code> from the build
+directory.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Adding a Library.html"
+                        title="previous chapter">Step 2: Adding a Library</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Installing and Testing.html"
+                        title="next chapter">Step 4: Installing and Testing</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/guide/tutorial/Adding Usage Requirements for a Library.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Installing and Testing.html" title="Step 4: Installing and Testing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Adding a Library.html" title="Step 2: Adding a Library"
+             >previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2000-2021 Kitware, Inc. and Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

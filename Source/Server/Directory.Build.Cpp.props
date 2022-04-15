@@ -1,5 +1,0 @@
-﻿<Project>
-  <PropertyGroup>
-    <IncludePath>$(SolutionDir);$(SolutionDir)Server;$(SolutionDir)ThirdParty\protobuf-2.6.1rc1\src;$(SolutionDir)ThirdParty\aes_modes;$(SolutionDir)ThirdParty\aes;$(SolutionDir)ThirdParty\zlib;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-</Project>

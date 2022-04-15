@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  <title>Step 9: Selecting Static or Shared Libraries &mdash; CMake 3.22.1 Documentation</title>
+
+    <link rel="stylesheet" href="../../_static/cmake.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/cmake-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Step 10: Adding Generator Expressions" href="Adding Generator Expressions.html" />
+    <link rel="prev" title="Step 8: Adding Support for a Testing Dashboard" href="Adding Support for a Testing Dashboard.html" />
+  
+ 
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Adding Generator Expressions.html" title="Step 10: Adding Generator Expressions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Adding Support for a Testing Dashboard.html" title="Step 8: Adding Support for a Testing Dashboard"
+             accesskey="P">previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="step-9-selecting-static-or-shared-libraries">
+<span id="guide:tutorial/Selecting Static or Shared Libraries"></span><h1>Step 9: Selecting Static or Shared Libraries<a class="headerlink" href="#step-9-selecting-static-or-shared-libraries" title="Permalink to this headline">¶</a></h1>
+<p>In this section we will show how the <span class="target" id="index-0-variable:BUILD_SHARED_LIBS"></span><a class="reference internal" href="../../variable/BUILD_SHARED_LIBS.html#variable:BUILD_SHARED_LIBS" title="BUILD_SHARED_LIBS"><code class="xref cmake cmake-variable docutils literal notranslate"><span class="pre">BUILD_SHARED_LIBS</span></code></a> variable can
+be used to control the default behavior of <span class="target" id="index-0-command:add_library"></span><a class="reference internal" href="../../command/add_library.html#command:add_library" title="add_library"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">add_library()</span></code></a>,
+and allow control over how libraries without an explicit type (<code class="docutils literal notranslate"><span class="pre">STATIC</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SHARED</span></code>, <code class="docutils literal notranslate"><span class="pre">MODULE</span></code> or <code class="docutils literal notranslate"><span class="pre">OBJECT</span></code>) are built.</p>
+<p>To accomplish this we need to add <span class="target" id="index-1-variable:BUILD_SHARED_LIBS"></span><a class="reference internal" href="../../variable/BUILD_SHARED_LIBS.html#variable:BUILD_SHARED_LIBS" title="BUILD_SHARED_LIBS"><code class="xref cmake cmake-variable docutils literal notranslate"><span class="pre">BUILD_SHARED_LIBS</span></code></a> to the
+top-level <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>. We use the <span class="target" id="index-0-command:option"></span><a class="reference internal" href="../../command/option.html#command:option" title="option"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">option()</span></code></a> command as it allows
+users to optionally select if the value should be <code class="docutils literal notranslate"><span class="pre">ON</span></code> or <code class="docutils literal notranslate"><span class="pre">OFF</span></code>.</p>
+<p>Next we are going to refactor <code class="docutils literal notranslate"><span class="pre">MathFunctions</span></code> to become a real library that
+encapsulates using <code class="docutils literal notranslate"><span class="pre">mysqrt</span></code> or <code class="docutils literal notranslate"><span class="pre">sqrt</span></code>, instead of requiring the calling
+code to do this logic. This will also mean that <code class="docutils literal notranslate"><span class="pre">USE_MYMATH</span></code> will not control
+building <code class="docutils literal notranslate"><span class="pre">MathFunctions</span></code>, but instead will control the behavior of this
+library.</p>
+<p>The first step is to update the starting section of the top-level
+<code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to look like:</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-option-build-shared-libs">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-option-build-shared-libs" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">cmake_minimum_required(</span><span class="no">VERSION</span><span class="w"> </span><span class="m">3.10</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># set the project name and version</span>
+<span class="nf">project(</span><span class="nb">Tutorial</span><span class="w"> </span><span class="no">VERSION</span><span class="w"> </span><span class="m">1.0</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># specify the C++ standard</span>
+<span class="nf">set(</span><span class="no">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="m">11</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="no">CMAKE_CXX_STANDARD_REQUIRED</span><span class="w"> </span><span class="nb">True</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># control where the static and shared libraries are built so that on windows</span>
+<span class="c"># we don&#39;t need to tinker with the path to run the executable</span>
+<span class="nf">set(</span><span class="no">CMAKE_ARCHIVE_OUTPUT_DIRECTORY</span><span class="w"> </span><span class="s">&quot;${PROJECT_BINARY_DIR}&quot;</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="no">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span><span class="w"> </span><span class="s">&quot;${PROJECT_BINARY_DIR}&quot;</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="no">CMAKE_RUNTIME_OUTPUT_DIRECTORY</span><span class="w"> </span><span class="s">&quot;${PROJECT_BINARY_DIR}&quot;</span><span class="nf">)</span><span class="w"></span>
+
+<span class="nf">option(</span><span class="no">BUILD_SHARED_LIBS</span><span class="w"> </span><span class="s">&quot;Build using shared libraries&quot;</span><span class="w"> </span><span class="no">ON</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># configure a header file to pass the version number only</span>
+<span class="nf">configure_file(</span><span class="nb">TutorialConfig.h.in</span><span class="w"> </span><span class="nb">TutorialConfig.h</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># add the MathFunctions library</span>
+<span class="nf">add_subdirectory(</span><span class="nb">MathFunctions</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># add the executable</span>
+<span class="nf">add_executable(</span><span class="nb">Tutorial</span><span class="w"> </span><span class="nb">tutorial.cxx</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">target_link_libraries(</span><span class="nb">Tutorial</span><span class="w"> </span><span class="no">PUBLIC</span><span class="w"> </span><span class="nb">MathFunctions</span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Now that we have made <code class="docutils literal notranslate"><span class="pre">MathFunctions</span></code> always be used, we will need to update
+the logic of that library. So, in <code class="docutils literal notranslate"><span class="pre">MathFunctions/CMakeLists.txt</span></code> we need to
+create a SqrtLibrary that will conditionally be built and installed when
+<code class="docutils literal notranslate"><span class="pre">USE_MYMATH</span></code> is enabled. Now, since this is a tutorial, we are going to
+explicitly require that SqrtLibrary is built statically.</p>
+<p>The end result is that <code class="docutils literal notranslate"><span class="pre">MathFunctions/CMakeLists.txt</span></code> should look like:</p>
+<div class="literal-block-wrapper docutils container" id="mathfunctions-cmakelists-txt-add-library-static">
+<div class="code-block-caption"><span class="caption-text">MathFunctions/CMakeLists.txt</span><a class="headerlink" href="#mathfunctions-cmakelists-txt-add-library-static" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># add the library that runs</span>
+<span class="nf">add_library(</span><span class="nb">MathFunctions</span><span class="w"> </span><span class="nb">MathFunctions.cxx</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># state that anybody linking to us needs to include the current source dir</span>
+<span class="c"># to find MathFunctions.h, while we don&#39;t.</span>
+<span class="nf">target_include_directories(</span><span class="nb">MathFunctions</span><span class="w"></span>
+<span class="w">                           </span><span class="no">INTERFACE</span><span class="w"> </span><span class="o">${</span><span class="nt">CMAKE_CURRENT_SOURCE_DIR</span><span class="o">}</span><span class="w"></span>
+<span class="w">                           </span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># should we use our own math functions</span>
+<span class="nf">option(</span><span class="no">USE_MYMATH</span><span class="w"> </span><span class="s">&quot;Use tutorial provided math implementation&quot;</span><span class="w"> </span><span class="no">ON</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">if(</span><span class="no">USE_MYMATH</span><span class="nf">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="nf">target_compile_definitions(</span><span class="nb">MathFunctions</span><span class="w"> </span><span class="no">PRIVATE</span><span class="w"> </span><span class="s">&quot;USE_MYMATH&quot;</span><span class="nf">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="c"># first we add the executable that generates the table</span>
+<span class="w">  </span><span class="nf">add_executable(</span><span class="nb">MakeTable</span><span class="w"> </span><span class="nb">MakeTable.cxx</span><span class="nf">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="c"># add the command to generate the source code</span>
+<span class="w">  </span><span class="nf">add_custom_command(</span><span class="w"></span>
+<span class="w">    </span><span class="no">OUTPUT</span><span class="w"> </span><span class="o">${</span><span class="nt">CMAKE_CURRENT_BINARY_DIR</span><span class="o">}</span><span class="na">/Table.h</span><span class="w"></span>
+<span class="w">    </span><span class="no">COMMAND</span><span class="w"> </span><span class="nb">MakeTable</span><span class="w"> </span><span class="o">${</span><span class="nt">CMAKE_CURRENT_BINARY_DIR</span><span class="o">}</span><span class="na">/Table.h</span><span class="w"></span>
+<span class="w">    </span><span class="no">DEPENDS</span><span class="w"> </span><span class="nb">MakeTable</span><span class="w"></span>
+<span class="w">    </span><span class="nf">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="c"># library that just does sqrt</span>
+<span class="w">  </span><span class="nf">add_library(</span><span class="nb">SqrtLibrary</span><span class="w"> </span><span class="no">STATIC</span><span class="w"></span>
+<span class="w">              </span><span class="nb">mysqrt.cxx</span><span class="w"></span>
+<span class="w">              </span><span class="o">${</span><span class="nt">CMAKE_CURRENT_BINARY_DIR</span><span class="o">}</span><span class="na">/Table.h</span><span class="w"></span>
+<span class="w">              </span><span class="nf">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="c"># state that we depend on our binary dir to find Table.h</span>
+<span class="w">  </span><span class="nf">target_include_directories(</span><span class="nb">SqrtLibrary</span><span class="w"> </span><span class="no">PRIVATE</span><span class="w"></span>
+<span class="w">                             </span><span class="o">${</span><span class="nt">CMAKE_CURRENT_BINARY_DIR</span><span class="o">}</span><span class="w"></span>
+<span class="w">                             </span><span class="nf">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="nf">target_link_libraries(</span><span class="nb">MathFunctions</span><span class="w"> </span><span class="no">PRIVATE</span><span class="w"> </span><span class="nb">SqrtLibrary</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">endif()</span><span class="w"></span>
+
+<span class="c"># define the symbol stating we are using the declspec(dllexport) when</span>
+<span class="c"># building on windows</span>
+<span class="nf">target_compile_definitions(</span><span class="nb">MathFunctions</span><span class="w"> </span><span class="no">PRIVATE</span><span class="w"> </span><span class="s">&quot;EXPORTING_MYMATH&quot;</span><span class="nf">)</span><span class="w"></span>
+
+<span class="c"># install rules</span>
+<span class="nf">set(</span><span class="nb">installable_libs</span><span class="w"> </span><span class="nb">MathFunctions</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">if(</span><span class="no">TARGET</span><span class="w"> </span><span class="nb">SqrtLibrary</span><span class="nf">)</span><span class="w"></span>
+<span class="w">  </span><span class="nf">list(</span><span class="no">APPEND</span><span class="w"> </span><span class="nb">installable_libs</span><span class="w"> </span><span class="nb">SqrtLibrary</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">endif()</span><span class="w"></span>
+<span class="nf">install(</span><span class="no">TARGETS</span><span class="w"> </span><span class="o">${</span><span class="nt">installable_libs</span><span class="o">}</span><span class="w"> </span><span class="no">DESTINATION</span><span class="w"> </span><span class="nb">lib</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">install(</span><span class="no">FILES</span><span class="w"> </span><span class="nb">MathFunctions.h</span><span class="w"> </span><span class="no">DESTINATION</span><span class="w"> </span><span class="nb">include</span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Next, update <code class="docutils literal notranslate"><span class="pre">MathFunctions/mysqrt.cxx</span></code> to use the <code class="docutils literal notranslate"><span class="pre">mathfunctions</span></code> and
+<code class="docutils literal notranslate"><span class="pre">detail</span></code> namespaces:</p>
+<div class="literal-block-wrapper docutils container" id="mathfunctions-mysqrt-cxx-namespace">
+<div class="code-block-caption"><span class="caption-text">MathFunctions/mysqrt.cxx</span><a class="headerlink" href="#mathfunctions-mysqrt-cxx-namespace" title="Permalink to this code">¶</a></div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;MathFunctions.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// include the generated table</span>
+<span class="cp">#include</span> <span class="cpf">&quot;Table.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">mathfunctions</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">detail</span> <span class="p">{</span>
+<span class="c1">// a hack square root calculation using simple operations</span>
+<span class="kt">double</span> <span class="n">mysqrt</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// use the table to help find an initial value</span>
+  <span class="kt">double</span> <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Use the table to help find an initial value &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">sqrtTable</span><span class="p">[</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)];</span>
+  <span class="p">}</span>
+
+  <span class="c1">// do ten iterations</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">result</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">double</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="n">result</span> <span class="o">*</span> <span class="n">result</span><span class="p">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">/</span> <span class="n">result</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Computing sqrt of &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; to be &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>We also need to make some changes in <code class="docutils literal notranslate"><span class="pre">tutorial.cxx</span></code>, so that it no longer
+uses <code class="docutils literal notranslate"><span class="pre">USE_MYMATH</span></code>:</p>
+<ol class="arabic simple">
+<li><p>Always include <code class="docutils literal notranslate"><span class="pre">MathFunctions.h</span></code></p></li>
+<li><p>Always use <code class="docutils literal notranslate"><span class="pre">mathfunctions::sqrt</span></code></p></li>
+<li><p>Don't include <code class="docutils literal notranslate"><span class="pre">cmath</span></code></p></li>
+</ol>
+<p>Finally, update <code class="docutils literal notranslate"><span class="pre">MathFunctions/MathFunctions.h</span></code> to use dll export defines:</p>
+<div class="literal-block-wrapper docutils container" id="mathfunctions-mathfunctions-h">
+<div class="code-block-caption"><span class="caption-text">MathFunctions/MathFunctions.h</span><a class="headerlink" href="#mathfunctions-mathfunctions-h" title="Permalink to this code">¶</a></div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#if defined(_WIN32)</span>
+<span class="cp">#  if defined(EXPORTING_MYMATH)</span>
+<span class="cp">#    define DECLSPEC __declspec(dllexport)</span>
+<span class="cp">#  else</span>
+<span class="cp">#    define DECLSPEC __declspec(dllimport)</span>
+<span class="cp">#  endif</span>
+<span class="cp">#else </span><span class="c1">// non windows</span>
+<span class="cp">#  define DECLSPEC</span>
+<span class="cp">#endif</span>
+
+<span class="k">namespace</span> <span class="n">mathfunctions</span> <span class="p">{</span>
+<span class="kt">double</span> <span class="n">DECLSPEC</span> <span class="n">sqrt</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>At this point, if you build everything, you may notice that linking fails
+as we are combining a static library without position independent code with a
+library that has position independent code. The solution to this is to
+explicitly set the <span class="target" id="index-0-prop_tgt:POSITION_INDEPENDENT_CODE"></span><a class="reference internal" href="../../prop_tgt/POSITION_INDEPENDENT_CODE.html#prop_tgt:POSITION_INDEPENDENT_CODE" title="POSITION_INDEPENDENT_CODE"><code class="xref cmake cmake-prop_tgt docutils literal notranslate"><span class="pre">POSITION_INDEPENDENT_CODE</span></code></a> target property of
+SqrtLibrary to be <code class="docutils literal notranslate"><span class="pre">True</span></code> no matter the build type.</p>
+<div class="literal-block-wrapper docutils container" id="mathfunctions-cmakelists-txt-position-independent-code">
+<div class="code-block-caption"><span class="caption-text">MathFunctions/CMakeLists.txt</span><a class="headerlink" href="#mathfunctions-cmakelists-txt-position-independent-code" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c"># state that SqrtLibrary need PIC when the default is shared libraries</span>
+<span class="w">  </span><span class="nf">set_target_properties(</span><span class="nb">SqrtLibrary</span><span class="w"> </span><span class="no">PROPERTIES</span><span class="w"></span>
+<span class="w">                        </span><span class="no">POSITION_INDEPENDENT_CODE</span><span class="w"> </span><span class="o">${</span><span class="nt">BUILD_SHARED_LIBS</span><span class="o">}</span><span class="w"></span>
+<span class="w">                        </span><span class="nf">)</span><span class="w"></span>
+
+<span class="w">  </span><span class="nf">target_link_libraries(</span><span class="nb">MathFunctions</span><span class="w"> </span><span class="no">PRIVATE</span><span class="w"> </span><span class="nb">SqrtLibrary</span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p><strong>Exercise</strong>: We modified <code class="docutils literal notranslate"><span class="pre">MathFunctions.h</span></code> to use dll export defines.
+Using CMake documentation can you find a helper module to simplify this?</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Adding Support for a Testing Dashboard.html"
+                        title="previous chapter">Step 8: Adding Support for a Testing Dashboard</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Adding Generator Expressions.html"
+                        title="next chapter">Step 10: Adding Generator Expressions</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/guide/tutorial/Selecting Static or Shared Libraries.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Adding Generator Expressions.html" title="Step 10: Adding Generator Expressions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Adding Support for a Testing Dashboard.html" title="Step 8: Adding Support for a Testing Dashboard"
+             >previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2000-2021 Kitware, Inc. and Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

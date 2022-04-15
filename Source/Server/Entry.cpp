@@ -62,8 +62,8 @@ int main(int argc, char* argv[])
             Error("Failed to initialize steam api, please ensure steam is running.");
             return 1;
         }
-        SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
 
+        SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
     }
     else
     {
@@ -73,6 +73,7 @@ int main(int argc, char* argv[])
             Error("Failed to initialize steam game server api.");
             return 1;
         }
+
         SteamGameServerUtils()->SetWarningMessageHook(&SteamWarningHook);
     }
 
