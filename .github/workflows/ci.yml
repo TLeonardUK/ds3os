@@ -31,6 +31,7 @@ jobs:
       
     - name: Generate Solution
       shell: cmd
+      working-directory: ${{env.GITHUB_WORKSPACE}}/Tools
       run: ${{env.GENERATE_PATH}}
 
     - name: Restore NuGet packages
