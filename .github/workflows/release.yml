@@ -51,12 +51,16 @@ jobs:
       working-directory: ${{github.workspace}}/Tools
       run: ${{github.workspace}}/Tools/generate_vs2022.bat
 
+    - name: Restore Dependencies
+      working-directory: ${{github.workspace}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} /t:Build
+
     - name: Package DotNet
       run: dotnet publish ./Source/Loader/Loader.csproj -r win-x64 -c Release --output ${{github.workspace}}/Bin/Loader/Package/ /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:Version=${{env.VERSION_NUMBER}}${{env.VERSION_NUMBER_POSTFIX}} /p:FileVersion=${{env.VERSION_NUMBER}} /p:AssemblyVersion=${{env.VERSION_NUMBER}}
 
     - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} /t:Restore;Build
+      working-directory: ${{github.workspace}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} /t:Build
 
     - name: Package Release
       shell: cmd
@@ -67,7 +71,7 @@ jobs:
       uses: vimtor/action-zip@v1
       with:
         files: DS3OS/
-        dest: Windows.zip
+        dest: windows.zip
     
     - name: Make Release
       id: create_release
@@ -88,6 +92,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./Windows.zip
-        asset_name: Windows.zip
+        asset_path: ./windows.zip
+        asset_name: windows.zip
         asset_content_type: application/zip
