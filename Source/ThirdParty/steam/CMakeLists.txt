@@ -12,7 +12,7 @@ if (WIN32)
     set(STEAM_EAT_LIB "win64/sdkencryptedappticket64.lib")
 elseif(UNIX)
     set(STEAM_SHLIB "linux64/libsteam_api.so")
-    set(STEAM_EAT_SHLIB "linux64/libsdkencryptedappticket.dll")
+    set(STEAM_EAT_SHLIB "linux64/libsdkencryptedappticket.so")
 endif()
 
 add_library(${PROJECT_NAME} SHARED IMPORTED GLOBAL)

@@ -64,7 +64,6 @@ SET(SOURCES
     Core/Utils/Strings.h
 
     Platform/Platform.h
-    Platform/Win32/Win32Platform.cpp
 
     Protobuf/FpdLogMessage.cc
     Protobuf/Frpg2PlayerData.cc

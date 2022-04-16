@@ -5,6 +5,12 @@
 
 project(libprotobuf-lite C CXX)
 
+if (UNIX)
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+    find_package(Threads REQUIRED)
+endif()
+
 SET(SOURCES
     vsprojects/config.h
 
@@ -50,12 +56,23 @@ SET(SOURCES
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
-target_include_directories(${PROJECT_NAME} PUBLIC src vsprojects)
+if (UNIX)
+    target_link_libraries(${PROJECT_NAME} Threads::Threads)
+endif()
+
+if (UNIX)
+    target_include_directories(${PROJECT_NAME} PUBLIC src gccprojects)
+else()
+    target_include_directories(${PROJECT_NAME} PUBLIC src vsprojects)
+endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS -D_USRDLL -DLIBPROTOBUF_EXPORTS)
 
 if (MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /wd4244 /wd4267 /wd4018 /wd4355 /wd4800 /wd4251 /wd4996 /wd4146 /wd4305)
+elseif (UNIX)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DHAVE_PTHREAD)
+    target_compile_options(${PROJECT_NAME} PRIVATE "-pthread")
 endif()
 
 util_setup_folder_structure(${PROJECT_NAME} SOURCES "ThirdParty")

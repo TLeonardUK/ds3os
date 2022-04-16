@@ -20,6 +20,15 @@ if (WIN32)
     # Platform type define.
     set(COMPILE_OPTIONS ${COMPILE_OPTIONS} -DDS_PLATFORM_WINDOWS)
 
+elseif (UNIX)
+
+    # Platform type define.
+    set(COMPILE_OPTIONS ${COMPILE_OPTIONS} -DDS_PLATFORM_LINUX)
+    
+    # Use permissive flags, GCC/clang are stricter that MSVC.
+    # We should go in and fix up the problematic areas and remove this later.
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
+    
 endif()
 
 # Architecture define.
@@ -29,10 +38,11 @@ else()
     set(COMPILE_OPTIONS ${COMPILE_OPTIONS} -DDS_PLATFORM_X64)
 endif()
 
-# We always want to generate debug information in all configurations.
-set(COMPILE_OPTIONS ${COMPILE_OPTIONS} /Zi)
-set(LINK_OPTIONS ${LINK_OPTIONS} /DEBUG)
-
+if (WIN32)
+    # We always want to generate debug information in all configurations.
+    set(COMPILE_OPTIONS ${COMPILE_OPTIONS} /Zi)
+    set(LINK_OPTIONS ${LINK_OPTIONS} /DEBUG)
+endif()
 
 set(DEBUG_COMPILE_OPTIONS   ${COMPILE_OPTIONS} -DDS_CONFIG_DEBUG)
 set(RELEASE_COMPILE_OPTIONS ${COMPILE_OPTIONS} -DDS_CONFIG_RELEASE)

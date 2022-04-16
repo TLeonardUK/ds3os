@@ -23,7 +23,13 @@
 #pragma once
 
 #include <inttypes.h>
+
+#ifdef _WIN32
 #include <corecrt_wstring.h>
+#else
+#include <wchar.h>
+#include <byteswap.h>
+#endif
 
 // Static class that holds methods intended to validate the structure
 // of the size-delimited entry lists and serialized NRSessionSearchResult 
@@ -153,7 +159,11 @@ public:
 				break;
 			case 4: // Case 4 : Null-terminated wide string field
 				NumWideCharLeft = (Size - Position) / 2;
+#ifdef _WIN32
 				StrLength = wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+#else
+				StrLength = wcsnlen(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+#endif
 				if (StrLength >= NumWideCharLeft || StrLength >= MAX_PROP_WSTR_SIZE) return ValidationResult::NRSSR_PropertyString_Overflow;
 				Position += 2 * (StrLength + 1);
 				break;
@@ -164,7 +174,11 @@ public:
 
 		// Check if the host name is null terminated and has valid length
 		NumWideCharLeft = (Size - Position) / 2;
+#ifdef _WIN32
 		StrLength = wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+#else
+		StrLength = wcsnlen(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+#endif
 		if (StrLength >= NumWideCharLeft || StrLength >= MAX_NAME_WSTR_SIZE) return ValidationResult::NRSSR_NameString_Overflow;
 		Position += 2 * (StrLength + 1);
 
@@ -173,7 +187,11 @@ public:
 			return ValidationResult::NRSSR_RemainingDataSize_Mismatch;
 		
 		// Read the big-endian sessin data size field and make sure it matches the normal value for the game
+#ifdef _WIN32
 		uint16_t SessionDataSize = _byteswap_ushort(*reinterpret_cast<const uint16_t*>(Position + HOST_ONLINE_ID_SIZE));
+#else
+		uint16_t SessionDataSize = bswap_16(*reinterpret_cast<const uint16_t*>(Position + HOST_ONLINE_ID_SIZE));
+#endif
 		return (SessionDataSize == SESSION_DATA_SIZE) ? ValidationResult::Valid : ValidationResult::NRSSR_SessionSize_Abnormal;
 	}
 };

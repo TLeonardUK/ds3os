@@ -169,7 +169,7 @@ public:
     // This should be for all intents and purposes infinite. But you can limit
     // it if you so wish. Bare in mind that players may see signs that no longer
     // exist on the server.
-    int SummonSignMaxEntriesPerArea = INT_MAX;
+    int SummonSignMaxEntriesPerArea = std::numeric_limits<int>::max();
 
     // How much XP the user gets when winning an undead match.
     int QuickMatchWinXp = 2250;

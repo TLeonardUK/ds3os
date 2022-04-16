@@ -128,10 +128,14 @@
 #endif
 
 /* Allow SMB to work on Windows */
+#ifdef _WIN32
 #define USE_WIN32_CRYPTO 1
+#endif
 
 /* Use Windows LDAP implementation */
+#ifdef _WIN32
 #define USE_WIN32_LDAP 1
+#endif
 
 /* when not building a shared library */
 #define CURL_STATICLIB 1
@@ -170,7 +174,9 @@
 /* #undef HAVE_CLOCK_GETTIME_MONOTONIC */
 
 /* Define to 1 if you have the `closesocket' function. */
+#ifdef _WIN32
 #define HAVE_CLOSESOCKET 1
+#endif
 
 /* Define to 1 if you have the `CRYPTO_cleanup_all_ex_data' function. */
 /* #undef HAVE_CRYPTO_CLEANUP_ALL_EX_DATA */
@@ -423,19 +429,29 @@
 /* #undef HAVE_MSG_NOSIGNAL */
 
 /* Define to 1 if you have the <netdb.h> header file. */
-/* #undef HAVE_NETDB_H */
+#ifdef __linux__
+#define HAVE_NETDB_H
+#endif
 
 /* Define to 1 if you have the <netinet/in.h> header file. */
-/* #undef HAVE_NETINET_IN_H */
+#ifdef __linux__
+#define HAVE_NETINET_IN_H
+#endif
 
 /* Define to 1 if you have the <netinet/tcp.h> header file. */
-/* #undef HAVE_NETINET_TCP_H */
+#ifdef __linux__
+#define HAVE_NETINET_TCP_H
+#endif
 
 /* Define to 1 if you have the <linux/tcp.h> header file. */
-/* #undef HAVE_LINUX_TCP_H */
+#ifdef __linux__
+#define HAVE_LINUX_TCP_H
+#endif
 
 /* Define to 1 if you have the <net/if.h> header file. */
-/* #undef HAVE_NET_IF_H */
+#ifdef __linux__
+#define HAVE_NET_IF_H
+#endif
 
 /* Define to 1 if NI_WITHSCOPEID exists and works. */
 /* #undef HAVE_NI_WITHSCOPEID */
@@ -483,7 +499,9 @@
 /* #undef HAVE_POSIX_STRERROR_R */
 
 /* Define to 1 if you have the <pthread.h> header file */
-/* #undef HAVE_PTHREAD_H */
+#ifdef __linux__
+#define HAVE_PTHREAD_H
+#endif
 
 /* Define to 1 if you have the <pwd.h> header file. */
 /* #undef HAVE_PWD_H */
@@ -624,7 +642,9 @@
 /* #undef HAVE_SYS_FILIO_H */
 
 /* Define to 1 if you have the <sys/ioctl.h> header file. */
-/* #undef HAVE_SYS_IOCTL_H */
+#ifdef __linux__
+#define HAVE_SYS_IOCTL_H
+#endif
 
 /* Define to 1 if you have the <sys/param.h> header file. */
 /* #undef HAVE_SYS_PARAM_H */
@@ -639,7 +659,9 @@
 /* #undef HAVE_SYS_SELECT_H */
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
-/* #undef HAVE_SYS_SOCKET_H */
+#ifdef __linux__
+#define HAVE_SYS_SOCKET_H
+#endif
 
 /* Define to 1 if you have the <sys/sockio.h> header file. */
 /* #undef HAVE_SYS_SOCKIO_H */
@@ -657,7 +679,9 @@
 /* #undef HAVE_SYS_UIO_H */
 
 /* Define to 1 if you have the <sys/un.h> header file. */
-/* #undef HAVE_SYS_UN_H */
+#ifdef __linux__
+#define HAVE_SYS_UN_H
+#endif
 
 /* Define to 1 if you have the <sys/utime.h> header file. */
 #define HAVE_SYS_UTIME_H 1
@@ -681,7 +705,9 @@
 /* #undef HAVE_UNAME */
 
 /* Define to 1 if you have the <unistd.h> header file. */
-/* #undef HAVE_UNISTD_H */
+#ifdef __linux__
+#define HAVE_UNISTD_H
+#endif
 
 /* Define to 1 if you have the `utime' function. */
 #define HAVE_UTIME 1
@@ -702,13 +728,17 @@
 /* #undef HAVE_WINBER_H */
 
 /* Define to 1 if you have the windows.h header file. */
+#ifdef _WIN32
 #define HAVE_WINDOWS_H 1
+#endif
 
 /* Define to 1 if you have the winldap.h header file. */
 /* #undef HAVE_WINLDAP_H */
 
 /* Define to 1 if you have the winsock2.h header file. */
+#ifdef _WIN32
 #define HAVE_WINSOCK2_H 1
+#endif
 
 /* Define this symbol if your OS supports changing the contents of argv */
 /* #undef HAVE_WRITABLE_ARGV */
@@ -717,13 +747,17 @@
 /* #undef HAVE_WRITEV */
 
 /* Define to 1 if you have the ws2tcpip.h header file. */
+#ifdef _WIN32
 #define HAVE_WS2TCPIP_H 1
+#endif
 
 /* Define to 1 if you have the <x509.h> header file. */
 /* #undef HAVE_X509_H */
 
 /* Define if you have the <process.h> header file. */
+#ifdef _WIN32
 #define HAVE_PROCESS_H 1
+#endif
 
 /* if you have the zlib.h header file */
 /* #undef HAVE_ZLIB_H */
@@ -745,7 +779,11 @@
 /* #undef NEED_REENTRANT */
 
 /* cpu-machine-OS */
+#if defined(_WIN32)
 #define OS "Windows"
+#elif defined(__linux__)
+#define OS "Linux"
+#endif
 
 /* Name of package */
 /* #undef PACKAGE */
@@ -799,7 +837,11 @@
 /* #undef RECVFROM_TYPE_RETV */
 
 /* Define to the type of arg 1 for recv. */
+#ifdef _WIN32
 #define RECV_TYPE_ARG1 SOCKET
+#else
+#define RECV_TYPE_ARG1 int
+#endif
 
 /* Define to the type of arg 2 for recv. */
 #define RECV_TYPE_ARG2 char *
@@ -832,7 +874,11 @@
 #define SEND_QUAL_ARG2 const
 
 /* Define to the type of arg 1 for send. */
+#ifdef _WIN32
 #define SEND_TYPE_ARG1 SOCKET
+#else
+#define SEND_TYPE_ARG1 int
+#endif
 
 /* Define to the type of arg 2 for send. */
 #define SEND_TYPE_ARG2 char *
@@ -889,10 +935,14 @@
 /* #undef USE_ARES */
 
 /* Define if you want to enable POSIX threaded DNS lookup */
-/* #undef USE_THREADS_POSIX */
+#ifdef __linux__
+#undef USE_THREADS_POSIX
+#endif
 
 /* Define if you want to enable WIN32 threaded DNS lookup */
+#ifdef _WIN32
 #define USE_THREADS_WIN32 1
+#endif
 
 /* if GnuTLS is enabled */
 /* #undef USE_GNUTLS */
@@ -988,7 +1038,9 @@
 /* #undef const */
 
 /* Type to use in place of in_addr_t when system does not provide it. */
+#ifdef _WIN32
 #define in_addr_t unsigned long
+#endif
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
