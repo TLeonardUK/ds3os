@@ -10,6 +10,8 @@
 #include "Config/RuntimeConfig.h"
 #include "Core/Utils/File.h"
 
+#include <cfloat>
+
 bool RuntimeConfig::Save(const std::filesystem::path& Path)
 {
     nlohmann::json json;

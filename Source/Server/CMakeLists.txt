@@ -171,7 +171,17 @@ SET(SOURCES
     Server/WebUIService/Handlers/WebUIHandler.h
 )
  
-add_executable(${PROJECT_NAME} ${SOURCES})
+if (WIN32)
+    SET(PLATFORM_SOURCES
+        Platform/Win32/Win32Platform.cpp
+    )
+elseif (UNIX)
+    SET(PLATFORM_SOURCES
+        Platform/Linux/LinuxPlatform.cpp
+    )
+endif()
+ 
+add_executable(${PROJECT_NAME} ${SOURCES} ${PLATFORM_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../")
 

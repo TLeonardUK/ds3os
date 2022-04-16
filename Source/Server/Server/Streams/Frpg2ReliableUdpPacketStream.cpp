@@ -24,6 +24,7 @@
 
 #include <thread>
 #include <chrono>
+#include <cstring>
 
 Frpg2ReliableUdpPacketStream::Frpg2ReliableUdpPacketStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient)
     : Frpg2UdpPacketStream(Connection, CwcKey, AuthToken, AsClient)

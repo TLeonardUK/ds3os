@@ -11,6 +11,7 @@
 
 #include <filesystem>
 #include <string>
+#include <vector>
 
 // Some general purpose random functionality.
 

@@ -11,6 +11,8 @@
 
 #include <filesystem>
 #include <string>
+#include <vector>
+#include <cstdint>
 
 // Some general purpose IO functionality.
 

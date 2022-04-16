@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "Server/GameService/Utils/Gameids.h"
+#include "Server/GameService/Utils/GameIds.h"
 
 #include <unordered_map>
 #include <deque>

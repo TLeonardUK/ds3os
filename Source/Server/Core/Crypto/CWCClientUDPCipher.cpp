@@ -14,6 +14,8 @@
 #include "Core/Utils/Endian.h"
 #include "Core/Utils/Strings.h"
 
+#include <cstring>
+
 // Basically the same as CWCCipher except we include a packet-type and auth token.
 
 CWCClientUDPCipher::CWCClientUDPCipher(const std::vector<uint8_t>& InKey, uint64_t InAuthToken)
