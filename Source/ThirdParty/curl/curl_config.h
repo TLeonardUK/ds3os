@@ -320,10 +320,14 @@
 /* #undef HAVE_INTTYPES_H */
 
 /* Define to 1 if you have the ioctl function. */
-/* #undef HAVE_IOCTL */
+#ifdef __linux__
+#define HAVE_IOCTL 1
+#endif
 
 /* Define to 1 if you have the ioctlsocket function. */
+#ifdef _WIN32
 #define HAVE_IOCTLSOCKET 1
+#endif
 
 /* Define to 1 if you have the IoctlSocket camel case function. */
 /* #undef HAVE_IOCTLSOCKET_CAMEL */
@@ -333,10 +337,14 @@
 /* #undef HAVE_IOCTLSOCKET_CAMEL_FIONBIO */
 
 /* Define to 1 if you have a working ioctlsocket FIONBIO function. */
+#ifdef _WIN32
 #define HAVE_IOCTLSOCKET_FIONBIO 1
+#endif
 
 /* Define to 1 if you have a working ioctl FIONBIO function. */
-/* #undef HAVE_IOCTL_FIONBIO */
+#ifdef __linux__
+#define HAVE_IOCTL_FIONBIO 1
+#endif
 
 /* Define to 1 if you have a working ioctl SIOCGIFADDR function. */
 /* #undef HAVE_IOCTL_SIOCGIFADDR */

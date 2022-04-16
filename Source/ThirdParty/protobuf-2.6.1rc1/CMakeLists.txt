@@ -42,7 +42,6 @@ SET(SOURCES
     src/google/protobuf/io/zero_copy_stream.cc
     src/google/protobuf/io/zero_copy_stream_impl_lite.cc
 
-    src/google/protobuf/stubs/atomicops_internals_x86_msvc.cc
     src/google/protobuf/stubs/common.cc
     src/google/protobuf/stubs/once.cc
     src/google/protobuf/stubs/stringprintf.cc
@@ -54,7 +53,13 @@ SET(SOURCES
     src/google/protobuf/wire_format_lite.cc
 )
 
-add_library(${PROJECT_NAME} STATIC ${SOURCES})
+if (UNIX)
+    SET(PLATFORM_SOURCES src/google/protobuf/stubs/atomicops_internals_x86_gcc.cc)
+else()
+    SET(PLATFORM_SOURCES src/google/protobuf/stubs/atomicops_internals_x86_msvc.cc)
+endif()
+    
+add_library(${PROJECT_NAME} STATIC ${SOURCES} ${PLATFORM_SOURCES})
 
 if (UNIX)
     target_link_libraries(${PROJECT_NAME} Threads::Threads)

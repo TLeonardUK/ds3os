@@ -16,6 +16,7 @@ macro(util_copy_all_dlls_to_output name)
     add_custom_command(TARGET ${name} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:${name}> $<TARGET_FILE_DIR:${name}>
         COMMAND_EXPAND_LISTS
+        COMMENT "Copying dependent DLL's to output"
     )
 endmacro()
 
