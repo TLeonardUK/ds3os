@@ -13,4 +13,4 @@ xcopy /s Bin\x64_release\WebUI DS3OS\Server\WebUI
 xcopy /s Bin\x64_release\Server.exe DS3OS\Server\Server.exe
 xcopy /s Bin\x64_release\Server.pdb DS3OS\Server\Server.pdb
 
-xcopy /s Bin\x64_release\Loader\Package DS3OS\Loader
+xcopy /s Bin\Loader\Package DS3OS\Loader
