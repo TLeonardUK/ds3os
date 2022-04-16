@@ -14,7 +14,8 @@ env:
   BUILD_CONFIGURATION: Release
 
 jobs:
-  build:
+  build-windows:
+    name: Build Windows
     runs-on: windows-2022
 
     steps:
@@ -29,7 +30,7 @@ jobs:
     - name: Generate Solution
       shell: cmd
       working-directory: ${{env.GITHUB_WORKSPACE}}/Tools
-      run: generate_vs2022.bat
+      run: .\generate_vs2022.bat
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
