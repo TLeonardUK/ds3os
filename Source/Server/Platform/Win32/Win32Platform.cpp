@@ -11,6 +11,7 @@
 #include "Core/Utils/Logging.h"
 
 #include <windows.h>
+#include <WinSock2.h>
 #include <chrono>
 
 #if defined(_WIN32)

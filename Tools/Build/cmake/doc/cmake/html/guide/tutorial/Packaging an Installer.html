@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  <title>Step 7: Packaging an Installer &mdash; CMake 3.22.1 Documentation</title>
+
+    <link rel="stylesheet" href="../../_static/cmake.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/cmake-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Step 8: Adding Support for a Testing Dashboard" href="Adding Support for a Testing Dashboard.html" />
+    <link rel="prev" title="Step 6: Adding a Custom Command and Generated File" href="Adding a Custom Command and Generated File.html" />
+  
+ 
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Adding Support for a Testing Dashboard.html" title="Step 8: Adding Support for a Testing Dashboard"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Adding a Custom Command and Generated File.html" title="Step 6: Adding a Custom Command and Generated File"
+             accesskey="P">previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="step-7-packaging-an-installer">
+<span id="guide:tutorial/Packaging an Installer"></span><h1>Step 7: Packaging an Installer<a class="headerlink" href="#step-7-packaging-an-installer" title="Permalink to this headline">¶</a></h1>
+<p>Next suppose that we want to distribute our project to other people so that
+they can use it. We want to provide both binary and source distributions on a
+variety of platforms. This is a little different from the install we did
+previously in <a class="reference internal" href="Installing and Testing.html#guide:tutorial/Installing and Testing" title="tutorial/Installing and Testing"><code class="xref cmake cmake-guide docutils literal notranslate"><span class="pre">Installing</span> <span class="pre">and</span> <span class="pre">Testing</span></code></a>, where we were
+installing the binaries that we had built from the source code. In this
+example we will be building installation packages that support binary
+installations and package management features. To accomplish this we will use
+CPack to create platform specific installers. Specifically we need to add a
+few lines to the bottom of our top-level <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file.</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-include-cpack">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-include-cpack" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">include(</span><span class="nb">InstallRequiredSystemLibraries</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="no">CPACK_RESOURCE_FILE_LICENSE</span><span class="w"> </span><span class="s">&quot;${CMAKE_CURRENT_SOURCE_DIR}/License.txt&quot;</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="no">CPACK_PACKAGE_VERSION_MAJOR</span><span class="w"> </span><span class="s">&quot;${Tutorial_VERSION_MAJOR}&quot;</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="no">CPACK_PACKAGE_VERSION_MINOR</span><span class="w"> </span><span class="s">&quot;${Tutorial_VERSION_MINOR}&quot;</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">include(</span><span class="nb">CPack</span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>That is all there is to it. We start by including
+<span class="target" id="index-0-module:InstallRequiredSystemLibraries"></span><a class="reference internal" href="../../module/InstallRequiredSystemLibraries.html#module:InstallRequiredSystemLibraries" title="InstallRequiredSystemLibraries"><code class="xref cmake cmake-module docutils literal notranslate"><span class="pre">InstallRequiredSystemLibraries</span></code></a>. This module will include any runtime
+libraries that are needed by the project for the current platform. Next we set
+some CPack variables to where we have stored the license and version
+information for this project. The version information was set earlier in this
+tutorial and the <code class="docutils literal notranslate"><span class="pre">license.txt</span></code> has been included in the top-level source
+directory for this step.</p>
+<p>Finally we include the <span class="target" id="index-0-module:CPack"></span><a class="reference internal" href="../../module/CPack.html#module:CPack" title="CPack"><code class="xref cmake cmake-module docutils literal notranslate"><span class="pre">CPack</span> <span class="pre">module</span></code></a> which will use these
+variables and some other properties of the current system to setup an
+installer.</p>
+<p>The next step is to build the project in the usual manner and then run the
+<span class="target" id="index-0-manual:cpack(1)"></span><a class="reference internal" href="../../manual/cpack.1.html#manual:cpack(1)" title="cpack(1)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">cpack</span></code></a> executable. To build a binary distribution, from the
+binary directory run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cpack</span>
+</pre></div>
+</div>
+<p>To specify the generator, use the <code class="docutils literal notranslate"><span class="pre">-G</span></code> option. For multi-config builds, use
+<code class="docutils literal notranslate"><span class="pre">-C</span></code> to specify the configuration. For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cpack -G ZIP -C Debug</span>
+</pre></div>
+</div>
+<p>To create a source distribution you would type:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cpack --config CPackSourceConfig.cmake</span>
+</pre></div>
+</div>
+<p>Alternatively, run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package</span></code> or right click the <code class="docutils literal notranslate"><span class="pre">Package</span></code> target and
+<code class="docutils literal notranslate"><span class="pre">Build</span> <span class="pre">Project</span></code> from an IDE.</p>
+<p>Run the installer found in the binary directory. Then run the installed
+executable and verify that it works.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Adding a Custom Command and Generated File.html"
+                        title="previous chapter">Step 6: Adding a Custom Command and Generated File</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Adding Support for a Testing Dashboard.html"
+                        title="next chapter">Step 8: Adding Support for a Testing Dashboard</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/guide/tutorial/Packaging an Installer.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Adding Support for a Testing Dashboard.html" title="Step 8: Adding Support for a Testing Dashboard"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Adding a Custom Command and Generated File.html" title="Step 6: Adding a Custom Command and Generated File"
+             >previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2000-2021 Kitware, Inc. and Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

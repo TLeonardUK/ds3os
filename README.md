@@ -79,16 +79,11 @@ The settings are all documented in the source code in this file, in future I'll 
 https://github.com/TLeonardUK/ds3os/blob/main/Source/Server/Config/RuntimeConfig.h
 
 # How do I build it?
-Currently the project uses visual studio 2019 and C++17 for compilation, and as such is currently limited to windows. At some point in future the codebase will likely be moved over to something platform agnostic like cmake.
+Currently the project uses visual studio 2022 and C++17 for compilation.
 
-Ensure that you have vcpkg (https://vcpkg.io) installed and integrated into visual studio as well, as it is used for managing a few of the dependencies, by doing the following:
+We use cmake for generating project files. You can either use the cmake frontend to generate the project files, or you can use one of the generate_* shell scripts inside the Tools folder.
 
-1. Clone the vcpkg repo: `git clone https://github.com/Microsoft/vcpkg.git` or download the repository as .zip file
-2. Run Windows PowerShell as Administrator and `cd` into the directory, example: `cd C:\dev\vcpkg`
-3. Enter command: `.\bootstrap-vcpkg.bat` and wait for it to process
-4. Enter command: `.\vcpkg integrate install` and wait for it to process
-
-Building the project should now require opening the Source/DS3OpenServer.sln and building it. To uninstall vcpkg use the `.\vcpkg integrate remove` command.
+Once generated the project files are stored in the intermediate folder, at this point you can just open them and build the project.
 
 # Whats in the repository?
 ```
@@ -98,8 +93,10 @@ Building the project should now require opening the Source/DS3OpenServer.sln and
 ├── Resources/            General resources used for building and packaging - icons/readmes/etc.
 ├── Source/               All source code for the project.
 │   ├── Loader/           Simple winforms app that loads DS3 such that it will connect to a custom server.
+│   ├── MasterServer/     NodeJS source code for a simple API server for advertising and listing active servers.
 │   ├── Server/           Source code for the main server.
-│   └── ThirdParty/       Source code for any third-party libraries used. Preference is storing source here over using vcpkg modules where practical.
+│   └── ThirdParty/       Source code for any third-party libraries used.
+│   └── WebUI/            Contains the static resources used to assemble the management web page for the server.
 ├── Tools/                Various cheat engine tables, bat files and alike used for analysis.
 ```
 

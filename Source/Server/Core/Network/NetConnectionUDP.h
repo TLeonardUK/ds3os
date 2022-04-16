@@ -14,7 +14,6 @@
 #include <stdlib.h>
 
 #if defined(_WIN32)
-#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <ws2tcpip.h>
 #include <winsock2.h>

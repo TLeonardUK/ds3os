@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  <title>Step 10: Adding Generator Expressions &mdash; CMake 3.22.1 Documentation</title>
+
+    <link rel="stylesheet" href="../../_static/cmake.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/cmake-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Step 11: Adding Export Configuration" href="Adding Export Configuration.html" />
+    <link rel="prev" title="Step 9: Selecting Static or Shared Libraries" href="Selecting Static or Shared Libraries.html" />
+  
+ 
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Adding Export Configuration.html" title="Step 11: Adding Export Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Selecting Static or Shared Libraries.html" title="Step 9: Selecting Static or Shared Libraries"
+             accesskey="P">previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="step-10-adding-generator-expressions">
+<span id="guide:tutorial/Adding Generator Expressions"></span><h1>Step 10: Adding Generator Expressions<a class="headerlink" href="#step-10-adding-generator-expressions" title="Permalink to this headline">¶</a></h1>
+<p><span class="target" id="index-0-manual:cmake-generator-expressions(7)"></span><a class="reference internal" href="../../manual/cmake-generator-expressions.7.html#manual:cmake-generator-expressions(7)" title="cmake-generator-expressions(7)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">Generator</span> <span class="pre">expressions</span></code></a> are evaluated
+during build system generation to produce information specific to each build
+configuration.</p>
+<p><span class="target" id="index-1-manual:cmake-generator-expressions(7)"></span><a class="reference internal" href="../../manual/cmake-generator-expressions.7.html#manual:cmake-generator-expressions(7)" title="cmake-generator-expressions(7)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">Generator</span> <span class="pre">expressions</span></code></a> are allowed in
+the context of many target properties, such as <span class="target" id="index-0-prop_tgt:LINK_LIBRARIES"></span><a class="reference internal" href="../../prop_tgt/LINK_LIBRARIES.html#prop_tgt:LINK_LIBRARIES" title="LINK_LIBRARIES"><code class="xref cmake cmake-prop_tgt docutils literal notranslate"><span class="pre">LINK_LIBRARIES</span></code></a>,
+<span class="target" id="index-0-prop_tgt:INCLUDE_DIRECTORIES"></span><a class="reference internal" href="../../prop_tgt/INCLUDE_DIRECTORIES.html#prop_tgt:INCLUDE_DIRECTORIES" title="INCLUDE_DIRECTORIES"><code class="xref cmake cmake-prop_tgt docutils literal notranslate"><span class="pre">INCLUDE_DIRECTORIES</span></code></a>, <span class="target" id="index-0-prop_tgt:COMPILE_DEFINITIONS"></span><a class="reference internal" href="../../prop_tgt/COMPILE_DEFINITIONS.html#prop_tgt:COMPILE_DEFINITIONS" title="COMPILE_DEFINITIONS"><code class="xref cmake cmake-prop_tgt docutils literal notranslate"><span class="pre">COMPILE_DEFINITIONS</span></code></a> and others.
+They may also be used when using commands to populate those properties, such as
+<span class="target" id="index-0-command:target_link_libraries"></span><a class="reference internal" href="../../command/target_link_libraries.html#command:target_link_libraries" title="target_link_libraries"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_link_libraries()</span></code></a>, <span class="target" id="index-0-command:target_include_directories"></span><a class="reference internal" href="../../command/target_include_directories.html#command:target_include_directories" title="target_include_directories"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_include_directories()</span></code></a>,
+<span class="target" id="index-0-command:target_compile_definitions"></span><a class="reference internal" href="../../command/target_compile_definitions.html#command:target_compile_definitions" title="target_compile_definitions"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_compile_definitions()</span></code></a> and others.</p>
+<p><span class="target" id="index-2-manual:cmake-generator-expressions(7)"></span><a class="reference internal" href="../../manual/cmake-generator-expressions.7.html#manual:cmake-generator-expressions(7)" title="cmake-generator-expressions(7)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">Generator</span> <span class="pre">expressions</span></code></a>  may be used
+to enable conditional linking, conditional definitions used when compiling,
+conditional include directories and more. The conditions may be based on the
+build configuration, target properties, platform information or any other
+queryable information.</p>
+<p>There are different types of
+<span class="target" id="index-3-manual:cmake-generator-expressions(7)"></span><a class="reference internal" href="../../manual/cmake-generator-expressions.7.html#manual:cmake-generator-expressions(7)" title="cmake-generator-expressions(7)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">generator</span> <span class="pre">expressions</span></code></a> including
+Logical, Informational, and Output expressions.</p>
+<p>Logical expressions are used to create conditional output. The basic
+expressions are the <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> expressions. A <code class="docutils literal notranslate"><span class="pre">$&lt;0:...&gt;</span></code> results in the
+empty string, and <code class="docutils literal notranslate"><span class="pre">&lt;1:...&gt;</span></code> results in the content of <code class="docutils literal notranslate"><span class="pre">...</span></code>.  They can also
+be nested.</p>
+<p>A common usage of
+<span class="target" id="index-4-manual:cmake-generator-expressions(7)"></span><a class="reference internal" href="../../manual/cmake-generator-expressions.7.html#manual:cmake-generator-expressions(7)" title="cmake-generator-expressions(7)"><code class="xref cmake cmake-manual docutils literal notranslate"><span class="pre">generator</span> <span class="pre">expressions</span></code></a> is to
+conditionally add compiler flags, such as those for language levels or
+warnings. A nice pattern is to associate this information to an <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code>
+target allowing this information to propagate. Let's start by constructing an
+<code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> target and specifying the required C++ standard level of <code class="docutils literal notranslate"><span class="pre">11</span></code>
+instead of using <span class="target" id="index-0-variable:CMAKE_CXX_STANDARD"></span><a class="reference internal" href="../../variable/CMAKE_CXX_STANDARD.html#variable:CMAKE_CXX_STANDARD" title="CMAKE_CXX_STANDARD"><code class="xref cmake cmake-variable docutils literal notranslate"><span class="pre">CMAKE_CXX_STANDARD</span></code></a>.</p>
+<p>So the following code:</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-cxx-standard-variable-remove">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-cxx-standard-variable-remove" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># specify the C++ standard</span>
+<span class="nf">set(</span><span class="no">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="m">11</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="no">CMAKE_CXX_STANDARD_REQUIRED</span><span class="w"> </span><span class="nb">True</span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Would be replaced with:</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-cxx-std-feature">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-cxx-std-feature" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">add_library(</span><span class="nb">tutorial_compiler_flags</span><span class="w"> </span><span class="no">INTERFACE</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">target_compile_features(</span><span class="nb">tutorial_compiler_flags</span><span class="w"> </span><span class="no">INTERFACE</span><span class="w"> </span><span class="nb">cxx_std_11</span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p><strong>Note</strong>:  This upcoming section will require a change to the
+<span class="target" id="index-0-command:cmake_minimum_required"></span><a class="reference internal" href="../../command/cmake_minimum_required.html#command:cmake_minimum_required" title="cmake_minimum_required"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">cmake_minimum_required()</span></code></a> usage in the code.  The Generator Expression
+that is about to be used was introduced in <cite>3.15</cite>.  Update the call to require
+that more recent version:</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-version-update">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-version-update" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">cmake_minimum_required(</span><span class="no">VERSION</span><span class="w"> </span><span class="m">3.15</span><span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Next we add the desired compiler warning flags that we want for our project. As
+warning flags vary based on the compiler we use the <code class="docutils literal notranslate"><span class="pre">COMPILE_LANG_AND_ID</span></code>
+generator expression to control which flags to apply given a language and a set
+of compiler ids as seen below:</p>
+<div class="literal-block-wrapper docutils container" id="cmakelists-txt-target-compile-options-genex">
+<div class="code-block-caption"><span class="caption-text">CMakeLists.txt</span><a class="headerlink" href="#cmakelists-txt-target-compile-options-genex" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nf">set(</span><span class="nb">gcc_like_cxx</span><span class="w"> </span><span class="s">&quot;$&lt;COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU&gt;&quot;</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">set(</span><span class="nb">msvc_cxx</span><span class="w"> </span><span class="s">&quot;$&lt;COMPILE_LANG_AND_ID:CXX,MSVC&gt;&quot;</span><span class="nf">)</span><span class="w"></span>
+<span class="nf">target_compile_options(</span><span class="nb">tutorial_compiler_flags</span><span class="w"> </span><span class="no">INTERFACE</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;$&lt;${gcc_like_cxx}:$&lt;BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused&gt;&gt;&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;$&lt;${msvc_cxx}:$&lt;BUILD_INTERFACE:-W3&gt;&gt;&quot;</span><span class="w"></span>
+<span class="nf">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Looking at this we see that the warning flags are encapsulated inside a
+<code class="docutils literal notranslate"><span class="pre">BUILD_INTERFACE</span></code> condition. This is done so that consumers of our installed
+project will not inherit our warning flags.</p>
+<p><strong>Exercise</strong>: Modify <code class="docutils literal notranslate"><span class="pre">MathFunctions/CMakeLists.txt</span></code> so that all targets have
+a <span class="target" id="index-1-command:target_link_libraries"></span><a class="reference internal" href="../../command/target_link_libraries.html#command:target_link_libraries" title="target_link_libraries"><code class="xref cmake cmake-command docutils literal notranslate"><span class="pre">target_link_libraries()</span></code></a> call to <code class="docutils literal notranslate"><span class="pre">tutorial_compiler_flags</span></code>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Selecting Static or Shared Libraries.html"
+                        title="previous chapter">Step 9: Selecting Static or Shared Libraries</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Adding Export Configuration.html"
+                        title="next chapter">Step 11: Adding Export Configuration</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/guide/tutorial/Adding Generator Expressions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Adding Export Configuration.html" title="Step 11: Adding Export Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Selecting Static or Shared Libraries.html" title="Step 9: Selecting Static or Shared Libraries"
+             >previous</a> |</li>
+  <li>
+    <img src="../../_static/cmake-logo-16.png" alt=""
+         style="vertical-align: middle; margin-top: -2px" />
+  </li>
+  <li>
+    <a href="https://cmake.org/">CMake</a> &#187;
+  </li>
+  <li>
+    <a href="../../index.html">3.22.1 Documentation</a> &#187;
+  </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >CMake Tutorial</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2000-2021 Kitware, Inc. and Contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

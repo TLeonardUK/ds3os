@@ -1,6 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
-    <BaseIntermediateOutputPath>$(SolutionDir)\..\Intermediate\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-    <BaseOutputPath>$(SolutionDir)\..\Bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)\..\..\Intermediate\$(Platform)_$(Configuration)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(SolutionDir)\..\..\Bin\$(Platform)_$(Configuration)\</BaseOutputPath>
   </PropertyGroup>
 </Project>

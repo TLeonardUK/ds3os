@@ -17,6 +17,12 @@
 *.dll
 !Source/ThirdParty/**.dll
 !Source/ThirdParty/**/*.dll
+!Source/ThirdParty/**.so
+!Source/ThirdParty/**/*.so
+!Tools/**.dll
+!Tools/**/*.dll
+!Tools/**.so
+!Tools/**/*.so
 
 # Fortran module files
 *.mod
@@ -29,16 +35,24 @@
 *.lib
 !Source/ThirdParty/**.lib
 !Source/ThirdParty/**/*.lib
+!Source/ThirdParty/**.a
+!Source/ThirdParty/**/*.a
+!Tools/**.lib
+!Tools/**/*.lib
+!Tools/**.a
+!Tools/**/*.a
 
 # Executables
 *.exe
 *.out
 *.app
 !Resources/Prerequisites/*.exe
+!Tools/**.exe
+!Tools/**/*.exe
 
 Debug/
-Bin/
-Intermediate/
+/Bin/
+intermediate/
 Research/
 vcpkg_installed/
 .vs/
