@@ -29,7 +29,7 @@ jobs:
     - name: Generate Solution
       shell: cmd
       working-directory: ${{env.GITHUB_WORKSPACE}}/Tools
-      run: ./generate_vs2022.bat
+      run: generate_vs2022.bat
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
