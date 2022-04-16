@@ -32,9 +32,9 @@ jobs:
       working-directory: ${{github.workspace}}/Tools
       run: ${{github.workspace}}/Tools/generate_vs2022.bat
 
-    - name: Restore NuGet packages
+    - name: Restore DotNet dependencies
       working-directory: ${{github.workspace}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+      run: dotnet restore ${{github.workspace}}/Source/Loader/Loader.csproj
       
     - name: Build
       working-directory: ${{github.workspace}}
