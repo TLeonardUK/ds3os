@@ -47,7 +47,7 @@ jobs:
         submodules: recursive
 
     - name: Generate Solution
-      shell: cmd
+      shell: bash
       working-directory: ${{github.workspace}}/Tools
       run: ${{github.workspace}}/Tools/generate_make_release.sh
       
