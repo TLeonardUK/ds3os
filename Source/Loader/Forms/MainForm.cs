@@ -35,7 +35,7 @@ namespace Loader
 
         private string[] ColumnNames = { "Server Name", "Player Count", "Description" };
         
-        public static string OfficialServer = "142.44.247.246";
+        public static string OfficialServer = NetUtils.HostnameToIPv4("ds3os-server.timleonard.uk");
 
         public MainForm()
         {
