@@ -49,7 +49,7 @@ jobs:
     - name: Generate Solution
       shell: cmd
       working-directory: ${{github.workspace}}/Tools
-      run: ${{github.workspace}}/Tools/generate_make_release.bat
+      run: ${{github.workspace}}/Tools/generate_make_release.sh
       
     - name: Build
       working-directory: ${{github.workspace}}/intermediate/make
