@@ -126,6 +126,14 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
       
+    - name: Build and push master-server docker
+      uses: docker/build-push-action@v2
+      with:
+        context: ./Source/MasterServer/
+        file: ./Source/MasterServer/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os-master:latest 
+                      
     - name: Build and push server docker
       uses: docker/build-push-action@v2
       with:
@@ -133,14 +141,6 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os:latest 
-                      
-    - name: Build and push master-server docker
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./Source/MasterServer/Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os-master:latest 
                       
   make-release:
     name: Make Release
