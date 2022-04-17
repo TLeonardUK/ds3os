@@ -128,43 +128,79 @@ public:
 		return Signature == SIGNATURE && Version == VERSION_NUMBER;
 	}
 
+	// Secure functions do not exist on anything else but msvc. The normal functions
+	// have slightly different behaviour. So just adding this quickly to match behaviour
+	// between platforms.
+	static size_t internal_wcsnlen_s(const wchar_t* str, size_t strsz)
+	{
+		if (str == nullptr)
+		{
+			return 0;
+		}
+
+		for (size_t i = 0; i < strsz; i++)
+		{
+			if (str[i] == '\0')
+			{
+				return i;
+			}
+		}
+
+		return strsz;
+	}
+
 	// Verify if serialized NRSessionSearchResult data is valid. 
 	static ValidationResult ValidateNRSSRData(const uint8_t* NRSSRData, size_t Size)
 	{
 		// Check if signature and version number matches
-		if (!CheckNRSSRSignatureAndVersion(NRSSRData, Size)) return ValidationResult::NRSSR_SignatureOrVersion_Mismatch;
+		if (!CheckNRSSRSignatureAndVersion(NRSSRData, Size)) 
+		{
+			return ValidationResult::NRSSR_SignatureOrVersion_Mismatch;
+		}
 
 		// Make sure that we have enough data to read the property count field 
-		if (Size < 7) return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;;
+		if (Size < 7) 
+		{
+			return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;
+		}
 		uint8_t PropertyCount = NRSSRData[6];
 
 		// Parse the property list and verify each entry has a valid type and length
-		size_t Position = 7, StrLength, NumWideCharLeft;
+		int Position = 7, StrLength, NumWideCharLeft, InternalStrLength;
 		for (int i = 0; i < PropertyCount; i++)
-		{	// We don't care about the ID or unknown value, just check sizes
-			if (Size - Position < 6) return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;
+		{	
+			// We don't care about the ID or unknown value, just check sizes
+			if (Size - Position < 6) 
+			{
+				return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;
+			}
 			uint8_t Type = NRSSRData[Position + 4];
 			Position += 6;
 
 			switch (Type)
 			{
 			case 1: // Case 1 : 4 byte field
-				if (Size - Position < 4) return ValidationResult::NRSSR_Property4Byte_InsufficientData;
+				if (Size - Position < 4) 
+				{
+					return ValidationResult::NRSSR_Property4Byte_InsufficientData;
+				}
 				Position += 4;
 				break;
 			case 2:
 			case 3: // Cases 2-3 : 8 byte field (perhaps signed/unsigned?)
-				if (Size - Position < 8) return ValidationResult::NRSSR_Property8Byte_InsufficientData;
+				if (Size - Position < 8) 
+				{
+					return ValidationResult::NRSSR_Property8Byte_InsufficientData;
+				}
 				Position += 8;
 				break;
 			case 4: // Case 4 : Null-terminated wide string field
 				NumWideCharLeft = (Size - Position) / 2;
-#ifdef _WIN32
-				StrLength = wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
-#else
-				StrLength = wcsnlen(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
-#endif
-				if (StrLength >= NumWideCharLeft || StrLength >= MAX_PROP_WSTR_SIZE) return ValidationResult::NRSSR_PropertyString_Overflow;
+				StrLength = internal_wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+				if (StrLength >= NumWideCharLeft || StrLength >= MAX_PROP_WSTR_SIZE) 
+				{
+					return ValidationResult::NRSSR_PropertyString_Overflow;
+				}
 				Position += 2 * (StrLength + 1);
 				break;
 			default:
@@ -174,24 +210,28 @@ public:
 
 		// Check if the host name is null terminated and has valid length
 		NumWideCharLeft = (Size - Position) / 2;
-#ifdef _WIN32
-		StrLength = wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
-#else
-		StrLength = wcsnlen(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
-#endif
-		if (StrLength >= NumWideCharLeft || StrLength >= MAX_NAME_WSTR_SIZE) return ValidationResult::NRSSR_NameString_Overflow;
+		StrLength = internal_wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
+		if (StrLength >= NumWideCharLeft || StrLength >= MAX_NAME_WSTR_SIZE) 
+		{
+			return ValidationResult::NRSSR_NameString_Overflow;
+		}
 		Position += 2 * (StrLength + 1);
 
 		// Check host online id and session data size
 		if (Size - Position != sizeof(SESSION_DATA_SIZE) + HOST_ONLINE_ID_SIZE + SESSION_DATA_SIZE) 
+		{
 			return ValidationResult::NRSSR_RemainingDataSize_Mismatch;
-		
+		}
+
 		// Read the big-endian sessin data size field and make sure it matches the normal value for the game
-#ifdef _WIN32
-		uint16_t SessionDataSize = _byteswap_ushort(*reinterpret_cast<const uint16_t*>(Position + HOST_ONLINE_ID_SIZE));
-#else
-		uint16_t SessionDataSize = bswap_16(*reinterpret_cast<const uint16_t*>(Position + HOST_ONLINE_ID_SIZE));
-#endif
-		return (SessionDataSize == SESSION_DATA_SIZE) ? ValidationResult::Valid : ValidationResult::NRSSR_SessionSize_Abnormal;
+		uint16_t SessionDataSize = (uint16_t)NRSSRData[Position + HOST_ONLINE_ID_SIZE] << 8 | (uint16_t)NRSSRData[Position + HOST_ONLINE_ID_SIZE + 1];
+		if (SessionDataSize == SESSION_DATA_SIZE)
+		{
+			return ValidationResult::Valid;
+		}
+		else
+		{
+			return ValidationResult::NRSSR_SessionSize_Abnormal;
+		}
 	}
 };
