@@ -1,0 +1,66 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+!Source/ThirdParty/**.dll
+!Source/ThirdParty/**/*.dll
+!Source/ThirdParty/**.so
+!Source/ThirdParty/**/*.so
+!Tools/**.dll
+!Tools/**/*.dll
+!Tools/**.so
+!Tools/**/*.so
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+!Source/ThirdParty/**.lib
+!Source/ThirdParty/**/*.lib
+!Source/ThirdParty/**.a
+!Source/ThirdParty/**/*.a
+!Tools/**.lib
+!Tools/**/*.lib
+!Tools/**.a
+!Tools/**/*.a
+
+# Executables
+*.exe
+*.out
+*.app
+!Resources/Prerequisites/*.exe
+!Tools/**.exe
+!Tools/**/*.exe
+
+Debug/
+/Bin/
+intermediate/
+Research/
+vcpkg_installed/
+.vs/
+Temp/
+RawCaptures/
+GameCaptures/
+Dumps/
+enc_temp_folder/
+Publish/
+DS3OS/
+node_modules/
