@@ -2,9 +2,9 @@
  * NRSSRSanitizer.h
  * Copyright (C) 2022 William Tremblay
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of 
- * this software and associated documentation files (the "Software"), to deal in the 
- * Software without restriction, including without limitation the rights to use, copy, 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in the
+ * Software without restriction, including without limitation the rights to use, copy,
  * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so, subject to the
  * following conditions:
@@ -31,15 +31,15 @@
 #include <byteswap.h>
 #endif
 
-// Static class that holds methods intended to validate the structure
-// of the size-delimited entry lists and serialized NRSessionSearchResult 
-// data for security purposes, namely patching out-of-bounds read crashes 
-// and a reliable remote code execution exploit (CVE-2022-24126).
-// 
-// This specifically relates to the game's V1.15 version. It will most 
-// likely have to be reworked if a new client version comes out, but this 
-// should not be necessary as the only reason for a client update would be 
-// patching this bug.
+ // Static class that holds methods intended to validate the structure
+ // of the size-delimited entry lists and serialized NRSessionSearchResult 
+ // data for security purposes, namely patching out-of-bounds read crashes 
+ // and a reliable remote code execution exploit (CVE-2022-24126).
+ // 
+ // This specifically relates to the game's V1.15 version. It will most 
+ // likely have to be reworked if a new client version comes out, but this 
+ // should not be necessary as the only reason for a client update would be 
+ // patching this bug.
 class NRSSRSanitizer
 {
 public:
@@ -58,7 +58,7 @@ public:
 	// The size of the host online id field in NRSSR data. On PC this is 8 (size of a CSteamID).
 	inline static const size_t HOST_ONLINE_ID_SIZE = 8;
 
-	// Game stack buffer sizes for property and name strings (in number of wchar_t)
+	// Game stack buffer sizes for property and name strings (in number of uint16_t (note:not wchar_t!!! wchar_t size is compiler dependent))
 	inline static const size_t MAX_PROP_WSTR_SIZE = 1024;
 	inline static const size_t MAX_NAME_WSTR_SIZE = 256;
 
@@ -131,7 +131,7 @@ public:
 	// Secure functions do not exist on anything else but msvc. The normal functions
 	// have slightly different behaviour. So just adding this quickly to match behaviour
 	// between platforms.
-	static size_t internal_wcsnlen_s(const wchar_t* str, size_t strsz)
+	static size_t internal_wcsnlen_s(const uint16_t* str, size_t strsz)
 	{
 		if (str == nullptr)
 		{
@@ -153,13 +153,13 @@ public:
 	static ValidationResult ValidateNRSSRData(const uint8_t* NRSSRData, size_t Size)
 	{
 		// Check if signature and version number matches
-		if (!CheckNRSSRSignatureAndVersion(NRSSRData, Size)) 
+		if (!CheckNRSSRSignatureAndVersion(NRSSRData, Size))
 		{
 			return ValidationResult::NRSSR_SignatureOrVersion_Mismatch;
 		}
 
 		// Make sure that we have enough data to read the property count field 
-		if (Size < 7) 
+		if (Size < 7)
 		{
 			return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;
 		}
@@ -168,9 +168,9 @@ public:
 		// Parse the property list and verify each entry has a valid type and length
 		int Position = 7, StrLength, NumWideCharLeft, InternalStrLength;
 		for (int i = 0; i < PropertyCount; i++)
-		{	
+		{
 			// We don't care about the ID or unknown value, just check sizes
-			if (Size - Position < 6) 
+			if (Size - Position < 6)
 			{
 				return ValidationResult::NRSSR_PropertyMetadata_InsufficientData;
 			}
@@ -180,7 +180,7 @@ public:
 			switch (Type)
 			{
 			case 1: // Case 1 : 4 byte field
-				if (Size - Position < 4) 
+				if (Size - Position < 4)
 				{
 					return ValidationResult::NRSSR_Property4Byte_InsufficientData;
 				}
@@ -188,7 +188,7 @@ public:
 				break;
 			case 2:
 			case 3: // Cases 2-3 : 8 byte field (perhaps signed/unsigned?)
-				if (Size - Position < 8) 
+				if (Size - Position < 8)
 				{
 					return ValidationResult::NRSSR_Property8Byte_InsufficientData;
 				}
@@ -196,8 +196,8 @@ public:
 				break;
 			case 4: // Case 4 : Null-terminated wide string field
 				NumWideCharLeft = (Size - Position) / 2;
-				StrLength = internal_wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
-				if (StrLength >= NumWideCharLeft || StrLength >= MAX_PROP_WSTR_SIZE) 
+				StrLength = internal_wcsnlen_s(reinterpret_cast<const uint16_t*>(NRSSRData + Position), NumWideCharLeft);
+				if (StrLength >= NumWideCharLeft || StrLength >= MAX_PROP_WSTR_SIZE)
 				{
 					return ValidationResult::NRSSR_PropertyString_Overflow;
 				}
@@ -210,15 +210,15 @@ public:
 
 		// Check if the host name is null terminated and has valid length
 		NumWideCharLeft = (Size - Position) / 2;
-		StrLength = internal_wcsnlen_s(reinterpret_cast<const wchar_t*>(NRSSRData + Position), NumWideCharLeft);
-		if (StrLength >= NumWideCharLeft || StrLength >= MAX_NAME_WSTR_SIZE) 
+		StrLength = internal_wcsnlen_s(reinterpret_cast<const uint16_t*>(NRSSRData + Position), NumWideCharLeft);
+		if (StrLength >= NumWideCharLeft || StrLength >= MAX_NAME_WSTR_SIZE)
 		{
 			return ValidationResult::NRSSR_NameString_Overflow;
 		}
 		Position += 2 * (StrLength + 1);
 
-		// Check host online id and session data size
-		if (Size - Position != sizeof(SESSION_DATA_SIZE) + HOST_ONLINE_ID_SIZE + SESSION_DATA_SIZE) 
+		// Check host online id and session data size		
+		if (Size - Position != sizeof(SESSION_DATA_SIZE) + HOST_ONLINE_ID_SIZE + SESSION_DATA_SIZE)
 		{
 			return ValidationResult::NRSSR_RemainingDataSize_Mismatch;
 		}
