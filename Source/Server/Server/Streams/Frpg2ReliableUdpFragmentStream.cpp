@@ -22,6 +22,8 @@
 #include "Core/Crypto/RSAKeyPair.h"
 #include "Core/Crypto/RSACipher.h"
 
+#include <cstring>
+
 Frpg2ReliableUdpFragmentStream::Frpg2ReliableUdpFragmentStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient)
     : Frpg2ReliableUdpPacketStream(Connection, CwcKey, AuthToken, AsClient)
 {

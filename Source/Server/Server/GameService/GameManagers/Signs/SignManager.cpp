@@ -24,6 +24,8 @@
 #include "Core/Utils/Strings.h"
 #include "Core/Utils/DiffTracker.h"
 
+#include <cmath>
+
 SignManager::SignManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)
     , GameServiceInstance(InGameServiceInstance)
@@ -533,7 +535,7 @@ MessageHandleResult SignManager::Handle_RequestGetRightMatchingArea(GameClient* 
     // Normalize the values to the 0-5 range the client expects and return them.
     for (auto Pair : PotentialAreas)
     {
-        int NormalizedPopulation = (int)std::ceilf((Pair.second / (float)MaxAreaPopulation) * 5.0f);
+        int NormalizedPopulation = (int)std::ceil((Pair.second / (float)MaxAreaPopulation) * 5.0f);
 
         Frpg2RequestMessage::RequestGetRightMatchingAreaResponse_Area_info& Info = *Response.add_area_info();
         Info.set_online_area_id((uint32_t)Pair.first);

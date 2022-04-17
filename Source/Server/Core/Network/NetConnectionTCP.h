@@ -11,17 +11,22 @@
 
 #include "Core/Network/NetConnection.h"
 
-#include <stdlib.h>
-
 #if defined(_WIN32)
 #include <windows.h>
-#include <WinSock2.h>
+#include <ws2tcpip.h>
+#include <winsock2.h>
 #else
 #include <unistd.h>
 #include <sys/socket.h>
-#include <stdlib.h>
+#include <netdb.h>
+#include <netinet/tcp.h>
 #include <netinet/in.h>
+#include <fcntl.h>
+
+#define SOCKET_ERROR (-1)
 #endif
+
+#include <stdlib.h>
 
 class NetConnectionTCP
     : public NetConnection
@@ -34,7 +39,7 @@ public:
 #else
     using SocketType = int;
     using SocketLenType = socklen_t;
-    const SocketType INVALID_SOCKET_VALUE = 0;
+    const SocketType INVALID_SOCKET_VALUE = -1;
 #endif
 
 public:

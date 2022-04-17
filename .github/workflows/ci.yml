@@ -35,3 +35,22 @@ jobs:
     - name: Build
       working-directory: ${{github.workspace}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} /t:Restore,Build
+      
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout respository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Generate Solution
+      shell: bash
+      working-directory: ${{github.workspace}}/Tools
+      run: ${{github.workspace}}/Tools/generate_make_release.sh
+      
+    - name: Build
+      working-directory: ${{github.workspace}}/intermediate/make
+      run: make

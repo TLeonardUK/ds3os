@@ -10,9 +10,14 @@
 #include "Core/Network/NetUtils.h"
 #include "Core/Network/NetHttpRequest.h"
 
+#ifdef __linux__
+#include <netdb.h>
+#include <unistd.h>
+#endif
+
 bool GetMachineIPv4(NetIPAddress& Output, bool GetPublicAddress)
 {
-    // For public ip address we query and external webapi.
+    // For public ip address we query an external webapi.
     if (GetPublicAddress)
     {
         NetHttpRequest Request;
@@ -36,11 +41,11 @@ bool GetMachineIPv4(NetIPAddress& Output, bool GetPublicAddress)
     }
     // Otherwise we can just grab one with some winsock shenanigans. This won't
     // work correctly for machines with multiple interfaces. But for our purposes it should
-    // be ok. This path is mainly used for debugging.
+    // be ok. This ip is mainly used for debugging.
     else
     {
         char Buffer[1024];
-        if (gethostname(Buffer, sizeof(Buffer)) == SOCKET_ERROR)
+        if (gethostname(Buffer, sizeof(Buffer)) == -1)
         {
             return false;
         }
@@ -53,12 +58,21 @@ bool GetMachineIPv4(NetIPAddress& Output, bool GetPublicAddress)
 
         struct in_addr* Addr = (struct in_addr* )HostEntry->h_addr;
 
+#ifdef _WIN32
         Output = NetIPAddress(
             Addr->S_un.S_un_b.s_b1,
             Addr->S_un.S_un_b.s_b2,
             Addr->S_un.S_un_b.s_b3,
             Addr->S_un.S_un_b.s_b4
         );
+#else
+        Output = NetIPAddress(
+            Addr->s_addr & 0xFF,
+            (Addr->s_addr >> 8) & 0xFF,
+            (Addr->s_addr >> 16) & 0xFF,
+            (Addr->s_addr >> 24) & 0xF
+        );
+#endif
 
         return true;
     }

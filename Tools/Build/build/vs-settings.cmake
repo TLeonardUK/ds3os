@@ -15,3 +15,4 @@ if(WIN32)
     # Use parallel compilation, for some reason this isn't the default with cmake :(
     add_definitions(/MP)
 endif()
+

@@ -11,7 +11,19 @@
 
 #include <string>
 #include <memory>
-#include <Vector>
+#include <vector>
+
+#if __linux__
+#include <unistd.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <netinet/tcp.h>
+#include <netinet/in.h>
+#include <fcntl.h>
+
+#define SOCKET_ERROR (-1)
+#define WSAGetLastError() (errno)
+#endif
 
 // Base class for network connections. This class handles
 // both listening and connecting. There are different

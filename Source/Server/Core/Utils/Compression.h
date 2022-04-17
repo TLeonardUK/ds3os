@@ -11,6 +11,8 @@
 
 #include <filesystem>
 #include <string>
+#include <vector>
+#include <cstdint>
 
 bool Compress(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output);
 bool Decompress(const std::vector<uint8_t>& Input, std::vector<uint8_t>& Output, uint32_t DecompressedSize);

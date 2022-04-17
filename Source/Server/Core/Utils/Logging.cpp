@@ -13,6 +13,7 @@
 #include <ctime>
 #include <cstdarg>
 #include <list>
+#include <cstdio>
 
 namespace 
 {

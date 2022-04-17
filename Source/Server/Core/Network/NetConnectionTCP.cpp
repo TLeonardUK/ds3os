@@ -13,6 +13,14 @@
 #include "Config/BuildConfig.h"
 #include "Core/Crypto/Cipher.h"
 
+#include <cstring>
+
+#ifdef __linux__
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#endif
+
 NetConnectionTCP::NetConnectionTCP(const std::string& InName)
     : Name(InName)
 {
@@ -71,8 +79,9 @@ bool NetConnectionTCP::Listen(int Port)
         ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
         return false;
     }
-#else
-    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+#else   
+    int flags;
+    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
         ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
@@ -118,6 +127,28 @@ std::shared_ptr<NetConnection> NetConnectionTCP::Accept()
     SocketType NewSocket = accept(Socket, (struct sockaddr*)&ClientAddress, (SocketLenType*)&AddressLength);
     if (NewSocket != INVALID_SOCKET_VALUE)
     {
+#if defined(_WIN32)
+        unsigned long mode = 1;
+        if (int result = ioctlsocket(NewSocket, FIONBIO, &mode); result != 0)
+        {
+            ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
+            return false;
+        }
+#else
+        int flags;
+        if (flags = fcntl(NewSocket, F_GETFL, 0); flags == -1)
+        {
+            ErrorS(GetName().c_str(), "Failed to get socket flags.");
+            return nullptr;
+        }
+        flags = flags | O_NONBLOCK;
+        if (int result = fcntl(NewSocket, F_SETFL, flags); result != 0)
+        {
+            ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
+            return nullptr;
+        }
+#endif
+
         std::vector<char> ClientName;
         ClientName.resize(64);
         snprintf(ClientName.data(), ClientName.size(), "%s:%s:%i", Name.c_str(), inet_ntoa(ClientAddress.sin_addr), ClientAddress.sin_port);
@@ -125,11 +156,21 @@ std::shared_ptr<NetConnection> NetConnectionTCP::Accept()
         // TODO: Keep track of these clients and disconnect them when 
         //       this socket is disconnected.
 
+#if defined(_WIN32)
         NetIPAddress NetClientAddress(
             ClientAddress.sin_addr.S_un.S_un_b.s_b1, 
             ClientAddress.sin_addr.S_un.S_un_b.s_b2, 
             ClientAddress.sin_addr.S_un.S_un_b.s_b3, 
             ClientAddress.sin_addr.S_un.S_un_b.s_b4);
+#else
+
+        NetIPAddress NetClientAddress(
+            (ClientAddress.sin_addr.s_addr) & 0xFF,
+            (ClientAddress.sin_addr.s_addr >> 8) & 0xFF,
+            (ClientAddress.sin_addr.s_addr >> 16) & 0xFF,
+            (ClientAddress.sin_addr.s_addr >> 24) & 0xFF
+        );
+#endif
 
         return std::make_shared<NetConnectionTCP>(NewSocket, ClientName.data(), NetClientAddress);
     }
@@ -183,7 +224,7 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         }
     }
 
-    int Result = connect(Socket, (SOCKADDR*)&SockAddr, sizeof(SockAddr));
+    int Result = connect(Socket, (sockaddr*)&SockAddr, sizeof(SockAddr));
     if (Result == SOCKET_ERROR)
     {
 #if defined(_WIN32)
@@ -213,7 +254,8 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         return false;
     }
 #else
-    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+    int flags;
+    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
         ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
@@ -346,8 +388,12 @@ bool NetConnectionTCP::Disconnect()
     {
         return false;
     }
-
+    
+#if defined(_WIN32)
     closesocket(Socket);
+#else
+    close(Socket);
+#endif
     Socket = INVALID_SOCKET_VALUE;
     
     return false;
@@ -371,7 +417,11 @@ bool NetConnectionTCP::IsConnected()
     }
 
     int error_code;
+#ifdef _WIN32
     int error_code_size = sizeof(error_code);
+#else
+    socklen_t error_code_size = sizeof(error_code);
+#endif
     if (getsockopt(Socket, SOL_SOCKET, SO_ERROR, (char*)&error_code, &error_code_size) < 0)
     {
         return false;

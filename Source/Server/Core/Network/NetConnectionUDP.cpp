@@ -14,6 +14,14 @@
 #include "Config/BuildConfig.h"
 #include "Core/Crypto/Cipher.h"
 
+#include <cstring>
+
+#ifdef __linux__
+#include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#endif
+
 NetConnectionUDP::NetConnectionUDP(const std::string& InName)
     : Name(InName)
 {
@@ -69,7 +77,8 @@ bool NetConnectionUDP::Listen(int Port)
         return false;
     }
 #else
-    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+    int flags;
+    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
         ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
@@ -165,7 +174,8 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         return false;
     }
 #else
-    if (int flags = fcntl(Socket, F_GETFL, 0); flags == -1)
+    int flags;
+    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
     {
         ErrorS(GetName().c_str(), "Failed to get socket flags.");
         return false;
@@ -306,7 +316,11 @@ bool NetConnectionUDP::Disconnect()
 
     if (!bChild)
     {
+#ifdef _WIN32
         closesocket(Socket);
+#else
+        close(Socket);
+#endif
     }
     Socket = INVALID_SOCKET_VALUE;
     
@@ -339,7 +353,7 @@ void NetConnectionUDP::ProcessPacket(const PendingPacket& Packet)
         {
             if (std::shared_ptr<NetConnectionUDP> Connection = ConnectionWeakPtr.lock())
             {
-                if (Connection->Destination.sin_addr.S_un.S_addr == Packet.SourceAddress.sin_addr.S_un.S_addr &&
+                if (Connection->Destination.sin_addr.s_addr == Packet.SourceAddress.sin_addr.s_addr &&
                     Connection->Destination.sin_port == Packet.SourceAddress.sin_port)
                 {
                     Connection->RecieveQueue.push_back(Packet.Data);
@@ -356,11 +370,21 @@ void NetConnectionUDP::ProcessPacket(const PendingPacket& Packet)
             ClientName.resize(64);
             snprintf(ClientName.data(), ClientName.size(), "%s:%s:%i", Name.c_str(), inet_ntoa(Packet.SourceAddress.sin_addr), Packet.SourceAddress.sin_port);
 
+#ifdef _WIN32
             NetIPAddress NetClientAddress(
                 Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b1,
                 Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b2,
                 Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b3,
                 Packet.SourceAddress.sin_addr.S_un.S_un_b.s_b4);
+#else
+
+            NetIPAddress NetClientAddress(
+                (Packet.SourceAddress.sin_addr.s_addr) & 0xFF,
+                (Packet.SourceAddress.sin_addr.s_addr >> 8) & 0xFF,
+                (Packet.SourceAddress.sin_addr.s_addr >> 16) & 0xFF,
+                (Packet.SourceAddress.sin_addr.s_addr >> 24) & 0xFF
+            );
+#endif
 
             std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(Socket, Packet.SourceAddress, ClientName.data(), NetClientAddress);
             NewConnection->RecieveQueue.push_back(Packet.Data);
@@ -390,7 +414,12 @@ bool NetConnectionUDP::Pump()
             socklen_t SourceAddressSize = sizeof(struct sockaddr);
             sockaddr_in SourceAddress = { 0 };
 
-            int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), 0, (sockaddr*)&SourceAddress, &SourceAddressSize);
+            int Flags = 0;
+#ifdef __unix__
+            Flags |= MSG_DONTWAIT;
+#endif
+
+            int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), Flags, (sockaddr*)&SourceAddress, &SourceAddressSize);
             if (Result < 0)
             {
         #if defined(_WIN32)

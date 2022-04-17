@@ -11,7 +11,7 @@
 
 #include <string>
 #include <memory>
-#include <Vector>
+#include <vector>
 #include <curl/curl.h>
 
 // Simple class for sending HTTP requests

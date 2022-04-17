@@ -64,7 +64,6 @@ SET(SOURCES
     Core/Utils/Strings.h
 
     Platform/Platform.h
-    Platform/Win32/Win32Platform.cpp
 
     Protobuf/FpdLogMessage.cc
     Protobuf/Frpg2PlayerData.cc
@@ -171,7 +170,17 @@ SET(SOURCES
     Server/WebUIService/Handlers/WebUIHandler.h
 )
  
-add_executable(${PROJECT_NAME} ${SOURCES})
+if (WIN32)
+    SET(PLATFORM_SOURCES
+        Platform/Win32/Win32Platform.cpp
+    )
+elseif (UNIX)
+    SET(PLATFORM_SOURCES
+        Platform/Linux/LinuxPlatform.cpp
+    )
+endif()
+ 
+add_executable(${PROJECT_NAME} ${SOURCES} ${PLATFORM_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../")
 
@@ -186,7 +195,7 @@ target_link_libraries(
     sqlite
     zlib
     steam
-    steam-encryptedappticket
+    #steam-encryptedappticket
     libcurl
     crypto
     ssl
@@ -204,5 +213,3 @@ foreach(config ${CMAKE_CONFIGURATION_TYPES})
 endforeach()
 
 util_setup_folder_structure(${PROJECT_NAME} SOURCES "DS3OS")
-
-util_copy_all_dlls_to_output(${PROJECT_NAME})
