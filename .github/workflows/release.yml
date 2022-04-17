@@ -134,6 +134,14 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os:latest 
                       
+    - name: Build and push master-server docker
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Source/MasterServer/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os-master:latest 
+                      
   make-release:
     name: Make Release
     needs: [ build-windows, build-linux ]
