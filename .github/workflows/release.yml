@@ -65,14 +65,78 @@ jobs:
     - name: Package Release
       shell: cmd
       working-directory: ${{github.workspace}}
-      run: ${{github.workspace}}/Tools/generate_package.bat
+      run: ${{github.workspace}}/Tools/generate_package_windows.bat
 
     - name: Zip Release
       uses: vimtor/action-zip@v1
       with:
         files: DS3OS/
         dest: windows.zip
-    
+
+    - name: Upload Artifact
+      id: upload-artifact
+      uses: actions/upload-artifact@master
+      with:
+        path: ./windows.zip
+        name: windows
+        
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout respository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Generate Solution
+      shell: bash
+      working-directory: ${{github.workspace}}/Tools
+      run: ${{github.workspace}}/Tools/generate_make_release.sh
+      
+    - name: Build
+      working-directory: ${{github.workspace}}/intermediate/make
+      run: make
+
+    - name: Package Release
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: ${{github.workspace}}/Tools/generate_package_linux.sh
+
+    - name: Zip Release
+      uses: vimtor/action-zip@v1
+      with:
+        files: DS3OS/
+        dest: linux.zip
+        
+    - name: Upload Artifact
+      id: upload-artifact
+      uses: actions/upload-artifact@master
+      with:
+        path: ./linux.zip
+        name: linux
+              
+  make-release:
+    name: Make Release
+    needs: [ build-windows, build-linux ]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download windows artifact
+      id: download-windows-artifact
+      uses: actions/download-artifact@master
+      with:
+        path: ./windows.zip
+        name: windows
+
+    - name: Download linux artifact
+      id: download-linux-artifact
+      uses: actions/download-artifact@master
+      with:
+        path: ./linux.zip
+        name: linux
+              
     - name: Make Release
       id: create_release
       uses: actions/create-release@v1
@@ -85,8 +149,8 @@ jobs:
         draft: false
         prerelease: true
         
-    - name: Upload Release Asset
-      id: upload-release-asset 
+    - name: Upload Windows Release Asset
+      id: upload-windows-release-asset 
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -95,3 +159,15 @@ jobs:
         asset_path: ./windows.zip
         asset_name: windows.zip
         asset_content_type: application/zip
+        
+    - name: Upload Linux Release Asset
+      id: upload-linux-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./linux.zip
+        asset_name: linux.zip
+        asset_content_type: application/zip
+        
