@@ -195,7 +195,7 @@ target_link_libraries(
     sqlite
     zlib
     steam
-    steam-encryptedappticket
+    #steam-encryptedappticket
     libcurl
     crypto
     ssl
@@ -213,5 +213,3 @@ foreach(config ${CMAKE_CONFIGURATION_TYPES})
 endforeach()
 
 util_setup_folder_structure(${PROJECT_NAME} SOURCES "DS3OS")
-
-util_copy_all_dlls_to_output(${PROJECT_NAME})

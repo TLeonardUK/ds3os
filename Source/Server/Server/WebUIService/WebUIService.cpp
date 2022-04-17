@@ -50,10 +50,10 @@ bool WebUIService::Init()
         return false;
     }
 
-    std::filesystem::path StaticPath = std::filesystem::current_path() / "..\\..\\Source\\WebUI\\Static";
+    std::filesystem::path StaticPath = std::filesystem::current_path() / "../../Source/WebUI/Static";
     if (!std::filesystem::exists(StaticPath))
     {
-        StaticPath = std::filesystem::current_path() / "WebUI\\Static";
+        StaticPath = std::filesystem::current_path() / "WebUI/Static";
     }
     if (!std::filesystem::exists(StaticPath))
     {

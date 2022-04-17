@@ -28,15 +28,22 @@ if(STEAM_LIB)
     )
 endif()
 
-add_library(${PROJECT_NAME}-encryptedappticket SHARED IMPORTED GLOBAL)
+#add_library(${PROJECT_NAME}-encryptedappticket SHARED IMPORTED GLOBAL)
+#
+#set_target_properties(${PROJECT_NAME}-encryptedappticket PROPERTIES
+#    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/public/steam/lib/${STEAM_EAT_SHLIB}"
+#    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/public"
+#)
 
-set_target_properties(${PROJECT_NAME}-encryptedappticket PROPERTIES
-    IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/public/steam/lib/${STEAM_EAT_SHLIB}"
-    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/public"
-)
+#if (STEAM_EAT_LIB)
+#    set_target_properties(${PROJECT_NAME}-encryptedappticket PROPERTIES
+#        IMPORTED_IMPLIB "${CMAKE_CURRENT_SOURCE_DIR}/public/steam/lib/${STEAM_EAT_LIB}"
+#    )
+#endif()
 
-if (STEAM_EAT_LIB)
-    set_target_properties(${PROJECT_NAME}-encryptedappticket PROPERTIES
-        IMPORTED_IMPLIB "${CMAKE_CURRENT_SOURCE_DIR}/public/steam/lib/${STEAM_EAT_LIB}"
-    )
-endif()
+# Copy shared libraries over to output folder.
+foreach(config ${CMAKE_CONFIGURATION_TYPES})
+    file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/redistributable_bin/${STEAM_SHLIB}"  DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config_upper}}")    
+endforeach()
+
+
