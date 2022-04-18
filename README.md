@@ -98,7 +98,6 @@ Once generated the project files are stored in the intermediate folder, at this 
 # Whats in the repository?
 ```
 /
-├── Config/               Contains any useful configuration material, server config files and alike.
 ├── Protobuf/             Contains the protobuf definitions used by the server's network traffic. Compiling them is done via the bat file in Tools/
 ├── Resources/            General resources used for building and packaging - icons/readmes/etc.
 ├── Source/               All source code for the project.

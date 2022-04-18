@@ -53,6 +53,7 @@
 Debug/
 /Bin/
 /bin/
+/Config/
 intermediate/
 Research/
 vcpkg_installed/
