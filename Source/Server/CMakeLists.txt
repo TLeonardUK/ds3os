@@ -116,8 +116,8 @@ SET(SOURCES
     Server/GameService/GameManagers/AntiCheat/AntiCheatManager.h
     Server/GameService/GameManagers/AntiCheat/AntiCheatTrigger.cpp
     Server/GameService/GameManagers/AntiCheat/AntiCheatTrigger.h
-    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlag.cpp
-    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlag.h
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.cpp
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.h
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.cpp
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.h
     Server/GameService/Utils/GameIds.h
