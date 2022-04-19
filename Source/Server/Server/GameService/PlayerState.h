@@ -24,6 +24,26 @@
         type& Get##name##_Mutable() { return name; }                        \
         void Set##name(const type& input) { name = input; Mutated(); }   
 
+struct PlayerAntiCheatState
+{
+    // The penalty score of the user, this increases as triggers occur.
+    float Penalty = 0.0f;
+
+    // If the players current anti-cheat penalty has been loaded from the database yet.
+    bool HasLoadedPenalty = false;
+
+    // If set to true, we should apply whatever penalty the user deserves 
+    // on the next iteration.
+    bool ShouldApplyPenalty = false;
+
+    // What triggers have been activated this frame. We can only activate each one
+    // once per session.
+    std::vector<std::string> TriggersThisSession;
+
+    // Cooldown between showing warning management messages.
+    float WarningMessageCooldown = 0.0f;
+};
+
 struct PlayerState
 {
 private:
@@ -41,7 +61,7 @@ public:
     DEFINE_FIELD(uint32_t, PlayerId, 0)
     
     // What character id they are currently playing.
-    DEFINE_FIELD(uint32_t, CharacterId, 0)
+    DEFINE_FIELD(int, CharacterId, -1)
     
     // The name of the character the player is currently playing with. Will be empty
     // until the first RequestUpdatePlayerStatus is invoked.
@@ -65,6 +85,9 @@ public:
     // Information the player sends and periodically patches with 
     // RequestUpdatePlayerStatus requests.
     DEFINE_FIELD(Frpg2PlayerData::AllStatus, PlayerStatus, Frpg2PlayerData::AllStatus())
+
+    // Current anti-cheat penalty score.
+    DEFINE_FIELD(PlayerAntiCheatState, AntiCheatState, {});
 };
 
 #undef DEFINE_FIELD

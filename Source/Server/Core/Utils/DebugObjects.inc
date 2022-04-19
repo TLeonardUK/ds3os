@@ -13,6 +13,7 @@ TIMER(GameService_PollTime, "Game Service (Poll Time)")
 TIMER(AuthService_PollTime, "Auth Service (Poll Time)")
 TIMER(LoginService_PollTime, "Login Service (Poll Time)")
 TIMER(DatabaseQueryTime, "Database Query Time")
+TIMER(AntiCheatTime, "Anti-Cheat Time")
 
 COUNTER(AuthConnections, "Auth Connections")
 COUNTER(LoginConnections, "Login Connections")

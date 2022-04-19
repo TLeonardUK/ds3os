@@ -27,7 +27,7 @@ void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto() {
   delete GetServiceStatusResponse::default_instance_;
   delete RequestWaitForUserLogin::default_instance_;
   delete RequestWaitForUserLoginResponse::default_instance_;
-  delete PlayerInfoUploadConfigPushMessageList::default_instance_;
+  delete PlayerStatusUploadConfig::default_instance_;
   delete AnnounceMessageData::default_instance_;
   delete AnnounceMessageDataList::default_instance_;
   delete RequestGetAnnounceMessageList::default_instance_;
@@ -234,7 +234,6 @@ void protobuf_ShutdownFile_Frpg2RequestMessage_2eproto() {
   delete NRLogUploadRequest::default_instance_;
   delete NRLoggingMessage::default_instance_;
   delete ServerPing::default_instance_;
-  delete PlayerStatusUploadConfig::default_instance_;
   delete RequestGetOnlineShopItemList::default_instance_;
   delete RequestGetOnlineShopItemListResponse::default_instance_;
   delete RequestGetOnlineShopItemListResponse_Lineup::default_instance_;
@@ -287,7 +286,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   GetServiceStatusResponse::default_instance_ = new GetServiceStatusResponse();
   RequestWaitForUserLogin::default_instance_ = new RequestWaitForUserLogin();
   RequestWaitForUserLoginResponse::default_instance_ = new RequestWaitForUserLoginResponse();
-  PlayerInfoUploadConfigPushMessageList::default_instance_ = new PlayerInfoUploadConfigPushMessageList();
+  PlayerStatusUploadConfig::default_instance_ = new PlayerStatusUploadConfig();
   AnnounceMessageData::default_instance_ = new AnnounceMessageData();
   AnnounceMessageDataList::default_instance_ = new AnnounceMessageDataList();
   RequestGetAnnounceMessageList::default_instance_ = new RequestGetAnnounceMessageList();
@@ -494,7 +493,6 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   NRLogUploadRequest::default_instance_ = new NRLogUploadRequest();
   NRLoggingMessage::default_instance_ = new NRLoggingMessage();
   ServerPing::default_instance_ = new ServerPing();
-  PlayerStatusUploadConfig::default_instance_ = new PlayerStatusUploadConfig();
   RequestGetOnlineShopItemList::default_instance_ = new RequestGetOnlineShopItemList();
   RequestGetOnlineShopItemListResponse::default_instance_ = new RequestGetOnlineShopItemListResponse();
   RequestGetOnlineShopItemListResponse_Lineup::default_instance_ = new RequestGetOnlineShopItemListResponse_Lineup();
@@ -532,7 +530,7 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   GetServiceStatusResponse::default_instance_->InitAsDefaultInstance();
   RequestWaitForUserLogin::default_instance_->InitAsDefaultInstance();
   RequestWaitForUserLoginResponse::default_instance_->InitAsDefaultInstance();
-  PlayerInfoUploadConfigPushMessageList::default_instance_->InitAsDefaultInstance();
+  PlayerStatusUploadConfig::default_instance_->InitAsDefaultInstance();
   AnnounceMessageData::default_instance_->InitAsDefaultInstance();
   AnnounceMessageDataList::default_instance_->InitAsDefaultInstance();
   RequestGetAnnounceMessageList::default_instance_->InitAsDefaultInstance();
@@ -739,7 +737,6 @@ void protobuf_AddDesc_Frpg2RequestMessage_2eproto() {
   NRLogUploadRequest::default_instance_->InitAsDefaultInstance();
   NRLoggingMessage::default_instance_->InitAsDefaultInstance();
   ServerPing::default_instance_->InitAsDefaultInstance();
-  PlayerStatusUploadConfig::default_instance_->InitAsDefaultInstance();
   RequestGetOnlineShopItemList::default_instance_->InitAsDefaultInstance();
   RequestGetOnlineShopItemListResponse::default_instance_->InitAsDefaultInstance();
   RequestGetOnlineShopItemListResponse_Lineup::default_instance_->InitAsDefaultInstance();
@@ -3416,38 +3413,38 @@ void RequestWaitForUserLoginResponse::Swap(RequestWaitForUserLoginResponse* othe
 // ===================================================================
 
 #ifndef _MSC_VER
-const int PlayerInfoUploadConfigPushMessageList::kUnknown1FieldNumber;
-const int PlayerInfoUploadConfigPushMessageList::kUnknown2FieldNumber;
+const int PlayerStatusUploadConfig::kPlayerDataMaskFieldNumber;
+const int PlayerStatusUploadConfig::kUploadIntervalFieldNumber;
 #endif  // !_MSC_VER
 
-PlayerInfoUploadConfigPushMessageList::PlayerInfoUploadConfigPushMessageList()
+PlayerStatusUploadConfig::PlayerStatusUploadConfig()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
+  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.PlayerStatusUploadConfig)
 }
 
-void PlayerInfoUploadConfigPushMessageList::InitAsDefaultInstance() {
+void PlayerStatusUploadConfig::InitAsDefaultInstance() {
 }
 
-PlayerInfoUploadConfigPushMessageList::PlayerInfoUploadConfigPushMessageList(const PlayerInfoUploadConfigPushMessageList& from)
+PlayerStatusUploadConfig::PlayerStatusUploadConfig(const PlayerStatusUploadConfig& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
+  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.PlayerStatusUploadConfig)
 }
 
-void PlayerInfoUploadConfigPushMessageList::SharedCtor() {
+void PlayerStatusUploadConfig::SharedCtor() {
   _cached_size_ = 0;
-  unknown_2_ = 0u;
+  upload_interval_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-PlayerInfoUploadConfigPushMessageList::~PlayerInfoUploadConfigPushMessageList() {
-  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
+PlayerStatusUploadConfig::~PlayerStatusUploadConfig() {
+  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.PlayerStatusUploadConfig)
   SharedDtor();
 }
 
-void PlayerInfoUploadConfigPushMessageList::SharedDtor() {
+void PlayerStatusUploadConfig::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -3456,12 +3453,12 @@ void PlayerInfoUploadConfigPushMessageList::SharedDtor() {
   }
 }
 
-void PlayerInfoUploadConfigPushMessageList::SetCachedSize(int size) const {
+void PlayerStatusUploadConfig::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const PlayerInfoUploadConfigPushMessageList& PlayerInfoUploadConfigPushMessageList::default_instance() {
+const PlayerStatusUploadConfig& PlayerStatusUploadConfig::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_Frpg2RequestMessage_2eproto();
 #else
@@ -3470,20 +3467,20 @@ const PlayerInfoUploadConfigPushMessageList& PlayerInfoUploadConfigPushMessageLi
   return *default_instance_;
 }
 
-PlayerInfoUploadConfigPushMessageList* PlayerInfoUploadConfigPushMessageList::default_instance_ = NULL;
+PlayerStatusUploadConfig* PlayerStatusUploadConfig::default_instance_ = NULL;
 
-PlayerInfoUploadConfigPushMessageList* PlayerInfoUploadConfigPushMessageList::New() const {
-  return new PlayerInfoUploadConfigPushMessageList;
+PlayerStatusUploadConfig* PlayerStatusUploadConfig::New() const {
+  return new PlayerStatusUploadConfig;
 }
 
-void PlayerInfoUploadConfigPushMessageList::Clear() {
-  unknown_2_ = 0u;
-  unknown_1_.Clear();
+void PlayerStatusUploadConfig::Clear() {
+  upload_interval_ = 0u;
+  player_data_mask_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
 
-bool PlayerInfoUploadConfigPushMessageList::MergePartialFromCodedStream(
+bool PlayerStatusUploadConfig::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
@@ -3491,39 +3488,39 @@ bool PlayerInfoUploadConfigPushMessageList::MergePartialFromCodedStream(
       mutable_unknown_fields());
   ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
+  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.PlayerStatusUploadConfig)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 unknown_1 = 1;
+      // repeated uint32 player_data_mask = 1;
       case 1: {
         if (tag == 8) {
-         parse_unknown_1:
+         parse_player_data_mask:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 8, input, this->mutable_unknown_1())));
+                 1, 8, input, this->mutable_player_data_mask())));
         } else if (tag == 10) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_unknown_1())));
+                 input, this->mutable_player_data_mask())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(8)) goto parse_unknown_1;
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(8)) goto parse_player_data_mask;
+        if (input->ExpectTag(16)) goto parse_upload_interval;
         break;
       }
 
-      // required uint32 unknown_2 = 2;
+      // required uint32 upload_interval = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_upload_interval:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &upload_interval_)));
+          set_has_upload_interval();
         } else {
           goto handle_unusual;
         }
@@ -3545,53 +3542,53 @@ bool PlayerInfoUploadConfigPushMessageList::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
+  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.PlayerStatusUploadConfig)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
+  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.PlayerStatusUploadConfig)
   return false;
 #undef DO_
 }
 
-void PlayerInfoUploadConfigPushMessageList::SerializeWithCachedSizes(
+void PlayerStatusUploadConfig::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
-  // repeated uint32 unknown_1 = 1;
-  for (int i = 0; i < this->unknown_1_size(); i++) {
+  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.PlayerStatusUploadConfig)
+  // repeated uint32 player_data_mask = 1;
+  for (int i = 0; i < this->player_data_mask_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      1, this->unknown_1(i), output);
+      1, this->player_data_mask(i), output);
   }
 
-  // required uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // required uint32 upload_interval = 2;
+  if (has_upload_interval()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->upload_interval(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList)
+  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PlayerStatusUploadConfig)
 }
 
-int PlayerInfoUploadConfigPushMessageList::ByteSize() const {
+int PlayerStatusUploadConfig::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    // required uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // required uint32 upload_interval = 2;
+    if (has_upload_interval()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+          this->upload_interval());
     }
 
   }
-  // repeated uint32 unknown_1 = 1;
+  // repeated uint32 player_data_mask = 1;
   {
     int data_size = 0;
-    for (int i = 0; i < this->unknown_1_size(); i++) {
+    for (int i = 0; i < this->player_data_mask_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->unknown_1(i));
+        UInt32Size(this->player_data_mask(i));
     }
-    total_size += 1 * this->unknown_1_size() + data_size;
+    total_size += 1 * this->player_data_mask_size() + data_size;
   }
 
   total_size += unknown_fields().size();
@@ -3602,46 +3599,46 @@ int PlayerInfoUploadConfigPushMessageList::ByteSize() const {
   return total_size;
 }
 
-void PlayerInfoUploadConfigPushMessageList::CheckTypeAndMergeFrom(
+void PlayerStatusUploadConfig::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const PlayerInfoUploadConfigPushMessageList*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const PlayerStatusUploadConfig*>(&from));
 }
 
-void PlayerInfoUploadConfigPushMessageList::MergeFrom(const PlayerInfoUploadConfigPushMessageList& from) {
+void PlayerStatusUploadConfig::MergeFrom(const PlayerStatusUploadConfig& from) {
   GOOGLE_CHECK_NE(&from, this);
-  unknown_1_.MergeFrom(from.unknown_1_);
+  player_data_mask_.MergeFrom(from.player_data_mask_);
   if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_upload_interval()) {
+      set_upload_interval(from.upload_interval());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
-void PlayerInfoUploadConfigPushMessageList::CopyFrom(const PlayerInfoUploadConfigPushMessageList& from) {
+void PlayerStatusUploadConfig::CopyFrom(const PlayerStatusUploadConfig& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool PlayerInfoUploadConfigPushMessageList::IsInitialized() const {
+bool PlayerStatusUploadConfig::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000002) != 0x00000002) return false;
 
   return true;
 }
 
-void PlayerInfoUploadConfigPushMessageList::Swap(PlayerInfoUploadConfigPushMessageList* other) {
+void PlayerStatusUploadConfig::Swap(PlayerStatusUploadConfig* other) {
   if (other != this) {
-    unknown_1_.Swap(&other->unknown_1_);
-    std::swap(unknown_2_, other->unknown_2_);
+    player_data_mask_.Swap(&other->player_data_mask_);
+    std::swap(upload_interval_, other->upload_interval_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::std::string PlayerInfoUploadConfigPushMessageList::GetTypeName() const {
-  return "Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList";
+::std::string PlayerStatusUploadConfig::GetTypeName() const {
+  return "Frpg2RequestMessage.PlayerStatusUploadConfig";
 }
 
 
@@ -4975,9 +4972,9 @@ void PlayerCharacterID::Swap(PlayerCharacterID* other) {
 
 #ifndef _MSC_VER
 const int PlayerInfoUploadConfigPushMessage::kPushMessageIdFieldNumber;
-const int PlayerInfoUploadConfigPushMessage::kUnknown2FieldNumber;
-const int PlayerInfoUploadConfigPushMessage::kUnknown3FieldNumber;
-const int PlayerInfoUploadConfigPushMessage::kUnknown4FieldNumber;
+const int PlayerInfoUploadConfigPushMessage::kConfigFieldNumber;
+const int PlayerInfoUploadConfigPushMessage::kPlayerCharacterUpdateSendDelayFieldNumber;
+const int PlayerInfoUploadConfigPushMessage::kPlayerStatusSendDelayFieldNumber;
 #endif  // !_MSC_VER
 
 PlayerInfoUploadConfigPushMessage::PlayerInfoUploadConfigPushMessage()
@@ -4988,10 +4985,10 @@ PlayerInfoUploadConfigPushMessage::PlayerInfoUploadConfigPushMessage()
 
 void PlayerInfoUploadConfigPushMessage::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  unknown_2_ = const_cast< ::Frpg2RequestMessage::PlayerInfoUploadConfigPushMessageList*>(
-      ::Frpg2RequestMessage::PlayerInfoUploadConfigPushMessageList::internal_default_instance());
+  config_ = const_cast< ::Frpg2RequestMessage::PlayerStatusUploadConfig*>(
+      ::Frpg2RequestMessage::PlayerStatusUploadConfig::internal_default_instance());
 #else
-  unknown_2_ = const_cast< ::Frpg2RequestMessage::PlayerInfoUploadConfigPushMessageList*>(&::Frpg2RequestMessage::PlayerInfoUploadConfigPushMessageList::default_instance());
+  config_ = const_cast< ::Frpg2RequestMessage::PlayerStatusUploadConfig*>(&::Frpg2RequestMessage::PlayerStatusUploadConfig::default_instance());
 #endif
 }
 
@@ -5005,9 +5002,9 @@ PlayerInfoUploadConfigPushMessage::PlayerInfoUploadConfigPushMessage(const Playe
 void PlayerInfoUploadConfigPushMessage::SharedCtor() {
   _cached_size_ = 0;
   push_message_id_ = 829;
-  unknown_2_ = NULL;
-  unknown_3_ = 0u;
-  unknown_4_ = 0u;
+  config_ = NULL;
+  player_character_update_send_delay_ = 0u;
+  player_status_send_delay_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5022,7 +5019,7 @@ void PlayerInfoUploadConfigPushMessage::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
-    delete unknown_2_;
+    delete config_;
   }
 }
 
@@ -5058,10 +5055,10 @@ void PlayerInfoUploadConfigPushMessage::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 15) {
-    ZR_(unknown_3_, unknown_4_);
+    ZR_(player_character_update_send_delay_, player_status_send_delay_);
     push_message_id_ = 829;
-    if (has_unknown_2()) {
-      if (unknown_2_ != NULL) unknown_2_->::Frpg2RequestMessage::PlayerInfoUploadConfigPushMessageList::Clear();
+    if (has_config()) {
+      if (config_ != NULL) config_->::Frpg2RequestMessage::PlayerStatusUploadConfig::Clear();
     }
   }
 
@@ -5102,46 +5099,46 @@ bool PlayerInfoUploadConfigPushMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_unknown_2;
+        if (input->ExpectTag(18)) goto parse_config;
         break;
       }
 
-      // required .Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList unknown_2 = 2;
+      // required .Frpg2RequestMessage.PlayerStatusUploadConfig config = 2;
       case 2: {
         if (tag == 18) {
-         parse_unknown_2:
+         parse_config:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_unknown_2()));
+               input, mutable_config()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_player_character_update_send_delay;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required uint32 player_character_update_send_delay = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_player_character_update_send_delay:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &player_character_update_send_delay_)));
+          set_has_player_character_update_send_delay();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_player_status_send_delay;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required uint32 player_status_send_delay = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_player_status_send_delay:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                 input, &player_status_send_delay_)));
+          set_has_player_status_send_delay();
         } else {
           goto handle_unusual;
         }
@@ -5180,20 +5177,20 @@ void PlayerInfoUploadConfigPushMessage::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
-  // required .Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList unknown_2 = 2;
-  if (has_unknown_2()) {
+  // required .Frpg2RequestMessage.PlayerStatusUploadConfig config = 2;
+  if (has_config()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, this->unknown_2(), output);
+      2, this->config(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required uint32 player_character_update_send_delay = 3;
+  if (has_player_character_update_send_delay()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->player_character_update_send_delay(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required uint32 player_status_send_delay = 4;
+  if (has_player_status_send_delay()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->player_status_send_delay(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5211,25 +5208,25 @@ int PlayerInfoUploadConfigPushMessage::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
     }
 
-    // required .Frpg2RequestMessage.PlayerInfoUploadConfigPushMessageList unknown_2 = 2;
-    if (has_unknown_2()) {
+    // required .Frpg2RequestMessage.PlayerStatusUploadConfig config = 2;
+    if (has_config()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->unknown_2());
+          this->config());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required uint32 player_character_update_send_delay = 3;
+    if (has_player_character_update_send_delay()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->player_character_update_send_delay());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required uint32 player_status_send_delay = 4;
+    if (has_player_status_send_delay()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+          this->player_status_send_delay());
     }
 
   }
@@ -5252,14 +5249,14 @@ void PlayerInfoUploadConfigPushMessage::MergeFrom(const PlayerInfoUploadConfigPu
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
-    if (from.has_unknown_2()) {
-      mutable_unknown_2()->::Frpg2RequestMessage::PlayerInfoUploadConfigPushMessageList::MergeFrom(from.unknown_2());
+    if (from.has_config()) {
+      mutable_config()->::Frpg2RequestMessage::PlayerStatusUploadConfig::MergeFrom(from.config());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_player_character_update_send_delay()) {
+      set_player_character_update_send_delay(from.player_character_update_send_delay());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_player_status_send_delay()) {
+      set_player_status_send_delay(from.player_status_send_delay());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -5274,8 +5271,8 @@ void PlayerInfoUploadConfigPushMessage::CopyFrom(const PlayerInfoUploadConfigPus
 bool PlayerInfoUploadConfigPushMessage::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
-  if (has_unknown_2()) {
-    if (!this->unknown_2().IsInitialized()) return false;
+  if (has_config()) {
+    if (!this->config().IsInitialized()) return false;
   }
   return true;
 }
@@ -5283,9 +5280,9 @@ bool PlayerInfoUploadConfigPushMessage::IsInitialized() const {
 void PlayerInfoUploadConfigPushMessage::Swap(PlayerInfoUploadConfigPushMessage* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
-    std::swap(unknown_2_, other->unknown_2_);
-    std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(config_, other->config_);
+    std::swap(player_character_update_send_delay_, other->player_character_update_send_delay_);
+    std::swap(player_status_send_delay_, other->player_status_send_delay_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -32916,7 +32913,7 @@ bool RequestRejectVisit::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
+      // required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
       case 2: {
         if (tag == 16) {
          parse_visitor_pool:
@@ -33012,7 +33009,7 @@ void RequestRejectVisit::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->player_id(), output);
   }
 
-  // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
+  // required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
   if (has_visitor_pool()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->visitor_pool(), output);
@@ -33049,7 +33046,7 @@ int RequestRejectVisit::ByteSize() const {
           this->player_id());
     }
 
-    // optional .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
+    // required .Frpg2RequestMessage.VisitorPool visitor_pool = 2;
     if (has_visitor_pool()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->visitor_pool());
@@ -33119,7 +33116,7 @@ void RequestRejectVisit::CopyFrom(const RequestRejectVisit& from) {
 }
 
 bool RequestRejectVisit::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001d) != 0x0000001d) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -52377,154 +52374,6 @@ void ServerPing::Swap(ServerPing* other) {
 
 ::std::string ServerPing::GetTypeName() const {
   return "Frpg2RequestMessage.ServerPing";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-#endif  // !_MSC_VER
-
-PlayerStatusUploadConfig::PlayerStatusUploadConfig()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:Frpg2RequestMessage.PlayerStatusUploadConfig)
-}
-
-void PlayerStatusUploadConfig::InitAsDefaultInstance() {
-}
-
-PlayerStatusUploadConfig::PlayerStatusUploadConfig(const PlayerStatusUploadConfig& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Frpg2RequestMessage.PlayerStatusUploadConfig)
-}
-
-void PlayerStatusUploadConfig::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-PlayerStatusUploadConfig::~PlayerStatusUploadConfig() {
-  // @@protoc_insertion_point(destructor:Frpg2RequestMessage.PlayerStatusUploadConfig)
-  SharedDtor();
-}
-
-void PlayerStatusUploadConfig::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void PlayerStatusUploadConfig::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const PlayerStatusUploadConfig& PlayerStatusUploadConfig::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_Frpg2RequestMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-PlayerStatusUploadConfig* PlayerStatusUploadConfig::default_instance_ = NULL;
-
-PlayerStatusUploadConfig* PlayerStatusUploadConfig::New() const {
-  return new PlayerStatusUploadConfig;
-}
-
-void PlayerStatusUploadConfig::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool PlayerStatusUploadConfig::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:Frpg2RequestMessage.PlayerStatusUploadConfig)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:Frpg2RequestMessage.PlayerStatusUploadConfig)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:Frpg2RequestMessage.PlayerStatusUploadConfig)
-  return false;
-#undef DO_
-}
-
-void PlayerStatusUploadConfig::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Frpg2RequestMessage.PlayerStatusUploadConfig)
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:Frpg2RequestMessage.PlayerStatusUploadConfig)
-}
-
-int PlayerStatusUploadConfig::ByteSize() const {
-  int total_size = 0;
-
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void PlayerStatusUploadConfig::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const PlayerStatusUploadConfig*>(&from));
-}
-
-void PlayerStatusUploadConfig::MergeFrom(const PlayerStatusUploadConfig& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void PlayerStatusUploadConfig::CopyFrom(const PlayerStatusUploadConfig& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool PlayerStatusUploadConfig::IsInitialized() const {
-
-  return true;
-}
-
-void PlayerStatusUploadConfig::Swap(PlayerStatusUploadConfig* other) {
-  if (other != this) {
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string PlayerStatusUploadConfig::GetTypeName() const {
-  return "Frpg2RequestMessage.PlayerStatusUploadConfig";
 }
 
 

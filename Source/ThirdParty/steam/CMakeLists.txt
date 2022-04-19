@@ -43,6 +43,7 @@ endif()
 
 # Copy shared libraries over to output folder.
 foreach(config ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${config} config_upper)
     file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/redistributable_bin/${STEAM_SHLIB}"  DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config_upper}}")    
 endforeach()
 

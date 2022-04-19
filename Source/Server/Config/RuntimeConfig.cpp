@@ -253,13 +253,35 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(DisableGhosts);
     SERIALIZE_VAR(DisableInvasionAutoSummon);
     SERIALIZE_VAR(DisableCoopAutoSummon);
-    SERIALIZE_VAR(IgnoreInvasionAreaFilter)
+    SERIALIZE_VAR(IgnoreInvasionAreaFilter);
+    SERIALIZE_VAR(PlayerStatusUploadInterval);
+    SERIALIZE_VAR(PlayerCharacterUpdateSendDelay);
+    SERIALIZE_VAR(PlayerStatusUploadSendDelay);
     SERIALIZE_STRUCT_VAR(SummonSignMatchingParameters);
     SERIALIZE_STRUCT_VAR(WayOfBlueMatchingParameters);
     SERIALIZE_STRUCT_VAR(DarkSpiritInvasionMatchingParameters);
     SERIALIZE_STRUCT_VAR(MoundMakerInvasionMatchingParameters);
     SERIALIZE_STRUCT_VAR(CovenantInvasionMatchingParameters);
     SERIALIZE_STRUCT_VAR(UndeadMatchMatchingParameters);
+
+    SERIALIZE_VAR(AntiCheatEnabled);
+    SERIALIZE_VAR(AntiCheatWarningMessage);
+    SERIALIZE_VAR(AntiCheatDisconnectMessage);
+    SERIALIZE_VAR(AntiCheatBanMessage);
+    SERIALIZE_VAR(AntiCheatSendWarningMessageInGame);
+    SERIALIZE_VAR(AntiCheatSendWarningMessageInGameInterval);
+    SERIALIZE_VAR(AntiCheatWarningThreshold);
+    SERIALIZE_VAR(AntiCheatDisconnectThreshold);
+    SERIALIZE_VAR(AntiCheatBanThreshold);
+    SERIALIZE_VAR(AntiCheatScore_ClientFlagged);
+    SERIALIZE_VAR(AntiCheatScore_ImpossibleStats);
+    SERIALIZE_VAR(AntiCheatScore_RceExploit);
+    SERIALIZE_VAR(AntiCheatScore_ImpossibleName);
+    SERIALIZE_VAR(AntiCheatScore_ImpossibleStatDelta);
+    SERIALIZE_VAR(AntiCheatScore_ImpossibleGetItemQuantity);
+    SERIALIZE_VAR(AntiCheatScore_ImpossiblePlayTime);
+    SERIALIZE_VAR(AntiCheatScore_ImpossibleLocation);
+    SERIALIZE_VAR(AntiCheatScore_UnfairDisconnect);
 
     return true;
 }

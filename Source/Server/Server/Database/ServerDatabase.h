@@ -170,6 +170,19 @@ public:
     // to act as a sample at the current point in time.
     void AddMatchingSample(const std::string& Name, const std::string& Scope, int64_t Count, uint32_t Level, uint32_t WeaponLevel);
 
+    // ----------------------------------------------------------------
+    // Anticheat interface
+    // ----------------------------------------------------------------
+
+    // Gets a given users current penalty score.
+    float GetAntiCheatPenaltyScore(const std::string& SteamId);
+
+    // Increments a given users penalty score.
+    void AddAntiCheatPenaltyScore(const std::string& SteamId, float Amount);
+
+    // Stores a log of the anticheat trigger that trigger for a given user.
+    void LogAntiCheatTrigger(const std::string& SteamId, const std::string& TriggerName, float Penalty, const std::string& ExtraInfo);
+
 protected:
 
     using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>, int64_t>;

@@ -76,6 +76,10 @@ enum NetMode {
 }
 
 message PlayerStatus {
+
+    // Ranking registration is probably in here somewhere.
+    // Invasion time limit is also probably here
+
     optional uint32 regulation_version = 1;                
     optional uint32 unknown_2 = 2;                           // 2
 
@@ -148,7 +152,7 @@ message PlayerStatus {
     optional ResistanceInfo armor_resistance_info = 60;
     optional ResistanceInfo base_resistance_info = 61;
 
-    repeated int32 anticheat_data = 62;                         // This is anti-cheat data.
+    repeated int32 anticheat_data = 62;                         // This is anti-cheat data. If it contains 0x1770 you're getting banned.
 
     optional int32 unknown_63 = 63;                         // 98
     optional int32 estus_flask_max = 64;                    

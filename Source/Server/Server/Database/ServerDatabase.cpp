@@ -147,6 +147,22 @@ bool ServerDatabase::CreateTables()
         "   PlayerSteamId       CHAR(50)"                                           \
         ");"
     );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS AntiCheatStates("                               \
+        "   StateId             INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   PlayerSteamId       CHAR(50),"                                          \
+        "   Score               REAL"                                               \
+        ");"
+    );
+    tables.push_back(
+        "CREATE TABLE IF NOT EXISTS AntiCheatLogs("                                 \
+        "   LogId               INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
+        "   PlayerSteamId       CHAR(50),"                                          \
+        "   Score               REAL,"                                              \
+        "   TriggerName         CHAR(1024),"                                        \
+        "   ExtraInfo           CHAR(1024)"                                         \
+        ");"
+    );
 
     for (const std::string& statement : tables)
     {
@@ -832,6 +848,41 @@ int64_t ServerDatabase::GetPlayerStatistic(const std::string& Name, uint32_t Pla
     snprintf(Scope, 64, "Player/%u", PlayerId);
 
     return GetStatistic(Name, Scope);
+}
+
+float ServerDatabase::GetAntiCheatPenaltyScore(const std::string& SteamId)
+{
+    float Result = 0.0f;
+
+    RunStatement("SELECT Score FROM AntiCheatStates WHERE PlayerSteamId = ?1 LIMIT 1", { SteamId }, [&Result](sqlite3_stmt* statement) {
+        Result = (float)sqlite3_column_double(statement, 0);
+    });
+
+    return Result;
+}
+
+void ServerDatabase::AddAntiCheatPenaltyScore(const std::string& SteamId, float Amount)
+{
+    if (!RunStatement("UPDATE AntiCheatStates SET Score = Score + ?2 WHERE PlayerSteamId = ?1", { SteamId, Amount }, nullptr))
+    {
+        return;
+    }
+
+    if (sqlite3_changes(db_handle) == 0)
+    {
+        if (!RunStatement("INSERT INTO AntiCheatStates(PlayerSteamId, Score) VALUES(?1, ?2)", { SteamId, Amount }, nullptr))
+        {
+            return;
+        }
+    }
+}
+
+void ServerDatabase::LogAntiCheatTrigger(const std::string& SteamId, const std::string& TriggerName, float Penalty, const std::string& ExtraInfo)
+{
+    if (!RunStatement("INSERT INTO AntiCheatLogs(PlayerSteamId, Score, TriggerName, ExtraInfo) VALUES(?1, ?2, ?3, ?4)", { SteamId, Penalty, TriggerName, ExtraInfo }, nullptr))
+    {
+        return;
+    }
 }
 
 void ServerDatabase::TrimTable(const std::string& TableName, const std::string& IdColumn, size_t MaxEntries)

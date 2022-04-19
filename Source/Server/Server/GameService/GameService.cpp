@@ -22,6 +22,7 @@
 #include "Server/GameService/GameManagers/Visitor/VisitorManager.h"
 #include "Server/GameService/GameManagers/Mark/MarkManager.h"
 #include "Server/GameService/GameManagers/Misc/MiscManager.h"
+#include "Server/GameService/GameManagers/AntiCheat/AntiCheatManager.h"
 
 #include "Server/Server.h"
 #include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
@@ -57,6 +58,7 @@ GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     Managers.push_back(std::make_shared<VisitorManager>(ServerInstance, this));
     Managers.push_back(std::make_shared<MarkManager>(ServerInstance));
     Managers.push_back(std::make_shared<MiscManager>(ServerInstance, this));
+    Managers.push_back(std::make_shared<AntiCheatManager>(ServerInstance, this));
 }
 
 GameService::~GameService()

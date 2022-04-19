@@ -112,6 +112,14 @@ SET(SOURCES
     Server/GameService/GameManagers/Signs/SignManager.h
     Server/GameService/GameManagers/Visitor/VisitorManager.cpp
     Server/GameService/GameManagers/Visitor/VisitorManager.h
+    Server/GameService/GameManagers/AntiCheat/AntiCheatManager.cpp
+    Server/GameService/GameManagers/AntiCheat/AntiCheatManager.h
+    Server/GameService/GameManagers/AntiCheat/AntiCheatTrigger.cpp
+    Server/GameService/GameManagers/AntiCheat/AntiCheatTrigger.h
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlag.cpp
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlag.h
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.cpp
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.h
     Server/GameService/Utils/GameIds.h
     Server/GameService/Utils/NRSSRSanitizer.h
     Server/GameService/Utils/OnlineAreaPool.h

@@ -129,7 +129,6 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         State.GetPlayerStatus_Mutable().mutable_player_status()->clear_anticheat_data();
     }
     State.GetPlayerStatus_Mutable().MergeFrom(status);
-    State.Mutated();
 
     // Keep track of the players character id.
     if (State.GetPlayerStatus().player_status().has_character_id())
