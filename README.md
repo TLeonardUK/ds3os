@@ -7,8 +7,6 @@ Idealistically made for the purpose of allow better alternatives to playing mods
 
 :bangbang: This project is still a work in progress, no guarantees are given over its stability (that said it works quite well now!).
 
-![Build Status](https://github.com/TLeonardUK/ds3os/actions/workflows/ci.yml/badge.svg)
-
 # Can I use it with a pirated game?
 No, the server authenticates steam tickets. Please do not ask about piracy, steam emulators or the like, we have no interest in supporting them. 
 
