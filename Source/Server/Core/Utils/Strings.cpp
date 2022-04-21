@@ -11,6 +11,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include <string>
 
 std::string BytesToHex(const std::vector<uint8_t>& Bytes)
 {
@@ -52,4 +53,42 @@ std::string BytesToString(const std::vector<uint8_t>& Bytes, const std::string& 
     }
 
     return result;
+}
+
+
+std::string TrimString(const std::string& input)
+{
+    size_t startWhiteCount = 0;
+    size_t endWhiteCount = 0;
+
+    for (size_t i = 0; i < input.size(); i++)
+    {
+        if (input[i] < 32)
+        {
+            startWhiteCount++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    for (size_t i = 0; i < input.size(); i++)
+    {
+        if (input[input.size() - (i + 1)] < 32)
+        {
+            endWhiteCount++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (startWhiteCount + endWhiteCount >= input.size())
+    {
+        return "";
+    }
+
+    return input.substr(startWhiteCount, input.size() - startWhiteCount - endWhiteCount);
 }

@@ -325,11 +325,14 @@ public:
     // How much gets added to the players penalty score when impossible stats are detected (eg. 99 in each stat, but level 1).
     float AntiCheatScore_ImpossibleStats = 20;
 
-    // How much gets added to the players penalty score when a potential RCE exploit is detected.
-    float AntiCheatScore_RceExploit = 100;
-
     // How much gets added to the players penalty score when they have an impossible name (eg. blank)
     float AntiCheatScore_ImpossibleName = 20;
+
+
+    // Unimplemented
+
+    // How much gets added to the players penalty score when a potential RCE exploit is detected.
+    float AntiCheatScore_RceExploit = 100;
 
     // How much gets added to the players penalty score when the delta between their stats on one update and another is impossible (eg. going from level 1 to 100).
     float AntiCheatScore_ImpossibleStatDelta = 20;

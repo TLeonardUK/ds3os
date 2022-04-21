@@ -120,6 +120,8 @@ SET(SOURCES
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.h
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.cpp
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.h
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_InvalidName.cpp
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_InvalidName.h
     Server/GameService/Utils/GameIds.h
     Server/GameService/Utils/NRSSRSanitizer.h
     Server/GameService/Utils/OnlineAreaPool.h

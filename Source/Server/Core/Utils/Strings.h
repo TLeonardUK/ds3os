@@ -29,3 +29,5 @@ std::string StringFormat(const char* format, Args... args)
 
     return std::string(buffer.get(), buffer.get() + size - 1); // We don't want the '\0' inside
 }
+
+std::string TrimString(const std::string& input);

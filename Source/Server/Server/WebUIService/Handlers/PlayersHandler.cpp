@@ -36,7 +36,10 @@ void PlayersHandler::GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClie
     auto Status = State.GetPlayerStatus().player_status();
     auto LogInfo = State.GetPlayerStatus().log_info();
 
-    Info.SteamId = State.GetSteamId();
+    uint64_t SteamIdInt;
+    sscanf(State.GetSteamId().c_str(), "%016llx", &SteamIdInt);
+
+    Info.SteamId = std::to_string(SteamIdInt);
     Info.PlayerId = State.GetPlayerId();
     Info.CharacterName = State.GetCharacterName();
     Info.DeathCount = LogInfo.death_count();

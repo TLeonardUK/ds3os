@@ -10,6 +10,7 @@
 #include "Server/GameService/GameManagers/AntiCheat/AntiCheatManager.h"
 #include "Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.h"
 #include "Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.h"
+#include "Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_InvalidName.h"
 
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
@@ -32,6 +33,7 @@ AntiCheatManager::AntiCheatManager(Server* InServerInstance, GameService* InGame
 {
     Triggers.push_back(std::make_shared<AntiCheatTrigger_ClientFlagged>(this, InServerInstance, InGameServiceInstance));
     Triggers.push_back(std::make_shared<AntiCheatTrigger_ImpossibleStats>(this, InServerInstance, InGameServiceInstance));
+    Triggers.push_back(std::make_shared<AntiCheatTrigger_InvalidName>(this, InServerInstance, InGameServiceInstance));
 }
 
 void AntiCheatManager::Poll()

@@ -447,8 +447,7 @@ function refreshPlayersTab()
             var player = data.players[i];
             newHtml += `        
                 <tr>
-                    <td class="mdl-data-table__cell--non-numeric">${player["steamId"]}</td>
-                    <td class="mdl-data-table__cell--non-numeric">${player["characterName"]}</td>
+                    <td class="mdl-data-table__cell--non-numeric"><a href="https://steamcommunity.com/profiles/${player["steamId"]}">${player["characterName"]}</a></td>
                     <td>${player["soulLevel"]}</td>
                     <td>${player["soulMemory"]}</td>
                     <td>${player["covenant"]}</td>
@@ -456,6 +455,7 @@ function refreshPlayersTab()
                     <td>${player["location"]}</td>
                     <td>${player["playTime"]}</td>
                     <td>${player["connectionTime"]}</td>
+                    <td>${player["antiCheatScore"]}</td>
                     <td>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="disconnectUser(${player["playerId"]})">
                             Disconnect
@@ -514,7 +514,8 @@ function refreshSettingsTab()
         setMaterialCheckState(document.querySelector("#disable-auto-summon-invasions"), data.disableAutoSummonInvasions);
         setMaterialCheckState(document.querySelector("#disable-weapon-level-matching"), data.disableWeaponLevelMatching);
         setMaterialCheckState(document.querySelector("#disable-soul-level-matching"), data.disableSoulLevelMatching);
-        setMaterialCheckState(document.querySelector("#ignore-invasion-area-filter"), data.ignoreInvasionAreaFilter);        
+        setMaterialCheckState(document.querySelector("#ignore-invasion-area-filter"), data.ignoreInvasionAreaFilter);
+        setMaterialCheckState(document.querySelector("#anti-cheat-enabled"), data.antiCheatEnabled);
     })
     .catch(function (error) 
     {
@@ -551,7 +552,8 @@ function saveSettings()
             "disableAutoSummonInvasions": document.querySelector("#disable-auto-summon-invasions").checked,
             "disableWeaponLevelMatching": document.querySelector("#disable-weapon-level-matching").checked,
             "disableSoulLevelMatching": document.querySelector("#disable-soul-level-matching").checked,    
-            "ignoreInvasionAreaFilter": document.querySelector("#ignore-invasion-area-filter").checked,    
+            "ignoreInvasionAreaFilter": document.querySelector("#ignore-invasion-area-filter").checked,
+            "antiCheatEnabled": document.querySelector("#anti-cheat-enabled").checked,
         })
     })
     .catch(function (error) 
