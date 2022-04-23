@@ -492,7 +492,7 @@ void Server::PollDiscordNotices()
                     attachSoulLevels = true;
 
                     BossId bossId = static_cast<BossId>(Notice.extraId);
-                    if (auto& Iter = DiscordBossThumbnails.find(bossId); Iter != DiscordBossThumbnails.end())
+                    if (auto Iter = DiscordBossThumbnails.find(bossId); Iter != DiscordBossThumbnails.end())
                     {
                         thumbnailUrl = Iter->second;
                     }
