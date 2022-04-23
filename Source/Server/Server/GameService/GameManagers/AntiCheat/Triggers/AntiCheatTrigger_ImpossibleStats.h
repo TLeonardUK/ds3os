@@ -12,6 +12,8 @@
 #include "Server/GameService/GameManagers/AntiCheat/AntiCheatManager.h"
 #include "Server/GameService/GameManagers/AntiCheat/AntiCheatTrigger.h"
 
+#include "Server/GameService/Utils/GameIds.h"
+
 #include <string>
 #include <memory>
 #include <unordered_map>
@@ -72,6 +74,61 @@ protected:
         { StatType::Intelligence,   7 },
         { StatType::Faith,          7 },
         { StatType::Luck,           7 }
+    };
+
+    using StatAdjustments = std::unordered_map<StatType, int>;
+    inline const static std::unordered_map<int, StatAdjustments> k_ItemStatAdjustments = {
+
+        // Prisoner's Chain
+        {
+            20550, 
+            { 
+                { StatType::Vigor,          5 },
+                { StatType::Endurance,      5 },
+                { StatType::Vitality,       5 }
+            }
+        },
+
+        // Knights Ring,
+        {
+            20460,
+            {
+                { StatType::Strength,       5 }
+            }
+        },
+
+        // Hunters Ring,
+        {
+            20470,
+            {
+                { StatType::Dexterity,      5 }
+            }
+        },
+
+        // Scholars Ring,
+        {
+            20150,
+            {
+                { StatType::Intelligence,   5 }
+            }
+        },
+
+        // Priestess Ring,
+        {
+            20160,
+            {
+                { StatType::Faith,          5 }
+            }
+        },
+
+        // Carthus Milkring
+        {
+            20450,
+            {
+                { StatType::Dexterity,      3 }
+            }
+        }
+
     };
 
 };

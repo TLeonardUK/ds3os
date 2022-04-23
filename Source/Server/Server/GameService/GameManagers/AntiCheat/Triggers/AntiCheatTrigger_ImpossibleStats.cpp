@@ -50,9 +50,10 @@ AntiCheatTrigger_ImpossibleStats::AntiCheatTrigger_ImpossibleStats(AntiCheatMana
 bool AntiCheatTrigger_ImpossibleStats::Scan(std::shared_ptr<GameClient> client, std::string& extraInfo)
 {
     auto& AllStatus = client->GetPlayerState().GetPlayerStatus();
-    if (AllStatus.has_player_status())
+    if (AllStatus.has_player_status() && AllStatus.has_equipment())
     {
         auto& PlayerStatus = AllStatus.player_status();
+        auto& Equipment = AllStatus.equipment();
 
         // Ensure soul level is inside sane bounds.
         if (PlayerStatus.soul_level() <= 0 || PlayerStatus.soul_level() > k_max_soul_level)
@@ -72,6 +73,24 @@ bool AntiCheatTrigger_ImpossibleStats::Scan(std::shared_ptr<GameClient> client, 
             { StatType::Faith,          PlayerStatus.faith() },
             { StatType::Luck,           PlayerStatus.luck() },
         };
+
+        // Adjust stats based on items held so we can the "base stats".
+        auto AdjustStats = [&Stats](int id)
+        {
+            if (auto Iter = k_ItemStatAdjustments.find(id); Iter != k_ItemStatAdjustments.end())
+            {
+                const StatAdjustments& Adjustments = Iter->second;
+                for (auto& Pair : Adjustments)
+                {
+                    Stats[Pair.first] -= Pair.second;
+                }
+            }
+        };
+
+        AdjustStats(Equipment.ring_1());
+        AdjustStats(Equipment.ring_2());
+        AdjustStats(Equipment.ring_3());
+        AdjustStats(Equipment.ring_4());
 
         // Check all the stats are inside sane bounds.
         int TotalStats = 0;

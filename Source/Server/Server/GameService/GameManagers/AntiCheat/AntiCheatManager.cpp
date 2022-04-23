@@ -86,7 +86,7 @@ void AntiCheatManager::Poll()
                     ServerInstance->GetDatabase().AddAntiCheatPenaltyScore(State.GetSteamId(), AntiCheatState.Penalty);
                     ServerInstance->GetDatabase().LogAntiCheatTrigger(State.GetSteamId(), Trigger->GetName(), AntiCheatState.Penalty, ExtraInfo);
 
-                    if (Config.SendDiscordNotice_AntiCheat)
+                    if (Config.SendDiscordNotice_AntiCheat && Config.AntiCheatApplyPenalties)
                     {
                         ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, StringFormat("Flagged for cheating: %s", ExtraInfo.c_str()));
                     }
@@ -95,57 +95,60 @@ void AntiCheatManager::Poll()
         }
     }
 
-    // Apply penalties to any users who are causing issues.
-    for (auto& Player : GameServiceInstance->GetClients())
+    if (Config.AntiCheatApplyPenalties)
     {
-        PlayerState& State = Player->GetPlayerState();
-        PlayerAntiCheatState& AntiCheatState = State.GetAntiCheatState_Mutable();
-
-        if (AntiCheatState.ShouldApplyPenalty)
+        // Apply penalties to any users who are causing issues.
+        for (auto& Player : GameServiceInstance->GetClients())
         {
-            std::string WarningMessage = "";
+            PlayerState& State = Player->GetPlayerState();
+            PlayerAntiCheatState& AntiCheatState = State.GetAntiCheatState_Mutable();
 
-            if (AntiCheatState.Penalty > Config.AntiCheatBanThreshold)
+            if (AntiCheatState.ShouldApplyPenalty)
             {
-                // Ban and disconnect.
-                ServerInstance->GetDatabase().BanPlayer(State.GetSteamId());
-                Player->DisconnectTime = GetSeconds() + 10.0f;
+                std::string WarningMessage = "";
 
-                WarningMessage = Config.AntiCheatBanMessage;
-                AntiCheatState.ShouldApplyPenalty = false;
-
-                if (Config.SendDiscordNotice_AntiCheat)
+                if (AntiCheatState.Penalty > Config.AntiCheatBanThreshold)
                 {
-                    ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, "Banned for cheating.");
+                    // Ban and disconnect.
+                    ServerInstance->GetDatabase().BanPlayer(State.GetSteamId());
+                    Player->DisconnectTime = GetSeconds() + 10.0f;
+
+                    WarningMessage = Config.AntiCheatBanMessage;
+                    AntiCheatState.ShouldApplyPenalty = false;
+
+                    if (Config.SendDiscordNotice_AntiCheat)
+                    {
+                        ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, "Banned for cheating.");
+                    }
                 }
-            }
-            else if (AntiCheatState.Penalty > Config.AntiCheatDisconnectThreshold)
-            {
-                // Disconnect.
-                Player->DisconnectTime = GetSeconds() + 10.0f;
-
-                WarningMessage = Config.AntiCheatDisconnectMessage;
-                AntiCheatState.ShouldApplyPenalty = false;
-
-                if (Config.SendDiscordNotice_AntiCheat)
+                else if (AntiCheatState.Penalty > Config.AntiCheatDisconnectThreshold)
                 {
-                    ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, "Disconnected for cheating.");
+                    // Disconnect.
+                    Player->DisconnectTime = GetSeconds() + 10.0f;
+
+                    WarningMessage = Config.AntiCheatDisconnectMessage;
+                    AntiCheatState.ShouldApplyPenalty = false;
+
+                    if (Config.SendDiscordNotice_AntiCheat)
+                    {
+                        ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, "Disconnected for cheating.");
+                    }
                 }
-            }
-            else if (AntiCheatState.Penalty > Config.AntiCheatWarningThreshold)
-            {
-                // Send a warning.
-                WarningMessage = Config.AntiCheatWarningMessage;
-
-                // Don't reset penalty flag, we will keep sending the message during this session.
-            }
-
-            if (Config.AntiCheatSendWarningMessageInGame)
-            {
-                if (GetSeconds() > AntiCheatState.WarningMessageCooldown)
+                else if (AntiCheatState.Penalty > Config.AntiCheatWarningThreshold)
                 {
-                    Player->SendTextMessage(WarningMessage);
-                    AntiCheatState.WarningMessageCooldown = GetSeconds() + Config.AntiCheatSendWarningMessageInGameInterval;
+                    // Send a warning.
+                    WarningMessage = Config.AntiCheatWarningMessage;
+
+                    // Don't reset penalty flag, we will keep sending the message during this session.
+                }
+
+                if (Config.AntiCheatSendWarningMessageInGame)
+                {
+                    if (GetSeconds() > AntiCheatState.WarningMessageCooldown)
+                    {
+                        Player->SendTextMessage(WarningMessage);
+                        AntiCheatState.WarningMessageCooldown = GetSeconds() + Config.AntiCheatSendWarningMessageInGameInterval;
+                    }
                 }
             }
         }
