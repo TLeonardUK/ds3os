@@ -79,8 +79,8 @@ bool NetHttpRequest::StartRequest()
     curl_easy_setopt(Handle, CURLOPT_WRITEFUNCTION, RecieveBodyFunction);
     curl_easy_setopt(Handle, CURLOPT_WRITEDATA, Response.get());
     curl_easy_setopt(Handle, CURLOPT_HTTPHEADER, Headers);
-    curl_easy_setopt(Handle, CURLOPT_SSL_VERIFYPEER, FALSE);
-    curl_easy_setopt(Handle, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_easy_setopt(Handle, CURLOPT_SSL_VERIFYPEER, false);
+    curl_easy_setopt(Handle, CURLOPT_SSL_VERIFYHOST, false);
 
     switch (Method)
     {
