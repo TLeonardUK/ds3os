@@ -475,14 +475,14 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillBoss(GameClient* Cli
         return MessageHandleResult::Error;
     }
     
-    if (ServerInstance->GetConfig().SendDiscordNotice_Bell)
+    if (ServerInstance->GetConfig().SendDiscordNotice_Boss)
     {
         BossId Id = (BossId)Request->boss_id();
 
-        ServerInstance->SetDiscordNotice(StringFormat("Player '%s' killed '%s'.",
-            Client->GetPlayerState().GetCharacterName().c_str(),
+        ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::BossKilled, StringFormat("Killed '%s'.",
             GetEnumString<BossId>(Id).c_str()
-        ));
+        ),
+        static_cast<uint32_t>(Id));
     }
 
     return MessageHandleResult::Handled;

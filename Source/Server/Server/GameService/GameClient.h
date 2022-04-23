@@ -26,8 +26,10 @@ struct SummonSign;
 // Represents an individual client connected to the game service.
 
 class GameClient 
+    : public std::enable_shared_from_this<GameClient>
 {
 public:
+    GameClient() {}
     GameClient(GameService* OwningService, std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken);
 
     // If this returns true the client is expected to be disconnected and is disposed of.

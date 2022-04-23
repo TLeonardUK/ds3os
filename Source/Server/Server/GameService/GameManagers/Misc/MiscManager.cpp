@@ -114,9 +114,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
 
     if (ServerInstance->GetConfig().SendDiscordNotice_Bell)
     {
-        ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has rung archdragon bell.",
-            Client->GetPlayerState().GetCharacterName().c_str()
-        ));
+        ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::Bell, "Rung archdragon bell.");
     }
 
     return MessageHandleResult::Handled;

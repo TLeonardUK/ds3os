@@ -290,7 +290,7 @@ public:
     };    
 
     // If enabled player behaviour will be scanned for cheating, and appropriate penalties applied.
-    bool AntiCheatEnabled = true;
+    bool AntiCheatEnabled = false;
 
     // Message shown to a user in announcements if they have been flagged as cheating.
     std::string AntiCheatWarningMessage = "Your account has been flagged for unfair play, if this continues you may be disconnected or banned from the server.";

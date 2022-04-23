@@ -88,7 +88,7 @@ void AntiCheatManager::Poll()
 
                     if (Config.SendDiscordNotice_AntiCheat)
                     {
-                        ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has been flagged for cheating: %s", State.GetCharacterName().c_str(), ExtraInfo.c_str()));
+                        ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, StringFormat("Flagged for cheating: %s", ExtraInfo.c_str()));
                     }
                 }
             }
@@ -116,7 +116,7 @@ void AntiCheatManager::Poll()
 
                 if (Config.SendDiscordNotice_AntiCheat)
                 {
-                    ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has been banned for cheating.", State.GetCharacterName().c_str()));
+                    ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, "Banned for cheating.");
                 }
             }
             else if (AntiCheatState.Penalty > Config.AntiCheatDisconnectThreshold)
@@ -129,7 +129,7 @@ void AntiCheatManager::Poll()
 
                 if (Config.SendDiscordNotice_AntiCheat)
                 {
-                    ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has been disconnected for cheating.", State.GetCharacterName().c_str()));
+                    ServerInstance->SendDiscordNotice(Player, DiscordNoticeType::AntiCheat, "Disconnected for cheating.");
                 }
             }
             else if (AntiCheatState.Penalty > Config.AntiCheatWarningThreshold)

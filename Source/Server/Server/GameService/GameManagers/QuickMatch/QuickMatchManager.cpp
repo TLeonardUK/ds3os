@@ -251,8 +251,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
                 case Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo_Team:        ModeName = "Team 2 v 2";        break;
             }
 
-            ServerInstance->SetDiscordNotice(StringFormat("Player '%s' (SL %i, WL %i) started a public '%s' undead match.",
-                Client->GetPlayerState().GetCharacterName().c_str(),
+            ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::UndeadMatch, StringFormat("Started a public '%s' undead match.",
                 NewMatch->MatchingParams.soul_level(),
                 NewMatch->MatchingParams.weapon_level(),
                 ModeName.c_str()

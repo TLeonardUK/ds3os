@@ -17,7 +17,7 @@
 
 namespace 
 {
-    int CalculateMinimumLevelUpCost(int SoulLevel)
+    size_t CalculateMinimumLevelUpCost(int SoulLevel)
     {
         // We skip levels below 13, then use a seperate calculation and our starting classes
         // will bias the costs. So the result may be a little lower than normal.
@@ -27,15 +27,15 @@ namespace
             return 0;
         }
 
-        int Total = 0;
+        size_t Total = 0;
 
-        int SoulLevel2 = SoulLevel * SoulLevel;
-        int SoulLevel3 = SoulLevel * SoulLevel * SoulLevel;
+        size_t SoulLevel2 = SoulLevel * SoulLevel;
+        size_t SoulLevel3 = SoulLevel * SoulLevel * SoulLevel;
 
-        for (int i = 13; i <= SoulLevel; i++)
+        for (size_t i = 13; i <= SoulLevel; i++)
         {
-            float LevelCost = (0.02f * SoulLevel3 + 3.06f * SoulLevel2 + 105.6 * SoulLevel - 895);
-            Total += static_cast<int>(LevelCost);
+            double LevelCost = (0.02 * SoulLevel3 + 3.06 * SoulLevel2 + 105.6 * SoulLevel - 895);
+            Total += static_cast<size_t>(LevelCost);
         }
 
         return Total;
@@ -93,6 +93,8 @@ bool AntiCheatTrigger_ImpossibleStats::Scan(std::shared_ptr<GameClient> client, 
             TotalStats += Pair.second;
         }
 
+        // TODO: Reduce total stats by number boost by items.
+
         // Check its actually possible to acquire this many stats at this level.
         int MaxTotalStats = k_level_1_stat_count + (PlayerStatus.soul_level() - 1);
         if (TotalStats > MaxTotalStats)
@@ -102,7 +104,7 @@ bool AntiCheatTrigger_ImpossibleStats::Scan(std::shared_ptr<GameClient> client, 
         }
 
         // Ensure soul memory is equal or greater than the total cost to level up to this level.
-        int LevelCost = CalculateMinimumLevelUpCost(PlayerStatus.soul_level());
+        size_t LevelCost = CalculateMinimumLevelUpCost(PlayerStatus.soul_level());
         if (PlayerStatus.soul_memory() < LevelCost)
         {
             extraInfo = StringFormat("Level %i requires %i souls, but only has a memory of %i.", PlayerStatus.soul_level(), LevelCost, PlayerStatus.soul_memory());

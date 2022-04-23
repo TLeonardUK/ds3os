@@ -14,6 +14,7 @@
 #include "Server/LoginService/LoginService.h"
 #include "Server/AuthService/AuthService.h"
 #include "Server/GameService/GameService.h"
+#include "Server/GameService/GameClient.h"
 #include "Server/WebUIService/WebUIService.h"
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
@@ -417,14 +418,27 @@ void Server::SaveConfig()
     }
 }
 
-void Server::SetDiscordNotice(const std::string& message)
+void Server::SendDiscordNotice(std::shared_ptr<GameClient> origin, DiscordNoticeType noticeType, const std::string& message, uint32_t extraId)
 {
     if (Config.DiscordWebHookUrl.empty())
     {
         return;
     }
 
-    PendingDiscordNotices.push(message);
+    uint32_t PlayerId = origin->GetPlayerState().GetPlayerId();
+
+    if (auto Iter = DiscordOriginCooldown.find(PlayerId); Iter != DiscordOriginCooldown.end())
+    {
+        float Elapsed = GetSeconds() - Iter->second;
+        if (Elapsed < k_DiscordOriginCooldownMin)
+        {
+            return;
+        }
+    }
+
+    DiscordOriginCooldown[PlayerId] = GetSeconds();
+
+    PendingDiscordNotices.push({ origin, noticeType, message, extraId });
 }
 
 void Server::PollDiscordNotices()
@@ -433,18 +447,108 @@ void Server::PollDiscordNotices()
     {
         if (!PendingDiscordNotices.empty())
         {
-            std::string Message = PendingDiscordNotices.front();
+            PendingDiscordNotice Notice = PendingDiscordNotices.front();
             PendingDiscordNotices.pop();
 
-            nlohmann::json Body;
-            Body["content"] = Message;
+            auto embeds = nlohmann::json::array();
 
-            Log("Sending notification: %s", Message.c_str());
+            uint64_t SteamId64;
+            sscanf(Notice.origin->GetPlayerState().GetSteamId().c_str(), "%016llx", &SteamId64);
+
+            auto author = nlohmann::json::object();
+            auto embed = nlohmann::json::object();
+
+            bool attachSoulLevels = false;
+            std::unordered_map<std::string, std::string> fields;
+            std::string thumbnailUrl = "";
+
+            switch (Notice.type)
+            {
+                case DiscordNoticeType::AntiCheat:
+                {
+                    embed["color"] = "14423100"; // Red
+                    break;
+                }
+                case DiscordNoticeType::Bell:
+                {
+                    embed["color"] = "8900346"; // Blue
+                    break;
+                }
+                case DiscordNoticeType::UndeadMatch:
+                {
+                    embed["color"] = "3329330"; // Green
+                    attachSoulLevels = true;
+                    break;
+                }
+                case DiscordNoticeType::SummonSign:
+                {
+                    embed["color"] = "16316671"; // White
+                    attachSoulLevels = true;
+                    break;
+                }
+                case DiscordNoticeType::BossKilled:
+                {
+                    embed["color"] = "16766720"; // Gold
+                    attachSoulLevels = true;
+
+                    BossId bossId = static_cast<BossId>(Notice.extraId);
+                    if (auto& Iter = DiscordBossThumbnails.find(bossId); Iter != DiscordBossThumbnails.end())
+                    {
+                        thumbnailUrl = Iter->second;
+                    }
+
+                    break;
+                }
+            }
+
+            if (attachSoulLevels)
+            {
+                fields["Soul Level"] = std::to_string(Notice.origin->GetPlayerState().GetSoulLevel());
+                fields["Weapon Level"] = std::to_string(Notice.origin->GetPlayerState().GetMaxWeaponLevel());
+            }
+
+            if (!fields.empty())
+            {
+                auto fieldObj = nlohmann::json::array();
+
+                for (auto& pair : fields)
+                {
+                    auto field = nlohmann::json::object();
+                    field["name"] = pair.first;
+                    field["value"] = pair.second;
+                    field["inline"] = true;
+
+                    fieldObj.push_back(field);
+                }
+
+                embed["fields"] = fieldObj;
+            }
+
+            author["name"] = Notice.origin->GetPlayerState().GetCharacterName();
+            author["url"] = StringFormat("https://steamcommunity.com/profiles/%s", std::to_string(SteamId64).c_str());
+
+            embed["author"] = author;
+            embed["description"] = Notice.message;
+
+            if (!thumbnailUrl.empty())
+            {
+                embed["thumbnail"] = nlohmann::json::object();
+                embed["thumbnail"]["url"] = thumbnailUrl;
+            }
+
+            embeds.push_back(embed);
+
+            nlohmann::json Body;
+            Body["embeds"] = embeds;
+
+            Log("Sending notification from %s: %s", Notice.origin->GetPlayerState().GetCharacterName().c_str(), Notice.message.c_str());
+
+            std::string FormattedBody = Body.dump(4);
 
             DiscordNoticeRequest = std::make_shared<NetHttpRequest>();
             DiscordNoticeRequest->SetMethod(NetHttpMethod::POST);
             DiscordNoticeRequest->SetUrl(Config.DiscordWebHookUrl);
-            DiscordNoticeRequest->SetBody(Body.dump());
+            DiscordNoticeRequest->SetBody(FormattedBody);
             if (!DiscordNoticeRequest->SendAsync())
             {
                 Warning("Recieved error when trying to send discord notification.");
