@@ -986,7 +986,7 @@
 /* #undef USE_OPENLDAP */
 
 /* if OpenSSL is in use */
-/* #undef USE_OPENSSL */
+#define USE_OPENSSL
 
 /* Define to 1 if you don't want the OpenSSL configuration to be loaded
    automatically */

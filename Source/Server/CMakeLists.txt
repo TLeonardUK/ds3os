@@ -118,6 +118,8 @@ SET(SOURCES
     Server/GameService/GameManagers/AntiCheat/AntiCheatTrigger.h
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.cpp
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.h
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_Exploit.cpp
+    Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_Exploit.h
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.cpp
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.h
     Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_InvalidName.cpp
@@ -136,6 +138,7 @@ SET(SOURCES
     Server/GameService/Utils/Ids/ItemId.inc
     Server/GameService/Utils/Ids/OnlineAreaId.inc
     Server/GameService/Utils/Ids/TeamTypeId.inc
+    Server/GameService/Utils/Ids/BossId.inc
     Server/LoginService/LoginClient.cpp
     Server/LoginService/LoginClient.h
     Server/LoginService/LoginService.cpp
@@ -170,6 +173,8 @@ SET(SOURCES
     Server/WebUIService/Handlers/DebugStatisticsHandler.h
     Server/WebUIService/Handlers/MessageHandler.cpp
     Server/WebUIService/Handlers/MessageHandler.h
+    Server/WebUIService/Handlers/BansHandler.cpp
+    Server/WebUIService/Handlers/BansHandler.h
     Server/WebUIService/Handlers/PlayersHandler.cpp
     Server/WebUIService/Handlers/PlayersHandler.h
     Server/WebUIService/Handlers/SettingsHandler.cpp

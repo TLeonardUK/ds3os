@@ -172,23 +172,30 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
     Frpg2RequestMessage::AnnounceMessageDataList* Notices = Response.mutable_notices();
     Frpg2RequestMessage::AnnounceMessageDataList* Changes = Response.mutable_changes();
 
+    float Score = ServerInstance->GetDatabase().GetAntiCheatPenaltyScore(Client->GetPlayerState().GetSteamId());
+
     std::vector<RuntimeConfigAnnouncement> Announcements;
     if (ServerInstance->GetDatabase().IsPlayerBanned(Client->GetPlayerState().GetSteamId()))
     {
         RuntimeConfigAnnouncement Announcement;
-        Announcement.Header = "Banned";
-        Announcement.Body = "Your account has been banned from this server.";
+        Announcement.Header = "BANNED";
+        Announcement.Body = ServerInstance->GetConfig().BanAnnouncementMessage;
         Announcements.push_back(Announcement);
 
         Client->Banned = true;
         Client->DisconnectTime = GetSeconds() + 2.0f;
     }
+    else if (Score > ServerInstance->GetConfig().AntiCheatWarningThreshold)
+    {
+        RuntimeConfigAnnouncement Announcement;
+        Announcement.Header = "WARNING";
+        Announcement.Body = ServerInstance->GetConfig().WarningAnnouncementMessage;
+        Announcements.push_back(Announcement);
+    }
     else
     {
         Announcements = ServerInstance->GetConfig().Announcements;
     }
-
-    // TODO: Give warning based on anti-cheat
 
     int Index = 0;
 

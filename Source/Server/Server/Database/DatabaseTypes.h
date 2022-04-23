@@ -106,3 +106,12 @@ struct Character
     uint32_t QuickMatchBrawlRank = 0;
     uint32_t QuickMatchBrawlXp = 0;
 };
+
+// Individual character profile registered by a player.
+struct AntiCheatLog
+{
+    std::string SteamId;
+    std::string TriggerName;
+    std::string Extra;
+    float Score;
+};

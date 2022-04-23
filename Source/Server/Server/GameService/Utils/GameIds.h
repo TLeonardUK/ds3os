@@ -67,6 +67,13 @@
 #undef ENUM_FILE
 
 
+#define ENUM_NAME BossId
+#define ENUM_FILE "Server/GameService/Utils/Ids/BossId.inc"
+#   include "Core/Utils/EnumDef.inc"
+#undef ENUM_NAME
+#undef ENUM_FILE
+
+
 
 
 

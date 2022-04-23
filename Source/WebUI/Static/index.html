@@ -77,6 +77,7 @@
                 <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
                     <a href="#stats-tab" class="mdl-layout__tab is-active">Statistics</a>
                     <a href="#players-tab" class="mdl-layout__tab">Players</a>
+                    <a href="#bans-tab" class="mdl-layout__tab">Bans</a>
                     <a href="#settings-tab" class="mdl-layout__tab">Settings</a>
                     <a href="#debug-tab" class="mdl-layout__tab">Debug</a>
                 </div>
@@ -84,11 +85,11 @@
             </header>
 
             <main class="mdl-layout__content  mdl-color--grey-100">
-                
+
                 <!-- ------------------------------------------------ STATISTICS TAB ------------------------------------------------ -->
                 <section class="mdl-layout__tab-panel is-active" id="stats-tab">
                     <div class="page-content">
-                        
+
                         <main class="mdl-layout__content">
                             <div class="mdl-grid">
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--12-col mdl-grid">
@@ -97,7 +98,7 @@
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--6-col mdl-grid">
-                                    
+
                                     <table class="mdl-data-table mdl-js-data-table mdl-data-table fullwidth">
                                         <thead>
                                             <tr>
@@ -107,7 +108,7 @@
                                         </thead>
                                         <tbody id="statistic-table-body">
                                         </tbody>
-                                    </table>                                    
+                                    </table>
 
                                 </div>
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--6-col mdl-grid">
@@ -121,7 +122,7 @@
                                         </thead>
                                         <tbody id="populated-areas-table-body">
                                         </tbody>
-                                    </table>      
+                                    </table>
 
                                 </div>
                             </div>
@@ -129,7 +130,7 @@
 
                     </div>
                 </section>
-                
+
                 <!-- ------------------------------------------------ PLAYERS TAB ------------------------------------------------ -->
                 <section class="mdl-layout__tab-panel" id="players-tab">
                     <div class="page-content">
@@ -162,7 +163,30 @@
 
                     </div>
                 </section>
-                
+
+                <!-- ------------------------------------------------ BANS TAB ------------------------------------------------ -->
+                <section class="mdl-layout__tab-panel" id="bans-tab">
+                    <div class="page-content">
+
+                        <div class="elementPaddingMargin" style="padding:0px;">
+                            <div style="text-align:right; padding-bottom: 20px;">
+                            </div>
+                            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th class="mdl-data-table__cell--non-numeric">Username</th>
+                                        <th>Reason</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bans-table-body">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </section>
+
                 <!-- ------------------------------------------------ SETTINGS TAB ------------------------------------------------ -->
                 <section class="mdl-layout__tab-panel" id="settings-tab">
                     <div class="page-content">
@@ -170,7 +194,7 @@
                         <main class="mdl-layout__content">
                             <div class="mdl-grid" style="width: 1100px; text-align: left;">
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--6-col mdl-grid" style="padding: 20px;">
-                                    
+
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label fullWidth">
                                         <input class="mdl-textfield__input" type="text" id="server-name">
                                         <label class="mdl-textfield__label" for="server-name">Server Name</label>
@@ -256,7 +280,7 @@
 
                                 </div>
                             </div>
-                            <div class="mdl-grid"  style="width: 1100px;">
+                            <div class="mdl-grid" style="width: 1100px;">
                                 <div class="mdl-cell mdl-cell--12-col mdl-grid">
                                     <div class="mdl-layout-spacer"></div>
                                     <button type="button" id="apply-settings-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="saveSettings()">Apply Settings</button>
@@ -270,11 +294,11 @@
                 <!-- ------------------------------------------------ Debug TAB ------------------------------------------------ -->
                 <section class="mdl-layout__tab-panel" id="debug-tab">
                     <div class="page-content">
-                        
+
                         <main class="mdl-layout__content">
                             <div class="mdl-grid">
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--12-col mdl-grid">
-                                    
+
                                     <table class="mdl-data-table mdl-js-data-table mdl-data-table fullwidth">
                                         <thead>
                                             <tr>
@@ -286,11 +310,11 @@
                                         </thead>
                                         <tbody id="debug-timer-table-body">
                                         </tbody>
-                                    </table>                                    
+                                    </table>
 
                                 </div>
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--12-col mdl-grid">
-                                    
+
                                     <table class="mdl-data-table mdl-js-data-table mdl-data-table fullwidth">
                                         <thead>
                                             <tr>
@@ -301,11 +325,11 @@
                                         </thead>
                                         <tbody id="debug-counter-table-body">
                                         </tbody>
-                                    </table>                                    
+                                    </table>
 
                                 </div>
                                 <div class="mdl-color--white mdl-shadow--4dp mdl-cell mdl-cell--12-col mdl-grid">
-                                    
+
                                     <table class="mdl-data-table mdl-js-data-table mdl-data-table fullwidth">
                                         <thead>
                                             <tr>
@@ -316,7 +340,7 @@
                                         </thead>
                                         <tbody id="debug-log-table-body">
                                         </tbody>
-                                    </table>                                    
+                                    </table>
 
                                 </div>
                             </div>
@@ -324,7 +348,7 @@
 
                     </div>
                 </section>
-                
+
             </main>
 
             <!-- Footer -->

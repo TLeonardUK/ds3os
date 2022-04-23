@@ -16,6 +16,7 @@
 #include <memory>
 #include <vector>
 #include <filesystem>
+#include <queue>
 
 #include "Core/Crypto/RSAKeyPair.h"
 
@@ -63,7 +64,11 @@ public:
         return nullptr;
     }
 
+    void SetDiscordNotice(const std::string& message);
+
 protected:
+
+    void PollDiscordNotices();
 
     void CancelServerAdvertisement();
     void PollServerAdvertisement();
@@ -97,5 +102,8 @@ private:
 
     double LastMasterServerUpdate = 0.0;
     std::shared_ptr<NetHttpRequest> MasterServerUpdateRequest;
+
+    std::queue<std::string> PendingDiscordNotices;
+    std::shared_ptr<NetHttpRequest> DiscordNoticeRequest;
 
 };

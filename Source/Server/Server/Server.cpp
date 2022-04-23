@@ -385,6 +385,7 @@ void Server::RunUntilQuit()
                 Service->Poll();
             }
 
+            PollDiscordNotices();
             PollServerAdvertisement();
         }
 
@@ -413,5 +414,61 @@ void Server::SaveConfig()
     if (!Config.Save(ConfigPath))
     {
         Error("Failed to save configuration file: %s", ConfigPath.string().c_str());
+    }
+}
+
+void Server::SetDiscordNotice(const std::string& message)
+{
+    if (Config.DiscordWebHookUrl.empty())
+    {
+        return;
+    }
+
+    PendingDiscordNotices.push(message);
+}
+
+void Server::PollDiscordNotices()
+{
+    if (!DiscordNoticeRequest)
+    {
+        if (!PendingDiscordNotices.empty())
+        {
+            std::string Message = PendingDiscordNotices.front();
+            PendingDiscordNotices.pop();
+
+            nlohmann::json Body;
+            Body["content"] = Message;
+
+            Log("Sending notification: %s", Message.c_str());
+
+            DiscordNoticeRequest = std::make_shared<NetHttpRequest>();
+            DiscordNoticeRequest->SetMethod(NetHttpMethod::POST);
+            DiscordNoticeRequest->SetUrl(Config.DiscordWebHookUrl);
+            DiscordNoticeRequest->SetBody(Body.dump());
+            if (!DiscordNoticeRequest->SendAsync())
+            {
+                Warning("Recieved error when trying to send discord notification.");
+            }
+        }
+    }
+    else if (!DiscordNoticeRequest->InProgress())
+    {
+        if (std::shared_ptr<NetHttpResponse> Response = DiscordNoticeRequest->GetResponse(); Response)
+        {
+            if (!Response->GetWasSuccess())
+            {
+                Warning("Recieved error when trying to send discord notification.");
+            }
+            else
+            {
+                Log("Discord notice successfully sent.");
+            }
+        }
+        else
+        {
+            Warning("No response recieved to discord notification.");
+        }
+
+        DiscordNoticeRequest = nullptr;
     }
 }

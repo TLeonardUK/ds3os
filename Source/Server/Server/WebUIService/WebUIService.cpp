@@ -15,6 +15,7 @@
 #include "Server/WebUIService/Handlers/SettingsHandler.h"
 #include "Server/WebUIService/Handlers/DebugStatisticsHandler.h"
 #include "Server/WebUIService/Handlers/MessageHandler.h"
+#include "Server/WebUIService/Handlers/BansHandler.h"
 
 #include "Server/Server.h"
 #include "Core/Utils/Logging.h"
@@ -33,6 +34,7 @@ WebUIService::WebUIService(Server* OwningServer)
     Handlers.push_back(std::make_shared<StatisticsHandler>(this));
     Handlers.push_back(std::make_shared<SettingsHandler>(this));
     Handlers.push_back(std::make_shared<MessageHandler>(this));
+    Handlers.push_back(std::make_shared<BansHandler>(this));
     Handlers.push_back(std::make_shared<DebugStatisticsHandler>(this));
 }
 

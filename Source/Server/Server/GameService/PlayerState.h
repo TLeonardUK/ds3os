@@ -42,6 +42,9 @@ struct PlayerAntiCheatState
 
     // Cooldown between showing warning management messages.
     float WarningMessageCooldown = 0.0f;
+    
+    // Flagged by various parts of the code if the user has attempted a security exploit.
+    bool ExploitDetected = false;
 };
 
 struct PlayerState

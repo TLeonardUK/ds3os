@@ -268,6 +268,9 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(AntiCheatWarningMessage);
     SERIALIZE_VAR(AntiCheatDisconnectMessage);
     SERIALIZE_VAR(AntiCheatBanMessage);
+    SERIALIZE_VAR(BanAnnouncementMessage);
+    SERIALIZE_VAR(WarningAnnouncementMessage);
+
     SERIALIZE_VAR(AntiCheatSendWarningMessageInGame);
     SERIALIZE_VAR(AntiCheatSendWarningMessageInGameInterval);
     SERIALIZE_VAR(AntiCheatWarningThreshold);
@@ -275,13 +278,20 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(AntiCheatBanThreshold);
     SERIALIZE_VAR(AntiCheatScore_ClientFlagged);
     SERIALIZE_VAR(AntiCheatScore_ImpossibleStats);
-    SERIALIZE_VAR(AntiCheatScore_RceExploit);
+    SERIALIZE_VAR(AntiCheatScore_Exploit);
     SERIALIZE_VAR(AntiCheatScore_ImpossibleName);
     SERIALIZE_VAR(AntiCheatScore_ImpossibleStatDelta);
     SERIALIZE_VAR(AntiCheatScore_ImpossibleGetItemQuantity);
     SERIALIZE_VAR(AntiCheatScore_ImpossiblePlayTime);
     SERIALIZE_VAR(AntiCheatScore_ImpossibleLocation);
     SERIALIZE_VAR(AntiCheatScore_UnfairDisconnect);
+
+    SERIALIZE_VAR(DiscordWebHookUrl);
+    SERIALIZE_VAR(SendDiscordNotice_AntiCheat);
+    SERIALIZE_VAR(SendDiscordNotice_SummonSign);
+    SERIALIZE_VAR(SendDiscordNotice_QuickMatch);
+    SERIALIZE_VAR(SendDiscordNotice_Bell);
+    SERIALIZE_VAR(SendDiscordNotice_Boss);
 
     return true;
 }

@@ -260,6 +260,8 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
             WarningS(Client->GetName().c_str(), "Blood message data recieved from client is invalid (error code %i).",
                 static_cast<uint32_t>(ValidationResult));
 
+            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
+
             // Simply ignore the request. Perhaps sending a response with an invalid sign id or disconnecting the client would be better?
             return MessageHandleResult::Handled;
         }

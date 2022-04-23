@@ -234,6 +234,32 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
         return MessageHandleResult::Error;
     }
 
+    if (ServerInstance->GetConfig().SendDiscordNotice_QuickMatch)
+    {
+        if (NewMatch->MatchingParams.password().empty())
+        {
+            std::string ModeName = "";
+            switch (NewMatch->GameMode)
+            {
+                case Frpg2RequestMessage::QuickMatchGameMode::Duel:                     ModeName = "Dual";              break;
+                case Frpg2RequestMessage::QuickMatchGameMode::FourPlayerBrawl:          ModeName = "4 Player Brawl";    break;
+                case Frpg2RequestMessage::QuickMatchGameMode::SixPlayerBrawl:           ModeName = "6 Player Brawl";    break;
+                case Frpg2RequestMessage::QuickMatchGameMode::ThreeVersusThree:         ModeName = "3 v 3";             break;
+                case Frpg2RequestMessage::QuickMatchGameMode::ThreeVersusThree_Team:    ModeName = "Team 3 v 3";        break;
+                case Frpg2RequestMessage::QuickMatchGameMode::TwoPlayerBrawl:           ModeName = "2 Player Brawl";    break;
+                case Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo:             ModeName = "2 v 2";             break;
+                case Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo_Team:        ModeName = "Team 2 v 2";        break;
+            }
+
+            ServerInstance->SetDiscordNotice(StringFormat("Player '%s' (SL %i, WL %i) started a public '%s' undead match.",
+                Client->GetPlayerState().GetCharacterName().c_str(),
+                NewMatch->MatchingParams.soul_level(),
+                NewMatch->MatchingParams.weapon_level(),
+                ModeName.c_str()
+            ));
+        }
+    }
+
     return MessageHandleResult::Handled;
 }
 
@@ -369,6 +395,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
         {
             WarningS(Client->GetName().c_str(), "RequestAcceptQuickMatch message recieved from client contains ill formated binary data (error code %i).",
                 static_cast<uint32_t>(ValidationResult));
+
+            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
 
             ShouldProcessRequest = false;
         }

@@ -309,6 +309,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     .
     include
     lib
+    ../openssl/include
 )
+
 
 util_setup_folder_structure(${PROJECT_NAME} SOURCES "ThirdParty")

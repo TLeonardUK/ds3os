@@ -293,13 +293,19 @@ public:
     bool AntiCheatEnabled = true;
 
     // Message shown to a user in announcements if they have been flagged as cheating.
-    std::string AntiCheatWarningMessage = "Your account has been flagged for unfair play (cheating/exploits/disconnecting), if this continues you may be disconnected or banned from the server.";
+    std::string AntiCheatWarningMessage = "Your account has been flagged for unfair play, if this continues you may be disconnected or banned from the server.";
 
     // Message shown to a user in announcements if they have been flagged as cheating.
     std::string AntiCheatDisconnectMessage = "Your account has been flagged for unfair play, you will be disconnected from the server.";
 
     // Message shown in-game just before banning the user.
     std::string AntiCheatBanMessage = "Your account has been flagged for unfair play, you have been banned from the server.";
+
+    // Message shown when user logs in when they are banned.
+    std::string BanAnnouncementMessage = "Your account has been banned from this server.";
+
+    // Message shown when user logs in when they have a penalty score above the warning level.
+    std::string WarningAnnouncementMessage = "Your account has been flagged for unfair play. Further unfair behaviour will lead to disconnection or bans.";
 
 
     // If set the player will recieve ingame management messages periodically when they mean the threshold.
@@ -313,26 +319,26 @@ public:
     float AntiCheatWarningThreshold = 10;
 
     // How high the players penalty score has to be to cause them to be disconnected when detected.
-    float AntiCheatDisconnectThreshold = 20;
+    float AntiCheatDisconnectThreshold = 25;
 
     // How high the players penalty score has to be to cause them to be permanently banned.
     float AntiCheatBanThreshold = 100;
 
 
     // How much gets added to the players penalty score when the anti-cheat data supplied by the client is unexpected.
-    float AntiCheatScore_ClientFlagged = 20;
+    float AntiCheatScore_ClientFlagged = 25;
 
     // How much gets added to the players penalty score when impossible stats are detected (eg. 99 in each stat, but level 1).
-    float AntiCheatScore_ImpossibleStats = 20;
+    float AntiCheatScore_ImpossibleStats = 25;
 
     // How much gets added to the players penalty score when they have an impossible name (eg. blank)
-    float AntiCheatScore_ImpossibleName = 20;
+    float AntiCheatScore_ImpossibleName = 10;
+
+    // How much gets added to the players penalty score when a potential security exploit is detected.
+    float AntiCheatScore_Exploit = 100;
 
 
     // Unimplemented
-
-    // How much gets added to the players penalty score when a potential RCE exploit is detected.
-    float AntiCheatScore_RceExploit = 100;
 
     // How much gets added to the players penalty score when the delta between their stats on one update and another is impossible (eg. going from level 1 to 100).
     float AntiCheatScore_ImpossibleStatDelta = 20;
@@ -348,6 +354,25 @@ public:
 
     // How much gets added to the players penalty score when disconnects occur during multiplayer.
     float AntiCheatScore_UnfairDisconnect = 5;
+
+
+    // If supplied various notifications can be made to discord.
+    std::string DiscordWebHookUrl = "";
+
+    // Send notifications when anti-cheat flags occur.
+    bool SendDiscordNotice_AntiCheat = true;
+
+    // Send notifications when sign placed.
+    bool SendDiscordNotice_SummonSign = true;
+
+    // Send notifications when a quick match begins.
+    bool SendDiscordNotice_QuickMatch = true;
+
+    // Send notifications when a bell is rung.
+    bool SendDiscordNotice_Bell = true;
+
+    // Send notifications when a boss is killed.
+    bool SendDiscordNotice_Boss = true;
 
 public:
 

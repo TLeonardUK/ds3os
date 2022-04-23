@@ -474,6 +474,16 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillBoss(GameClient* Cli
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
     }
+    
+    if (ServerInstance->GetConfig().SendDiscordNotice_Bell)
+    {
+        BossId Id = (BossId)Request->boss_id();
+
+        ServerInstance->SetDiscordNotice(StringFormat("Player '%s' killed '%s'.",
+            Client->GetPlayerState().GetCharacterName().c_str(),
+            GetEnumString<BossId>(Id).c_str()
+        ));
+    }
 
     return MessageHandleResult::Handled;
 }

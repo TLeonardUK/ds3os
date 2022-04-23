@@ -104,7 +104,7 @@ bool GameClient::Poll()
 
 bool GameClient::HandleMessage(const Frpg2ReliableUdpMessage& Message)
 {
-    //WarningS(GetName().c_str(), "-> %s", Message.Protobuf->GetTypeName().c_str());
+    WarningS(GetName().c_str(), "-> %s", Message.Protobuf->GetTypeName().c_str());
 
     const std::vector<std::shared_ptr<GameManager>>& Managers = Service->GetManagers();
     for (auto& Manager : Managers)

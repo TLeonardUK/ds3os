@@ -36,10 +36,7 @@ void PlayersHandler::GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClie
     auto Status = State.GetPlayerStatus().player_status();
     auto LogInfo = State.GetPlayerStatus().log_info();
 
-    uint64_t SteamIdInt;
-    sscanf(State.GetSteamId().c_str(), "%016llx", &SteamIdInt);
-
-    Info.SteamId = std::to_string(SteamIdInt);
+    Info.SteamId = State.GetSteamId();
     Info.PlayerId = State.GetPlayerId();
     Info.CharacterName = State.GetCharacterName();
     Info.DeathCount = LogInfo.death_count();
@@ -51,6 +48,7 @@ void PlayersHandler::GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClie
     Info.PlayTime = State.GetPlayerStatus().play_data().play_time_seconds();    
     Info.Status = "Unknown";
     Info.CovenantState = GetEnumString<CovenantId>((CovenantId)Status.covenant());
+    Info.AntiCheatScore = State.GetAntiCheatState().Penalty;
 
     switch ((CovenantId)Status.covenant())
     {
@@ -237,6 +235,11 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
             };
 
             auto playerJson = nlohmann::json::object();
+
+            uint64_t SteamId64;
+            sscanf(Info.SteamId.c_str(), "%016llx", &SteamId64);
+
+            playerJson["steamId64"] = std::to_string(SteamId64);
             playerJson["steamId"] = Info.SteamId;
             playerJson["playerId"] = Info.PlayerId;
             playerJson["characterName"] = Info.CharacterName;            
@@ -250,6 +253,7 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
             playerJson["location"] = GetEnumString<OnlineAreaId>(Info.OnlineArea);
             playerJson["connectionTime"] = SecondsToString(Info.ConnectionDuration);
             playerJson["playTime"] = SecondsToString(Info.PlayTime);
+            playerJson["antiCheatScore"] = Info.AntiCheatScore;
 
             playerArray.push_back(playerJson);
         }

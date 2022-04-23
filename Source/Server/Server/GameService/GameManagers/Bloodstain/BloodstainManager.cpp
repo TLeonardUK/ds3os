@@ -103,6 +103,8 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
             WarningS(Client->GetName().c_str(), "Bloodstain metadata recieved from client is invalid (error code %i).",
                 static_cast<uint32_t>(ValidationResult));
 
+            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
+
             return MessageHandleResult::Handled;
         }
         ValidationResult = NRSSRSanitizer::ValidateEntryList(GhostData.data(), GhostData.size());
@@ -110,6 +112,8 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
         {
             WarningS(Client->GetName().c_str(), "Ghost data recieved from client is invalid (error code %i).",
                 static_cast<uint32_t>(ValidationResult));
+
+            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
 
             return MessageHandleResult::Handled;
         }

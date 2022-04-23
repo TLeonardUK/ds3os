@@ -321,6 +321,12 @@ void ServerDatabase::BanPlayer(const std::string& SteamId)
     RunStatement("INSERT INTO Bans(PlayerSteamId) VALUES(?1)", { SteamId }, nullptr);
 }
 
+void ServerDatabase::UnbanPlayer(const std::string& SteamId)
+{
+    RunStatement("DELETE FROM Bans WHERE PlayerSteamId = ?1", { SteamId }, nullptr);
+    RunStatement("UPDATE AntiCheatStates SET Score = 0 WHERE PlayerSteamId = ?1", { SteamId }, nullptr);
+}
+
 bool ServerDatabase::IsPlayerBanned(const std::string& SteamId)
 {
     uint32_t Result = 0;
@@ -330,6 +336,17 @@ bool ServerDatabase::IsPlayerBanned(const std::string& SteamId)
     });
 
     return Result > 0;
+}
+
+std::vector<std::string> ServerDatabase::GetBannedSteamIds()
+{
+    std::vector<std::string> Result;
+
+    RunStatement("SELECT PlayerSteamId FROM Bans", { }, [&Result](sqlite3_stmt* statement) {
+        Result.push_back((const char*)sqlite3_column_text(statement, 0));
+    });
+
+    return Result;
 }
 
 std::shared_ptr<BloodMessage> ServerDatabase::FindBloodMessage(uint32_t MessageId)
@@ -883,6 +900,23 @@ void ServerDatabase::LogAntiCheatTrigger(const std::string& SteamId, const std::
     {
         return;
     }
+}
+
+std::vector<AntiCheatLog> ServerDatabase::GetAntiCheatLogs(const std::string& SteamId)
+{
+    std::vector<AntiCheatLog> Result;
+
+    RunStatement("SELECT Score, TriggerName, ExtraInfo FROM AntiCheatLogs WHERE PlayerSteamId = ?1", { SteamId }, [&Result, SteamId](sqlite3_stmt* statement) {
+        AntiCheatLog Log;
+        Log.SteamId = SteamId;
+        Log.Score = (float)sqlite3_column_double(statement, 0);
+        Log.TriggerName = (const char*)sqlite3_column_text(statement, 1);
+        Log.Extra = (const char*)sqlite3_column_text(statement, 2);
+
+        Result.push_back(Log);
+    });
+
+    return Result;
 }
 
 void ServerDatabase::TrimTable(const std::string& TableName, const std::string& IdColumn, size_t MaxEntries)

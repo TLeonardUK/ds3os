@@ -54,6 +54,12 @@ public:
     // Checks if the given steam-id is banned.
     bool IsPlayerBanned(const std::string& SteamId);
 
+    // Removes the ban for a specific player.
+    void UnbanPlayer(const std::string& SteamId);
+
+    // Gets a list of all banned steam ids.
+    std::vector<std::string> GetBannedSteamIds();
+
     // ----------------------------------------------------------------
     // Character interface
     // ----------------------------------------------------------------
@@ -182,6 +188,9 @@ public:
 
     // Stores a log of the anticheat trigger that trigger for a given user.
     void LogAntiCheatTrigger(const std::string& SteamId, const std::string& TriggerName, float Penalty, const std::string& ExtraInfo);
+
+    // Gets all the logs for anti-cheat triggers on the specific steam account.
+    std::vector<AntiCheatLog> GetAntiCheatLogs(const std::string& SteamId);
 
 protected:
 

@@ -50,6 +50,7 @@ protected:
 		OnlineAreaId OnlineArea;
 		std::string Status;
 		double PlayTime;
+		double AntiCheatScore;
 
 		double ConnectionDuration;
 	};

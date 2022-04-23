@@ -112,6 +112,13 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
         return MessageHandleResult::Error;
     }
 
+    if (ServerInstance->GetConfig().SendDiscordNotice_Bell)
+    {
+        ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has rung archdragon bell.",
+            Client->GetPlayerState().GetCharacterName().c_str()
+        ));
+    }
+
     return MessageHandleResult::Handled;
 }
 
@@ -153,6 +160,8 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
             {
                 WarningS(Client->GetName().c_str(), "PushRequestAllowBreakInTarget message recieved from client contains ill formated binary data (error code %i).",
                     static_cast<uint32_t>(ValidationResult));
+
+                Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
 
                 ShouldProcessRequest = false;
             }

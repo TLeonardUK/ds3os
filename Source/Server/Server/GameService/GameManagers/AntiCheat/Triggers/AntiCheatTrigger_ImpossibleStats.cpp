@@ -35,7 +35,6 @@ namespace
         for (int i = 13; i <= SoulLevel; i++)
         {
             float LevelCost = (0.02f * SoulLevel3 + 3.06f * SoulLevel2 + 105.6 * SoulLevel - 895);
-            //Log("Level[%i] costs %i", i, LevelCost);
             Total += static_cast<int>(LevelCost);
         }
 

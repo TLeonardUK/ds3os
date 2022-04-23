@@ -9,6 +9,7 @@
 
 var gRefreshStatisticsInterval;
 var gRefreshPlayersInterval;
+var gRefreshBansInterval;
 var gRefreshDebugInterval;
 
 var gActivePlayersChart;
@@ -199,10 +200,12 @@ function startDataRefresh()
 {
     gRefreshStatisticsInterval = setInterval(refreshStatisticsTab, 5000);
     gRefreshPlayersInterval = setInterval(refreshPlayersTab, 5000);
+    gRefreshBansInterval = setInterval(refreshBansTab, 5000);
     gRefreshDebugInterval = setInterval(refreshDebugTab, 5000);
 
     refreshStatisticsTab();
     refreshPlayersTab();
+    refreshBansTab();
     refreshSettingsTab();
     refreshDebugTab();
 }
@@ -212,6 +215,7 @@ function stopDataRefresh()
 {
     clearInterval(gRefreshStatisticsInterval);
     clearInterval(gRefreshPlayersInterval);
+    clearInterval(gRefreshBansInterval);
     clearInterval(gRefreshDebugInterval);
 }
 
@@ -256,6 +260,30 @@ function banUser(playerId)
         body: JSON.stringify({ 
             "playerId": playerId,
             "ban": true
+        })
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed');                
+        reauthenticate();           
+    });
+}
+
+// Bans the given steam-id
+function removeBan(steamId)
+{
+    console.log("Unbanning user " + steamId);
+
+    fetch("/bans", 
+    {
+        method: 'delete',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        },
+        body: JSON.stringify({ 
+            "steamId": steamId
         })
     })
     .catch(function (error) 
@@ -447,7 +475,7 @@ function refreshPlayersTab()
             var player = data.players[i];
             newHtml += `        
                 <tr>
-                    <td class="mdl-data-table__cell--non-numeric"><a href="https://steamcommunity.com/profiles/${player["steamId"]}">${player["characterName"]}</a></td>
+                    <td class="mdl-data-table__cell--non-numeric"><a href="https://steamcommunity.com/profiles/${player["steamId64"]}">${player["characterName"]}</a></td>
                     <td>${player["soulLevel"]}</td>
                     <td>${player["soulMemory"]}</td>
                     <td>${player["covenant"]}</td>
@@ -476,6 +504,52 @@ function refreshPlayersTab()
     .catch(function (error) 
     {
         console.log('Request failed');                
+        reauthenticate();           
+    });
+}
+
+// Retrieves data from the server to update the bans tab.
+function refreshBansTab()
+{
+    fetch("/bans", 
+    {
+        method: 'get',
+        headers: 
+        {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Auth-Token": getAuthToken() 
+        }
+    })
+    .then(response => 
+    {        
+        return response.json();
+    })
+    .then(function (data) 
+    {
+        var table = document.querySelector("#bans-table-body");    
+        var newHtml = "";
+
+        for (var i = 0; i < data.bans.length; i++)
+        {
+            var ban = data.bans[i];
+            newHtml += `        
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric"><a href="https://steamcommunity.com/profiles/${ban["steamId64"]}">${ban["steamId64"]}</a></td>
+                    <td><div style="white-space: pre-line">${ban["reason"]}</div></td>
+                    <td>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="removeBan('${ban["steamId"]}')">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        table.innerHTML = newHtml;
+    })
+    .catch(function (error) 
+    {
+        console.log('Request failed ' + error);                
         reauthenticate();           
     });
 }

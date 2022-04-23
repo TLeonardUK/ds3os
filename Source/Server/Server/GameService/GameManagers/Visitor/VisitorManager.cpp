@@ -133,6 +133,8 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
         auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Request->data().data(), Request->data().size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
+            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
+
             WarningS(Client->GetName().c_str(), "RequestVisit message recieved from client contains ill formated binary data (error code %i).",
                 static_cast<uint32_t>(ValidationResult));
 

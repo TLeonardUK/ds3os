@@ -11,6 +11,7 @@
 #include "Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.h"
 #include "Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.h"
 #include "Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_InvalidName.h"
+#include "Server/GameService/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_Exploit.h"
 
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
@@ -32,6 +33,7 @@ AntiCheatManager::AntiCheatManager(Server* InServerInstance, GameService* InGame
     , GameServiceInstance(InGameServiceInstance)
 {
     Triggers.push_back(std::make_shared<AntiCheatTrigger_ClientFlagged>(this, InServerInstance, InGameServiceInstance));
+    Triggers.push_back(std::make_shared<AntiCheatTrigger_Exploit>(this, InServerInstance, InGameServiceInstance));
     Triggers.push_back(std::make_shared<AntiCheatTrigger_ImpossibleStats>(this, InServerInstance, InGameServiceInstance));
     Triggers.push_back(std::make_shared<AntiCheatTrigger_InvalidName>(this, InServerInstance, InGameServiceInstance));
 }
@@ -79,10 +81,15 @@ void AntiCheatManager::Poll()
                     AntiCheatState.ShouldApplyPenalty = true;
                     AntiCheatState.TriggersThisSession.push_back(Trigger->GetName());
 
-                    LogS(Player->GetName().c_str(), "Player has been flagged for cheating by trigger '%s', penalty score is now %.2f.", Trigger->GetName().c_str(), AntiCheatState.Penalty);
+                    LogS(Player->GetName().c_str(), "Player has been flagged for cheating by trigger '%s', penalty score is now %.2f: %s", Trigger->GetName().c_str(), AntiCheatState.Penalty, ExtraInfo.c_str());
 
                     ServerInstance->GetDatabase().AddAntiCheatPenaltyScore(State.GetSteamId(), AntiCheatState.Penalty);
                     ServerInstance->GetDatabase().LogAntiCheatTrigger(State.GetSteamId(), Trigger->GetName(), AntiCheatState.Penalty, ExtraInfo);
+
+                    if (Config.SendDiscordNotice_AntiCheat)
+                    {
+                        ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has been flagged for cheating: %s", State.GetCharacterName().c_str(), ExtraInfo.c_str()));
+                    }
                 }
             }
         }
@@ -102,18 +109,28 @@ void AntiCheatManager::Poll()
             {
                 // Ban and disconnect.
                 ServerInstance->GetDatabase().BanPlayer(State.GetSteamId());
-                Player->DisconnectTime = GetSeconds() + 30.0f;
+                Player->DisconnectTime = GetSeconds() + 10.0f;
 
                 WarningMessage = Config.AntiCheatBanMessage;
                 AntiCheatState.ShouldApplyPenalty = false;
+
+                if (Config.SendDiscordNotice_AntiCheat)
+                {
+                    ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has been banned for cheating.", State.GetCharacterName().c_str()));
+                }
             }
             else if (AntiCheatState.Penalty > Config.AntiCheatDisconnectThreshold)
             {
                 // Disconnect.
-                Player->DisconnectTime = GetSeconds() + 30.0f;
+                Player->DisconnectTime = GetSeconds() + 10.0f;
 
                 WarningMessage = Config.AntiCheatDisconnectMessage;
                 AntiCheatState.ShouldApplyPenalty = false;
+
+                if (Config.SendDiscordNotice_AntiCheat)
+                {
+                    ServerInstance->SetDiscordNotice(StringFormat("Player '%s' has been disconnected for cheating.", State.GetCharacterName().c_str()));
+                }
             }
             else if (AntiCheatState.Penalty > Config.AntiCheatWarningThreshold)
             {

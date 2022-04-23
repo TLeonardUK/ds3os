@@ -244,6 +244,8 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
             WarningS(Client->GetName().c_str(), "RequestCreateSign message recieved from client contains ill formated binary data (error code %i).",
                 static_cast<uint32_t>(ValidationResult));
 
+            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
+
             // Simply ignore the request. Perhaps sending a response with an invalid sign id or disconnecting the client would be better?
             return MessageHandleResult::Handled;
         }
@@ -272,6 +274,31 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetSignListResponse response.");
         return MessageHandleResult::Error;
+    }
+
+    if (ServerInstance->GetConfig().SendDiscordNotice_SummonSign)
+    {
+        if (Sign->MatchingParameters.password().empty())
+        {
+            if (Sign->IsRedSign)
+            {
+                ServerInstance->SetDiscordNotice(StringFormat("Player '%s' (SL %i, WL %i) placed a public red summon sign in '%s'.", 
+                    Client->GetPlayerState().GetCharacterName().c_str(),
+                    Sign->MatchingParameters.soul_level(),
+                    Sign->MatchingParameters.weapon_level(),
+                    GetEnumString(Sign->OnlineAreaId).c_str()
+                ));
+            }
+            else
+            {
+                ServerInstance->SetDiscordNotice(StringFormat("Player '%s' (SL %i, WL %i) placed a public summon sign in '%s'.",
+                    Client->GetPlayerState().GetCharacterName().c_str(),
+                    Sign->MatchingParameters.soul_level(),
+                    Sign->MatchingParameters.weapon_level(),
+                    GetEnumString(Sign->OnlineAreaId).c_str()
+                ));
+            }
+        }
     }
 
     return MessageHandleResult::Handled;
@@ -347,6 +374,8 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
         auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
         if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
         {
+            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
+
             WarningS(Client->GetName().c_str(), "RequestSummonSign message recieved from client contains ill formated binary data (error code %i).",
                 static_cast<uint32_t>(ValidationResult));
 
