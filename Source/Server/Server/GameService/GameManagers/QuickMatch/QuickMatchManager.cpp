@@ -252,8 +252,6 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
             }
 
             ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::UndeadMatch, StringFormat("Started a public '%s' undead match.",
-                NewMatch->MatchingParams.soul_level(),
-                NewMatch->MatchingParams.weapon_level(),
                 ModeName.c_str()
             ));
         }

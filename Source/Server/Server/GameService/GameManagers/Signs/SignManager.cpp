@@ -283,16 +283,12 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
             if (Sign->IsRedSign)
             {
                 ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, StringFormat("Placed a public red summon sign in '%s'.",
-                    Sign->MatchingParameters.soul_level(),
-                    Sign->MatchingParameters.weapon_level(),
                     GetEnumString(Sign->OnlineAreaId).c_str()
                 ));
             }
             else
             {
                 ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, StringFormat("Placed a public summon sign in '%s'.",
-                    Sign->MatchingParameters.soul_level(),
-                    Sign->MatchingParameters.weapon_level(),
                     GetEnumString(Sign->OnlineAreaId).c_str()
                 ));
             }
