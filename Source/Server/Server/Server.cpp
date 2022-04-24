@@ -418,7 +418,12 @@ void Server::SaveConfig()
     }
 }
 
-void Server::SendDiscordNotice(std::shared_ptr<GameClient> origin, DiscordNoticeType noticeType, const std::string& message, uint32_t extraId)
+void Server::SendDiscordNotice(
+    std::shared_ptr<GameClient> origin, 
+    DiscordNoticeType noticeType, 
+    const std::string& message,
+    uint32_t extraId,
+    std::vector<DiscordField> customFields)
 {
     if (Config.DiscordWebHookUrl.empty())
     {
@@ -438,7 +443,7 @@ void Server::SendDiscordNotice(std::shared_ptr<GameClient> origin, DiscordNotice
 
     DiscordOriginCooldown[PlayerId] = GetSeconds();
 
-    PendingDiscordNotices.push({ origin, noticeType, message, extraId });
+    PendingDiscordNotices.push({ origin, noticeType, message, extraId, customFields });
 }
 
 void Server::PollDiscordNotices()
@@ -458,8 +463,6 @@ void Server::PollDiscordNotices()
             auto author = nlohmann::json::object();
             auto embed = nlohmann::json::object();
 
-            bool attachSoulLevels = false;
-            std::unordered_map<std::string, std::string> fields;
             std::string thumbnailUrl = "";
 
             switch (Notice.type)
@@ -477,19 +480,29 @@ void Server::PollDiscordNotices()
                 case DiscordNoticeType::UndeadMatch:
                 {
                     embed["color"] = "3329330"; // Green
-                    attachSoulLevels = true;
                     break;
                 }
                 case DiscordNoticeType::SummonSign:
                 {
                     embed["color"] = "16316671"; // White
-                    attachSoulLevels = true;
                     break;
                 }
-                case DiscordNoticeType::BossKilled:
+                case DiscordNoticeType::PvPKill:
                 {
-                    embed["color"] = "16766720"; // Gold
-                    attachSoulLevels = true;
+                    embed["color"] = "14423100"; // Red
+                    break;
+                }
+                case DiscordNoticeType::DiedToBoss:
+                case DiscordNoticeType::KilledBoss:
+                {
+                    if (Notice.type  == DiscordNoticeType::KilledBoss)
+                    {
+                        embed["color"] = "16766720"; // Gold
+                    }
+                    else
+                    {
+                        embed["color"] = "14423100"; // Red
+                    }
 
                     BossId bossId = static_cast<BossId>(Notice.extraId);
                     if (auto Iter = DiscordBossThumbnails.find(bossId); Iter != DiscordBossThumbnails.end())
@@ -501,22 +514,16 @@ void Server::PollDiscordNotices()
                 }
             }
 
-            if (attachSoulLevels)
-            {
-                fields["Soul Level"] = std::to_string(Notice.origin->GetPlayerState().GetSoulLevel());
-                fields["Weapon Level"] = std::to_string(Notice.origin->GetPlayerState().GetMaxWeaponLevel());
-            }
-
-            if (!fields.empty())
+            if (!Notice.customFields.empty())
             {
                 auto fieldObj = nlohmann::json::array();
 
-                for (auto& pair : fields)
+                for (auto& pair : Notice.customFields)
                 {
                     auto field = nlohmann::json::object();
-                    field["name"] = pair.first;
-                    field["value"] = pair.second;
-                    field["inline"] = true;
+                    field["name"] = pair.name;
+                    field["value"] = pair.value;
+                    field["inline"] = pair.is_inline;
 
                     fieldObj.push_back(field);
                 }

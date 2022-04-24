@@ -6856,21 +6856,21 @@ class RequestNotifyDie : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 souls_lost() const;
   inline void set_souls_lost(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_7 = 7;
-  inline bool has_unknown_7() const;
-  inline void clear_unknown_7();
-  static const int kUnknown7FieldNumber = 7;
-  inline ::google::protobuf::uint32 unknown_7() const;
-  inline void set_unknown_7(::google::protobuf::uint32 value);
+  // required uint32 actor_id = 7;
+  inline bool has_actor_id() const;
+  inline void clear_actor_id();
+  static const int kActorIdFieldNumber = 7;
+  inline ::google::protobuf::uint32 actor_id() const;
+  inline void set_actor_id(::google::protobuf::uint32 value);
 
-  // required .Frpg2RequestMessage.KillerInfo unknown_8 = 8;
-  inline bool has_unknown_8() const;
-  inline void clear_unknown_8();
-  static const int kUnknown8FieldNumber = 8;
-  inline const ::Frpg2RequestMessage::KillerInfo& unknown_8() const;
-  inline ::Frpg2RequestMessage::KillerInfo* mutable_unknown_8();
-  inline ::Frpg2RequestMessage::KillerInfo* release_unknown_8();
-  inline void set_allocated_unknown_8(::Frpg2RequestMessage::KillerInfo* unknown_8);
+  // required .Frpg2RequestMessage.KillerInfo killer_info = 8;
+  inline bool has_killer_info() const;
+  inline void clear_killer_info();
+  static const int kKillerInfoFieldNumber = 8;
+  inline const ::Frpg2RequestMessage::KillerInfo& killer_info() const;
+  inline ::Frpg2RequestMessage::KillerInfo* mutable_killer_info();
+  inline ::Frpg2RequestMessage::KillerInfo* release_killer_info();
+  inline void set_allocated_killer_info(::Frpg2RequestMessage::KillerInfo* killer_info);
 
   // @@protoc_insertion_point(class_scope:Frpg2RequestMessage.RequestNotifyDie)
  private:
@@ -6886,10 +6886,10 @@ class RequestNotifyDie : public ::google::protobuf::MessageLite {
   inline void clear_has_souls_dropped();
   inline void set_has_souls_lost();
   inline void clear_has_souls_lost();
-  inline void set_has_unknown_7();
-  inline void clear_has_unknown_7();
-  inline void set_has_unknown_8();
-  inline void clear_has_unknown_8();
+  inline void set_has_actor_id();
+  inline void clear_has_actor_id();
+  inline void set_has_killer_info();
+  inline void clear_has_killer_info();
 
   ::std::string _unknown_fields_;
 
@@ -6901,8 +6901,8 @@ class RequestNotifyDie : public ::google::protobuf::MessageLite {
   int cause_of_death_;
   ::google::protobuf::uint32 souls_dropped_;
   ::google::protobuf::uint32 souls_lost_;
-  ::Frpg2RequestMessage::KillerInfo* unknown_8_;
-  ::google::protobuf::uint32 unknown_7_;
+  ::Frpg2RequestMessage::KillerInfo* killer_info_;
+  ::google::protobuf::uint32 actor_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
   #else
@@ -7124,33 +7124,33 @@ class RequestNotifyKillBoss : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 boss_id() const;
   inline void set_boss_id(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_3 = 3;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 3;
-  inline ::google::protobuf::uint32 unknown_3() const;
-  inline void set_unknown_3(::google::protobuf::uint32 value);
+  // required uint32 in_coop = 3;
+  inline bool has_in_coop() const;
+  inline void clear_in_coop();
+  static const int kInCoopFieldNumber = 3;
+  inline ::google::protobuf::uint32 in_coop() const;
+  inline void set_in_coop(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_4 = 4;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown_4() const;
-  inline void set_unknown_4(::google::protobuf::uint32 value);
+  // required uint32 boss_died = 4;
+  inline bool has_boss_died() const;
+  inline void clear_boss_died();
+  static const int kBossDiedFieldNumber = 4;
+  inline ::google::protobuf::uint32 boss_died() const;
+  inline void set_boss_died(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_5 = 5;
-  inline bool has_unknown_5() const;
-  inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 5;
-  inline ::google::protobuf::uint32 unknown_5() const;
-  inline void set_unknown_5(::google::protobuf::uint32 value);
+  // required uint32 cooperator_count = 5;
+  inline bool has_cooperator_count() const;
+  inline void clear_cooperator_count();
+  static const int kCooperatorCountFieldNumber = 5;
+  inline ::google::protobuf::uint32 cooperator_count() const;
+  inline void set_cooperator_count(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_6 = 6;
-  inline bool has_unknown_6() const;
-  inline void clear_unknown_6();
-  static const int kUnknown6FieldNumber = 6;
-  inline ::google::protobuf::uint32 unknown_6() const;
-  inline void set_unknown_6(::google::protobuf::uint32 value);
+  // required uint32 fight_duration = 6;
+  inline bool has_fight_duration() const;
+  inline void clear_fight_duration();
+  static const int kFightDurationFieldNumber = 6;
+  inline ::google::protobuf::uint32 fight_duration() const;
+  inline void set_fight_duration(::google::protobuf::uint32 value);
 
   // required uint32 map_id = 8;
   inline bool has_map_id() const;
@@ -7165,14 +7165,14 @@ class RequestNotifyKillBoss : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_1();
   inline void set_has_boss_id();
   inline void clear_has_boss_id();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
-  inline void set_has_unknown_5();
-  inline void clear_has_unknown_5();
-  inline void set_has_unknown_6();
-  inline void clear_has_unknown_6();
+  inline void set_has_in_coop();
+  inline void clear_has_in_coop();
+  inline void set_has_boss_died();
+  inline void clear_has_boss_died();
+  inline void set_has_cooperator_count();
+  inline void clear_has_cooperator_count();
+  inline void set_has_fight_duration();
+  inline void clear_has_fight_duration();
   inline void set_has_map_id();
   inline void clear_has_map_id();
 
@@ -7182,10 +7182,10 @@ class RequestNotifyKillBoss : public ::google::protobuf::MessageLite {
   mutable int _cached_size_;
   ::std::string* unknown_1_;
   ::google::protobuf::uint32 boss_id_;
-  ::google::protobuf::uint32 unknown_3_;
-  ::google::protobuf::uint32 unknown_4_;
-  ::google::protobuf::uint32 unknown_5_;
-  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 in_coop_;
+  ::google::protobuf::uint32 boss_died_;
+  ::google::protobuf::uint32 cooperator_count_;
+  ::google::protobuf::uint32 fight_duration_;
   ::google::protobuf::uint32 map_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2RequestMessage_2eproto_impl();
@@ -30497,73 +30497,73 @@ inline void RequestNotifyDie::set_souls_lost(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.souls_lost)
 }
 
-// required uint32 unknown_7 = 7;
-inline bool RequestNotifyDie::has_unknown_7() const {
+// required uint32 actor_id = 7;
+inline bool RequestNotifyDie::has_actor_id() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void RequestNotifyDie::set_has_unknown_7() {
+inline void RequestNotifyDie::set_has_actor_id() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void RequestNotifyDie::clear_has_unknown_7() {
+inline void RequestNotifyDie::clear_has_actor_id() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void RequestNotifyDie::clear_unknown_7() {
-  unknown_7_ = 0u;
-  clear_has_unknown_7();
+inline void RequestNotifyDie::clear_actor_id() {
+  actor_id_ = 0u;
+  clear_has_actor_id();
 }
-inline ::google::protobuf::uint32 RequestNotifyDie::unknown_7() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.unknown_7)
-  return unknown_7_;
+inline ::google::protobuf::uint32 RequestNotifyDie::actor_id() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.actor_id)
+  return actor_id_;
 }
-inline void RequestNotifyDie::set_unknown_7(::google::protobuf::uint32 value) {
-  set_has_unknown_7();
-  unknown_7_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.unknown_7)
+inline void RequestNotifyDie::set_actor_id(::google::protobuf::uint32 value) {
+  set_has_actor_id();
+  actor_id_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyDie.actor_id)
 }
 
-// required .Frpg2RequestMessage.KillerInfo unknown_8 = 8;
-inline bool RequestNotifyDie::has_unknown_8() const {
+// required .Frpg2RequestMessage.KillerInfo killer_info = 8;
+inline bool RequestNotifyDie::has_killer_info() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void RequestNotifyDie::set_has_unknown_8() {
+inline void RequestNotifyDie::set_has_killer_info() {
   _has_bits_[0] |= 0x00000080u;
 }
-inline void RequestNotifyDie::clear_has_unknown_8() {
+inline void RequestNotifyDie::clear_has_killer_info() {
   _has_bits_[0] &= ~0x00000080u;
 }
-inline void RequestNotifyDie::clear_unknown_8() {
-  if (unknown_8_ != NULL) unknown_8_->::Frpg2RequestMessage::KillerInfo::Clear();
-  clear_has_unknown_8();
+inline void RequestNotifyDie::clear_killer_info() {
+  if (killer_info_ != NULL) killer_info_->::Frpg2RequestMessage::KillerInfo::Clear();
+  clear_has_killer_info();
 }
-inline const ::Frpg2RequestMessage::KillerInfo& RequestNotifyDie::unknown_8() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.unknown_8)
+inline const ::Frpg2RequestMessage::KillerInfo& RequestNotifyDie::killer_info() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyDie.killer_info)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  return unknown_8_ != NULL ? *unknown_8_ : *default_instance().unknown_8_;
+  return killer_info_ != NULL ? *killer_info_ : *default_instance().killer_info_;
 #else
-  return unknown_8_ != NULL ? *unknown_8_ : *default_instance_->unknown_8_;
+  return killer_info_ != NULL ? *killer_info_ : *default_instance_->killer_info_;
 #endif
 }
-inline ::Frpg2RequestMessage::KillerInfo* RequestNotifyDie::mutable_unknown_8() {
-  set_has_unknown_8();
-  if (unknown_8_ == NULL) unknown_8_ = new ::Frpg2RequestMessage::KillerInfo;
-  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestNotifyDie.unknown_8)
-  return unknown_8_;
+inline ::Frpg2RequestMessage::KillerInfo* RequestNotifyDie::mutable_killer_info() {
+  set_has_killer_info();
+  if (killer_info_ == NULL) killer_info_ = new ::Frpg2RequestMessage::KillerInfo;
+  // @@protoc_insertion_point(field_mutable:Frpg2RequestMessage.RequestNotifyDie.killer_info)
+  return killer_info_;
 }
-inline ::Frpg2RequestMessage::KillerInfo* RequestNotifyDie::release_unknown_8() {
-  clear_has_unknown_8();
-  ::Frpg2RequestMessage::KillerInfo* temp = unknown_8_;
-  unknown_8_ = NULL;
+inline ::Frpg2RequestMessage::KillerInfo* RequestNotifyDie::release_killer_info() {
+  clear_has_killer_info();
+  ::Frpg2RequestMessage::KillerInfo* temp = killer_info_;
+  killer_info_ = NULL;
   return temp;
 }
-inline void RequestNotifyDie::set_allocated_unknown_8(::Frpg2RequestMessage::KillerInfo* unknown_8) {
-  delete unknown_8_;
-  unknown_8_ = unknown_8;
-  if (unknown_8) {
-    set_has_unknown_8();
+inline void RequestNotifyDie::set_allocated_killer_info(::Frpg2RequestMessage::KillerInfo* killer_info) {
+  delete killer_info_;
+  killer_info_ = killer_info;
+  if (killer_info) {
+    set_has_killer_info();
   } else {
-    clear_has_unknown_8();
+    clear_has_killer_info();
   }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestNotifyDie.unknown_8)
+  // @@protoc_insertion_point(field_set_allocated:Frpg2RequestMessage.RequestNotifyDie.killer_info)
 }
 
 // -------------------------------------------------------------------
@@ -30818,100 +30818,100 @@ inline void RequestNotifyKillBoss::set_boss_id(::google::protobuf::uint32 value)
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.boss_id)
 }
 
-// required uint32 unknown_3 = 3;
-inline bool RequestNotifyKillBoss::has_unknown_3() const {
+// required uint32 in_coop = 3;
+inline bool RequestNotifyKillBoss::has_in_coop() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void RequestNotifyKillBoss::set_has_unknown_3() {
+inline void RequestNotifyKillBoss::set_has_in_coop() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void RequestNotifyKillBoss::clear_has_unknown_3() {
+inline void RequestNotifyKillBoss::clear_has_in_coop() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void RequestNotifyKillBoss::clear_unknown_3() {
-  unknown_3_ = 0u;
-  clear_has_unknown_3();
+inline void RequestNotifyKillBoss::clear_in_coop() {
+  in_coop_ = 0u;
+  clear_has_in_coop();
 }
-inline ::google::protobuf::uint32 RequestNotifyKillBoss::unknown_3() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_3)
-  return unknown_3_;
+inline ::google::protobuf::uint32 RequestNotifyKillBoss::in_coop() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.in_coop)
+  return in_coop_;
 }
-inline void RequestNotifyKillBoss::set_unknown_3(::google::protobuf::uint32 value) {
-  set_has_unknown_3();
-  unknown_3_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_3)
+inline void RequestNotifyKillBoss::set_in_coop(::google::protobuf::uint32 value) {
+  set_has_in_coop();
+  in_coop_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.in_coop)
 }
 
-// required uint32 unknown_4 = 4;
-inline bool RequestNotifyKillBoss::has_unknown_4() const {
+// required uint32 boss_died = 4;
+inline bool RequestNotifyKillBoss::has_boss_died() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void RequestNotifyKillBoss::set_has_unknown_4() {
+inline void RequestNotifyKillBoss::set_has_boss_died() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void RequestNotifyKillBoss::clear_has_unknown_4() {
+inline void RequestNotifyKillBoss::clear_has_boss_died() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void RequestNotifyKillBoss::clear_unknown_4() {
-  unknown_4_ = 0u;
-  clear_has_unknown_4();
+inline void RequestNotifyKillBoss::clear_boss_died() {
+  boss_died_ = 0u;
+  clear_has_boss_died();
 }
-inline ::google::protobuf::uint32 RequestNotifyKillBoss::unknown_4() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_4)
-  return unknown_4_;
+inline ::google::protobuf::uint32 RequestNotifyKillBoss::boss_died() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.boss_died)
+  return boss_died_;
 }
-inline void RequestNotifyKillBoss::set_unknown_4(::google::protobuf::uint32 value) {
-  set_has_unknown_4();
-  unknown_4_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_4)
+inline void RequestNotifyKillBoss::set_boss_died(::google::protobuf::uint32 value) {
+  set_has_boss_died();
+  boss_died_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.boss_died)
 }
 
-// required uint32 unknown_5 = 5;
-inline bool RequestNotifyKillBoss::has_unknown_5() const {
+// required uint32 cooperator_count = 5;
+inline bool RequestNotifyKillBoss::has_cooperator_count() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void RequestNotifyKillBoss::set_has_unknown_5() {
+inline void RequestNotifyKillBoss::set_has_cooperator_count() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void RequestNotifyKillBoss::clear_has_unknown_5() {
+inline void RequestNotifyKillBoss::clear_has_cooperator_count() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void RequestNotifyKillBoss::clear_unknown_5() {
-  unknown_5_ = 0u;
-  clear_has_unknown_5();
+inline void RequestNotifyKillBoss::clear_cooperator_count() {
+  cooperator_count_ = 0u;
+  clear_has_cooperator_count();
 }
-inline ::google::protobuf::uint32 RequestNotifyKillBoss::unknown_5() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_5)
-  return unknown_5_;
+inline ::google::protobuf::uint32 RequestNotifyKillBoss::cooperator_count() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.cooperator_count)
+  return cooperator_count_;
 }
-inline void RequestNotifyKillBoss::set_unknown_5(::google::protobuf::uint32 value) {
-  set_has_unknown_5();
-  unknown_5_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_5)
+inline void RequestNotifyKillBoss::set_cooperator_count(::google::protobuf::uint32 value) {
+  set_has_cooperator_count();
+  cooperator_count_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.cooperator_count)
 }
 
-// required uint32 unknown_6 = 6;
-inline bool RequestNotifyKillBoss::has_unknown_6() const {
+// required uint32 fight_duration = 6;
+inline bool RequestNotifyKillBoss::has_fight_duration() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void RequestNotifyKillBoss::set_has_unknown_6() {
+inline void RequestNotifyKillBoss::set_has_fight_duration() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void RequestNotifyKillBoss::clear_has_unknown_6() {
+inline void RequestNotifyKillBoss::clear_has_fight_duration() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void RequestNotifyKillBoss::clear_unknown_6() {
-  unknown_6_ = 0u;
-  clear_has_unknown_6();
+inline void RequestNotifyKillBoss::clear_fight_duration() {
+  fight_duration_ = 0u;
+  clear_has_fight_duration();
 }
-inline ::google::protobuf::uint32 RequestNotifyKillBoss::unknown_6() const {
-  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_6)
-  return unknown_6_;
+inline ::google::protobuf::uint32 RequestNotifyKillBoss::fight_duration() const {
+  // @@protoc_insertion_point(field_get:Frpg2RequestMessage.RequestNotifyKillBoss.fight_duration)
+  return fight_duration_;
 }
-inline void RequestNotifyKillBoss::set_unknown_6(::google::protobuf::uint32 value) {
-  set_has_unknown_6();
-  unknown_6_ = value;
-  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.unknown_6)
+inline void RequestNotifyKillBoss::set_fight_duration(::google::protobuf::uint32 value) {
+  set_has_fight_duration();
+  fight_duration_ = value;
+  // @@protoc_insertion_point(field_set:Frpg2RequestMessage.RequestNotifyKillBoss.fight_duration)
 }
 
 // required uint32 map_id = 8;

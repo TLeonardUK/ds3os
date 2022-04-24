@@ -251,9 +251,14 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
                 case Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo_Team:        ModeName = "Team 2 v 2";        break;
             }
 
-            ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::UndeadMatch, StringFormat("Started a public '%s' undead match.",
-                ModeName.c_str()
-            ));
+            ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::UndeadMatch, 
+                StringFormat("Started a public '%s' undead match.", ModeName.c_str()),
+                0,
+                {
+                    { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), true },
+                    { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), true }
+                }
+            );
         }
     }
 

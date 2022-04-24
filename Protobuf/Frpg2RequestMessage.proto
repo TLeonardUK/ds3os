@@ -427,9 +427,9 @@ message DomainLimitData {
 
 message KillerInfo {
     required uint32 killer_player_id = 1;
-    required uint32 unknown_2 = 2;              // 25
+    required uint32 unknown_2 = 2;              // 0, 25
     required uint32 unknown_3 = 3;              // 2
-    required uint32 unknown_4 = 4;              // 18446744073709551615 - Timestamp probably   
+    required uint32 unknown_4 = 4;              // -1 if host, > if invader. Maybe invasion length
 }
 
 message KillEnemyInfo {
@@ -483,8 +483,8 @@ message RequestNotifyDie {
     required CauseOfDeath cause_of_death = 4;     
     required uint32 souls_dropped = 5;                   
     required uint32 souls_lost = 6;                      
-    required uint32 unknown_7 = 7;                      // 10002, 18446744073709551615
-    required KillerInfo unknown_8 = 8;                  // { 4006136, 25, 2, 18446744073709551615 } { 0, 0, 0, 18446744073709551615 }   {5,1,2,300021}=killed by invader
+    required uint32 actor_id = 7;                      
+    required KillerInfo killer_info = 8;                  // { 4006136, 25, 2, 18446744073709551615 } { 0, 0, 0, 18446744073709551615 }   {5,1,2,300021}=killed by invader
 }
 
 // Sent when user kills an enemy.
@@ -495,14 +495,14 @@ message RequestNotifyKillEnemy {
     required Frpg2PlayerData.Vector location = 4;
 }
 
-// Sent when user kills the boss of an area (including in coop)
+// Sent when user kills (or is killed by) the boss of an area (including in coop)
 message RequestNotifyKillBoss {
-    required string unknown_1 = 1;
-    required uint32 boss_id = 2;
-    required uint32 unknown_3 = 3;          // 1
-    required uint32 unknown_4 = 4;          // 1
-    required uint32 unknown_5 = 5;          // 1
-    required uint32 unknown_6 = 6;          // 140, 26
+    required string unknown_1 = 1;          // Seems to always be 370136096, no idea.
+    required uint32 boss_id = 2;            
+    required uint32 in_coop = 3;            // 3 and 5 might be the wrong way around.
+    required uint32 boss_died = 4;          
+    required uint32 cooperator_count = 5;   
+    required uint32 fight_duration = 6;     
     required uint32 map_id = 8;
 }
 

@@ -15318,8 +15318,8 @@ const int RequestNotifyDie::kLocationFieldNumber;
 const int RequestNotifyDie::kCauseOfDeathFieldNumber;
 const int RequestNotifyDie::kSoulsDroppedFieldNumber;
 const int RequestNotifyDie::kSoulsLostFieldNumber;
-const int RequestNotifyDie::kUnknown7FieldNumber;
-const int RequestNotifyDie::kUnknown8FieldNumber;
+const int RequestNotifyDie::kActorIdFieldNumber;
+const int RequestNotifyDie::kKillerInfoFieldNumber;
 #endif  // !_MSC_VER
 
 RequestNotifyDie::RequestNotifyDie()
@@ -15336,10 +15336,10 @@ void RequestNotifyDie::InitAsDefaultInstance() {
   location_ = const_cast< ::Frpg2PlayerData::Vector*>(&::Frpg2PlayerData::Vector::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  unknown_8_ = const_cast< ::Frpg2RequestMessage::KillerInfo*>(
+  killer_info_ = const_cast< ::Frpg2RequestMessage::KillerInfo*>(
       ::Frpg2RequestMessage::KillerInfo::internal_default_instance());
 #else
-  unknown_8_ = const_cast< ::Frpg2RequestMessage::KillerInfo*>(&::Frpg2RequestMessage::KillerInfo::default_instance());
+  killer_info_ = const_cast< ::Frpg2RequestMessage::KillerInfo*>(&::Frpg2RequestMessage::KillerInfo::default_instance());
 #endif
 }
 
@@ -15359,8 +15359,8 @@ void RequestNotifyDie::SharedCtor() {
   cause_of_death_ = 0;
   souls_dropped_ = 0u;
   souls_lost_ = 0u;
-  unknown_7_ = 0u;
-  unknown_8_ = NULL;
+  actor_id_ = 0u;
+  killer_info_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -15379,7 +15379,7 @@ void RequestNotifyDie::SharedDtor() {
   if (this != default_instance_) {
   #endif
     delete location_;
-    delete unknown_8_;
+    delete killer_info_;
   }
 }
 
@@ -15424,9 +15424,9 @@ void RequestNotifyDie::Clear() {
     if (has_location()) {
       if (location_ != NULL) location_->::Frpg2PlayerData::Vector::Clear();
     }
-    unknown_7_ = 0u;
-    if (has_unknown_8()) {
-      if (unknown_8_ != NULL) unknown_8_->::Frpg2RequestMessage::KillerInfo::Clear();
+    actor_id_ = 0u;
+    if (has_killer_info()) {
+      if (killer_info_ != NULL) killer_info_->::Frpg2RequestMessage::KillerInfo::Clear();
     }
   }
 
@@ -15538,31 +15538,31 @@ bool RequestNotifyDie::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_unknown_7;
+        if (input->ExpectTag(56)) goto parse_actor_id;
         break;
       }
 
-      // required uint32 unknown_7 = 7;
+      // required uint32 actor_id = 7;
       case 7: {
         if (tag == 56) {
-         parse_unknown_7:
+         parse_actor_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_7_)));
-          set_has_unknown_7();
+                 input, &actor_id_)));
+          set_has_actor_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(66)) goto parse_unknown_8;
+        if (input->ExpectTag(66)) goto parse_killer_info;
         break;
       }
 
-      // required .Frpg2RequestMessage.KillerInfo unknown_8 = 8;
+      // required .Frpg2RequestMessage.KillerInfo killer_info = 8;
       case 8: {
         if (tag == 66) {
-         parse_unknown_8:
+         parse_killer_info:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_unknown_8()));
+               input, mutable_killer_info()));
         } else {
           goto handle_unusual;
         }
@@ -15628,15 +15628,15 @@ void RequestNotifyDie::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->souls_lost(), output);
   }
 
-  // required uint32 unknown_7 = 7;
-  if (has_unknown_7()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
+  // required uint32 actor_id = 7;
+  if (has_actor_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->actor_id(), output);
   }
 
-  // required .Frpg2RequestMessage.KillerInfo unknown_8 = 8;
-  if (has_unknown_8()) {
+  // required .Frpg2RequestMessage.KillerInfo killer_info = 8;
+  if (has_killer_info()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      8, this->unknown_8(), output);
+      8, this->killer_info(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -15689,18 +15689,18 @@ int RequestNotifyDie::ByteSize() const {
           this->souls_lost());
     }
 
-    // required uint32 unknown_7 = 7;
-    if (has_unknown_7()) {
+    // required uint32 actor_id = 7;
+    if (has_actor_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_7());
+          this->actor_id());
     }
 
-    // required .Frpg2RequestMessage.KillerInfo unknown_8 = 8;
-    if (has_unknown_8()) {
+    // required .Frpg2RequestMessage.KillerInfo killer_info = 8;
+    if (has_killer_info()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->unknown_8());
+          this->killer_info());
     }
 
   }
@@ -15738,11 +15738,11 @@ void RequestNotifyDie::MergeFrom(const RequestNotifyDie& from) {
     if (from.has_souls_lost()) {
       set_souls_lost(from.souls_lost());
     }
-    if (from.has_unknown_7()) {
-      set_unknown_7(from.unknown_7());
+    if (from.has_actor_id()) {
+      set_actor_id(from.actor_id());
     }
-    if (from.has_unknown_8()) {
-      mutable_unknown_8()->::Frpg2RequestMessage::KillerInfo::MergeFrom(from.unknown_8());
+    if (from.has_killer_info()) {
+      mutable_killer_info()->::Frpg2RequestMessage::KillerInfo::MergeFrom(from.killer_info());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -15760,8 +15760,8 @@ bool RequestNotifyDie::IsInitialized() const {
   if (has_location()) {
     if (!this->location().IsInitialized()) return false;
   }
-  if (has_unknown_8()) {
-    if (!this->unknown_8().IsInitialized()) return false;
+  if (has_killer_info()) {
+    if (!this->killer_info().IsInitialized()) return false;
   }
   return true;
 }
@@ -15774,8 +15774,8 @@ void RequestNotifyDie::Swap(RequestNotifyDie* other) {
     std::swap(cause_of_death_, other->cause_of_death_);
     std::swap(souls_dropped_, other->souls_dropped_);
     std::swap(souls_lost_, other->souls_lost_);
-    std::swap(unknown_7_, other->unknown_7_);
-    std::swap(unknown_8_, other->unknown_8_);
+    std::swap(actor_id_, other->actor_id_);
+    std::swap(killer_info_, other->killer_info_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -16109,10 +16109,10 @@ void RequestNotifyKillEnemy::Swap(RequestNotifyKillEnemy* other) {
 #ifndef _MSC_VER
 const int RequestNotifyKillBoss::kUnknown1FieldNumber;
 const int RequestNotifyKillBoss::kBossIdFieldNumber;
-const int RequestNotifyKillBoss::kUnknown3FieldNumber;
-const int RequestNotifyKillBoss::kUnknown4FieldNumber;
-const int RequestNotifyKillBoss::kUnknown5FieldNumber;
-const int RequestNotifyKillBoss::kUnknown6FieldNumber;
+const int RequestNotifyKillBoss::kInCoopFieldNumber;
+const int RequestNotifyKillBoss::kBossDiedFieldNumber;
+const int RequestNotifyKillBoss::kCooperatorCountFieldNumber;
+const int RequestNotifyKillBoss::kFightDurationFieldNumber;
 const int RequestNotifyKillBoss::kMapIdFieldNumber;
 #endif  // !_MSC_VER
 
@@ -16137,10 +16137,10 @@ void RequestNotifyKillBoss::SharedCtor() {
   _cached_size_ = 0;
   unknown_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   boss_id_ = 0u;
-  unknown_3_ = 0u;
-  unknown_4_ = 0u;
-  unknown_5_ = 0u;
-  unknown_6_ = 0u;
+  in_coop_ = 0u;
+  boss_died_ = 0u;
+  cooperator_count_ = 0u;
+  fight_duration_ = 0u;
   map_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -16246,63 +16246,63 @@ bool RequestNotifyKillBoss::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_in_coop;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required uint32 in_coop = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_in_coop:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &in_coop_)));
+          set_has_in_coop();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_boss_died;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required uint32 boss_died = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_boss_died:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                 input, &boss_died_)));
+          set_has_boss_died();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_unknown_5;
+        if (input->ExpectTag(40)) goto parse_cooperator_count;
         break;
       }
 
-      // required uint32 unknown_5 = 5;
+      // required uint32 cooperator_count = 5;
       case 5: {
         if (tag == 40) {
-         parse_unknown_5:
+         parse_cooperator_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_5_)));
-          set_has_unknown_5();
+                 input, &cooperator_count_)));
+          set_has_cooperator_count();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_unknown_6;
+        if (input->ExpectTag(48)) goto parse_fight_duration;
         break;
       }
 
-      // required uint32 unknown_6 = 6;
+      // required uint32 fight_duration = 6;
       case 6: {
         if (tag == 48) {
-         parse_unknown_6:
+         parse_fight_duration:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_6_)));
-          set_has_unknown_6();
+                 input, &fight_duration_)));
+          set_has_fight_duration();
         } else {
           goto handle_unusual;
         }
@@ -16361,24 +16361,24 @@ void RequestNotifyKillBoss::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->boss_id(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required uint32 in_coop = 3;
+  if (has_in_coop()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->in_coop(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required uint32 boss_died = 4;
+  if (has_boss_died()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->boss_died(), output);
   }
 
-  // required uint32 unknown_5 = 5;
-  if (has_unknown_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  // required uint32 cooperator_count = 5;
+  if (has_cooperator_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->cooperator_count(), output);
   }
 
-  // required uint32 unknown_6 = 6;
-  if (has_unknown_6()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
+  // required uint32 fight_duration = 6;
+  if (has_fight_duration()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->fight_duration(), output);
   }
 
   // required uint32 map_id = 8;
@@ -16409,32 +16409,32 @@ int RequestNotifyKillBoss::ByteSize() const {
           this->boss_id());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required uint32 in_coop = 3;
+    if (has_in_coop()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->in_coop());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required uint32 boss_died = 4;
+    if (has_boss_died()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+          this->boss_died());
     }
 
-    // required uint32 unknown_5 = 5;
-    if (has_unknown_5()) {
+    // required uint32 cooperator_count = 5;
+    if (has_cooperator_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_5());
+          this->cooperator_count());
     }
 
-    // required uint32 unknown_6 = 6;
-    if (has_unknown_6()) {
+    // required uint32 fight_duration = 6;
+    if (has_fight_duration()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_6());
+          this->fight_duration());
     }
 
     // required uint32 map_id = 8;
@@ -16467,17 +16467,17 @@ void RequestNotifyKillBoss::MergeFrom(const RequestNotifyKillBoss& from) {
     if (from.has_boss_id()) {
       set_boss_id(from.boss_id());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_in_coop()) {
+      set_in_coop(from.in_coop());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_boss_died()) {
+      set_boss_died(from.boss_died());
     }
-    if (from.has_unknown_5()) {
-      set_unknown_5(from.unknown_5());
+    if (from.has_cooperator_count()) {
+      set_cooperator_count(from.cooperator_count());
     }
-    if (from.has_unknown_6()) {
-      set_unknown_6(from.unknown_6());
+    if (from.has_fight_duration()) {
+      set_fight_duration(from.fight_duration());
     }
     if (from.has_map_id()) {
       set_map_id(from.map_id());
@@ -16502,10 +16502,10 @@ void RequestNotifyKillBoss::Swap(RequestNotifyKillBoss* other) {
   if (other != this) {
     std::swap(unknown_1_, other->unknown_1_);
     std::swap(boss_id_, other->boss_id_);
-    std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
-    std::swap(unknown_5_, other->unknown_5_);
-    std::swap(unknown_6_, other->unknown_6_);
+    std::swap(in_coop_, other->in_coop_);
+    std::swap(boss_died_, other->boss_died_);
+    std::swap(cooperator_count_, other->cooperator_count_);
+    std::swap(fight_duration_, other->fight_duration_);
     std::swap(map_id_, other->map_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);

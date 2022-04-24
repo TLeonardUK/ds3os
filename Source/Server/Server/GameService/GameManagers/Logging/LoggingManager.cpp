@@ -8,6 +8,7 @@
  */
 
 #include "Server/GameService/GameManagers/Logging/LoggingManager.h"
+#include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
@@ -441,6 +442,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyDie(GameClient* Client, 
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
+    GameService& Game = *ServerInstance->GetService<GameService>();
 
     Frpg2RequestMessage::RequestNotifyDie* Request = (Frpg2RequestMessage::RequestNotifyDie*)Message.Protobuf.get();
 
@@ -457,6 +459,31 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyDie(GameClient* Client, 
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
         return MessageHandleResult::Error;
+    }
+    
+    if (ServerInstance->GetConfig().SendDiscordNotice_PvP)
+    {
+        auto& KillerInfo = Request->killer_info();
+
+        if (KillerInfo.killer_player_id() > 0)
+        {
+            if (auto KillerClient = Game.FindClientByPlayerId(KillerInfo.killer_player_id()); KillerClient != nullptr)
+            {
+                ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::PvPKill,
+                    "Was killed by another player.",
+                    0,
+                    {
+                        { "Killer", KillerClient->GetPlayerState().GetCharacterName(), false },
+                        
+                        { "Killer Soul Level", std::to_string(KillerClient->GetPlayerState().GetSoulLevel()), false },
+                        { "Killer Weapon Level", std::to_string(KillerClient->GetPlayerState().GetMaxWeaponLevel()), false },
+
+                        { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), false },
+                        { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), false }
+                    }
+                );
+            }
+        }
     }
 
     return MessageHandleResult::Handled;
@@ -479,10 +506,45 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillBoss(GameClient* Cli
     {
         BossId Id = (BossId)Request->boss_id();
 
-        ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::BossKilled, StringFormat("Killed '%s'.",
-            GetEnumString<BossId>(Id).c_str()
-        ),
-        static_cast<uint32_t>(Id));
+        if (Request->boss_died())
+        {
+            if (Request->in_coop())
+            {
+                ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::KilledBoss,
+                    StringFormat("Killed '%s' with help.", GetEnumString<BossId>(Id).c_str()),
+                    static_cast<uint32_t>(Id),
+                    {
+                        { "Fight Duration", std::to_string(Request->fight_duration()), false },
+                        { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), false },
+                        { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), false }
+                    }
+                );
+            }
+            else
+            {
+                ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::KilledBoss,
+                    StringFormat("Solo killed '%s'.", GetEnumString<BossId>(Id).c_str()),
+                    static_cast<uint32_t>(Id),
+                    { 
+                        { "Fight Duration", std::to_string(Request->fight_duration()), false },
+                        { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), false },
+                        { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), false }
+                    }
+                );
+            }
+        }
+        else
+        {
+            ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::DiedToBoss,
+                StringFormat("Died to '%s'.", GetEnumString<BossId>(Id).c_str()),
+                static_cast<uint32_t>(Id),
+                {
+                    { "Fight Duration", std::to_string(Request->fight_duration()), false },
+                    { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), false },
+                    { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), false }
+                }
+            );
+        }
     }
 
     return MessageHandleResult::Handled;

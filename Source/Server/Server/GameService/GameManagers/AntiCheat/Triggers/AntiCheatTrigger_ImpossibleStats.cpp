@@ -112,8 +112,6 @@ bool AntiCheatTrigger_ImpossibleStats::Scan(std::shared_ptr<GameClient> client, 
             TotalStats += Pair.second;
         }
 
-        // TODO: Reduce total stats by number boost by items.
-
         // Check its actually possible to acquire this many stats at this level.
         int MaxTotalStats = k_level_1_stat_count + (PlayerStatus.soul_level() - 1);
         if (TotalStats > MaxTotalStats)
@@ -123,17 +121,18 @@ bool AntiCheatTrigger_ImpossibleStats::Scan(std::shared_ptr<GameClient> client, 
         }
 
         // Ensure soul memory is equal or greater than the total cost to level up to this level.
-        size_t LevelCost = CalculateMinimumLevelUpCost(PlayerStatus.soul_level());
+        // Skip this one for now, it produces too many false positives.
+        /*size_t LevelCost = CalculateMinimumLevelUpCost(PlayerStatus.soul_level());
         if (PlayerStatus.soul_memory() < LevelCost)
         {
             extraInfo = StringFormat("Level %i requires %i souls, but only has a memory of %i.", PlayerStatus.soul_level(), LevelCost, PlayerStatus.soul_memory());
             return true;
-        }
+        }*/
 
         // Player has more souls than they ever obtained?
         if (PlayerStatus.souls() > PlayerStatus.soul_memory())
         {
-            extraInfo = StringFormat("Has %i souls, but only acquired %i.", PlayerStatus.souls(), LevelCost, PlayerStatus.soul_memory());
+            extraInfo = StringFormat("Has %i souls, but only acquired %i.", PlayerStatus.souls(), PlayerStatus.soul_memory());
             return true;            
         }
     }

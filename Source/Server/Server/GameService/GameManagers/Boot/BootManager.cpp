@@ -165,6 +165,8 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
 
 MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    auto& Config = ServerInstance->GetConfig();
+
     Frpg2RequestMessage::RequestGetAnnounceMessageList* Request = (Frpg2RequestMessage::RequestGetAnnounceMessageList*)Message.Protobuf.get();
     Ensure(Request->max_entries() == 100);
 
@@ -179,17 +181,17 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
     {
         RuntimeConfigAnnouncement Announcement;
         Announcement.Header = "BANNED";
-        Announcement.Body = ServerInstance->GetConfig().BanAnnouncementMessage;
+        Announcement.Body = Config.BanAnnouncementMessage;
         Announcements.push_back(Announcement);
 
         Client->Banned = true;
         Client->DisconnectTime = GetSeconds() + 2.0f;
     }
-    else if (Score > ServerInstance->GetConfig().AntiCheatWarningThreshold)
+    else if (Config.AntiCheatApplyPenalties && Score > Config.AntiCheatWarningThreshold)
     {
         RuntimeConfigAnnouncement Announcement;
         Announcement.Header = "WARNING";
-        Announcement.Body = ServerInstance->GetConfig().WarningAnnouncementMessage;
+        Announcement.Body = Config.WarningAnnouncementMessage;
         Announcements.push_back(Announcement);
     }
     else

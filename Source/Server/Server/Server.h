@@ -37,9 +37,11 @@ enum class DiscordNoticeType
 {
     AntiCheat,
     Bell,
-    BossKilled,
+    DiedToBoss,
+    KilledBoss,
     UndeadMatch,
     SummonSign,
+    PvPKill,
 };
 
 class Server
@@ -75,7 +77,19 @@ public:
         return nullptr;
     }
 
-    void SendDiscordNotice(std::shared_ptr<GameClient> origin, DiscordNoticeType noticeType, const std::string& message, uint32_t extraId = 0);
+    struct DiscordField
+    {
+        std::string name;
+        std::string value;
+        bool is_inline;
+    };
+
+    void SendDiscordNotice(
+        std::shared_ptr<GameClient> origin, 
+        DiscordNoticeType noticeType, 
+        const std::string& message, 
+        uint32_t extraId = 0,
+        std::vector<DiscordField> customFields = {});
 
 protected:
 
@@ -85,6 +99,7 @@ protected:
         DiscordNoticeType type;
         std::string message;
         uint32_t extraId;
+        std::vector<DiscordField> customFields;
     };
 
     void PollDiscordNotices();

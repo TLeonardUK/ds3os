@@ -378,6 +378,9 @@ public:
     // Send notifications when a boss is killed.
     bool SendDiscordNotice_Boss = true;
 
+    // Send notifications when players kill each other.
+    bool SendDiscordNotice_PvP = true;
+
 public:
 
     bool Save(const std::filesystem::path& Path);

@@ -282,15 +282,25 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
         {
             if (Sign->IsRedSign)
             {
-                ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, StringFormat("Placed a public red summon sign in '%s'.",
-                    GetEnumString(Sign->OnlineAreaId).c_str()
-                ));
+                ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, 
+                    StringFormat("Placed a public red summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                    0,
+                    {
+                        { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), true },
+                        { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), true }
+                    }
+                );
             }
             else
             {
-                ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, StringFormat("Placed a public summon sign in '%s'.",
-                    GetEnumString(Sign->OnlineAreaId).c_str()
-                ));
+                ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, 
+                    StringFormat("Placed a public summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                    0,
+                    {
+                        { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), true },
+                        { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), true }
+                    }
+                );
             }
         }
     }
