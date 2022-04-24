@@ -91,6 +91,10 @@ public:
 
     // Current anti-cheat penalty score.
     DEFINE_FIELD(PlayerAntiCheatState, AntiCheatState, {});
+
+    // Bonfire info used for calculating deltas on when the user lights one.
+    DEFINE_FIELD(std::vector<uint32_t>, LitBonfires, {});
+    DEFINE_FIELD(bool, HasInitialState, false);
 };
 
 #undef DEFINE_FIELD

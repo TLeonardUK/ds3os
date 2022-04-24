@@ -1528,14 +1528,17 @@ class PlayData : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 bonfire_level() const;
   inline void set_bonfire_level(::google::protobuf::uint32 value);
 
-  // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
-  inline bool has_bonfire_info() const;
+  // repeated .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
+  inline int bonfire_info_size() const;
   inline void clear_bonfire_info();
   static const int kBonfireInfoFieldNumber = 8;
-  inline const ::Frpg2PlayerData::BonfireInfo& bonfire_info() const;
-  inline ::Frpg2PlayerData::BonfireInfo* mutable_bonfire_info();
-  inline ::Frpg2PlayerData::BonfireInfo* release_bonfire_info();
-  inline void set_allocated_bonfire_info(::Frpg2PlayerData::BonfireInfo* bonfire_info);
+  inline const ::Frpg2PlayerData::BonfireInfo& bonfire_info(int index) const;
+  inline ::Frpg2PlayerData::BonfireInfo* mutable_bonfire_info(int index);
+  inline ::Frpg2PlayerData::BonfireInfo* add_bonfire_info();
+  inline const ::google::protobuf::RepeatedPtrField< ::Frpg2PlayerData::BonfireInfo >&
+      bonfire_info() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Frpg2PlayerData::BonfireInfo >*
+      mutable_bonfire_info();
 
   // @@protoc_insertion_point(class_scope:Frpg2PlayerData.PlayData)
  private:
@@ -1549,8 +1552,6 @@ class PlayData : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_4();
   inline void set_has_bonfire_level();
   inline void clear_has_bonfire_level();
-  inline void set_has_bonfire_info();
-  inline void clear_has_bonfire_info();
 
   ::std::string _unknown_fields_;
 
@@ -1560,7 +1561,7 @@ class PlayData : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 is_hollow_;
   ::google::protobuf::uint32 hollow_level_;
   ::google::protobuf::uint32 unknown_4_;
-  ::Frpg2PlayerData::BonfireInfo* bonfire_info_;
+  ::google::protobuf::RepeatedPtrField< ::Frpg2PlayerData::BonfireInfo > bonfire_info_;
   ::google::protobuf::uint32 bonfire_level_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Frpg2PlayerData_2eproto_impl();
@@ -6143,49 +6144,34 @@ inline void PlayData::set_bonfire_level(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:Frpg2PlayerData.PlayData.bonfire_level)
 }
 
-// optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
-inline bool PlayData::has_bonfire_info() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void PlayData::set_has_bonfire_info() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void PlayData::clear_has_bonfire_info() {
-  _has_bits_[0] &= ~0x00000020u;
+// repeated .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
+inline int PlayData::bonfire_info_size() const {
+  return bonfire_info_.size();
 }
 inline void PlayData::clear_bonfire_info() {
-  if (bonfire_info_ != NULL) bonfire_info_->::Frpg2PlayerData::BonfireInfo::Clear();
-  clear_has_bonfire_info();
+  bonfire_info_.Clear();
 }
-inline const ::Frpg2PlayerData::BonfireInfo& PlayData::bonfire_info() const {
+inline const ::Frpg2PlayerData::BonfireInfo& PlayData::bonfire_info(int index) const {
   // @@protoc_insertion_point(field_get:Frpg2PlayerData.PlayData.bonfire_info)
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  return bonfire_info_ != NULL ? *bonfire_info_ : *default_instance().bonfire_info_;
-#else
-  return bonfire_info_ != NULL ? *bonfire_info_ : *default_instance_->bonfire_info_;
-#endif
+  return bonfire_info_.Get(index);
 }
-inline ::Frpg2PlayerData::BonfireInfo* PlayData::mutable_bonfire_info() {
-  set_has_bonfire_info();
-  if (bonfire_info_ == NULL) bonfire_info_ = new ::Frpg2PlayerData::BonfireInfo;
+inline ::Frpg2PlayerData::BonfireInfo* PlayData::mutable_bonfire_info(int index) {
   // @@protoc_insertion_point(field_mutable:Frpg2PlayerData.PlayData.bonfire_info)
+  return bonfire_info_.Mutable(index);
+}
+inline ::Frpg2PlayerData::BonfireInfo* PlayData::add_bonfire_info() {
+  // @@protoc_insertion_point(field_add:Frpg2PlayerData.PlayData.bonfire_info)
+  return bonfire_info_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Frpg2PlayerData::BonfireInfo >&
+PlayData::bonfire_info() const {
+  // @@protoc_insertion_point(field_list:Frpg2PlayerData.PlayData.bonfire_info)
   return bonfire_info_;
 }
-inline ::Frpg2PlayerData::BonfireInfo* PlayData::release_bonfire_info() {
-  clear_has_bonfire_info();
-  ::Frpg2PlayerData::BonfireInfo* temp = bonfire_info_;
-  bonfire_info_ = NULL;
-  return temp;
-}
-inline void PlayData::set_allocated_bonfire_info(::Frpg2PlayerData::BonfireInfo* bonfire_info) {
-  delete bonfire_info_;
-  bonfire_info_ = bonfire_info;
-  if (bonfire_info) {
-    set_has_bonfire_info();
-  } else {
-    clear_has_bonfire_info();
-  }
-  // @@protoc_insertion_point(field_set_allocated:Frpg2PlayerData.PlayData.bonfire_info)
+inline ::google::protobuf::RepeatedPtrField< ::Frpg2PlayerData::BonfireInfo >*
+PlayData::mutable_bonfire_info() {
+  // @@protoc_insertion_point(field_mutable_list:Frpg2PlayerData.PlayData.bonfire_info)
+  return &bonfire_info_;
 }
 
 // -------------------------------------------------------------------

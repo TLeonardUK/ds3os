@@ -41,7 +41,9 @@ enum class DiscordNoticeType
     KilledBoss,
     UndeadMatch,
     SummonSign,
+    SummonSignPvP,
     PvPKill,
+    BonfireLit
 };
 
 class Server
@@ -143,6 +145,10 @@ private:
     constexpr static inline double k_DiscordOriginCooldownMin = 10.0f;
 
     std::unordered_map<uint32_t, double> DiscordOriginCooldown;
+
+    static inline std::string BonfireThumbnail          = "https://i.imgur.com/zyHeayN.png";
+    static inline std::string RedSoapstoneThumbnail     = "https://i.imgur.com/I251YBN.png";
+    static inline std::string WhiteSoapstoneThumbnail   = "https://i.imgur.com/kOXzqso.png";
 
     static inline std::unordered_map<BossId, std::string> DiscordBossThumbnails = {
         { BossId::Spear_of_the_Church,              "https://i.imgur.com/mIOPfle.jpeg" },

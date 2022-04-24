@@ -485,11 +485,24 @@ void Server::PollDiscordNotices()
                 case DiscordNoticeType::SummonSign:
                 {
                     embed["color"] = "16316671"; // White
+                    thumbnailUrl = WhiteSoapstoneThumbnail;
+                    break;
+                }
+                case DiscordNoticeType::SummonSignPvP:
+                {
+                    embed["color"] = "14423100"; // Red
+                    thumbnailUrl = RedSoapstoneThumbnail;
                     break;
                 }
                 case DiscordNoticeType::PvPKill:
                 {
                     embed["color"] = "14423100"; // Red
+                    break;
+                }
+                case DiscordNoticeType::BonfireLit:
+                {
+                    embed["color"] = "16747520"; // Orange
+                    thumbnailUrl = BonfireThumbnail;
                     break;
                 }
                 case DiscordNoticeType::DiedToBoss:

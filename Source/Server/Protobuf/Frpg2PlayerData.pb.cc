@@ -4248,12 +4248,6 @@ PlayData::PlayData()
 }
 
 void PlayData::InitAsDefaultInstance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  bonfire_info_ = const_cast< ::Frpg2PlayerData::BonfireInfo*>(
-      ::Frpg2PlayerData::BonfireInfo::internal_default_instance());
-#else
-  bonfire_info_ = const_cast< ::Frpg2PlayerData::BonfireInfo*>(&::Frpg2PlayerData::BonfireInfo::default_instance());
-#endif
 }
 
 PlayData::PlayData(const PlayData& from)
@@ -4270,7 +4264,6 @@ void PlayData::SharedCtor() {
   hollow_level_ = 0u;
   unknown_4_ = 0u;
   bonfire_level_ = 0u;
-  bonfire_info_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4285,7 +4278,6 @@ void PlayData::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
-    delete bonfire_info_;
   }
 }
 
@@ -4320,17 +4312,15 @@ void PlayData::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 63) {
+  if (_has_bits_[0 / 32] & 31) {
     ZR_(play_time_seconds_, unknown_4_);
     bonfire_level_ = 0u;
-    if (has_bonfire_info()) {
-      if (bonfire_info_ != NULL) bonfire_info_->::Frpg2PlayerData::BonfireInfo::Clear();
-    }
   }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
+  bonfire_info_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -4423,15 +4413,16 @@ bool PlayData::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
+      // repeated .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
       case 8: {
         if (tag == 66) {
          parse_bonfire_info:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_bonfire_info()));
+                input, add_bonfire_info()));
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(66)) goto parse_bonfire_info;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -4486,10 +4477,10 @@ void PlayData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->bonfire_level(), output);
   }
 
-  // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
-  if (has_bonfire_info()) {
+  // repeated .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
+  for (int i = 0; i < this->bonfire_info_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      8, this->bonfire_info(), output);
+      8, this->bonfire_info(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -4536,14 +4527,15 @@ int PlayData::ByteSize() const {
           this->bonfire_level());
     }
 
-    // optional .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
-    if (has_bonfire_info()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->bonfire_info());
-    }
-
   }
+  // repeated .Frpg2PlayerData.BonfireInfo bonfire_info = 8;
+  total_size += 1 * this->bonfire_info_size();
+  for (int i = 0; i < this->bonfire_info_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->bonfire_info(i));
+  }
+
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -4559,6 +4551,7 @@ void PlayData::CheckTypeAndMergeFrom(
 
 void PlayData::MergeFrom(const PlayData& from) {
   GOOGLE_CHECK_NE(&from, this);
+  bonfire_info_.MergeFrom(from.bonfire_info_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_play_time_seconds()) {
       set_play_time_seconds(from.play_time_seconds());
@@ -4575,9 +4568,6 @@ void PlayData::MergeFrom(const PlayData& from) {
     if (from.has_bonfire_level()) {
       set_bonfire_level(from.bonfire_level());
     }
-    if (from.has_bonfire_info()) {
-      mutable_bonfire_info()->::Frpg2PlayerData::BonfireInfo::MergeFrom(from.bonfire_info());
-    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -4590,9 +4580,7 @@ void PlayData::CopyFrom(const PlayData& from) {
 
 bool PlayData::IsInitialized() const {
 
-  if (has_bonfire_info()) {
-    if (!this->bonfire_info().IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->bonfire_info())) return false;
   return true;
 }
 
@@ -4603,7 +4591,7 @@ void PlayData::Swap(PlayData* other) {
     std::swap(hollow_level_, other->hollow_level_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(bonfire_level_, other->bonfire_level_);
-    std::swap(bonfire_info_, other->bonfire_info_);
+    bonfire_info_.Swap(&other->bonfire_info_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

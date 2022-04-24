@@ -180,7 +180,7 @@ message PlayData {
     optional uint32 hollow_level = 5;                          
     optional uint32 unknown_4 = 6;                          // 0, 5 on journey 2?
     optional uint32 bonfire_level = 7;                      
-    optional BonfireInfo bonfire_info = 8;
+    repeated BonfireInfo bonfire_info = 8;
 }
 
 message LogInfo {
