@@ -265,6 +265,7 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_STRUCT_VAR(UndeadMatchMatchingParameters);
 
     SERIALIZE_VAR(AntiCheatEnabled);
+    SERIALIZE_VAR(AntiCheatApplyPenalties);
     SERIALIZE_VAR(AntiCheatWarningMessage);
     SERIALIZE_VAR(AntiCheatDisconnectMessage);
     SERIALIZE_VAR(AntiCheatBanMessage);
@@ -292,6 +293,7 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(SendDiscordNotice_QuickMatch);
     SERIALIZE_VAR(SendDiscordNotice_Bell);
     SERIALIZE_VAR(SendDiscordNotice_Boss);
+    SERIALIZE_VAR(SendDiscordNotice_PvP);
 
     return true;
 }

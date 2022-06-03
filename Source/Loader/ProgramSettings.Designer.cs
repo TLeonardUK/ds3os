@@ -12,7 +12,7 @@ namespace Loader {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class ProgramSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static ProgramSettings defaultInstance = ((ProgramSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ProgramSettings())));
@@ -49,7 +49,7 @@ namespace Loader {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://timleonard.uk:50020")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://ds3os-master.timleonard.uk:50020")]
         public string master_server_url {
             get {
                 return ((string)(this["master_server_url"]));
