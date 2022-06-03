@@ -93,6 +93,12 @@ bool Server::Init()
         }
     }
 
+    // Patch old server ip.
+    if (Config.MasterServerIp == "timleonard.uk")
+    {
+        Config.MasterServerIp = "ds3os-master.timleonard.uk";
+    }
+
     // Generate server encryption keypair if it doesn't already exists.
     if (!std::filesystem::exists(PrivateKeyPath) ||
         !std::filesystem::exists(PublicKeyPath))

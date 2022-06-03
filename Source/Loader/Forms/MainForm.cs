@@ -249,6 +249,11 @@ namespace Loader
             minimumPlayersBox.Value = ProgramSettings.Default.minimum_players;
             ServerConfigList.FromJson(ProgramSettings.Default.server_config_json, out ServerList);
 
+            if (ProgramSettings.Default.master_server_url == "timleonard.uk")
+            {
+                ProgramSettings.Default.master_server_url = "ds3os-master.timleonard.uk";
+            }
+
             // Strip out any old config files downloaded from the server, we will be querying them
             // shortly anyway.
             foreach (ServerConfig Config in ServerList.Servers.ToArray())

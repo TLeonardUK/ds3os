@@ -117,6 +117,21 @@ jobs:
         path: ./linux.zip
         name: linux
         
+  build-docker:
+    name: Build Docker
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout respository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Generate Solution
+      shell: bash
+      working-directory: ${{github.workspace}}/Tools
+      run: ${{github.workspace}}/Tools/generate_make_release.sh
+      
     - name: Login to DockerHub
       uses: docker/login-action@v1 
       with:
@@ -141,10 +156,10 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os:latest 
-                      
+                                            
   make-release:
     name: Make Release
-    needs: [ build-windows, build-linux ]
+    needs: [ build-windows, build-linux, build-docker ]
     runs-on: ubuntu-latest
 
     steps:
