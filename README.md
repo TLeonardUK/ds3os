@@ -1,11 +1,18 @@
 ![Dark Souls 3 - Open Server](./Resources/banner.png?raw=true)
 
+![GitHub license](https://img.shields.io/github/license/TLeonardUK/ds3os)
+![GitHub release](https://img.shields.io/github/release/TLeonardUK/ds3os)
+![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
+[![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/eQWJcRYwH5)
+
 # What is this project?
 An open source implementation of the dark souls 3 game server. 
 
 Idealistically made for the purpose of allow better alternatives to playing mods than getting your account banned and using the retail ban server. As well as opening up opportunities to improve player safety and choice, by allowing them to segregate themselves off from the pool of cheaters on retail, without loosing network functionality.
 
-:bangbang: This project is still a work in progress, no guarantees are given over its stability (that said it works quite well now!).
+:bangbang: This project is still a work in progress, no guarantees are given over its stability (that said it works quite well now!). 
+
+If you have any trouble join the discord for tech-support: https://discord.gg/eQWJcRYwH5
 
 # Can I use it with a pirated game?
 No, the server authenticates steam tickets. Please do not ask about piracy, steam emulators or the like, we have no interest in supporting them. 
@@ -51,6 +58,7 @@ Most of the games core functionality works now, with some degree of variance to 
 
 Future roadmap:
 
+- [ ] Client-side mods dictated by server configuration (eg. Raising player limit, anti-cheat, reduce invasion cool downs, change params, etc). 
 - [ ] Regulation file distribution.
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
 
