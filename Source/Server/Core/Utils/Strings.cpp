@@ -12,6 +12,7 @@
 #include <sstream>
 #include <iomanip>
 #include <string>
+#include <codecvt>
 
 std::string BytesToHex(const std::vector<uint8_t>& Bytes)
 {
@@ -91,4 +92,20 @@ std::string TrimString(const std::string& input)
     }
 
     return input.substr(startWhiteCount, input.size() - startWhiteCount - endWhiteCount);
+}
+
+// For working with exotic characters, such as 
+// chinese or japanese letters.
+std::string WidestringToBytes(std::wstring const& widestring)
+{
+    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
+    std::string bytes = convert.to_bytes(widestring);
+    return bytes;
+}
+
+std::wstring BytesToWidestring(std::string const& bytes)
+{
+    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
+    std::wstring widestring = convert.from_bytes(bytes);
+    return widestring;
 }

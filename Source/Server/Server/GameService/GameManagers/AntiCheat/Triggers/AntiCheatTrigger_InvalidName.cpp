@@ -25,12 +25,12 @@ bool AntiCheatTrigger_InvalidName::Scan(std::shared_ptr<GameClient> client, std:
     auto& AllStatus = client->GetPlayerState().GetPlayerStatus();
     if (AllStatus.has_player_status())
     {
-        std::string name = TrimString(AllStatus.player_status().name());
+        std::wstring wideName = BytesToWidestring(AllStatus.player_status().name());
 
-        // Check trimmed length of name is valid.
-        if (name.size() < k_min_name_length || name.size() > k_max_name_length)
+        // Check if length of widestring name is valid.
+        if (wideName.size() < k_min_name_length || wideName.size() > k_max_name_length)
         {
-            extraInfo = StringFormat("Name '%s' has invalid length of %zi.", name.c_str(), name.size());
+            extraInfo = StringFormat("Name '%s' has invalid length of %zi.", WidestringToBytes(wideName), wideName.size());
             return true;
         }
     }

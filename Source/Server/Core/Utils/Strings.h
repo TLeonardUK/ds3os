@@ -31,3 +31,7 @@ std::string StringFormat(const char* format, Args... args)
 }
 
 std::string TrimString(const std::string& input);
+
+std::string WidestringToBytes(const std::wstring& widestring);
+
+std::wstring BytesToWidestring(std::string const& bytes);
