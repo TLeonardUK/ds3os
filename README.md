@@ -76,7 +76,7 @@ timleonarduk/ds3os-master - This is for the master server, unless you are making
 
 If you want a quick one-liner to run the server, you can use this. Note that it mounts the Saved folder to the host filesytem, this is simply to make modifying the config files easier.
 
-`sudo docker run -d -m 2G --restart always --net host --mount type=bind,source=/opt/ds3os/Saved,target=/opt/ds3os/Saved timleonarduk/ds3os:latest`
+`sudo docker run -d -m 2G --name ds3os --restart always --net host --mount type=bind,source=/opt/ds3os/Saved,target=/opt/ds3os/Saved timleonarduk/ds3os:latest`
 
 ## I launch the game but its unable to connect?
 There are a few different causes of this, the simplest one is to make sure you're running as admin, the launcher needs to patch the games memory to get it to connect to the new server, this requires admin privileges.
