@@ -148,12 +148,13 @@ bool AuthClient::Poll()
                 // Note: I think empty response is sent back here if an update is available.
 
                 Frpg2RequestMessage::GetServiceStatusResponse Response;
-                if (Request.app_version() == BuildConfig::APP_VERSION)
+                if (Request.app_version() <  BuildConfig::MIN_APP_VERSION ||
+                    Request.app_version() >= BuildConfig::APP_VERSION)
                 {
                     Response.set_id(2);
                     Response.set_steam_id("\0");
                     Response.set_unknown_1(0);
-                    Response.set_app_version(BuildConfig::APP_VERSION);
+                    Response.set_app_version(Request.app_version());
                 }
 
                 if (!MessageStream->Send(&Response, Frpg2MessageType::Reply, Message.Header.msg_index))

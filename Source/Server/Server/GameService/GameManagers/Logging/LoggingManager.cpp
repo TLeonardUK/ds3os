@@ -93,6 +93,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyProtoBufLog(GameClient* 
         case Frpg2RequestMessage::LogType::LeaveItemLog:        Handle_LeaveItemLog(Client, Request);           break;
         case Frpg2RequestMessage::LogType::SaleItemLog:         Handle_SaleItemLog(Client, Request);            break;
         case Frpg2RequestMessage::LogType::StrengthenWeaponLog: Handle_StrengthenWeaponLog(Client, Request);    break;
+        case Frpg2RequestMessage::LogType::VisitResultLog:      Handle_VisitResultLog(Client, Request);         break;
 
         // There are other log types, but none we particularly care about handling, so just ignore them.
     }
@@ -366,6 +367,28 @@ void LoggingManager::Handle_StrengthenWeaponLog(GameClient* Client, Frpg2Request
     std::string TotalStatisticKey = StringFormat("Item/TotalUpgraded");
     Database.AddGlobalStatistic(TotalStatisticKey, TotalCount);
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
+}
+
+void LoggingManager::Handle_VisitResultLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+{
+    ServerDatabase& Database = ServerInstance->GetDatabase();
+    PlayerState& Player = Client->GetPlayerState();
+
+    FpdLogMessage::VisitResultLog Log;
+    if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
+    {
+        WarningS(Client->GetName().c_str(), "Failed to parse VisitResultLog.");
+        return;
+    }
+
+#ifdef _DEBUG
+    LogS(Client->GetName().c_str(), "Recieved VisitResultLog from: %s", Client->GetName().c_str());
+    Log("map_id: %i", Log.map_id());
+    Log("location: %.2f, %.2f, %.2f", Log.location().x(), Log.location().y(), Log.location().z());
+    Log("online_area_id_source: %i", Log.online_area_id_source());
+    Log("online_area_id_destination: %i", Log.online_area_id_destination());
+    Log("unknown_2: %i", Log.unknown_2());
+#endif
 }
 
 MessageHandleResult LoggingManager::Handle_RequestNotifyKillEnemy(GameClient* Client, const Frpg2ReliableUdpMessage& Message)

@@ -583,14 +583,7 @@ namespace Loader
             }
 
             string ConnectionHostname = ResolveConnectIp(Config);
-
-            byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey);
-            if (DataBlock == null)
-            {
-                MessageBox.Show("Failed to encode server info patch. Potentially server information is too long to fit into the space available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
+            
             DarkSoulsLoadConfig LoadConfig;
             if (!BuildConfig.ExeLoadConfiguration.TryGetValue(ExeUtils.GetExeSimpleHash(ExeLocationTextBox.Text), out LoadConfig))
             {
@@ -598,30 +591,16 @@ namespace Loader
                 return;
             }
 
+            byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey, LoadConfig.Key);
+            if (DataBlock == null)
+            {
+                MessageBox.Show("Failed to encode server info patch. Potentially server information is too long to fit into the space available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             string ExeLocation = ExeLocationTextBox.Text;
             string ExeDirectory = Path.GetDirectoryName(ExeLocation);
-                        
-            if (!File.Exists(Path.Combine(ExeDirectory, "BlueSentinelPref.ini")) ||
-                !File.Exists(Path.Combine(ExeDirectory, "xinput1_3.dll")))
-            {
-                DialogResult result = MessageBox.Show(
-@"It looks like you may not have the BlueSentinel mod installed.
-                                
-This is advised as CVE-2022-24126 has now been publically disclosed with proof of concept exploits.
-                                
-Only play without if you trust the people with access to the server.
-                                
-Do you want to launch the game unprotected?", 
-                "Warning", 
-                MessageBoxButtons.YesNo, 
-                MessageBoxIcon.Warning);
-
-                if (result == DialogResult.No)
-                {
-                    return;
-                }
-            }
-            
+ 
             string AppIdFile = Path.Combine(ExeDirectory, "steam_appid.txt");
             if (!File.Exists(AppIdFile))
             {
@@ -637,7 +616,7 @@ Do you want to launch the game unprotected?",
                 IntPtr.Zero,
                 IntPtr.Zero,
                 false,
-                ProcessCreationFlags.CREATE_SUSPENDED,
+                ProcessCreationFlags.ZERO_FLAG, 
                 IntPtr.Zero,
                 ExeDirectory,
                 ref StartupInfo,
@@ -650,14 +629,35 @@ Do you want to launch the game unprotected?",
                 return;
             }
 
-            int BytesWritten;
-            bool WriteSuccessful = WinAPI.WriteProcessMemory(ProcessInfo.hProcess, (IntPtr)LoadConfig.ServerInfoAddress, DataBlock, (uint)DataBlock.Length, out BytesWritten);
-            if (!WriteSuccessful || BytesWritten != DataBlock.Length)
+            // Retry a few times until steamstub has unpacked everything.
+            // Ugly as fuck, but simplest way to handle this.
+            for (int i = 0; i < 32; i++)
             {
-                MessageBox.Show("Failed to write full patch to memory. Game may or may not work.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+                IntPtr BaseAddress = WinAPI.GetProcessModuleBaseAddress(ProcessInfo.hProcess);
+                IntPtr PatchAddress = (IntPtr)LoadConfig.ServerInfoAddress;
+                if (LoadConfig.UsesASLR)
+                {
+                    PatchAddress = (IntPtr)((ulong)BaseAddress + (ulong)PatchAddress);
+                }
 
-            WinAPI.ResumeThread(ProcessInfo.hThread);
+                int BytesWritten;
+                bool WriteSuccessful = WinAPI.WriteProcessMemory(ProcessInfo.hProcess, PatchAddress, DataBlock, (uint)DataBlock.Length, out BytesWritten);
+                if (!WriteSuccessful || BytesWritten != DataBlock.Length)
+                {
+                    if (i == 31)
+                    {
+                        MessageBox.Show("Failed to write full patch to memory. Game may or may not work.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        Thread.Sleep(500);
+                    }
+                }            
+                else
+                {
+                    break;
+                }
+            }
 
             RunningProcessHandle = ProcessInfo.hProcess;
             RunningProcessId = ProcessInfo.dwProcessId;
@@ -740,7 +740,7 @@ Do you want to launch the game unprotected?",
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "https://discord.gg/eQWJcRYwH5",
+                FileName = "https://discord.gg/pBmquc9Jkj",
                 UseShellExecute = true
             });
         }

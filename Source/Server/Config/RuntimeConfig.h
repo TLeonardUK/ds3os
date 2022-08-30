@@ -192,16 +192,13 @@ public:
     bool DisableCoop = false;
 
     // Disables bloodmessages.
-    // Defaults to true as mitigation to CVE-2022-24125 / CVE-2022-24126
-    bool DisableBloodMessages = true;
+    bool DisableBloodMessages = false;
 
     // Disables bloodstains.
-    // Defaults to true as mitigation to CVE-2022-24125 / CVE-2022-24126
-    bool DisableBloodStains = true;
+    bool DisableBloodStains = false;
 
     // Disables ghosts
-    // Defaults to true as mitigation to CVE-2022-24125 / CVE-2022-24126
-    bool DisableGhosts = true;
+    bool DisableGhosts = false;
 
     // Disables all auto summoning for invasions (alrich faithful, watchdogs, etc)
     bool DisableInvasionAutoSummon = false;

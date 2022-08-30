@@ -54,6 +54,7 @@ protected:
     void Handle_LeaveItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
     void Handle_SaleItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
     void Handle_StrengthenWeaponLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_VisitResultLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
 
 private:
     Server* ServerInstance;

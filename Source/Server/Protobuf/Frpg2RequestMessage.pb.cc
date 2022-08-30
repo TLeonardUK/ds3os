@@ -795,9 +795,9 @@ bool PushMessageId_IsValid(int value) {
     case 933:
     case 934:
     case 935:
-    case 951:
     case 952:
     case 953:
+    case 957:
     case 969:
       return true;
     default:
@@ -43230,11 +43230,11 @@ bool JoinQuickMatchMessage::MergePartialFromCodedStream(
         break;
       }
 
-      // required string unknown_6 = 6;
+      // required bytes unknown_6 = 6;
       case 6: {
         if (tag == 50) {
          parse_unknown_6:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_unknown_6()));
         } else {
           goto handle_unusual;
@@ -43294,9 +43294,9 @@ void JoinQuickMatchMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
   }
 
-  // required string unknown_6 = 6;
+  // required bytes unknown_6 = 6;
   if (has_unknown_6()) {
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       6, this->unknown_6(), output);
   }
 
@@ -43344,10 +43344,10 @@ int JoinQuickMatchMessage::ByteSize() const {
           this->unknown_5());
     }
 
-    // required string unknown_6 = 6;
+    // required bytes unknown_6 = 6;
     if (has_unknown_6()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->unknown_6());
     }
 

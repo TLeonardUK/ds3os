@@ -94,31 +94,6 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
     GhostData.assign(Request->ghost_data().data(), Request->ghost_data().data() + Request->ghost_data().size());
 
-    // There is no NRSSR struct in bloodstain or ghost data, but we still make sure the size-delimited entry list is valid.
-    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
-    {
-        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Data.data(), Data.size());
-        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
-        {
-            WarningS(Client->GetName().c_str(), "Bloodstain metadata recieved from client is invalid (error code %i).",
-                static_cast<uint32_t>(ValidationResult));
-
-            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
-
-            return MessageHandleResult::Handled;
-        }
-        ValidationResult = NRSSRSanitizer::ValidateEntryList(GhostData.data(), GhostData.size());
-        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
-        {
-            WarningS(Client->GetName().c_str(), "Ghost data recieved from client is invalid (error code %i).",
-                static_cast<uint32_t>(ValidationResult));
-
-            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
-
-            return MessageHandleResult::Handled;
-        }
-    }
-
     if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
     {
         LiveCache.Add(ActiveStain->OnlineAreaId, ActiveStain->BloodstainId, ActiveStain);

@@ -18,14 +18,6 @@ namespace Loader
 {
     public class PatchingUtils
     {
-        // The TEA encryption key used to encrypt the server info block.
-        public static uint[] ServerInfoTEAEncryptionKey = {
-            0x4B694CD6,
-            0x96ADA235,
-            0xEC91D9D4,
-            0x23F562E5
-        };
-
         // Maximum size our server info block can be. Technically there is some extra space after this
         // as FROM seem to included a bunch of their stack memory when encrypting this lol. But it 
         // feels safest not to stray into that data if we can avoid it.
@@ -43,7 +35,7 @@ namespace Loader
         // Makes the TEA encrypted data block that contains the hostname and public key of 
         // the login server. This can be taken and the one in memory replaced so we can connect
         // to the new server.
-        public static byte[] MakeEncryptedServerInfo(string server_hostname, string public_key)
+        public static byte[] MakeEncryptedServerInfo(string server_hostname, string public_key, uint[] key)
         {
             byte[] data_block = new byte[ServerInfoPatchSize];
 
@@ -63,7 +55,7 @@ namespace Loader
             Array.Copy(key_bytes, 0, data_block, 0, key_bytes.Length);
             Array.Copy(host_bytes, 0, data_block, ServerInfoHostOffset, host_bytes.Length);
 
-            return EncryptionUtils.Tea32Encrypt(data_block, ServerInfoTEAEncryptionKey);
+            return EncryptionUtils.Tea32Encrypt(data_block, key);
         }
     }
 }

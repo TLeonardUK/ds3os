@@ -127,21 +127,6 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
 
     bool bSuccess = true;
 
-    // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
-    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
-    {
-        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Request->data().data(), Request->data().size());
-        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
-        {
-            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
-
-            WarningS(Client->GetName().c_str(), "RequestVisit message recieved from client contains ill formated binary data (error code %i).",
-                static_cast<uint32_t>(ValidationResult));
-
-            bSuccess = false;
-        }
-    }
-
     // Check client still exists.
     std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());
     if (!TargetClient)
@@ -153,19 +138,25 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     // If success sent push to target client.
     if (bSuccess && TargetClient)
     {
-#ifdef _DEBUG
-        LogS(Client->GetName().c_str(), "Sending push requesting visit to player: %s", TargetClient->GetName().c_str());
-        Log("visitor_pool: %i", Request->visitor_pool());
-#endif
-
         Frpg2RequestMessage::PushRequestVisit PushMessage;
         PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestVisit);
         PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_player_steam_id(Player.GetSteamId());
-        PushMessage.set_data(Request->data());
+        PushMessage.set_data(Request->data().c_str(), Request->data().size());
         PushMessage.set_visitor_pool(Request->visitor_pool());
         PushMessage.set_map_id(Request->map_id());
         PushMessage.set_online_area_id(Request->online_area_id());
+
+#ifdef _DEBUG
+        LogS(Client->GetName().c_str(), "Sending push requesting visit to player: %s", TargetClient->GetName().c_str());
+        Log("push_message_id: %i", PushMessage.push_message_id());
+        Log("player_id: %i", PushMessage.player_id());
+        Log("player_steam_id: %s", PushMessage.player_steam_id().c_str());
+        Log("data: %i bytes", PushMessage.data().size());
+        Log("visitor_pool: %i", PushMessage.visitor_pool());
+        Log("map_id: %i", PushMessage.map_id());
+        Log("online_area_id: %i", PushMessage.online_area_id());
+#endif
 
         if (!TargetClient->MessageStream->Send(&PushMessage))
         {
@@ -253,6 +244,9 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
 
 #ifdef _DEBUG
     LogS(Client->GetName().c_str(), "Recieved rejection of visit requested by player: %s", InitiatorClient->GetName().c_str());
+    Log("player_id: %i", Request->player_id());
+    Log("map_id: %i", Request->map_id());
+    Log("online_area_id: %i", Request->online_area_id());
     Log("visitor_pool: %i", Request->visitor_pool());
     Log("unknown_5: %i", Request->unknown_5());
 #endif

@@ -212,21 +212,6 @@ bool Server::Init()
     WriteState("Coop", !Config.DisableCoop);
 #undef WriteState
 
-    if (!Config.DisableBloodMessages || !Config.DisableBloodStains || !Config.DisableGhosts)
-    {
-        Error(
-            "\n\n"
-            "=============================================== WARNING ===============================================\n"
-            " Blood messages, stains, ghosts and other serialized data that is client-generated and client-parsed\n"
-            " are vulnerable to CVE-2022-24125 and CVE-2022-24126.\n"
-            "\n"
-            " Until FROM SOFTWARE patch the client it is not advised to run with these enabled, unless you are only\n"
-            " permitting access to the server to only people you trust.\n"
-            "=======================================================================================================\n"
-            "\n\n"
-        );
-    }
-
     return true;
 }
 
@@ -325,7 +310,7 @@ void Server::PollServerAdvertisement()
     {
         return;
     }
-    if constexpr (!BuildConfig::SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS || !BuildConfig::NRSSR_SANITY_CHECKS)
+    if constexpr (!BuildConfig::SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS)
     {
         Warning("Security fixes for RequestSendMessageToPlayers or the NRSSR RCE exploit are disabled. As such, the server will not be listed publicly.");
         Config.Advertise = false;

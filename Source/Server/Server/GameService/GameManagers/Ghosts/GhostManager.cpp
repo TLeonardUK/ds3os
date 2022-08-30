@@ -88,21 +88,6 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
 
-    // There is no NRSSR struct in ghost data, but we still make sure the size-delimited entry list is valid.
-    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
-    {
-        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Data.data(), Data.size());
-        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
-        {
-            WarningS(Client->GetName().c_str(), "Ghost data recieved from client is invalid (error code %i).",
-                static_cast<uint32_t>(ValidationResult));
-
-            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
-
-            return MessageHandleResult::Handled;
-        }
-    }
-
     if (std::shared_ptr<Ghost> ActiveGhost = Database.CreateGhost((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data))
     {
         LiveCache.Add(ActiveGhost->OnlineAreaId, ActiveGhost->GhostId, ActiveGhost);

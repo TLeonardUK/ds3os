@@ -290,7 +290,7 @@ enum PushMessageId {
   PushID_PushRequestBreakInTarget = 933,
   PushID_PushRequestRejectBreakInTarget = 934,
   PushID_PushRequestAllowBreakInTarget = 935,
-  PushID_PushRequestVisit = 951,
+  PushID_PushRequestVisit = 957,
   PushID_PushRequestRejectVisit = 952,
   PushID_PushRequestRemoveVisitor = 953,
   PushID_PushRequestNotifyRingBell = 969,
@@ -19022,14 +19022,14 @@ class JoinQuickMatchMessage : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_5() const;
   inline void set_unknown_5(::google::protobuf::uint32 value);
 
-  // required string unknown_6 = 6;
+  // required bytes unknown_6 = 6;
   inline bool has_unknown_6() const;
   inline void clear_unknown_6();
   static const int kUnknown6FieldNumber = 6;
   inline const ::std::string& unknown_6() const;
   inline void set_unknown_6(const ::std::string& value);
   inline void set_unknown_6(const char* value);
-  inline void set_unknown_6(const char* value, size_t size);
+  inline void set_unknown_6(const void* value, size_t size);
   inline ::std::string* mutable_unknown_6();
   inline ::std::string* release_unknown_6();
   inline void set_allocated_unknown_6(::std::string* unknown_6);
@@ -39541,7 +39541,7 @@ inline void JoinQuickMatchMessage::set_unknown_5(::google::protobuf::uint32 valu
   // @@protoc_insertion_point(field_set:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_5)
 }
 
-// required string unknown_6 = 6;
+// required bytes unknown_6 = 6;
 inline bool JoinQuickMatchMessage::has_unknown_6() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -39577,7 +39577,7 @@ inline void JoinQuickMatchMessage::set_unknown_6(const char* value) {
   unknown_6_->assign(value);
   // @@protoc_insertion_point(field_set_char:Frpg2RequestMessage.JoinQuickMatchMessage.unknown_6)
 }
-inline void JoinQuickMatchMessage::set_unknown_6(const char* value, size_t size) {
+inline void JoinQuickMatchMessage::set_unknown_6(const void* value, size_t size) {
   set_has_unknown_6();
   if (unknown_6_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     unknown_6_ = new ::std::string;

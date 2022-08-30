@@ -150,20 +150,6 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
             WarningS(Client->GetName().c_str(), "RequestSendMessageToPlayers embedded message provided by client is not a valid PushRequestAllowBreakInTarget message.");
             ShouldProcessRequest = false;
         }
-        // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
-        else if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
-        {
-            auto ValidationResult = NRSSRSanitizer::ValidateEntryList(EmbdeddedMsg.player_struct().data(), EmbdeddedMsg.player_struct().size());
-            if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
-            {
-                WarningS(Client->GetName().c_str(), "PushRequestAllowBreakInTarget message recieved from client contains ill formated binary data (error code %i).",
-                    static_cast<uint32_t>(ValidationResult));
-
-                Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
-
-                ShouldProcessRequest = false;
-            }
-        }
     }
 
     if (ShouldProcessRequest)

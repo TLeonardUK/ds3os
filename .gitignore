@@ -66,3 +66,6 @@ enc_temp_folder/
 Publish/
 DS3OS/
 node_modules/
+Tools/Utilities/ScyllaHide/
+Tools/Utilities/ServerAddressFinder/
+Tools/Deploy/

@@ -185,6 +185,34 @@ namespace Loader
         public UInt32 GrantedAccess;
     }
 
+    public enum MemoryProtectionMode : uint
+    {
+        PAGE_EXECUTE = 0x10,
+        PAGE_EXECUTE_READ = 0x20,
+        PAGE_EXECUTE_READWRITE = 0x40,
+        PAGE_EXECUTE_WRITECOPY = 0x80,
+        PAGE_NOACCESS = 0x01,
+        PAGE_READONLY = 0x02,
+        PAGE_READWRITE = 0x04,
+        PAGE_WRITECOPY = 0x08,
+    }
+    
+    public enum DwFilterFlag : uint
+    {
+        LIST_MODULES_DEFAULT = 0x0,
+        LIST_MODULES_32BIT = 0x01,
+        LIST_MODULES_64BIT = 0x02,
+        LIST_MODULES_ALL = (LIST_MODULES_32BIT | LIST_MODULES_64BIT)
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MODULEINFO
+    {
+        public IntPtr lpBaseOfDll;
+        public uint SizeOfImage;
+        public IntPtr EntryPoint;
+    }
+
     public static class WinAPI
     {
         [DllImport("kernel32.dll")]
@@ -195,12 +223,23 @@ namespace Loader
                 IntPtr lpEnvironment, string lpCurrentDirectory,
                 ref STARTUPINFO lpStartupInfo,
                 out PROCESS_INFORMATION lpProcessInformation);
+                
+        [DllImport("psapi.dll", SetLastError = true)]
+        public static extern bool EnumProcessModulesEx(
+            IntPtr hProcess,
+            [Out] IntPtr lphModule,
+            UInt32 cb,
+            [MarshalAs(UnmanagedType.U4)] out UInt32 lpcbNeeded,
+            DwFilterFlag dwff);
 
         [DllImport("kernel32.dll")]
         public static extern uint ResumeThread(IntPtr hThread);
 
         [DllImport("kernel32.dll")]
         public static extern uint SuspendThread(IntPtr hThread);
+        
+        [DllImport("kernel32.dll")]
+        public static extern int GetLastError();
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -239,6 +278,44 @@ namespace Loader
 
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetCurrentProcess();
+        
+        [DllImport("psapi.dll", SetLastError = true)]
+        static extern bool GetModuleInformation(IntPtr hProcess, IntPtr hModule, out MODULEINFO lpmodinfo, uint cb);
+
+        public static IntPtr GetProcessModuleBaseAddress(IntPtr hProcess)
+        {
+            List<String> moduleNames = new List<String>();
+
+            IntPtr[] hMods = new IntPtr[1024];
+
+            GCHandle hPinnedModules = GCHandle.Alloc(hMods, GCHandleType.Pinned); 
+            IntPtr pModules = hPinnedModules.AddrOfPinnedObject();
+
+            uint uiSize = (uint)(Marshal.SizeOf(typeof(IntPtr)) * hMods.Length);
+            uint cbNeeded = 0;
+
+            if (EnumProcessModulesEx(hProcess, pModules, uiSize, out cbNeeded, DwFilterFlag.LIST_MODULES_ALL) == true)
+            {
+                Int32 uiTotalNumberofModules = (Int32)(cbNeeded / (Marshal.SizeOf(typeof(IntPtr))));
+
+                for (int i = 0; i < (int)uiTotalNumberofModules; i++)
+                {
+                    MODULEINFO modInfo;
+                    uint modInfoSize = (uint)Marshal.SizeOf(typeof(MODULEINFO));
+                    if (GetModuleInformation(hProcess, hMods[i], out modInfo, modInfoSize))
+                    {
+                        // First module is the one we want.
+                        return modInfo.lpBaseOfDll;
+                    }
+                }
+            }
+
+            int error = GetLastError();
+
+            hPinnedModules.Free();
+
+            return (IntPtr)0;
+        }
     }
 
     // Based on the code from SO here, but fixed up so it actually works:

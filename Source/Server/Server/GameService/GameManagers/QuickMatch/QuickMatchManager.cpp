@@ -318,6 +318,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestUpdateQuickMatch(GameClient
 
 MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
     Frpg2RequestMessage::RequestJoinQuickMatch* Request = (Frpg2RequestMessage::RequestJoinQuickMatch*)Message.Protobuf.get();
@@ -331,9 +332,6 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
         if (ExistingMatch)
         {        
             LogS(Client->GetName().c_str(), "RequestJoinQuickMatch: Attempting to join match hosted by %s", HostClient->GetName().c_str());
-       
-            Log(" unknown_7 = %i", Request->unknown_7());
-            Log(" join_character_id = %i", Request->character_id());
 
             Frpg2RequestMessage::PushRequestJoinQuickMatch PushMessage;
             PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestJoinQuickMatch);
@@ -341,8 +339,13 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
             PushMessage.mutable_message()->set_join_player_steam_id(Player.GetSteamId());
             PushMessage.mutable_message()->set_join_character_id(Request->character_id());
             PushMessage.mutable_message()->set_online_area_id((uint32_t)ExistingMatch->AreaId);
-            PushMessage.mutable_message()->set_unknown_5(0);                                            // TODO: Figure out - MAYBE GAMEMODE?
-            PushMessage.mutable_message()->set_unknown_6("");                                           // TODO: Figure out
+            PushMessage.mutable_message()->set_unknown_5(0);                                                               // TODO: Figure out - MAYBE GAMEMODE?
+
+            std::vector<uint8_t> CharacterData;
+            CharacterData.resize(Player.GetPlayerStatus().ByteSize());
+            Player.GetPlayerStatus().SerializeToArray(CharacterData.data(), CharacterData.size());
+
+            PushMessage.mutable_message()->set_unknown_6(CharacterData.data(), CharacterData.size());
 
             if (!HostClient->MessageStream->Send(&PushMessage))
             {
@@ -389,20 +392,6 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
     Frpg2RequestMessage::RequestAcceptQuickMatch* Request = (Frpg2RequestMessage::RequestAcceptQuickMatch*)Message.Protobuf.get();
 
     bool ShouldProcessRequest = true;
-    // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
-    if constexpr (BuildConfig::NRSSR_SANITY_CHECKS)
-    {
-        auto ValidationResult = NRSSRSanitizer::ValidateEntryList(Request->data().data(), Request->data().size());
-        if (ValidationResult != NRSSRSanitizer::ValidationResult::Valid)
-        {
-            WarningS(Client->GetName().c_str(), "RequestAcceptQuickMatch message recieved from client contains ill formated binary data (error code %i).",
-                static_cast<uint32_t>(ValidationResult));
-
-            Client->GetPlayerState().GetAntiCheatState_Mutable().ExploitDetected = true;
-
-            ShouldProcessRequest = false;
-        }
-    }
 
     std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->join_player_id());
     if (ShouldProcessRequest && TargetClient != nullptr)

@@ -157,7 +157,12 @@ protected:
 
     const float RETRANSMIT_CYCLE_INTERVAL = 0.2f;       // 200ms
 
-    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 32;        
+#ifdef _DEBUG
+    // Makes debugging easier.
+    const uint32_t RETRANSMIT_MAX_ATTEMPTS = std::numeric_limits<uint32_t>::max();        
+#else
+    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 32;
+#endif
 
     const float RESEND_SYN_INTERVAL = 0.5f;
 

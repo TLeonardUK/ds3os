@@ -133,7 +133,7 @@ private:
     size_t InstanceId = 0;
 
     std::string ClientStreamId = "";
-    int ClientAppVersion = 114;
+    int ClientAppVersion = 115;
     int LocalCharacterId = 10;
     int ServerCharacterId;
 

@@ -32,7 +32,7 @@ bool IsCharRenderable(char c)
 
 std::string BytesToString(const std::vector<uint8_t>& Bytes, const std::string& LinePrefix)
 {
-    static int column_width = 16;
+    static int column_width = 32;
 
     std::string result = "";
 
@@ -49,7 +49,7 @@ std::string BytesToString(const std::vector<uint8_t>& Bytes, const std::string& 
             chars += IsCharRenderable((char)Byte) ? (char)Byte : '.';
         }
 
-        result += StringFormat("%s%-48s \xB3 %s\n", LinePrefix.c_str(), hex.c_str(), chars.c_str());
+        result += StringFormat("%s%-97s \xB3 %s\n", LinePrefix.c_str(), hex.c_str(), chars.c_str());
     }
 
     return result;

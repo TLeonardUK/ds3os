@@ -14,6 +14,7 @@
 
 #include "Core/Utils/Logging.h"
 #include "Core/Utils/File.h"
+#include "Core/Utils/Strings.h"
 #include "Platform/Platform.h"
 
 #include "Core/Crypto/CWCServerUDPCipher.h"

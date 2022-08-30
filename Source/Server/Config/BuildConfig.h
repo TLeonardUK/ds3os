@@ -38,9 +38,13 @@ public:
     // packets beyond this will result in disconnect.
     inline static const int MAX_SEND_QUEUE_SIZE = 256 * 1024;
 
+    // What minimum application version we support (this is the app version shown on the menu without the dot and -1).
+    // So 1.15 = 114
+    inline static const int MIN_APP_VERSION = 114;
+
     // What application version we support (this is the app version shown on the menu without the dot and -1).
     // So 1.15 = 114
-    inline static const int APP_VERSION = 114;
+    inline static const int APP_VERSION = 115;
 
     // If true clients are disconnected if we are unable to handle the message they send.
     // Be careful with this, if we don't reply to some messages the client will deadlock.
@@ -50,15 +54,9 @@ public:
     inline static const bool DISCONNECT_ON_UNHANDLED_MESSAGE = true;
 #endif
 
-    // CVE-2022-24125 (RequestSendMessageToPlayers abuse) and CVE-2022-24126 (NRSessionSearchResult RCE) serverside fixes.
+    // CVE-2022-24125 (RequestSendMessageToPlayers abuse) serverside fixes.
     // These should only be disabled on a debug build for testing purposes.
-#if defined(_DEBUG)
-    constexpr inline static const bool SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS = false;
-    constexpr inline static const bool NRSSR_SANITY_CHECKS = false;
-#else
     constexpr inline static const bool SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS = true;
-    constexpr inline static const bool NRSSR_SANITY_CHECKS = true;
-#endif
 
     // Dumps a diasssembly of each message to the output.
     constexpr inline static const bool DISASSEMBLE_RECIEVED_MESSAGES = false;
