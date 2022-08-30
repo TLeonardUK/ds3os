@@ -3,7 +3,10 @@
 ![GitHub license](https://img.shields.io/github/license/TLeonardUK/ds3os)
 ![GitHub release](https://img.shields.io/github/release/TLeonardUK/ds3os)
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
-[![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/eQWJcRYwH5)
+[![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
+
+# Update Note
+This project is currently incompatible with the latest game release. To use it you will need to downgrade to the previous version of dark souls 3. A patch will come to support the new version in the future when I have time, a lot has changed in the server-connection area in the latest patch so it will take time.
 
 # What is this project?
 An open source implementation of the dark souls 3 game server. 
