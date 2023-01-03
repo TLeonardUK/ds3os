@@ -1,8 +1,8 @@
-name: Release
+name: Build MS Docker Image
 
 on: 
   workflow_dispatch:
-  
+
 jobs:        
   build-docker:
     name: Build Docker
