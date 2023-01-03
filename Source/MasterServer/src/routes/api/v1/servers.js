@@ -165,17 +165,11 @@ function RemoveTimedOutServers()
 // @description Get a list of all active servers.
 // @access Public
 router.get('/', async (req, res) => {
-    console.log("Requesting list of servers: " + req.connection.remoteAddress);
-
     RemoveTimedOutServers();
-
-    console.log("Finishing removing timed out servers: " + req.connection.remoteAddress);
 
     var ServerInfo = [];    
     for (var i = 0; i < GActiveServers.length; i++)
     {    
-        console.log("Checking server " + i + "/" + GActiveServers.length);
-
         var Server = GActiveServers[i];
         var DisplayName = Server["Name"];
         var DisplayDescription = Server["Description"];
@@ -199,8 +193,6 @@ router.get('/', async (req, res) => {
             "ModsRequiredList": Server["ModsRequiredList"]
         });
     }
-
-    console.log("Returned list of servers.");
 
     res.json({ "status":"success", "servers": ServerInfo });
 });
