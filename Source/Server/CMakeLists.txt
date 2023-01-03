@@ -138,7 +138,13 @@ SET(SOURCES
     Server/GameService/Utils/Ids/ItemId.inc
     Server/GameService/Utils/Ids/OnlineAreaId.inc
     Server/GameService/Utils/Ids/TeamTypeId.inc
-    Server/GameService/Utils/Ids/BossId.inc
+    Server/GameService/Utils/Ids/BossId.inc    
+    Server/GameService/Utils/Ids/BloodMessageConjunction.inc
+    Server/GameService/Utils/Ids/BloodMessageGesture.inc
+    Server/GameService/Utils/Ids/BloodMessageTemplate.inc
+    Server/GameService/Utils/Ids/BloodMessageWord.inc    
+    Server/GameService/Utils/Data/BloodMessageData.h
+    Server/GameService/Utils/Data/BloodMessageData.cpp
     Server/LoginService/LoginClient.cpp
     Server/LoginService/LoginClient.h
     Server/LoginService/LoginService.cpp
