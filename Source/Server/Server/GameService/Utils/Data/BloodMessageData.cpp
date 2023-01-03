@@ -8,7 +8,6 @@
  */
 
 #include "Server/GameService/Utils/Data/BloodMessageData.h"
-#include "Server/GameService/Utils/Data/PropertyList.h"
 
 #include "Core/Utils/Strings.h"
 
