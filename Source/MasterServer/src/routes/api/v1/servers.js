@@ -159,7 +159,11 @@ function RemoveTimedOutServers()
 // @description Get a list of all active servers.
 // @access Public
 router.get('/', async (req, res) => {
+    console.log("Requesting list of servers: " + req.connection.remoteAddress);
+
     RemoveTimedOutServers();
+
+    console.log("Finishing removing timed out servers: " + req.connection.remoteAddress);
 
     var ServerInfo = [];    
     for (i = 0; i < GActiveServers.length; i++)
@@ -203,7 +207,6 @@ router.post('/:ip_address/public_key', async (req, res) => {
 
     var password = req.body["password"];
  
-    var ServerInfo = [];    
     for (i = 0; i < GActiveServers.length; i++)
     {
         if (GActiveServers[i].IpAddress == req.params.ip_address)
