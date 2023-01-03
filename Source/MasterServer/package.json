@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/index.js --max-old-space-size=10000",
     "start:dev": "nodemon src/index.js",
     "package": "rimraf ../../Bin/MasterServer && mkdir ../../Bin/MasterServer && pkg -o ../../Bin/MasterServer/MasterServer.exe ./build/index.js"
   },

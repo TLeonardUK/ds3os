@@ -3,4 +3,4 @@ COPY . /app
 WORKDIR /app
 RUN npm install;
 EXPOSE 50020/tcp
-ENTRYPOINT ["npm", "run", "start:dev"]
+ENTRYPOINT ["npm", "run", "start"]
