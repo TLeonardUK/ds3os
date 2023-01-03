@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js --max-old-space-size=10000",
+    "start": "node src/index.js --max-old-space-size=3000",
     "start:dev": "nodemon src/index.js",
     "package": "rimraf ../../Bin/MasterServer && mkdir ../../Bin/MasterServer && pkg -o ../../Bin/MasterServer/MasterServer.exe ./build/index.js"
   },
@@ -12,7 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-rate-limit": "^6.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12",
