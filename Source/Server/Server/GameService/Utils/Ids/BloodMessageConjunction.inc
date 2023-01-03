@@ -12,7 +12,7 @@ ENTRY(and_then,                                                 "and then",     
 ENTRY(but,                                                      "but",                                                      0xC351)
 ENTRY(therefore,                                                "therefore",                                                0xC352)
 ENTRY(in_short,                                                 "in short",                                                 0xC353)
-ENTRY(or,                                                       "or",                                                       0xC354)
+ENTRY(_or,                                                      "or",                                                       0xC354)
 ENTRY(only,                                                     "only",                                                     0xC355)
 ENTRY(by_the_way,                                               "by the way",                                               0xC356)
 ENTRY(so_to_speak,                                              "so to speak",                                              0xC357)
