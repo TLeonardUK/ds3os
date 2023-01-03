@@ -192,6 +192,8 @@ router.get('/', async (req, res) => {
         });
     }
 
+    console.log("Returned list of servers.");
+
     res.json({ "status":"success", "servers": ServerInfo });
 });
 
