@@ -58,6 +58,7 @@ Most of the games core functionality works now, with some degree of variance to 
 
 Future roadmap:
 
+- [ ] Sharding support. So we can have a single server and people can shard off their own game instance on it. Much simpler for end-users, less tech-support required.
 - [ ] Client-side mods dictated by server configuration (eg. Raising player limit, anti-cheat, reduce invasion cool downs, change params, etc). 
 - [ ] Regulation file distribution.
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
