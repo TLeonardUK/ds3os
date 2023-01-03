@@ -11,7 +11,9 @@
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
-#include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/Frpg2ReliableUdpMessageStream.h"*/
+
+#include "Server/GameService/Utils/Data/BloodMessageData.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -250,6 +252,13 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
 
     std::vector<uint8_t> MessageData;
     MessageData.assign(Request->message_data().data(), Request->message_data().data() + Request->message_data().size());
+
+    BloodMessageData data;
+    if (BloodMessageData::Parse(MessageData, data))
+    {
+        std::string msg = data.ToString();
+        LogS(Client->GetName().c_str(), "BloodMessage Created: %s", data.ToString().c_str());
+    }
 
     if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData))
     {

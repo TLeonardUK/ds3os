@@ -74,6 +74,33 @@
 #undef ENUM_FILE
 
 
+#define ENUM_NAME BloodMessageTemplate
+#define ENUM_FILE "Server/GameService/Utils/Ids/BloodMessageTemplate.inc"
+#   include "Core/Utils/EnumDef.inc"
+#undef ENUM_NAME
+#undef ENUM_FILE
+
+
+#define ENUM_NAME BloodMessageWord
+#define ENUM_FILE "Server/GameService/Utils/Ids/BloodMessageWord.inc"
+#   include "Core/Utils/EnumDef.inc"
+#undef ENUM_NAME
+#undef ENUM_FILE
+
+
+#define ENUM_NAME BloodMessageGesture
+#define ENUM_FILE "Server/GameService/Utils/Ids/BloodMessageGesture.inc"
+#   include "Core/Utils/EnumDef.inc"
+#undef ENUM_NAME
+#undef ENUM_FILE
+
+
+
+#define ENUM_NAME BloodMessageConjunction
+#define ENUM_FILE "Server/GameService/Utils/Ids/BloodMessageConjunction.inc"
+#   include "Core/Utils/EnumDef.inc"
+#undef ENUM_NAME
+#undef ENUM_FILE
 
 
 

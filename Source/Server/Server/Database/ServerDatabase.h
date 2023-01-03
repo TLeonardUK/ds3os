@@ -81,6 +81,9 @@ public:
     // doesn't exist.
     std::shared_ptr<BloodMessage> FindBloodMessage(uint32_t MessageId);
 
+    // Gets every blood message in the database, this shouldn't be used at runtime, its debugging functionality.
+    std::vector<std::shared_ptr<BloodMessage>> GetAllBloodMessages();
+
     // Gets the x most recent blood messages in the database.
     std::vector<std::shared_ptr<BloodMessage>> FindRecentBloodMessage(OnlineAreaId AreaId, int Count);
 

@@ -390,6 +390,27 @@ std::vector<std::shared_ptr<BloodMessage>> ServerDatabase::FindRecentBloodMessag
     return Result;
 }
 
+std::vector<std::shared_ptr<BloodMessage>> ServerDatabase::GetAllBloodMessages()
+{
+    std::vector<std::shared_ptr<BloodMessage>> Result;
+
+    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages", {  }, [&Result](sqlite3_stmt* statement) {
+        std::shared_ptr<BloodMessage> Message = std::make_shared<BloodMessage>();
+        Message->MessageId = sqlite3_column_int(statement, 0);
+        Message->OnlineAreaId = (OnlineAreaId)sqlite3_column_int(statement, 1);
+        Message->PlayerId = sqlite3_column_int(statement, 2);
+        Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+        Message->CharacterId = sqlite3_column_int(statement, 4);
+        Message->RatingPoor = sqlite3_column_int(statement, 5);
+        Message->RatingGood = sqlite3_column_int(statement, 6);
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 7);
+        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 7));
+        Result.push_back(Message);
+    });
+
+    return Result;
+}
+
 std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(OnlineAreaId AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, uint32_t CharacterId, const std::vector<uint8_t>& Data)
 {
     if (!RunStatement("INSERT INTO BloodMessages(OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, ?6, ?7, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, CharacterId, 0, 0, Data }, nullptr))
