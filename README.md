@@ -5,9 +5,6 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
-# Update Note
-This project is currently incompatible with the latest game release. To use it you will need to downgrade to the previous version of dark souls 3. A patch will come to support the new version in the future when I have time, a lot has changed in the server-connection area in the latest patch so it will take time.
-
 # What is this project?
 An open source implementation of the dark souls 3 game server. 
 
@@ -15,7 +12,7 @@ Idealistically made for the purpose of allow better alternatives to playing mods
 
 :bangbang: This project is still a work in progress, no guarantees are given over its stability (that said it works quite well now!). 
 
-If you have any trouble join the discord for tech-support: https://discord.gg/eQWJcRYwH5
+If you have any trouble join the discord for tech-support: https://discord.gg/pBmquc9Jkj
 
 # Can I use it with a pirated game?
 No, the server authenticates steam tickets. Please do not ask about piracy, steam emulators or the like, we have no interest in supporting them. 
