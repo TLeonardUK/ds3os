@@ -106,12 +106,18 @@ function AddServer(IpAddress, hostname, private_hostname, description, name, pub
         "ModsBlackList": mods_black_list,
         "ModsRequiredList": mods_required_list,
         "UpdatedTime": Date.now(),
-        "Version": version
+        "Version": version,
+        "Censored": false
      };
 
     if (IsServerFilter(ServerObj))
     {
         return;
+    }
+
+    if (IsServerCensored(ServerObj))
+    {
+        ServerObj["Censored"] = true;
     }
 
     for (i = 0; i < GActiveServers.length; i++)
@@ -167,12 +173,14 @@ router.get('/', async (req, res) => {
 
     var ServerInfo = [];    
     for (i = 0; i < GActiveServers.length; i++)
-    {
+    {    
+        console.log("Checking server " + i + "/" + GActiveServers.length);
+
         var Server = GActiveServers[i];
         var DisplayName = Server["Name"];
         var DisplayDescription = Server["Description"];
 
-        if (IsServerCensored(Server))
+        if (Server.Censored)
         {
             DisplayName = "[Censored]";
             DisplayDescription = "Censored by DS3OS, ask on discord to reinstate name/description.";
