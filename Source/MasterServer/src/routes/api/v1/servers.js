@@ -15,20 +15,23 @@ const config = require("../../../config/config.json")
 var GActiveServers = [];
 
 // Use lowercase patterns only.
-var GFilters = [];
+
+// Filter list will block servers showing up in the loader.
+var GFilters = [
+    
+];
+
+// Censor list will replace name and description of server with a censored message.
+var GCensors = [ 
+
+    // Reason: Attacking other users in server description / linked blog.
+    // Description: "小丑白鸽网暴,人肉,开挂:blog.majula.cn Q群851837506 BAN挂/MOD/暗改
+    // Name: 如蜜
+    "115.239.248.166",
+
+];
 
 var GOldestSupportedVersion = 2;
-
-function IsServerFilter(ServerInfo)
-{
-    if (ServerInfo['Version'] < GOldestSupportedVersion) {
-        return true;
-    }
-
-    return  IsFiltered(ServerInfo['Name']) || 
-            IsFiltered(ServerInfo['Description']) || 
-            IsFiltered(ServerInfo['Hostname']);
-}
 
 function IsFiltered(Name)
 {
@@ -42,6 +45,38 @@ function IsFiltered(Name)
     }
 
     return false;
+}
+
+function IsCensored(Name)
+{
+    var NameLower = Name.toLowerCase();
+    for (i = 0; i < GCensors.length; i++)
+    {
+        if (NameLower.includes(GCensors[i]))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function IsServerFilter(ServerInfo)
+{
+    if (ServerInfo['Version'] < GOldestSupportedVersion) {
+        return true;
+    }
+
+    return  IsFiltered(ServerInfo['Name']) || 
+            IsFiltered(ServerInfo['Description']) || 
+            IsFiltered(ServerInfo['Hostname']);
+}
+
+function IsServerCensored(ServerInfo)
+{
+    return  IsCensored(ServerInfo['Name']) || 
+            IsCensored(ServerInfo['Description']) || 
+            IsCensored(ServerInfo['Hostname']);
 }
 
 function RemoveServer(IpAddress)
@@ -129,17 +164,27 @@ router.get('/', async (req, res) => {
     var ServerInfo = [];    
     for (i = 0; i < GActiveServers.length; i++)
     {
+        var Server = GActiveServers[i];
+        var DisplayName = Server["Name"];
+        var DisplayDescription = Server["Description"];
+
+        if (IsServerCensored(Server))
+        {
+            DisplayName = "[Censored]";
+            DisplayDescription = "Censored by DS3OS, ask on discord to reinstate name/description.";
+        }
+
         ServerInfo.push({
-            "IpAddress": GActiveServers[i]["IpAddress"],
-            "Hostname": GActiveServers[i]["Hostname"],
-            "PrivateHostname": GActiveServers[i]["PrivateHostname"],
-            "Description": GActiveServers[i]["Description"],
-            "Name": GActiveServers[i]["Name"],
-            "PlayerCount": GActiveServers[i]["PlayerCount"],
-            "PasswordRequired": GActiveServers[i]["Password"].length > 0,
-            "ModsWhiteList": GActiveServers[i]["ModsWhiteList"],
-            "ModsBlackList": GActiveServers[i]["ModsBlackList"],
-            "ModsRequiredList": GActiveServers[i]["ModsRequiredList"]
+            "IpAddress": Server["IpAddress"],
+            "Hostname": Server["Hostname"],
+            "PrivateHostname": Server["PrivateHostname"],
+            "Description": DisplayDescription,
+            "Name": DisplayName,
+            "PlayerCount": Server["PlayerCount"],
+            "PasswordRequired": Server["Password"].length > 0,
+            "ModsWhiteList": Server["ModsWhiteList"],
+            "ModsBlackList": Server["ModsBlackList"],
+            "ModsRequiredList": Server["ModsRequiredList"]
         });
     }
 
