@@ -20,7 +20,7 @@
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ApplicationManifest>$(SolutionDir)\app.manifest</ApplicationManifest>
+    <ApplicationManifest>.\app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
