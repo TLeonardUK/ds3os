@@ -36,7 +36,7 @@ var GOldestSupportedVersion = 2;
 function IsFiltered(Name)
 {
     var NameLower = Name.toLowerCase();
-    for (i = 0; i < GFilters.length; i++)
+    for (var i = 0; i < GFilters.length; i++)
     {
         if (NameLower.includes(GFilters[i]))
         {
@@ -50,7 +50,7 @@ function IsFiltered(Name)
 function IsCensored(Name)
 {
     var NameLower = Name.toLowerCase();
-    for (i = 0; i < GCensors.length; i++)
+    for (var i = 0; i < GCensors.length; i++)
     {
         if (NameLower.includes(GCensors[i]))
         {
@@ -81,7 +81,7 @@ function IsServerCensored(ServerInfo)
 
 function RemoveServer(IpAddress)
 {
-    for (i = 0; i < GActiveServers.length; i++)
+    for (var i = 0; i < GActiveServers.length; i++)
     {
         if (GActiveServers[i].IpAddress == IpAddress)
         {
@@ -120,7 +120,7 @@ function AddServer(IpAddress, hostname, private_hostname, description, name, pub
         ServerObj["Censored"] = true;
     }
 
-    for (i = 0; i < GActiveServers.length; i++)
+    for (var i = 0; i < GActiveServers.length; i++)
     {
         if (GActiveServers[i].IpAddress == IpAddress)
         {
@@ -139,7 +139,7 @@ function RemoveTimedOutServers()
 {
     var TimeoutOccured = false;
     var TimeoutDate = new Date(Date.now() - config.server_timeout_ms);
-    for (i = 0; i < GActiveServers.length; )
+    for (var i = 0; i < GActiveServers.length; )
     {
         if (GActiveServers[i].UpdatedTime < TimeoutDate)
         {
@@ -172,7 +172,7 @@ router.get('/', async (req, res) => {
     console.log("Finishing removing timed out servers: " + req.connection.remoteAddress);
 
     var ServerInfo = [];    
-    for (i = 0; i < GActiveServers.length; i++)
+    for (var i = 0; i < GActiveServers.length; i++)
     {    
         console.log("Checking server " + i + "/" + GActiveServers.length);
 
@@ -217,7 +217,7 @@ router.post('/:ip_address/public_key', async (req, res) => {
 
     var password = req.body["password"];
  
-    for (i = 0; i < GActiveServers.length; i++)
+    for (var i = 0; i < GActiveServers.length; i++)
     {
         if (GActiveServers[i].IpAddress == req.params.ip_address)
         {
