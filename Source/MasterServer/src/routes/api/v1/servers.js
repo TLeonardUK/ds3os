@@ -24,11 +24,6 @@ var GFilters = [
 // Censor list will replace name and description of server with a censored message.
 var GCensors = [ 
 
-    // Reason: Attacking other users in server description / linked blog.
-    // Description: "小丑白鸽网暴,人肉,开挂:blog.majula.cn Q群851837506 BAN挂/MOD/暗改
-    // Name: 如蜜
-    "115.239.248.166",
-
 ];
 
 var GOldestSupportedVersion = 2;
