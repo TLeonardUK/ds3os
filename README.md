@@ -5,6 +5,8 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
+:bangbang::bangbang: Currently requires version 1.15.1 or 1.15.0 version of the game to use. The latest patch is not yet supported.
+
 # What is this project?
 An open source implementation of the dark souls 3 game server. 
 
