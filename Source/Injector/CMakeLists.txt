@@ -27,4 +27,5 @@ util_setup_folder_structure(${PROJECT_NAME} SOURCES "DS3OS")
 target_link_libraries(
     ${PROJECT_NAME}
     Shared
+    detours
 )
