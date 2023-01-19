@@ -13,14 +13,14 @@
 
 #include "Config/BuildConfig.h"
 
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnection.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/File.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/File.h"
+#include "Shared/Core/Utils/Strings.h"
 
-#include "Core/Crypto/RSAKeyPair.h"
-#include "Core/Crypto/RSACipher.h"
+#include "Shared/Core/Crypto/RSAKeyPair.h"
+#include "Shared/Core/Crypto/RSACipher.h"
 
 #include <thread>
 #include <chrono>

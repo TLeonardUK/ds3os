@@ -12,13 +12,13 @@
 
 #include "Config/BuildConfig.h"
 
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnection.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
 
-#include "Core/Crypto/RSAKeyPair.h"
-#include "Core/Crypto/RSACipher.h"
+#include "Shared/Core/Crypto/RSAKeyPair.h"
+#include "Shared/Core/Crypto/RSACipher.h"
 
 Frpg2MessageStream::Frpg2MessageStream(std::shared_ptr<NetConnection> Connection, RSAKeyPair* InEncryptionKey, bool AsClient)
     : Frpg2PacketStream(Connection)

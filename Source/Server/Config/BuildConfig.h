@@ -34,10 +34,6 @@ public:
     // Maximum length of a packet in an Frpg2PacketStream.
     inline static const int MAX_PACKET_LENGTH = 8192;
 
-    // Maximum backlog of data in a packet streams send queue. Sending
-    // packets beyond this will result in disconnect.
-    inline static const int MAX_SEND_QUEUE_SIZE = 256 * 1024;
-
     // What minimum application version we support (this is the app version shown on the menu without the dot and -1).
     // So 1.15 = 114
     inline static const int MIN_APP_VERSION = 114;
@@ -85,17 +81,6 @@ public:
 
     inline static const double SPIKE_LENGTH_MIN = 1000.0 * 5.0;
     inline static const double SPIKE_LENGTH_MAX = 1000.0 * 20.0;
-
-    // Emulates dropped udp packets.
-    inline static const bool EMULATE_DROPPED_PACKETS = false;
-
-    inline static const double DROP_PACKET_PROBABILITY = 0.1f;
-
-    // Emulates latency.
-    inline static const bool EMULATE_LATENCY = false;
-
-    inline static const double LATENCY_MINIMUM = 300.0f;
-    inline static const double LATENCY_VARIANCE = 10.0f;
 
     // When running as a client emulator this is how many clients to spawn.
     inline static const size_t CLIENT_EMULATOR_COUNT = 128;

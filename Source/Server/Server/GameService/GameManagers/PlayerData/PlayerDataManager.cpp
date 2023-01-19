@@ -15,11 +15,11 @@
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Utils/DiffTracker.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Utils/DiffTracker.h"
 
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnection.h"
 
 PlayerDataManager::PlayerDataManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)

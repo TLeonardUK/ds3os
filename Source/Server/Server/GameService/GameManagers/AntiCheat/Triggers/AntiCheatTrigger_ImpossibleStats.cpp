@@ -11,8 +11,8 @@
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Server.h"
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
 #include "Config/RuntimeConfig.h"
 
 namespace 

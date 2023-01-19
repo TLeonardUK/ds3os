@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "Core/Utils/Enum.h"
+#include "Shared/Core/Utils/Enum.h"
 
 #define ENUM_NAME BonfireId
 #define ENUM_FILE "Server/GameService/Utils/Ids/BonfireId.inc"

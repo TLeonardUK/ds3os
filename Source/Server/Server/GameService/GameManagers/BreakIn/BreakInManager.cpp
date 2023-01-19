@@ -16,9 +16,9 @@
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Utils/DiffTracker.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Utils/DiffTracker.h"
 
 BreakInManager::BreakInManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)

@@ -14,10 +14,10 @@
 
 #include "Server/Server.h"
 
-#include "Platform/Platform.h"
+#include "Shared/Platform/Platform.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Network/NetConnection.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"

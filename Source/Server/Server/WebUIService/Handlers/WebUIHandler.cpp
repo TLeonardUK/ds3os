@@ -9,7 +9,7 @@
 
 #include "Server/WebUIService/Handlers/WebUIHandler.h"
 
-#include "Platform/Platform.h"
+#include "Shared/Platform/Platform.h"
 
 #include "Config/BuildConfig.h"
 

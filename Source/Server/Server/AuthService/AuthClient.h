@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-#include "Core/Utils/Endian.h"
+#include "Shared/Core/Utils/Endian.h"
 
 class AuthService;
 class NetConnection;

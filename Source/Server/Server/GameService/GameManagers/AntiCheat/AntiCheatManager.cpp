@@ -23,10 +23,10 @@
 
 #include "Config/BuildConfig.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Utils/DebugTimer.h"
-#include "Core/Utils/DebugObjects.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Utils/DebugTimer.h"
+#include "Shared/Core/Utils/DebugObjects.h"
 
 AntiCheatManager::AntiCheatManager(Server* InServerInstance, GameService* InGameServiceInstance)
     : ServerInstance(InServerInstance)

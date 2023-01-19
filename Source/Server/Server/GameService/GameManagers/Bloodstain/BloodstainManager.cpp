@@ -18,8 +18,8 @@
 #include "Config/BuildConfig.h"
 #include "Server/GameService/Utils/NRSSRSanitizer.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
 
 BloodstainManager::BloodstainManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)

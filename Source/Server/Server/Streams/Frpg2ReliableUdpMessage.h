@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "Core/Utils/Endian.h"
+#include "Shared/Core/Utils/Endian.h"
 
 #include <vector>
 #include <memory>

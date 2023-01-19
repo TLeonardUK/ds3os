@@ -15,7 +15,7 @@
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
 
-#include "Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Logging.h"
 
 MarkManager::MarkManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)

@@ -28,11 +28,11 @@
 #include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
 
-#include "Core/Network/NetConnection.h"
-#include "Core/Network/NetConnectionUDP.h"
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Utils/DebugObjects.h"
+#include "Shared/Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnectionUDP.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Utils/DebugObjects.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"

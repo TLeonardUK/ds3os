@@ -10,8 +10,8 @@
 #include "Server/Server.h"
 #include "Client/Client.h"
 #include "Config/BuildConfig.h"
-#include "Core/Utils/Logging.h"
-#include "Platform/Platform.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Platform/Platform.h"
 
 #include <filesystem>
 #include <thread>

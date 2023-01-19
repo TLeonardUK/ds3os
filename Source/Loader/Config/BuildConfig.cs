@@ -62,6 +62,16 @@ namespace Loader
                     Key = new uint[4] { 0x970F4CFB, 0x1AA625DD, 0x172EBF85, 0x119A5426 },
                 } 
             },
+            { 
+                ExeUtils.MakeSimpleExeHash("1.15.2.0", 88960032), 
+                new DarkSoulsLoadConfig 
+                { 
+                    VersionName = "1.15.2.0 (Steam)", 
+                    ServerInfoAddress = 0x4efa861,//0x4CDBA61,
+                    UsesASLR = true,
+                    Key = new uint[4] { 0xAE805677, 0x2912E1BB, 0x2A5BCFCB, 0xFA144FFE },
+                } 
+            },
         };
     }
 }

@@ -13,12 +13,12 @@
 
 #include "Config/BuildConfig.h"
 
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnection.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/File.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Utils/DebugObjects.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/File.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Utils/DebugObjects.h"
 
 #include "Protobuf/Protobufs.h"
 

@@ -10,15 +10,15 @@
 #include "Server/Streams/Frpg2UdpPacketStream.h"
 #include "Server/Streams/Frpg2UdpPacket.h"
 
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnection.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/File.h"
-#include "Core/Utils/Strings.h"
-#include "Platform/Platform.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/File.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Platform/Platform.h"
 
-#include "Core/Crypto/CWCServerUDPCipher.h"
-#include "Core/Crypto/CWCClientUDPCipher.h"
+#include "Shared/Core/Crypto/CWCServerUDPCipher.h"
+#include "Shared/Core/Crypto/CWCClientUDPCipher.h"
 
 #include <thread>
 #include <chrono>

@@ -12,10 +12,10 @@
 
 #include "Server/Server.h"
 
-#include "Core/Network/NetConnection.h"
-#include "Core/Network/NetConnectionTCP.h"
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/DebugObjects.h"
+#include "Shared/Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnectionTCP.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/DebugObjects.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"

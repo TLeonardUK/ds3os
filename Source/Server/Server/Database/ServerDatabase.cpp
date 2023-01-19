@@ -9,8 +9,8 @@
 
 #include "Server/Database/ServerDatabase.h"
 #include "Config/BuildConfig.h"
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/DebugObjects.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/DebugObjects.h"
 #include "ThirdParty/sqlite/sqlite3.h"
 
 ServerDatabase::ServerDatabase()

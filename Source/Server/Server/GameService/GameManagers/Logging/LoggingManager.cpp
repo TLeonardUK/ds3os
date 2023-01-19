@@ -17,8 +17,8 @@
 #include "Server/Server.h"
 #include "Server/Database/ServerDatabase.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
 
 LoggingManager::LoggingManager(Server* InServerInstance)
     : ServerInstance(InServerInstance)

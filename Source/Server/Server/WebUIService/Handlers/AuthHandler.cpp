@@ -10,7 +10,7 @@
 #include "Server/Server.h"
 #include "Server/WebUIService/Handlers/AuthHandler.h"
 
-#include "Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Logging.h"
 
 AuthHandler::AuthHandler(WebUIService* InService)
     : WebUIHandler(InService)

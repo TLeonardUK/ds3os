@@ -15,56 +15,6 @@ SET(SOURCES
     Config/RuntimeConfig.h
     Config/RuntimeConfig.cpp
 
-    Core/Crypto/Cipher.h
-    Core/Crypto/CWCCipher.cpp
-    Core/Crypto/CWCCipher.h
-    Core/Crypto/CWCClientUDPCipher.cpp
-    Core/Crypto/CWCClientUDPCipher.h
-    Core/Crypto/CWCServerUDPCipher.cpp
-    Core/Crypto/CWCServerUDPCipher.h
-    Core/Crypto/RSACipher.cpp
-    Core/Crypto/RSACipher.h
-    Core/Crypto/RSAKeyPair.cpp
-    Core/Crypto/RSAKeyPair.h
-    Core/Network/NetConnection.h
-    Core/Network/NetConnectionTCP.cpp
-    Core/Network/NetConnectionTCP.h
-    Core/Network/NetConnectionUDP.cpp
-    Core/Network/NetConnectionUDP.h
-    Core/Network/NetHttpRequest.cpp
-    Core/Network/NetHttpRequest.h
-    Core/Network/NetIPAddress.cpp
-    Core/Network/NetIPAddress.h
-    Core/Network/NetUtils.cpp
-    Core/Network/NetUtils.h
-    Core/Utils/Compression.cpp
-    Core/Utils/Compression.h
-    Core/Utils/DebugCounter.cpp
-    Core/Utils/DebugCounter.h
-    Core/Utils/DebugObjects.cpp
-    Core/Utils/DebugObjects.h
-    Core/Utils/DebugObjects.inc
-    Core/Utils/DebugTimer.cpp
-    Core/Utils/DebugTimer.h
-    Core/Utils/DiffTracker.cpp
-    Core/Utils/DiffTracker.h
-    Core/Utils/Endian.h
-    Core/Utils/Enum.h
-    Core/Utils/EnumDef.inc
-    Core/Utils/Event.h
-    Core/Utils/File.cpp
-    Core/Utils/File.h
-    Core/Utils/Logging.cpp
-    Core/Utils/Logging.h
-    Core/Utils/Random.cpp
-    Core/Utils/Random.h
-    Core/Utils/Strings.cpp
-    Core/Utils/Strings.h
-    Core/Utils/Strings.h
-    Core/Utils/Strings.h
-
-    Platform/Platform.h
-
     Protobuf/FpdLogMessage.cc
     Protobuf/Frpg2PlayerData.cc
     Protobuf/Frpg2RequestMessage.cc
@@ -191,16 +141,6 @@ SET(SOURCES
     Server/WebUIService/Handlers/WebUIHandler.h
 )
  
-if (WIN32)
-    SET(PLATFORM_SOURCES
-        Platform/Win32/Win32Platform.cpp
-    )
-elseif (UNIX)
-    SET(PLATFORM_SOURCES
-        Platform/Linux/LinuxPlatform.cpp
-    )
-endif()
- 
 add_executable(${PROJECT_NAME} ${SOURCES} ${PLATFORM_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../")
@@ -209,17 +149,11 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -D_CRT_SECURE_NO_WARNINGS -D_
 
 target_link_libraries(
     ${PROJECT_NAME}
-    aes_modes
+    Shared
     civetweb
-    lib_generic_c
     libprotobuf-lite
     sqlite
-    zlib
     steam
-    #steam-encryptedappticket
-    libcurl
-    crypto
-    ssl
 )
 
 # Copy some important files over to our output directory.

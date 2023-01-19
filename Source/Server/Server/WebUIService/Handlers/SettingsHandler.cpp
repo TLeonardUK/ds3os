@@ -12,8 +12,8 @@
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
 
 #include <ctime>
 

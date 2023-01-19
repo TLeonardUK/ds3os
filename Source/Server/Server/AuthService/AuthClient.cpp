@@ -15,17 +15,17 @@
 
 #include "Server/Server.h"
 
-#include "Platform/Platform.h"
+#include "Shared/Platform/Platform.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Random.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Random.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Network/NetConnection.h"
 
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
 
-#include "Core/Crypto/CWCCipher.h"
+#include "Shared/Core/Crypto/CWCCipher.h"
 
 #include "Protobuf/Protobufs.h"
 

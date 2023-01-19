@@ -11,10 +11,10 @@
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/WebUIService/Handlers/PlayersHandler.h"
-#include "Server/Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnection.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
 
 PlayersHandler::PlayersHandler(WebUIService* InService)
     : WebUIHandler(InService)

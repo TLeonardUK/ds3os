@@ -9,15 +9,15 @@
 
 #include "Server/Streams/Frpg2PacketStream.h"
 
-#include "Core/Network/NetConnection.h"
+#include "Shared/Core/Network/NetConnection.h"
 
 #include "Config/BuildConfig.h"
 
-#include "Core/Utils/Endian.h"
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Endian.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
 
-#include "Core/Utils/File.h"
+#include "Shared/Core/Utils/File.h"
 
 #include <cstring>
 

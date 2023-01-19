@@ -17,9 +17,9 @@
 #include "Server/GameService/GameManagers/Signs/SignManager.h"
 #include "Server/GameService/GameManagers/Ghosts/GhostManager.h"
 
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Utils/DebugObjects.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Utils/DebugObjects.h"
 
 #include <ctime>
 

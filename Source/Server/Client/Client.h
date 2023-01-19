@@ -11,10 +11,10 @@
 
 #include "Server/Database/ServerDatabase.h"
 
-#include "Platform/Platform.h"
+#include "Shared/Platform/Platform.h"
 
-#include "Core/Crypto/RSAKeyPair.h"
-#include "Core/Network/NetIPAddress.h"
+#include "Shared/Core/Crypto/RSAKeyPair.h"
+#include "Shared/Core/Network/NetIPAddress.h"
 
 #include <memory>
 #include <vector>

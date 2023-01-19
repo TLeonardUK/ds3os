@@ -16,13 +16,13 @@
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/WebUIService/WebUIService.h"
-#include "Core/Utils/Logging.h"
-#include "Core/Utils/File.h"
-#include "Core/Utils/Strings.h"
-#include "Core/Utils/Random.h"
-#include "Core/Utils/DebugObjects.h"
-#include "Core/Network/NetUtils.h"
-#include "Core/Network/NetHttpRequest.h"
+#include "Shared/Core/Utils/Logging.h"
+#include "Shared/Core/Utils/File.h"
+#include "Shared/Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Random.h"
+#include "Shared/Core/Utils/DebugObjects.h"
+#include "Shared/Core/Network/NetUtils.h"
+#include "Shared/Core/Network/NetHttpRequest.h"
 
 #include <thread>
 #include <chrono>

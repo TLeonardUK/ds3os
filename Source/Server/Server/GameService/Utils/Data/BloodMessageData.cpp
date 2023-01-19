@@ -9,7 +9,7 @@
 
 #include "Server/GameService/Utils/Data/BloodMessageData.h"
 
-#include "Core/Utils/Strings.h"
+#include "Shared/Core/Utils/Strings.h"
 
 bool BloodMessageData::Parse(const std::vector<uint8_t>& data, BloodMessageData& output)
 {
