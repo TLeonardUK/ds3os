@@ -29,6 +29,10 @@ namespace Loader
         // base address.
         public bool UsesASLR;
 
+        // If true the injector DLL will be loaded into the DS3 process rather than
+        // patching the memory.
+        public bool UseInjector;
+
         // TEA key used to encrypt payload.
         public uint[] Key;
     }
@@ -48,6 +52,7 @@ namespace Loader
                 { 
                     VersionName = "1.15.0.0 (Steam)", 
                     ServerInfoAddress = 0x144F4A5B1,
+                    UseInjector = false,
                     UsesASLR = false,
                     Key = new uint[4] { 0x4B694CD6, 0x96ADA235, 0xEC91D9D4, 0x23F562E5 },
                 } 
@@ -58,6 +63,7 @@ namespace Loader
                 { 
                     VersionName = "1.15.1.0 (Steam)", 
                     ServerInfoAddress = 0x55A3F15,
+                    UseInjector = false,
                     UsesASLR = true,
                     Key = new uint[4] { 0x970F4CFB, 0x1AA625DD, 0x172EBF85, 0x119A5426 },
                 } 
@@ -67,9 +73,10 @@ namespace Loader
                 new DarkSoulsLoadConfig 
                 { 
                     VersionName = "1.15.2.0 (Steam)", 
-                    ServerInfoAddress = 0x4efa861,//0x4CDBA61,
+                    ServerInfoAddress = 0x0,
+                    UseInjector = true,
                     UsesASLR = true,
-                    Key = new uint[4] { 0xAE805677, 0x2912E1BB, 0x2A5BCFCB, 0xFA144FFE },
+                    Key = new uint[0] { },
                 } 
             },
         };

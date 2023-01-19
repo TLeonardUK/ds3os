@@ -20,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Loader
 {
@@ -591,13 +592,6 @@ namespace Loader
                 return;
             }
 
-            byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey, LoadConfig.Key);
-            if (DataBlock == null)
-            {
-                MessageBox.Show("Failed to encode server info patch. Potentially server information is too long to fit into the space available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             string ExeLocation = ExeLocationTextBox.Text;
             string ExeDirectory = Path.GetDirectoryName(ExeLocation);
  
@@ -629,33 +623,121 @@ namespace Loader
                 return;
             }
 
-            // Retry a few times until steamstub has unpacked everything.
-            // Ugly as fuck, but simplest way to handle this.
-            for (int i = 0; i < 32; i++)
+            // Inject our hook DLL.
+            if (LoadConfig.UseInjector)
             {
-                IntPtr BaseAddress = WinAPI.GetProcessModuleBaseAddress(ProcessInfo.hProcess);
-                IntPtr PatchAddress = (IntPtr)LoadConfig.ServerInfoAddress;
-                if (LoadConfig.UsesASLR)
+                // Find injector DLL.
+                string DirectoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string InjectorPath = System.IO.Path.Combine(DirectoryPath, "Injector.dll");
+                string InjectorConfigPath = System.IO.Path.Combine(DirectoryPath, "Injector.config");
+                while (!File.Exists(InjectorPath))
                 {
-                    PatchAddress = (IntPtr)((ulong)BaseAddress + (ulong)PatchAddress);
+                    DirectoryPath = System.IO.Path.GetDirectoryName(DirectoryPath);
+                    if (DirectoryPath == null)
+                    {
+                        MessageBox.Show("Failed to find Injector.dll, please reinstall: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    InjectorPath = System.IO.Path.Combine(DirectoryPath, "Injector.dll");
+                    InjectorConfigPath = System.IO.Path.Combine(DirectoryPath, "Injector.config");
                 }
 
-                int BytesWritten;
-                bool WriteSuccessful = WinAPI.WriteProcessMemory(ProcessInfo.hProcess, PatchAddress, DataBlock, (uint)DataBlock.Length, out BytesWritten);
-                if (!WriteSuccessful || BytesWritten != DataBlock.Length)
+                byte[] InjectorPathBuffer = System.Text.Encoding.UTF8.GetBytes(InjectorPath);
+
+                // Write the config file which the injector will read everything from.
+                InjectionConfig injectConfig = new InjectionConfig();
+                injectConfig.ServerName = Config.Name;
+                injectConfig.ServerPublicKey = Config.PublicKey;
+                injectConfig.ServerHostname = ConnectionHostname;
+
+                string json = injectConfig.ToJson();
+                File.WriteAllText(InjectorConfigPath, json);
+
+                // Inject the DLL into the process.
+                IntPtr ModulePtr = WinAPI.GetModuleHandle("kernel32.dll");
+                if (ModulePtr == IntPtr.Zero)
                 {
-                    if (i == 31)
-                    {
-                        MessageBox.Show("Failed to write full patch to memory. Game may or may not work.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
+                    MessageBox.Show("Failed to get kernel32.dll module handle: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                IntPtr LoadLibraryPtr = WinAPI.GetProcAddress(ModulePtr, "LoadLibraryA");
+                if (LoadLibraryPtr == IntPtr.Zero)
+                {
+                    MessageBox.Show("Failed to get LoadLibraryA procedure address: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                IntPtr PathAddress = IntPtr.Zero;
+                for (int i = 0; i < 32 && PathAddress == IntPtr.Zero; i++)
+                {
+                    PathAddress = WinAPI.VirtualAllocEx(ProcessInfo.hProcess, IntPtr.Zero, (uint)InjectorPath.Length, (uint)(AllocationType.Reserve | AllocationType.Commit), (uint)MemoryProtection.ReadWrite);
+                    if (PathAddress == IntPtr.Zero)
                     {
                         Thread.Sleep(500);
                     }
-                }            
-                else
+                }
+                if (PathAddress == IntPtr.Zero)
                 {
-                    break;
+                    MessageBox.Show("Failed to allocation memory in process: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
+                    return;
+                }
+                
+                int BytesWritten;
+                bool WriteSuccessful = WinAPI.WriteProcessMemory(ProcessInfo.hProcess, PathAddress, InjectorPathBuffer, (uint)InjectorPathBuffer.Length, out BytesWritten);
+                if (!WriteSuccessful || BytesWritten != InjectorPathBuffer.Length)
+                {
+                    MessageBox.Show("Failed to write full patch to memory: GetLastError=" + Marshal.GetLastWin32Error(), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                IntPtr ThreadHandle = WinAPI.CreateRemoteThread(ProcessInfo.hProcess, IntPtr.Zero, 0, LoadLibraryPtr, PathAddress, 0, IntPtr.Zero);
+                if (ThreadHandle == IntPtr.Zero)
+                {
+                    MessageBox.Show("Failed to spawn remote thread: GetLastError=" + Marshal.GetLastWin32Error(), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            // Otherwise patch the server key into the process memory.
+            else
+            {            
+                byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey, LoadConfig.Key);
+                if (DataBlock == null)
+                {
+                    MessageBox.Show("Failed to encode server info patch. Potentially server information is too long to fit into the space available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Retry a few times until steamstub has unpacked everything.
+                // Ugly as fuck, but simplest way to handle this.
+                for (int i = 0; i < 32; i++)
+                {
+                    IntPtr BaseAddress = WinAPI.GetProcessModuleBaseAddress(ProcessInfo.hProcess);
+                    IntPtr PatchAddress = (IntPtr)LoadConfig.ServerInfoAddress;
+                    if (LoadConfig.UsesASLR)
+                    {
+                        PatchAddress = (IntPtr)((ulong)BaseAddress + (ulong)PatchAddress);
+                    }
+
+                    int BytesWritten;
+                    bool WriteSuccessful = WinAPI.WriteProcessMemory(ProcessInfo.hProcess, PatchAddress, DataBlock, (uint)DataBlock.Length, out BytesWritten);
+                    if (!WriteSuccessful || BytesWritten != DataBlock.Length)
+                    {
+                        if (i == 31)
+                        {
+                            MessageBox.Show("Failed to write full patch to memory. Game may or may not work.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            Thread.Sleep(500);
+                        }
+                    }            
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 

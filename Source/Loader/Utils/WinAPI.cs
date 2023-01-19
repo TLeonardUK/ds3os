@@ -204,6 +204,37 @@ namespace Loader
         LIST_MODULES_64BIT = 0x02,
         LIST_MODULES_ALL = (LIST_MODULES_32BIT | LIST_MODULES_64BIT)
     }
+    
+    [Flags]
+    public enum AllocationType
+    {
+         Commit = 0x1000,
+         Reserve = 0x2000,
+         Decommit = 0x4000,
+         Release = 0x8000,
+         Reset = 0x80000,
+         Physical = 0x400000,
+         TopDown = 0x100000,
+         WriteWatch = 0x200000,
+         LargePages = 0x20000000
+    }
+
+    [Flags]
+    public enum MemoryProtection
+    {
+         Execute = 0x10,
+         ExecuteRead = 0x20,
+         ExecuteReadWrite = 0x40,
+         ExecuteWriteCopy = 0x80,
+         NoAccess = 0x01,
+         ReadOnly = 0x02,
+         ReadWrite = 0x04,
+         WriteCopy = 0x08,
+         GuardModifierflag = 0x100,
+         NoCacheModifierflag = 0x200,
+         WriteCombineModifierflag = 0x400
+    }
+
 
     [StructLayout(LayoutKind.Sequential)]
     public struct MODULEINFO
@@ -278,9 +309,21 @@ namespace Loader
 
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetCurrentProcess();
+
+        [DllImport("kernel32", CharSet=CharSet.Ansi, ExactSpelling=true, SetLastError=true)]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+        [DllImport("kernel32.dll", EntryPoint="GetModuleHandleA", SetLastError=true)]
+        public static extern IntPtr GetModuleHandle(string moduleName);
         
+        [DllImport("kernel32.dll", SetLastError=true, ExactSpelling=true)]
+        public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
+
         [DllImport("psapi.dll", SetLastError = true)]
         static extern bool GetModuleInformation(IntPtr hProcess, IntPtr hModule, out MODULEINFO lpmodinfo, uint cb);
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
 
         public static IntPtr GetProcessModuleBaseAddress(IntPtr hProcess)
         {

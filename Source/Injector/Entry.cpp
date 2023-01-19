@@ -12,6 +12,8 @@
 
 #include "Shared/Core/Utils/Logging.h"
 
+#include "Injector/Injector.h"
+
 void main();
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
@@ -28,6 +30,13 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 
 void main()
 {
+    // Alloc a new console and redirect standard IO to it.
+    FILE* dummy;
+    AllocConsole();
+    freopen_s(&dummy, "CONIN$", "r", stdin);
+    freopen_s(&dummy, "CONOUT$", "w", stderr);
+    freopen_s(&dummy, "CONOUT$", "w", stdout);
+
     Log(R"--(    ____             __      _____             __        _____)--");
     Log(R"--(   / __ \____ ______/ /__   / ___/____  __  __/ /____   |__  /)--");
     Log(R"--(  / / / / __ `/ ___/ //_/   \__ \/ __ \/ / / / / ___/    /_ < )--");
@@ -48,11 +57,18 @@ void main()
         return;
     }
 
-    // Load config information.
-
-    // Hook stuff
-
-    // Wait until terminating.
+    Injector InjectorInstance;
+    if (!InjectorInstance.Init())
+    {
+        Error("Injector failed to initialize.");
+        return;
+    }
+    InjectorInstance.RunUntilQuit();
+    if (!InjectorInstance.Term())
+    {
+        Error("Injector failed to terminate.");
+        return;
+    }
 
     if (!PlatformTerm())
     {

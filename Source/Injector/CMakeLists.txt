@@ -7,9 +7,16 @@ project(Injector C CXX)
 
 SET(SOURCES
     Entry.cpp
+
+    Config/BuildConfig.h
+    Config/RuntimeConfig.h
+    Config/RuntimeConfig.cpp
+    
+    Injector/Injector.h
+    Injector/Injector.cpp
 )
  
-add_executable(${PROJECT_NAME} ${SOURCES} ${PLATFORM_SOURCES})
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${PLATFORM_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../")
 
