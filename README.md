@@ -5,8 +5,6 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
-:bangbang::bangbang: Currently requires version 1.15.1 or 1.15.0 version of the game to use. The latest patch is not yet supported.
-
 # What is this project?
 An open source implementation of the dark souls 3 game server. 
 
@@ -66,11 +64,16 @@ Future roadmap:
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
 
 # Will this ban my account on the retail server?
-So far we've had several accounts using unoffical servers, for quite a while, and have not had any account penalized on the retail server. 
-
-So it seems safe enough. The only way you are going to get banned is if you do things that would normally get you banned then go back to the retail server - cheating and the like.
+DS3OS uses its own save files, as long as you don't copy ds3os saves back to your retail saves you should be fine.
 
 # FAQ
+## Why aren't my save files appearing?
+DS3OS uses its own saves to avoid any issues with retail game saves. If you want to transfer your retail saves to ds3os, you can copy the .sl2 files (your retail saves) in here and change them to use a .ds3os file extension (ds3os saves):
+
+C:\Users\\[Your-Username]\AppData\Roaming\DarkSoulsIII\\[Your-SteamId]
+
+Do not do this the otherway - Copying ds3os saves to retail saves, you risk being banned on retail servers doing that.
+
 ## Can I run the server via docker?
 Yes, there are 2 docker containers currently published for ds3os, these are automatically updated each time a new release is made:
 
@@ -110,9 +113,11 @@ Once generated the project files are stored in the intermediate folder, at this 
 ├── Protobuf/             Contains the protobuf definitions used by the server's network traffic. Compiling them is done via the bat file in Tools/
 ├── Resources/            General resources used for building and packaging - icons/readmes/etc.
 ├── Source/               All source code for the project.
-│   ├── Loader/           Simple winforms app that loads DS3 such that it will connect to a custom server.
+│   ├── Injector/         This is the DLL that gets injected into the game to provide DS3OS's functionality.
+│   ├── Loader/           Simple winforms app that loads DS3 such that it will connect to a custom server.S3 such that it will connect to a custom server.
 │   ├── MasterServer/     NodeJS source code for a simple API server for advertising and listing active servers.
 │   ├── Server/           Source code for the main server.
+│   ├── Shared/           Source code that is shared between the server and injector projects.
 │   └── ThirdParty/       Source code for any third-party libraries used.
 │   └── WebUI/            Contains the static resources used to assemble the management web page for the server.
 ├── Tools/                Various cheat engine tables, bat files and alike used for analysis.
