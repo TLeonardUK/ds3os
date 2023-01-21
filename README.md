@@ -64,7 +64,7 @@ Future roadmap:
 - [ ] Anticheat (potentially we could do some more harsh checks than FROM does).
 
 # Will this ban my account on the retail server?
-DS3OS uses its own save fils, as long as you don't copy ds3os saves back to your retail saves you should be fine.
+DS3OS uses its own save files, as long as you don't copy ds3os saves back to your retail saves you should be fine.
 
 # FAQ
 ## Why aren't my save files appearing?
