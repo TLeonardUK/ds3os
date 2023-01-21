@@ -51,8 +51,8 @@ SET(SOURCES
     Core/Utils/Random.h
     Core/Utils/Strings.cpp
     Core/Utils/Strings.h
-    Core/Utils/Strings.h
-    Core/Utils/Strings.h
+    Core/Utils/WinApi.cpp
+    Core/Utils/WinApi.h
 
     Platform/Platform.h
 )
@@ -81,6 +81,8 @@ target_link_libraries(
     libcurl
     crypto
     ssl
+    dbghelp.lib 
+    Rpcrt4.lib
 )
 
 util_setup_folder_structure(${PROJECT_NAME} SOURCES "DS3OS")

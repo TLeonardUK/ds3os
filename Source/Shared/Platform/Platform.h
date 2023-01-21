@@ -76,3 +76,33 @@ double GetSeconds();
 // performance timings. There is an overhead for using this, so
 // prefer use of GetSeconds where possible.
 double GetHighResolutionSeconds();
+
+// ========================================================================
+// Debug functionality.
+// ========================================================================
+
+struct Callstack
+{
+    struct Frame
+    {
+        size_t Address;
+        std::string Module;
+        std::string Function;
+        std::string Filename;
+        size_t Line;
+    };
+
+    std::vector<Frame> Frames;
+};
+
+
+// Loads symbols files if they are available. The symbols will be used for resolving 
+// function names and similar for functions like db_capture_callstack.
+bool LoadSymbols();
+
+// Cleans up symbols previously loaded by db_load_symbols.
+bool UnloadSymbols();
+
+// Writes the given text to the console.
+// Colors are platform dependent and are not guaranteed to be used.
+std::unique_ptr<Callstack> CaptureCallstack(size_t FrameOffset = 0, size_t FrameCount = INT_MAX);

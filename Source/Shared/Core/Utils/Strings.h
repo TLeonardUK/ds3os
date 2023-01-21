@@ -31,3 +31,15 @@ std::string StringFormat(const char* format, Args... args)
 }
 
 std::string TrimString(const std::string& input);
+
+//  Converts a wide utf-16 string to utf-8.
+std::string NarrowString(const std::wstring& input);
+
+//  Converts a utf-8 string to a utf-16 string.
+std::wstring WidenString(const std::string& input);
+
+//  Determines if a given string ends with another string.
+bool StringEndsWith(const std::string& subject, const std::string& needle);
+
+//  Determines if a given string starts with another string.
+bool StringStartsWith(const std::string& subject, const std::string& needle);

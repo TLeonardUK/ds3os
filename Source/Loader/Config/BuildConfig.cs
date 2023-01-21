@@ -52,7 +52,7 @@ namespace Loader
                 { 
                     VersionName = "1.15.0.0 (Steam)", 
                     ServerInfoAddress = 0x144F4A5B1,
-                    UseInjector = false,
+                    UseInjector = true,
                     UsesASLR = false,
                     Key = new uint[4] { 0x4B694CD6, 0x96ADA235, 0xEC91D9D4, 0x23F562E5 },
                 } 
@@ -63,7 +63,7 @@ namespace Loader
                 { 
                     VersionName = "1.15.1.0 (Steam)", 
                     ServerInfoAddress = 0x55A3F15,
-                    UseInjector = false,
+                    UseInjector = true,
                     UsesASLR = true,
                     Key = new uint[4] { 0x970F4CFB, 0x1AA625DD, 0x172EBF85, 0x119A5426 },
                 } 

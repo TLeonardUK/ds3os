@@ -16,12 +16,21 @@
 #include "Shared/Core/Utils/DebugObjects.h"
 #include "Shared/Core/Network/NetUtils.h"
 #include "Shared/Core/Network/NetHttpRequest.h"
+#include "Shared/Core/Utils/WinApi.h"
+#include "Shared/Core/Utils/Strings.h"
+
+#include "Injector/Hooks/ReplaceServerAddressHook.h"
+#include "Injector/Hooks/ChangeSaveGameFilenameHook.h"
 
 #include <thread>
 #include <chrono>
 #include <fstream>
 
 #include "ThirdParty/nlohmann/json.hpp"
+
+
+// Use different save file.
+// add checkbox to ui to show debug window.
 
 namespace 
 {
@@ -30,12 +39,22 @@ namespace
     }
 };
 
+Injector& Injector::Instance()
+{
+    return *s_instance;
+}
+
 Injector::Injector()
 {
+    s_instance = this;
+
+    Hooks.push_back(std::make_unique<ReplaceServerAddressHook>());
+    Hooks.push_back(std::make_unique<ChangeSaveGameFilenameHook>());    
 }
 
 Injector::~Injector()
 {
+    s_instance = nullptr;
 }
 
 bool Injector::Init()
@@ -71,15 +90,54 @@ bool Injector::Init()
         return false;
     }
 
-
     Log("Server Name: %s", Config.ServerName.c_str());
     Log("Server Hostname: %s", Config.ServerHostname.c_str());
+    Log("");
+
+    ModuleRegion = GetModuleBaseRegion("DarkSoulsIII.exe");
+    Log("Base Address: 0x%p",ModuleRegion.first);
+    Log("Base Size: 0x%08x", ModuleRegion.second);
+    Log("");
+
+    if (ModuleRegion.first == 0)
+    {
+        Error("Failed to get module region for DarkSoulsIII.exe.");
+        return false;
+    }
+
+    Log("Installing hooks ...");
+    bool AllInstalled = true;
+    for (auto& hook : Hooks)
+    {
+        if (hook->Install(*this))
+        {
+            Success("\t%s: Success", hook->GetName());
+            InstalledHooks.push_back(hook.get());
+        }
+        else
+        {
+            Error("\t%s: Failed", hook->GetName());
+            AllInstalled = false;
+        }
+    }
+
+    if (!AllInstalled)
+    {
+        return false;
+    }
 
     return true;
 }
 
 bool Injector::Term()
 {
+    Log("Uninstalling hooks ...");
+    for (auto& hook : InstalledHooks)
+    {
+        Error("\t%s", hook->GetName());
+    }
+    InstalledHooks.clear();
+
     Log("Terminating injector ...");
 
     return true;
@@ -87,6 +145,7 @@ bool Injector::Term()
 
 void Injector::RunUntilQuit()
 {
+    Log("");
     Success("Injector is now running.");
 
     // We should really do this event driven ...
@@ -105,4 +164,42 @@ void Injector::SaveConfig()
     {
         Error("Failed to save configuration file: %s", ConfigPath.string().c_str());
     }
+}
+
+intptr_t Injector::GetBaseAddress()
+{
+    return ModuleRegion.first;
+}
+
+std::vector<intptr_t> Injector::SearchAOB(const std::vector<AOBByte>& pattern)
+{
+    std::vector<intptr_t> Matches;
+
+    size_t ScanLength = ModuleRegion.second - pattern.size();
+
+    for (size_t Offset = 0; Offset < ScanLength; Offset++)
+    {
+        bool OffsetMatches = true;
+
+        for (size_t PatternOffset = 0; PatternOffset < pattern.size(); PatternOffset++)
+        {
+            if (pattern[PatternOffset].has_value())
+            {
+                intptr_t Address = ModuleRegion.first + Offset + PatternOffset;
+                uint8_t Byte = *reinterpret_cast<uint8_t*>(Address);
+                if (Byte != pattern[PatternOffset].value())
+                {
+                    OffsetMatches = false;
+                    break;
+                }
+            }
+        }        
+
+        if (OffsetMatches)
+        {
+            Matches.push_back(ModuleRegion.first + Offset);
+        }
+    }
+
+    return Matches;
 }

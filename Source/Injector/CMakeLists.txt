@@ -14,6 +14,13 @@ SET(SOURCES
     
     Injector/Injector.h
     Injector/Injector.cpp
+
+    Hooks/Hook.h
+    Hooks/Hook.cpp
+    Hooks/ReplaceServerAddressHook.h
+    Hooks/ReplaceServerAddressHook.cpp
+    Hooks/ChangeSaveGameFilenameHook.h
+    Hooks/ChangeSaveGameFilenameHook.cpp
 )
  
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${PLATFORM_SOURCES})

@@ -92,3 +92,71 @@ std::string TrimString(const std::string& input)
 
     return input.substr(startWhiteCount, input.size() - startWhiteCount - endWhiteCount);
 }
+
+std::string NarrowString(const std::wstring& input)
+{
+    std::string result;
+
+    int result_length = WideCharToMultiByte(CP_UTF8, 0, input.data(), static_cast<int>(input.length()), nullptr, 0, nullptr, nullptr);
+    assert(result_length > 0);
+    if (result_length <= 0)
+    {
+        return "";
+    }
+
+    result.resize(result_length);
+    WideCharToMultiByte(CP_UTF8, 0, input.data(), static_cast<int>(input.length()), result.data(), static_cast<int>(result.length()), nullptr, nullptr);
+
+    return result;
+}
+
+std::wstring WidenString(const std::string& input)
+{
+    std::wstring result;
+    result.resize(input.size());
+
+    int result_length = MultiByteToWideChar(CP_UTF8, 0, input.data(), static_cast<int>(input.length()), result.data(), static_cast<int>(result.length()));
+    assert(result_length > 0);
+    if (result_length <= 0)
+    {
+        return L"";
+    }
+
+    result.resize(result_length);
+
+    return result;
+}
+
+bool StringEndsWith(const std::string& subject, const std::string& needle)
+{
+    if (subject.size() >= needle.size())
+    {
+        size_t start_offset = subject.size() - needle.size();
+        for (size_t i = start_offset; i < start_offset + needle.size(); i++)
+        {
+            if (subject[i] != needle[i - start_offset])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+bool StringStartsWith(const std::string& subject, const std::string& needle)
+{
+    if (subject.size() >= needle.size())
+    {
+        for (size_t i = 0; i < needle.size(); i++)
+        {
+            if (subject[i] != needle[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    return false;
+}
+

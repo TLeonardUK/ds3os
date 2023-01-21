@@ -7,12 +7,17 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
+#include <DbgEng.h>
+#include <DbgHelp.h>
+
 #include "Platform/Platform.h"
 #include "Core/Utils/Logging.h"
 
 #include <windows.h>
 #include <WinSock2.h>
 #include <chrono>
+
+#include <array>
 
 #if defined(_WIN32)
 // Link to the windows socket library.
@@ -50,6 +55,8 @@ public:
 
 bool PlatformInit()
 {
+    LoadSymbols();
+
     WSADATA wsaData;
     if (int Result = WSAStartup(MAKEWORD(2, 2), &wsaData); Result != 0) 
     {
@@ -75,6 +82,8 @@ bool PlatformTerm()
         Error("WSACleanup failed with error 0x%08x.", Result);
         return false;
     }
+
+    UnloadSymbols();
 
     return true;
 }
@@ -127,4 +136,80 @@ double GetHighResolutionSeconds()
     ElapsedMicroseconds.QuadPart /= Frequency.QuadPart;
 
     return (double)ElapsedMicroseconds.QuadPart / 1000000.0;
+}
+
+bool LoadSymbols()
+{
+    bool result = SymInitialize(GetCurrentProcess(), nullptr, true);
+    if (!result)
+    {
+        Warning("Failed to load symbols for current process.");
+    }
+    
+    return true;
+}
+
+bool UnloadSymbols()
+{
+    bool result = SymCleanup(GetCurrentProcess());
+    if (!result)
+    {
+        Warning("Failed to unload symbols for current process.");
+    }
+
+    return result;
+}
+
+std::unique_ptr<Callstack> CaptureCallstack(size_t FrameOffset, size_t FrameCount)
+{
+    constexpr size_t k_max_frames = 256;
+    std::array<void*, k_max_frames> frames;
+
+    USHORT captured_frames = RtlCaptureStackBackTrace(
+        static_cast<ULONG>(FrameOffset + 1), 
+        static_cast<ULONG>(std::min(FrameCount, k_max_frames)),
+        frames.data(),
+        nullptr);
+
+    std::unique_ptr<Callstack> result = std::make_unique<Callstack>();
+    result->Frames.resize(captured_frames);
+
+    HANDLE process = GetCurrentProcess();
+    DWORD displacement = 0;
+    DWORD64 displacement64 = 0;
+
+    for (size_t i = 0; i < captured_frames; i++)
+    {
+        Callstack::Frame& frame = result->Frames[i];
+        frame.Address = reinterpret_cast<size_t>(frames[i]);
+
+        char buffer[sizeof(IMAGEHLP_SYMBOL64) + MAX_SYM_NAME * sizeof(TCHAR)];
+
+        IMAGEHLP_SYMBOL64* symbol = reinterpret_cast<IMAGEHLP_SYMBOL64*>(buffer);
+        memset(buffer, 0, sizeof(buffer));
+        symbol->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL64);
+        symbol->MaxNameLength = MAX_SYM_NAME;
+        if (SymGetSymFromAddr64(process, frame.Address, &displacement64, symbol))
+        {
+            frame.Function = symbol->Name;
+        }
+
+        IMAGEHLP_MODULE64* module = reinterpret_cast<IMAGEHLP_MODULE64*>(buffer);
+        memset(buffer, 0, sizeof(buffer));
+        module->SizeOfStruct = sizeof(IMAGEHLP_MODULE64);
+        if (SymGetModuleInfo64(process, frame.Address, module))
+        {
+            frame.Module = module->ModuleName;
+        }
+
+        IMAGEHLP_LINE64 line = {};
+        line.SizeOfStruct = sizeof(line);
+        if (SymGetLineFromAddr64(process, frame.Address, &displacement, &line))
+        {
+            frame.Filename = line.FileName;
+            frame.Line = line.LineNumber;
+        }
+    }
+
+    return std::move(result);
 }

@@ -61,6 +61,8 @@ void main()
     if (!InjectorInstance.Init())
     {
         Error("Injector failed to initialize.");
+        MessageBoxA(nullptr, "Failed to initialize DS3OS.\n\nGame will now be terminated to avoid playing on a partially patched game which may trigger bans.", "DS3OS Error", MB_OK|MB_ICONEXCLAMATION);
+        std::abort();
         return;
     }
     InjectorInstance.RunUntilQuit();

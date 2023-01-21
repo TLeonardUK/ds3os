@@ -76,3 +76,18 @@ double GetHighResolutionSeconds()
 {
     return GetSeconds();
 }
+
+bool LoadSymbols()
+{
+    return true;
+}
+
+bool UnloadSymbols()
+{
+    return true;
+}
+
+std::unique_ptr<Callstack> CaptureCallstack(size_t FrameOffset, size_t FrameCount)
+{
+    return {};
+}

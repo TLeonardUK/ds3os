@@ -155,6 +155,10 @@ bool AuthClient::Poll()
                     Response.set_unknown_1(0);
                     Response.set_app_version(Request.app_version());
                 }
+                else
+                {
+                    WarningS(GetName().c_str(), "Disconnecting client as they have unsupported version: %zi, highest we support is %i.", Request.app_version(), BuildConfig::APP_VERSION);
+                }
 
                 if (!MessageStream->Send(&Response, Frpg2MessageType::Reply, Message.Header.msg_index))
                 {
