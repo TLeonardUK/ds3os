@@ -12,6 +12,7 @@
 #include <sstream>
 #include <iomanip>
 #include <string>
+#include <cassert>
 
 std::string BytesToHex(const std::vector<uint8_t>& Bytes)
 {
@@ -93,6 +94,8 @@ std::string TrimString(const std::string& input)
     return input.substr(startWhiteCount, input.size() - startWhiteCount - endWhiteCount);
 }
 
+#ifdef _WIN32
+
 std::string NarrowString(const std::wstring& input)
 {
     std::string result;
@@ -126,6 +129,8 @@ std::wstring WidenString(const std::string& input)
 
     return result;
 }
+
+#endif
 
 bool StringEndsWith(const std::string& subject, const std::string& needle)
 {

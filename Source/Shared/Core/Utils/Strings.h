@@ -32,11 +32,15 @@ std::string StringFormat(const char* format, Args... args)
 
 std::string TrimString(const std::string& input);
 
+#ifdef _WIN32
+
 //  Converts a wide utf-16 string to utf-8.
 std::string NarrowString(const std::wstring& input);
 
 //  Converts a utf-8 string to a utf-16 string.
 std::wstring WidenString(const std::string& input);
+
+#endif
 
 //  Determines if a given string ends with another string.
 bool StringEndsWith(const std::string& subject, const std::string& needle);
