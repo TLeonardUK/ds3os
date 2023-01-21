@@ -61,9 +61,15 @@ if (WIN32)
     SET(PLATFORM_SOURCES
         Platform/Win32/Win32Platform.cpp
     )
+    SET(PLATFORM_LIBRARIES         
+        dbghelp.lib 
+        Rpcrt4.lib
+    )
 elseif (UNIX)
     SET(PLATFORM_SOURCES
         Platform/Linux/LinuxPlatform.cpp
+    )
+    SET(PLATFORM_LIBRARIES         
     )
 endif()
  
@@ -81,8 +87,7 @@ target_link_libraries(
     libcurl
     crypto
     ssl
-    dbghelp.lib 
-    Rpcrt4.lib
+    ${PLATFORM_LIBRARIES}
 )
 
 util_setup_folder_structure(${PROJECT_NAME} SOURCES "DS3OS")
