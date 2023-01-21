@@ -1,4 +1,4 @@
-FROM ubuntu AS build
+FROM ubuntu@sha256:4b1d0c4a2d2aaf63b37111f34eb9fa89fa1bf53dd6e4ca954d47caebca4005c2 AS build
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -q -y g++ curl zip unzip tar binutils cmake git yasm
 
@@ -13,12 +13,8 @@ FROM steamcmd/steamcmd:latest@sha256:5373ccd9282a02e262ba95f3f45d2bea71fbc6ce198
 
 # Make steamcmd download steam client libraries so we can copy them later.
 RUN steamcmd +login anonymous +quit
-RUN steamcmd +login anonymous +quit
-RUN ls -la /root/*
-RUN ls -la /root/.steam/*
-RUN ls -la /root/.steam/linux64/*
 
-FROM ubuntu AS runtime
+FROM ubuntu@sha256:4b1d0c4a2d2aaf63b37111f34eb9fa89fa1bf53dd6e4ca954d47caebca4005c2 AS runtime
 
 RUN mkdir -p /opt/ds3os/Saved \
     && useradd -r -s /bin/bash -u 1000 ds3os \

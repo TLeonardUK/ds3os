@@ -82,7 +82,7 @@ jobs:
         
   build-linux:
     name: Build Linux
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout respository
@@ -119,7 +119,7 @@ jobs:
         
   build-docker:
     name: Build Docker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout respository
@@ -161,7 +161,7 @@ jobs:
   make-release:
     name: Make Release
     needs: [ build-windows, build-linux, build-docker ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Download windows artifact
