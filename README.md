@@ -70,7 +70,7 @@ DS3OS uses its own save files, as long as you don't copy ds3os saves back to you
 ## Why aren't my save files appearing?
 DS3OS uses its own saves to avoid any issues with retail game saves. If you want to transfer your retail saves to ds3os, you can copy the .sl2 files (your retail saves) in here and change them to use a .ds3os file extension (ds3os saves):
 
-C:\Users\[Your-Username]\AppData\Roaming\DarkSoulsIII\[Your-SteamId]
+C:\Users\\[Your-Username]\AppData\Roaming\DarkSoulsIII\\[Your-SteamId]
 
 Do not do this the otherway - Copying ds3os saves to retail saves, you risk being banned on retail servers doing that.
 
