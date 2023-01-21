@@ -9,7 +9,11 @@
 
 #pragma once
 
+#ifdef _WIN32
+
 #include <stdint.h>
 #include <utility>
 
 std::pair<intptr_t, size_t> GetModuleBaseRegion(const char* ModuleName);
+
+#endif

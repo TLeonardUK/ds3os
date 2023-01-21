@@ -9,6 +9,8 @@
 
 #include "Shared/Core/Utils/WinApi.h"
 
+#ifdef _WIN32
+
 #include <windows.h>
 #include <TlHelp32.h>
 
@@ -39,3 +41,5 @@ std::pair<intptr_t, size_t> GetModuleBaseRegion(const char* ModuleName)
 
     return { 0, 0 };
 }
+
+#endif
