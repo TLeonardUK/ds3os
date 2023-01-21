@@ -12,4 +12,7 @@ add_subdirectory(steam)
 add_subdirectory(zlib)
 add_subdirectory(curl)
 add_subdirectory(openssl)
-add_subdirectory(detours)
+
+if (WIN32)
+    add_subdirectory(detours)
+endif()
