@@ -14,3 +14,5 @@ xcopy /s Bin\x64_release\Server.exe DS3OS\Server\
 xcopy /s Bin\x64_release\Server.pdb DS3OS\Server\
 
 xcopy /s Bin\Loader\Package DS3OS\Loader
+xcopy /s Bin\x64_release\Injector.pdb DS3OS\Loader\
+xcopy /s Bin\x64_release\Injector.dll DS3OS\Loader\
