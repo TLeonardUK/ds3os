@@ -627,7 +627,7 @@ namespace Loader
             if (LoadConfig.UseInjector)
             {
                 // Find injector DLL.
-                string DirectoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+                string DirectoryPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
                 string InjectorPath = System.IO.Path.Combine(DirectoryPath, "Injector.dll");
                 string InjectorConfigPath = System.IO.Path.Combine(DirectoryPath, "Injector.config");
                 while (!File.Exists(InjectorPath))
