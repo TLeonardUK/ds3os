@@ -12,6 +12,8 @@ FROM steamcmd/steamcmd:latest AS steam
 
 # Make steamcmd download steam client libraries so we can copy them later.
 RUN steamcmd +login anonymous +quit
+RUN ls -la /root/.steam/*
+RUN ls -la /root/.steam/linux64/*
 
 FROM ubuntu AS runtime
 

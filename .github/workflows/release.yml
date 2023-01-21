@@ -155,6 +155,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
+        no-cache: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os:latest 
                                             
   make-release:
