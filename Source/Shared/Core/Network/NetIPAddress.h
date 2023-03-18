@@ -20,9 +20,9 @@ public:
     NetIPAddress()
     {
         Bytes[0] = 127;
-        Bytes[0] = 0;
-        Bytes[0] = 0;
-        Bytes[0] = 1;
+        Bytes[1] = 0;
+        Bytes[2] = 0;
+        Bytes[3] = 1;
     }
 
     NetIPAddress(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4)
