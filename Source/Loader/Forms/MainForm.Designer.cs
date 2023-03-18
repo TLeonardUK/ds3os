@@ -72,6 +72,7 @@ namespace Loader
             this.serverIpBox = new System.Windows.Forms.Label();
             this.filterBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.SettingsButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minimumPlayersBox)).BeginInit();
             this.SuspendLayout();
@@ -107,6 +108,7 @@ namespace Loader
             this.serverListImageList.Images.SetKeyName(8, "world.png");
             this.serverListImageList.Images.SetKeyName(9, "folder_magnify.png");
             this.serverListImageList.Images.SetKeyName(10, "award_star_gold_2.png");
+            this.serverListImageList.Images.SetKeyName(11, "cog.png");
             // 
             // LaunchButton
             // 
@@ -330,7 +332,7 @@ namespace Loader
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(238, 424);
+            this.label3.Location = new System.Drawing.Point(259, 424);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 23);
             this.label3.TabIndex = 15;
@@ -340,7 +342,7 @@ namespace Loader
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(365, 424);
+            this.label4.Location = new System.Drawing.Point(386, 424);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 15);
             this.label4.TabIndex = 17;
@@ -350,7 +352,7 @@ namespace Loader
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(520, 424);
+            this.label5.Location = new System.Drawing.Point(541, 424);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(102, 15);
             this.label5.TabIndex = 19;
@@ -361,7 +363,7 @@ namespace Loader
             // 
             this.privateIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.privateIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.privateIpBox.Location = new System.Drawing.Point(473, 424);
+            this.privateIpBox.Location = new System.Drawing.Point(494, 424);
             this.privateIpBox.Name = "privateIpBox";
             this.privateIpBox.Size = new System.Drawing.Size(99, 19);
             this.privateIpBox.TabIndex = 21;
@@ -371,7 +373,7 @@ namespace Loader
             // 
             this.publicIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.publicIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.publicIpBox.Location = new System.Drawing.Point(628, 424);
+            this.publicIpBox.Location = new System.Drawing.Point(649, 424);
             this.publicIpBox.Name = "publicIpBox";
             this.publicIpBox.Size = new System.Drawing.Size(99, 19);
             this.publicIpBox.TabIndex = 22;
@@ -381,7 +383,7 @@ namespace Loader
             // 
             this.serverIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.serverIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.serverIpBox.Location = new System.Drawing.Point(307, 424);
+            this.serverIpBox.Location = new System.Drawing.Point(328, 424);
             this.serverIpBox.Name = "serverIpBox";
             this.serverIpBox.Size = new System.Drawing.Size(99, 19);
             this.serverIpBox.TabIndex = 23;
@@ -406,11 +408,24 @@ namespace Loader
             this.panel2.Size = new System.Drawing.Size(23, 23);
             this.panel2.TabIndex = 25;
             // 
+            // SettingsButton
+            // 
+            this.SettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SettingsButton.ImageIndex = 11;
+            this.SettingsButton.ImageList = this.serverListImageList;
+            this.SettingsButton.Location = new System.Drawing.Point(223, 414);
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(37, 35);
+            this.SettingsButton.TabIndex = 26;
+            this.SettingsButton.UseVisualStyleBackColor = true;
+            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 458);
+            this.Controls.Add(this.SettingsButton);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.filterBox);
             this.Controls.Add(this.serverIpBox);
@@ -475,6 +490,7 @@ namespace Loader
         private System.Windows.Forms.Label serverIpBox;
         private System.Windows.Forms.TextBox filterBox;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button SettingsButton;
     }
 }
 

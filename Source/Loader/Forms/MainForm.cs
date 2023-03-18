@@ -650,6 +650,7 @@ namespace Loader
                 injectConfig.ServerName = Config.Name;
                 injectConfig.ServerPublicKey = Config.PublicKey;
                 injectConfig.ServerHostname = ConnectionHostname;
+                injectConfig.EnableSeperateSaveFiles = ProgramSettings.Default.use_seperate_saves;
 
                 string json = injectConfig.ToJson();
                 File.WriteAllText(InjectorConfigPath, json);
@@ -854,6 +855,13 @@ namespace Loader
                 ImportedServerListView.Columns[Sorter.SortColumn].Text = "↓ " + ColumnNames[Sorter.SortColumn];
             }
             ImportedServerListView.Sort();
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            SettingsForm dialog = new SettingsForm();
+            dialog.ExeLocation = ExeLocationTextBox.Text;
+            dialog.ShowDialog();
         }
     }
 

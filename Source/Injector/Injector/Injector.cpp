@@ -48,9 +48,6 @@ Injector& Injector::Instance()
 Injector::Injector()
 {
     s_instance = this;
-
-    Hooks.push_back(std::make_unique<ReplaceServerAddressHook>());
-    Hooks.push_back(std::make_unique<ChangeSaveGameFilenameHook>());    
 }
 
 Injector::~Injector()
@@ -105,6 +102,13 @@ bool Injector::Init()
     {
         Error("Failed to get module region for DarkSoulsIII.exe.");
         return false;
+    }
+
+    // Add hooks we need to use based on configuration.
+    Hooks.push_back(std::make_unique<ReplaceServerAddressHook>());
+    if (Config.EnableSeperateSaveFiles)
+    {
+        Hooks.push_back(std::make_unique<ChangeSaveGameFilenameHook>());
     }
 
     Log("Installing hooks ...");

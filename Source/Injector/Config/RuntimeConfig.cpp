@@ -148,6 +148,7 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(ServerName);
     SERIALIZE_VAR(ServerHostname);
     SERIALIZE_VAR(ServerPublicKey);
+    SERIALIZE_VAR(EnableSeperateSaveFiles);
 
     return true;
 }
