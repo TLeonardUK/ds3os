@@ -60,8 +60,11 @@ bool PlatformInit()
     WSADATA wsaData;
     if (int Result = WSAStartup(MAKEWORD(2, 2), &wsaData); Result != 0) 
     {
-        Error("WSAStartup failed with error 0x%08x.", Result);
-        return false;
+        if (Result == 0x0000276b)
+        {
+            MessageBoxA(nullptr, "Failed to initialize networking layer.\n\nIf you are running a mod that uses modengine, make sure you set blocknetworkaccess to 0 in modengine.ini to enable network access.\n\nGame will continue but connecting to a server may not be possible until you resolve this issue.", "Network Access Blocked", 0);
+        }
+        Warning("WSAStartup failed with error 0x%08x. It may have already been initialized. Ignoring ...", Result);
     }
 
     // Disable quick-edit on the output console. It results in the application

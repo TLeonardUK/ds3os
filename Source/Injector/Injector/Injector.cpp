@@ -28,6 +28,7 @@
 
 #include "ThirdParty/nlohmann/json.hpp"
 
+#include <Windows.h>
 
 // Use different save file.
 // add checkbox to ui to show debug window.
@@ -63,22 +64,23 @@ bool Injector::Init()
 
     // Grab the dll path based on the location of static function.
     HMODULE moduleHandle = nullptr;
-    char modulePath[MAX_PATH];
+    wchar_t modulePath[MAX_PATH] = {};
     if (GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)&dummyFunction, &moduleHandle) == 0)
     {
         Error("Failed to get dll handle, GetLastError=%u", GetLastError());
         return false;
     }
-    if (GetModuleFileName(moduleHandle, modulePath, sizeof(modulePath)) == 0)
+    if (GetModuleFileNameW(moduleHandle, modulePath, sizeof(modulePath)) == 0)
     {
         Error("Failed to get dll path, GetLastError=%u", GetLastError());
         return false;
     }
 
-    DllPath = modulePath;
+    std::wstring modulePathWide = modulePath;
+    DllPath = modulePathWide;
     DllPath = DllPath.parent_path();
 
-    Log("DLL Path: %s", DllPath.string().c_str());
+    Log("DLL Path: %s", NarrowString(DllPath.generic_wstring()).c_str());
 
     // TODO: Move this stuff into a RuntimeConfig type class.
     ConfigPath = DllPath / std::filesystem::path("Injector.config");

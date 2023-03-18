@@ -643,7 +643,7 @@ namespace Loader
                     InjectorConfigPath = System.IO.Path.Combine(DirectoryPath, "Injector.config");
                 }
 
-                byte[] InjectorPathBuffer = System.Text.Encoding.UTF8.GetBytes(InjectorPath);
+                byte[] InjectorPathBuffer = System.Text.Encoding.Unicode.GetBytes(InjectorPath + "\0");
 
                 // Write the config file which the injector will read everything from.
                 InjectionConfig injectConfig = new InjectionConfig();
@@ -662,7 +662,7 @@ namespace Loader
                     return;
                 }
 
-                IntPtr LoadLibraryPtr = WinAPI.GetProcAddress(ModulePtr, "LoadLibraryA");
+                IntPtr LoadLibraryPtr = WinAPI.GetProcAddress(ModulePtr, "LoadLibraryW");
                 if (LoadLibraryPtr == IntPtr.Zero)
                 {
                     MessageBox.Show("Failed to get LoadLibraryA procedure address: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -672,7 +672,7 @@ namespace Loader
                 IntPtr PathAddress = IntPtr.Zero;
                 for (int i = 0; i < 32 && PathAddress == IntPtr.Zero; i++)
                 {
-                    PathAddress = WinAPI.VirtualAllocEx(ProcessInfo.hProcess, IntPtr.Zero, (uint)InjectorPath.Length, (uint)(AllocationType.Reserve | AllocationType.Commit), (uint)MemoryProtection.ReadWrite);
+                    PathAddress = WinAPI.VirtualAllocEx(ProcessInfo.hProcess, IntPtr.Zero, (uint)InjectorPathBuffer.Length, (uint)(AllocationType.Reserve | AllocationType.Commit), (uint)MemoryProtection.ReadWrite);
                     if (PathAddress == IntPtr.Zero)
                     {
                         Thread.Sleep(500);
