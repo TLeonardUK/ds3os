@@ -80,9 +80,9 @@ Yes, there are 2 docker containers currently published for ds3os, these are auto
 timleonarduk/ds3os - This is the main server and the one you almost certainly want.
 timleonarduk/ds3os-master - This is for the master server, unless you are making a fork of ds3os, you probably don't need this.
 
-If you want a quick one-liner to run the server, you can use this. Note that it mounts the Saved folder to the host filesytem, this is simply to make modifying the config files easier.
+If you want a quick one-liner to run the server, you can use this. Note that it mounts the Saved folder to the host filesystem at /opt/ds3os/Saved, making it easier to modify the configuration files. Access /opt/ds3os/Saved to view and modify the configuration files.
 
-`sudo docker run -d -m 2G --restart always --net host --mount type=bind,source=/opt/ds3os/Saved,target=/opt/ds3os/Saved timleonarduk/ds3os:latest`
+`sudo mkdir -p /opt/ds3os/Saved && sudo chown 1000:1000 /opt/ds3os/Saved && sudo docker run -d -m 2G --restart always --net host --mount type=bind,source=/opt/ds3os/Saved,target=/opt/ds3os/Saved timleonarduk/ds3os:latest`
 
 ## I launch the game but its unable to connect?
 There are a few different causes of this, the simplest one is to make sure you're running as admin, the launcher needs to patch the games memory to get it to connect to the new server, this requires admin privileges.
