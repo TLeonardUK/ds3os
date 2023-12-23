@@ -19,6 +19,8 @@ SET(SOURCES
     Hooks/Hook.cpp
     Hooks/ReplaceServerAddressHook.h
     Hooks/ReplaceServerAddressHook.cpp
+    Hooks/ReplaceServerPortHook.h
+    Hooks/ReplaceServerPortHook.cpp
     Hooks/ChangeSaveGameFilenameHook.h
     Hooks/ChangeSaveGameFilenameHook.cpp
 )

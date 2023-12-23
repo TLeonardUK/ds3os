@@ -87,11 +87,12 @@ function RemoveServer(Id)
     }
 }
 
-function AddServer(Id, IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address)
+function AddServer(Id, IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address, port)
 {
     var ServerObj = {
         "Id": Id,
         "IpAddress": IpAddress,
+        "Port": port,
         "Hostname": hostname,
         "PrivateHostname": private_hostname,
         "Description": description,
@@ -130,7 +131,7 @@ function AddServer(Id, IpAddress, hostname, private_hostname, description, name,
 
     GActiveServers.push(ServerObj);
     
-    console.log(`Adding server: id=${Id} ip=${IpAddress} name=${name}`);
+    console.log(`Adding server: id=${Id} ip=${IpAddress} port=${port} name=${name}`);
     console.log(`Total servers is now ${GActiveServers.length}`);
 }
 
@@ -182,6 +183,7 @@ router.get('/', async (req, res) => {
         ServerInfo.push({
             "Id": Server["Id"],
             "IpAddress": Server["IpAddress"],
+            "Port": Server["Port"],
             "Hostname": Server["Hostname"],
             "PrivateHostname": Server["PrivateHostname"],
             "Description": DisplayDescription,
@@ -199,10 +201,10 @@ router.get('/', async (req, res) => {
     res.json({ "status":"success", "servers": ServerInfo });
 });
 
-// @route POST api/v1/servers/:ip_address/public_key
+// @route POST api/v1/servers/:id/public_key
 // @description Get the public kley of a given server.
 // @access Public
-router.post('/:ip_address/public_key', async (req, res) => { 
+router.post('/:id/public_key', async (req, res) => { 
     if (!('password' in req.body))
     {
         res.json({ "status":"error", "message":"Expected password in body." });
@@ -210,7 +212,7 @@ router.post('/:ip_address/public_key', async (req, res) => {
     }
 
     var password = req.body["password"];
- 
+
     for (var i = 0; i < GActiveServers.length; i++)
     {
         if (GActiveServers[i].Id == req.params.id)
@@ -298,6 +300,7 @@ router.post('/', async (req, res) => {
     var allow_sharding = false;
     var web_address = "";
     var server_id = req.connection.remoteAddress;
+    var port = 50050;
 
     if ('AllowSharding' in req.body)
     {
@@ -311,12 +314,14 @@ router.post('/', async (req, res) => {
     {
         server_id = req.body["ServerId"];
     }
-
-    console.log(`serverId=${server_id}`);
+    if ('Port' in req.body)
+    {
+        port = req.body["Port"];
+    }
 
     var version = ('ServerVersion' in req.body) ? parseInt(req.body['ServerVersion']) : 1;
 
-    AddServer(server_id, req.connection.remoteAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address);
+    AddServer(server_id, req.connection.remoteAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address, port);
     
     res.json({ "status":"success" });
 });

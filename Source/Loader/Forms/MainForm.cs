@@ -90,7 +90,7 @@ namespace Loader
             bool HasSelectedManualServer = false;
             if (ImportedServerListView.SelectedIndices.Count > 0)
             {
-                HasSelectedManualServer = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname).ManualImport;
+                HasSelectedManualServer = GetConfigFromId((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Id).ManualImport;
             }
             //RemoveButton.Enabled = HasSelectedManualServer;
 
@@ -306,7 +306,7 @@ namespace Loader
         {
             if (ImportedServerListView.SelectedItems.Count > 0)
             {
-                CurrentServerConfig = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname);
+                CurrentServerConfig = GetConfigFromId((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Id);
             }
 
             ValidateUI();
@@ -317,7 +317,7 @@ namespace Loader
         {
             if (ImportedServerListView.SelectedItems.Count > 0)
             {
-                ServerConfig Config = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname);
+                ServerConfig Config = GetConfigFromId((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Id);
 
                 for (int i = 0; i < ServerList.Servers.Count; i++)
                 {
@@ -467,11 +467,11 @@ namespace Loader
             BuildServerList();
         }
 
-        private ServerConfig GetConfigFromHostname(string Hostname)
+        private ServerConfig GetConfigFromId(string Id)
         {
             for (int i = 0; i < ServerList.Servers.Count; i++)
             {
-                if (ServerList.Servers[i].Hostname == Hostname)
+                if (ServerList.Servers[i].Id == Id)
                 {
                     return ServerList.Servers[i];
                 }
@@ -482,7 +482,7 @@ namespace Loader
 
         private void OnLaunch(object sender, EventArgs e)
         {
-            ServerConfig Config = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname);
+            ServerConfig Config = GetConfigFromId((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Id);
 
             if (string.IsNullOrEmpty(Config.PublicKey))
             {
@@ -630,6 +630,7 @@ namespace Loader
                 injectConfig.ServerName = Config.Name;
                 injectConfig.ServerPublicKey = Config.PublicKey;
                 injectConfig.ServerHostname = ConnectionHostname;
+                injectConfig.ServerPort = Config.Port;
                 injectConfig.EnableSeperateSaveFiles = ProgramSettings.Default.use_seperate_saves;
 
                 string json = injectConfig.ToJson();

@@ -90,14 +90,19 @@ bool SettingsHandler::handlePost(CivetServer* Server, struct mg_connection* Conn
     {
         Config.Password = json["password"];
     }
-    if (json.contains("publicHostname"))
+
+    if (Service->GetServer()->IsDefaultServer())
     {
-        Config.ServerHostname = json["publicHostname"];
+        if (json.contains("publicHostname"))
+        {
+            Config.ServerHostname = json["publicHostname"];
+        }
+        if (json.contains("privateHostname"))
+        {
+            Config.ServerPrivateHostname = json["privateHostname"];
+        }
     }
-    if (json.contains("privateHostname"))
-    {
-        Config.ServerPrivateHostname = json["privateHostname"];
-    }
+
     if (json.contains("advertise"))
     {
         Config.Advertise = json["advertise"];

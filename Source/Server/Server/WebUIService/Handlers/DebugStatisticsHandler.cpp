@@ -73,13 +73,16 @@ bool DebugStatisticsHandler::handleGet(CivetServer* Server, struct mg_connection
         }
 
         auto logs = nlohmann::json::array();
-        for (const LogMessage& Message : GetRecentLogs())
+        if (Service->GetServer()->IsDefaultServer())
         {
-            auto stat = nlohmann::json::object();
-            stat["level"] = Message.Level;
-            stat["source"] = Message.Source;
-            stat["message"] = Message.Message;
-            logs.push_back(stat);
+            for (const LogMessage& Message : GetRecentLogs())
+            {
+                auto stat = nlohmann::json::object();
+                stat["level"] = Message.Level;
+                stat["source"] = Message.Source;
+                stat["message"] = Message.Message;
+                logs.push_back(stat);
+            }
         }
 
         json["timers"] = timers;

@@ -38,7 +38,7 @@ namespace
             std::string str(first_c, distance);
             if (str.find(k_retail_key) == 0)
             {
-                Log("Retail server address requested, patching.");
+                Log("Retail server address requested, patching to custom server address.");
 
                 const RuntimeConfig& Config = Injector::Instance().GetConfig();
 

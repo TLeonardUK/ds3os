@@ -27,6 +27,9 @@ public:
     // Public key of server being joined.
     std::string ServerPublicKey = "";
 
+    // Login port to connect to on server.
+    int ServerPort = 50050;
+
     // If we should use seperate saves from the retail ones.
     bool EnableSeperateSaveFiles = true;
 

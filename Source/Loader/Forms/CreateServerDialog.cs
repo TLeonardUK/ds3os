@@ -77,6 +77,7 @@ namespace Loader.Forms
         {       
             CreateServerTask = null;
             DialogResult = DialogResult.OK;
+            Visible = false;
             Close();
                  
             if (string.IsNullOrEmpty(Result.webUsername) ||

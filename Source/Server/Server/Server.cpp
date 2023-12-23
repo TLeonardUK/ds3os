@@ -60,10 +60,7 @@ Server::Server(const std::string& InServerId, const std::string& InServerName, c
     Services.push_back(std::make_shared<LoginService>(this, &PrimaryKeyPair));
     Services.push_back(std::make_shared<AuthService>(this, &PrimaryKeyPair));
     Services.push_back(std::make_shared<GameService>(this, &PrimaryKeyPair));
-    //if (IsDefaultServer())
-    {
-        Services.push_back(std::make_shared<WebUIService>(this));
-    }
+    Services.push_back(std::make_shared<WebUIService>(this));
 }
 
 Server::~Server()
@@ -394,6 +391,7 @@ void Server::PollServerAdvertisement()
         Body["ServerVersion"] = BuildConfig::MASTER_SERVER_CLIENT_VERSION;
         Body["AllowSharding"] = Config.SupportSharding;
         Body["WebAddress"] = Config.SupportSharding ? StringFormat("http://%s:%i", ((std::string)Body["Hostname"]).c_str(), Config.WebUIServerPort) : "";
+        Body["Port"] = Config.LoginServerPort;
 
         MasterServerUpdateRequest = std::make_shared<NetHttpRequest>();
         MasterServerUpdateRequest->SetMethod(NetHttpMethod::POST);

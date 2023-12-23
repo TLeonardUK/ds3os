@@ -104,6 +104,17 @@ void ServerManager::RunUntilQuit()
             NextServerPruneTime = GetSeconds() + 60.0f;
         }
 
+        // Execute all callbacks.
+        {
+            std::scoped_lock lock(CallbackMutex);
+            for (auto& callback : Callbacks)
+            {
+                callback();
+            }
+
+            Callbacks.clear();
+        }
+
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
@@ -111,9 +122,16 @@ void ServerManager::RunUntilQuit()
 bool ServerManager::NewServer(const std::string& Name, const std::string& Password, std::string& OutServerId)
 {
     std::scoped_lock lock(m_mutex);
-
     OutServerId = MakeGUID();
     return StartServer(OutServerId, Name, Password);
+}
+
+
+void ServerManager::QueueCallback(std::function<void()> callback)
+{
+    std::scoped_lock lock(CallbackMutex);
+
+    Callbacks.push_back(callback);
 }
 
 bool ServerManager::StartServer(const std::string& ServerId, const std::string& Name, const std::string& Password)

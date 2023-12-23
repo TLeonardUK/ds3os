@@ -24,6 +24,9 @@
 #include "ThirdParty/civetweb/include/civetweb.h"
 #include "ThirdParty/civetweb/include/CivetServer.h"
 
+#include <thread>
+#include <condition_variable>
+
 ShardingHandler::ShardingHandler(WebUIService* InService)
     : WebUIHandler(InService)
 {
@@ -71,7 +74,21 @@ bool ShardingHandler::handlePost(CivetServer* WebServer, struct mg_connection* C
 
     if (Instance == nullptr)
     {
-        if (!Manager.NewServer(ServerName, ServerPassword, ServerId))
+        std::mutex mutex;
+        std::condition_variable convar;
+        bool Success = false;
+
+        std::unique_lock lock(mutex);
+
+        Manager.QueueCallback([&Manager, ServerName, ServerPassword, &ServerId, &Success, &mutex, &convar]() mutable {
+            std::unique_lock inner_lock(mutex);
+            Success = Manager.NewServer(ServerName, ServerPassword, ServerId);
+            convar.notify_all();
+        });
+
+        convar.wait(lock);
+
+        if (!Success)
         {
             mg_send_http_error(Connection, 500, "Failed to start server.");
             return false;

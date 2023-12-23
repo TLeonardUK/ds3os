@@ -18,6 +18,7 @@
 #include <filesystem>
 #include <queue>
 #include <unordered_map>
+#include <functional>
 
 // The server manager essentially manages multiple server shards running on the same machine.
 
@@ -38,6 +39,8 @@ public:
 
     bool NewServer(const std::string& Name, const std::string& Password, std::string& OutServerId);
 
+    void QueueCallback(std::function<void()> callback);
+
 private:
     bool StartServer(const std::string& ServerId, const std::string& Name = "", const std::string& Password = "");
     bool StopServer(const std::string& ServerId, bool Permanent = false);
@@ -57,5 +60,8 @@ private:
     std::filesystem::path SavedPath;
 
     std::vector<std::unique_ptr<Server>> ServerInstances;
+
+    std::mutex CallbackMutex;
+    std::vector<std::function<void()>> Callbacks;
 
 };

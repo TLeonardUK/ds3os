@@ -70,6 +70,8 @@ bool WebUIService::Init()
     Options.push_back(StaticPath.string());
     Options.push_back("listening_ports");
     Options.push_back(StringFormat("%i", Port));
+    Options.push_back("num_threads");
+    Options.push_back("5");
 
     try
     {

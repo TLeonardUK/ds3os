@@ -20,6 +20,7 @@
 #include "Shared/Core/Utils/Strings.h"
 
 #include "Injector/Hooks/ReplaceServerAddressHook.h"
+#include "Injector/Hooks/ReplaceServerPortHook.h"
 #include "Injector/Hooks/ChangeSaveGameFilenameHook.h"
 
 #include <thread>
@@ -91,6 +92,7 @@ bool Injector::Init()
 
     Log("Server Name: %s", Config.ServerName.c_str());
     Log("Server Hostname: %s", Config.ServerHostname.c_str());
+    Log("Server Port: %i", Config.ServerPort);
     Log("");
 
     ModuleRegion = GetModuleBaseRegion("DarkSoulsIII.exe");
@@ -106,6 +108,7 @@ bool Injector::Init()
 
     // Add hooks we need to use based on configuration.
     Hooks.push_back(std::make_unique<ReplaceServerAddressHook>());
+    Hooks.push_back(std::make_unique<ReplaceServerPortHook>());
     if (Config.EnableSeperateSaveFiles)
     {
         Hooks.push_back(std::make_unique<ChangeSaveGameFilenameHook>());
