@@ -70,6 +70,7 @@ elseif (UNIX)
         Platform/Linux/LinuxPlatform.cpp
     )
     SET(PLATFORM_LIBRARIES         
+        uuid
     )
 endif()
  
