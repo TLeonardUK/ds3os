@@ -25,6 +25,9 @@ public:
     // Version to give to the master-server when trying to advertise, used to hard-cut-off older server versions from advertising.
     inline static const int MASTER_SERVER_CLIENT_VERSION = 2;
 
+    // How many seconds without activity before a sharded server is cleaned up.
+    inline static const double SERVER_TIMEOUT = 60.0 * 60.0f;
+
     // How many seconds without messages causes a client to timeout.
     inline static const double CLIENT_TIMEOUT = 60.0;
 
@@ -65,6 +68,9 @@ public:
 
     // Writes messages that fail to deserialize to the local directory.
     constexpr inline static const bool DUMP_FAILED_DISASSEMBLED_PACKETS = true;
+
+    // Writes out legacy import files when the server starts.
+    constexpr inline static const bool SUPPORT_LEGACY_IMPORT_FILES = false;
 
     // How many seconds of inactivity before a webui authentication token expires.
     inline static const double WEBUI_AUTH_TIMEOUT = 60.0 * 60.0;

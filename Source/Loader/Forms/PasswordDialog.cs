@@ -31,7 +31,7 @@ namespace Loader.Forms
 
             GetPublicKeyTask = Task.Run(() =>
             {
-                string PublicKey = MasterServerApi.GetPublicKey(Config.IpAddress, Password);
+                string PublicKey = MasterServerApi.GetPublicKey(Config.Id, Password);
                 this.Invoke((MethodInvoker)delegate {
                     ProcessPublicKey(PublicKey);
                 });

@@ -106,3 +106,6 @@ bool UnloadSymbols();
 // Writes the given text to the console.
 // Colors are platform dependent and are not guaranteed to be used.
 std::unique_ptr<Callstack> CaptureCallstack(size_t FrameOffset = 0, size_t FrameCount = std::numeric_limits<size_t>::max());
+
+// Creates a globally unique UUID.
+std::string MakeGUID();

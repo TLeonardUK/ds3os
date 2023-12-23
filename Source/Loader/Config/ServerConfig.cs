@@ -48,6 +48,7 @@ namespace Loader
     [Serializable]
     public class ServerConfig
     {
+        public string Id                    { get; set; }
         public string Name                  { get; set; }
         public string Description           { get; set; }
         public string Hostname              { get; set; }
@@ -56,12 +57,15 @@ namespace Loader
         public bool ManualImport            { get; set; }
 
         // These attributes are only set if retrieved from master server.
-        public string IpAddress            { get; set; }
-        public int PlayerCount             { get; set; }
-        public bool PasswordRequired       { get; set; }
-        public string ModsWhiteList       { get; set; }
-        public string ModsBlackList       { get; set; }
-        public string ModsRequiredList    { get; set; }
+        public string IpAddress             { get; set; }
+        public int PlayerCount              { get; set; }
+        public bool PasswordRequired        { get; set; }
+        public string ModsWhiteList         { get; set; }
+        public string ModsBlackList         { get; set; }
+        public string ModsRequiredList      { get; set; }
+
+        public bool AllowSharding           { get; set; }
+        public string WebAddress            { get; set; }
 
         public void CopyTransientPropsFrom(ServerConfig Source)
         {
@@ -75,6 +79,8 @@ namespace Loader
             ModsWhiteList = Source.ModsWhiteList;
             ModsBlackList = Source.ModsBlackList;
             ModsRequiredList = Source.ModsRequiredList;
+            AllowSharding = Source.AllowSharding;
+            WebAddress = Source.WebAddress;
         }
 
         public string ToJson()

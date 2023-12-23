@@ -32,6 +32,7 @@ class Service;
 class NetHttpRequest;
 class NetHttpResponse;
 class GameClient;
+class ServerManager;
 
 enum class DiscordNoticeType
 {
@@ -49,12 +50,12 @@ enum class DiscordNoticeType
 class Server
 {
 public:
-    Server();
+    Server(const std::string& InServerId, const std::string& InServerName, const std::string& InServerPassword, ServerManager* InManager);
     ~Server();
 
     bool Init();
     bool Term();
-    void RunUntilQuit();
+    void Poll();
 
     void SaveConfig();
 
@@ -64,6 +65,12 @@ public:
 
     NetIPAddress GetPublicIP()          { return PublicIP; }
     NetIPAddress GetPrivateIP()         { return PrivateIP; }
+
+    std::string GetId()                 { return ServerId; }
+    bool IsDefaultServer()              { return ServerId == "default"; }
+    ServerManager& GetManager()         { return *Manager; }
+
+    std::filesystem::path GetSavedPath(){ return SavedPath; }
 
     template <typename T>
     std::shared_ptr<T> GetService()
@@ -93,6 +100,8 @@ public:
         uint32_t extraId = 0,
         std::vector<DiscordField> customFields = {});
 
+    size_t GetSecondsSinceLastActivity();
+
 protected:
 
     struct PendingDiscordNotice
@@ -112,15 +121,20 @@ protected:
 
 private:
 
-    bool QuitRecieved = false;
-
-    PlatformEvents::CtrlSignalEvent::DelegatePtr CtrlSignalHandle = nullptr;
-
     RuntimeConfig Config;
 
     std::vector<std::shared_ptr<Service>> Services;
 
+    ServerManager* Manager;
+
     ServerDatabase Database;
+
+    double NextKeepAliveTime = 0.0;
+
+    std::string ServerId;
+
+    std::string DefaultServerName;
+    std::string DefaultServerPassword;
 
     std::filesystem::path SavedPath;
     std::filesystem::path ConfigPath;
@@ -128,6 +142,7 @@ private:
     std::filesystem::path PublicKeyPath;
     std::filesystem::path Ds3osconfigPath;
     std::filesystem::path DatabasePath;
+    std::filesystem::path KeepAliveFilePath;
 
     NetIPAddress PublicIP;
     NetIPAddress PrivateIP;

@@ -164,4 +164,3 @@ bool StringStartsWith(const std::string& subject, const std::string& needle)
     }
     return false;
 }
-

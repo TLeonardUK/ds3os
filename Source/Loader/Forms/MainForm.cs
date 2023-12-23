@@ -92,7 +92,7 @@ namespace Loader
             {
                 HasSelectedManualServer = GetConfigFromHostname((ImportedServerListView.SelectedItems[0].Tag as ServerConfig).Hostname).ManualImport;
             }
-            RemoveButton.Enabled = HasSelectedManualServer;
+            //RemoveButton.Enabled = HasSelectedManualServer;
 
             if (ImportedServerListView.SelectedItems.Count <= 0)
             {
@@ -164,7 +164,7 @@ namespace Loader
 
                 foreach (ListViewItem ViewItem in ImportedServerListView.Items)
                 {
-                    if ((ViewItem.Tag as ServerConfig).Hostname == Config.Hostname)
+                    if ((ViewItem.Tag as ServerConfig).Id == Config.Id)
                     {
                         ServerItem = ViewItem;
                         break;
@@ -217,7 +217,7 @@ namespace Loader
                     {
                         continue;
                     }
-                    if (Config.Hostname == (ViewItem.Tag as ServerConfig).Hostname)
+                    if (Config.Id == (ViewItem.Tag as ServerConfig).Id)
                     {
                         Exists = true;
                         break;
@@ -250,10 +250,9 @@ namespace Loader
             minimumPlayersBox.Value = ProgramSettings.Default.minimum_players;
             ServerConfigList.FromJson(ProgramSettings.Default.server_config_json, out ServerList);
 
-            if (ProgramSettings.Default.master_server_url == "timleonard.uk")
-            {
-                ProgramSettings.Default.master_server_url = "ds3os-master.timleonard.uk";
-            }
+#if DEBUG
+            ProgramSettings.Default.master_server_url = "http://127.0.0.1:50020";
+#endif
 
             // Strip out any old config files downloaded from the server, we will be querying them
             // shortly anyway.
@@ -292,31 +291,12 @@ namespace Loader
             }
         }
 
-        private void OnImportServerConfig(object sender, EventArgs e)
-        {
-            using (OpenFileDialog Dialog = new OpenFileDialog())
+        private void OnCreateNewServer(object sender, EventArgs e)
+        {        
+            Forms.CreateServerDialog Dialog = new Forms.CreateServerDialog(ServerList.Servers, MachinePublicIp, this);
+            if (Dialog.ShowDialog() != DialogResult.OK)
             {
-                Dialog.Filter = "Dark Souls III - Server Config|*.ds3osconfig|All Files|*.*";
-                Dialog.Title = "Select Server Configuration File";
-
-                if (Dialog.ShowDialog() == DialogResult.OK)
-                {
-                    string JsonContents = File.ReadAllText(Dialog.FileName);
-                    ServerConfig NewServerConfig;
-
-                    if (!ServerConfig.FromJson(JsonContents, out NewServerConfig))
-                    {
-                        MessageBox.Show("Failed to load server configuration, are you sure its in the correct format?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        ServerList.Servers.Add(NewServerConfig);
-                    }
-
-                    BuildServerList();
-                    SaveConfig();
-                    ValidateUI();
-                }
+                return;
             }
         }
 
@@ -408,7 +388,7 @@ namespace Loader
                 bool Exists = false;
                 foreach (ServerConfig ExistingServer in ServerList.Servers)
                 {
-                    if (ExistingServer.Hostname == Server.Hostname)
+                    if (ExistingServer.Id == Server.Id)
                     {
                         ExistingServer.CopyTransientPropsFrom(Server);
                         Exists = true;
@@ -437,7 +417,7 @@ namespace Loader
                         continue;
                     }
 
-                    if (Server1.Hostname == Server2.Hostname)
+                    if (Server1.Id == Server2.Id)
                     {
                         Duplicate = true;
                         break;
@@ -467,7 +447,7 @@ namespace Loader
                 bool Exists = false;
                 foreach (ServerConfig Server in Servers)
                 {
-                    if (ExistingServer.Hostname == Server.Hostname)
+                    if (ExistingServer.Id == Server.Id)
                     {
                         Exists = true;
                         break;
@@ -518,7 +498,7 @@ namespace Loader
                 {
                     Task GetKeyTask = Task.Run(() =>
                     {
-                        Config.PublicKey = MasterServerApi.GetPublicKey(Config.IpAddress, "");
+                        Config.PublicKey = MasterServerApi.GetPublicKey(Config.Id, "");
                     });
 
                     while (!GetKeyTask.IsCompleted)

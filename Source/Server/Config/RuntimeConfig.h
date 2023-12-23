@@ -59,6 +59,9 @@ class RuntimeConfig
 {
 public:
 
+    // Id of the server thats generated on first run.
+    std::string ServerId = "";
+
     // Name used in the server import file.
     std::string ServerName = "Dark Souls 3 Server";
 
@@ -88,6 +91,11 @@ public:
     // as high as possible to avoid saturating the master server.
     float AdvertiseHearbeatTime = 30.0f;
 
+    // If set this server supports being sharded into multiple sub-servers to help users from 
+    // having to run servers themselves. This is generally only expected to be used on
+    // the main ds3os servers.
+    bool SupportSharding = false;
+
     // If set the user will need to enter a password to recieve the keys to enter the 
     // server when its advertised.
     std::string Password = "";
@@ -115,6 +123,9 @@ public:
 
     // Network port the admin web-ui server listens for connections on.
     int WebUIServerPort = 50005;
+
+    // Start of the game server port range when hosting multiple servers.
+    int StartGameServerPortRange = 50060;
 
     // Username to login into web-ui with.
     std::string WebUIServerUsername = "";

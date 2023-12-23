@@ -19,9 +19,12 @@
 
 #include <array>
 
+#include <Rpc.h>
+
 #if defined(_WIN32)
 // Link to the windows socket library.
 #pragma comment(lib, "Ws2_32.lib")
+#pragma comment(lib, "rpcrt4.lib")
 #endif
 
 struct Win32CtrlSignalHandler
@@ -215,4 +218,19 @@ std::unique_ptr<Callstack> CaptureCallstack(size_t FrameOffset, size_t FrameCoun
     }
 
     return std::move(result);
+}
+
+std::string MakeGUID()
+{
+    UUID uuid;
+    UuidCreate(&uuid);
+
+    unsigned char* str;
+    UuidToStringA(&uuid, &str);
+
+    std::string result((char*)str);
+
+    RpcStringFreeA(&str);
+
+    return result;
 }

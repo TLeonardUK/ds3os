@@ -7,7 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-#include "Server/Server.h"
+#include "Server/ServerManager.h"
 #include "Client/Client.h"
 #include "Config/BuildConfig.h"
 #include "Shared/Core/Utils/Logging.h"
@@ -113,14 +113,14 @@ int main(int argc, char* argv[])
     }
     else
     {
-        Server ServerInstance; 
-        if (!ServerInstance.Init())
+        ServerManager ServerManagerInstance;
+        if (!ServerManagerInstance.Init())
         {
             Error("Server failed to initialize.");
             return 1;
         }
-        ServerInstance.RunUntilQuit();
-        if (!ServerInstance.Term())
+        ServerManagerInstance.RunUntilQuit();
+        if (!ServerManagerInstance.Term())
         {
             Error("Server failed to terminate.");
             return 1;

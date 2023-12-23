@@ -20,6 +20,8 @@ SET(SOURCES
     Protobuf/Frpg2RequestMessage.cc
     Protobuf/Protobufs.h
     
+    Server/ServerManager.cpp
+    Server/ServerManager.h
     Server/Server.cpp
     Server/Server.h
     Server/Service.h
@@ -137,6 +139,8 @@ SET(SOURCES
     Server/WebUIService/Handlers/SettingsHandler.h
     Server/WebUIService/Handlers/StatisticsHandler.cpp
     Server/WebUIService/Handlers/StatisticsHandler.h
+    Server/WebUIService/Handlers/ShardingHandler.cpp
+    Server/WebUIService/Handlers/ShardingHandler.h
     Server/WebUIService/Handlers/WebUIHandler.cpp
     Server/WebUIService/Handlers/WebUIHandler.h
 )

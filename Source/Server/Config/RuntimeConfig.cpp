@@ -210,6 +210,7 @@ bool RuntimeConfigMatchingParameters::Serialize(nlohmann::json& Json, bool Loadi
 
 bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
 {
+    SERIALIZE_VAR(ServerId);
     SERIALIZE_VAR(ServerName);
     SERIALIZE_VAR(ServerDescription);
     SERIALIZE_VAR(ServerHostname);
@@ -224,9 +225,12 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(ModsBlacklist);
     SERIALIZE_VAR(ModsRequiredList);
 
+    SERIALIZE_VAR(SupportSharding);
+
     SERIALIZE_VAR(LoginServerPort);
     SERIALIZE_VAR(AuthServerPort);
     SERIALIZE_VAR(GameServerPort);
+    SERIALIZE_VAR(StartGameServerPortRange);
     SERIALIZE_VAR(WebUIServerPort);
     SERIALIZE_VAR(WebUIServerUsername);
     SERIALIZE_VAR(WebUIServerPassword);

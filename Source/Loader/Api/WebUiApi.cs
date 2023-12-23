@@ -18,35 +18,34 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Security.Cryptography;
 
 namespace Loader
 {
-    public static class MasterServerApi
+    public static class WebUiApi
     {
         private static readonly HttpClient Client = new HttpClient();
 
-        private class BaseResponse
+        public class BaseResponse
         {
-            public string Status { get; set; }
-            public string Message { get; set; }
+        }
+        
+        private class CreateServerRequest : BaseResponse
+        {
+            public string serverName { get; set; }
+            public string serverPassword { get; set; }
+            public string machineId { get; set; }
         }
 
-        private class ListServersResponse : BaseResponse
+        public class CreateServerResponse : BaseResponse
         {
-            public List<ServerConfig> Servers { get; set; }
+            public string id { get; set; }
+            public string webUsername { get; set; }
+            public string webPassword { get; set; }
+            public string webUrl { get; set; }
         }
 
-        private class GetPublicKeyRequest : BaseResponse
-        {
-            public string Password { get; set; }
-        }
-
-        private class GetPublicKeyResponse : BaseResponse
-        {
-            public string PublicKey { get; set; }
-        }
-
-        static MasterServerApi()
+        static WebUiApi()
         {
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -81,13 +80,6 @@ namespace Loader
                     return null;
                 }
 
-                ResultType TypedResponse = ResponseTask.Result;
-                if (TypedResponse.Status != "success")
-                {
-                    Debug.WriteLine("Got error when trying to query master server: {0}", TypedResponse.Status);
-                    return null;
-                }
-
                 Result = ResponseTask.Result;
             }
             catch (Exception Ex)
@@ -98,30 +90,22 @@ namespace Loader
             return Result;
         }
 
-        public static List<ServerConfig> ListServers()
+        public static CreateServerResponse CreateServer(string ServerAddress, string ServerName, string ServerPassword)
         {
-            ListServersResponse Result = DoRequest<ListServersResponse>(HttpMethod.Get, ProgramSettings.Default.master_server_url + "/api/v1/servers");
-            if (Result != null && Result.Servers != null)
-            {
-                return Result.Servers;
-            }
-            else
-            {
-                return null;
-            }
-        }
+            // This is kinda jank, we should probably just generate a uuid and save it off the first time the user runs the application.
+            string machineIdEntropy = Environment.MachineName + Environment.UserName + Environment.ProcessorCount + Environment.OSVersion;
 
-        public static string GetPublicKey(string ServerId, string Password)
-        {
-            GetPublicKeyRequest Request = new GetPublicKeyRequest();
-            Request.Password = Password;
+            CreateServerRequest Request = new CreateServerRequest();
+            Request.serverName = ServerName;
+            Request.serverPassword = ServerPassword;
+            Request.machineId = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(machineIdEntropy)));
 
-            GetPublicKeyResponse Result = DoRequest<GetPublicKeyResponse>(HttpMethod.Post, ProgramSettings.Default.master_server_url + "/api/v1/servers/" + ServerId + "/public_key", JsonContent.Create<GetPublicKeyRequest>(Request));
+            CreateServerResponse Result = DoRequest<CreateServerResponse>(HttpMethod.Post, ServerAddress + "/sharding", JsonContent.Create<CreateServerRequest>(Request));
             if (Result != null)
             {
-                return Result.PublicKey;
+                return Result;
             }
-            return "";
+            return null;
         }
     }
 }

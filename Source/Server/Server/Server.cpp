@@ -8,6 +8,7 @@
  */
 
 #include "Server/Server.h"
+#include "Server/ServerManager.h"
 #include "Server/Config/BuildConfig.h"
 #include "Server/Database/ServerDatabase.h"
 #include "Server/Service.h"
@@ -33,32 +34,40 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
-Server::Server()
+Server::Server(const std::string& InServerId, const std::string& InServerName, const std::string& InServerPassword, ServerManager* InManager)
+    : ServerId(InServerId)
+    , Manager(InManager)
+    , DefaultServerName(InServerName)
+    , DefaultServerPassword(InServerPassword)
 {
-    // TODO: Move this stuff into a RuntimeConfig type class.
-    SavedPath = std::filesystem::current_path() / std::filesystem::path("Saved");
-    PrivateKeyPath = SavedPath / std::filesystem::path("private.key");
-    PublicKeyPath = SavedPath / std::filesystem::path("public.key");
-    Ds3osconfigPath = SavedPath / std::filesystem::path("server.ds3osconfig");
+    // The keys are always shared between all servers so we can use the same login/auth servers.
+//    std::filesystem::path BasePath = std::filesystem::current_path() / std::filesystem::path("Saved");
+//    PrivateKeyPath = BasePath / std::filesystem::path("private.key");
+//    PublicKeyPath = BasePath / std::filesystem::path("public.key");
+
+    SavedPath = std::filesystem::current_path() / std::filesystem::path("Saved") / InServerId;
+    if constexpr (BuildConfig::SUPPORT_LEGACY_IMPORT_FILES)
+    {
+        Ds3osconfigPath = SavedPath / std::filesystem::path("server.ds3osconfig");
+    }
     ConfigPath = SavedPath / std::filesystem::path("config.json");
     DatabasePath = SavedPath / std::filesystem::path("database.sqlite");
-
-    // Register for Ctrl+C notifications, its the only way the server shuts down right now.
-    CtrlSignalHandle = PlatformEvents::OnCtrlSignal.Register([=]() {
-        Warning("Quit signal recieved, starting shutdown.");        
-        QuitRecieved = true;
-    });
+    KeepAliveFilePath = SavedPath / std::filesystem::path("last_activity.time");
+    PrivateKeyPath = SavedPath / std::filesystem::path("private.key");
+    PublicKeyPath = SavedPath / std::filesystem::path("public.key");
 
     // Register all services we want to run.
     Services.push_back(std::make_shared<LoginService>(this, &PrimaryKeyPair));
     Services.push_back(std::make_shared<AuthService>(this, &PrimaryKeyPair));
     Services.push_back(std::make_shared<GameService>(this, &PrimaryKeyPair));
-    Services.push_back(std::make_shared<WebUIService>(this));
+    //if (IsDefaultServer())
+    {
+        Services.push_back(std::make_shared<WebUIService>(this));
+    }
 }
 
 Server::~Server()
 {
-    CtrlSignalHandle.reset();
 }
 
 bool Server::Init()
@@ -76,6 +85,8 @@ bool Server::Init()
     }
 
     // Load configuration if it exists.
+    bool IsNewServer = false;
+    
     if (std::filesystem::exists(ConfigPath))
     {
         if (!Config.Load(ConfigPath))
@@ -86,6 +97,15 @@ bool Server::Init()
     }
     else
     {
+        // If not default server then generating some unique webui credentials.
+        if (!IsDefaultServer())
+        {
+            Config.WebUIServerPassword = RandomPassword();
+            Config.WebUIServerUsername = RandomName();
+            Config.ServerName = DefaultServerName;
+            Config.Password = DefaultServerPassword;
+        }
+
         if (!Config.Save(ConfigPath))
         {
             Error("Failed to save configuration file: %s", ConfigPath.string().c_str());
@@ -94,9 +114,29 @@ bool Server::Init()
     }
 
     // Patch old server ip.
+#ifdef _DEBUG
+    Config.MasterServerIp = "127.0.0.1";
+#else
     if (Config.MasterServerIp == "timleonard.uk")
     {
         Config.MasterServerIp = "ds3os-master.timleonard.uk";
+    }
+#endif
+
+    // If not the default server we grab a random free port for the game server.
+    if (!IsDefaultServer())
+    {
+        Config.GameServerPort = Manager->GetFreeGamePort();
+        Config.WebUIServerPort = Manager->GetFreeGamePort();
+        Config.AuthServerPort = Manager->GetFreeGamePort();
+        Config.LoginServerPort = Manager->GetFreeGamePort();
+    }
+
+    // Create a server id if one isn't specified already.
+    if (Config.ServerId.empty())
+    {
+        Config.ServerId = MakeGUID();
+        SaveConfig();
     }
 
     // Generate server encryption keypair if it doesn't already exists.
@@ -168,21 +208,24 @@ bool Server::Init()
     Log("Public ip address: %s", PublicIP.ToString().c_str());
     Log("Private ip address: %s", PrivateIP.ToString().c_str());
 
-    // Write out the server import file with the latest configuration.
-    nlohmann::json Output;
-    Output["Name"]              = Config.ServerName;
-    Output["Description"]       = Config.ServerDescription;
-    Output["Hostname"]          = Config.ServerHostname.length() > 0 ? Config.ServerHostname : PublicIP.ToString();
-    Output["PrivateHostname"]   = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PrivateIP.ToString();
-    Output["PublicKey"]         = PrimaryKeyPair.GetPublicString();
-    Output["ModsWhitelist"]     = Config.ModsWhitelist;
-    Output["ModsBlacklist"]     = Config.ModsBlacklist;
-    Output["ModsRequiredList"]  = Config.ModsRequiredList;
-
-    if (!WriteTextToFile(Ds3osconfigPath, Output.dump(4)))
+    if constexpr (BuildConfig::SUPPORT_LEGACY_IMPORT_FILES)
     {
-        Error("Failed to write ds3osconfig file to: %s", Ds3osconfigPath.string().c_str());
-        return false;
+        // Write out the server import file with the latest configuration.
+        nlohmann::json Output;
+        Output["Name"]              = Config.ServerName;
+        Output["Description"]       = Config.ServerDescription;
+        Output["Hostname"]          = Config.ServerHostname.length() > 0 ? Config.ServerHostname : PublicIP.ToString();
+        Output["PrivateHostname"]   = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PrivateIP.ToString();
+        Output["PublicKey"]         = PrimaryKeyPair.GetPublicString();
+        Output["ModsWhitelist"]     = Config.ModsWhitelist;
+        Output["ModsBlacklist"]     = Config.ModsBlacklist;
+        Output["ModsRequiredList"]  = Config.ModsRequiredList;
+
+        if (!WriteTextToFile(Ds3osconfigPath, Output.dump(4)))
+        {
+            Error("Failed to write ds3osconfig file to: %s", Ds3osconfigPath.string().c_str());
+            return false;
+        }
     }
 
     // Open connection to our database.
@@ -337,6 +380,7 @@ void Server::PollServerAdvertisement()
     else if (GetSeconds() - LastMasterServerUpdate > Config.AdvertiseHearbeatTime)
     {
         nlohmann::json Body;
+        Body["ServerId"] = Config.ServerId;
         Body["Hostname"] = Config.ServerHostname.length() > 0 ? Config.ServerHostname : PublicIP.ToString();
         Body["PrivateHostname"] = Config.ServerPrivateHostname.length() > 0 ? Config.ServerPrivateHostname : PrivateIP.ToString();
         Body["Description"] = Config.ServerDescription;
@@ -348,6 +392,8 @@ void Server::PollServerAdvertisement()
         Body["ModsBlackList"] = Config.ModsBlacklist;
         Body["ModsRequiredList"] = Config.ModsRequiredList;        
         Body["ServerVersion"] = BuildConfig::MASTER_SERVER_CLIENT_VERSION;
+        Body["AllowSharding"] = Config.SupportSharding;
+        Body["WebAddress"] = Config.SupportSharding ? StringFormat("http://%s:%i", ((std::string)Body["Hostname"]).c_str(), Config.WebUIServerPort) : "";
 
         MasterServerUpdateRequest = std::make_shared<NetHttpRequest>();
         MasterServerUpdateRequest->SetMethod(NetHttpMethod::POST);
@@ -361,44 +407,67 @@ void Server::PollServerAdvertisement()
     }
 }
 
-void Server::RunUntilQuit()
+void Server::Poll()
 {
-    Success("Server is now running.");
-
-    // We should really do this event driven ...
-    // This suffices for now.
-    while (!QuitRecieved)
     {
+        DebugTimerScope Scope(Debug::UpdateTime);
+
+        for (auto& Service : Services)
         {
-            DebugTimerScope Scope(Debug::UpdateTime);
-
-            for (auto& Service : Services)
-            {
-                Service->Poll();
-            }
-
-            PollDiscordNotices();
-            PollServerAdvertisement();
+            Service->Poll();
         }
 
-        // Emulate frametime spikes.
-        if constexpr (BuildConfig::EMULATE_SPIKES)
-        {
-            if (GetSeconds() > NextSpikeTime)
-            {
-                double DurationMs = FRandRange(BuildConfig::SPIKE_LENGTH_MIN, BuildConfig::SPIKE_LENGTH_MAX);
-                double IntervalMs = FRandRange(BuildConfig::SPIKE_INTERVAL_MIN, BuildConfig::SPIKE_INTERVAL_MAX);
-
-                Log("Emulating spike of %.2f ms", DurationMs);
-
-                std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<size_t>(DurationMs)));
-
-                NextSpikeTime = GetSeconds() + (IntervalMs / 1000.0);
-            }
-        }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        PollDiscordNotices();
+        PollServerAdvertisement();
     }
+
+    // Emulate frametime spikes.
+    if constexpr (BuildConfig::EMULATE_SPIKES)
+    {
+        if (GetSeconds() > NextSpikeTime)
+        {
+            double DurationMs = FRandRange(BuildConfig::SPIKE_LENGTH_MIN, BuildConfig::SPIKE_LENGTH_MAX);
+            double IntervalMs = FRandRange(BuildConfig::SPIKE_INTERVAL_MIN, BuildConfig::SPIKE_INTERVAL_MAX);
+
+            Log("Emulating spike of %.2f ms", DurationMs);
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<size_t>(DurationMs)));
+
+            NextSpikeTime = GetSeconds() + (IntervalMs / 1000.0);
+        }
+    }
+
+    // Write last activity time periodically to disk to keep this server instance alive.
+    if (GetSeconds() > NextKeepAliveTime)
+    {
+        if (!(int)GetService<GameService>()->GetClients().empty())
+        {
+            const auto TimePoint = std::chrono::system_clock::now();
+            const size_t SecondsSinceEpoch = std::chrono::duration_cast<std::chrono::seconds>(TimePoint.time_since_epoch()).count();
+
+            WriteTextToFile(KeepAliveFilePath, StringFormat("%llu", SecondsSinceEpoch));
+        }
+
+        NextKeepAliveTime = GetSeconds() + 60.0f;
+    }
+}
+
+size_t Server::GetSecondsSinceLastActivity()
+{
+    if (std::filesystem::exists(KeepAliveFilePath))
+    {
+        std::string Output;
+        if (ReadTextFromFile(KeepAliveFilePath, Output))
+        {
+            const auto TimePoint = std::chrono::system_clock::now();
+            const size_t SecondsSinceEpoch = std::chrono::duration_cast<std::chrono::seconds>(TimePoint.time_since_epoch()).count();
+
+            const size_t LastActivity = std::stoull(Output.c_str());
+
+            return (SecondsSinceEpoch - LastActivity);
+        }
+    }
+    return 0;
 }
 
 void Server::SaveConfig()

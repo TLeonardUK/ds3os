@@ -12,6 +12,7 @@
 
 #include <csignal>
 #include <cstdio>
+#include <uuid/uuid.h>
 
 struct LinuxCtrlSignalHandler 
 {
@@ -90,4 +91,13 @@ bool UnloadSymbols()
 std::unique_ptr<Callstack> CaptureCallstack(size_t FrameOffset, size_t FrameCount)
 {
     return {};
+}
+
+std::string MakeGUID()
+{
+    uuid_t uuid;
+    uuid_generate_random(uuid);
+    char result[37];
+    uuid_unparse(uuid, result);
+    return result;
 }

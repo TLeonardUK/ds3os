@@ -37,427 +37,399 @@ namespace Loader
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Name",
-            "Players",
-            "Description"}, 0);
-            this.ImportButton = new System.Windows.Forms.Button();
-            this.serverListImageList = new System.Windows.Forms.ImageList(this.components);
-            this.LaunchButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.ExeLocationTextBox = new System.Windows.Forms.TextBox();
-            this.ExeLocationBrowseButton = new System.Windows.Forms.Button();
-            this.ImportedServerListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            this.BuildInfoLabel = new System.Windows.Forms.Label();
-            this.ContinualUpdateTimer = new System.Windows.Forms.Timer(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.DiscordLink = new System.Windows.Forms.LinkLabel();
-            this.GithubLink = new System.Windows.Forms.LinkLabel();
-            this.RemoveButton = new System.Windows.Forms.Button();
-            this.serverListRefreshTimer = new System.Windows.Forms.Timer(this.components);
-            this.RefreshButton = new System.Windows.Forms.Button();
-            this.minimumPlayersBox = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.hidePasswordedBox = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.privateIpBox = new System.Windows.Forms.Label();
-            this.publicIpBox = new System.Windows.Forms.Label();
-            this.serverIpBox = new System.Windows.Forms.Label();
-            this.filterBox = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.SettingsButton = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.minimumPlayersBox)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // ImportButton
-            // 
-            this.ImportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ImportButton.ImageIndex = 3;
-            this.ImportButton.ImageList = this.serverListImageList;
-            this.ImportButton.Location = new System.Drawing.Point(8, 414);
-            this.ImportButton.Name = "ImportButton";
-            this.ImportButton.Size = new System.Drawing.Size(122, 35);
-            this.ImportButton.TabIndex = 1;
-            this.ImportButton.Text = "Import Server";
-            this.ImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ImportButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.ImportButton.UseVisualStyleBackColor = true;
-            this.ImportButton.Click += new System.EventHandler(this.OnImportServerConfig);
-            // 
-            // serverListImageList
-            // 
-            this.serverListImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.serverListImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("serverListImageList.ImageStream")));
-            this.serverListImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.serverListImageList.Images.SetKeyName(0, "lock.png");
-            this.serverListImageList.Images.SetKeyName(1, "arrow_refresh.png");
-            this.serverListImageList.Images.SetKeyName(2, "cross.png");
-            this.serverListImageList.Images.SetKeyName(3, "add.png");
-            this.serverListImageList.Images.SetKeyName(4, "joystick.png");
-            this.serverListImageList.Images.SetKeyName(5, "magnifier.png");
-            this.serverListImageList.Images.SetKeyName(6, "bullet_star.png");
-            this.serverListImageList.Images.SetKeyName(7, "star.png");
-            this.serverListImageList.Images.SetKeyName(8, "world.png");
-            this.serverListImageList.Images.SetKeyName(9, "folder_magnify.png");
-            this.serverListImageList.Images.SetKeyName(10, "award_star_gold_2.png");
-            this.serverListImageList.Images.SetKeyName(11, "cog.png");
-            // 
-            // LaunchButton
-            // 
-            this.LaunchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.LaunchButton.ImageIndex = 4;
-            this.LaunchButton.ImageList = this.serverListImageList;
-            this.LaunchButton.Location = new System.Drawing.Point(751, 414);
-            this.LaunchButton.Name = "LaunchButton";
-            this.LaunchButton.Size = new System.Drawing.Size(174, 35);
-            this.LaunchButton.TabIndex = 2;
-            this.LaunchButton.Text = "Launch Game";
-            this.LaunchButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LaunchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.LaunchButton.UseVisualStyleBackColor = true;
-            this.LaunchButton.Click += new System.EventHandler(this.OnLaunch);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(8, 118);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(138, 15);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "DarkSoulsIII.exe Location";
-            // 
-            // ExeLocationTextBox
-            // 
-            this.ExeLocationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExeLocationTextBox.Location = new System.Drawing.Point(8, 138);
-            this.ExeLocationTextBox.Name = "ExeLocationTextBox";
-            this.ExeLocationTextBox.ReadOnly = true;
-            this.ExeLocationTextBox.Size = new System.Drawing.Size(868, 23);
-            this.ExeLocationTextBox.TabIndex = 5;
-            // 
-            // ExeLocationBrowseButton
-            // 
-            this.ExeLocationBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExeLocationBrowseButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ExeLocationBrowseButton.ImageIndex = 9;
-            this.ExeLocationBrowseButton.ImageList = this.serverListImageList;
-            this.ExeLocationBrowseButton.Location = new System.Drawing.Point(883, 137);
-            this.ExeLocationBrowseButton.Name = "ExeLocationBrowseButton";
-            this.ExeLocationBrowseButton.Size = new System.Drawing.Size(42, 25);
-            this.ExeLocationBrowseButton.TabIndex = 6;
-            this.ExeLocationBrowseButton.UseVisualStyleBackColor = true;
-            this.ExeLocationBrowseButton.Click += new System.EventHandler(this.OnBrowseForExecutable);
-            // 
-            // ImportedServerListView
-            // 
-            this.ImportedServerListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ImportedServerListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ImportedServerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader4,
-            this.columnHeader2});
-            this.ImportedServerListView.FullRowSelect = true;
-            this.ImportedServerListView.GridLines = true;
-            this.ImportedServerListView.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            this.ImportedServerListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.ImportedServerListView.Location = new System.Drawing.Point(8, 199);
-            this.ImportedServerListView.MultiSelect = false;
-            this.ImportedServerListView.Name = "ImportedServerListView";
-            this.ImportedServerListView.Size = new System.Drawing.Size(917, 209);
-            this.ImportedServerListView.SmallImageList = this.serverListImageList;
-            this.ImportedServerListView.Sorting = System.Windows.Forms.SortOrder.Descending;
-            this.ImportedServerListView.TabIndex = 7;
-            this.ImportedServerListView.UseCompatibleStateImageBehavior = false;
-            this.ImportedServerListView.View = System.Windows.Forms.View.Details;
-            this.ImportedServerListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.OnColumnClicked);
-            this.ImportedServerListView.SelectedIndexChanged += new System.EventHandler(this.OnSelectedServerChanged);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Server Name";
-            this.columnHeader1.Width = 250;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Player Count";
-            this.columnHeader4.Width = 100;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Description";
-            this.columnHeader2.Width = 500;
-            // 
-            // BuildInfoLabel
-            // 
-            this.BuildInfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.BuildInfoLabel.Location = new System.Drawing.Point(152, 115);
-            this.BuildInfoLabel.Name = "BuildInfoLabel";
-            this.BuildInfoLabel.Size = new System.Drawing.Size(724, 20);
-            this.BuildInfoLabel.TabIndex = 8;
-            this.BuildInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // ContinualUpdateTimer
-            // 
-            this.ContinualUpdateTimer.Interval = 5000;
-            this.ContinualUpdateTimer.Tick += new System.EventHandler(this.OnContinualUpdateTimer);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.BackgroundImage = global::Loader.Properties.Resources.banner2;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.DiscordLink);
-            this.panel1.Controls.Add(this.GithubLink);
-            this.panel1.Location = new System.Drawing.Point(-2, -2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(943, 113);
-            this.panel1.TabIndex = 10;
-            // 
-            // DiscordLink
-            // 
-            this.DiscordLink.ActiveLinkColor = System.Drawing.Color.White;
-            this.DiscordLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.DiscordLink.AutoSize = true;
-            this.DiscordLink.BackColor = System.Drawing.Color.Transparent;
-            this.DiscordLink.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DiscordLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.DiscordLink.ForeColor = System.Drawing.Color.White;
-            this.DiscordLink.LinkColor = System.Drawing.Color.White;
-            this.DiscordLink.Location = new System.Drawing.Point(164, 74);
-            this.DiscordLink.Name = "DiscordLink";
-            this.DiscordLink.Size = new System.Drawing.Size(95, 21);
-            this.DiscordLink.TabIndex = 13;
-            this.DiscordLink.TabStop = true;
-            this.DiscordLink.Text = "Join Discord";
-            this.DiscordLink.VisitedLinkColor = System.Drawing.Color.Gray;
-            this.DiscordLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnClickDiscordLink);
-            // 
-            // GithubLink
-            // 
-            this.GithubLink.ActiveLinkColor = System.Drawing.Color.White;
-            this.GithubLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.GithubLink.AutoSize = true;
-            this.GithubLink.BackColor = System.Drawing.Color.Transparent;
-            this.GithubLink.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.GithubLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.GithubLink.ForeColor = System.Drawing.Color.White;
-            this.GithubLink.LinkColor = System.Drawing.Color.White;
-            this.GithubLink.Location = new System.Drawing.Point(65, 74);
-            this.GithubLink.Name = "GithubLink";
-            this.GithubLink.Size = new System.Drawing.Size(93, 21);
-            this.GithubLink.TabIndex = 12;
-            this.GithubLink.TabStop = true;
-            this.GithubLink.Text = "Visit GitHub";
-            this.GithubLink.VisitedLinkColor = System.Drawing.Color.Gray;
-            this.GithubLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnClickGithubLink);
-            // 
-            // RemoveButton
-            // 
-            this.RemoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RemoveButton.ImageIndex = 2;
-            this.RemoveButton.ImageList = this.serverListImageList;
-            this.RemoveButton.Location = new System.Drawing.Point(136, 414);
-            this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(37, 35);
-            this.RemoveButton.TabIndex = 9;
-            this.RemoveButton.UseVisualStyleBackColor = true;
-            this.RemoveButton.Click += new System.EventHandler(this.OnRemoveClicked);
-            // 
-            // serverListRefreshTimer
-            // 
-            this.serverListRefreshTimer.Enabled = true;
-            this.serverListRefreshTimer.Interval = 30000;
-            this.serverListRefreshTimer.Tick += new System.EventHandler(this.OnServerRefreshTimer);
-            // 
-            // RefreshButton
-            // 
-            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RefreshButton.ImageIndex = 1;
-            this.RefreshButton.ImageList = this.serverListImageList;
-            this.RefreshButton.Location = new System.Drawing.Point(180, 414);
-            this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(37, 35);
-            this.RefreshButton.TabIndex = 11;
-            this.RefreshButton.UseVisualStyleBackColor = true;
-            this.RefreshButton.Click += new System.EventHandler(this.OnRefreshClicked);
-            // 
-            // minimumPlayersBox
-            // 
-            this.minimumPlayersBox.Location = new System.Drawing.Point(131, 169);
-            this.minimumPlayersBox.Name = "minimumPlayersBox";
-            this.minimumPlayersBox.Size = new System.Drawing.Size(53, 23);
-            this.minimumPlayersBox.TabIndex = 12;
-            this.minimumPlayersBox.ValueChanged += new System.EventHandler(this.OnFilterPropertyChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(190, 173);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 15);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Minimum Players";
-            // 
-            // hidePasswordedBox
-            // 
-            this.hidePasswordedBox.AutoSize = true;
-            this.hidePasswordedBox.Location = new System.Drawing.Point(8, 172);
-            this.hidePasswordedBox.Name = "hidePasswordedBox";
-            this.hidePasswordedBox.Size = new System.Drawing.Size(117, 19);
-            this.hidePasswordedBox.TabIndex = 14;
-            this.hidePasswordedBox.Text = "Hide Passworded";
-            this.hidePasswordedBox.UseVisualStyleBackColor = true;
-            this.hidePasswordedBox.CheckedChanged += new System.EventHandler(this.OnFilterPropertyChanged);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(259, 424);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 23);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Server IP";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(386, 424);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(102, 15);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "Private IP";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(541, 424);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 15);
-            this.label5.TabIndex = 19;
-            this.label5.Text = "Public IP";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // privateIpBox
-            // 
-            this.privateIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.privateIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.privateIpBox.Location = new System.Drawing.Point(494, 424);
-            this.privateIpBox.Name = "privateIpBox";
-            this.privateIpBox.Size = new System.Drawing.Size(99, 19);
-            this.privateIpBox.TabIndex = 21;
-            this.privateIpBox.Text = "255.255.255.255";
-            // 
-            // publicIpBox
-            // 
-            this.publicIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.publicIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.publicIpBox.Location = new System.Drawing.Point(649, 424);
-            this.publicIpBox.Name = "publicIpBox";
-            this.publicIpBox.Size = new System.Drawing.Size(99, 19);
-            this.publicIpBox.TabIndex = 22;
-            this.publicIpBox.Text = "255.255.255.255";
-            // 
-            // serverIpBox
-            // 
-            this.serverIpBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.serverIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.serverIpBox.Location = new System.Drawing.Point(328, 424);
-            this.serverIpBox.Name = "serverIpBox";
-            this.serverIpBox.Size = new System.Drawing.Size(99, 19);
-            this.serverIpBox.TabIndex = 23;
-            this.serverIpBox.Text = "255.255.255.255";
-            // 
-            // filterBox
-            // 
-            this.filterBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.filterBox.Location = new System.Drawing.Point(549, 168);
-            this.filterBox.Name = "filterBox";
-            this.filterBox.Size = new System.Drawing.Size(376, 23);
-            this.filterBox.TabIndex = 24;
-            this.filterBox.TextChanged += new System.EventHandler(this.OnFilterPropertyChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.BackgroundImage = global::Loader.Properties.Resources.magnifier;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel2.Location = new System.Drawing.Point(520, 168);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(23, 23);
-            this.panel2.TabIndex = 25;
-            // 
-            // SettingsButton
-            // 
-            this.SettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SettingsButton.ImageIndex = 11;
-            this.SettingsButton.ImageList = this.serverListImageList;
-            this.SettingsButton.Location = new System.Drawing.Point(223, 414);
-            this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(37, 35);
-            this.SettingsButton.TabIndex = 26;
-            this.SettingsButton.UseVisualStyleBackColor = true;
-            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
-            // 
-            // MainForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 458);
-            this.Controls.Add(this.SettingsButton);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.filterBox);
-            this.Controls.Add(this.serverIpBox);
-            this.Controls.Add(this.publicIpBox);
-            this.Controls.Add(this.privateIpBox);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.hidePasswordedBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.minimumPlayersBox);
-            this.Controls.Add(this.RefreshButton);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.RemoveButton);
-            this.Controls.Add(this.BuildInfoLabel);
-            this.Controls.Add(this.ImportedServerListView);
-            this.Controls.Add(this.ExeLocationBrowseButton);
-            this.Controls.Add(this.ExeLocationTextBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.LaunchButton);
-            this.Controls.Add(this.ImportButton);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(950, 490);
-            this.Name = "MainForm";
-            this.Text = "Dark Souls III - Open Server Loader";
-            this.Load += new System.EventHandler(this.OnLoaded);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.minimumPlayersBox)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        components = new System.ComponentModel.Container();
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+        System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] { "Name", "Players", "Description" }, 0);
+        ImportButton = new System.Windows.Forms.Button();
+        serverListImageList = new System.Windows.Forms.ImageList(components);
+        LaunchButton = new System.Windows.Forms.Button();
+        label2 = new System.Windows.Forms.Label();
+        ExeLocationTextBox = new System.Windows.Forms.TextBox();
+        ExeLocationBrowseButton = new System.Windows.Forms.Button();
+        ImportedServerListView = new System.Windows.Forms.ListView();
+        columnHeader1 = new System.Windows.Forms.ColumnHeader();
+        columnHeader4 = new System.Windows.Forms.ColumnHeader();
+        columnHeader2 = new System.Windows.Forms.ColumnHeader();
+        BuildInfoLabel = new System.Windows.Forms.Label();
+        ContinualUpdateTimer = new System.Windows.Forms.Timer(components);
+        panel1 = new System.Windows.Forms.Panel();
+        DiscordLink = new System.Windows.Forms.LinkLabel();
+        GithubLink = new System.Windows.Forms.LinkLabel();
+        serverListRefreshTimer = new System.Windows.Forms.Timer(components);
+        RefreshButton = new System.Windows.Forms.Button();
+        minimumPlayersBox = new System.Windows.Forms.NumericUpDown();
+        label1 = new System.Windows.Forms.Label();
+        hidePasswordedBox = new System.Windows.Forms.CheckBox();
+        label3 = new System.Windows.Forms.Label();
+        label4 = new System.Windows.Forms.Label();
+        label5 = new System.Windows.Forms.Label();
+        privateIpBox = new System.Windows.Forms.Label();
+        publicIpBox = new System.Windows.Forms.Label();
+        serverIpBox = new System.Windows.Forms.Label();
+        filterBox = new System.Windows.Forms.TextBox();
+        panel2 = new System.Windows.Forms.Panel();
+        SettingsButton = new System.Windows.Forms.Button();
+        panel1.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)minimumPlayersBox).BeginInit();
+        SuspendLayout();
+        // 
+        // ImportButton
+        // 
+        ImportButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        ImportButton.ImageKey = "add.png";
+        ImportButton.ImageList = serverListImageList;
+        ImportButton.Location = new System.Drawing.Point(8, 414);
+        ImportButton.Name = "ImportButton";
+        ImportButton.Size = new System.Drawing.Size(166, 35);
+        ImportButton.TabIndex = 1;
+        ImportButton.Text = "Create New Server";
+        ImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+        ImportButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+        ImportButton.UseVisualStyleBackColor = true;
+        ImportButton.Click += OnCreateNewServer;
+        // 
+        // serverListImageList
+        // 
+        serverListImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+        serverListImageList.ImageStream = (System.Windows.Forms.ImageListStreamer)resources.GetObject("serverListImageList.ImageStream");
+        serverListImageList.TransparentColor = System.Drawing.Color.Transparent;
+        serverListImageList.Images.SetKeyName(0, "lock.png");
+        serverListImageList.Images.SetKeyName(1, "arrow_refresh.png");
+        serverListImageList.Images.SetKeyName(2, "cross.png");
+        serverListImageList.Images.SetKeyName(3, "add.png");
+        serverListImageList.Images.SetKeyName(4, "joystick.png");
+        serverListImageList.Images.SetKeyName(5, "magnifier.png");
+        serverListImageList.Images.SetKeyName(6, "bullet_star.png");
+        serverListImageList.Images.SetKeyName(7, "star.png");
+        serverListImageList.Images.SetKeyName(8, "world.png");
+        serverListImageList.Images.SetKeyName(9, "folder_magnify.png");
+        serverListImageList.Images.SetKeyName(10, "award_star_gold_2.png");
+        serverListImageList.Images.SetKeyName(11, "cog.png");
+        // 
+        // LaunchButton
+        // 
+        LaunchButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        LaunchButton.ImageIndex = 4;
+        LaunchButton.ImageList = serverListImageList;
+        LaunchButton.Location = new System.Drawing.Point(751, 414);
+        LaunchButton.Name = "LaunchButton";
+        LaunchButton.Size = new System.Drawing.Size(174, 35);
+        LaunchButton.TabIndex = 2;
+        LaunchButton.Text = "Launch Game";
+        LaunchButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+        LaunchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+        LaunchButton.UseVisualStyleBackColor = true;
+        LaunchButton.Click += OnLaunch;
+        // 
+        // label2
+        // 
+        label2.AutoSize = true;
+        label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+        label2.Location = new System.Drawing.Point(8, 118);
+        label2.Name = "label2";
+        label2.Size = new System.Drawing.Size(138, 15);
+        label2.TabIndex = 4;
+        label2.Text = "DarkSoulsIII.exe Location";
+        // 
+        // ExeLocationTextBox
+        // 
+        ExeLocationTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        ExeLocationTextBox.Location = new System.Drawing.Point(8, 138);
+        ExeLocationTextBox.Name = "ExeLocationTextBox";
+        ExeLocationTextBox.ReadOnly = true;
+        ExeLocationTextBox.Size = new System.Drawing.Size(868, 23);
+        ExeLocationTextBox.TabIndex = 5;
+        // 
+        // ExeLocationBrowseButton
+        // 
+        ExeLocationBrowseButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+        ExeLocationBrowseButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+        ExeLocationBrowseButton.ImageIndex = 9;
+        ExeLocationBrowseButton.ImageList = serverListImageList;
+        ExeLocationBrowseButton.Location = new System.Drawing.Point(883, 137);
+        ExeLocationBrowseButton.Name = "ExeLocationBrowseButton";
+        ExeLocationBrowseButton.Size = new System.Drawing.Size(42, 25);
+        ExeLocationBrowseButton.TabIndex = 6;
+        ExeLocationBrowseButton.UseVisualStyleBackColor = true;
+        ExeLocationBrowseButton.Click += OnBrowseForExecutable;
+        // 
+        // ImportedServerListView
+        // 
+        ImportedServerListView.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        ImportedServerListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        ImportedServerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader4, columnHeader2 });
+        ImportedServerListView.FullRowSelect = true;
+        ImportedServerListView.GridLines = true;
+        ImportedServerListView.HideSelection = false;
+        listViewItem1.StateImageIndex = 0;
+        ImportedServerListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] { listViewItem1 });
+        ImportedServerListView.Location = new System.Drawing.Point(8, 199);
+        ImportedServerListView.MultiSelect = false;
+        ImportedServerListView.Name = "ImportedServerListView";
+        ImportedServerListView.Size = new System.Drawing.Size(917, 209);
+        ImportedServerListView.SmallImageList = serverListImageList;
+        ImportedServerListView.Sorting = System.Windows.Forms.SortOrder.Descending;
+        ImportedServerListView.TabIndex = 7;
+        ImportedServerListView.UseCompatibleStateImageBehavior = false;
+        ImportedServerListView.View = System.Windows.Forms.View.Details;
+        ImportedServerListView.ColumnClick += OnColumnClicked;
+        ImportedServerListView.SelectedIndexChanged += OnSelectedServerChanged;
+        // 
+        // columnHeader1
+        // 
+        columnHeader1.Text = "Server Name";
+        columnHeader1.Width = 250;
+        // 
+        // columnHeader4
+        // 
+        columnHeader4.Text = "Player Count";
+        columnHeader4.Width = 100;
+        // 
+        // columnHeader2
+        // 
+        columnHeader2.Text = "Description";
+        columnHeader2.Width = 500;
+        // 
+        // BuildInfoLabel
+        // 
+        BuildInfoLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        BuildInfoLabel.Location = new System.Drawing.Point(152, 115);
+        BuildInfoLabel.Name = "BuildInfoLabel";
+        BuildInfoLabel.Size = new System.Drawing.Size(724, 20);
+        BuildInfoLabel.TabIndex = 8;
+        BuildInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+        // 
+        // ContinualUpdateTimer
+        // 
+        ContinualUpdateTimer.Interval = 5000;
+        ContinualUpdateTimer.Tick += OnContinualUpdateTimer;
+        // 
+        // panel1
+        // 
+        panel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        panel1.BackColor = System.Drawing.Color.Black;
+        panel1.BackgroundImage = Properties.Resources.banner2;
+        panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+        panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+        panel1.Controls.Add(DiscordLink);
+        panel1.Controls.Add(GithubLink);
+        panel1.Location = new System.Drawing.Point(-2, -2);
+        panel1.Margin = new System.Windows.Forms.Padding(0);
+        panel1.Name = "panel1";
+        panel1.Padding = new System.Windows.Forms.Padding(5);
+        panel1.Size = new System.Drawing.Size(943, 113);
+        panel1.TabIndex = 10;
+        // 
+        // DiscordLink
+        // 
+        DiscordLink.ActiveLinkColor = System.Drawing.Color.White;
+        DiscordLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+        DiscordLink.AutoSize = true;
+        DiscordLink.BackColor = System.Drawing.Color.Transparent;
+        DiscordLink.Cursor = System.Windows.Forms.Cursors.Hand;
+        DiscordLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        DiscordLink.ForeColor = System.Drawing.Color.White;
+        DiscordLink.LinkColor = System.Drawing.Color.White;
+        DiscordLink.Location = new System.Drawing.Point(164, 74);
+        DiscordLink.Name = "DiscordLink";
+        DiscordLink.Size = new System.Drawing.Size(95, 21);
+        DiscordLink.TabIndex = 13;
+        DiscordLink.TabStop = true;
+        DiscordLink.Text = "Join Discord";
+        DiscordLink.VisitedLinkColor = System.Drawing.Color.Gray;
+        DiscordLink.LinkClicked += OnClickDiscordLink;
+        // 
+        // GithubLink
+        // 
+        GithubLink.ActiveLinkColor = System.Drawing.Color.White;
+        GithubLink.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+        GithubLink.AutoSize = true;
+        GithubLink.BackColor = System.Drawing.Color.Transparent;
+        GithubLink.Cursor = System.Windows.Forms.Cursors.Hand;
+        GithubLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        GithubLink.ForeColor = System.Drawing.Color.White;
+        GithubLink.LinkColor = System.Drawing.Color.White;
+        GithubLink.Location = new System.Drawing.Point(65, 74);
+        GithubLink.Name = "GithubLink";
+        GithubLink.Size = new System.Drawing.Size(93, 21);
+        GithubLink.TabIndex = 12;
+        GithubLink.TabStop = true;
+        GithubLink.Text = "Visit GitHub";
+        GithubLink.VisitedLinkColor = System.Drawing.Color.Gray;
+        GithubLink.LinkClicked += OnClickGithubLink;
+        // 
+        // serverListRefreshTimer
+        // 
+        serverListRefreshTimer.Enabled = true;
+        serverListRefreshTimer.Interval = 30000;
+        serverListRefreshTimer.Tick += OnServerRefreshTimer;
+        // 
+        // RefreshButton
+        // 
+        RefreshButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        RefreshButton.ImageIndex = 1;
+        RefreshButton.ImageList = serverListImageList;
+        RefreshButton.Location = new System.Drawing.Point(180, 414);
+        RefreshButton.Name = "RefreshButton";
+        RefreshButton.Size = new System.Drawing.Size(37, 35);
+        RefreshButton.TabIndex = 11;
+        RefreshButton.UseVisualStyleBackColor = true;
+        RefreshButton.Click += OnRefreshClicked;
+        // 
+        // minimumPlayersBox
+        // 
+        minimumPlayersBox.Location = new System.Drawing.Point(131, 169);
+        minimumPlayersBox.Name = "minimumPlayersBox";
+        minimumPlayersBox.Size = new System.Drawing.Size(53, 23);
+        minimumPlayersBox.TabIndex = 12;
+        minimumPlayersBox.ValueChanged += OnFilterPropertyChanged;
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new System.Drawing.Point(190, 173);
+        label1.Name = "label1";
+        label1.Size = new System.Drawing.Size(100, 15);
+        label1.TabIndex = 13;
+        label1.Text = "Minimum Players";
+        // 
+        // hidePasswordedBox
+        // 
+        hidePasswordedBox.AutoSize = true;
+        hidePasswordedBox.Location = new System.Drawing.Point(8, 172);
+        hidePasswordedBox.Name = "hidePasswordedBox";
+        hidePasswordedBox.Size = new System.Drawing.Size(117, 19);
+        hidePasswordedBox.TabIndex = 14;
+        hidePasswordedBox.Text = "Hide Passworded";
+        hidePasswordedBox.UseVisualStyleBackColor = true;
+        hidePasswordedBox.CheckedChanged += OnFilterPropertyChanged;
+        // 
+        // label3
+        // 
+        label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        label3.Location = new System.Drawing.Point(259, 424);
+        label3.Name = "label3";
+        label3.Size = new System.Drawing.Size(61, 23);
+        label3.TabIndex = 15;
+        label3.Text = "Server IP";
+        label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+        // 
+        // label4
+        // 
+        label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        label4.Location = new System.Drawing.Point(386, 424);
+        label4.Name = "label4";
+        label4.Size = new System.Drawing.Size(102, 15);
+        label4.TabIndex = 17;
+        label4.Text = "Private IP";
+        label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+        // 
+        // label5
+        // 
+        label5.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        label5.Location = new System.Drawing.Point(541, 424);
+        label5.Name = "label5";
+        label5.Size = new System.Drawing.Size(102, 15);
+        label5.TabIndex = 19;
+        label5.Text = "Public IP";
+        label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+        // 
+        // privateIpBox
+        // 
+        privateIpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        privateIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+        privateIpBox.Location = new System.Drawing.Point(494, 424);
+        privateIpBox.Name = "privateIpBox";
+        privateIpBox.Size = new System.Drawing.Size(99, 19);
+        privateIpBox.TabIndex = 21;
+        privateIpBox.Text = "255.255.255.255";
+        // 
+        // publicIpBox
+        // 
+        publicIpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        publicIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+        publicIpBox.Location = new System.Drawing.Point(649, 424);
+        publicIpBox.Name = "publicIpBox";
+        publicIpBox.Size = new System.Drawing.Size(99, 19);
+        publicIpBox.TabIndex = 22;
+        publicIpBox.Text = "255.255.255.255";
+        // 
+        // serverIpBox
+        // 
+        serverIpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        serverIpBox.ForeColor = System.Drawing.SystemColors.ControlDark;
+        serverIpBox.Location = new System.Drawing.Point(328, 424);
+        serverIpBox.Name = "serverIpBox";
+        serverIpBox.Size = new System.Drawing.Size(99, 19);
+        serverIpBox.TabIndex = 23;
+        serverIpBox.Text = "255.255.255.255";
+        // 
+        // filterBox
+        // 
+        filterBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        filterBox.Location = new System.Drawing.Point(549, 168);
+        filterBox.Name = "filterBox";
+        filterBox.Size = new System.Drawing.Size(376, 23);
+        filterBox.TabIndex = 24;
+        filterBox.TextChanged += OnFilterPropertyChanged;
+        // 
+        // panel2
+        // 
+        panel2.BackgroundImage = Properties.Resources.magnifier;
+        panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+        panel2.Location = new System.Drawing.Point(520, 168);
+        panel2.Name = "panel2";
+        panel2.Size = new System.Drawing.Size(23, 23);
+        panel2.TabIndex = 25;
+        // 
+        // SettingsButton
+        // 
+        SettingsButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        SettingsButton.ImageIndex = 11;
+        SettingsButton.ImageList = serverListImageList;
+        SettingsButton.Location = new System.Drawing.Point(223, 414);
+        SettingsButton.Name = "SettingsButton";
+        SettingsButton.Size = new System.Drawing.Size(37, 35);
+        SettingsButton.TabIndex = 26;
+        SettingsButton.UseVisualStyleBackColor = true;
+        SettingsButton.Click += SettingsButton_Click;
+        // 
+        // MainForm
+        // 
+        AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        ClientSize = new System.Drawing.Size(934, 458);
+        Controls.Add(SettingsButton);
+        Controls.Add(panel2);
+        Controls.Add(filterBox);
+        Controls.Add(serverIpBox);
+        Controls.Add(publicIpBox);
+        Controls.Add(privateIpBox);
+        Controls.Add(label5);
+        Controls.Add(label4);
+        Controls.Add(label3);
+        Controls.Add(hidePasswordedBox);
+        Controls.Add(label1);
+        Controls.Add(minimumPlayersBox);
+        Controls.Add(RefreshButton);
+        Controls.Add(panel1);
+        Controls.Add(BuildInfoLabel);
+        Controls.Add(ImportedServerListView);
+        Controls.Add(ExeLocationBrowseButton);
+        Controls.Add(ExeLocationTextBox);
+        Controls.Add(label2);
+        Controls.Add(LaunchButton);
+        Controls.Add(ImportButton);
+        Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+        MinimumSize = new System.Drawing.Size(950, 490);
+        Name = "MainForm";
+        Text = "Dark Souls III - Open Server Loader";
+        Load += OnLoaded;
+        panel1.ResumeLayout(false);
+        panel1.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)minimumPlayersBox).EndInit();
+        ResumeLayout(false);
+        PerformLayout();
         }
 
         #endregion
@@ -473,7 +445,6 @@ namespace Loader
         private System.Windows.Forms.Timer ContinualUpdateTimer;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.Timer serverListRefreshTimer;
         private System.Windows.Forms.ImageList serverListImageList;
         private System.Windows.Forms.Button RefreshButton;
