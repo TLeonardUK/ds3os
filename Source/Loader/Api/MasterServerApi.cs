@@ -103,6 +103,13 @@ namespace Loader
             ListServersResponse Result = DoRequest<ListServersResponse>(HttpMethod.Get, ProgramSettings.Default.master_server_url + "/api/v1/servers");
             if (Result != null && Result.Servers != null)
             {
+                foreach (ServerConfig config in Result.Servers)
+                {
+                    if (string.IsNullOrEmpty(config.Id))
+                    {
+                        config.Id = config.IpAddress;
+                    }
+                }
                 return Result.Servers;
             }
             else
