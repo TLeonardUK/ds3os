@@ -11,7 +11,7 @@
 
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
-package FpdLogMessage;
+package DS2_FpdLogMessage;
 
 message Vector {
     required float x = 1;

@@ -98,6 +98,11 @@ std::string TrimString(const std::string& input)
 
 std::string NarrowString(const std::wstring& input)
 {
+    if (input.empty())
+    {
+        return "";
+    }
+
     std::string result;
 
     int result_length = WideCharToMultiByte(CP_UTF8, 0, input.data(), static_cast<int>(input.length()), nullptr, 0, nullptr, nullptr);
@@ -115,6 +120,11 @@ std::string NarrowString(const std::wstring& input)
 
 std::wstring WidenString(const std::string& input)
 {
+    if (input.empty())
+    {
+        return L"";
+    }
+
     std::wstring result;
     result.resize(input.size());
 

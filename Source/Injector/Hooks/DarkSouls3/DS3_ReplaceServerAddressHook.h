@@ -15,7 +15,7 @@
 // its found. Adding it to the STL adds some constant overhead but should be reliable
 // for all game versions as its non-obfuscated and unlikely to ever be obfuscated due to 
 // performance concerns.
-class ReplaceServerAddressHook : public Hook
+class DS3_ReplaceServerAddressHook : public Hook
 {
 public:
     virtual bool Install(Injector& injector) override;

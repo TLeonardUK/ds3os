@@ -19,9 +19,10 @@
 #include "Shared/Core/Utils/WinApi.h"
 #include "Shared/Core/Utils/Strings.h"
 
-#include "Injector/Hooks/ReplaceServerAddressHook.h"
-#include "Injector/Hooks/ReplaceServerPortHook.h"
-#include "Injector/Hooks/ChangeSaveGameFilenameHook.h"
+#include "Injector/Hooks//DarkSouls3/DS3_ReplaceServerAddressHook.h"
+#include "Injector/Hooks//DarkSouls2/DS2_ReplaceServerAddressHook.h"
+#include "Injector/Hooks/Shared/ReplaceServerPortHook.h"
+#include "Injector/Hooks/Shared/ChangeSaveGameFilenameHook.h"
 
 #include <thread>
 #include <chrono>
@@ -90,12 +91,31 @@ bool Injector::Init()
         return false;
     }
 
+    if (!ParseGameType(Config.ServerGameType.c_str(), CurrentGameType))
+    {
+        Error("Unknown game type in configuration file: %s", Config.ServerGameType.c_str());
+        return false;
+    }
+
     Log("Server Name: %s", Config.ServerName.c_str());
     Log("Server Hostname: %s", Config.ServerHostname.c_str());
     Log("Server Port: %i", Config.ServerPort);
-    Log("");
+    Log("Server Game Type: %s", Config.ServerGameType.c_str());
 
-    ModuleRegion = GetModuleBaseRegion("DarkSoulsIII.exe");
+    switch (CurrentGameType)
+    {
+        case GameType::DarkSouls3:
+        {
+            ModuleRegion = GetModuleBaseRegion("DarkSoulsIII.exe");
+            break;
+        }
+        case GameType::DarkSouls2:
+        {
+            ModuleRegion = GetModuleBaseRegion("DarkSoulsII.exe");
+            break;
+        }
+    }
+
     Log("Base Address: 0x%p",ModuleRegion.first);
     Log("Base Size: 0x%08x", ModuleRegion.second);
     Log("");
@@ -107,7 +127,20 @@ bool Injector::Init()
     }
 
     // Add hooks we need to use based on configuration.
-    Hooks.push_back(std::make_unique<ReplaceServerAddressHook>());
+    switch (CurrentGameType)
+    {
+        case GameType::DarkSouls3:
+        {
+            Hooks.push_back(std::make_unique<DS3_ReplaceServerAddressHook>());
+            break;
+        }
+        case GameType::DarkSouls2:
+        {
+            Hooks.push_back(std::make_unique<DS2_ReplaceServerAddressHook>());
+            break;
+        }
+    }
+
     Hooks.push_back(std::make_unique<ReplaceServerPortHook>());
     if (Config.EnableSeperateSaveFiles)
     {

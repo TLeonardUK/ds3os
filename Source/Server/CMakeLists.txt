@@ -15,9 +15,18 @@ SET(SOURCES
     Config/RuntimeConfig.h
     Config/RuntimeConfig.cpp
 
-    Protobuf/FpdLogMessage.cc
-    Protobuf/Frpg2PlayerData.cc
-    Protobuf/Frpg2RequestMessage.cc
+    Protobuf/DarkSouls2/DS2_FpdLogMessage.pb.cc
+    Protobuf/DarkSouls2/DS2_Frpg2PlayerData.pb.cc
+    Protobuf/DarkSouls2/DS2_Frpg2RequestMessage.pb.cc
+
+    Protobuf/DarkSouls3/DS3_FpdLogMessage.pb.cc
+    Protobuf/DarkSouls3/DS3_Frpg2PlayerData.pb.cc
+    Protobuf/DarkSouls3/DS3_Frpg2RequestMessage.pb.cc
+    
+    Protobuf/Shared/Shared_FpdLogMessage.pb.cc
+    Protobuf/Shared/Shared_Frpg2PlayerData.pb.cc
+    Protobuf/Shared/Shared_Frpg2RequestMessage.pb.cc
+    
     Protobuf/Protobufs.h
     
     Server/ServerManager.cpp

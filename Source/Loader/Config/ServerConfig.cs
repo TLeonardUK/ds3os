@@ -67,6 +67,9 @@ namespace Loader
 
         public bool AllowSharding           { get; set; }
         public string WebAddress            { get; set; }
+        
+        public bool IsShard                 { get; set; }
+        public string GameType              { get; set; }
 
         public void CopyTransientPropsFrom(ServerConfig Source)
         {
@@ -82,6 +85,8 @@ namespace Loader
             ModsRequiredList = Source.ModsRequiredList;
             AllowSharding = Source.AllowSharding;
             WebAddress = Source.WebAddress;
+            IsShard = Source.IsShard;
+            GameType = Source.GameType;
         }
 
         public string ToJson()

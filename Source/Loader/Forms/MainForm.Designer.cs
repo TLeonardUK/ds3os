@@ -43,7 +43,7 @@ namespace Loader
         ImportButton = new System.Windows.Forms.Button();
         serverListImageList = new System.Windows.Forms.ImageList(components);
         LaunchButton = new System.Windows.Forms.Button();
-        label2 = new System.Windows.Forms.Label();
+        ExePathLabel = new System.Windows.Forms.Label();
         ExeLocationTextBox = new System.Windows.Forms.TextBox();
         ExeLocationBrowseButton = new System.Windows.Forms.Button();
         ImportedServerListView = new System.Windows.Forms.ListView();
@@ -69,8 +69,13 @@ namespace Loader
         filterBox = new System.Windows.Forms.TextBox();
         panel2 = new System.Windows.Forms.Panel();
         SettingsButton = new System.Windows.Forms.Button();
+        gameTabControl = new System.Windows.Forms.TabControl();
+        tabPage1 = new System.Windows.Forms.TabPage();
+        tabPage2 = new System.Windows.Forms.TabPage();
+        panel3 = new System.Windows.Forms.Panel();
         panel1.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)minimumPlayersBox).BeginInit();
+        gameTabControl.SuspendLayout();
         SuspendLayout();
         // 
         // ImportButton
@@ -121,20 +126,20 @@ namespace Loader
         LaunchButton.UseVisualStyleBackColor = true;
         LaunchButton.Click += OnLaunch;
         // 
-        // label2
+        // ExePathLabel
         // 
-        label2.AutoSize = true;
-        label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-        label2.Location = new System.Drawing.Point(8, 118);
-        label2.Name = "label2";
-        label2.Size = new System.Drawing.Size(138, 15);
-        label2.TabIndex = 4;
-        label2.Text = "DarkSoulsIII.exe Location";
+        ExePathLabel.AutoSize = true;
+        ExePathLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+        ExePathLabel.Location = new System.Drawing.Point(8, 152);
+        ExePathLabel.Name = "ExePathLabel";
+        ExePathLabel.Size = new System.Drawing.Size(138, 15);
+        ExePathLabel.TabIndex = 4;
+        ExePathLabel.Text = "DarkSoulsIII.exe Location";
         // 
         // ExeLocationTextBox
         // 
         ExeLocationTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-        ExeLocationTextBox.Location = new System.Drawing.Point(8, 138);
+        ExeLocationTextBox.Location = new System.Drawing.Point(8, 172);
         ExeLocationTextBox.Name = "ExeLocationTextBox";
         ExeLocationTextBox.ReadOnly = true;
         ExeLocationTextBox.Size = new System.Drawing.Size(868, 23);
@@ -146,7 +151,7 @@ namespace Loader
         ExeLocationBrowseButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
         ExeLocationBrowseButton.ImageIndex = 9;
         ExeLocationBrowseButton.ImageList = serverListImageList;
-        ExeLocationBrowseButton.Location = new System.Drawing.Point(883, 137);
+        ExeLocationBrowseButton.Location = new System.Drawing.Point(883, 171);
         ExeLocationBrowseButton.Name = "ExeLocationBrowseButton";
         ExeLocationBrowseButton.Size = new System.Drawing.Size(42, 25);
         ExeLocationBrowseButton.TabIndex = 6;
@@ -163,10 +168,10 @@ namespace Loader
         ImportedServerListView.HideSelection = false;
         listViewItem1.StateImageIndex = 0;
         ImportedServerListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] { listViewItem1 });
-        ImportedServerListView.Location = new System.Drawing.Point(8, 199);
+        ImportedServerListView.Location = new System.Drawing.Point(8, 232);
         ImportedServerListView.MultiSelect = false;
         ImportedServerListView.Name = "ImportedServerListView";
-        ImportedServerListView.Size = new System.Drawing.Size(917, 209);
+        ImportedServerListView.Size = new System.Drawing.Size(917, 176);
         ImportedServerListView.SmallImageList = serverListImageList;
         ImportedServerListView.Sorting = System.Windows.Forms.SortOrder.Descending;
         ImportedServerListView.TabIndex = 7;
@@ -193,7 +198,7 @@ namespace Loader
         // BuildInfoLabel
         // 
         BuildInfoLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-        BuildInfoLabel.Location = new System.Drawing.Point(152, 115);
+        BuildInfoLabel.Location = new System.Drawing.Point(152, 149);
         BuildInfoLabel.Name = "BuildInfoLabel";
         BuildInfoLabel.Size = new System.Drawing.Size(724, 20);
         BuildInfoLabel.TabIndex = 8;
@@ -208,7 +213,7 @@ namespace Loader
         // 
         panel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
         panel1.BackColor = System.Drawing.Color.Black;
-        panel1.BackgroundImage = Properties.Resources.banner2;
+        panel1.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel1.BackgroundImage");
         panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
         panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
         panel1.Controls.Add(DiscordLink);
@@ -230,7 +235,7 @@ namespace Loader
         DiscordLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
         DiscordLink.ForeColor = System.Drawing.Color.White;
         DiscordLink.LinkColor = System.Drawing.Color.White;
-        DiscordLink.Location = new System.Drawing.Point(164, 74);
+        DiscordLink.Location = new System.Drawing.Point(216, 76);
         DiscordLink.Name = "DiscordLink";
         DiscordLink.Size = new System.Drawing.Size(95, 21);
         DiscordLink.TabIndex = 13;
@@ -249,7 +254,7 @@ namespace Loader
         GithubLink.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
         GithubLink.ForeColor = System.Drawing.Color.White;
         GithubLink.LinkColor = System.Drawing.Color.White;
-        GithubLink.Location = new System.Drawing.Point(65, 74);
+        GithubLink.Location = new System.Drawing.Point(117, 76);
         GithubLink.Name = "GithubLink";
         GithubLink.Size = new System.Drawing.Size(93, 21);
         GithubLink.TabIndex = 12;
@@ -278,7 +283,7 @@ namespace Loader
         // 
         // minimumPlayersBox
         // 
-        minimumPlayersBox.Location = new System.Drawing.Point(131, 169);
+        minimumPlayersBox.Location = new System.Drawing.Point(131, 203);
         minimumPlayersBox.Name = "minimumPlayersBox";
         minimumPlayersBox.Size = new System.Drawing.Size(53, 23);
         minimumPlayersBox.TabIndex = 12;
@@ -287,7 +292,7 @@ namespace Loader
         // label1
         // 
         label1.AutoSize = true;
-        label1.Location = new System.Drawing.Point(190, 173);
+        label1.Location = new System.Drawing.Point(190, 207);
         label1.Name = "label1";
         label1.Size = new System.Drawing.Size(100, 15);
         label1.TabIndex = 13;
@@ -296,7 +301,7 @@ namespace Loader
         // hidePasswordedBox
         // 
         hidePasswordedBox.AutoSize = true;
-        hidePasswordedBox.Location = new System.Drawing.Point(8, 172);
+        hidePasswordedBox.Location = new System.Drawing.Point(8, 206);
         hidePasswordedBox.Name = "hidePasswordedBox";
         hidePasswordedBox.Size = new System.Drawing.Size(117, 19);
         hidePasswordedBox.TabIndex = 14;
@@ -367,7 +372,7 @@ namespace Loader
         // filterBox
         // 
         filterBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-        filterBox.Location = new System.Drawing.Point(549, 168);
+        filterBox.Location = new System.Drawing.Point(549, 202);
         filterBox.Name = "filterBox";
         filterBox.Size = new System.Drawing.Size(376, 23);
         filterBox.TabIndex = 24;
@@ -377,7 +382,7 @@ namespace Loader
         // 
         panel2.BackgroundImage = Properties.Resources.magnifier;
         panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-        panel2.Location = new System.Drawing.Point(520, 168);
+        panel2.Location = new System.Drawing.Point(520, 202);
         panel2.Name = "panel2";
         panel2.Size = new System.Drawing.Size(23, 23);
         panel2.TabIndex = 25;
@@ -394,11 +399,54 @@ namespace Loader
         SettingsButton.UseVisualStyleBackColor = true;
         SettingsButton.Click += SettingsButton_Click;
         // 
+        // gameTabControl
+        // 
+        gameTabControl.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        gameTabControl.Controls.Add(tabPage1);
+        gameTabControl.Controls.Add(tabPage2);
+        gameTabControl.Location = new System.Drawing.Point(8, 117);
+        gameTabControl.Name = "gameTabControl";
+        gameTabControl.SelectedIndex = 0;
+        gameTabControl.Size = new System.Drawing.Size(917, 21);
+        gameTabControl.TabIndex = 27;
+        gameTabControl.SelectedIndexChanged += GameTabControl_SelectedIndexChanged;
+        // 
+        // tabPage1
+        // 
+        tabPage1.Location = new System.Drawing.Point(4, 24);
+        tabPage1.Name = "tabPage1";
+        tabPage1.Padding = new System.Windows.Forms.Padding(3);
+        tabPage1.Size = new System.Drawing.Size(909, 0);
+        tabPage1.TabIndex = 0;
+        tabPage1.Text = "Dark Souls II";
+        tabPage1.UseVisualStyleBackColor = true;
+        // 
+        // tabPage2
+        // 
+        tabPage2.Location = new System.Drawing.Point(4, 24);
+        tabPage2.Name = "tabPage2";
+        tabPage2.Padding = new System.Windows.Forms.Padding(3);
+        tabPage2.Size = new System.Drawing.Size(909, 0);
+        tabPage2.TabIndex = 1;
+        tabPage2.Text = "Dark Souls III";
+        tabPage2.UseVisualStyleBackColor = true;
+        // 
+        // panel3
+        // 
+        panel3.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        panel3.BackColor = System.Drawing.SystemColors.ControlDark;
+        panel3.Location = new System.Drawing.Point(8, 141);
+        panel3.Name = "panel3";
+        panel3.Size = new System.Drawing.Size(917, 1);
+        panel3.TabIndex = 28;
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(934, 458);
+        Controls.Add(panel3);
+        Controls.Add(gameTabControl);
         Controls.Add(SettingsButton);
         Controls.Add(panel2);
         Controls.Add(filterBox);
@@ -417,17 +465,18 @@ namespace Loader
         Controls.Add(ImportedServerListView);
         Controls.Add(ExeLocationBrowseButton);
         Controls.Add(ExeLocationTextBox);
-        Controls.Add(label2);
+        Controls.Add(ExePathLabel);
         Controls.Add(LaunchButton);
         Controls.Add(ImportButton);
         Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
         MinimumSize = new System.Drawing.Size(950, 490);
         Name = "MainForm";
-        Text = "Dark Souls III - Open Server Loader";
+        Text = "Dark Souls - Open Server Loader";
         Load += OnLoaded;
         panel1.ResumeLayout(false);
         panel1.PerformLayout();
         ((System.ComponentModel.ISupportInitialize)minimumPlayersBox).EndInit();
+        gameTabControl.ResumeLayout(false);
         ResumeLayout(false);
         PerformLayout();
         }
@@ -435,7 +484,7 @@ namespace Loader
         #endregion
         private System.Windows.Forms.Button ImportButton;
         private System.Windows.Forms.Button LaunchButton;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label ExePathLabel;
         private System.Windows.Forms.TextBox ExeLocationTextBox;
         private System.Windows.Forms.Button ExeLocationBrowseButton;
         private System.Windows.Forms.ListView ImportedServerListView;
@@ -462,6 +511,10 @@ namespace Loader
         private System.Windows.Forms.TextBox filterBox;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button SettingsButton;
+        private System.Windows.Forms.TabControl gameTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Panel panel3;
     }
 }
 

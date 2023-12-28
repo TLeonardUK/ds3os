@@ -80,25 +80,25 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyProtoBufLog(GameClient* 
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestNotifyProtoBufLog* Request = (Frpg2RequestMessage::RequestNotifyProtoBufLog*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request = (DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog*)Message.Protobuf.get();
 
     switch (Request->type())
     {
-        case Frpg2RequestMessage::LogType::UseMagicLog:         Handle_UseMagicLog(Client, Request);            break;
-        case Frpg2RequestMessage::LogType::ActGestureLog:       Handle_ActGestureLog(Client, Request);          break;
-        case Frpg2RequestMessage::LogType::UseItemLog:          Handle_UseItemLog(Client, Request);             break;
-        case Frpg2RequestMessage::LogType::PurchaseItemLog:     Handle_PurchaseItemLog(Client, Request);        break;
-        case Frpg2RequestMessage::LogType::GetItemLog:          Handle_GetItemLog(Client, Request);             break;
-        case Frpg2RequestMessage::LogType::DropItemLog:         Handle_DropItemLog(Client, Request);            break;
-        case Frpg2RequestMessage::LogType::LeaveItemLog:        Handle_LeaveItemLog(Client, Request);           break;
-        case Frpg2RequestMessage::LogType::SaleItemLog:         Handle_SaleItemLog(Client, Request);            break;
-        case Frpg2RequestMessage::LogType::StrengthenWeaponLog: Handle_StrengthenWeaponLog(Client, Request);    break;
-        case Frpg2RequestMessage::LogType::VisitResultLog:      Handle_VisitResultLog(Client, Request);         break;
+        case DS3_Frpg2RequestMessage::LogType::UseMagicLog:         Handle_UseMagicLog(Client, Request);            break;
+        case DS3_Frpg2RequestMessage::LogType::ActGestureLog:       Handle_ActGestureLog(Client, Request);          break;
+        case DS3_Frpg2RequestMessage::LogType::UseItemLog:          Handle_UseItemLog(Client, Request);             break;
+        case DS3_Frpg2RequestMessage::LogType::PurchaseItemLog:     Handle_PurchaseItemLog(Client, Request);        break;
+        case DS3_Frpg2RequestMessage::LogType::GetItemLog:          Handle_GetItemLog(Client, Request);             break;
+        case DS3_Frpg2RequestMessage::LogType::DropItemLog:         Handle_DropItemLog(Client, Request);            break;
+        case DS3_Frpg2RequestMessage::LogType::LeaveItemLog:        Handle_LeaveItemLog(Client, Request);           break;
+        case DS3_Frpg2RequestMessage::LogType::SaleItemLog:         Handle_SaleItemLog(Client, Request);            break;
+        case DS3_Frpg2RequestMessage::LogType::StrengthenWeaponLog: Handle_StrengthenWeaponLog(Client, Request);    break;
+        case DS3_Frpg2RequestMessage::LogType::VisitResultLog:      Handle_VisitResultLog(Client, Request);         break;
 
         // There are other log types, but none we particularly care about handling, so just ignore them.
     }
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -108,12 +108,12 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyProtoBufLog(GameClient* 
     return MessageHandleResult::Handled;
 }
 
-void LoggingManager::Handle_UseMagicLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_UseMagicLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::UseMagicLog Log;
+    DS3_FpdLogMessage::UseMagicLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse UseMagicLog.");
@@ -123,7 +123,7 @@ void LoggingManager::Handle_UseMagicLog(GameClient* Client, Frpg2RequestMessage:
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.use_magic_info_list_size(); i++)
     {
-        const FpdLogMessage::UseMagicLog_Use_magic_info_list& Item = Log.use_magic_info_list(i);
+        const DS3_FpdLogMessage::UseMagicLog_Use_magic_info_list& Item = Log.use_magic_info_list(i);
 
         std::string StatisticKey = StringFormat("Magic/TotalUsed/Id=%u", Item.spell_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -137,12 +137,12 @@ void LoggingManager::Handle_UseMagicLog(GameClient* Client, Frpg2RequestMessage:
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_ActGestureLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_ActGestureLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::ActGestureLog Log;
+    DS3_FpdLogMessage::ActGestureLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse ActGestureLog.");
@@ -152,7 +152,7 @@ void LoggingManager::Handle_ActGestureLog(GameClient* Client, Frpg2RequestMessag
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.use_gesture_info_list_size(); i++)
     {
-        const FpdLogMessage::ActGestureLog_Use_gesture_info_list& Item = Log.use_gesture_info_list(i);
+        const DS3_FpdLogMessage::ActGestureLog_Use_gesture_info_list& Item = Log.use_gesture_info_list(i);
 
         std::string StatisticKey = StringFormat("Gesture/TotalUsed/Id=%u", Item.guesture_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -166,12 +166,12 @@ void LoggingManager::Handle_ActGestureLog(GameClient* Client, Frpg2RequestMessag
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_UseItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_UseItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::UseItemLog Log;
+    DS3_FpdLogMessage::UseItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse UseItemLog.");
@@ -181,7 +181,7 @@ void LoggingManager::Handle_UseItemLog(GameClient* Client, Frpg2RequestMessage::
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.use_item_info_list_size(); i++)
     {
-        const FpdLogMessage::UseItemLog_Use_item_info_list& Item = Log.use_item_info_list(i);
+        const DS3_FpdLogMessage::UseItemLog_Use_item_info_list& Item = Log.use_item_info_list(i);
 
         std::string StatisticKey = StringFormat("Item/TotalUsed/Id=%u", Item.item_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -195,12 +195,12 @@ void LoggingManager::Handle_UseItemLog(GameClient* Client, Frpg2RequestMessage::
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_PurchaseItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_PurchaseItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::PurchaseItemLog Log;
+    DS3_FpdLogMessage::PurchaseItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse PurchaseItemLog.");
@@ -210,7 +210,7 @@ void LoggingManager::Handle_PurchaseItemLog(GameClient* Client, Frpg2RequestMess
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.purchase_item_info_list_size(); i++)
     {
-        const FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& Item = Log.purchase_item_info_list(i);
+        const DS3_FpdLogMessage::PurchaseItemLog_Purchase_item_info_list& Item = Log.purchase_item_info_list(i);
 
         std::string StatisticKey = StringFormat("Item/TotalPurchased/Id=%u", Item.item_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -224,12 +224,12 @@ void LoggingManager::Handle_PurchaseItemLog(GameClient* Client, Frpg2RequestMess
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_GetItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_GetItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::GetItemLog Log;
+    DS3_FpdLogMessage::GetItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse GetItemLog.");
@@ -239,7 +239,7 @@ void LoggingManager::Handle_GetItemLog(GameClient* Client, Frpg2RequestMessage::
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.get_item_info_list_size(); i++)
     {
-        const FpdLogMessage::GetItemLog_Get_item_info_list& Item = Log.get_item_info_list(i);
+        const DS3_FpdLogMessage::GetItemLog_Get_item_info_list& Item = Log.get_item_info_list(i);
 
         std::string StatisticKey = StringFormat("Item/TotalRecieved/Id=%u", Item.item_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -253,12 +253,12 @@ void LoggingManager::Handle_GetItemLog(GameClient* Client, Frpg2RequestMessage::
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_DropItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_DropItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::DropItemLog Log;
+    DS3_FpdLogMessage::DropItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse DropItemLog.");
@@ -268,7 +268,7 @@ void LoggingManager::Handle_DropItemLog(GameClient* Client, Frpg2RequestMessage:
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.throw_away_item_list_size(); i++)
     {
-        const FpdLogMessage::DropItemLog_Throw_away_item_list& Item = Log.throw_away_item_list(i);
+        const DS3_FpdLogMessage::DropItemLog_Throw_away_item_list& Item = Log.throw_away_item_list(i);
 
         std::string StatisticKey = StringFormat("Item/TotalDropped/Id=%u", Item.item_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -282,12 +282,12 @@ void LoggingManager::Handle_DropItemLog(GameClient* Client, Frpg2RequestMessage:
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_LeaveItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_LeaveItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::LeaveItemLog Log;
+    DS3_FpdLogMessage::LeaveItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse LeaveItemLog.");
@@ -297,7 +297,7 @@ void LoggingManager::Handle_LeaveItemLog(GameClient* Client, Frpg2RequestMessage
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.set_item_info_list_size(); i++)
     {
-        const FpdLogMessage::LeaveItemLog_Set_item_info_list& Item = Log.set_item_info_list(i);
+        const DS3_FpdLogMessage::LeaveItemLog_Set_item_info_list& Item = Log.set_item_info_list(i);
 
         std::string StatisticKey = StringFormat("Item/TotalLeft/Id=%u", Item.item_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -311,12 +311,12 @@ void LoggingManager::Handle_LeaveItemLog(GameClient* Client, Frpg2RequestMessage
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_SaleItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_SaleItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::SaleItemLog Log;
+    DS3_FpdLogMessage::SaleItemLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse SaleItemLog.");
@@ -326,7 +326,7 @@ void LoggingManager::Handle_SaleItemLog(GameClient* Client, Frpg2RequestMessage:
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.sale_item_info_list_size(); i++)
     {
-        const FpdLogMessage::SaleItemLog_Sale_item_info_list& Item = Log.sale_item_info_list(i);
+        const DS3_FpdLogMessage::SaleItemLog_Sale_item_info_list& Item = Log.sale_item_info_list(i);
 
         std::string StatisticKey = StringFormat("Item/TotalSold/Id=%u", Item.item_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
@@ -340,12 +340,12 @@ void LoggingManager::Handle_SaleItemLog(GameClient* Client, Frpg2RequestMessage:
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_StrengthenWeaponLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_StrengthenWeaponLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::StrengthenWeaponLog Log;
+    DS3_FpdLogMessage::StrengthenWeaponLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse StrengthenWeaponLog.");
@@ -355,7 +355,7 @@ void LoggingManager::Handle_StrengthenWeaponLog(GameClient* Client, Frpg2Request
     uint32_t TotalCount = 0;
     for (int i = 0; i < Log.strengthen_weapon_info_list_size(); i++)
     {
-        const FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& Item = Log.strengthen_weapon_info_list(i);
+        const DS3_FpdLogMessage::StrengthenWeaponLog_Strengthen_weapon_info_list& Item = Log.strengthen_weapon_info_list(i);
 
         std::string StatisticKey = StringFormat("Item/TotalUpgraded/Id=%u", Item.from_item_id());
         Database.AddGlobalStatistic(StatisticKey, 1);
@@ -369,12 +369,12 @@ void LoggingManager::Handle_StrengthenWeaponLog(GameClient* Client, Frpg2Request
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
 
-void LoggingManager::Handle_VisitResultLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
+void LoggingManager::Handle_VisitResultLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    FpdLogMessage::VisitResultLog Log;
+    DS3_FpdLogMessage::VisitResultLog Log;
     if (!Log.ParseFromArray(Request->data().data(), (int)Request->data().size()))
     {
         WarningS(Client->GetName().c_str(), "Failed to parse VisitResultLog.");
@@ -396,12 +396,12 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillEnemy(GameClient* Cl
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestNotifyKillEnemy* Request = (Frpg2RequestMessage::RequestNotifyKillEnemy*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyKillEnemy* Request = (DS3_Frpg2RequestMessage::RequestNotifyKillEnemy*)Message.Protobuf.get();
 
     int EnemyCount = 0;
     for (int i = 0; i < Request->enemys_size(); i++)
     {
-        const Frpg2RequestMessage::KillEnemyInfo& EnemyInfo = Request->enemys(i);
+        const DS3_Frpg2RequestMessage::KillEnemyInfo& EnemyInfo = Request->enemys(i);
 
         std::string StatisticKey = StringFormat("Enemies/TotalKilled/Id=%u", EnemyInfo.enemy_type_id());
         Database.AddGlobalStatistic(StatisticKey, EnemyInfo.count());
@@ -414,7 +414,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillEnemy(GameClient* Cl
     Database.AddGlobalStatistic(TotalStatisticKey, EnemyCount);
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), EnemyCount);
     
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -426,11 +426,11 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillEnemy(GameClient* Cl
 
 MessageHandleResult LoggingManager::Handle_RequestNotifyDisconnectSession(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestNotifyDisconnectSession* Request = (Frpg2RequestMessage::RequestNotifyDisconnectSession*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyDisconnectSession* Request = (DS3_Frpg2RequestMessage::RequestNotifyDisconnectSession*)Message.Protobuf.get();
 
     // Note: I don't think we really care about this log.
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -445,13 +445,13 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyRegisterCharacter(GameCl
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestNotifyRegisterCharacter* Request = (Frpg2RequestMessage::RequestNotifyRegisterCharacter*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyRegisterCharacter* Request = (DS3_Frpg2RequestMessage::RequestNotifyRegisterCharacter*)Message.Protobuf.get();
 
     std::string TotalStatisticKey = StringFormat("Player/TotalRegisteredCharacters");
     Database.AddGlobalStatistic(TotalStatisticKey, 1);
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), 1);
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -467,7 +467,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyDie(GameClient* Client, 
     PlayerState& Player = Client->GetPlayerState();
     GameService& Game = *ServerInstance->GetService<GameService>();
 
-    Frpg2RequestMessage::RequestNotifyDie* Request = (Frpg2RequestMessage::RequestNotifyDie*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyDie* Request = (DS3_Frpg2RequestMessage::RequestNotifyDie*)Message.Protobuf.get();
 
     std::string TypeStatisticKey = StringFormat("Player/TotalDeaths/Cause=%u", (uint32_t)Request->cause_of_death());
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
@@ -477,7 +477,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyDie(GameClient* Client, 
     Database.AddGlobalStatistic(TotalStatisticKey, 1);
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), 1);
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -514,11 +514,11 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyDie(GameClient* Client, 
 
 MessageHandleResult LoggingManager::Handle_RequestNotifyKillBoss(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestNotifyKillBoss* Request = (Frpg2RequestMessage::RequestNotifyKillBoss*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyKillBoss* Request = (DS3_Frpg2RequestMessage::RequestNotifyKillBoss*)Message.Protobuf.get();
 
     // Note: I don't think we really care about this log. We get the death information from KillEnemy notification.
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -575,11 +575,11 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyKillBoss(GameClient* Cli
 
 MessageHandleResult LoggingManager::Handle_RequestNotifyJoinMultiplay(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestNotifyJoinMultiplay* Request = (Frpg2RequestMessage::RequestNotifyJoinMultiplay*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyJoinMultiplay* Request = (DS3_Frpg2RequestMessage::RequestNotifyJoinMultiplay*)Message.Protobuf.get();
 
     // Note: I don't think we really care about this log. We get most of this info from LeaveMultiplay anyway.
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -594,7 +594,7 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyLeaveMultiplay(GameClien
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestNotifyLeaveMultiplay* Request = (Frpg2RequestMessage::RequestNotifyLeaveMultiplay*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyLeaveMultiplay* Request = (DS3_Frpg2RequestMessage::RequestNotifyLeaveMultiplay*)Message.Protobuf.get();
 
     std::string TypeStatisticKey = StringFormat("Player/TotalMultiplaySessions");
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
@@ -602,12 +602,12 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyLeaveMultiplay(GameClien
 
     for (int i = 0; i < Request->party_member_info_size(); i++)
     {        
-        const Frpg2RequestMessage::PartyMemberInfo& Info = Request->party_member_info(i);
+        const DS3_Frpg2RequestMessage::PartyMemberInfo& Info = Request->party_member_info(i);
         std::string TypeStatisticKey = StringFormat("Player/TotalMultiplaySessions/PartyPlayerId=%u", Info.player_id());
         Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
     }
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -619,11 +619,11 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyLeaveMultiplay(GameClien
 
 MessageHandleResult LoggingManager::Handle_RequestNotifySummonSignResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestNotifySummonSignResult* Request = (Frpg2RequestMessage::RequestNotifySummonSignResult*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifySummonSignResult* Request = (DS3_Frpg2RequestMessage::RequestNotifySummonSignResult*)Message.Protobuf.get();
 
     // Note: I don't think we really care about this log. We get most of this during the summon flow.
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -635,11 +635,11 @@ MessageHandleResult LoggingManager::Handle_RequestNotifySummonSignResult(GameCli
 
 MessageHandleResult LoggingManager::Handle_RequestNotifyCreateSignResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestNotifyCreateSignResult* Request = (Frpg2RequestMessage::RequestNotifyCreateSignResult*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyCreateSignResult* Request = (DS3_Frpg2RequestMessage::RequestNotifyCreateSignResult*)Message.Protobuf.get();
 
     // Note: I don't think we really care about this log. We get most of this during the summon flow.
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");
@@ -651,11 +651,11 @@ MessageHandleResult LoggingManager::Handle_RequestNotifyCreateSignResult(GameCli
 
 MessageHandleResult LoggingManager::Handle_RequestNotifyBreakInResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestNotifyBreakInResult* Request = (Frpg2RequestMessage::RequestNotifyBreakInResult*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyBreakInResult* Request = (DS3_Frpg2RequestMessage::RequestNotifyBreakInResult*)Message.Protobuf.get();
 
     // Note: I don't think we really care about this log. We get most of this during the summon flow.
 
-    Frpg2RequestMessage::EmptyResponse Response;
+    DS3_Frpg2RequestMessage::EmptyResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send EmptyResponse response.");

@@ -27,12 +27,14 @@ namespace Loader
                 return "";
             }
 
+            /*
             string PotentialPath = SteamPath + @"\steamapps\common\" + FolderName;
             if (Directory.Exists(PotentialPath))
             {
                 return PotentialPath;
             }
-
+            */
+            
             string ConfigVdfPath = SteamPath + @"\steamapps\LibraryFolders.vdf";
             if (!File.Exists(ConfigVdfPath))
             {
@@ -75,8 +77,9 @@ namespace Loader
                 }
 
                 string Value = Trimmed.Substring(IndexValueStart + 1, IndexValueEnd - IndexValueStart - 1);
+                Value = Value.Replace("\\\\", "\\");
 
-                PotentialPath = Value + @"\steamapps\common\" + FolderName;
+                string PotentialPath = Value + @"\steamapps\common\" + FolderName;
                 if (Directory.Exists(PotentialPath))
                 {
                     return PotentialPath;

@@ -48,7 +48,7 @@ MessageHandleResult BreakInManager::OnMessageRecieved(GameClient* Client, const 
     return MessageHandleResult::Unhandled;
 }
 
-bool BreakInManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
+bool BreakInManager::CanMatchWith(const DS3_Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
 
@@ -64,7 +64,7 @@ bool BreakInManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& 
     }
 
     const RuntimeConfigMatchingParameters* MatchingParams = &Config.DarkSpiritInvasionMatchingParameters;
-    if (Request.covenant() == Frpg2RequestMessage::Covenant::Covenant_Mound_Makers)
+    if (Request.covenant() == DS3_Frpg2RequestMessage::Covenant::Covenant_Mound_Makers)
     {
         MatchingParams = &Config.MoundMakerInvasionMatchingParameters;
     }
@@ -88,7 +88,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
 
     const RuntimeConfig& Config = ServerInstance->GetConfig();
 
-    Frpg2RequestMessage::RequestGetBreakInTargetList* Request = (Frpg2RequestMessage::RequestGetBreakInTargetList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetBreakInTargetList* Request = (DS3_Frpg2RequestMessage::RequestGetBreakInTargetList*)Message.Protobuf.get();
     
     std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([this, Client, Request, Config, Player](const std::shared_ptr<GameClient>& OtherClient) {
         if (Client == OtherClient.get())
@@ -139,7 +139,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
     }
 #endif
 
-    Frpg2RequestMessage::RequestGetBreakInTargetListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetBreakInTargetListResponse Response;
     Response.set_map_id(Request->map_id());
     Response.set_online_area_id(Request->online_area_id());
 
@@ -148,7 +148,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
     {
         std::shared_ptr<GameClient> OtherClient = PotentialTargets[i];
 
-        Frpg2RequestMessage::BreakInTargetData* Data = Response.add_target_data();
+        DS3_Frpg2RequestMessage::BreakInTargetData* Data = Response.add_target_data();
         Data->set_player_id(OtherClient->GetPlayerState().GetPlayerId());
         Data->set_steam_id(OtherClient->GetPlayerState().GetSteamId());
     }
@@ -167,7 +167,7 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestBreakInTarget* Request = (Frpg2RequestMessage::RequestBreakInTarget*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestBreakInTarget* Request = (DS3_Frpg2RequestMessage::RequestBreakInTarget*)Message.Protobuf.get();
 
     bool bSuccess = true;
 
@@ -182,8 +182,8 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
     // If success sent push to target client.
     if (bSuccess && TargetClient)
     {
-        Frpg2RequestMessage::PushRequestBreakInTarget PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestBreakInTarget);
+        DS3_Frpg2RequestMessage::PushRequestBreakInTarget PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestBreakInTarget);
         PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_steam_id(Player.GetSteamId());
         PushMessage.set_unknown_4(0);
@@ -203,7 +203,7 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestBreakInTargetResponse Response;
+    DS3_Frpg2RequestMessage::RequestBreakInTargetResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestBreakInTargetResponse response.");
@@ -213,8 +213,8 @@ MessageHandleResult BreakInManager::Handle_RequestBreakInTarget(GameClient* Clie
     // Otherwise send rejection to client.
     if (!bSuccess)
     {
-        Frpg2RequestMessage::PushRequestRejectBreakInTarget PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectBreakInTarget);
+        DS3_Frpg2RequestMessage::PushRequestRejectBreakInTarget PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectBreakInTarget);
         PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_unknown_3(1);     // TODO: Figure out
         PushMessage.set_steam_id(Player.GetSteamId());
@@ -238,7 +238,7 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
 {
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestRejectBreakInTarget* Request = (Frpg2RequestMessage::RequestRejectBreakInTarget*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRejectBreakInTarget* Request = (DS3_Frpg2RequestMessage::RequestRejectBreakInTarget*)Message.Protobuf.get();
 
     // Get client who initiated the invasion.
     std::shared_ptr<GameClient> InvaderClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());
@@ -249,8 +249,8 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
     }
 
     // Reject the break in.
-    Frpg2RequestMessage::PushRequestRejectBreakInTarget PushMessage;
-    PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectBreakInTarget);
+    DS3_Frpg2RequestMessage::PushRequestRejectBreakInTarget PushMessage;
+    PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectBreakInTarget);
     PushMessage.set_player_id(Player.GetPlayerId());
     PushMessage.set_unknown_3(1);     // TODO: Figure out
     PushMessage.set_steam_id(Player.GetSteamId());
@@ -263,7 +263,7 @@ MessageHandleResult BreakInManager::Handle_RequestRejectBreakInTarget(GameClient
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestRejectBreakInTargetResponse Response;
+    DS3_Frpg2RequestMessage::RequestRejectBreakInTargetResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectBreakInTargetResponse response.");

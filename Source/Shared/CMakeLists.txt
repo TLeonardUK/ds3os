@@ -54,6 +54,10 @@ SET(SOURCES
     Core/Utils/WinApi.cpp
     Core/Utils/WinApi.h
 
+    
+    Game/GameType.cpp
+    Game/GameType.h
+
     Platform/Platform.h
 )
  

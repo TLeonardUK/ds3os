@@ -89,18 +89,18 @@ void PlayersHandler::GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClie
 
     switch (Status.world_type())
     {
-    case Frpg2PlayerData::WorldType::WorldType_None:
+    case DS3_Frpg2PlayerData::WorldType::WorldType_None:
         {
         Info.Status = "Loading or in menus";
             break;
         }
-    case Frpg2PlayerData::WorldType::WorldType_Multiplayer:
+    case DS3_Frpg2PlayerData::WorldType::WorldType_Multiplayer:
         {
-            if (Status.net_mode() == Frpg2PlayerData::NetMode::NetMode_None)
+            if (Status.net_mode() == DS3_Frpg2PlayerData::NetMode::NetMode_None)
             {
                 Info.Status = "Multiplayer alone";
             }
-            else if (Status.net_mode() == Frpg2PlayerData::NetMode::NetMode_Host)
+            else if (Status.net_mode() == DS3_Frpg2PlayerData::NetMode::NetMode_Host)
             {
                 InvasionTypeId TypeId = (InvasionTypeId)Status.invasion_type();
                 switch (TypeId)
@@ -135,13 +135,13 @@ void PlayersHandler::GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClie
                 }
                 }
             }
-            else if (Status.net_mode() == Frpg2PlayerData::NetMode::NetMode_Client)
+            else if (Status.net_mode() == DS3_Frpg2PlayerData::NetMode::NetMode_Client)
             {
                 Info.Status = "In another world";
             }
             break;
         }
-    case Frpg2PlayerData::WorldType::WorldType_Singleplayer:
+    case DS3_Frpg2PlayerData::WorldType::WorldType_Singleplayer:
         {
             std::string status = "Playing solo";
             if (Status.is_invadable())

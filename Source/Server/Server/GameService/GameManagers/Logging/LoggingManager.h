@@ -14,7 +14,7 @@
 struct Frpg2ReliableUdpMessage;
 class Server;
 
-namespace Frpg2RequestMessage {
+namespace DS3_Frpg2RequestMessage {
     class RequestNotifyProtoBufLog;
 };
 
@@ -45,16 +45,16 @@ protected:
     MessageHandleResult Handle_RequestNotifyCreateSignResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestNotifyBreakInResult(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     
-    void Handle_UseMagicLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_ActGestureLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_UseItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_PurchaseItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_GetItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_DropItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_LeaveItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_SaleItemLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_StrengthenWeaponLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
-    void Handle_VisitResultLog(GameClient* Client, Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_UseMagicLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_ActGestureLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_UseItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_PurchaseItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_GetItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_DropItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_LeaveItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_SaleItemLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_StrengthenWeaponLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
+    void Handle_VisitResultLog(GameClient* Client, DS3_Frpg2RequestMessage::RequestNotifyProtoBufLog* Request);
 
 private:
     Server* ServerInstance;

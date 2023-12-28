@@ -68,7 +68,7 @@ struct SummonSign
 
     bool IsRedSign = false;
 
-    Frpg2RequestMessage::MatchingParameter MatchingParameters;
+    DS3_Frpg2RequestMessage::MatchingParameter MatchingParameters;
 
     std::vector<uint8_t> PlayerStruct;
 

@@ -27,6 +27,9 @@ public:
     // Public key of server being joined.
     std::string ServerPublicKey = "";
 
+    // Type of game we are being injected into.
+    std::string ServerGameType = "";
+
     // Login port to connect to on server.
     int ServerPort = 50050;
 

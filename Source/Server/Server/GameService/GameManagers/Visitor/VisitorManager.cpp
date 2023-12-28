@@ -46,10 +46,10 @@ MessageHandleResult VisitorManager::OnMessageRecieved(GameClient* Client, const 
     return MessageHandleResult::Unhandled;
 }
 
-bool VisitorManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
+bool VisitorManager::CanMatchWith(const DS3_Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
-    bool IsInvasion = (Match->GetPlayerState().GetVisitorPool() != Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue);
+    bool IsInvasion = (Match->GetPlayerState().GetVisitorPool() != DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue);
 
     const RuntimeConfigMatchingParameters* MatchingParams = &Config.CovenantInvasionMatchingParameters;
     if (!IsInvasion)
@@ -79,7 +79,7 @@ bool VisitorManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& 
 
 MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestGetVisitorList* Request = (Frpg2RequestMessage::RequestGetVisitorList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetVisitorList* Request = (DS3_Frpg2RequestMessage::RequestGetVisitorList*)Message.Protobuf.get();
     
     std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([this, Client, Request](const std::shared_ptr<GameClient>& OtherClient) {
         if (Client == OtherClient.get())
@@ -95,7 +95,7 @@ MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Cli
 
     // TODO: Sort potential targets based on prioritization (more summons etc)
 
-    Frpg2RequestMessage::RequestGetVisitorListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetVisitorListResponse Response;
     Response.set_map_id(Request->map_id());
     Response.set_online_area_id(Request->online_area_id());
 
@@ -104,7 +104,7 @@ MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Cli
     {
         std::shared_ptr<GameClient> OtherClient = PotentialTargets[i];
 
-        Frpg2RequestMessage::VisitorData* Data = Response.add_visitors();
+        DS3_Frpg2RequestMessage::VisitorData* Data = Response.add_visitors();
         Data->set_player_id(OtherClient->GetPlayerState().GetPlayerId());
         Data->set_player_steam_id(OtherClient->GetPlayerState().GetSteamId());
     }
@@ -123,7 +123,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestVisit* Request = (Frpg2RequestMessage::RequestVisit*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestVisit* Request = (DS3_Frpg2RequestMessage::RequestVisit*)Message.Protobuf.get();
 
     bool bSuccess = true;
 
@@ -138,8 +138,8 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     // If success sent push to target client.
     if (bSuccess && TargetClient)
     {
-        Frpg2RequestMessage::PushRequestVisit PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestVisit);
+        DS3_Frpg2RequestMessage::PushRequestVisit PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestVisit);
         PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_player_steam_id(Player.GetSteamId());
         PushMessage.set_data(Request->data().c_str(), Request->data().size());
@@ -167,7 +167,7 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestVisitResponse Response;
+    DS3_Frpg2RequestMessage::RequestVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestVisitResponse response.");
@@ -181,8 +181,8 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
         LogS(Client->GetName().c_str(), "Sending push rejecting visit of player, as could not be found.");
 #endif
 
-        Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectVisit);
+        DS3_Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectVisit);
         PushMessage.set_player_id(Request->player_id());
         PushMessage.set_visitor_pool(Request->visitor_pool());   
         PushMessage.set_steam_id("");
@@ -201,8 +201,8 @@ MessageHandleResult VisitorManager::Handle_RequestVisit(GameClient* Client, cons
     // On success the server immediately sends a PushRequestRemoveVisitor message.
     else
     {
-        Frpg2RequestMessage::PushRequestRemoveVisitor PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRemoveVisitor);
+        DS3_Frpg2RequestMessage::PushRequestRemoveVisitor PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRemoveVisitor);
         PushMessage.set_player_id(Request->player_id());
         if (TargetClient)
         {
@@ -232,7 +232,7 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
 {
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestRejectVisit* Request = (Frpg2RequestMessage::RequestRejectVisit*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRejectVisit* Request = (DS3_Frpg2RequestMessage::RequestRejectVisit*)Message.Protobuf.get();
 
     // Get client who initiated the visit.
     std::shared_ptr<GameClient> InitiatorClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());
@@ -252,8 +252,8 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
 #endif
 
     // Reject the visit
-    Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
-    PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectVisit);
+    DS3_Frpg2RequestMessage::PushRequestRejectVisit PushMessage;
+    PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectVisit);
     PushMessage.set_player_id(Player.GetPlayerId());
     if (Request->has_visitor_pool())
     {
@@ -269,7 +269,7 @@ MessageHandleResult VisitorManager::Handle_RequestRejectVisit(GameClient* Client
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestRejectVisitResponse Response;
+    DS3_Frpg2RequestMessage::RequestRejectVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectVisitResponse response.");

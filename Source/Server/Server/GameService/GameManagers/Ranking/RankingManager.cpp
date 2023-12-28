@@ -50,7 +50,7 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestRegisterRankingData* Request = (Frpg2RequestMessage::RequestRegisterRankingData*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRegisterRankingData* Request = (DS3_Frpg2RequestMessage::RequestRegisterRankingData*)Message.Protobuf.get();
 
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
@@ -66,7 +66,7 @@ MessageHandleResult RankingManager::Handle_RequestRegisterRankingData(GameClient
     Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
     // Empty response.
-    Frpg2RequestMessage::RequestRegisterRankingDataResponse Response;
+    DS3_Frpg2RequestMessage::RequestRegisterRankingDataResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRegisterRankingDataResponse response.");
@@ -80,14 +80,14 @@ MessageHandleResult RankingManager::Handle_RequestGetRankingData(GameClient* Cli
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
 
-    Frpg2RequestMessage::RequestGetRankingData* Request = (Frpg2RequestMessage::RequestGetRankingData*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetRankingData* Request = (DS3_Frpg2RequestMessage::RequestGetRankingData*)Message.Protobuf.get();
     
     std::vector<std::shared_ptr<Ranking>> Rankings = Database.GetRankings(Request->board_id(), Request->offset(), Request->count());
     
-    Frpg2RequestMessage::RequestGetRankingDataResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetRankingDataResponse Response;
     for (std::shared_ptr<Ranking>& Ranking : Rankings)
     {
-        Frpg2RequestMessage::RankingData& Data = *Response.add_data();
+        DS3_Frpg2RequestMessage::RankingData& Data = *Response.add_data();
         Data.set_player_id(Ranking->PlayerId);
         Data.set_character_id(Ranking->CharacterId);
         Data.set_serial_rank(Ranking->SerialRank);
@@ -110,9 +110,9 @@ MessageHandleResult RankingManager::Handle_RequestGetCharacterRankingData(GameCl
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetCharacterRankingData* Request = (Frpg2RequestMessage::RequestGetCharacterRankingData*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestGetCharacterRankingDataResponse Response;
-    Frpg2RequestMessage::RankingData& ResponseData = *Response.mutable_data();
+    DS3_Frpg2RequestMessage::RequestGetCharacterRankingData* Request = (DS3_Frpg2RequestMessage::RequestGetCharacterRankingData*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetCharacterRankingDataResponse Response;
+    DS3_Frpg2RequestMessage::RankingData& ResponseData = *Response.mutable_data();
 
     std::shared_ptr<Ranking> CharRanking = Database.GetCharacterRanking(Request->board_id(), Player.GetPlayerId(), Request->character_id());
     if (CharRanking)
@@ -147,11 +147,11 @@ MessageHandleResult RankingManager::Handle_RequestCountRankingData(GameClient* C
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
 
-    Frpg2RequestMessage::RequestCountRankingData* Request = (Frpg2RequestMessage::RequestCountRankingData*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestCountRankingData* Request = (DS3_Frpg2RequestMessage::RequestCountRankingData*)Message.Protobuf.get();
 
     uint32_t RankingCount = Database.GetRankingCount(Request->board_id());
 
-    Frpg2RequestMessage::RequestCountRankingDataResponse Response;
+    DS3_Frpg2RequestMessage::RequestCountRankingDataResponse Response;
     Response.set_count(RankingCount);
 
     if (!Client->MessageStream->Send(&Response, &Message))

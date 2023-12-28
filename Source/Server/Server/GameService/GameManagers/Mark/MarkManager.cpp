@@ -46,7 +46,7 @@ MessageHandleResult MarkManager::OnMessageRecieved(GameClient* Client, const Frp
 
 MessageHandleResult MarkManager::Handle_RequestCreateMark(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestCreateMark* Request = (Frpg2RequestMessage::RequestCreateMark*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestCreateMark* Request = (DS3_Frpg2RequestMessage::RequestCreateMark*)Message.Protobuf.get();
 
     // These functions should never be called, they are cut-content.
     Ensure(false);
@@ -56,7 +56,7 @@ MessageHandleResult MarkManager::Handle_RequestCreateMark(GameClient* Client, co
 
 MessageHandleResult MarkManager::Handle_RequestRemoveMark(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestRemoveMark* Request = (Frpg2RequestMessage::RequestRemoveMark*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRemoveMark* Request = (DS3_Frpg2RequestMessage::RequestRemoveMark*)Message.Protobuf.get();
 
     // These functions should never be called, they are cut-content.
     Ensure(false);
@@ -66,7 +66,7 @@ MessageHandleResult MarkManager::Handle_RequestRemoveMark(GameClient* Client, co
 
 MessageHandleResult MarkManager::Handle_RequestReentryMark(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestReentryMark* Request = (Frpg2RequestMessage::RequestReentryMark*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestReentryMark* Request = (DS3_Frpg2RequestMessage::RequestReentryMark*)Message.Protobuf.get();
 
     // These functions should never be called, they are cut-content.
     Ensure(false);
@@ -76,7 +76,7 @@ MessageHandleResult MarkManager::Handle_RequestReentryMark(GameClient* Client, c
 
 MessageHandleResult MarkManager::Handle_RequestGetMarkList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestGetMarkList* Request = (Frpg2RequestMessage::RequestGetMarkList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetMarkList* Request = (DS3_Frpg2RequestMessage::RequestGetMarkList*)Message.Protobuf.get();
 
     // These functions should never be called, they are cut-content.
     Ensure(false);

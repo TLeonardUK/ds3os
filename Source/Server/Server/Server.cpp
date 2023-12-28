@@ -34,11 +34,12 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
-Server::Server(const std::string& InServerId, const std::string& InServerName, const std::string& InServerPassword, ServerManager* InManager)
+Server::Server(const std::string& InServerId, const std::string& InServerName, const std::string& InServerPassword, GameType InType, ServerManager* InManager)
     : ServerId(InServerId)
     , Manager(InManager)
     , DefaultServerName(InServerName)
     , DefaultServerPassword(InServerPassword)
+    , DefaultServerGameType(InType)
 {
     // The keys are always shared between all servers so we can use the same login/auth servers.
 //    std::filesystem::path BasePath = std::filesystem::current_path() / std::filesystem::path("Saved");
@@ -101,6 +102,7 @@ bool Server::Init()
             Config.WebUIServerUsername = RandomName();
             Config.ServerName = DefaultServerName;
             Config.Password = DefaultServerPassword;
+            Config.GameType = GameTypeStrings[(int)DefaultServerGameType];
         }
 
         if (!Config.Save(ConfigPath))
@@ -108,6 +110,13 @@ bool Server::Init()
             Error("Failed to save configuration file: %s", ConfigPath.string().c_str());
             return false;
         }
+    }
+
+    // Determine game type.
+    if (!ParseGameType(Config.GameType.c_str(), ServerGameType))
+    {
+        Error("Unknown game type: %s", Config.GameType.c_str());
+        return false;
     }
 
     // Patch old server ip.
@@ -392,6 +401,8 @@ void Server::PollServerAdvertisement()
         Body["AllowSharding"] = Config.SupportSharding;
         Body["WebAddress"] = Config.SupportSharding ? StringFormat("http://%s:%i", ((std::string)Body["Hostname"]).c_str(), Config.WebUIServerPort) : "";
         Body["Port"] = Config.LoginServerPort;
+        Body["IsShard"] = !IsDefaultServer();
+        Body["GameType"] = GameTypeStrings[(int)ServerGameType];
 
         MasterServerUpdateRequest = std::make_shared<NetHttpRequest>();
         MasterServerUpdateRequest->SetMethod(NetHttpMethod::POST);

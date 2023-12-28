@@ -36,21 +36,31 @@ namespace Loader
         }
 
         private void CopySavesClicked(object sender, EventArgs e)
-        {        
-            string BasePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\DarkSoulsIII";
-
-            if (!Directory.Exists(BasePath))
-            {
-                MessageBox.Show("Failed to find existing save folder. Have you actually run the game before on retail?");
-                return;
-            }
-
-            if (MessageBox.Show("This will overwrite any existing DS3OS saves that exist, are you sure you wish to do this?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+        {   
+            if (MessageBox.Show("This will overwrite any existing DSOS saves that exist, are you sure you wish to do this?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
             {
                 return;
             }
 
             int FilesCopied = 0;
+            
+            string BasePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\DarkSoulsIII";
+            FilesCopied += CopySavesInDirectory(BasePath);
+            
+            BasePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\DarkSoulsII";
+            FilesCopied += CopySavesInDirectory(BasePath);
+            
+            MessageBox.Show("Copied " + FilesCopied.ToString() + " retail saves to dsos.");
+        }
+
+        private int CopySavesInDirectory(string BasePath)
+        {
+            int FilesCopied = 0;
+            
+            if (!Directory.Exists(BasePath))
+            {
+                return 0;
+            }
 
             string[] RetailFiles = System.IO.Directory.GetFiles(BasePath, "*.sl2", SearchOption.AllDirectories);
             foreach (string file in RetailFiles)
@@ -63,7 +73,7 @@ namespace Loader
                 FilesCopied++;
             }
             
-            MessageBox.Show("Copied " + FilesCopied.ToString() + " retail saves to ds3os.");
+            return FilesCopied;
         }
 
         private void SettingChanged(object sender, EventArgs e)

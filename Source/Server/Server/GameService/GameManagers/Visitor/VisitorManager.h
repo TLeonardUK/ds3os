@@ -31,7 +31,7 @@ public:
     virtual std::string GetName() override;
 
 protected:
-    bool CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Client, const std::shared_ptr<GameClient>& Match);
+    bool CanMatchWith(const DS3_Frpg2RequestMessage::MatchingParameter& Client, const std::shared_ptr<GameClient>& Match);
 
     MessageHandleResult Handle_RequestGetVisitorList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestVisit(GameClient* Client, const Frpg2ReliableUdpMessage& Message);

@@ -7,7 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-#include "Injector/Hooks/ReplaceServerAddressHook.h"
+#include "Injector/Hooks/DarkSouls3/DS3_ReplaceServerAddressHook.h"
 #include "Injector/Injector/Injector.h"
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"
@@ -54,7 +54,7 @@ namespace
     }
 };
 
-bool ReplaceServerAddressHook::Install(Injector& injector)
+bool DS3_ReplaceServerAddressHook::Install(Injector& injector)
 {
     // This matches std::vector::insert_range.
     std::vector<intptr_t> matches = injector.SearchAOB({ 
@@ -85,13 +85,13 @@ bool ReplaceServerAddressHook::Install(Injector& injector)
     return true;
 }
 
-void ReplaceServerAddressHook::Uninstall()
+void DS3_ReplaceServerAddressHook::Uninstall()
 {
 
 }
 
-const char* ReplaceServerAddressHook::GetName()
+const char* DS3_ReplaceServerAddressHook::GetName()
 {
-    return "Replace Server Address";
+    return "DS3 Replace Server Address";
 }
 

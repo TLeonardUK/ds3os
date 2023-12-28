@@ -36,7 +36,7 @@ public:
     size_t GetLiveCount() { return LiveCache.GetTotalEntries(); }
 
 protected:
-    bool CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Client, const Frpg2RequestMessage::MatchingParameter& Match, bool IsRedSign);
+    bool CanMatchWith(const DS3_Frpg2RequestMessage::MatchingParameter& Client, const DS3_Frpg2RequestMessage::MatchingParameter& Match, bool IsRedSign);
 
     void RemoveSignAndNotifyAware(const std::shared_ptr<SummonSign>& Sign);
 

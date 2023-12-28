@@ -283,7 +283,7 @@ void Client::Handle_LoginServer_RequestServerInfo()
 {
     LogS(GetName().c_str(), "Requesting server info.");
 
-    Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
+    DS3_Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
     Request.set_steam_id(ClientStreamId.c_str());
     Request.set_app_version(ClientAppVersion);
     Ensure(LoginServerMessageStream->Send(&Request, Frpg2MessageType::RequestQueryLoginServerInfo));
@@ -291,7 +291,7 @@ void Client::Handle_LoginServer_RequestServerInfo()
     Frpg2Message Response;
     WaitForNextMessage(LoginServerConnection, LoginServerMessageStream, Response);
 
-    Frpg2RequestMessage::RequestQueryLoginServerInfoResponse TypedResponse;
+    DS3_Frpg2RequestMessage::RequestQueryLoginServerInfoResponse TypedResponse;
     Ensure(TypedResponse.ParseFromArray(Response.Payload.data(), (int)Response.Payload.size()));
 
     AuthServerIP = TypedResponse.server_ip();
@@ -330,7 +330,7 @@ void Client::Handle_AuthServer_RequestHandshake()
     CwcKey.resize(16);
     FillRandomBytes(CwcKey);
 
-    Frpg2RequestMessage::RequestHandshake Request;
+    DS3_Frpg2RequestMessage::RequestHandshake Request;
     Request.set_aes_cwc_key(CwcKey.data(), CwcKey.size());
     Ensure(AuthServerMessageStream->Send(&Request, Frpg2MessageType::RequestHandshake));
 
@@ -351,7 +351,7 @@ void Client::Handle_AuthServer_RequestServiceStatus()
 {
     LogS(GetName().c_str(), "Requesting service status.");
 
-    Frpg2RequestMessage::GetServiceStatus Request;
+    DS3_Frpg2RequestMessage::GetServiceStatus Request;
     Request.set_id(1);
     Request.set_steam_id(ClientStreamId.c_str(), (int)ClientStreamId.size());
     Request.set_app_version(ClientAppVersion);
@@ -365,7 +365,7 @@ void Client::Handle_AuthServer_RequestServiceStatus()
         Abort("New version of application available or server is down for maintenance.");
     }
 
-    Frpg2RequestMessage::GetServiceStatusResponse TypedResponse;
+    DS3_Frpg2RequestMessage::GetServiceStatusResponse TypedResponse;
     Ensure(TypedResponse.ParseFromArray(Response.Payload.data(), (int)Response.Payload.size()));
 
     ChangeState(ClientState::AuthServer_ExchangeKeyData);
@@ -459,14 +459,14 @@ void Client::Handle_GameServer_RequestWaitForUserLogin()
 {
     LogS(GetName().c_str(), "Waiting for user login.");
 
-    Frpg2RequestMessage::RequestWaitForUserLogin Request;
+    DS3_Frpg2RequestMessage::RequestWaitForUserLogin Request;
     Request.set_steam_id(ClientStreamId.c_str(), ClientStreamId.size());
     Request.set_unknown_1(1);
     Request.set_unknown_2(0);
     Request.set_unknown_3(1);
     Request.set_unknown_4(2);
     
-    Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;
+    DS3_Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
     GamePlayerId = Response.player_id();
@@ -480,10 +480,10 @@ void Client::Handle_GameServer_RequestGetAnnounceMessageList()
 {
     LogS(GetName().c_str(), "Requesting announcement messages.");
 
-    Frpg2RequestMessage::RequestGetAnnounceMessageList Request;
+    DS3_Frpg2RequestMessage::RequestGetAnnounceMessageList Request;
     Request.set_max_entries(100);
 
-    Frpg2RequestMessage::RequestGetAnnounceMessageListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetAnnounceMessageListResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
     LogS(GetName().c_str(), "Recieved announcements.");
@@ -510,11 +510,11 @@ void Client::Handle_GameServer_RequestUpdateLoginPlayerCharacter()
 {
     LogS(GetName().c_str(), "Requesting update of login player character.");
 
-    Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter Request;
+    DS3_Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter Request;
     Request.set_character_id(LocalCharacterId);
     Request.mutable_unknown_2()->Add(LocalCharacterId);
 
-    Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
     ServerCharacterId = Response.character_id();
@@ -535,18 +535,18 @@ void Client::Handle_GameServer_RequestUpdatePlayerStatus()
     std::vector<uint8_t> RequestTemplateBytes;
     Ensure(ReadBytesFromFile("../../Resources/TemplateProtobufs/RequestUpdatePlayerStatus.dat", RequestTemplateBytes));
 
-    Frpg2RequestMessage::RequestUpdatePlayerStatus Request;
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerStatus Request;
     Request.ParseFromArray(RequestTemplateBytes.data(), (int)RequestTemplateBytes.size());
 
     std::string bytes = Request.status();
-    Frpg2PlayerData::AllStatus status;
+    DS3_Frpg2PlayerData::AllStatus status;
     status.ParseFromArray(bytes.data(), (int)bytes.size());
 
     ClientSoulLevel = status.player_status().soul_level();
     ClientSoulMemory = status.player_status().soul_memory();
     ClientWeaponLevel = status.player_status().max_weapon_level();
 
-    Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
     LogS(GetName().c_str(), "Recieved update player status response.");
@@ -561,10 +561,10 @@ void Client::Handle_GameServer_RequestUpdatePlayerCharacter()
     std::vector<uint8_t> RequestTemplateBytes;
     Ensure(ReadBytesFromFile("../../Resources/TemplateProtobufs/RequestUpdatePlayerCharacter.dat", RequestTemplateBytes));
 
-    Frpg2RequestMessage::RequestUpdatePlayerCharacter Request;
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerCharacter Request;
     Request.ParseFromArray(RequestTemplateBytes.data(), (int)RequestTemplateBytes.size());
 
-    Frpg2RequestMessage::RequestUpdatePlayerCharacterResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerCharacterResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
     Log("Recieved update player character response.");
@@ -576,7 +576,7 @@ void Client::Handle_GameServer_RequestGetRightMatchingArea()
 {
     LogS(GetName().c_str(), "Requesting right matching area.");
 
-    Frpg2RequestMessage::RequestGetRightMatchingArea Request;
+    DS3_Frpg2RequestMessage::RequestGetRightMatchingArea Request;
     Request.mutable_matching_parameter()->set_regulation_version(1350000);
     Request.mutable_matching_parameter()->set_unknown_id_2(2);
     Request.mutable_matching_parameter()->set_allow_cross_region(0);
@@ -586,17 +586,17 @@ void Client::Handle_GameServer_RequestGetRightMatchingArea()
     Request.mutable_matching_parameter()->set_soul_memory(ClientSoulMemory);
     Request.mutable_matching_parameter()->set_clear_count(0);
     Request.mutable_matching_parameter()->set_password("");
-    Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
+    Request.mutable_matching_parameter()->set_covenant(DS3_Frpg2RequestMessage::Covenant_Blue_Sentinels);
     Request.mutable_matching_parameter()->set_weapon_level(ClientWeaponLevel);
     Request.set_unknown(0);
 
-    Frpg2RequestMessage::RequestGetRightMatchingAreaResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetRightMatchingAreaResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
     LogS(GetName().c_str(), "Recieved populated matching areas.");
     for (int i = 0; i < Response.area_info_size(); i++)
     {
-        const Frpg2RequestMessage::RequestGetRightMatchingAreaResponse_Area_info& AreaInfo = Response.area_info(i);
+        const DS3_Frpg2RequestMessage::RequestGetRightMatchingAreaResponse_Area_info& AreaInfo = Response.area_info(i);
         LogS(GetName().c_str(), "\tArea:%i Population:%i", AreaInfo.online_area_id(), AreaInfo.population());
     }
 
@@ -619,20 +619,20 @@ void Client::Handle_GameServer_Idle()
                 {
                     LogS(GetName().c_str(), "Requesting sign list.");
 
-                    Frpg2RequestMessage::RequestGetSignList Request;
+                    DS3_Frpg2RequestMessage::RequestGetSignList Request;
                     Request.set_unknown_id_1(0);
                     Request.set_max_signs(0);
                     
-                    Frpg2RequestMessage::SignDomainGetInfo* Domain = Request.mutable_search_areas()->Add();
+                    DS3_Frpg2RequestMessage::SignDomainGetInfo* Domain = Request.mutable_search_areas()->Add();
                     Domain->set_online_area_id(30004);
                     Domain->set_max_signs(32);
                     
-                    Frpg2RequestMessage::SignGetFlags* Flags = Request.mutable_sign_get_flags();
+                    DS3_Frpg2RequestMessage::SignGetFlags* Flags = Request.mutable_sign_get_flags();
                     Flags->set_unknown_id_1(1);
                     Flags->set_unknown_id_2(1);
                     Flags->set_unknown_id_3(0);
                     
-                    Frpg2RequestMessage::MatchingParameter* Params = Request.mutable_matching_parameter();
+                    DS3_Frpg2RequestMessage::MatchingParameter* Params = Request.mutable_matching_parameter();
                     Params->set_regulation_version(1350000);
                     Params->set_unknown_id_2(2);
                     Params->set_allow_cross_region(0);
@@ -643,11 +643,11 @@ void Client::Handle_GameServer_Idle()
                     Params->set_unknown_string("");
                     Params->set_clear_count(0);
                     Params->set_password("");
-                    Params->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
+                    Params->set_covenant(DS3_Frpg2RequestMessage::Covenant_Blue_Sentinels);
                     Params->set_weapon_level(1);
                     Params->set_unknown_id_15("");
 
-                    Frpg2RequestMessage::RequestGetSignListResponse Response;
+                    DS3_Frpg2RequestMessage::RequestGetSignListResponse Response;
                     SendAndAwaitWaitForReply(&Request, &Response);
 
                     break;
@@ -656,15 +656,15 @@ void Client::Handle_GameServer_Idle()
                 {
                     LogS(GetName().c_str(), "Requesting blood message.");
 
-                    Frpg2RequestMessage::RequestGetBloodMessageList Request;
+                    DS3_Frpg2RequestMessage::RequestGetBloodMessageList Request;
                     Request.set_max_messages(40);
 
-                    Frpg2RequestMessage::BloodMessageDomainLimitData* Domain = Request.add_search_areas();
+                    DS3_Frpg2RequestMessage::BloodMessageDomainLimitData* Domain = Request.add_search_areas();
                     Domain->set_online_area_id(30004);
                     Domain->set_max_type_1(20);
                     Domain->set_max_type_2(20);
 
-                    Frpg2RequestMessage::RequestGetBloodMessageListResponse Response;
+                    DS3_Frpg2RequestMessage::RequestGetBloodMessageListResponse Response;
                     SendAndAwaitWaitForReply(&Request, &Response);
 
                     break;
@@ -673,14 +673,14 @@ void Client::Handle_GameServer_Idle()
                 {
                     LogS(GetName().c_str(), "Requesting blood stain.");
 
-                    Frpg2RequestMessage::RequestGetBloodstainList Request;
+                    DS3_Frpg2RequestMessage::RequestGetBloodstainList Request;
                     Request.set_max_stains(32);
 
-                    Frpg2RequestMessage::DomainLimitData* Domain = Request.add_search_areas();
+                    DS3_Frpg2RequestMessage::DomainLimitData* Domain = Request.add_search_areas();
                     Domain->set_online_area_id(30004);
                     Domain->set_max_items(32);
 
-                    Frpg2RequestMessage::RequestGetBloodstainListResponse Response;
+                    DS3_Frpg2RequestMessage::RequestGetBloodstainListResponse Response;
                     SendAndAwaitWaitForReply(&Request, &Response);
 
                     break;
@@ -696,10 +696,10 @@ void Client::Handle_GameServer_Idle()
     std::vector<uint8_t> RequestTemplateBytes;
     Ensure(ReadBytesFromFile("../../Resources/TemplateProtobufs/RequestUpdatePlayerCharacter.dat", RequestTemplateBytes));
 
-    Frpg2RequestMessage::RequestGetRegulationFile Request;
+    DS3_Frpg2RequestMessage::RequestGetRegulationFile Request;
     Request.set_unknown_1(0);
 
-    Frpg2RequestMessage::RequestGetRegulationFileResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetRegulationFileResponse Response;
     SendAndAwaitWaitForReply(&Request, &Response);
 
     Log("Recieved regulation file response");
@@ -730,14 +730,14 @@ void Client::Handle_GameServer_GatherStatistics()
 
                 // Get sign statistics.
                 {
-                    Frpg2RequestMessage::RequestGetSignList Request;
+                    DS3_Frpg2RequestMessage::RequestGetSignList Request;
                     Request.set_unknown_id_1(0);
                     Request.set_max_signs(100);
                     Request.mutable_sign_get_flags()->set_unknown_id_1(1);
                     Request.mutable_sign_get_flags()->set_unknown_id_2(1);
                     Request.mutable_sign_get_flags()->set_unknown_id_3(0);
 
-                    Frpg2RequestMessage::SignDomainGetInfo* DomainInfo = Request.mutable_search_areas()->Add();
+                    DS3_Frpg2RequestMessage::SignDomainGetInfo* DomainInfo = Request.mutable_search_areas()->Add();
                     DomainInfo->set_max_signs(100);
                     DomainInfo->set_online_area_id((int32)Area);
 
@@ -750,10 +750,10 @@ void Client::Handle_GameServer_GatherStatistics()
                     Request.mutable_matching_parameter()->set_soul_memory(Level * 100000); // Huuum, this might cause some issues.
                     Request.mutable_matching_parameter()->set_clear_count(0);
                     Request.mutable_matching_parameter()->set_password("");
-                    Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
+                    Request.mutable_matching_parameter()->set_covenant(DS3_Frpg2RequestMessage::Covenant_Blue_Sentinels);
                     Request.mutable_matching_parameter()->set_weapon_level(WeaponLevel);
 
-                    Frpg2RequestMessage::RequestGetSignListResponse Response;
+                    DS3_Frpg2RequestMessage::RequestGetSignListResponse Response;
                     SendAndAwaitWaitForReply(&Request, &Response);
 
                     int SignCount = Response.has_get_sign_result() ? Response.get_sign_result().sign_data_size() : 0;
@@ -766,7 +766,7 @@ void Client::Handle_GameServer_GatherStatistics()
 
                 // Get invasion statistics.
                 {
-                    Frpg2RequestMessage::RequestGetBreakInTargetList Request;
+                    DS3_Frpg2RequestMessage::RequestGetBreakInTargetList Request;
                     Request.set_map_id(AreaMapId);
                     Request.set_online_area_id((int32)Area);
                     Request.set_max_targets(100);
@@ -781,10 +781,10 @@ void Client::Handle_GameServer_GatherStatistics()
                     Request.mutable_matching_parameter()->set_soul_memory(Level * 100000); // Huuum, this might cause some issues.
                     Request.mutable_matching_parameter()->set_clear_count(0);
                     Request.mutable_matching_parameter()->set_password("");
-                    Request.mutable_matching_parameter()->set_covenant(Frpg2RequestMessage::Covenant_Blue_Sentinels);
+                    Request.mutable_matching_parameter()->set_covenant(DS3_Frpg2RequestMessage::Covenant_Blue_Sentinels);
                     Request.mutable_matching_parameter()->set_weapon_level(WeaponLevel);
 
-                    Frpg2RequestMessage::RequestGetBreakInTargetListResponse Response;
+                    DS3_Frpg2RequestMessage::RequestGetBreakInTargetListResponse Response;
                     SendAndAwaitWaitForReply(&Request, &Response);
 
                     int TargetCount = Response.target_data_size();

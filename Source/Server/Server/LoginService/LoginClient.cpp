@@ -73,7 +73,7 @@ bool LoginClient::Poll()
 
         // Login server only accepts RequestQueryLoginServerInfo messages. 
         // Nice and straight forward!
-        Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
+        DS3_Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
         if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
         {
             WarningS(GetName().c_str(), "Disconnecting client as recieved message that could not be parsed into expected format.");
@@ -91,7 +91,7 @@ bool LoginClient::Poll()
             LogS(GetName().c_str(), "Directing login client to our private ip (%s) as appears to be on private subnet.", ServerIP.c_str());
         }
 
-        Frpg2RequestMessage::RequestQueryLoginServerInfoResponse Response;
+        DS3_Frpg2RequestMessage::RequestQueryLoginServerInfoResponse Response;
         Response.set_server_ip(ServerIP);
         Response.set_port(Config.AuthServerPort);
 

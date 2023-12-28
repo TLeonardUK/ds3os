@@ -61,7 +61,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& State = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter* Request = (DS3_Frpg2RequestMessage::RequestUpdateLoginPlayerCharacter*)Message.Protobuf.get();
 
     std::shared_ptr<Character> Character = Database.FindCharacter(State.GetPlayerId(), Request->character_id());
     if (!Character)
@@ -77,10 +77,10 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
         Ensure(Character);
     }
 
-    Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdateLoginPlayerCharacterResponse Response;
     Response.set_character_id(Request->character_id());
 
-    Frpg2RequestMessage::QuickMatchRank* Rank = Response.mutable_quickmatch_brawl_rank();
+    DS3_Frpg2RequestMessage::QuickMatchRank* Rank = Response.mutable_quickmatch_brawl_rank();
     Rank->set_rank(Character->QuickMatchBrawlRank);
     Rank->set_xp(Character->QuickMatchBrawlXp);
 
@@ -99,17 +99,17 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdateLoginPlayerCharacter(
 
 MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestUpdatePlayerStatus* Request = (Frpg2RequestMessage::RequestUpdatePlayerStatus*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerStatus* Request = (DS3_Frpg2RequestMessage::RequestUpdatePlayerStatus*)Message.Protobuf.get();
 
     PlayerState& State = Client->GetPlayerState();
 
     // Merge the delta into the current state.
     std::string bytes = Request->status();
 
-    Frpg2PlayerData::AllStatus status;
+    DS3_Frpg2PlayerData::AllStatus status;
     if (!status.ParseFromArray(bytes.data(), (int)bytes.size()))
     {
-        WarningS(Client->GetName().c_str(), "Failed to parse Frpg2PlayerData::AllStatus from RequestUpdatePlayerStatus.");
+        WarningS(Client->GetName().c_str(), "Failed to parse DS3_Frpg2PlayerData::AllStatus from RequestUpdatePlayerStatus.");
 
         // Don't take this as an error, it will resolve itself on next send.
         return MessageHandleResult::Handled;
@@ -189,22 +189,22 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         }
 
         // Grab whatever visitor pool they should be in.
-        Frpg2RequestMessage::VisitorPool NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_None;
+        DS3_Frpg2RequestMessage::VisitorPool NewVisitorPool = DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_None;
         if (State.GetPlayerStatus().player_status().has_can_summon_for_way_of_blue() && State.GetPlayerStatus().player_status().can_summon_for_way_of_blue())
         {
-            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue;
+            NewVisitorPool = DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue;
         }
         if (State.GetPlayerStatus().player_status().has_can_summon_for_watchdog_of_farron() && State.GetPlayerStatus().player_status().can_summon_for_watchdog_of_farron())
         {
-            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Watchdog_of_Farron;
+            NewVisitorPool = DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_Watchdog_of_Farron;
         }
         if (State.GetPlayerStatus().player_status().has_can_summon_for_aldritch_faithful() && State.GetPlayerStatus().player_status().can_summon_for_aldritch_faithful())
         {
-            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Aldrich_Faithful;
+            NewVisitorPool = DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_Aldrich_Faithful;
         }
         if (State.GetPlayerStatus().player_status().has_can_summon_for_spear_of_church() && State.GetPlayerStatus().player_status().can_summon_for_spear_of_church())
         {
-            NewVisitorPool = Frpg2RequestMessage::VisitorPool::VisitorPool_Spear_of_the_Church;
+            NewVisitorPool = DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_Spear_of_the_Church;
         }
 
         if (NewVisitorPool != State.GetVisitorPool())
@@ -244,7 +244,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.play_data.unknown_id_4", State.GetPlayerStatus().play_data().unknown_4());
 #endif
 
-    Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestUpdatePlayerStatusResponse response.");
@@ -294,7 +294,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameC
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& State = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestUpdatePlayerCharacter* Request = (Frpg2RequestMessage::RequestUpdatePlayerCharacter*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerCharacter* Request = (DS3_Frpg2RequestMessage::RequestUpdatePlayerCharacter*)Message.Protobuf.get();
 
     std::vector<uint8_t> Data;
     Data.assign(Request->character_data().data(), Request->character_data().data() + Request->character_data().size());
@@ -305,7 +305,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerCharacter(GameC
         return MessageHandleResult::Error;
     }
 
-    Frpg2RequestMessage::RequestUpdatePlayerCharacterResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdatePlayerCharacterResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestUpdatePlayerCharacterResponse response.");
@@ -320,8 +320,8 @@ MessageHandleResult PlayerDataManager::Handle_RequestGetPlayerCharacter(GameClie
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& State = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetPlayerCharacter* Request = (Frpg2RequestMessage::RequestGetPlayerCharacter*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestGetPlayerCharacterResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetPlayerCharacter* Request = (DS3_Frpg2RequestMessage::RequestGetPlayerCharacter*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetPlayerCharacterResponse Response;
 
     std::vector<uint8_t> CharacterData;
     std::shared_ptr<Character> Character = Database.FindCharacter(Request->player_id(), Request->character_id());
@@ -345,12 +345,12 @@ MessageHandleResult PlayerDataManager::Handle_RequestGetPlayerCharacter(GameClie
 
 MessageHandleResult PlayerDataManager::Handle_RequestGetLoginPlayerCharacter(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestGetLoginPlayerCharacter* Request = (Frpg2RequestMessage::RequestGetLoginPlayerCharacter*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetLoginPlayerCharacter* Request = (DS3_Frpg2RequestMessage::RequestGetLoginPlayerCharacter*)Message.Protobuf.get();
 
     // TODO: Implement
     Ensure(false); // Never seen this in use.
 
-    Frpg2RequestMessage::RequestGetLoginPlayerCharacterResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetLoginPlayerCharacterResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetLoginPlayerCharacterResponse response.");
@@ -362,12 +362,12 @@ MessageHandleResult PlayerDataManager::Handle_RequestGetLoginPlayerCharacter(Gam
 
 MessageHandleResult PlayerDataManager::Handle_RequestGetPlayerCharacterList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestGetPlayerCharacterList* Request = (Frpg2RequestMessage::RequestGetPlayerCharacterList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetPlayerCharacterList* Request = (DS3_Frpg2RequestMessage::RequestGetPlayerCharacterList*)Message.Protobuf.get();
 
     // TODO: Implement
     Ensure(false); // Never seen this in use.
 
-    Frpg2RequestMessage::RequestGetPlayerCharacterListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetPlayerCharacterListResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetPlayerCharacterListResponse response.");

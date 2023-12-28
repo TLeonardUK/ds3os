@@ -119,11 +119,11 @@ void ServerManager::RunUntilQuit()
     }
 }
 
-bool ServerManager::NewServer(const std::string& Name, const std::string& Password, std::string& OutServerId)
+bool ServerManager::NewServer(const std::string& Name, const std::string& Password, GameType InGameType, std::string& OutServerId)
 {
     std::scoped_lock lock(m_mutex);
     OutServerId = MakeGUID();
-    return StartServer(OutServerId, Name, Password);
+    return StartServer(OutServerId, Name, Password, InGameType);
 }
 
 
@@ -134,13 +134,13 @@ void ServerManager::QueueCallback(std::function<void()> callback)
     Callbacks.push_back(callback);
 }
 
-bool ServerManager::StartServer(const std::string& ServerId, const std::string& Name, const std::string& Password)
+bool ServerManager::StartServer(const std::string& ServerId, const std::string& Name, const std::string& Password, GameType InGameType)
 {
     std::scoped_lock lock(m_mutex);
 
     Log("Starting server %s ...", ServerId.c_str());
 
-    std::unique_ptr<Server> Instance = std::make_unique<Server>(ServerId, Name, Password, this);
+    std::unique_ptr<Server> Instance = std::make_unique<Server>(ServerId, Name, Password, InGameType, this);
     Server* InstancePtr = Instance.get();
     ServerInstances.push_back(std::move(Instance));
 

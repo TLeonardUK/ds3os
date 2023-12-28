@@ -12,19 +12,19 @@
 bool Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
 #define DEFINE_REQUEST_RESPONSE(OpCode, Type, ProtobufClass, ResponseProtobufClass) \
-    if (dynamic_cast<Frpg2RequestMessage::ProtobufClass*>(Message) != nullptr)      \
+    if (dynamic_cast<DS3_Frpg2RequestMessage::ProtobufClass*>(Message) != nullptr)      \
     {                                                                               \
         Output = Frpg2ReliableUdpMessageType::Type;                                 \
         return true;                                                                \
     }                                                                               
 #define DEFINE_MESSAGE(OpCode, Type, ProtobufClass)                                 \
-    if (dynamic_cast<Frpg2RequestMessage::ProtobufClass*>(Message) != nullptr)      \
+    if (dynamic_cast<DS3_Frpg2RequestMessage::ProtobufClass*>(Message) != nullptr)      \
     {                                                                               \
         Output = Frpg2ReliableUdpMessageType::Type;                                 \
         return true;                                                                \
     }                                                                               
 #define DEFINE_PUSH_MESSAGE(OpCode, Type, ProtobufClass)                            \
-    if (dynamic_cast<Frpg2RequestMessage::ProtobufClass*>(Message) != nullptr)      \
+    if (dynamic_cast<DS3_Frpg2RequestMessage::ProtobufClass*>(Message) != nullptr)      \
     {                                                                               \
         Output = Frpg2ReliableUdpMessageType::Push; /* Not using push */            \
         return true;                                                                \
@@ -44,11 +44,11 @@ bool ReliableUdpMessageType_To_Protobuf(Frpg2ReliableUdpMessageType InType, bool
     {                                                                                                   \
         if (IsResponse)                                                                                 \
         {                                                                                               \
-            Output = std::make_shared<Frpg2RequestMessage::ResponseProtobufClass>();                    \
+            Output = std::make_shared<DS3_Frpg2RequestMessage::ResponseProtobufClass>();                    \
         }                                                                                               \
         else                                                                                            \
         {                                                                                               \
-            Output = std::make_shared<Frpg2RequestMessage::ProtobufClass>();                            \
+            Output = std::make_shared<DS3_Frpg2RequestMessage::ProtobufClass>();                            \
         }                                                                                               \
         return true;                                                                                    \
     }
@@ -61,7 +61,7 @@ bool ReliableUdpMessageType_To_Protobuf(Frpg2ReliableUdpMessageType InType, bool
         }                                                                                               \
         else                                                                                            \
         {                                                                                               \
-            Output = std::make_shared<Frpg2RequestMessage::ProtobufClass>();                            \
+            Output = std::make_shared<DS3_Frpg2RequestMessage::ProtobufClass>();                            \
             return true;                                                                                \
         }                                                                                               \
     }

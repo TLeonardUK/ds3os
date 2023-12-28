@@ -112,9 +112,9 @@ MessageHandleResult BloodMessageManager::Handle_RequestReentryBloodMessage(GameC
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
 
-    Frpg2RequestMessage::RequestReentryBloodMessage* Request = (Frpg2RequestMessage::RequestReentryBloodMessage*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestReentryBloodMessage* Request = (DS3_Frpg2RequestMessage::RequestReentryBloodMessage*)Message.Protobuf.get();
 
-    Frpg2RequestMessage::RequestReentryBloodMessageResponse Response;
+    DS3_Frpg2RequestMessage::RequestReentryBloodMessageResponse Response;
     auto RecreateMessageIds = Response.mutable_recreate_message_ids();
 
     // Go through all ids, if they are already in the live pool, do nothing, if they
@@ -122,7 +122,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReentryBloodMessage(GameC
     // ask for them to be recreated.
     for (int i = 0; i < Request->messages_size(); i++)
     {
-        const Frpg2RequestMessage::LocatedBloodMessage& Message = Request->messages(i);
+        const DS3_Frpg2RequestMessage::LocatedBloodMessage& Message = Request->messages(i);
         
         OnlineAreaId OnlineArea = static_cast<OnlineAreaId>(Message.online_area_id());
         uint32_t Id = Message.message_id();
@@ -155,15 +155,15 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
     
-    Frpg2RequestMessage::RequestReCreateBloodMessageList* Request = (Frpg2RequestMessage::RequestReCreateBloodMessageList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestReCreateBloodMessageList* Request = (DS3_Frpg2RequestMessage::RequestReCreateBloodMessageList*)Message.Protobuf.get();
 
-    Frpg2RequestMessage::RequestReCreateBloodMessageListResponse Response;
+    DS3_Frpg2RequestMessage::RequestReCreateBloodMessageListResponse Response;
     auto CreatedMessageIds = Response.mutable_message_ids();
 
     // Recreate all the messages passed through by the client.
     for (int i = 0; i < Request->blood_message_info_list_size(); i++)
     {
-        const Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list& MessageInfo = Request->blood_message_info_list(i);
+        const DS3_Frpg2RequestMessage::RequestReCreateBloodMessageList_Blood_message_info_list& MessageInfo = Request->blood_message_info_list(i);
 
         std::vector<uint8_t> MessageData;
         MessageData.assign(MessageInfo.message_data().data(), MessageInfo.message_data().data() + MessageInfo.message_data().size());
@@ -196,17 +196,17 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageEvaluation
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetBloodMessageEvaluation* Request = (Frpg2RequestMessage::RequestGetBloodMessageEvaluation*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetBloodMessageEvaluation* Request = (DS3_Frpg2RequestMessage::RequestGetBloodMessageEvaluation*)Message.Protobuf.get();
 
-    Frpg2RequestMessage::RequestGetBloodMessageEvaluationResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetBloodMessageEvaluationResponse Response;
     auto MessageEvaluation = Response.mutable_messages();
 
     // Grab the current rating for every message, first from live if possible, then database.
     for (int i = 0; i < Request->messages_size(); i++)
     {
-        const Frpg2RequestMessage::LocatedBloodMessage& MessageInfo = Request->messages(i);
+        const DS3_Frpg2RequestMessage::LocatedBloodMessage& MessageInfo = Request->messages(i);
 
-        Frpg2RequestMessage::BloodMessageEvaluationData& EvalData = *MessageEvaluation->Add();
+        DS3_Frpg2RequestMessage::BloodMessageEvaluationData& EvalData = *MessageEvaluation->Add();
         EvalData.set_message_id(MessageInfo.message_id());
 
         // Try live cache first.
@@ -246,9 +246,9 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestCreateBloodMessage* Request = (Frpg2RequestMessage::RequestCreateBloodMessage*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestCreateBloodMessage* Request = (DS3_Frpg2RequestMessage::RequestCreateBloodMessage*)Message.Protobuf.get();
 
-    Frpg2RequestMessage::RequestCreateBloodMessageResponse Response;
+    DS3_Frpg2RequestMessage::RequestCreateBloodMessageResponse Response;
 
     std::vector<uint8_t> MessageData;
     MessageData.assign(Request->message_data().data(), Request->message_data().data() + Request->message_data().size());
@@ -290,7 +290,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestRemoveBloodMessage* Request = (Frpg2RequestMessage::RequestRemoveBloodMessage*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRemoveBloodMessage* Request = (DS3_Frpg2RequestMessage::RequestRemoveBloodMessage*)Message.Protobuf.get();
 
     LogS(Client->GetName().c_str(), "Removing blood message %i.", Request->message_id());
 
@@ -305,7 +305,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestRemoveBloodMessage(GameCl
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestRemoveBloodMessageResponse Response;
+    DS3_Frpg2RequestMessage::RequestRemoveBloodMessageResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRemoveBloodMessageResponse response.");
@@ -321,8 +321,8 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetBloodMessageList* Request = (Frpg2RequestMessage::RequestGetBloodMessageList*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestGetBloodMessageListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetBloodMessageList* Request = (DS3_Frpg2RequestMessage::RequestGetBloodMessageList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetBloodMessageListResponse Response;
     Response.mutable_messages();
 
     uint32_t RemainingMessageCount = Request->max_messages();
@@ -332,7 +332,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
         // Grab a random set of message from the live cache.
         for (int i = 0; i < Request->search_areas_size() && RemainingMessageCount > 0; i++)
         {
-            const Frpg2RequestMessage::BloodMessageDomainLimitData& Area = Request->search_areas(i);
+            const DS3_Frpg2RequestMessage::BloodMessageDomainLimitData& Area = Request->search_areas(i);
 
             OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
             uint32_t MaxForArea = Area.max_type_1() + Area.max_type_2(); // TODO: we need to figure out the difference between these two types.
@@ -347,7 +347,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageList(GameC
                     continue;
                 }
             
-                Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
+                DS3_Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
                 Data.set_player_id(AreaMsg->PlayerId);
                 Data.set_character_id(AreaMsg->CharacterId); 
                 Data.set_message_id(AreaMsg->MessageId);
@@ -376,7 +376,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestEvaluateBloodMessage* Request = (Frpg2RequestMessage::RequestEvaluateBloodMessage*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestEvaluateBloodMessage* Request = (DS3_Frpg2RequestMessage::RequestEvaluateBloodMessage*)Message.Protobuf.get();
 
     std::shared_ptr<BloodMessage> ActiveMessage = nullptr;
 
@@ -428,8 +428,8 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
         {
             LogS(Client->GetName().c_str(), "Sending push message for evaluation of blood message %i to player %i.", ActiveMessage->MessageId, ActiveMessage->PlayerId);
 
-            Frpg2RequestMessage::PushRequestEvaluateBloodMessage EvaluatePushMessage;
-            EvaluatePushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestEvaluateBloodMessage);
+            DS3_Frpg2RequestMessage::PushRequestEvaluateBloodMessage EvaluatePushMessage;
+            EvaluatePushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestEvaluateBloodMessage);
             EvaluatePushMessage.set_player_id(Player.GetPlayerId());
             EvaluatePushMessage.set_player_steam_id(Player.GetSteamId());
             EvaluatePushMessage.set_message_id(ActiveMessage->MessageId);
@@ -448,7 +448,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestEvaluateBloodMessageResponse Response;
+    DS3_Frpg2RequestMessage::RequestEvaluateBloodMessageResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestEvaluateBloodMessageResponse response.");

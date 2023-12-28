@@ -94,7 +94,7 @@ MessageHandleResult QuickMatchManager::OnMessageRecieved(GameClient* Client, con
     return MessageHandleResult::Unhandled;
 }
 
-bool QuickMatchManager::CanMatchWith(GameClient* Client, const Frpg2RequestMessage::RequestSearchQuickMatch& Request, const std::shared_ptr<Match>& Match)
+bool QuickMatchManager::CanMatchWith(GameClient* Client, const DS3_Frpg2RequestMessage::RequestSearchQuickMatch& Request, const std::shared_ptr<Match>& Match)
 {
     // Matches requested game mode.
     if (Match->GameMode != Request.mode())
@@ -154,8 +154,8 @@ std::shared_ptr<QuickMatchManager::Match> QuickMatchManager::GetMatchByHost(uint
 
 MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestSearchQuickMatch* Request = (Frpg2RequestMessage::RequestSearchQuickMatch*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestSearchQuickMatchResponse Response;
+    DS3_Frpg2RequestMessage::RequestSearchQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestSearchQuickMatch*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestSearchQuickMatchResponse Response;
 
 #ifdef _DEBUG
     static DiffTracker Tracker;
@@ -179,7 +179,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient
             continue;
         }
 
-        Frpg2RequestMessage::QuickMatchSearchResult* Result = Response.add_matches();
+        DS3_Frpg2RequestMessage::QuickMatchSearchResult* Result = Response.add_matches();
         Result->mutable_data()->set_host_player_id(Iter->HostPlayerId);
         Result->mutable_data()->set_host_player_steam_id(Iter->HostPlayerSteamId);
         Result->mutable_data()->set_online_area_id((uint32_t)Iter->AreaId);
@@ -192,7 +192,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient
     // If there are no results server seems to send an empty match result, client fails without it.
     if (ResultCount == 0)
     {
-        Frpg2RequestMessage::QuickMatchSearchResult* Result = Response.add_matches();
+        DS3_Frpg2RequestMessage::QuickMatchSearchResult* Result = Response.add_matches();
         Result->set_unknown_3(0);
         Result->set_unknown_4(0);
     }
@@ -211,8 +211,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestSearchQuickMatch(GameClient
 
 MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestRegisterQuickMatch* Request = (Frpg2RequestMessage::RequestRegisterQuickMatch*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestRegisterQuickMatchResponse Response;
+    DS3_Frpg2RequestMessage::RequestRegisterQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestRegisterQuickMatch*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRegisterQuickMatchResponse Response;
 
     std::shared_ptr<Match> NewMatch = std::make_shared<Match>();
     NewMatch->HostPlayerId = Client->GetPlayerState().GetPlayerId();
@@ -241,14 +241,14 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
             std::string ModeName = "";
             switch (NewMatch->GameMode)
             {
-                case Frpg2RequestMessage::QuickMatchGameMode::Duel:                     ModeName = "Dual";              break;
-                case Frpg2RequestMessage::QuickMatchGameMode::FourPlayerBrawl:          ModeName = "4 Player Brawl";    break;
-                case Frpg2RequestMessage::QuickMatchGameMode::SixPlayerBrawl:           ModeName = "6 Player Brawl";    break;
-                case Frpg2RequestMessage::QuickMatchGameMode::ThreeVersusThree:         ModeName = "3 v 3";             break;
-                case Frpg2RequestMessage::QuickMatchGameMode::ThreeVersusThree_Team:    ModeName = "Team 3 v 3";        break;
-                case Frpg2RequestMessage::QuickMatchGameMode::TwoPlayerBrawl:           ModeName = "2 Player Brawl";    break;
-                case Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo:             ModeName = "2 v 2";             break;
-                case Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo_Team:        ModeName = "Team 2 v 2";        break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::Duel:                     ModeName = "Dual";              break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::FourPlayerBrawl:          ModeName = "4 Player Brawl";    break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::SixPlayerBrawl:           ModeName = "6 Player Brawl";    break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::ThreeVersusThree:         ModeName = "3 v 3";             break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::ThreeVersusThree_Team:    ModeName = "Team 3 v 3";        break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::TwoPlayerBrawl:           ModeName = "2 Player Brawl";    break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo:             ModeName = "2 v 2";             break;
+                case DS3_Frpg2RequestMessage::QuickMatchGameMode::TwoVersusTwo_Team:        ModeName = "Team 2 v 2";        break;
             }
 
             ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::UndeadMatch, 
@@ -267,8 +267,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestRegisterQuickMatch(GameClie
 
 MessageHandleResult QuickMatchManager::Handle_RequestUnregisterQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestUnregisterQuickMatch* Request = (Frpg2RequestMessage::RequestUnregisterQuickMatch*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestUnregisterQuickMatchResponse Response;
+    DS3_Frpg2RequestMessage::RequestUnregisterQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestUnregisterQuickMatch*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestUnregisterQuickMatchResponse Response;
 
     for (auto Iter = Matches.begin(); Iter != Matches.end(); /* empty */)
     {
@@ -300,13 +300,13 @@ MessageHandleResult QuickMatchManager::Handle_RequestUnregisterQuickMatch(GameCl
 
 MessageHandleResult QuickMatchManager::Handle_RequestUpdateQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestUpdateQuickMatch* Request = (Frpg2RequestMessage::RequestUpdateQuickMatch*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestUpdateQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestUpdateQuickMatch*)Message.Protobuf.get();
 
     // Not sure we really need to do anything with this. It just keeps the match alive?
 
     LogS(Client->GetName().c_str(), "RequestUpdateQuickMatch: Updated match.");
 
-    Frpg2RequestMessage::RequestUpdateQuickMatchResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdateQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestUpdateQuickMatchResponse response.");
@@ -321,7 +321,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestJoinQuickMatch* Request = (Frpg2RequestMessage::RequestJoinQuickMatch*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestJoinQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestJoinQuickMatch*)Message.Protobuf.get();
 
     bool bSuccess = false;
 
@@ -333,8 +333,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
         {        
             LogS(Client->GetName().c_str(), "RequestJoinQuickMatch: Attempting to join match hosted by %s", HostClient->GetName().c_str());
 
-            Frpg2RequestMessage::PushRequestJoinQuickMatch PushMessage;
-            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestJoinQuickMatch);
+            DS3_Frpg2RequestMessage::PushRequestJoinQuickMatch PushMessage;
+            PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestJoinQuickMatch);
             PushMessage.mutable_message()->set_join_player_id(Player.GetPlayerId());
             PushMessage.mutable_message()->set_join_player_steam_id(Player.GetSteamId());
             PushMessage.mutable_message()->set_join_character_id(Request->character_id());
@@ -361,8 +361,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
 
     if (!bSuccess)
     {
-        Frpg2RequestMessage::PushRequestRejectQuickMatch PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectQuickMatch);
+        DS3_Frpg2RequestMessage::PushRequestRejectQuickMatch PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectQuickMatch);
         PushMessage.mutable_message()->set_host_player_id(Request->host_player_id());
         PushMessage.mutable_message()->set_unknown_2(0);
      
@@ -375,7 +375,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* 
         return MessageHandleResult::Handled;
     }
 
-    Frpg2RequestMessage::RequestJoinQuickMatchResponse Response;
+    DS3_Frpg2RequestMessage::RequestJoinQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestJoinQuickMatchResponse response.");
@@ -389,7 +389,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
 {
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestAcceptQuickMatch* Request = (Frpg2RequestMessage::RequestAcceptQuickMatch*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestAcceptQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestAcceptQuickMatch*)Message.Protobuf.get();
 
     bool ShouldProcessRequest = true;
 
@@ -398,8 +398,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
     {    
         LogS(Client->GetName().c_str(), "RequestAcceptQuickMatch: Accepting join request from %s", TargetClient->GetName().c_str());
 
-        Frpg2RequestMessage::PushRequestAcceptQuickMatch PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestAcceptQuickMatch);
+        DS3_Frpg2RequestMessage::PushRequestAcceptQuickMatch PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestAcceptQuickMatch);
         PushMessage.mutable_message()->set_host_player_id(Player.GetPlayerId());
         PushMessage.mutable_message()->set_host_player_steam_id(Player.GetSteamId());
         PushMessage.mutable_message()->set_metadata(Request->data().data(), Request->data().size());
@@ -410,7 +410,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestAcceptQuickMatch(GameClient
         }
     }
 
-    Frpg2RequestMessage::RequestAcceptQuickMatchResponse Response;
+    DS3_Frpg2RequestMessage::RequestAcceptQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestAcceptQuickMatchResponse response.");
@@ -424,15 +424,15 @@ MessageHandleResult QuickMatchManager::Handle_RequestRejectQuickMatch(GameClient
 {
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestRejectQuickMatch* Request = (Frpg2RequestMessage::RequestRejectQuickMatch*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRejectQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestRejectQuickMatch*)Message.Protobuf.get();
 
     if (std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->join_player_id()))
     {
         LogS(Client->GetName().c_str(), "RequestRejectQuickMatch: Rejecting join request from %s", TargetClient->GetName().c_str());
         Log(" unknown_5 = %i", Request->unknown_5());
 
-        Frpg2RequestMessage::PushRequestRejectQuickMatch PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectQuickMatch);
+        DS3_Frpg2RequestMessage::PushRequestRejectQuickMatch PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectQuickMatch);
         PushMessage.mutable_message()->set_host_player_id(Player.GetPlayerId());
         PushMessage.mutable_message()->set_unknown_2(0);
 
@@ -442,7 +442,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestRejectQuickMatch(GameClient
         }
     }
 
-    Frpg2RequestMessage::RequestRejectQuickMatchResponse Response;
+    DS3_Frpg2RequestMessage::RequestRejectQuickMatchResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectQuickMatchResponse response.");
@@ -456,7 +456,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchStart(GameCli
 {
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestSendQuickMatchStart* Request = (Frpg2RequestMessage::RequestSendQuickMatchStart*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestSendQuickMatchStart* Request = (DS3_Frpg2RequestMessage::RequestSendQuickMatchStart*)Message.Protobuf.get();
 
     LogS(Client->GetName().c_str(), "RequestSendQuickMatchStart: Starting quick match hosted by self.");
 
@@ -471,7 +471,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchStart(GameCli
         }
     }
 
-    Frpg2RequestMessage::RequestSendQuickMatchStartResponse Response;
+    DS3_Frpg2RequestMessage::RequestSendQuickMatchStartResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestSendQuickMatchStartResponse response.");
@@ -487,8 +487,8 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     const RuntimeConfig& Config = ServerInstance->GetConfig();
     PlayerState& State = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestSendQuickMatchResult* Request = (Frpg2RequestMessage::RequestSendQuickMatchResult*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestSendQuickMatchResultResponse Response;
+    DS3_Frpg2RequestMessage::RequestSendQuickMatchResult* Request = (DS3_Frpg2RequestMessage::RequestSendQuickMatchResult*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestSendQuickMatchResultResponse Response;
     Response.set_unknown_1(0); // TODO: Figure out.
 
     LogS(Client->GetName().c_str(), "RequestSendQuickMatchResult: Sending quick match results hosted by self.");
@@ -502,7 +502,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     }
 
     // Increase and return rank.
-    bool IsDuel = (Request->mode() == Frpg2RequestMessage::QuickMatchGameMode::Duel);
+    bool IsDuel = (Request->mode() == DS3_Frpg2RequestMessage::QuickMatchGameMode::Duel);
 
     uint32_t OriginalRank = IsDuel ? Character->QuickMatchDuelRank : Character->QuickMatchBrawlRank;
     uint32_t OriginalXP = IsDuel ? Character->QuickMatchDuelXp : Character->QuickMatchBrawlXp;
@@ -512,22 +512,22 @@ MessageHandleResult QuickMatchManager::Handle_RequestSendQuickMatchResult(GameCl
     
     switch (Request->result())
     {
-        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Win:
+        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Win:
         {
             XP += Config.QuickMatchWinXp;
             break;
         }
-        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Draw:
+        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Draw:
         {
             XP += Config.QuickMatchDrawXp;
             break;
         }
-        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Lose:
+        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Lose:
         {
             XP += Config.QuickMatchLoseXp;
             break;
         }
-        case Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Disconnect:
+        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Disconnect:
         {
             // No XP gained.
             break;

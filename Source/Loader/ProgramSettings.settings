@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Loader" GeneratedClassName="ProgramSettings">
   <Profiles />
   <Settings>
-    <Setting Name="exe_location" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="server_config_json" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -15,10 +12,16 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="minimum_players" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="use_seperate_saves" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ds2_exe_location" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ds3_exe_location" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

@@ -11,7 +11,7 @@
 
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
-package Frpg2PlayerData;
+package DS2_Frpg2PlayerData;
 
 message DateTime {
     required uint32 year = 1;

@@ -85,7 +85,7 @@ bool AuthClient::Poll()
                 }
 
                 // First request is always the handshake request. 
-                Frpg2RequestMessage::RequestHandshake Request;
+                DS3_Frpg2RequestMessage::RequestHandshake Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
                     WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting RequestHandshake.");
@@ -136,7 +136,7 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                Frpg2RequestMessage::GetServiceStatus Request;
+                DS3_Frpg2RequestMessage::GetServiceStatus Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
                     WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting GetServiceStatus.");
@@ -147,7 +147,7 @@ bool AuthClient::Poll()
 
                 // Note: I think empty response is sent back here if an update is available.
 
-                Frpg2RequestMessage::GetServiceStatusResponse Response;
+                DS3_Frpg2RequestMessage::GetServiceStatusResponse Response;
                 if (Request.app_version() >= BuildConfig::MIN_APP_VERSION && Request.app_version() <= BuildConfig::APP_VERSION)
                 {
                     Response.set_id(2);

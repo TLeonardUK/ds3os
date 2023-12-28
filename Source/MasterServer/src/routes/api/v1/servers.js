@@ -87,7 +87,7 @@ function RemoveServer(Id)
     }
 }
 
-function AddServer(Id, IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address, port)
+function AddServer(Id, IpAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address, port, is_shard, game_type)
 {
     var ServerObj = {
         "Id": Id,
@@ -104,6 +104,8 @@ function AddServer(Id, IpAddress, hostname, private_hostname, description, name,
         "ModsBlackList": mods_black_list,
         "ModsRequiredList": mods_required_list,
         "AllowSharding": allow_sharding,
+        "IsShard": is_shard,
+        "GameType": game_type,
         "WebAddress": web_address,
         "UpdatedTime": Date.now(),
         "Version": version,
@@ -131,7 +133,7 @@ function AddServer(Id, IpAddress, hostname, private_hostname, description, name,
 
     GActiveServers.push(ServerObj);
     
-    console.log(`Adding server: id=${Id} ip=${IpAddress} port=${port} name=${name}`);
+    console.log(`Adding server: id=${Id} ip=${IpAddress} port=${port} type=${game_type} name=${name}`);
     console.log(`Total servers is now ${GActiveServers.length}`);
 }
 
@@ -194,6 +196,8 @@ router.get('/', async (req, res) => {
             "ModsBlackList": Server["ModsBlackList"],
             "ModsRequiredList": Server["ModsRequiredList"],
             "AllowSharding": Server["AllowSharding"],
+            "IsShard": Server["IsShard"],
+            "GameType": Server["GameType"],
             "WebAddress": Server["WebAddress"]
         });
     }
@@ -298,6 +302,8 @@ router.post('/', async (req, res) => {
     var mods_black_list = req.body["ModsBlackList"];
     var mods_required_list = req.body["ModsRequiredList"];
     var allow_sharding = false;
+    var is_shard = false;
+    var game_type = "DarkSouls3";
     var web_address = "";
     var server_id = req.connection.remoteAddress;
     var port = 50050;
@@ -318,10 +324,18 @@ router.post('/', async (req, res) => {
     {
         port = req.body["Port"];
     }
+    if ('IsShard' in req.body)
+    {
+        is_shard = (req.body["IsShard"] == "1" || req.body["IsShard"] == "true");
+    }
+    if ('GameType' in req.body)
+    {
+        game_type = req.body["GameType"];
+    }
 
     var version = ('ServerVersion' in req.body) ? parseInt(req.body['ServerVersion']) : 1;
 
-    AddServer(server_id, req.connection.remoteAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address, port);
+    AddServer(server_id, req.connection.remoteAddress, hostname, private_hostname, description, name, public_key, player_count, password, mods_white_list, mods_black_list, mods_required_list, version, allow_sharding, web_address, port, is_shard, game_type);
     
     res.json({ "status":"success" });
 });

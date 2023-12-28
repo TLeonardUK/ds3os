@@ -83,11 +83,11 @@ public:
     DEFINE_FIELD(int, MaxWeaponLevel, 0)
     
     // What type of visitor the player can currently be summoned as.
-    DEFINE_FIELD(Frpg2RequestMessage::VisitorPool, VisitorPool, Frpg2RequestMessage::VisitorPool::VisitorPool_None)
+    DEFINE_FIELD(DS3_Frpg2RequestMessage::VisitorPool, VisitorPool, DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_None)
     
     // Information the player sends and periodically patches with 
     // RequestUpdatePlayerStatus requests.
-    DEFINE_FIELD(Frpg2PlayerData::AllStatus, PlayerStatus, Frpg2PlayerData::AllStatus())
+    DEFINE_FIELD(DS3_Frpg2PlayerData::AllStatus, PlayerStatus, DS3_Frpg2PlayerData::AllStatus())
 
     // Current anti-cheat penalty score.
     DEFINE_FIELD(PlayerAntiCheatState, AntiCheatState, {});

@@ -34,6 +34,7 @@ namespace Loader
         {
             public string serverName { get; set; }
             public string serverPassword { get; set; }
+            public string serverGameType { get; set; }
             public string machineId { get; set; }
         }
 
@@ -90,7 +91,7 @@ namespace Loader
             return Result;
         }
 
-        public static CreateServerResponse CreateServer(string ServerAddress, string ServerName, string ServerPassword)
+        public static CreateServerResponse CreateServer(string ServerAddress, string ServerName, string ServerPassword, string ServerGameType)
         {
             // This is kinda jank, we should probably just generate a uuid and save it off the first time the user runs the application.
             string machineIdEntropy = Environment.MachineName + Environment.UserName + Environment.ProcessorCount + Environment.OSVersion;
@@ -99,6 +100,7 @@ namespace Loader
             Request.serverName = ServerName;
             Request.serverPassword = ServerPassword;
             Request.machineId = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(machineIdEntropy)));
+            Request.serverGameType = ServerGameType;
 
             CreateServerResponse Result = DoRequest<CreateServerResponse>(HttpMethod.Post, ServerAddress + "/sharding", JsonContent.Create<CreateServerRequest>(Request));
             if (Result != null)

@@ -17,6 +17,8 @@
 
 #include "Shared/Core/Network/NetIPAddress.h"
 
+#include "Shared/Game/GameType.h"
+
 #include "Config/RuntimeConfig.h"
 
 #include <memory>
@@ -50,7 +52,7 @@ enum class DiscordNoticeType
 class Server
 {
 public:
-    Server(const std::string& InServerId, const std::string& InServerName, const std::string& InServerPassword, ServerManager* InManager);
+    Server(const std::string& InServerId, const std::string& InServerName, const std::string& InServerPassword, GameType InType, ServerManager* InManager);
     ~Server();
 
     bool Init();
@@ -69,6 +71,8 @@ public:
     std::string GetId()                 { return ServerId; }
     bool IsDefaultServer()              { return ServerId == "default"; }
     ServerManager& GetManager()         { return *Manager; }
+
+    GameType GetGameType()              { return ServerGameType; }
 
     std::filesystem::path GetSavedPath(){ return SavedPath; }
 
@@ -124,6 +128,9 @@ private:
     RuntimeConfig Config;
 
     std::vector<std::shared_ptr<Service>> Services;
+
+    GameType ServerGameType;
+    GameType DefaultServerGameType;
 
     ServerManager* Manager;
 

@@ -1,0 +1,313 @@
+/*
+ * Dark Souls 3 - Open Server
+ * Copyright (C) 2021 Tim Leonard
+ *
+ * This program is free software; licensed under the MIT license. 
+ * You should have received a copy of the license along with this program. 
+ * If not, see <https://opensource.org/licenses/MIT>.
+ */
+
+// Credit: A lot of information here has been derived from the protobufs of AmirBohd's ModEngine2.
+
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+package DS3_Frpg2PlayerData;
+
+message DateTime {
+    required uint32 year = 1;
+    required uint32 month = 2;
+    required uint32 day = 3;
+    required uint32 hours = 4;
+    required uint32 minutes = 5;
+    required uint32 seconds = 6;
+    required uint32 tzdiff = 7; 
+}
+
+message UnknownStruct1 {
+    optional int64 unknown_1 = 1;   // Always seems to be 3576692768, wondering if this is an offline id of some description?
+    optional string unknown_2 = 2;  // Mostly unused, when this is filled in it looks like a timestamp followed by the player id. eg. 202108092109340005938762
+    optional int64 unknown_3 = 3;   // Always seems to be either -1 or 0
+}
+
+message AllStatus {
+    optional PlayerLocation player_location = 1;
+    optional LogInfo log_info = 2;
+    optional PlayerStatus player_status = 3;
+    optional PlayData play_data = 4;
+    optional StatsInfo stats_info = 5;
+    optional Equipment equipment = 6;
+    optional UnknownStruct1 unknown_1 = 7;
+}
+
+enum InvasionType {
+    InvasionType_None = 0;
+    InvasionType_Summon_White = 1;
+    InvasionType_Summon_Red = 2;
+    InvasionType_Invade_Red = 3;
+    InvasionType_Summon_Purple_White = 4;
+    InvasionType_Covenant_Spear_of_the_Church = 6;
+    InvasionType_Covenant_Blade_of_the_Darkmoon = 7;
+    InvasionType_Guardian_of_Rosaria = 8;
+    InvasionType_Covenant_Watchdog_of_Farron = 9;
+    InvasionType_Covenant_Aldrich_Faithful = 10;
+    InvasionType_Avatar = 11;
+    InvasionType_Arena_Battle_Royal = 12;
+    InvasionType_Umbasa_White = 13;
+    InvasionType_Summon_Sunlight_White = 14;
+    InvasionType_Summon_Sunlight_Dark = 15;
+    InvasionType_Summon_Purple_Dark = 16;
+    InvasionType_Invade_Sunlight_Dark = 17;
+    InvasionType_Invade_Purple_Dark = 18;
+    InvasionType_Force_Join_Session = 19;
+    InvasionType_Red_Hunter = 20;
+    InvasionType_Covenant_Blue_Sentinel = 21;
+}
+
+enum WorldType {
+    WorldType_None = 0;              // Loading screens etc
+    WorldType_Singleplayer = 1;      // User is on their own
+    WorldType_Multiplayer = 2;       // Multiple users are in the world
+}
+
+enum NetMode {
+    NetMode_None = 0;               // On own, not hosting a shared world.
+    NetMode_Host = 1;               // Multiple users in game, we are hosting.
+    NetMode_Client = 2;             // Multiple users in game, we are a client.
+}
+
+message PlayerStatus {
+
+    // Ranking registration is probably in here somewhere.
+    // Invasion time limit is also probably here
+
+    optional uint32 regulation_version = 1;                
+    optional uint32 unknown_2 = 2;                           // 2
+
+    optional bool cross_region_matchmaking_disabled = 3;
+    optional int32 soul_level = 4; 
+
+    optional uint32 sinner_points = 5;
+    optional uint32 unknown_6 = 6;                           // 0
+    optional uint32 is_invadable = 7;                        
+    optional uint32 can_summon_for_way_of_blue = 8;     
+    optional uint32 unknown_9 = 9;                           // 0
+    optional uint32 can_summon_for_watchdog_of_farron = 10;   
+    optional uint32 can_summon_for_aldritch_faithful = 11;    
+    optional uint32 can_summon_for_spear_of_church = 12;      
+    optional uint32 unknown_13 = 13;                         // 1
+    optional uint32 unknown_14 = 14;                         // 0
+    optional WorldType world_type = 15;                      
+    optional uint32 covenant = 16;                           
+
+    repeated uint32 played_areas = 17;
+
+    repeated uint32 unknown_18 = 18;                         // 0 or 1
+    optional uint32 embered = 19;                         
+    optional uint32 souls = 20;                              
+    optional uint32 soul_memory = 21;                        
+    optional uint32 archetype = 22;                        
+
+    optional int32 hp = 23;
+    optional int32 max_hp = 24;
+    optional int32 base_max_hp = 25;
+    optional int32 fp = 26;
+    optional int32 max_fp = 27;
+    optional int32 base_max_fp = 28;
+    optional int32 stamina = 29;
+    optional int32 max_stamina = 30;
+    optional int32 base_max_stamina = 31;
+
+    optional uint32 unknown_32 = 32;                         // 
+    optional uint32 unknown_33 = 33;                         // 
+    optional NetMode net_mode = 34;                         
+    optional uint32 dried_fingers_active = 35;              
+    optional InvasionType invasion_type = 36;                       
+    optional uint32 character_id = 37;                       
+
+    optional string name = 38;
+    optional bool is_male = 39;
+
+    optional int32 vigor = 40;
+    optional int32 attunement = 41;
+    optional int32 endurance = 42;
+    optional int32 vitality = 43;
+    optional int32 strength = 44;
+    optional int32 dexterity = 45;
+    optional int32 intelligence = 46;
+    optional int32 faith = 47;
+    optional int32 luck = 48;
+
+    optional float equip_load = 49;                         
+    optional float one_minus_poise_fraction = 50;           // This is kind wierd value. If the value is 0.737, you do (1-0.737), resulting in 0.263 which when multiplied by 100 gives you the poise show on the status screen (26.2)
+    optional int32 item_discovery = 51;                     
+    optional int32 attack_power_r_weapon_1  = 52;           
+    optional int32 attack_power_r_weapon_2 = 53;            
+    optional int32 attack_power_r_weapon_3 = 54;            
+    optional int32 attack_power_l_weapon_1 = 55;            
+    optional int32 attack_power_l_weapon_2 = 56;            
+    optional int32 attack_power_l_weapon_3 = 57;            
+
+    optional DefenseInfo defense_info = 58;
+    optional CutRateInfo cutrate_info = 59;
+    optional ResistanceInfo armor_resistance_info = 60;
+    optional ResistanceInfo base_resistance_info = 61;
+
+    repeated int32 anticheat_data = 62;                         // This is anti-cheat data. If it contains 0x1770 you're getting banned.
+
+    optional int32 unknown_63 = 63;                         // 98
+    optional int32 estus_flask_max = 64;                    
+    optional int32 ashen_estus_flask_max = 65;         
+    optional float max_equip_load = 66;                     
+    optional int32 blade_of_the_darkmoon_offerings = 67;    
+    optional int32 warrior_of_sunlight_offerings = 68;      
+    optional int32 mound_makers_offerings = 69;             
+    optional int32 rosarias_fingers_offerings = 70;         
+    optional int32 watchdogs_of_farron_offerings = 71;      
+    optional int32 aldrich_faithful_offerings = 72;         
+    optional int32 solo_breakin_point = 73;
+    optional int32 max_weapon_level = 74;                   
+    optional int32 unknown_75 = 75;                         // 0
+    optional int32 unknown_76 = 76;                         // 0
+    optional int32 spears_of_the_church_offerings = 77;     
+    optional int32 unknown_78 = 78;                         // 0
+    optional int32 unknown_79 = 79;                         // 0
+    optional int32 unknown_80 = 80;                         // 1    
+}
+
+message PlayData {
+    optional uint32 play_time_seconds = 1;
+    optional uint32 is_hollow = 4;                          
+    optional uint32 hollow_level = 5;                          
+    optional uint32 unknown_4 = 6;                          // 0, 5 on journey 2?
+    optional uint32 bonfire_level = 7;                      
+    repeated BonfireInfo bonfire_info = 8;
+}
+
+message LogInfo {
+    optional uint32 clear_count = 1;                        
+    optional uint32 death_count = 6;                        
+    optional uint32 multiplay_count = 7;
+    optional uint32 coop_success_count = 8; 
+    optional uint32 dark_spirit_defeat_count = 9;
+    optional uint32 host_defeat_count = 10; 
+}
+
+message StatsInfo {
+    optional uint32 unknown_1 = 1;
+    optional uint32 unknown_2 = 2;
+    optional uint32 unknown_3 = 3;
+    optional uint32 unknown_4 = 4;
+    optional uint32 unknown_5 = 5;
+    optional uint32 unknown_6 = 6;
+    optional DateTime date_time_1 = 7;
+    optional DateTime date_time_2 = 8;
+}
+
+message Equipment {
+    optional int32 left_weapon_1 = 1;
+    optional int32 left_weapon_2 = 2;
+    optional int32 left_weapon_3 = 3;
+    optional int32 right_weapon_1 = 4;
+    optional int32 right_weapon_2 = 5;
+    optional int32 right_weapon_3 = 6;
+    optional int32 head = 7;
+    optional int32 chest = 8;
+    optional int32 hands = 9;
+    optional int32 legs = 10;
+    optional int32 ring_1 = 11;
+    optional int32 ring_2 = 12;
+    optional int32 ring_3 = 13;
+    optional int32 ring_4 = 14;
+    optional int32 quick_item_1 = 15;
+    optional int32 quick_item_2 = 16;
+    optional int32 quick_item_3 = 17;
+    optional int32 quick_item_4 = 18;
+    optional int32 quick_item_5 = 19;
+    optional int32 quick_item_6 = 20;
+    optional int32 quick_item_7 = 21;
+    optional int32 quick_item_8 = 22;
+    optional int32 quick_item_9 = 23;
+    optional int32 quick_item_10 = 24;
+    optional int32 tool_belt_1 = 25;
+    optional int32 tool_belt_2 = 26;
+    optional int32 tool_belt_3 = 27;
+    optional int32 tool_belt_4 = 28;
+    optional int32 tool_belt_5 = 29;
+    optional int32 arrow_1 = 30;
+    optional int32 arrow_2 = 31;
+    optional int32 bolt_1 = 32;
+    optional int32 bolt_2 = 33;
+    optional int32 spell_1 = 34;
+    optional int32 spell_2 = 35;
+    optional int32 spell_3 = 36;
+    optional int32 spell_4 = 37;
+    optional int32 spell_5 = 38;
+    optional int32 spell_6 = 39;
+    optional int32 spell_7 = 40;
+    optional int32 spell_8 = 41;
+    optional int32 spell_9 = 42;
+    optional int32 spell_10 = 43;
+    optional int32 spell_11 = 44;
+    optional int32 spell_12 = 45;
+    optional int32 spell_13 = 46;
+    optional int32 spell_14 = 47;
+    optional int32 covenant_item = 48;
+    optional int32 left_weapon_1_durability = 49;     
+    optional int32 left_weapon_2_durability = 50;     
+    optional int32 left_weapon_3_durability = 51;     
+    optional int32 right_weapon_1_durability = 52;     
+    optional int32 right_weapon_2_durability = 53;     
+    optional int32 right_weapon_3_durability = 54;     
+    optional int32 head_durability = 55;  
+    optional int32 chest_durability = 56;     
+    optional int32 hands_durability = 57;    
+    optional int32 legs_durability = 58;     
+
+    optional int32 unknown_59 = 59;     // 0
+    optional int32 unknown_60 = 60;     // 1, 5, 3      - estus charges?
+}
+
+message PlayerLocation {
+    optional uint32 map_id = 1;
+    optional uint32 online_area_id = 2;
+}
+
+message DefenseInfo {
+    optional uint32 physical = 1;
+    optional uint32 strike = 2;
+    optional uint32 slash = 3;
+    optional uint32 thrust = 4;
+    optional uint32 magic = 5;
+    optional uint32 fire = 6;
+    optional uint32 lightning = 7;
+    optional uint32 dark = 8;
+}
+
+message CutRateInfo {
+    optional float physical = 1;
+    optional float strike = 2;
+    optional float slash = 3;
+    optional float thrust = 4;
+    optional float magic = 5;
+    optional float fire = 6;
+    optional float lightning = 7;
+    optional float dark = 8;
+}
+
+message ResistanceInfo {
+    optional uint32 bleed = 1;
+    optional uint32 poison = 2;
+    optional uint32 frost = 3;
+    optional uint32 curse = 4;
+}
+
+message Vector {
+    required float x = 1;
+    required float y = 2;
+    required float z = 3;
+}
+
+message BonfireInfo {
+    required uint32 bonfire_id = 1;
+    required uint32 has_been_lit = 2;
+}

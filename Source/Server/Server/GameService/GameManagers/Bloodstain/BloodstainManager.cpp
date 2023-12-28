@@ -87,7 +87,7 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestCreateBloodstain* Request = (Frpg2RequestMessage::RequestCreateBloodstain*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestCreateBloodstain* Request = (DS3_Frpg2RequestMessage::RequestCreateBloodstain*)Message.Protobuf.get();
 
     std::vector<uint8_t> Data;
     std::vector<uint8_t> GhostData;
@@ -116,8 +116,8 @@ MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClien
     const RuntimeConfig& Config = ServerInstance->GetConfig();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetBloodstainList* Request = (Frpg2RequestMessage::RequestGetBloodstainList*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestGetBloodstainListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetBloodstainList* Request = (DS3_Frpg2RequestMessage::RequestGetBloodstainList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetBloodstainListResponse Response;
     Response.mutable_bloodstains();
 
     uint32_t RemainingStainCount = Request->max_stains();
@@ -127,7 +127,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClien
         // Grab a random set of stains from the live cache.
         for (int i = 0; i < Request->search_areas_size() && RemainingStainCount > 0; i++)
         {
-            const Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
+            const DS3_Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
 
             OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
             uint32_t MaxForArea = Area.max_items();
@@ -142,7 +142,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetBloodstainList(GameClien
                     continue;
                 }
 
-                Frpg2RequestMessage::BloodstainInfo& Data = *Response.mutable_bloodstains()->Add();
+                DS3_Frpg2RequestMessage::BloodstainInfo& Data = *Response.mutable_bloodstains()->Add();
                 Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);
                 Data.set_bloodstain_id((uint32_t)AreaMsg->BloodstainId);
                 Data.set_data(AreaMsg->Data.data(), AreaMsg->Data.size());
@@ -167,7 +167,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetDeadingGhost(GameClient*
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetDeadingGhost* Request = (Frpg2RequestMessage::RequestGetDeadingGhost*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetDeadingGhost* Request = (DS3_Frpg2RequestMessage::RequestGetDeadingGhost*)Message.Protobuf.get();
 
     std::shared_ptr<Bloodstain> ActiveStain;
 
@@ -188,7 +188,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetDeadingGhost(GameClient*
         return MessageHandleResult::Error;
     }
 
-    Frpg2RequestMessage::RequestGetDeadingGhostResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetDeadingGhostResponse Response;
     Response.set_online_area_id(Request->online_area_id());
     Response.set_bloodstain_id(Request->bloodstain_id());
     Response.set_data(ActiveStain->GhostData.data(), ActiveStain->GhostData.size());

@@ -134,14 +134,14 @@ std::string GameClient::GetName()
 
 void GameClient::SendTextMessage(const std::string& TextMessage)
 {
-    Frpg2RequestMessage::ManagementTextMessage Message;
-    Message.set_push_message_id(Frpg2RequestMessage::PushID_ManagementTextMessage);
+    DS3_Frpg2RequestMessage::ManagementTextMessage Message;
+    Message.set_push_message_id(DS3_Frpg2RequestMessage::PushID_ManagementTextMessage);
     Message.set_message(TextMessage);
     Message.set_unknown_4(0);
     Message.set_unknown_5(0);
 
     // Date makes no difference, just hard-code for now.
-    Frpg2PlayerData::DateTime* DateTime = Message.mutable_timestamp();
+    DS3_Frpg2PlayerData::DateTime* DateTime = Message.mutable_timestamp();
     DateTime->set_year(2021);
     DateTime->set_month(1);
     DateTime->set_day(1);

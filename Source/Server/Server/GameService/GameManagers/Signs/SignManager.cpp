@@ -52,8 +52,8 @@ void SignManager::RemoveSignAndNotifyAware(const std::shared_ptr<SummonSign>& Si
     {
         if (std::shared_ptr<GameClient> OtherClient = GameServiceInstance->FindClientByPlayerId(AwarePlayerId))
         {
-            Frpg2RequestMessage::PushRequestRemoveSign PushMessage;
-            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRemoveSign);
+            DS3_Frpg2RequestMessage::PushRequestRemoveSign PushMessage;
+            PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRemoveSign);
             PushMessage.mutable_message()->set_player_id(Sign->PlayerId);
             PushMessage.mutable_message()->set_sign_id(Sign->SignId);
 
@@ -106,7 +106,7 @@ MessageHandleResult SignManager::OnMessageRecieved(GameClient* Client, const Frp
     return MessageHandleResult::Unhandled;
 }
 
-bool SignManager::CanMatchWith(const Frpg2RequestMessage::MatchingParameter& Host, const Frpg2RequestMessage::MatchingParameter& Match, bool IsRedSign)
+bool SignManager::CanMatchWith(const DS3_Frpg2RequestMessage::MatchingParameter& Host, const DS3_Frpg2RequestMessage::MatchingParameter& Match, bool IsRedSign)
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
 
@@ -140,8 +140,8 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
 {
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetSignList* Request = (Frpg2RequestMessage::RequestGetSignList*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestGetSignListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetSignList* Request = (DS3_Frpg2RequestMessage::RequestGetSignList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetSignListResponse Response;
 
 #ifdef _DEBUG
     static DiffTracker Tracker;
@@ -163,12 +163,12 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
 
     uint32_t RemainingSignCount = Request->max_signs();
 
-    Frpg2RequestMessage::GetSignResult* SignResult = Response.mutable_get_sign_result();
+    DS3_Frpg2RequestMessage::GetSignResult* SignResult = Response.mutable_get_sign_result();
 
     // Grab as many recent signs as we can from the cache that match our matching criteria.
     for (int i = 0; i < Request->search_areas_size() && RemainingSignCount > 0; i++)
     {
-        const Frpg2RequestMessage::SignDomainGetInfo& Area = Request->search_areas(i);
+        const DS3_Frpg2RequestMessage::SignDomainGetInfo& Area = Request->search_areas(i);
 
         // Grab list of signs the client already has.
         std::unordered_set<uint32_t> ClientExistingSignId;
@@ -196,13 +196,13 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
             // If client already has sign data we only need to return a limited set of data.
             if (ClientExistingSignId.count(Sign->SignId) > 0)
             {
-                Frpg2RequestMessage::SignInfo* SignInfo = SignResult->add_sign_info_without_data();
+                DS3_Frpg2RequestMessage::SignInfo* SignInfo = SignResult->add_sign_info_without_data();
                 SignInfo->set_player_id(Sign->PlayerId);
                 SignInfo->set_sign_id(Sign->SignId);
             }
             else
             {
-                Frpg2RequestMessage::SignData* SignData = SignResult->add_sign_data();
+                DS3_Frpg2RequestMessage::SignData* SignData = SignResult->add_sign_data();
                 SignData->mutable_sign_info()->set_player_id(Sign->PlayerId);
                 SignData->mutable_sign_info()->set_sign_id(Sign->SignId);
                 SignData->set_online_area_id((uint32_t)Sign->OnlineAreaId);
@@ -233,7 +233,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestCreateSign* Request = (Frpg2RequestMessage::RequestCreateSign*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestCreateSign* Request = (DS3_Frpg2RequestMessage::RequestCreateSign*)Message.Protobuf.get();
 
     std::shared_ptr<SummonSign> Sign = std::make_shared<SummonSign>();
     Sign->SignId = NextSignId++;
@@ -247,7 +247,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
     LiveCache.Add(Sign->OnlineAreaId, Sign->SignId, Sign);
     Client->ActiveSummonSigns.push_back(Sign);
 
-    Frpg2RequestMessage::RequestCreateSignResponse Response;
+    DS3_Frpg2RequestMessage::RequestCreateSignResponse Response;
     Response.set_sign_id(Sign->SignId);
 
     std::string TypeStatisticKey = StringFormat("Sign/TotalCreated");
@@ -294,7 +294,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
 
 MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestRemoveSign* Request = (Frpg2RequestMessage::RequestRemoveSign*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRemoveSign* Request = (DS3_Frpg2RequestMessage::RequestRemoveSign*)Message.Protobuf.get();
 
     std::shared_ptr<SummonSign> Sign = LiveCache.Find((OnlineAreaId)Request->online_area_id(), Request->sign_id());
     if (!Sign)
@@ -318,7 +318,7 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestRemoveSignResponse Response;
+    DS3_Frpg2RequestMessage::RequestRemoveSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRemoveSignResponse response.");
@@ -330,14 +330,14 @@ MessageHandleResult SignManager::Handle_RequestRemoveSign(GameClient* Client, co
 
 MessageHandleResult SignManager::Handle_RequestUpdateSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestUpdateSign* Request = (Frpg2RequestMessage::RequestUpdateSign*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestUpdateSign* Request = (DS3_Frpg2RequestMessage::RequestUpdateSign*)Message.Protobuf.get();
 
     // I think the game uses this as something of a hearbeat to keep the sign active in the pool.
     // We keep all players signs active until they are removed, so we don't need to handle this.
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestUpdateSignResponse Response;
+    DS3_Frpg2RequestMessage::RequestUpdateSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestUpdateSignResponse response.");
@@ -352,7 +352,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestSummonSign* Request = (Frpg2RequestMessage::RequestSummonSign*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestSummonSign* Request = (DS3_Frpg2RequestMessage::RequestSummonSign*)Message.Protobuf.get();
 
     bool bSuccess = true;
 
@@ -377,8 +377,8 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
         std::shared_ptr<GameClient> OriginClient = GameServiceInstance->FindClientByPlayerId(Sign->PlayerId);
         Ensure(OriginClient != nullptr); // Should always be valid if the sign is in the cache.
 
-        Frpg2RequestMessage::PushRequestSummonSign PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestSummonSign);
+        DS3_Frpg2RequestMessage::PushRequestSummonSign PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestSummonSign);
         PushMessage.mutable_message()->set_player_id(Player.GetPlayerId());
         PushMessage.mutable_message()->set_steam_id(Player.GetSteamId());
         PushMessage.mutable_message()->mutable_sign_info()->set_sign_id(Sign->SignId);
@@ -398,7 +398,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestSummonSignResponse Response;
+    DS3_Frpg2RequestMessage::RequestSummonSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestSummonSignResponse response.");
@@ -408,8 +408,8 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
     // If failure then send a reject message.
     if (!bSuccess)
     {
-        Frpg2RequestMessage::PushRequestRejectSign PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectSign);
+        DS3_Frpg2RequestMessage::PushRequestRejectSign PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectSign);
         PushMessage.mutable_message()->set_unknown_2(1);
         PushMessage.mutable_message()->set_sign_id(Request->sign_info().sign_id());
 
@@ -435,7 +435,7 @@ MessageHandleResult SignManager::Handle_RequestSummonSign(GameClient* Client, co
 
 MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestRejectSign* Request = (Frpg2RequestMessage::RequestRejectSign*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestRejectSign* Request = (DS3_Frpg2RequestMessage::RequestRejectSign*)Message.Protobuf.get();
 
     // First check the sign still exists, if it doesn't, send a reject message as its probably already used.
     std::shared_ptr<SummonSign> Sign = LiveCache.Find(Request->sign_id());
@@ -450,8 +450,8 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
     {
         if (std::shared_ptr<GameClient> OtherClient = GameServiceInstance->FindClientByPlayerId(Sign->BeingSummonedByPlayerId))
         {
-            Frpg2RequestMessage::PushRequestRejectSign PushMessage;
-            PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestRejectSign);
+            DS3_Frpg2RequestMessage::PushRequestRejectSign PushMessage;
+            PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestRejectSign);
             PushMessage.mutable_message()->set_unknown_2(1);
             PushMessage.mutable_message()->set_sign_id(Sign->SignId);
 
@@ -471,7 +471,7 @@ MessageHandleResult SignManager::Handle_RequestRejectSign(GameClient* Client, co
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestRejectSignResponse Response;
+    DS3_Frpg2RequestMessage::RequestRejectSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectSignResponse response.");
@@ -485,8 +485,8 @@ MessageHandleResult SignManager::Handle_RequestGetRightMatchingArea(GameClient* 
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
 
-    Frpg2RequestMessage::RequestGetRightMatchingArea* Request = (Frpg2RequestMessage::RequestGetRightMatchingArea*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestGetRightMatchingAreaResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetRightMatchingArea* Request = (DS3_Frpg2RequestMessage::RequestGetRightMatchingArea*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetRightMatchingAreaResponse Response;
 
     // There are a few ways to handle this. I'm not sure how the server itself does it.
     // The simplest is to go through each client and check if they can match with the user, and use that 
@@ -539,7 +539,7 @@ MessageHandleResult SignManager::Handle_RequestGetRightMatchingArea(GameClient* 
     {
         int NormalizedPopulation = (int)std::ceil((Pair.second / (float)MaxAreaPopulation) * 5.0f);
 
-        Frpg2RequestMessage::RequestGetRightMatchingAreaResponse_Area_info& Info = *Response.add_area_info();
+        DS3_Frpg2RequestMessage::RequestGetRightMatchingAreaResponse_Area_info& Info = *Response.add_area_info();
         Info.set_online_area_id((uint32_t)Pair.first);
         Info.set_population(NormalizedPopulation);
     }

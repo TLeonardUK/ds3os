@@ -16,12 +16,14 @@ namespace Loader.Forms
         private Task CreateServerTask = null;
         private string MachinePublicIp = "";
         private MainForm ParentInstance;
+        private GameType ServerGameType;
 
-        public CreateServerDialog(List<ServerConfig> InActiveServers, string InPublicIp, MainForm InParentInstance)
+        public CreateServerDialog(List<ServerConfig> InActiveServers, string InPublicIp, MainForm InParentInstance, GameType InGameType)
         {
             ActiveServers = InActiveServers;
             MachinePublicIp = InPublicIp;
             ParentInstance = InParentInstance;
+            ServerGameType = InGameType;
 
             InitializeComponent();
         }
@@ -66,7 +68,7 @@ namespace Loader.Forms
                     Address = Address.Replace("/" + MachinePublicIp + ":", "/127.0.0.1:");
                 }
 
-                WebUiApi.CreateServerResponse result = WebUiApi.CreateServer(Address, Name, Password);
+                WebUiApi.CreateServerResponse result = WebUiApi.CreateServer(Address, Name, Password, ServerGameType.ToString());
                 this.Invoke((MethodInvoker)delegate {
                     ProcessResult(result);
                 });

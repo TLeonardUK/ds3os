@@ -37,12 +37,12 @@ public:
     Server* GetDefaultServer();
     Server* FindServer(const std::string& Id);
 
-    bool NewServer(const std::string& Name, const std::string& Password, std::string& OutServerId);
+    bool NewServer(const std::string& Name, const std::string& Password, GameType InGameType, std::string& OutServerId);
 
     void QueueCallback(std::function<void()> callback);
 
 private:
-    bool StartServer(const std::string& ServerId, const std::string& Name = "", const std::string& Password = "");
+    bool StartServer(const std::string& ServerId, const std::string& Name = "", const std::string& Password = "", GameType InGameType = GameType::Unknown);
     bool StopServer(const std::string& ServerId, bool Permanent = false);
 
     void PruneOldServers();

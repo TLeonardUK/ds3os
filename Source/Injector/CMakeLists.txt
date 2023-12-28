@@ -17,12 +17,14 @@ SET(SOURCES
 
     Hooks/Hook.h
     Hooks/Hook.cpp
-    Hooks/ReplaceServerAddressHook.h
-    Hooks/ReplaceServerAddressHook.cpp
-    Hooks/ReplaceServerPortHook.h
-    Hooks/ReplaceServerPortHook.cpp
-    Hooks/ChangeSaveGameFilenameHook.h
-    Hooks/ChangeSaveGameFilenameHook.cpp
+    Hooks/DarkSouls3/DS3_ReplaceServerAddressHook.h
+    Hooks/DarkSouls3/DS3_ReplaceServerAddressHook.cpp
+    Hooks/DarkSouls2/DS2_ReplaceServerAddressHook.h
+    Hooks/DarkSouls2/DS2_ReplaceServerAddressHook.cpp
+    Hooks/Shared/ReplaceServerPortHook.h
+    Hooks/Shared/ReplaceServerPortHook.cpp
+    Hooks/Shared/ChangeSaveGameFilenameHook.h
+    Hooks/Shared/ChangeSaveGameFilenameHook.cpp
 )
  
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${PLATFORM_SOURCES})

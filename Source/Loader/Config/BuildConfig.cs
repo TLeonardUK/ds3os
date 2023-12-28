@@ -35,30 +35,34 @@ namespace Loader
 
         // TEA key used to encrypt payload.
         public uint[] Key;
+
+        // Appid of steam version of game. Used to create steam_appid.txt file to prevent steam starting on game launch.
+        public int SteamAppId;
     }
 
     // Holds compile time configuration.
     public static class BuildConfig
     {
-        // Appid of steam version of dark souls 3. Used to create steam_appid.txt file to prevent steam starting on game launch.
-        public static int SteamAppId = 374320;
-
         // Map of exe version to configuration required to load the exe.
         public static Dictionary<string, DarkSoulsLoadConfig> ExeLoadConfiguration = new Dictionary<string, DarkSoulsLoadConfig>()
         {
+            // -------------------------------------------------------------------------------------------
+            // Dark Souls III
+            // -------------------------------------------------------------------------------------------
             { 
                 ExeUtils.MakeSimpleExeHash("1.15.0.0", 102494368), 
                 new DarkSoulsLoadConfig 
                 { 
-                    VersionName = "1.15.0.0 (Steam)", 
+                    VersionName = "Dark Souls III - 1.15.0.0 (Steam)", 
                     ServerInfoAddress = 0x144F4A5B1,
                     UseInjector = true,
                     UsesASLR = false,
                     Key = new uint[4] { 0x4B694CD6, 0x96ADA235, 0xEC91D9D4, 0x23F562E5 },
+                    SteamAppId = 374320
                 } 
             },
             { 
-                ExeUtils.MakeSimpleExeHash("1.15.1.0", 88982096), 
+                ExeUtils.MakeSimpleExeHash("Dark Souls III - 1.15.1.0", 88982096), 
                 new DarkSoulsLoadConfig 
                 { 
                     VersionName = "1.15.1.0 (Steam)", 
@@ -66,10 +70,11 @@ namespace Loader
                     UseInjector = true,
                     UsesASLR = true,
                     Key = new uint[4] { 0x970F4CFB, 0x1AA625DD, 0x172EBF85, 0x119A5426 },
+                    SteamAppId = 374320
                 } 
             },
             { 
-                ExeUtils.MakeSimpleExeHash("1.15.2.0", 88960032), 
+                ExeUtils.MakeSimpleExeHash("Dark Souls III - 1.15.2.0", 88960032), 
                 new DarkSoulsLoadConfig 
                 { 
                     VersionName = "1.15.2.0 (Steam)", 
@@ -77,6 +82,23 @@ namespace Loader
                     UseInjector = true,
                     UsesASLR = true,
                     Key = new uint[0] { },
+                    SteamAppId = 374320
+                } 
+            },
+            
+            // -------------------------------------------------------------------------------------------
+            // Dark Souls II
+            // -------------------------------------------------------------------------------------------
+            { 
+                ExeUtils.MakeSimpleExeHash("1,0,3,0", 28200992), 
+                new DarkSoulsLoadConfig 
+                { 
+                    VersionName = "Dark Souls II - 1.0.3.0 (Steam)", 
+                    ServerInfoAddress = 0x0,
+                    UseInjector = true,
+                    UsesASLR = false,
+                    Key = new uint[0] { },
+                    SteamAppId = 335300
                 } 
             },
         };

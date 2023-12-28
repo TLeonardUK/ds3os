@@ -7,7 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-#include "Injector/Hooks/ChangeSaveGameFilenameHook.h"
+#include "Injector/Hooks/Shared/ChangeSaveGameFilenameHook.h"
 #include "Injector/Injector/Injector.h"
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"
@@ -25,7 +25,7 @@ namespace
     HANDLE WINAPI CreateFileHook(LPCWSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
     {
         std::string filename = NarrowString(lpFileName);
-        
+
         const std::string extension_sl2 = ".sl2";
         const std::string extension_sl2_bak = ".sl2.bak";
         const std::string extension_ds3os = ".ds3os";

@@ -12,7 +12,7 @@ namespace Loader {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
     internal sealed partial class ProgramSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static ProgramSettings defaultInstance = ((ProgramSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ProgramSettings())));
@@ -20,18 +20,6 @@ namespace Loader {
         public static ProgramSettings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string exe_location {
-            get {
-                return ((string)(this["exe_location"]));
-            }
-            set {
-                this["exe_location"] = value;
             }
         }
         
@@ -73,7 +61,7 @@ namespace Loader {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int minimum_players {
             get {
                 return ((int)(this["minimum_players"]));
@@ -92,6 +80,30 @@ namespace Loader {
             }
             set {
                 this["use_seperate_saves"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ds2_exe_location {
+            get {
+                return ((string)(this["ds2_exe_location"]));
+            }
+            set {
+                this["ds2_exe_location"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ds3_exe_location {
+            get {
+                return ((string)(this["ds3_exe_location"]));
+            }
+            set {
+                this["ds3_exe_location"] = value;
             }
         }
     }

@@ -83,7 +83,7 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestCreateGhostData* Request = (Frpg2RequestMessage::RequestCreateGhostData*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestCreateGhostData* Request = (DS3_Frpg2RequestMessage::RequestCreateGhostData*)Message.Protobuf.get();
 
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
@@ -104,7 +104,7 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestCreateGhostDataResponse Response;
+    DS3_Frpg2RequestMessage::RequestCreateGhostDataResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestCreateGhostDataResponse response.");
@@ -120,8 +120,8 @@ MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Cli
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestGetGhostDataList* Request = (Frpg2RequestMessage::RequestGetGhostDataList*)Message.Protobuf.get();
-    Frpg2RequestMessage::RequestGetGhostDataListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetGhostDataList* Request = (DS3_Frpg2RequestMessage::RequestGetGhostDataList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetGhostDataListResponse Response;
     Response.mutable_ghosts();
 
     uint32_t RemainingGhostCount = Request->max_ghosts();
@@ -131,7 +131,7 @@ MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Cli
         // Grab a random set of stains from the live cache.
         for (int i = 0; i < Request->search_areas_size() && RemainingGhostCount > 0; i++)
         {
-            const Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
+            const DS3_Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
 
             OnlineAreaId AreaId = (OnlineAreaId)Area.online_area_id();
             uint32_t MaxForArea = Area.max_items();
@@ -146,7 +146,7 @@ MessageHandleResult GhostManager::Handle_RequestGetGhostDataList(GameClient* Cli
                     continue;
                 }
 
-                Frpg2RequestMessage::GhostData& Data = *Response.mutable_ghosts()->Add();
+                DS3_Frpg2RequestMessage::GhostData& Data = *Response.mutable_ghosts()->Add();
                 Data.set_unknown_1(1);                                                      // TODO: Figure out what this is.
                 Data.set_ghost_id((uint32_t)AreaMsg->GhostId);
                 Data.set_data(AreaMsg->Data.data(), AreaMsg->Data.size());

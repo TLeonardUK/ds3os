@@ -7,7 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-#include "Injector/Hooks/ReplaceServerPortHook.h"
+#include "Injector/Hooks/Shared/ReplaceServerPortHook.h"
 #include "Injector/Injector/Injector.h"
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"
@@ -26,7 +26,22 @@ namespace
     {
         sockaddr_in* addr = (sockaddr_in*)name;
 
-        if (addr->sin_port == htons(50050))
+        int redirect_port_number = 0;
+        switch (Injector::Instance().GetGameType())
+        {
+            case GameType::DarkSouls2:
+            {
+                redirect_port_number = 50031;
+                break;
+            }
+            case GameType::DarkSouls3:
+            {
+                redirect_port_number = 50050;
+                break;
+            }
+        }
+
+        if (addr->sin_port == htons(redirect_port_number))
         {
             const RuntimeConfig& Config = Injector::Instance().GetConfig();
 

@@ -69,7 +69,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestNotifyRingBell* Request = (Frpg2RequestMessage::RequestNotifyRingBell*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestNotifyRingBell* Request = (DS3_Frpg2RequestMessage::RequestNotifyRingBell*)Message.Protobuf.get();
     
     // List of locations the user should be in to recieve a push notification about the bell.
     std::unordered_set<OnlineAreaId> NotifyLocations = {
@@ -89,8 +89,8 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
 
     for (std::shared_ptr<GameClient>& OtherClient : PotentialTargets)
     {
-        Frpg2RequestMessage::PushRequestNotifyRingBell PushMessage;
-        PushMessage.set_push_message_id(Frpg2RequestMessage::PushID_PushRequestNotifyRingBell);
+        DS3_Frpg2RequestMessage::PushRequestNotifyRingBell PushMessage;
+        PushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushID_PushRequestNotifyRingBell);
         PushMessage.set_player_id(Player.GetPlayerId());
         PushMessage.set_online_area_id(Request->online_area_id());
         PushMessage.set_data(Request->data().data(), Request->data().size());
@@ -105,7 +105,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
     Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
-    Frpg2RequestMessage::RequestNotifyRingBellResponse Response;
+    DS3_Frpg2RequestMessage::RequestNotifyRingBellResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestNotifyRingBellResponse response.");
@@ -122,7 +122,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
 
 MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestSendMessageToPlayers* Request = (Frpg2RequestMessage::RequestSendMessageToPlayers*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestSendMessageToPlayers* Request = (DS3_Frpg2RequestMessage::RequestSendMessageToPlayers*)Message.Protobuf.get();
 
     // Wow this whole function seems unsafe, no idea why from software allows this to be a thing.
 
@@ -136,7 +136,7 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
     if constexpr (BuildConfig::SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS)
     {
         // The request should contain a PushRequestBreakInTarget message
-        Frpg2RequestMessage::PushRequestAllowBreakInTarget EmbdeddedMsg;
+        DS3_Frpg2RequestMessage::PushRequestAllowBreakInTarget EmbdeddedMsg;
 
         // The request should specify exactly one player
         if (Request->player_ids_size() > 1)
@@ -145,7 +145,7 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
             ShouldProcessRequest = false;
         }
         // The request should only ever contain a PushRequestAllowBreakInTarget message
-        if (!EmbdeddedMsg.ParseFromString(Request->message()) || EmbdeddedMsg.push_message_id() != Frpg2RequestMessage::PushMessageId::PushID_PushRequestAllowBreakInTarget)
+        if (!EmbdeddedMsg.ParseFromString(Request->message()) || EmbdeddedMsg.push_message_id() != DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestAllowBreakInTarget)
         {
             WarningS(Client->GetName().c_str(), "RequestSendMessageToPlayers embedded message provided by client is not a valid PushRequestAllowBreakInTarget message.");
             ShouldProcessRequest = false;
@@ -175,7 +175,7 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.
-    Frpg2RequestMessage::RequestSendMessageToPlayersResponse Response;
+    DS3_Frpg2RequestMessage::RequestSendMessageToPlayersResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestSendMessageToPlayersResponse response.");
@@ -187,12 +187,12 @@ MessageHandleResult MiscManager::Handle_RequestSendMessageToPlayers(GameClient* 
 
 MessageHandleResult MiscManager::Handle_RequestMeasureUploadBandwidth(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestMeasureUploadBandwidth* Request = (Frpg2RequestMessage::RequestMeasureUploadBandwidth*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestMeasureUploadBandwidth* Request = (DS3_Frpg2RequestMessage::RequestMeasureUploadBandwidth*)Message.Protobuf.get();
 
     // Never seen this called by client.
     Ensure(false);
 
-    Frpg2RequestMessage::RequestMeasureUploadBandwidthResponse Response;
+    DS3_Frpg2RequestMessage::RequestMeasureUploadBandwidthResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestMeasureUploadBandwidthResponse response.");
@@ -204,12 +204,12 @@ MessageHandleResult MiscManager::Handle_RequestMeasureUploadBandwidth(GameClient
 
 MessageHandleResult MiscManager::Handle_RequestMeasureDownloadBandwidth(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestMeasureDownloadBandwidth* Request = (Frpg2RequestMessage::RequestMeasureDownloadBandwidth*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestMeasureDownloadBandwidth* Request = (DS3_Frpg2RequestMessage::RequestMeasureDownloadBandwidth*)Message.Protobuf.get();
 
     // Never seen this called by client.
     Ensure(false);
 
-    Frpg2RequestMessage::RequestMeasureDownloadBandwidthResponse Response;
+    DS3_Frpg2RequestMessage::RequestMeasureDownloadBandwidthResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestMeasureDownloadBandwidthResponse response.");
@@ -221,12 +221,12 @@ MessageHandleResult MiscManager::Handle_RequestMeasureDownloadBandwidth(GameClie
 
 MessageHandleResult MiscManager::Handle_RequestGetOnlineShopItemList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestGetOnlineShopItemList* Request = (Frpg2RequestMessage::RequestGetOnlineShopItemList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetOnlineShopItemList* Request = (DS3_Frpg2RequestMessage::RequestGetOnlineShopItemList*)Message.Protobuf.get();
 
     // Never seen this called by client.
     Ensure(false);
 
-    Frpg2RequestMessage::RequestGetOnlineShopItemListResponse Response;
+    DS3_Frpg2RequestMessage::RequestGetOnlineShopItemListResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestGetOnlineShopItemListResponse response.");
@@ -238,12 +238,12 @@ MessageHandleResult MiscManager::Handle_RequestGetOnlineShopItemList(GameClient*
 
 MessageHandleResult MiscManager::Handle_RequestBenchmarkThroughput(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    Frpg2RequestMessage::RequestBenchmarkThroughput* Request = (Frpg2RequestMessage::RequestBenchmarkThroughput*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestBenchmarkThroughput* Request = (DS3_Frpg2RequestMessage::RequestBenchmarkThroughput*)Message.Protobuf.get();
 
     // Never seen this called by client.
     Ensure(false);
 
-    Frpg2RequestMessage::RequestBenchmarkThroughputResponse Response;
+    DS3_Frpg2RequestMessage::RequestBenchmarkThroughputResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestBenchmarkThroughputResponse response.");

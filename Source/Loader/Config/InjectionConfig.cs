@@ -25,6 +25,7 @@ namespace Loader
         public string ServerName            { get; set; }
         public string ServerHostname        { get; set; }
         public string ServerPublicKey       { get; set; }
+        public string ServerGameType        { get; set; }
         public int ServerPort               { get; set; }
         public bool EnableSeperateSaveFiles { get; set; }
 

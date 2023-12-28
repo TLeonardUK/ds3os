@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Shared/Platform/Platform.h"
+#include "Shared/Game/GameType.h"
 #include "Config/RuntimeConfig.h"
 
 #include "Injector/Hooks/Hook.h"
@@ -39,6 +40,7 @@ public:
     void SaveConfig();
 
     const RuntimeConfig& GetConfig()    { return Config; }
+    GameType GetGameType()              { return CurrentGameType; }
 
     intptr_t GetBaseAddress();
     
@@ -53,6 +55,8 @@ private:
 
     std::filesystem::path DllPath;
     std::filesystem::path ConfigPath;
+
+    GameType CurrentGameType;
 
     std::pair<intptr_t, size_t> ModuleRegion;
 

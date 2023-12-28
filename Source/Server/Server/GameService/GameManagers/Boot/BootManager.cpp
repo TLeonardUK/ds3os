@@ -45,7 +45,7 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& State = Client->GetPlayerState();
 
-    Frpg2RequestMessage::RequestWaitForUserLogin* Request = (Frpg2RequestMessage::RequestWaitForUserLogin*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestWaitForUserLogin* Request = (DS3_Frpg2RequestMessage::RequestWaitForUserLogin*)Message.Protobuf.get();
     
     std::string SteamId = Request->steam_id();
 
@@ -81,7 +81,7 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
     Client->Connection->Rename(State.GetSteamId());
 
     // Send back response with our new player id.
-    Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;
+    DS3_Frpg2RequestMessage::RequestWaitForUserLoginResponse Response;
     Response.set_steam_id(State.GetSteamId());
     Response.set_player_id(State.GetPlayerId()); 
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -138,12 +138,12 @@ MessageHandleResult BootManager::Handle_RequestWaitForUserLogin(GameClient* Clie
         0x8f
     };
 
-    Frpg2RequestMessage::PlayerInfoUploadConfigPushMessage UploadInfoPushMessage;
-    UploadInfoPushMessage.set_push_message_id(Frpg2RequestMessage::PushMessageId::PushID_PlayerInfoUploadConfigPushMessage);
+    DS3_Frpg2RequestMessage::PlayerInfoUploadConfigPushMessage UploadInfoPushMessage;
+    UploadInfoPushMessage.set_push_message_id(DS3_Frpg2RequestMessage::PushMessageId::PushID_PlayerInfoUploadConfigPushMessage);
     UploadInfoPushMessage.set_player_character_update_send_delay(ServerInstance->GetConfig().PlayerCharacterUpdateSendDelay);
     UploadInfoPushMessage.set_player_status_send_delay(ServerInstance->GetConfig().PlayerStatusUploadSendDelay);
 
-    Frpg2RequestMessage::PlayerStatusUploadConfig* UploadInfoPushMessageList = UploadInfoPushMessage.mutable_config();
+    DS3_Frpg2RequestMessage::PlayerStatusUploadConfig* UploadInfoPushMessageList = UploadInfoPushMessage.mutable_config();
     for (uint32_t Value : PlayerStatusFieldMask)
     {
         UploadInfoPushMessageList->add_player_data_mask(Value);
@@ -167,12 +167,12 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
 {
     auto& Config = ServerInstance->GetConfig();
 
-    Frpg2RequestMessage::RequestGetAnnounceMessageList* Request = (Frpg2RequestMessage::RequestGetAnnounceMessageList*)Message.Protobuf.get();
+    DS3_Frpg2RequestMessage::RequestGetAnnounceMessageList* Request = (DS3_Frpg2RequestMessage::RequestGetAnnounceMessageList*)Message.Protobuf.get();
     Ensure(Request->max_entries() == 100);
 
-    Frpg2RequestMessage::RequestGetAnnounceMessageListResponse Response;
-    Frpg2RequestMessage::AnnounceMessageDataList* Notices = Response.mutable_notices();
-    Frpg2RequestMessage::AnnounceMessageDataList* Changes = Response.mutable_changes();
+    DS3_Frpg2RequestMessage::RequestGetAnnounceMessageListResponse Response;
+    DS3_Frpg2RequestMessage::AnnounceMessageDataList* Notices = Response.mutable_notices();
+    DS3_Frpg2RequestMessage::AnnounceMessageDataList* Changes = Response.mutable_changes();
 
     float Score = ServerInstance->GetDatabase().GetAntiCheatPenaltyScore(Client->GetPlayerState().GetSteamId());
 
@@ -204,7 +204,7 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
     // Temporary warning for the exploit disclosure 
     for (const RuntimeConfigAnnouncement& Announcement : Announcements)
     {
-        Frpg2RequestMessage::AnnounceMessageData* Data = Changes->add_items();
+        DS3_Frpg2RequestMessage::AnnounceMessageData* Data = Changes->add_items();
         Data->set_unknown_1(1);
         Data->set_index(Index++);
         Data->set_unknown_2(1);
@@ -213,7 +213,7 @@ MessageHandleResult BootManager::Handle_RequestGetAnnounceMessageList(GameClient
 
         // The datetime isn't displayed anywhere and makes no difference to ordering, so
         // lets just auto generate it :shrugs:
-        Frpg2PlayerData::DateTime* DateTime = Data->mutable_datetime();
+        DS3_Frpg2PlayerData::DateTime* DateTime = Data->mutable_datetime();
         DateTime->set_year(2021);
         DateTime->set_month(1);
         DateTime->set_day(1);

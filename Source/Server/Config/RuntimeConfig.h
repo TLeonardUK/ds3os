@@ -59,14 +59,18 @@ class RuntimeConfig
 {
 public:
 
+    // Type of the game this server should run.
+    // DS3, DS2
+    std::string GameType = "DarkSouls3";
+
     // Id of the server thats generated on first run.
     std::string ServerId = "";
 
     // Name used in the server import file.
-    std::string ServerName = "Dark Souls 3 Server";
+    std::string ServerName = "Dark Souls Server";
 
     // Description used in the server import file.
-    std::string ServerDescription = "A custom Dark Souls 3 server.";
+    std::string ServerDescription = "A custom Dark Souls server.";
 
     // Hostname of the server that should be used for connecting.
     // If none is supplied then this wil be the external ip of the server.
@@ -135,7 +139,7 @@ public:
 
     // Announcements that show up when a user joins the game.
     std::vector<RuntimeConfigAnnouncement> Announcements = {
-        { "Welcome to DS3OS", "\nYou have connected to an unofficial, work-in-progress, Dark Souls III server. Stability is not guaranteed, but welcome!\n\nMore information on this project is available here:\nhttps://github.com/tleonarduk/ds3os" }
+        { "Welcome to DS3OS", "\nYou have connected to an unofficial, work-in-progress, Dark Souls server. Stability is not guaranteed, but welcome!\n\nMore information on this project is available here:\nhttps://github.com/tleonarduk/ds3os" }
     };
 
     // How often (in seconds) between each database trim.

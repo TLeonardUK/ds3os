@@ -52,8 +52,8 @@ private:
         uint32_t HostPlayerId;
         std::string HostPlayerSteamId;
 
-        Frpg2RequestMessage::QuickMatchGameMode GameMode;
-        Frpg2RequestMessage::MatchingParameter MatchingParams;
+        DS3_Frpg2RequestMessage::QuickMatchGameMode GameMode;
+        DS3_Frpg2RequestMessage::MatchingParameter MatchingParams;
 
         uint32_t MapId;
         OnlineAreaId AreaId;
@@ -62,7 +62,7 @@ private:
     };
 
 private:
-    bool CanMatchWith(GameClient* Client, const Frpg2RequestMessage::RequestSearchQuickMatch& Request, const std::shared_ptr<Match>& Match);
+    bool CanMatchWith(GameClient* Client, const DS3_Frpg2RequestMessage::RequestSearchQuickMatch& Request, const std::shared_ptr<Match>& Match);
 
     std::shared_ptr<Match> GetMatchByHost(uint32_t HostPlayerId);
 
