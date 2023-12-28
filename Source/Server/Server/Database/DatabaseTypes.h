@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "Server/GameService/Utils/GameIds.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 
 #include "Protobuf/Protobufs.h"
 

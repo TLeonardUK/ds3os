@@ -20,6 +20,7 @@
 #endif
 
 #include <google/protobuf/generated_message_util.h>
+#include <google/protobuf/message_lite.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
 // @@protoc_insertion_point(includes)
@@ -31,14 +32,1572 @@ void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
 void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
 void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
 
+class RequestQueryLoginServerInfo;
+class RequestQueryLoginServerInfoResponse;
+class RequestQueryLoginServerInfoForXboxOne;
+class RequestHandshake;
+class RequestHandshakeResponse;
+class GetServiceStatus;
+class GetServiceStatusForXboxOne;
+class GetServiceStatusResponse;
 
+// ===================================================================
+
+class RequestQueryLoginServerInfo : public ::google::protobuf::MessageLite {
+ public:
+  RequestQueryLoginServerInfo();
+  virtual ~RequestQueryLoginServerInfo();
+
+  RequestQueryLoginServerInfo(const RequestQueryLoginServerInfo& from);
+
+  inline RequestQueryLoginServerInfo& operator=(const RequestQueryLoginServerInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestQueryLoginServerInfo& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestQueryLoginServerInfo* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestQueryLoginServerInfo* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestQueryLoginServerInfo* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestQueryLoginServerInfo& from);
+  void MergeFrom(const RequestQueryLoginServerInfo& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string steam_id = 1;
+  inline bool has_steam_id() const;
+  inline void clear_steam_id();
+  static const int kSteamIdFieldNumber = 1;
+  inline const ::std::string& steam_id() const;
+  inline void set_steam_id(const ::std::string& value);
+  inline void set_steam_id(const char* value);
+  inline void set_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_steam_id();
+  inline ::std::string* release_steam_id();
+  inline void set_allocated_steam_id(::std::string* steam_id);
+
+  // optional string f2 = 2;
+  inline bool has_f2() const;
+  inline void clear_f2();
+  static const int kF2FieldNumber = 2;
+  inline const ::std::string& f2() const;
+  inline void set_f2(const ::std::string& value);
+  inline void set_f2(const char* value);
+  inline void set_f2(const char* value, size_t size);
+  inline ::std::string* mutable_f2();
+  inline ::std::string* release_f2();
+  inline void set_allocated_f2(::std::string* f2);
+
+  // required uint64 app_version = 3;
+  inline bool has_app_version() const;
+  inline void clear_app_version();
+  static const int kAppVersionFieldNumber = 3;
+  inline ::google::protobuf::uint64 app_version() const;
+  inline void set_app_version(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo)
+ private:
+  inline void set_has_steam_id();
+  inline void clear_has_steam_id();
+  inline void set_has_f2();
+  inline void clear_has_f2();
+  inline void set_has_app_version();
+  inline void clear_has_app_version();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* steam_id_;
+  ::std::string* f2_;
+  ::google::protobuf::uint64 app_version_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestQueryLoginServerInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestQueryLoginServerInfoResponse : public ::google::protobuf::MessageLite {
+ public:
+  RequestQueryLoginServerInfoResponse();
+  virtual ~RequestQueryLoginServerInfoResponse();
+
+  RequestQueryLoginServerInfoResponse(const RequestQueryLoginServerInfoResponse& from);
+
+  inline RequestQueryLoginServerInfoResponse& operator=(const RequestQueryLoginServerInfoResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestQueryLoginServerInfoResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestQueryLoginServerInfoResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestQueryLoginServerInfoResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestQueryLoginServerInfoResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestQueryLoginServerInfoResponse& from);
+  void MergeFrom(const RequestQueryLoginServerInfoResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int64 port = 1;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 1;
+  inline ::google::protobuf::int64 port() const;
+  inline void set_port(::google::protobuf::int64 value);
+
+  // required string server_ip = 2;
+  inline bool has_server_ip() const;
+  inline void clear_server_ip();
+  static const int kServerIpFieldNumber = 2;
+  inline const ::std::string& server_ip() const;
+  inline void set_server_ip(const ::std::string& value);
+  inline void set_server_ip(const char* value);
+  inline void set_server_ip(const char* value, size_t size);
+  inline ::std::string* mutable_server_ip();
+  inline ::std::string* release_server_ip();
+  inline void set_allocated_server_ip(::std::string* server_ip);
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse)
+ private:
+  inline void set_has_port();
+  inline void clear_has_port();
+  inline void set_has_server_ip();
+  inline void clear_has_server_ip();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::int64 port_;
+  ::std::string* server_ip_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestQueryLoginServerInfoResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestQueryLoginServerInfoForXboxOne : public ::google::protobuf::MessageLite {
+ public:
+  RequestQueryLoginServerInfoForXboxOne();
+  virtual ~RequestQueryLoginServerInfoForXboxOne();
+
+  RequestQueryLoginServerInfoForXboxOne(const RequestQueryLoginServerInfoForXboxOne& from);
+
+  inline RequestQueryLoginServerInfoForXboxOne& operator=(const RequestQueryLoginServerInfoForXboxOne& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestQueryLoginServerInfoForXboxOne& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestQueryLoginServerInfoForXboxOne* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestQueryLoginServerInfoForXboxOne* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestQueryLoginServerInfoForXboxOne* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestQueryLoginServerInfoForXboxOne& from);
+  void MergeFrom(const RequestQueryLoginServerInfoForXboxOne& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoForXboxOne)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestQueryLoginServerInfoForXboxOne* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestHandshake : public ::google::protobuf::MessageLite {
+ public:
+  RequestHandshake();
+  virtual ~RequestHandshake();
+
+  RequestHandshake(const RequestHandshake& from);
+
+  inline RequestHandshake& operator=(const RequestHandshake& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestHandshake& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestHandshake* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestHandshake* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestHandshake* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestHandshake& from);
+  void MergeFrom(const RequestHandshake& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes aes_cwc_key = 1;
+  inline bool has_aes_cwc_key() const;
+  inline void clear_aes_cwc_key();
+  static const int kAesCwcKeyFieldNumber = 1;
+  inline const ::std::string& aes_cwc_key() const;
+  inline void set_aes_cwc_key(const ::std::string& value);
+  inline void set_aes_cwc_key(const char* value);
+  inline void set_aes_cwc_key(const void* value, size_t size);
+  inline ::std::string* mutable_aes_cwc_key();
+  inline ::std::string* release_aes_cwc_key();
+  inline void set_allocated_aes_cwc_key(::std::string* aes_cwc_key);
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.RequestHandshake)
+ private:
+  inline void set_has_aes_cwc_key();
+  inline void clear_has_aes_cwc_key();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* aes_cwc_key_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestHandshake* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RequestHandshakeResponse : public ::google::protobuf::MessageLite {
+ public:
+  RequestHandshakeResponse();
+  virtual ~RequestHandshakeResponse();
+
+  RequestHandshakeResponse(const RequestHandshakeResponse& from);
+
+  inline RequestHandshakeResponse& operator=(const RequestHandshakeResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const RequestHandshakeResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestHandshakeResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(RequestHandshakeResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  RequestHandshakeResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const RequestHandshakeResponse& from);
+  void MergeFrom(const RequestHandshakeResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.RequestHandshakeResponse)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static RequestHandshakeResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetServiceStatus : public ::google::protobuf::MessageLite {
+ public:
+  GetServiceStatus();
+  virtual ~GetServiceStatus();
+
+  GetServiceStatus(const GetServiceStatus& from);
+
+  inline GetServiceStatus& operator=(const GetServiceStatus& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const GetServiceStatus& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const GetServiceStatus* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(GetServiceStatus* other);
+
+  // implements Message ----------------------------------------------
+
+  GetServiceStatus* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const GetServiceStatus& from);
+  void MergeFrom(const GetServiceStatus& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int64 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::int64 id() const;
+  inline void set_id(::google::protobuf::int64 value);
+
+  // required string steam_id = 2;
+  inline bool has_steam_id() const;
+  inline void clear_steam_id();
+  static const int kSteamIdFieldNumber = 2;
+  inline const ::std::string& steam_id() const;
+  inline void set_steam_id(const ::std::string& value);
+  inline void set_steam_id(const char* value);
+  inline void set_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_steam_id();
+  inline ::std::string* release_steam_id();
+  inline void set_allocated_steam_id(::std::string* steam_id);
+
+  // optional string unknown_1 = 3;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 3;
+  inline const ::std::string& unknown_1() const;
+  inline void set_unknown_1(const ::std::string& value);
+  inline void set_unknown_1(const char* value);
+  inline void set_unknown_1(const char* value, size_t size);
+  inline ::std::string* mutable_unknown_1();
+  inline ::std::string* release_unknown_1();
+  inline void set_allocated_unknown_1(::std::string* unknown_1);
+
+  // required int64 app_version = 4;
+  inline bool has_app_version() const;
+  inline void clear_app_version();
+  static const int kAppVersionFieldNumber = 4;
+  inline ::google::protobuf::int64 app_version() const;
+  inline void set_app_version(::google::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.GetServiceStatus)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_steam_id();
+  inline void clear_has_steam_id();
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_app_version();
+  inline void clear_has_app_version();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::int64 id_;
+  ::std::string* steam_id_;
+  ::std::string* unknown_1_;
+  ::google::protobuf::int64 app_version_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetServiceStatus* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetServiceStatusForXboxOne : public ::google::protobuf::MessageLite {
+ public:
+  GetServiceStatusForXboxOne();
+  virtual ~GetServiceStatusForXboxOne();
+
+  GetServiceStatusForXboxOne(const GetServiceStatusForXboxOne& from);
+
+  inline GetServiceStatusForXboxOne& operator=(const GetServiceStatusForXboxOne& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const GetServiceStatusForXboxOne& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const GetServiceStatusForXboxOne* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(GetServiceStatusForXboxOne* other);
+
+  // implements Message ----------------------------------------------
+
+  GetServiceStatusForXboxOne* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const GetServiceStatusForXboxOne& from);
+  void MergeFrom(const GetServiceStatusForXboxOne& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.GetServiceStatusForXboxOne)
+ private:
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetServiceStatusForXboxOne* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetServiceStatusResponse : public ::google::protobuf::MessageLite {
+ public:
+  GetServiceStatusResponse();
+  virtual ~GetServiceStatusResponse();
+
+  GetServiceStatusResponse(const GetServiceStatusResponse& from);
+
+  inline GetServiceStatusResponse& operator=(const GetServiceStatusResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::std::string& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::std::string* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const GetServiceStatusResponse& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const GetServiceStatusResponse* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(GetServiceStatusResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  GetServiceStatusResponse* New() const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const GetServiceStatusResponse& from);
+  void MergeFrom(const GetServiceStatusResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int64 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::int64 id() const;
+  inline void set_id(::google::protobuf::int64 value);
+
+  // optional string steam_id = 2;
+  inline bool has_steam_id() const;
+  inline void clear_steam_id();
+  static const int kSteamIdFieldNumber = 2;
+  inline const ::std::string& steam_id() const;
+  inline void set_steam_id(const ::std::string& value);
+  inline void set_steam_id(const char* value);
+  inline void set_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_steam_id();
+  inline ::std::string* release_steam_id();
+  inline void set_allocated_steam_id(::std::string* steam_id);
+
+  // optional int64 unknown_1 = 3;
+  inline bool has_unknown_1() const;
+  inline void clear_unknown_1();
+  static const int kUnknown1FieldNumber = 3;
+  inline ::google::protobuf::int64 unknown_1() const;
+  inline void set_unknown_1(::google::protobuf::int64 value);
+
+  // optional int64 app_version = 4;
+  inline bool has_app_version() const;
+  inline void clear_app_version();
+  static const int kAppVersionFieldNumber = 4;
+  inline ::google::protobuf::int64 app_version() const;
+  inline void set_app_version(::google::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:Shared_Frpg2RequestMessage.GetServiceStatusResponse)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_steam_id();
+  inline void clear_has_steam_id();
+  inline void set_has_unknown_1();
+  inline void clear_has_unknown_1();
+  inline void set_has_app_version();
+  inline void clear_has_app_version();
+
+  ::std::string _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::int64 id_;
+  ::std::string* steam_id_;
+  ::google::protobuf::int64 unknown_1_;
+  ::google::protobuf::int64 app_version_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_Shared_5fFrpg2RequestMessage_2eproto();
+  friend void protobuf_ShutdownFile_Shared_5fFrpg2RequestMessage_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetServiceStatusResponse* default_instance_;
+};
 // ===================================================================
 
 
 // ===================================================================
 
+// RequestQueryLoginServerInfo
 
-// ===================================================================
+// required string steam_id = 1;
+inline bool RequestQueryLoginServerInfo::has_steam_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestQueryLoginServerInfo::set_has_steam_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestQueryLoginServerInfo::clear_has_steam_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestQueryLoginServerInfo::clear_steam_id() {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_->clear();
+  }
+  clear_has_steam_id();
+}
+inline const ::std::string& RequestQueryLoginServerInfo::steam_id() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.steam_id)
+  return *steam_id_;
+}
+inline void RequestQueryLoginServerInfo::set_steam_id(const ::std::string& value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.steam_id)
+}
+inline void RequestQueryLoginServerInfo::set_steam_id(const char* value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.steam_id)
+}
+inline void RequestQueryLoginServerInfo::set_steam_id(const char* value, size_t size) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.steam_id)
+}
+inline ::std::string* RequestQueryLoginServerInfo::mutable_steam_id() {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.steam_id)
+  return steam_id_;
+}
+inline ::std::string* RequestQueryLoginServerInfo::release_steam_id() {
+  clear_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = steam_id_;
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestQueryLoginServerInfo::set_allocated_steam_id(::std::string* steam_id) {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete steam_id_;
+  }
+  if (steam_id) {
+    set_has_steam_id();
+    steam_id_ = steam_id;
+  } else {
+    clear_has_steam_id();
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.steam_id)
+}
+
+// optional string f2 = 2;
+inline bool RequestQueryLoginServerInfo::has_f2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestQueryLoginServerInfo::set_has_f2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestQueryLoginServerInfo::clear_has_f2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestQueryLoginServerInfo::clear_f2() {
+  if (f2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    f2_->clear();
+  }
+  clear_has_f2();
+}
+inline const ::std::string& RequestQueryLoginServerInfo::f2() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.f2)
+  return *f2_;
+}
+inline void RequestQueryLoginServerInfo::set_f2(const ::std::string& value) {
+  set_has_f2();
+  if (f2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    f2_ = new ::std::string;
+  }
+  f2_->assign(value);
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.f2)
+}
+inline void RequestQueryLoginServerInfo::set_f2(const char* value) {
+  set_has_f2();
+  if (f2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    f2_ = new ::std::string;
+  }
+  f2_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.f2)
+}
+inline void RequestQueryLoginServerInfo::set_f2(const char* value, size_t size) {
+  set_has_f2();
+  if (f2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    f2_ = new ::std::string;
+  }
+  f2_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.f2)
+}
+inline ::std::string* RequestQueryLoginServerInfo::mutable_f2() {
+  set_has_f2();
+  if (f2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    f2_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.f2)
+  return f2_;
+}
+inline ::std::string* RequestQueryLoginServerInfo::release_f2() {
+  clear_has_f2();
+  if (f2_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = f2_;
+    f2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestQueryLoginServerInfo::set_allocated_f2(::std::string* f2) {
+  if (f2_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete f2_;
+  }
+  if (f2) {
+    set_has_f2();
+    f2_ = f2;
+  } else {
+    clear_has_f2();
+    f2_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.f2)
+}
+
+// required uint64 app_version = 3;
+inline bool RequestQueryLoginServerInfo::has_app_version() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestQueryLoginServerInfo::set_has_app_version() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestQueryLoginServerInfo::clear_has_app_version() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestQueryLoginServerInfo::clear_app_version() {
+  app_version_ = GOOGLE_ULONGLONG(0);
+  clear_has_app_version();
+}
+inline ::google::protobuf::uint64 RequestQueryLoginServerInfo::app_version() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.app_version)
+  return app_version_;
+}
+inline void RequestQueryLoginServerInfo::set_app_version(::google::protobuf::uint64 value) {
+  set_has_app_version();
+  app_version_ = value;
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfo.app_version)
+}
+
+// -------------------------------------------------------------------
+
+// RequestQueryLoginServerInfoResponse
+
+// required int64 port = 1;
+inline bool RequestQueryLoginServerInfoResponse::has_port() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestQueryLoginServerInfoResponse::set_has_port() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestQueryLoginServerInfoResponse::clear_has_port() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestQueryLoginServerInfoResponse::clear_port() {
+  port_ = GOOGLE_LONGLONG(0);
+  clear_has_port();
+}
+inline ::google::protobuf::int64 RequestQueryLoginServerInfoResponse::port() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.port)
+  return port_;
+}
+inline void RequestQueryLoginServerInfoResponse::set_port(::google::protobuf::int64 value) {
+  set_has_port();
+  port_ = value;
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.port)
+}
+
+// required string server_ip = 2;
+inline bool RequestQueryLoginServerInfoResponse::has_server_ip() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestQueryLoginServerInfoResponse::set_has_server_ip() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestQueryLoginServerInfoResponse::clear_has_server_ip() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestQueryLoginServerInfoResponse::clear_server_ip() {
+  if (server_ip_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    server_ip_->clear();
+  }
+  clear_has_server_ip();
+}
+inline const ::std::string& RequestQueryLoginServerInfoResponse::server_ip() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.server_ip)
+  return *server_ip_;
+}
+inline void RequestQueryLoginServerInfoResponse::set_server_ip(const ::std::string& value) {
+  set_has_server_ip();
+  if (server_ip_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    server_ip_ = new ::std::string;
+  }
+  server_ip_->assign(value);
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.server_ip)
+}
+inline void RequestQueryLoginServerInfoResponse::set_server_ip(const char* value) {
+  set_has_server_ip();
+  if (server_ip_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    server_ip_ = new ::std::string;
+  }
+  server_ip_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.server_ip)
+}
+inline void RequestQueryLoginServerInfoResponse::set_server_ip(const char* value, size_t size) {
+  set_has_server_ip();
+  if (server_ip_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    server_ip_ = new ::std::string;
+  }
+  server_ip_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.server_ip)
+}
+inline ::std::string* RequestQueryLoginServerInfoResponse::mutable_server_ip() {
+  set_has_server_ip();
+  if (server_ip_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    server_ip_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.server_ip)
+  return server_ip_;
+}
+inline ::std::string* RequestQueryLoginServerInfoResponse::release_server_ip() {
+  clear_has_server_ip();
+  if (server_ip_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_ip_;
+    server_ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestQueryLoginServerInfoResponse::set_allocated_server_ip(::std::string* server_ip) {
+  if (server_ip_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete server_ip_;
+  }
+  if (server_ip) {
+    set_has_server_ip();
+    server_ip_ = server_ip;
+  } else {
+    clear_has_server_ip();
+    server_ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Shared_Frpg2RequestMessage.RequestQueryLoginServerInfoResponse.server_ip)
+}
+
+// -------------------------------------------------------------------
+
+// RequestQueryLoginServerInfoForXboxOne
+
+// -------------------------------------------------------------------
+
+// RequestHandshake
+
+// required bytes aes_cwc_key = 1;
+inline bool RequestHandshake::has_aes_cwc_key() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestHandshake::set_has_aes_cwc_key() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestHandshake::clear_has_aes_cwc_key() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestHandshake::clear_aes_cwc_key() {
+  if (aes_cwc_key_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    aes_cwc_key_->clear();
+  }
+  clear_has_aes_cwc_key();
+}
+inline const ::std::string& RequestHandshake::aes_cwc_key() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.RequestHandshake.aes_cwc_key)
+  return *aes_cwc_key_;
+}
+inline void RequestHandshake::set_aes_cwc_key(const ::std::string& value) {
+  set_has_aes_cwc_key();
+  if (aes_cwc_key_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    aes_cwc_key_ = new ::std::string;
+  }
+  aes_cwc_key_->assign(value);
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.RequestHandshake.aes_cwc_key)
+}
+inline void RequestHandshake::set_aes_cwc_key(const char* value) {
+  set_has_aes_cwc_key();
+  if (aes_cwc_key_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    aes_cwc_key_ = new ::std::string;
+  }
+  aes_cwc_key_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Shared_Frpg2RequestMessage.RequestHandshake.aes_cwc_key)
+}
+inline void RequestHandshake::set_aes_cwc_key(const void* value, size_t size) {
+  set_has_aes_cwc_key();
+  if (aes_cwc_key_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    aes_cwc_key_ = new ::std::string;
+  }
+  aes_cwc_key_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Shared_Frpg2RequestMessage.RequestHandshake.aes_cwc_key)
+}
+inline ::std::string* RequestHandshake::mutable_aes_cwc_key() {
+  set_has_aes_cwc_key();
+  if (aes_cwc_key_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    aes_cwc_key_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Shared_Frpg2RequestMessage.RequestHandshake.aes_cwc_key)
+  return aes_cwc_key_;
+}
+inline ::std::string* RequestHandshake::release_aes_cwc_key() {
+  clear_has_aes_cwc_key();
+  if (aes_cwc_key_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = aes_cwc_key_;
+    aes_cwc_key_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestHandshake::set_allocated_aes_cwc_key(::std::string* aes_cwc_key) {
+  if (aes_cwc_key_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete aes_cwc_key_;
+  }
+  if (aes_cwc_key) {
+    set_has_aes_cwc_key();
+    aes_cwc_key_ = aes_cwc_key;
+  } else {
+    clear_has_aes_cwc_key();
+    aes_cwc_key_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Shared_Frpg2RequestMessage.RequestHandshake.aes_cwc_key)
+}
+
+// -------------------------------------------------------------------
+
+// RequestHandshakeResponse
+
+// -------------------------------------------------------------------
+
+// GetServiceStatus
+
+// required int64 id = 1;
+inline bool GetServiceStatus::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GetServiceStatus::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GetServiceStatus::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetServiceStatus::clear_id() {
+  id_ = GOOGLE_LONGLONG(0);
+  clear_has_id();
+}
+inline ::google::protobuf::int64 GetServiceStatus::id() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatus.id)
+  return id_;
+}
+inline void GetServiceStatus::set_id(::google::protobuf::int64 value) {
+  set_has_id();
+  id_ = value;
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatus.id)
+}
+
+// required string steam_id = 2;
+inline bool GetServiceStatus::has_steam_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GetServiceStatus::set_has_steam_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GetServiceStatus::clear_has_steam_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GetServiceStatus::clear_steam_id() {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_->clear();
+  }
+  clear_has_steam_id();
+}
+inline const ::std::string& GetServiceStatus::steam_id() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatus.steam_id)
+  return *steam_id_;
+}
+inline void GetServiceStatus::set_steam_id(const ::std::string& value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatus.steam_id)
+}
+inline void GetServiceStatus::set_steam_id(const char* value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Shared_Frpg2RequestMessage.GetServiceStatus.steam_id)
+}
+inline void GetServiceStatus::set_steam_id(const char* value, size_t size) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Shared_Frpg2RequestMessage.GetServiceStatus.steam_id)
+}
+inline ::std::string* GetServiceStatus::mutable_steam_id() {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Shared_Frpg2RequestMessage.GetServiceStatus.steam_id)
+  return steam_id_;
+}
+inline ::std::string* GetServiceStatus::release_steam_id() {
+  clear_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = steam_id_;
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GetServiceStatus::set_allocated_steam_id(::std::string* steam_id) {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete steam_id_;
+  }
+  if (steam_id) {
+    set_has_steam_id();
+    steam_id_ = steam_id;
+  } else {
+    clear_has_steam_id();
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Shared_Frpg2RequestMessage.GetServiceStatus.steam_id)
+}
+
+// optional string unknown_1 = 3;
+inline bool GetServiceStatus::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GetServiceStatus::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GetServiceStatus::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GetServiceStatus::clear_unknown_1() {
+  if (unknown_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_1_->clear();
+  }
+  clear_has_unknown_1();
+}
+inline const ::std::string& GetServiceStatus::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatus.unknown_1)
+  return *unknown_1_;
+}
+inline void GetServiceStatus::set_unknown_1(const ::std::string& value) {
+  set_has_unknown_1();
+  if (unknown_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_1_ = new ::std::string;
+  }
+  unknown_1_->assign(value);
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatus.unknown_1)
+}
+inline void GetServiceStatus::set_unknown_1(const char* value) {
+  set_has_unknown_1();
+  if (unknown_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_1_ = new ::std::string;
+  }
+  unknown_1_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Shared_Frpg2RequestMessage.GetServiceStatus.unknown_1)
+}
+inline void GetServiceStatus::set_unknown_1(const char* value, size_t size) {
+  set_has_unknown_1();
+  if (unknown_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_1_ = new ::std::string;
+  }
+  unknown_1_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Shared_Frpg2RequestMessage.GetServiceStatus.unknown_1)
+}
+inline ::std::string* GetServiceStatus::mutable_unknown_1() {
+  set_has_unknown_1();
+  if (unknown_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    unknown_1_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Shared_Frpg2RequestMessage.GetServiceStatus.unknown_1)
+  return unknown_1_;
+}
+inline ::std::string* GetServiceStatus::release_unknown_1() {
+  clear_has_unknown_1();
+  if (unknown_1_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = unknown_1_;
+    unknown_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GetServiceStatus::set_allocated_unknown_1(::std::string* unknown_1) {
+  if (unknown_1_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete unknown_1_;
+  }
+  if (unknown_1) {
+    set_has_unknown_1();
+    unknown_1_ = unknown_1;
+  } else {
+    clear_has_unknown_1();
+    unknown_1_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Shared_Frpg2RequestMessage.GetServiceStatus.unknown_1)
+}
+
+// required int64 app_version = 4;
+inline bool GetServiceStatus::has_app_version() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GetServiceStatus::set_has_app_version() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GetServiceStatus::clear_has_app_version() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GetServiceStatus::clear_app_version() {
+  app_version_ = GOOGLE_LONGLONG(0);
+  clear_has_app_version();
+}
+inline ::google::protobuf::int64 GetServiceStatus::app_version() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatus.app_version)
+  return app_version_;
+}
+inline void GetServiceStatus::set_app_version(::google::protobuf::int64 value) {
+  set_has_app_version();
+  app_version_ = value;
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatus.app_version)
+}
+
+// -------------------------------------------------------------------
+
+// GetServiceStatusForXboxOne
+
+// -------------------------------------------------------------------
+
+// GetServiceStatusResponse
+
+// optional int64 id = 1;
+inline bool GetServiceStatusResponse::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GetServiceStatusResponse::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GetServiceStatusResponse::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetServiceStatusResponse::clear_id() {
+  id_ = GOOGLE_LONGLONG(0);
+  clear_has_id();
+}
+inline ::google::protobuf::int64 GetServiceStatusResponse::id() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatusResponse.id)
+  return id_;
+}
+inline void GetServiceStatusResponse::set_id(::google::protobuf::int64 value) {
+  set_has_id();
+  id_ = value;
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatusResponse.id)
+}
+
+// optional string steam_id = 2;
+inline bool GetServiceStatusResponse::has_steam_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GetServiceStatusResponse::set_has_steam_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GetServiceStatusResponse::clear_has_steam_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GetServiceStatusResponse::clear_steam_id() {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_->clear();
+  }
+  clear_has_steam_id();
+}
+inline const ::std::string& GetServiceStatusResponse::steam_id() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatusResponse.steam_id)
+  return *steam_id_;
+}
+inline void GetServiceStatusResponse::set_steam_id(const ::std::string& value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatusResponse.steam_id)
+}
+inline void GetServiceStatusResponse::set_steam_id(const char* value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Shared_Frpg2RequestMessage.GetServiceStatusResponse.steam_id)
+}
+inline void GetServiceStatusResponse::set_steam_id(const char* value, size_t size) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Shared_Frpg2RequestMessage.GetServiceStatusResponse.steam_id)
+}
+inline ::std::string* GetServiceStatusResponse::mutable_steam_id() {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Shared_Frpg2RequestMessage.GetServiceStatusResponse.steam_id)
+  return steam_id_;
+}
+inline ::std::string* GetServiceStatusResponse::release_steam_id() {
+  clear_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = steam_id_;
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GetServiceStatusResponse::set_allocated_steam_id(::std::string* steam_id) {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete steam_id_;
+  }
+  if (steam_id) {
+    set_has_steam_id();
+    steam_id_ = steam_id;
+  } else {
+    clear_has_steam_id();
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Shared_Frpg2RequestMessage.GetServiceStatusResponse.steam_id)
+}
+
+// optional int64 unknown_1 = 3;
+inline bool GetServiceStatusResponse::has_unknown_1() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GetServiceStatusResponse::set_has_unknown_1() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GetServiceStatusResponse::clear_has_unknown_1() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GetServiceStatusResponse::clear_unknown_1() {
+  unknown_1_ = GOOGLE_LONGLONG(0);
+  clear_has_unknown_1();
+}
+inline ::google::protobuf::int64 GetServiceStatusResponse::unknown_1() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatusResponse.unknown_1)
+  return unknown_1_;
+}
+inline void GetServiceStatusResponse::set_unknown_1(::google::protobuf::int64 value) {
+  set_has_unknown_1();
+  unknown_1_ = value;
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatusResponse.unknown_1)
+}
+
+// optional int64 app_version = 4;
+inline bool GetServiceStatusResponse::has_app_version() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GetServiceStatusResponse::set_has_app_version() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GetServiceStatusResponse::clear_has_app_version() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GetServiceStatusResponse::clear_app_version() {
+  app_version_ = GOOGLE_LONGLONG(0);
+  clear_has_app_version();
+}
+inline ::google::protobuf::int64 GetServiceStatusResponse::app_version() const {
+  // @@protoc_insertion_point(field_get:Shared_Frpg2RequestMessage.GetServiceStatusResponse.app_version)
+  return app_version_;
+}
+inline void GetServiceStatusResponse::set_app_version(::google::protobuf::int64 value) {
+  set_has_app_version();
+  app_version_ = value;
+  // @@protoc_insertion_point(field_set:Shared_Frpg2RequestMessage.GetServiceStatusResponse.app_version)
+}
 
 
 // @@protoc_insertion_point(namespace_scope)

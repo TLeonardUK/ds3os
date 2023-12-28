@@ -12,3 +12,67 @@
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
 package Shared_Frpg2RequestMessage;
+
+// ------------------------------------------------------------------------------------------------------------
+// Login Server Messages
+// ------------------------------------------------------------------------------------------------------------
+
+// First message sent to the login server, used to request
+// the port and server_ip to authenticate over.
+message RequestQueryLoginServerInfo {
+    required string steam_id = 1;
+    optional string f2 = 2;
+    required uint64 app_version = 3;                // app version without the period and -1. eg. app ver 1.13 = 112
+}
+
+// Send in response to RequestQueryLoginServerInfo
+message RequestQueryLoginServerInfoResponse {
+    required int64 port = 1;
+    required string server_ip = 2;
+}
+
+// Presumably a message sent instead of RequestQueryLoginServerInfo on xbox
+// Probably holds an xbox-specific user-id.
+message RequestQueryLoginServerInfoForXboxOne {
+    // index=1 type=2
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Auth Server Messages
+// ------------------------------------------------------------------------------------------------------------
+
+// First message sent to auth server RSA encrypted. Provides a CWC key used
+// for encrypting the rest of the traffic.
+message RequestHandshake {
+    required bytes aes_cwc_key = 1;
+}
+
+// Response to initial message, encrypted with CWC.
+message RequestHandshakeResponse {
+}
+
+// Sent after handshake, all seemingly constant data (apart from the steam_id). 
+// Presumably used for ensure we are connecting to a compatible server?
+message GetServiceStatus {
+    required int64 id = 1;              
+    required string steam_id = 2;
+    optional string unknown_1 = 3;
+    required int64 app_version = 4;     // 1.15 = 114 (zero indexed)
+}
+
+// Same as above but probably has an xbox one id rather than steam_id.
+message GetServiceStatusForXboxOne {
+    // index=1 type=0
+    // index=2 type=2
+}
+
+// Response to GetServiceStatus, contains identical data to what is sent
+// with the exception of a blank steam_id. Presumably if we connected to a dev server
+// or something we would get different responses.
+// If we are on an older version of the game an empty response is sent back for this.
+message GetServiceStatusResponse {
+    optional int64 id = 1;
+    optional string steam_id = 2;
+    optional int64 unknown_1 = 3;
+    optional int64 app_version = 4;
+}

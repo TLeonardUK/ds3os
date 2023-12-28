@@ -40,7 +40,7 @@ namespace Loader.Forms
 
             foreach (ServerConfig Config in ActiveServers)
             {
-                if (Config.AllowSharding && Config.WebAddress != "")
+                if (Config.AllowSharding && Config.WebAddress != "" && Config.GameType == ServerGameType.ToString())
                 {
                     ShardServer = Config;
                 }
@@ -48,7 +48,7 @@ namespace Loader.Forms
 
             if (ShardServer == null)
             {
-                MessageBox.Show("No servers are online that support sharding. Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No servers are online that support sharding for this game type. Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 DialogResult = DialogResult.Cancel;
                 Close();

@@ -7,7 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-// Credit: A lot of information here has been derived from the protobufs of AmirBohd's ModEngine2.
+// Credit: Parts of this are based on research by: AmirBohd, Radai
 
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;

@@ -22,7 +22,7 @@ class Frpg2ReliableUdpMessageStream
     : public Frpg2ReliableUdpFragmentStream
 {
 public:
-    Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient = false);
+    Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient, GameType InGameType);
 
     // Short hand version of Send for protobufs, takes care of constructing the wrapper message.
     virtual bool Send(google::protobuf::MessageLite* Message, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
@@ -65,6 +65,8 @@ private:
     uint32_t SentMessageCounter = 0;
 
     uint32_t LastSentMessageIndex = 0;
+
+    GameType ServerGameType;
 
     static inline size_t DumpMessageIndex = 0;
 

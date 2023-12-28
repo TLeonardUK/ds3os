@@ -11,11 +11,6 @@
 #include "Server/Server.h"
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
-#include "Server/GameService/GameManagers/BloodMessage/BloodMessageManager.h"
-#include "Server/GameService/GameManagers/Bloodstain/BloodstainManager.h"
-#include "Server/GameService/GameManagers/QuickMatch/QuickMatchManager.h"
-#include "Server/GameService/GameManagers/Signs/SignManager.h"
-#include "Server/GameService/GameManagers/Ghosts/GhostManager.h"
 
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"

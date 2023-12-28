@@ -11,5 +11,7 @@ if (WIN32)
 endif()
 
 add_subdirectory(Server)
+add_subdirectory(Server.DarkSouls3)
+add_subdirectory(Server.DarkSouls2)
 add_subdirectory(Shared)
 

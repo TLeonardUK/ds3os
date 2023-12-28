@@ -9,20 +9,20 @@
 
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
-#include "Server/GameService/GameManagers/Boot/BootManager.h"
-#include "Server/GameService/GameManagers/Logging/LoggingManager.h"
-#include "Server/GameService/GameManagers/PlayerData/PlayerDataManager.h"
-#include "Server/GameService/GameManagers/BloodMessage/BloodMessageManager.h"
-#include "Server/GameService/GameManagers/Bloodstain/BloodstainManager.h"
-#include "Server/GameService/GameManagers/Ghosts/GhostManager.h"
-#include "Server/GameService/GameManagers/Signs/SignManager.h"
-#include "Server/GameService/GameManagers/Ranking/RankingManager.h"
-#include "Server/GameService/GameManagers/QuickMatch/QuickMatchManager.h"
-#include "Server/GameService/GameManagers/BreakIn/BreakInManager.h"
-#include "Server/GameService/GameManagers/Visitor/VisitorManager.h"
-#include "Server/GameService/GameManagers/Mark/MarkManager.h"
-#include "Server/GameService/GameManagers/Misc/MiscManager.h"
-#include "Server/GameService/GameManagers/AntiCheat/AntiCheatManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Boot/BootManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Logging/LoggingManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/PlayerData/PlayerDataManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/BloodMessage/BloodMessageManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Bloodstain/BloodstainManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Ghosts/GhostManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Signs/SignManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Ranking/RankingManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/QuickMatch/QuickMatchManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/BreakIn/BreakInManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Visitor/VisitorManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Mark/MarkManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/Misc/MiscManager.h"
+#include "Server/GameService/DarkSouls3/GameManagers/AntiCheat/AntiCheatManager.h"
 
 #include "Server/Server.h"
 #include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
@@ -37,7 +37,7 @@
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
 
-#include "Server/GameService/Utils/GameIds.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 
 GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     : ServerInstance(OwningServer)

@@ -47,6 +47,9 @@ public:
     using AOBByte = std::optional<uint8_t>;
     std::vector<intptr_t> SearchAOB(const std::vector<AOBByte>& pattern);
 
+    std::vector<intptr_t> SearchString(const std::string& input);
+    std::vector<intptr_t> SearchString(const std::wstring& input);
+
 private:
 
     bool QuitRecieved = false;

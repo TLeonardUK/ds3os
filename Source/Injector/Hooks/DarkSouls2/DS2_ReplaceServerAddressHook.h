@@ -22,4 +22,8 @@ public:
     virtual void Uninstall() override;
     virtual const char* GetName() override;
 
+private:
+    bool PatchKey(Injector& injector);
+    bool PatchHostname(Injector& injector);
+
 };

@@ -65,17 +65,6 @@ int main(int argc, char* argv[])
 
         SteamUtils()->SetWarningMessageHook(&SteamWarningHook);
     }
-    else
-    {
-        // Ports etc are irrelevant, we're only using the api to do authentication. 
-        if (!SteamGameServer_Init(0, 50001, 50002, eServerModeAuthentication, "1.0.0.0"))
-        {
-            Error("Failed to initialize steam game server api.");
-            return 1;
-        }
-
-        SteamGameServerUtils()->SetWarningMessageHook(&SteamWarningHook);
-    }
 
     // TODO: Split this out into a seperate application.
     // TODO: Also do less crappy arg parsing.
@@ -130,10 +119,6 @@ int main(int argc, char* argv[])
     if (start_as_client_emulator)
     {
         SteamAPI_Shutdown();
-    }
-    else
-    {
-        SteamGameServer_Shutdown();
     }
 
     if (!PlatformTerm())

@@ -34,6 +34,9 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
+#include <steam/steam_api.h>
+#include <steam/steam_gameserver.h>
+
 Server::Server(const std::string& InServerId, const std::string& InServerName, const std::string& InServerPassword, GameType InType, ServerManager* InManager)
     : ServerId(InServerId)
     , Manager(InManager)
@@ -117,6 +120,21 @@ bool Server::Init()
     {
         Error("Unknown game type: %s", Config.GameType.c_str());
         return false;
+    }
+
+    // Setup steam for this server.
+    if (IsDefaultServer())
+    {
+        std::filesystem::path appid_path = std::filesystem::current_path() / "steam_appid.txt";
+
+        size_t appid = BuildConfig::GameConfig[(int)ServerGameType].STEAM_APPID;
+        WriteTextToFile(appid_path, std::to_string(appid));
+
+        if (!SteamGameServer_Init(0, 50001, 50002, eServerModeAuthentication, "1.0.0.0"))
+        {
+            Error("Failed to initialize steam game server api.");
+            return 1;
+        }
     }
 
     // Patch old server ip.
@@ -283,6 +301,11 @@ bool Server::Term()
     {
         Error("Failed to close database.");
         return false;
+    }
+
+    if (IsDefaultServer())
+    {
+        SteamGameServer_Shutdown();
     }
 
     return true;

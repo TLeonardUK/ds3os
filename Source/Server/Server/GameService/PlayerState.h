@@ -13,7 +13,7 @@
 
 #include "Protobuf/Protobufs.h"
 
-#include "Server/GameService/Utils/GameIds.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 
 // Represents the in-game state of a player. Each game client owns an instance of this class.
 
@@ -70,9 +70,6 @@ public:
     // until the first RequestUpdatePlayerStatus is invoked.
     DEFINE_FIELD(std::string, CharacterName, "")    
     
-    // Current online matching area the player is in.
-    DEFINE_FIELD(OnlineAreaId, CurrentArea, OnlineAreaId::None)
-    
     // If the player is currently in a state they can be invaded in.
     DEFINE_FIELD(bool, IsInvadable, false)
     
@@ -81,6 +78,18 @@ public:
     
     // Players maximum weapon level. 
     DEFINE_FIELD(int, MaxWeaponLevel, 0)
+        
+    // Current anti-cheat penalty score.
+    DEFINE_FIELD(PlayerAntiCheatState, AntiCheatState, {});
+
+    // Bonfire info used for calculating deltas on when the user lights one.
+    DEFINE_FIELD(std::vector<uint32_t>, LitBonfires, {});
+    DEFINE_FIELD(bool, HasInitialState, false);
+
+    // TODO: Split into derived class.
+
+    // Current online matching area the player is in.
+    DEFINE_FIELD(OnlineAreaId, CurrentArea, OnlineAreaId::None)
     
     // What type of visitor the player can currently be summoned as.
     DEFINE_FIELD(DS3_Frpg2RequestMessage::VisitorPool, VisitorPool, DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_None)
@@ -89,12 +98,6 @@ public:
     // RequestUpdatePlayerStatus requests.
     DEFINE_FIELD(DS3_Frpg2PlayerData::AllStatus, PlayerStatus, DS3_Frpg2PlayerData::AllStatus())
 
-    // Current anti-cheat penalty score.
-    DEFINE_FIELD(PlayerAntiCheatState, AntiCheatState, {});
-
-    // Bonfire info used for calculating deltas on when the user lights one.
-    DEFINE_FIELD(std::vector<uint32_t>, LitBonfires, {});
-    DEFINE_FIELD(bool, HasInitialState, false);
 };
 
 #undef DEFINE_FIELD

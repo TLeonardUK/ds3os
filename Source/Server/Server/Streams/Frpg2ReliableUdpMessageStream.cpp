@@ -24,15 +24,16 @@
 
 #include <google/protobuf/unknown_field_set.h>
 
-Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient)
+Frpg2ReliableUdpMessageStream::Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient, GameType InGameType)
     : Frpg2ReliableUdpFragmentStream(Connection, CwcKey, AuthToken, AsClient)
+    , ServerGameType(InGameType)
 {
 }
 
 bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& Message, const Frpg2ReliableUdpMessage* ResponseTo)
 {
     Frpg2ReliableUdpMessage SendMessage = Message;
-    if (SendMessage.Header.msg_type == Frpg2ReliableUdpMessageType::Push)
+    if (SendMessage.Header.IsType(DS3_Frpg2ReliableUdpMessageType::Push))
     {
         SendMessage.Header.msg_index = 0xFFFFFFFF;
 
@@ -80,7 +81,7 @@ bool Frpg2ReliableUdpMessageStream::SendInternal(const Frpg2ReliableUdpMessage& 
 
     if (SendMessage.Header.msg_type != Frpg2ReliableUdpMessageType::Reply)
     {
-        if (ReliableUdpMessageType_Expects_Response(SendMessage.Header.msg_type))
+        if (ReliableUdpMessageType_Expects_Response(ServerGameType, SendMessage.Header.msg_type))
         {
             OutstandingResponses.insert({ SendMessage.Header.msg_index, SendMessage.Header.msg_type });
         }
@@ -96,7 +97,7 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
 
     if (ResponseTo == nullptr)
     {
-        if (!Protobuf_To_ReliableUdpMessageType(Message, ResponseMessage.Header.msg_type))
+        if (!Protobuf_To_ReliableUdpMessageType(ServerGameType, Message, ResponseMessage.Header.msg_type))
         {
             WarningS(Connection->GetName().c_str(), "Failed to determine message type by protobuf.");
             InErrorState = true;
@@ -179,7 +180,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
     // Create protobuf based on the type provided.
     Frpg2ReliableUdpMessageType MessageType = Message->Header.msg_type;
     bool IsResponse = false;
-    if (Message->Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    if (Message->Header.IsType(DS3_Frpg2ReliableUdpMessageType::Reply))
     {
         // Find message being replied to.
         if (auto iter = OutstandingResponses.find(Message->Header.msg_index); iter != OutstandingResponses.end())
@@ -197,7 +198,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         IsResponse = true;
     }
 
-    if (!ReliableUdpMessageType_To_Protobuf(MessageType, IsResponse, Message->Protobuf))
+    if (!ReliableUdpMessageType_To_Protobuf(ServerGameType, MessageType, IsResponse, Message->Protobuf))
     {
         WarningS(Connection->GetName().c_str(), "Failed to create protobuf instance for message: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
 
@@ -244,7 +245,7 @@ bool Frpg2ReliableUdpMessageStream::DecodeMessage(const Frpg2ReliableUdpFragment
     ReadOffset += sizeof(Frpg2ReliableUdpMessageHeader);
     Message.Header.SwapEndian();
 
-    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::Reply))
     {
         memcpy(&Message.ResponseHeader, Packet.Payload.data() + ReadOffset, sizeof(Frpg2ReliableUdpMessageResponseHeader));
         ReadOffset += sizeof(Frpg2ReliableUdpMessageResponseHeader);
@@ -265,7 +266,7 @@ bool Frpg2ReliableUdpMessageStream::EncodeMessage(const Frpg2ReliableUdpMessage&
     ByteSwappedMessage.ResponseHeader.SwapEndian();
 
     size_t PayloadSize = sizeof(Frpg2ReliableUdpMessageHeader) + ByteSwappedMessage.Payload.size();
-    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::Reply))
     {
         PayloadSize += sizeof(Frpg2ReliableUdpMessageResponseHeader);
     }
@@ -276,7 +277,7 @@ bool Frpg2ReliableUdpMessageStream::EncodeMessage(const Frpg2ReliableUdpMessage&
     memcpy(Packet.Payload.data() + WriteOffset, &ByteSwappedMessage.Header, sizeof(Frpg2ReliableUdpMessageHeader));
     WriteOffset += sizeof(Frpg2ReliableUdpMessageHeader);
 
-    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::Reply))
     {
         memcpy(Packet.Payload.data() + WriteOffset, &ByteSwappedMessage.ResponseHeader, sizeof(Frpg2ReliableUdpMessageResponseHeader));
         WriteOffset += sizeof(Frpg2ReliableUdpMessageResponseHeader);
@@ -304,7 +305,7 @@ std::string Frpg2ReliableUdpMessageStream::Disassemble(const Frpg2ReliableUdpMes
     Result += StringFormat("\t%-30s = %u\n", "msg_type", Message.Header.msg_type);
     Result += StringFormat("\t%-30s = %u\n", "msg_index", Message.Header.msg_index);
 
-    if (Message.Header.msg_type == Frpg2ReliableUdpMessageType::Reply)
+    if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::Reply))
     {
         Result += StringFormat("\t%-30s = %u\n", "unknown_1", Message.ResponseHeader.unknown_1);
         Result += StringFormat("\t%-30s = %u\n", "unknown_2", Message.ResponseHeader.unknown_2);

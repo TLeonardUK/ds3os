@@ -14,13 +14,12 @@
 // To keep things a bit cleaner we import all the files through this header and cpp.
 #pragma warning(disable: 4267 4244 4018)
 
-#include "DarkSouls3/DS3_FpdLogMessage.pb.h"
-#include "DarkSouls3/DS3_Frpg2PlayerData.pb.h"
-#include "DarkSouls3/DS3_Frpg2RequestMessage.pb.h"
+#include "Server.DarkSouls3/Protobuf/DarkSouls3/DS3_FpdLogMessage.pb.h"
+#include "Server.DarkSouls3/Protobuf/DarkSouls3/DS3_Frpg2PlayerData.pb.h"
+#include "Server.DarkSouls3/Protobuf/DarkSouls3/DS3_Frpg2RequestMessage.pb.h"
 
-#include "DarkSouls2/DS2_FpdLogMessage.pb.h"
-#include "DarkSouls2/DS2_Frpg2PlayerData.pb.h"
-#include "DarkSouls2/DS2_Frpg2RequestMessage.pb.h"
+#include "Server.DarkSouls2/Protobuf/DarkSouls2/DS2_Frpg2PlayerData.pb.h"
+#include "Server.DarkSouls2/Protobuf/DarkSouls2/DS2_Frpg2RequestMessage.pb.h"
 
 #include "Shared/Shared_FpdLogMessage.pb.h"
 #include "Shared/Shared_Frpg2PlayerData.pb.h"

@@ -7,7 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-// Credit: A lot of information here has been derived from the protobufs of AmirBohd's ModEngine2.
+// Credit: Parts of this are based on research by: AmirBohd, Radai
 
 syntax = "proto2";
 option optimize_for = LITE_RUNTIME;
@@ -22,23 +22,23 @@ import "DS2_Frpg2PlayerData.proto";
 // The message-id thats recieved on the reliable udp message layer is always 0x0320, and the first
 // field is read to disambiguate the actual message.
 enum PushMessageId {
-    PushID_PushRequestRemoveSign               = 0x033D;
-    PushID_PushRequestSummonSign               = 0x033E;
-    PushID_PushRequestRejectSign               = 0x033F;
-    PushID_PushRequestJoinQuickMatch           = 0x0340;
-    PushID_PushRequestAcceptQuickMatch         = 0x0341;
-    PushID_PushRequestRejectQuickMatch         = 0x0342;
-    PushID_PlayerInfoUploadConfigPushMessage   = 0x038C;
-    PushID_PushRequestEvaluateBloodMessage     = 0x0396;
-    PushID_PushRequestBreakInTarget            = 0x03A5;
-    PushID_PushRequestRejectBreakInTarget      = 0x03A6;
-    PushID_PushRequestAllowBreakInTarget       = 0x03A7;
-    PushID_PushRequestVisit                    = 0x03B7;
-    PushID_PushRequestRejectVisit              = 0x03B8;
-    PushID_PushRequestRemoveVisitor            = 0x03B9;
-    PushID_PushRequestNotifyRingBell           = 0x03C9;
-    PushID_RegulationFileUpdatePushMessage     = 0x038B;
-    PushID_ManagementTextMessage               = 0x0389;
+	PushID_PushRequestRemoveSign               = 829;
+	PushID_PushRequestSummonSign               = 830;
+	PushID_PushRequestRejectSign               = 831;
+	PushID_PushRequestJoinQuickMatch           = 832;
+	PushID_PushRequestAcceptQuickMatch         = 833;
+	PushID_PushRequestRejectQuickMatch         = 834;
+	PushID_PlayerInfoUploadConfigPushMessage   = 908;
+	PushID_PushRequestEvaluateBloodMessage     = 918;
+	PushID_PushRequestBreakInTarget            = 933;
+	PushID_PushRequestRejectBreakInTarget      = 934;
+	PushID_PushRequestAllowBreakInTarget       = 935;
+	PushID_PushRequestVisit                    = 951;
+	PushID_PushRequestRejectVisit              = 952;
+	PushID_PushRequestRemoveVisitor            = 953;
+	PushID_PushRequestNotifyRingBell           = 969;
+	PushID_RegulationFileUpdatePushMessage     = 907;
+	PushID_ManagementTextMessage               = 905;
 }
 
 // Special empty response, some requests expect an empty response but
@@ -48,89 +48,27 @@ message EmptyResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
-// Login Server Messages
-// ------------------------------------------------------------------------------------------------------------
-
-// First message sent to the login server, used to request
-// the port and server_ip to authenticate over.
-message RequestQueryLoginServerInfo {
-    required string steam_id = 1;
-    optional string f2 = 2;
-    required uint64 app_version = 3;                // app version without the period and -1. eg. app ver 1.13 = 112
-}
-
-// Send in response to RequestQueryLoginServerInfo
-message RequestQueryLoginServerInfoResponse {
-    required int64 port = 1;
-    required string server_ip = 2;
-}
-
-// Presumably a message sent instead of RequestQueryLoginServerInfo on xbox
-// Probably holds an xbox-specific user-id.
-message RequestQueryLoginServerInfoForXboxOne {
-    // index=1 type=2
-}
-
-// ------------------------------------------------------------------------------------------------------------
-// Auth Server Messages
-// ------------------------------------------------------------------------------------------------------------
-
-// First message sent to auth server RSA encrypted. Provides a CWC key used
-// for encrypting the rest of the traffic.
-message RequestHandshake {
-    required bytes aes_cwc_key = 1;
-}
-
-// Response to initial message, encrypted with CWC.
-message RequestHandshakeResponse {
-}
-
-// Sent after handshake, all seemingly constant data (apart from the steam_id). 
-// Presumably used for ensure we are connecting to a compatible server?
-message GetServiceStatus {
-    required int64 id = 1;              
-    required string steam_id = 2;
-    optional string unknown_1 = 3;
-    required int64 app_version = 4;     // 1.15 = 114 (zero indexed)
-}
-
-// Same as above but probably has an xbox one id rather than steam_id.
-message GetServiceStatusForXboxOne {
-    // index=1 type=0
-    // index=2 type=2
-}
-
-// Response to GetServiceStatus, contains identical data to what is sent
-// with the exception of a blank steam_id. Presumably if we connected to a dev server
-// or something we would get different responses.
-// If we are on an older version of the game an empty response is sent back for this.
-message GetServiceStatusResponse {
-    optional int64 id = 1;
-    optional string steam_id = 2;
-    optional int64 unknown_1 = 3;
-    optional int64 app_version = 4;
-}
-
-// ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Initialization
 // ------------------------------------------------------------------------------------------------------------
 
 message RequestWaitForUserLogin {
-    required string steam_id = 1;
-    required uint32 unknown_1 = 2;  // 1
-    required uint32 unknown_2 = 3;  // 0
-    required uint32 unknown_3 = 4;  // 1
-    required uint32 unknown_4 = 5;  // 2
+	required string steam_id = 1;
+	required uint32 unknown_1 = 2;	//1
+	required uint32 unknown_2 = 3;	//0
+	required uint32 unknown_3 = 4;	//1
+	required uint32 unknown_4 = 5;	//2
+	optional uint32 unknown_5 = 6;
+	optional uint32 unknown_6 = 7;
 }
 
 message RequestWaitForUserLoginResponse {
-    required string steam_id = 1;
-    required uint32 player_id = 2; 
+	required string steam_id = 1;
+	required uint32 player_id = 2;
 }
 
 message PlayerStatusUploadConfig {
-    repeated uint32 player_data_mask = 1;   // Set of flags from 2 to 1059, these determine what player data is send in the PlayerStatus messages.
-    required uint32 upload_interval = 2;    // Interval between each periodic RequestUpdatePlayerStatus call. In seconds, 5 by default. Client appears to clamp to a minimum of 5. Not limited by set_player_status_send_delay.
+	repeated uint32 player_data_mask = 1;
+	required uint32 upload_interval = 2;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -138,92 +76,79 @@ message PlayerStatusUploadConfig {
 // ------------------------------------------------------------------------------------------------------------
 
 message AnnounceMessageData {
-    required uint32 unknown_1 = 1;  // Seen as 20,104,24, changing it makes no visual difference.
-    required uint32 index = 2;
-    required uint32 unknown_2 = 3;  // always 1
-    required string header = 4;
-    required string message = 5;
-    required DS2_Frpg2PlayerData.DateTime datetime = 6;
+	required uint32 unknown_1 = 1;
+	required uint32 unknown_2 = 2;
+	required uint32 unknown_3 = 3;
+	required string header = 4;
+	required string message = 5;
+	required DS2_Frpg2PlayerData.DateTime datetime = 6;
 }
 
 message AnnounceMessageDataList {
-    repeated AnnounceMessageData items = 1;
+	repeated AnnounceMessageData items = 1;
 }
 
 message RequestGetAnnounceMessageList {
-    required uint32 max_entries = 1; // Guessing this is what the value is, seems to be constant of 100. 
+	required uint32 max_entries = 1;
+	optional uint32 unknown_1 = 2;
+	optional uint32 unknown_2 = 3;
 }
 
 message RequestGetAnnounceMessageListResponse {
-    required AnnounceMessageDataList changes = 1;
-    required AnnounceMessageDataList notices = 2;
+	required AnnounceMessageDataList unknown_1 = 1;
+	required AnnounceMessageDataList unknown_2 = 2;
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Character Info Management
 // ------------------------------------------------------------------------------------------------------------
 
-message PlayerCharacterData { 
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=2
+message PlayerCharacterData {
 }
 
 message PlayerCharacterID {
-    // index=1 type=0
-    // index=2 type=0
 }
 
-// RequestUpdatePlayerStatus -> StatusDelayedSendTask
-
-// I'm guessing this is used to configure how often the user uploads their info, and in what locations.
-message PlayerInfoUploadConfigPushMessage { 
-    required PushMessageId push_message_id = 1;                 // 908 - Push message id.
-    required PlayerStatusUploadConfig config = 2;               // massive list
-    required uint32 player_character_update_send_delay = 3;     // Delay, in seconds, before sending RequestUpdatePlayerCharacter calls. Defaults to 600 = 10 minutes. Clamped to 60->50000.
-    required uint32 player_status_send_delay = 4;               // Delay, in seconds, before sending RequestUpdatePlayerStatus. Defaults to 300 = 5 minutes. Clamped to 60->50000.
+message PlayerInfoUploadConfigPushMessage {
+	required PushMessageId push_message_id = 1;
+	required PlayerStatusUploadConfig config = 2;
+	required uint32 player_character_status_update_send_delay = 3;
+	required uint32 player_status_send_delay = 4;
 }
 
 message RequestUpdateLoginPlayerCharacter {
-    required uint32 character_id = 1;                               
-    repeated uint32 unknown_2 = 2;                                   // 1, 1, 1, 1, 1, 1, 1, 6, 7 <- I think this is the id's of all the local player characters.
+	required uint32 character_id = 1;
+	repeated uint32 unknown = 2;
 }
 
 message RequestUpdateLoginPlayerCharacterResponse {
-    required uint32 character_id = 1;                              
-    required QuickMatchRank quickmatch_brawl_rank = 2;   
-    required QuickMatchRank quickmatch_dual_rank = 3;   
+	required uint32 character_id = 1;
 }
 
 message RequestUpdatePlayerStatus {
-    required bytes status = 1;
+	required DS2_Frpg2PlayerData.AllStatus status = 1;
 }
 
 message RequestUpdatePlayerStatusResponse {
-    // Empty Response
 }
 
 message RequestUpdatePlayerCharacter {
-    required uint32 character_id = 1;          
-    required bytes character_data = 2;      
+	required uint32 character_id = 1;
+	required bytes character_data = 2;
 }
 
 message RequestUpdatePlayerCharacterResponse {
-    // Empty Response
 }
-
-// The GetPlayerCharacter only seems to get called by the Roster of Knights when looking
-// at an entries character profile.
 
 message RequestGetPlayerCharacter {
-    required uint32 player_id = 1;
-    required uint32 character_id = 2;            
+	required uint32 player_id = 1;
+	required uint32 charatcer_id = 2;
 }
 
-message RequestGetPlayerCharacterResponse {
-    required uint32 player_id = 1;
-    required uint32 character_id = 2;           
-    required bytes  character_data = 3;         // Seems to contain profile information.
+message RequestGetPlayerCharacterList {
+	required uint32 player_id = 1;
+	required uint32 charatcer_id = 2;
+	required bytes character_data = 3;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -231,664 +156,417 @@ message RequestGetPlayerCharacterResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message BloodMessageData {
-    required uint32 player_id = 1;
-    required uint32 character_id = 2;   
-    required uint32 message_id = 3; 
-    required uint32 good = 4;         
-    required bytes  message_data = 5;
-    required string player_steam_id = 6;
-    required uint32 online_area_id = 7;
-    required uint32 poor = 8;                   
+	required uint32 player_id = 1;
+	required uint32 character_id = 2;
+	required uint32 message_id = 3;
+	required uint32 evaluations = 4;
+	required bytes message_data = 5;
+	required string steam_id = 6;
+	required uint32 online_area_id = 7;
+	optional string unknown_8 = 8;
 }
 
-message LocatedBloodMessage {
-    required uint32 online_area_id = 1;
-    required uint32 message_id = 2;
-}
-
-message BloodMessageDomainLimitData {
-    required uint32 online_area_id = 1;
-    required uint32 max_type_1 = 2;                     // Unknown differentiation 
-    required uint32 max_type_2 = 3;                     // Maximum messages to return in an area seems to be sum of both these?
-                                                        // I wonder if this is a split between "online" and "offline" users?
+message BloodMessageCellLimitData {
+	required uint32 cell_id = 1; //Guessing from the look of the value, could be wrong
+	required uint32 max_type_1 = 2; //3
+	required uint32 max_type_2 = 3; //2
 }
 
 message RequestReentryBloodMessage {
-    repeated LocatedBloodMessage messages = 1;
-    required uint32 character_id = 2;                   
 }
 
 message RequestReentryBloodMessageResponse {
-    // Seems to be a list of ids that need their data sent to the server again. 
-    // If anything is returned RequestReCreateBloodMessageList gets returned after. 
-    repeated uint32 recreate_message_ids = 1;       
 }
 
 message RequestCreateBloodMessage {
-    required uint32 online_area_id = 1;
-    required uint32 character_id = 2;                      
-    required bytes  message_data = 3;
+	required uint32 map_id = 1;
+	required uint32 player_id = 2;
+	required uint32 character_id = 3;
+	required bytes message_data = 4;
 }
 
 message RequestCreateBloodMessageResponse {
-    required uint32 message_id = 1;
-}
-
-message RequestReCreateBloodMessageList {
-    required uint32 character_id = 2;                     
-    repeated group Blood_message_info_list = 3 {
-        required uint32 online_area_id = 1;
-        required bytes  message_data = 2;
-        required uint32 unknown_1 = 3;                  // Seem 0, 2, 1
-        required uint32 unknown_2 = 4;                  // Always seems to be 0
-    }
-}
-
-message RequestReCreateBloodMessageListResponse {
-    repeated uint32 message_ids = 1;
+	required uint32 message_id = 1;
 }
 
 message RequestRemoveBloodMessage {
-    required uint32 online_area_id = 1;
-    required uint32 message_id = 2;
+	required uint32 area_id = 1;
+	required uint32 player_id = 2;
+	required uint32 message_id = 3;
 }
 
 message RequestRemoveBloodMessageResponse {
-    // Empty response.
 }
 
 message RequestGetBloodMessageList {
-    required uint32 max_messages = 1;                   // Always seems to be 40.
-    repeated BloodMessageDomainLimitData search_areas = 2;
+	required uint32 map_id = 1;
+	required uint32 count = 2;
+	repeated BloodMessageCellLimitData search_areas = 3;
 }
 
 message RequestGetBloodMessageListResponse {
-    repeated BloodMessageData messages = 1;
+	required uint32 map_id = 1;
+	repeated BloodMessageData messages = 2;
 }
 
 message RequestEvaluateBloodMessage {
-    required uint32 online_area_id = 1;
-    required uint32 message_id = 2;
-    required bool was_poor = 3;
 }
 
 message RequestEvaluateBloodMessageResponse {
-    // Empty response.
 }
 
 message RequestGetBloodMessageEvaluation {
-    repeated LocatedBloodMessage messages = 1;
-}
-
-message BloodMessageEvaluationData {
-    required uint32 message_id = 1;
-    required uint32 good = 2;
-    required uint32 poor = 3;
 }
 
 message RequestGetBloodMessageEvaluationResponse {
-    repeated BloodMessageEvaluationData messages = 1;
 }
 
 message PushRequestEvaluateBloodMessage {
-    required PushMessageId push_message_id = 1; // 918
-    required uint32 player_id = 2; 
-    required uint32 message_id = 3;
-    required string player_steam_id = 4; 
-    required bool was_poor = 5; 
+	required uint32 map_id = 1;
+	required uint32 player_id = 2;
+	required uint32 message_id = 3;
+}
+
+message RequestGetAreaBloodMessageList {
+	required uint32 map_id = 1;
+	required uint32 count = 2;
+	required uint32 unknown_3 = 3;
+	required uint32 unknown_4 = 4;
+}
+
+message RequestGetAreaBloodstainList {
+	required uint32 max_count = 1;
+	required uint32 unknown_2 = 2;
+	required uint32 unknown_3 = 3;
+	required uint32 unknown_4 = 4;
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Blood Stains
 // ------------------------------------------------------------------------------------------------------------
 
-message BloodstainInfo { 
-    required uint32 online_area_id = 1;
-    required uint32 bloodstain_id = 2;
-    required bytes data = 3;    
+message BloodstainInfo {
+	required uint32 map_id = 1;
+	required uint32 unknown_2 = 2; //Maybe player_id
+	required uint32 bloodstain_id = 3;
+	required bytes bloodstain_data = 4;
 }
 
 message RequestCreateBloodstain {
-    required uint32 online_area_id = 1;
-    required bytes  data = 2;                       
-    required bytes  ghost_data = 3;         
 }
 
 message RequestGetBloodstainList {
-    required uint32 max_stains = 1;                 // Always seems to be 32
-    repeated DomainLimitData search_areas = 2;
+	required uint32 map_id = 1;
+	required uint32 max_count = 2;
+	repeated CellLimitData cell_limit_data = 3;
 }
 
 message RequestGetBloodstainListResponse {
-    repeated BloodstainInfo bloodstains = 1;
+	repeated BloodstainInfo bloodstains = 1;
 }
 
 message RequestGetDeadingGhost {
-    required uint32 online_area_id = 1;    
-    required uint32 bloodstain_id = 2;
+	required uint32 map_id = 1;
+	required uint32 unknown_2 = 2;
+	required uint32 bloodstain_id = 3;
 }
 
 message RequestGetDeadingGhostResponse {
-    required uint32 online_area_id = 1;    
-    required uint32 bloodstain_id = 2;
-    required bytes data = 3;
+	required uint32 map_id = 1;
+	required uint32 unknown_2 = 2;
+	required uint32 bloodstain_id = 3;
+	required bytes ghost_data = 4;
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Logging
 // ------------------------------------------------------------------------------------------------------------
 
-// New for this protobuf, its not defined in DS3, we should fine out what struct
-// it actually maps to.
-message LogCommonInfo_1 {
-    required uint32 unknown_1 = 34; // 0, 1, 2
-    required uint32 unknown_2 = 37; // 0, 1
+message RequestNotifyBuyItem {
+	required uint32 merchant_chr_id = 1;
+	required uint32 item_id = 2;
+	required uint32 souls_spent = 3;
+	required uint32 quantity = 4;
 }
 
-// Wraps common information about a log message sent to the server.
-message LogCommonInfo {
-    required LogCommonInfo_1 unknown_1 = 3;
-    required DS2_Frpg2PlayerData.UnknownStruct1 unknown_2 = 7;
+message RequestNotifyBuyItemResponse {
 }
 
-// Sent in RequestNotifyProtoBufLog and used to determine which protobuf
-// is serialized in the raw data field.
-enum LogType
-{
-    UseMagicLog = 2020;
-    ActGestureLog = 2021;
-    UseItemLog = 3000;
-    PurchaseItemLog = 3001;
-    GetItemLog = 3002;
-    DropItemLog = 3003;
-    LeaveItemLog = 3004;
-    SaleItemLog = 3005;
-    StrengthenWeaponLog = 3010;
-    GlobalEventLog = 5001;
-    SystemOptionLog = 8001;
-    VisitResultLog = 7040;
-    QuickMatchResultLog = 7050;
-    QuickMatchEndLog = 7060;
-    // LevelUpLog = 0;                      // Never sent?
-    // BrokenEquipmentLog = 0;              // Never sent?
-    // AccessWarehouseLog = 0;              // Never sent?
-    // RepairEquipmentLog = 0;              // Never sent?
-    // EquipMagicLog = 0;                   // Never sent?        
-    // ChaneEstusFlaskNumLog = 0;           // Never sent?
-    // CreateBloodMessageLog = 0;           // Never sent?
-    // EvaluateBloodMessageLog = 0;         // Never sent?
-    // ConvertSaveDataLog = 0;
+message RequestNotifyDeath {
 }
 
-message DomainLimitData {
-    required uint32 online_area_id = 1;
-    required uint32 max_items = 2;
+message RequestNotifyDeathResponse {
 }
 
-message KillerInfo {
-    required uint32 killer_player_id = 1;
-    required uint32 unknown_2 = 2;              // 0, 25
-    required uint32 unknown_3 = 3;              // 2
-    required uint32 unknown_4 = 4;              // -1 if host, > if invader. Maybe invasion length
-}
-
-message KillEnemyInfo {
-    required uint32 enemy_type_id = 1;
-    required uint32 count = 2;
-}
-
-message PartyMemberInfo {
-    required uint32 player_id = 1;              // 5
-    required uint32 char_id = 2;                // 1
-    required uint32 unknown_2 = 3;              // 2
-    required uint32 unknown_4 = 4;              // 300021 / -1
-    required uint32 unknown_5 = 5;              // 0, 1
-    required uint32 unknown_6 = 6;              // 0, 1
-    optional uint32 unknown_7 = 7;              // 0, 21
-}
-
-// Send periodically throughout the game to send telemetry data. The
-// event specific data is stored as a protobuf serialized into the data
-// field. Which protobuf it is defined by the type. Look on FpdLogMessage.proto
-// for all their definitions.
-message RequestNotifyProtoBufLog {
-    required LogType type = 1; 
-    required bytes common = 2;      // Switching this to bytes, the format of this data seems to vary greatly, not sure its a defined struct.
-
-    // This is an embedded protobuf, its one of the *Log protobufs
-    // in the FpdLogMessage.proto file.
-    required bytes data = 3;
-}
-
-// What reason the player died. This seems to be the "main" cause of damage
-// over a short time period. For example if its 2hp of fall damage that kills you, but you 
-// just took 200hp of enemy damage, the death cause will be Enemy damage.
-enum CauseOfDeath
-{
-    Unknown = 0;
-    Physical = 1;             
-    Fire = 2;                 
-    Fall = 3;         
-    Cursed = 4;             
-    PosionToxicMagic = 5;        
-
-    // Probably a bunch more I haven't seen ...
-}
-
-// Sent when user dies.
-message RequestNotifyDie {
-    required string unknown_1 = 1;                      // "" This occassionally seems to turn into a mosteriously nested struct, I feel like this might be a bytes array.
-    required uint32 map_id = 2;         
-    required DS2_Frpg2PlayerData.Vector location = 3;
-    required CauseOfDeath cause_of_death = 4;     
-    required uint32 souls_dropped = 5;                   
-    required uint32 souls_lost = 6;                      
-    required uint32 actor_id = 7;                      
-    required KillerInfo killer_info = 8;                  // { 4006136, 25, 2, 18446744073709551615 } { 0, 0, 0, 18446744073709551615 }   {5,1,2,300021}=killed by invader
-}
-
-// Sent when user kills an enemy.
-message RequestNotifyKillEnemy {
-    required LogCommonInfo info = 1;
-    repeated KillEnemyInfo enemys = 2;
-    required uint32 map_id = 3;
-    required DS2_Frpg2PlayerData.Vector location = 4;
-}
-
-// Sent when user kills (or is killed by) the boss of an area (including in coop)
-message RequestNotifyKillBoss {
-    required string unknown_1 = 1;          // Seems to always be 370136096, no idea.
-    required uint32 boss_id = 2;            
-    required uint32 in_coop = 3;            // 3 and 5 might be the wrong way around.
-    required uint32 boss_died = 4;          
-    required uint32 cooperator_count = 5;   
-    required uint32 fight_duration = 6;     
-    required uint32 map_id = 8;
-}
-
-// Sent when user joins another users game, or someone else joins their game.
-message RequestNotifyJoinMultiplay { 
-    required DS2_Frpg2PlayerData.AllStatus all_status = 1;
-    required uint32 map_id = 2;
-    required uint32 online_area_id = 3;
-    required uint32 unknown_2 = 4;
-    required uint32 unknown_3 = 5;
-    repeated PartyMemberInfo party_member_info = 6;
-}
-
-// Sent when user is in a game with no other users connected.
-message RequestNotifyLeaveMultiplay {  
-    required DS2_Frpg2PlayerData.AllStatus all_status = 1;
-    required uint32 map_id = 2;
-    required uint32 online_area_id = 3;
-    required uint32 unknown_2 = 4;
-    required uint32 unknown_3 = 5;
-    required uint32 unknown_4 = 6;
-    repeated PartyMemberInfo party_member_info = 7;
-}
-
-// Sent when the user's sign is removed.
-message RequestNotifyCreateSignResult {
-    required DS2_Frpg2PlayerData.AllStatus all_status = 1;
-    required uint32 map_id = 2;
-    required uint32 online_area_id = 3;
-    required DS2_Frpg2PlayerData.Vector location = 4;
-    required uint32 sign_unique_number = 5;              // 528745087
-    required uint32 unknown_2 = 6;                       // 0
-    required uint32 unknown_3 = 7;                       // 3
-    required uint32 unknown_4 = 8;                       // 2
-}
-
-// Sent when user summons a given sign.
-message RequestNotifySummonSignResult {
-    required string unknown_1 = 1;                      // ""
-    required uint32 map_id = 2;
-    required uint32 online_area_id = 3;
-    required DS2_Frpg2PlayerData.Vector location = 4;
-    required SignInfo sign_info = 5;
-    required uint32 unknown_6 = 6;                       // 0
-    required uint32 unknown_7 = 7;                       // 15, 18, 0       0 on fail
-    required uint32 unknown_8 = 8;                       // 1, 2            2 on fail, 1 on success
-}
-
-// Sent when the user has invaded another game.
-message RequestNotifyBreakInResult {
-    // index=1 type=2
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=2
-    // index=5 type=0
-    // index=6 type=0
-}
-
-// Seemingly unused.
 message RequestNotifyDisconnectSession {
-    // index=1 type=0
 }
 
-// Seemingly unused.
 message RequestNotifyDisconnectSessionResponse {
-    // Empty
 }
 
-message RequestNotifyRegisterCharacter {
-    required DS2_Frpg2PlayerData.AllStatus status = 1;
-    required uint32 unknown_2 = 2;                  // 0
-    required uint32 unknown_3 = 3;                  // 0
-    required uint32 unknown_4 = 4;                  // 6
-    required uint32 unknown_5 = 5;                  // 1
-    required uint32 unknown_6 = 6;                  // 0
-    required uint32 unknown_7 = 7;                  // 2
-    required uint32 unknown_8 = 8;                  // 0
-    required uint32 unknown_9 = 9;                  // 0
-    required uint32 unknown_10 = 10;                // 1
+message RequestNotifyJoinGuestPlayer {
+}
+
+message RequestNotifyJoinGuestPlayerResponse {
+}
+
+message RequestNotifyJoinSession {
+}
+
+message RequestNotifyJoinSessionResponse {
+}
+
+message RequestNotifyKillEnemy {
+}
+
+message RequestNotifyKillEnemy_Enemy_count {
+}
+
+message RequestNotifyKillEnemyResponse {
+}
+
+message RequestNotifyKillPlayer {
+}
+
+message RequestNotifyKillPlayerResponse {
+}
+
+message RequestNotifyLeaveGuestPlayer {
+}
+
+message RequestNotifyLeaveGuestPlayerResponse {
+}
+
+message RequestNotifyLeaveSession {
+}
+
+message RequestNotifyLeaveSessionResponse {
+}
+
+message RequestNotifyMirrorKnight {
+}
+
+message RequestNotifyMirrorKnightResponse {
+}
+
+message RequestNotifyOfflineDeathCount {
+}
+
+message RequestNotifyOfflineDeathCountResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Summon Signs
 // ------------------------------------------------------------------------------------------------------------
 
-// Order of these events appear to be:
-//
-// As Summonee:
-//
-//   >> RequestCreateSign
-//   << CreateSummonSignResponse
-//   >> RequestUpdateSign (Multiple times, seems to keep them alive)
-//   >> RequestRemoveSign
-//   >> RequestNotifyCreateSignResult
-//   << PushRequestSummonSign
-//
-//   Presumably if its not possible to summon:
-//   >> RequestRejectSign
-//
-// As Summoner:
-//   >> RequestSummonSign
-//   << PushRequestRemoveSign
-//   >> RequestNotifySummonSighResult
-//
-//   Presumably if its not possible to summon:
-//   << PushRequestRejectSign
-
-enum Covenant
-{
-    Covenant_None = 0;
-    Covenant_Blade_of_the_Darkmoon = 1;
-    Covenant_Warriors_of_Sunlight = 2;
-    Covenant_Mound_Makers = 3;
-    Covenant_Spears_of_the_Church = 4;
-    Covenant_Fingers_of_Rosaria = 5;
-    Covenant_Watchdogs_of_Farron = 6;
-    Covenant_Aldrich_Faithfuls = 7;
-    Covenant_Way_of_Blue = 8;
-    Covenant_Blue_Sentinels = 9;
-}
-
-message SummonSignMessage {
-    required uint32 player_id = 1;
-    required string steam_id = 2;
-    required SignInfo sign_info = 3;
-    required bytes player_struct = 4;
-}
-
-message RemoveSignMessage {
-    required uint32 player_id = 1;
-    required uint32 sign_id = 2;
-}
-
-message RejectSignMessage {
-    required uint32 sign_id = 1;
-    required uint32 unknown_2 = 2;      // Usually just 1, maybe an error-code of some type?
-}
-
-message CachedSign {
-    // index=1 type=0
-    // index=2 type=0
-}
-
-message GetSignResult {
-    repeated SignInfo sign_info_without_data = 1;       // Gets sent back if already_have_signs in SignDomainGetInfo gets passed with the sign and they still exist.
-    repeated SignData sign_data = 2;
-}
-
-message SignInfo {
-    required uint32 player_id = 1;                      // index=1 type=0
-    required uint32 sign_id = 2;                        // index=2 type=0
-}
-
-message SignData {
-    required SignInfo sign_info = 1;                    // index=1 type=2
-    required uint32 online_area_id = 2;                 // index=2 type=0
-    required MatchingParameter matching_parameter = 3;  // index=3 type=2
-    required bytes player_struct = 4;                   // index=4 type=2
-    required string steam_id = 5;                       // index=5 type=2  // sometimes a steamid, sometimes a 3 value substruct
-    required uint32 is_red_sign = 6;                    // index=6 type=0  // I *think* this is correct, needs further testing.
-}
-
 message MatchingParameter {
-
-    // Possible unknowns:
-    //      region
-    //      players in other world (invasion prioritisation etc)
-
-    required uint32 regulation_version = 1;         
-
-    required uint32 unknown_id_2 = 2;                     // 2                  
-    
-    required uint32 allow_cross_region = 3;               
-    required uint32 nat_type = 4;                     
-
-    required uint32 unknown_id_5 = 5;                     // 0                  
-
-    required uint32 soul_level = 6;                                             
-    required uint32 soul_memory = 7;                                            
-
-    optional string unknown_string = 8;                   // Never seen used, but exists in parsing code.                     
-    required uint32 clear_count = 9;                     
-
-    required string password = 10;                                              
-    required Covenant covenant = 11;                                            
-    required uint32 weapon_level = 14;                                          
-    
-    optional string unknown_id_15 = 15;                   // Never seen used, but exists in parsing code.
-}
-
-message SignGetFlags {
-    required uint32 unknown_id_1 = 1;                     // 1
-    required uint32 unknown_id_2 = 2;                     // 1
-    required uint32 unknown_id_3 = 3;                     // 0
-}
-
-message SignDomainGetInfo {
-    required uint32 online_area_id = 1;                     // 30004
-    required uint32 max_signs = 2;                          // 32
-    repeated SignInfo already_have_signs = 3;
-}
-
-message RequestGetSignList {
-    required uint32 unknown_id_1 = 1;                       // Always 0
-    repeated SignDomainGetInfo search_areas = 2;
-    required uint32 max_signs = 3;                          // 0
-    required MatchingParameter matching_parameter = 4;
-    required SignGetFlags sign_get_flags = 5;
-}
-
-message RequestGetSignListResponse {
-    required GetSignResult get_sign_result = 1;
-}
-
-message RequestCreateSign {
-    required uint32 map_id = 1;
-    required uint32 online_area_id = 2;
-    required MatchingParameter matching_parameter = 3;
-    required bool is_red_sign = 4;
-    required bytes player_struct = 5;
-}
-
-message RequestCreateSignResponse {
-    required uint32 sign_id = 1;
-}
-
-message RequestSummonSign {
-    required uint32 map_id = 1;
-    required uint32 online_area_id = 2;
-    required SignInfo sign_info = 3;
-    required bytes player_struct = 4;
-}
-
-message RequestSummonSignResponse {
-    // Empty response.
-}
-
-message RequestRemoveSign {
-    required uint32 map_id = 1;
-    required uint32 online_area_id = 2;
-    required uint32 sign_id = 3;
-}
-
-message RequestRemoveSignResponse {
-    // Empty response.
-}
-
-message RequestUpdateSign {
-    required uint32 map_id = 1;
-    required uint32 online_area_id = 2;
-    required uint32 sign_id = 3;
-}
-
-message RequestUpdateSignResponse {
-    // Empty response.
-}
-
-message RequestRejectSign {
-    required uint32 unknown_1 = 1;              // 50331088
-    required uint32 unknown_2 = 2;              // 587202560
-    required uint32 sign_id = 3;
-    required bool unknown_4 = 4;                // 1
-    required bool unknown_5 = 5;                // 1
-}
-
-message RequestRejectSignResponse {
-    // Empty response.
-}
-
-message RequestGetRightMatchingArea {
-    required MatchingParameter matching_parameter = 1;
-    required uint32 unknown = 2;
-}
-
-message RequestGetRightMatchingAreaResponse {          
-    repeated group Area_info = 1 {
-        required uint32 online_area_id = 1;
-        required uint32 population = 2;             // Seems to be on a scale of 0-5.
-    }
-}
-
-message PushRequestRemoveSign {
-    required PushMessageId push_message_id = 1;     // 829
-    required RemoveSignMessage message = 2;
+	required uint32 unknown_1 = 1;
+	required uint32 soul_level = 2;
+	required uint32 clear_count = 3;
+	required uint32 unknown_4 = 4;
+	//Field 5 is skipped by the parsing code
+	required uint32 covenant = 6;
+	required uint32 unknown_7 = 7;
+	required uint32 unknown_8 = 8;
+	required uint32 disable_cross_region_play = 9;
+	required uint32 unknown_10 = 10;
+	required uint32 unknown_11 = 11;
+	required uint32 soul_memory = 12;
 }
 
 message PushRequestSummonSign {
-    required PushMessageId push_message_id = 1;     // 830
-    required SummonSignMessage message = 2;
+}
+
+message RequestSummonSign {
+}
+
+message RequestSummonSignResponse {
 }
 
 message PushRequestRejectSign {
-    // Guessing a bit on this one as haven't got it in the wild yet. But they all follow the same pattern.
-    required PushMessageId push_message_id = 1;
-    required RejectSignMessage message = 2;
+}
+
+message PushRequestRemoveSign {
+}
+
+message RequestCreateSign {
+	required uint32 map_id = 1;
+	required MatchingParameter matching_parameter = 2;
+	required bytes player_struct = 3;
+	required uint32 player_id = 4;
+	required uint32 sign_type = 5;
+}
+
+message RequestCreateSignResponse {
+	required uint32 sign_id = 1;
+}
+message RequestGetSignList {
+	required uint32 map_id = 1;
+	repeated SignCellInfo search_areas = 2;
+	required uint32 max_sign_count = 3;
+	required MatchingParameter matching_parameter = 4;
+	required uint32 unknown_5 = 5; //1
+	required uint32 unknown_6 = 6; //1
+	required uint32 unknown_7 = 7; //0
+}
+
+message RequestGetSignListResponse {
+}
+
+message RequestRejectSign {
+}
+
+message RequestRejectSignResponse {
+}
+
+message RequestRemoveSign {
+	required uint32 map_id = 1;
+	required uint32 sign_id = 2;
+	required uint32 player_id = 3;
+}
+
+message RequestRemoveSignResponse {
+}
+
+message RequestUpdateSign {
+}
+
+message RequestUpdateSignResponse {
+}
+
+message SignCellInfo {
+	required uint32 online_area_id = 1;
+	optional SignInfo local_signs = 2;
+	optional uint32 max_count = 3;
+}
+
+message SignData {
+}
+
+message SignInfo {
+	required uint32 player_id = 1;
+	required uint32 sign_id = 2;
+}
+
+message RequestGetRightMatchingArea {
+	required MatchingParameter matching_parameter = 1;
+}
+
+message RequestGetRightMatchingAreaResponse {
+	repeated group Area_info = 1
+	{
+		required uint32 map_id = 1;
+		required uint32 population = 2;
+	}
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Game Server Messages - Mirror knight summoning
+// ------------------------------------------------------------------------------------------------------------
+
+message PushRequestRejectMirrorKnightSign {
+}
+
+message PushRequestRemoveMirrorKnightSign {
+}
+
+message PushRequestSummonMirrorKnightSign {
+}
+
+message RequestCreateMirrorKnightSign {
+}
+
+message RequestCreateMirrorKnightSignResponse {
+}
+
+message RequestGetMirrorKnightSignList {
+}
+
+message RequestGetMirrorKnightSignListResponse {
+}
+
+message RequestRejectMirrorKnightSign {
+}
+
+message RequestRejectMirrorKnightSignResponse {
+}
+
+message RequestRemoveMirrorKnightSign {
+}
+
+message RequestRemoveMirrorKnightSignResponse {
+}
+
+message RequestSummonMirrorKnightSign {
+}
+
+message RequestSummonMirrorKnightSignResponse {
+}
+
+message RequestUpdateMirrorKnightSign {
+}
+
+message RequestUpdateMirrorKnightSignResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Break In Messages
 // ------------------------------------------------------------------------------------------------------------
 
-// Order of these events are:
-//
-//      Invader        >> RequestGetBreakInTargetList
-//      Invader        << RequestGetBreakInTargetListResponse
-//      Invader        >> RequestBreakInTarget
-//      Host           << PushRequestBreakInTarget
-//      Host           >> RequestRejectBreakInTarget or RequestSendMessageToPlayers (containing PushRequestAllowBreakInTarget)
-//      Invader        << PushRequestAllowBreakInTarget PushRequestRejectBreakInTarget
-//      Invader        >> RequestNotifyBreakInResult
-
 message BreakInTargetData {
-    required uint32 player_id = 1;
-    required string steam_id = 2;
+	required uint32 player_id = 1;
+	required string steam_id = 2;
 }
 
-message RequestGetBreakInTargetList { 
-    required uint32 map_id = 1;
-    required uint32 online_area_id = 2;
-    required uint32 max_targets = 3;                       
-    required MatchingParameter matching_parameter = 4;
-    required uint32 unknown_5 = 5;                          // 0
+message PushRequestAllowBreakInTarget {
+	required PushMessageId push_message_id = 1;
+	required uint32 player_id = 2;
+	required bytes player_struct = 3;
+	required uint32 unknown_4 = 4;
 }
 
-message RequestGetBreakInTargetListResponse {
-    optional uint32 map_id = 1;
-    optional uint32 online_area_id = 2;
-    repeated BreakInTargetData target_data = 3;
-}
-
-message PushRequestAllowBreakInTarget { 
-    required PushMessageId push_message_id = 1;
-    required uint32 player_id = 2;                          // Host playerid
-    required bytes  player_struct = 3;
-    required uint32 unknown_4 = 4;                          // 0
-}
-
-message PushRequestBreakInTarget { 
-    required PushMessageId push_message_id = 1;
-    required uint32 player_id = 2;                          // invading playerid
-    required string steam_id = 3;       
-    required uint32 unknown_4 = 4;                          // 0
-    required uint32 map_id = 5;
-    required uint32 online_area_id = 6;
-}
-
-message PushRequestRemoveBreakInTarget {
-    required PushMessageId push_message_id = 1;
-
-    // Unknown - Never actually seen the server ever send this.
-
-    // Unknown - The fields in this have been figured out based on reading ghidra, not seen in the wild.
-    required uint32 unknown_2 = 2;
-    required string unknown_3 = 3;                          // WIRETYPE_LENGTH_DELIMITED, guessing string, might be BreakInTargetData
-    required uint32 unknown_4 = 4;
-}
-
-message RequestBreakInTarget {
-    required uint32 map_id = 1;
-    required uint32 online_area_id = 2;
-    required uint32 player_id = 3;
-    required uint32 unknown_4 = 4;                          // Seems to always be 0
-}
-
-message RequestRejectBreakInTarget {
-    required uint32 player_id = 1;                         
-    required uint32 unknown_2 = 2;                          // 1
-    required uint32 map_id = 3;
-    required uint32 online_area_id = 4;
-    required uint32 unknown_5 = 5;                          // 0
+message PushRequestBreakInTarget {
+	required PushMessageId push_message_id = 1;
+	required uint32 player_id = 2;
+	required string steam_id = 3;
+	required uint32 unknown_4 = 4;
+	required uint32 map_id = 5;
+	required uint32 online_area_id = 6;
 }
 
 message PushRequestRejectBreakInTarget {
-    required PushMessageId push_message_id = 1;            // 934
-    required uint32 player_id = 2;
-    required uint32 unknown_3 = 3;                         // 1
-    required string steam_id = 4;                           
-    required uint32 unknown_5 = 5;                         // 0
+}
+
+message PushRequestRemoveBreakInTarget {
+}
+
+message RequestBreakInTarget {
+	required uint32 map_id = 1;
+	required uint32 online_area_id = 2;
+	required uint32 player_id = 3;
+	required uint32 unknown_4 = 4;
 }
 
 message RequestBreakInTargetResponse {
-    // Empty response.
+}
+
+message RequestGetBreakInTargetList {
+	required uint32 map_id = 1;
+	required uint32 online_area_id = 2;
+	required MatchingParameter matching_parameter = 3;
+	required uint32 unknown_5 = 5;
+}
+
+message RequestGetBreakInTargetListResponse {
+	optional uint32	map_id = 1;
+	optional uint32 online_area_id = 2;
+	repeated BreakInTargetData target_data = 3;
+}
+
+message RequestRejectBreakInTarget {
 }
 
 message RequestRejectBreakInTargetResponse {
-    // Empty response.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -896,678 +574,216 @@ message RequestRejectBreakInTargetResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message RequestGetGhostDataList {
-    required uint32 max_ghosts = 1;                 // Always seems to be 3
-    repeated DomainLimitData search_areas = 2;
-}
-
-message GhostData {
-    required uint32 unknown_1 = 1;                  // Always seems to be 0.
-    required uint32 ghost_id = 2;
-    required bytes  data = 3;
-}
-
-message RequestCreateGhostData {
-    required uint32 online_area_id = 1;
-    required bytes data = 2;
-}
-
-message RequestCreateGhostDataResponse {
-    // Empty response.
+	required uint32 map_id = 1;
+	required uint32 max_count = 2;
+	repeated CellLimitData cell_limit_data = 3;
 }
 
 message RequestGetGhostDataListResponse {
-    repeated GhostData ghosts = 1;
+	required uint32 map_id = 1;
+	repeated GhostData ghosts = 3;
+}
+
+message GhostData {
+	required uint32 cell_id = 1;
+	required uint32 ghost_id = 2;
+	required bytes ghost_data = 3;
+}
+
+message RequestCreateGhostData {
+	required uint32 map_id = 1;
+	required uint32 player_id = 2;
+	required bytes ghost_data = 3;
+}
+
+message RequestCreateGhostDataResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Vistors (Join via covenenant I think)
 // ------------------------------------------------------------------------------------------------------------
 
-// Seems to basically work the same as invasions just without the PushRequestAllowBreakInTarget exchange step.
-
-// Order of these events:
-//
-//      Host >> RequestGetVisitorList
-//      Host << RequestGetVisitorListResponse
-//      Host >> RequestVisit
-//      Summonee << PushRequestVisit
-//      Host << PushRequestRemoveVisitor
-//      Sumoneee >> VisitResultLog
-//
-// Side note the frequency of request calls for watchdogs is all over the place, I'm not suprised people never see
-// them being summoned.
-
-// I think this is basically just the pool of visitors we request from.
-enum VisitorPool
-{
-    VisitorPool_None                    = -1;   // Not used in network, just handy sentinel value for server code.
-    VisitorPool_Way_of_Blue             = 0;    // This grabs darkmoon & blue sentinels
-    VisitorPool_Debug                   = 1;    // Only seen this used when messing with debug functionality.
-    VisitorPool_Watchdog_of_Farron      = 2;
-    VisitorPool_Aldrich_Faithful        = 3;
-    VisitorPool_Spear_of_the_Church     = 4;
+message VisitorData {
 }
 
 message RequestGetVisitorList {
-    required uint32 map_id = 1;   
-    required uint32 online_area_id = 2;   
-    required uint32 max_visitors = 3;
-    required MatchingParameter matching_parameter = 4;
-    required VisitorPool visitor_pool = 5;                      
-    required uint32 unknown_6 = 6;                              // 0
-}
-
-message VisitorData {
-    required uint32 player_id = 1;
-    required string player_steam_id = 2;
 }
 
 message RequestGetVisitorListResponse {
-    required uint32 map_id = 1;   
-    required uint32 online_area_id = 2;  
-    repeated VisitorData visitors = 3;
 }
 
 message PushRequestRemoveVisitor {
-    required PushMessageId push_message_id = 1;     
-    required uint32 player_id = 2;
-    required string player_steam_id = 3;
-    required VisitorPool visitor_pool = 4;                           
 }
 
 message RequestVisit {
-    required uint32 map_id = 1;   
-    required uint32 online_area_id = 2;   
-    required VisitorPool visitor_pool = 3;        
-    required uint32 player_id = 4;              
-    required bytes  data = 5;
-}
-
-message PushRequestVisit {
-    required PushMessageId push_message_id = 1;         // 951 - Push message id
-    required uint32 player_id = 2; 
-    required string player_steam_id = 3;
-    required bytes  data = 4;                           
-    required VisitorPool visitor_pool = 5;       
-    required uint32 map_id = 6;
-    required uint32 online_area_id = 7;
-}
-
-message RequestRejectVisit {
-    required uint32 player_id = 1;                                        
-    required VisitorPool visitor_pool = 2;                      // 1
-    required uint32 map_id = 3;
-    required uint32 online_area_id = 4;
-    required uint32 unknown_5 = 5;                      // 0  
-}
-
-message PushRequestRejectVisit {
-    required PushMessageId push_message_id = 1;
-    
-    // Unknown - The fields in this have been figured out based on reading ghidra and looking at BreakIn code, not seen in the wild.
-    required uint32 player_id = 2;
-    optional VisitorPool visitor_pool = 3;              // total guess might be unknown_5   
-    required string steam_id = 4;                           
-    required uint32 unknown_5 = 5;                         
 }
 
 message RequestVisitResponse {
-    // Empty response.
+}
+
+message RequestRejectVisit {
 }
 
 message RequestRejectVisitResponse {
-    // Empty response.
+}
+
+message PushRequestRejectVisit {
+}
+
+message PushRequestVisit {
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Bells, this is for archdragon peak I believe.
 // ------------------------------------------------------------------------------------------------------------
 
+message PushRequestNotifyRingBell {
+}
+
 message RequestNotifyRingBell {
-    required uint32 online_area_id = 1;    
-    required bytes  data = 2;                   // "\001\000\000\000\004\000\000\000\001\000\000\000"
 }
 
 message RequestNotifyRingBellResponse {
-    // Empty response.
-}
-
-message PushRequestNotifyRingBell {
-    required PushMessageId push_message_id = 1;     // Almost certainly a push message id.
-    required uint32 player_id = 2;    
-    required uint32 online_area_id = 3;    
-    required bytes  data = 4;                   // "\001\000\000\000\004\000\000\000\002\000\000\000" or "\001\000\000\000\004\000\000\000\001\000\000\000"
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Regulation Files
 // ------------------------------------------------------------------------------------------------------------
 
-// Most of these have been derived from ghidra.
-
 message RequestGetRegulationFile {
-    // index=1 type=0
 }
 
 message RequestGetRegulationFileResponse {
-    // index=1 type=2
-}
-
-message RegulationFileMessage {
-    // index=1 type=0
-    // index=2 type=2
 }
 
 message RegulationFileDiffData {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=2
-    // index=4 type=2
-    // index=5 type=2
-    // index=6 type=2
-    // index=7 type=0
+}
+
+message RegulationFileMessage {
 }
 
 message RegulationFileUpdateMessage {
-    // index=1 type=2 // Looks repeated.
 }
 
 message RegulationFileUpdatePushMessage {
-    required PushMessageId push_message_id = 1;
-    required RegulationFileUpdateMessage update_message = 2;
-}
-
-// ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Management artifacts
-// ------------------------------------------------------------------------------------------------------------
-
-message RequestBenchmarkThroughput {
-    // index=1 type=0
-    // index=2 type=2
-    // index=3 type=0
-}
-
-message RequestBenchmarkThroughputResponse {
-    // index=1 type=0
-    // index=2 type=2
-}
-
-message RequestGetLoginPlayerCharacter {
-    // index=1 type=0
-}
-
-message RequestGetLoginPlayerCharacterResponse {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=2
-}
-
-message RequestGetPlayerCharacterList {
-    // index=1 type=2 // Repeated PlayerCharacterId's
-}
-
-message RequestGetPlayerCharacterListResponse {
-    // index=1 type=2 // Repeated PlayerCharacterData's
-}
-
-message RequestMeasureUploadBandwidth {
-    // index=1 type=0
-    // index=2 type=2
-}
-
-message RequestMeasureUploadBandwidthResponse {
-    // index=1 type=0
-}
-
-message RequestMeasureDownloadBandwidth {
-    // index=1 type=0
-    // index=2 type=0
-}
-
-message RequestMeasureDownloadBandwidthResponse {
-    // index=1 type=0
-    // index=2 type=2
-}
-
-message RequestSendMessageToPlayers { 
-    repeated uint32 player_ids = 1; 
-    required bytes message = 2;     // This is normally a push message, the first field of which is an id to distinguish what type it is.
-}
-
-message RequestSendMessageToPlayersResponse {
-    // index=1 type=0 or 2 (repeated ints?)
-}
-
-message RequestSendMessageToSelectLanguagePlayers {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=2
-}
-
-message RequestSendMessageToSelectLanguagePlayersResponse {
-    // Empty
-}
-
-message RequestSendMessageToAllPlayers {
-    // index=1 type=2
-}
-
-message RequestSendMessageToAllPlayersResponse {
-    // Empty
-}
-
-message RequestSendPlayerList {
-    // Empty
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Ranking (I'm assuming this is for covenants)
 // ------------------------------------------------------------------------------------------------------------
 
-message RankingData {
-    required uint32 player_id = 1;  
-    required uint32 character_id = 2;   
-    required uint32 serial_rank = 3;    // Index of rank globally, no duplicates.
-    required uint32 rank = 4;           // Rank of player, may be duplicates if multiple players have same score.
-    required uint32 score = 5;          
-    required bytes  data = 6;           // Payload of some description. Contains steam-id and various other things inside it. My guess is its as RankingDataPack
+message RankingRecordCount {
 }
 
 message RankingRotationID {
-    // index=1 type=0
-    // index=2 type=0
 }
 
-message RankingRecordCount {
-    // index=1 type=0
-    // index=2 type=0
+message PowerStoneRankingData {
+	required uint32 player_id = 1;
+	required uint32 character_id = 2;
+	required uint32 serial_rank = 3;
+	required uint32 rank = 4;
+	required uint32 score = 5;
+	required bytes data = 6;
 }
 
-message RankingDataPack {
-    // index=1 type=0
-    // index=2 type=2
+message PowerStoneRankingDataPack {
 }
 
-message RequestRegisterRankingData {
-    required uint32 board_id = 1;     
-    required uint32 character_id = 2;     
-    required uint32 score = 3;         
-    required bytes  data = 4;           // Probably a serialized RankingDataPack
+message RequestGetPowerStoneMyRanking {
+	required uint32 character_id = 1;
 }
 
-message RequestRegisterRankingDataResponse {
-    // Empty Response.
+message RequestGetPowerStoneMyRankingResponse {
+	required PowerStoneRankingData ranking_data = 1;
 }
 
-message RequestGetRankingData {
-    required uint32 board_id = 1;     
-    required uint32 offset = 2;       // 1-indexed.
-    required uint32 count = 3;         
+message RequestGetPowerStoneRanking {
+	required uint32 unknown_1 = 1;
+	required uint32 count = 2;
 }
 
-message RequestGetRankingDataResponse {
-    repeated RankingData data = 1;
+message RequestGetPowerStoneRankingRecordCount {
 }
 
-message RequestGetCharacterRankingData {
-    required uint32 board_id = 1;       
-    required uint32 character_id = 2; 
+message RequestGetPowerStoneRankingRecordCountResponse {
+	required uint32 record = 1;
 }
 
-message RequestGetCharacterRankingDataResponse {
-    optional RankingData data = 1;
+message RequestGetPowerStoneRankingResponse {
+	repeated PowerStoneRankingData ranking_data = 1;
 }
 
-message RequestCountRankingData {
-    required uint32 board_id = 1;       
+message RequestRegisterPowerStoneData {
 }
 
-message RequestCountRankingDataResponse {
-    required uint32 count = 1;
-}
-
-message RequestGetCurrentRank {
-    // index=1 type=0
-}
-
-message RequestGetCurrentRankResponse {
-    // index=1 type=2 
-    // index=2 type=2
+message RequestRegisterPowerStoneDataResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Quick Matches (Undead Matches)
 // ------------------------------------------------------------------------------------------------------------
 
-// >> RequestSearchQuickMatch
-// << RequestSearchQuickMatchResponse
-// 
-// Match found:
-// >> RequestJoinQuickMatch
-// << PushRequestAcceptQuickMatch / PushRequestRejectQuickMatch
-//
-// Nothing Found:
-// >> RequestRegisterQuickMatch
-// >> RequestUpdateQuickMatch
-// 
-//  Give up:
-//      >> QuickMatchResultLog
-//      >> RequestUnregisterQuickMatch
-//
-//  Find match:
-//      << PushRequestJoinQuickMatch
-//      >> RequestAcceptQuickMatch
-//      >> QuickMatchResultLog
-//      >> RequestUnregisterQuickMatch
-//      >> RequestSendQuickMatchStart
-//      << RequestSendQuickMatchStartResponse       
-//      >> RequestSendQuickMatchResult              Not sent if using password matching.
-//      << RequestSendQuickMatchResultResponse
-//      >> QuickMatchEndLog
-
-enum QuickMatchGameMode {
-    Duel = 0;
-    TwoPlayerBrawl = 1;
-    FourPlayerBrawl = 2;
-    SixPlayerBrawl = 3;
-    // Brawl (Group) searchs for Four and Six then registers for Six.
-    TwoVersusTwo = 4;
-    ThreeVersusThree = 5;
-    // Co-op Match (Group) search for TwoVersusTwo and ThreeVersusThree then registers for ThreeVersusThree
-
-    // Team matches are used if you set "password applies to: Friendly team only"
-    TwoVersusTwo_Team = 6;
-    ThreeVersusThree_Team = 7;
-}
-
-message QuickMatchRank {
-    optional uint32 rank = 1;       
-    optional uint32 xp = 2;         
-}
-
-message QuickMatchRankCache {
-    // index=1 type=0 
-    // index=2 type=0    
-    // index=3 type=0    
-    // index=4 type=0    
-    // index=5 type=0       
-}
-
-message QuickMatchSession {
-    // index=1 type=0    
-    repeated group Result_list = 2 {
-        // index=1 type=0
-        // index=2 type=0
-        // index=3 type=0
-        // index=4 type=0
-    }
-}
-
-message QuickMatchApologyPoint {
-    // index=1 type=0
-    // index=2 type=0
-}
-
-message QuickMatchData {
-    required uint32 host_player_id = 1;      
-    required string host_player_steam_id = 2;       // Not sure this is right, looks like { 6:49, 6:0x6535313130303030, 12:0x31393834 }    
-    required uint32 online_area_id = 3;             
-}
-
-message QuickMatchSearchResult {
-    optional QuickMatchData data = 2;
-    required uint32 unknown_3 = 3;                  // Always 0
-    required uint32 unknown_4 = 4;                  // Always 0
-}
-
-message AcceptQuickMatchMessage {
-    required uint32 host_player_id = 1;  
-    required string host_player_steam_id = 2;
-    required bytes  metadata = 3;   
-}
-
-message RejectQuickMatchMessage {
-    // Based on ghidra, not managed to reproduce in-game.
-    required uint32 host_player_id = 1;                         // index=1 type=0
-    required uint32 unknown_2 = 2;                              // Maybe a "reason" value?
-}
-
-message RemoveQuickMatchMessage {
-    // index=1 type=0
-}
-
-// <uint32> request_id
-
-// <uint32> applicant_player_id
-// <string> applicant_user_id
-// <uint32> area_id
-// <uint32> domain_id
-// <uint32> type
-
-// index=1 type=0
-// index=2 type=0
-// index=3 type=2
-// index=4 type=0
-// index=5 type=0
-// index=6 type=0
-
-message JoinQuickMatchMessage {
-    required uint32 join_player_id = 1;                                         // 0
-    required string join_player_steam_id = 2;                                   // "011001012d1fafa9"
-    required uint32 join_character_id = 3;                                      // 14
-    required uint32 online_area_id = 4;                                         // 530000
-    required uint32 unknown_5 = 5;                                              // 0
-    required bytes unknown_6 = 6;                                              // ""
+message PushRequestAllowQuickMatch {
 }
 
 message PushRequestJoinQuickMatch {
-    required PushMessageId push_message_id = 1;                  // 832
-    required JoinQuickMatchMessage message = 2;
-}
-
-message PushRequestAcceptQuickMatch {
-    required PushMessageId push_message_id = 1;                  // 833
-    required AcceptQuickMatchMessage message = 2;
 }
 
 message PushRequestRejectQuickMatch {
-    // We are missing something from here
-    required PushMessageId push_message_id = 1;                     // 0x0342
-    required RejectQuickMatchMessage message = 2;
 }
 
-message RequestSearchQuickMatch {
-    required QuickMatchGameMode mode = 1;
-    repeated group Map_id_list = 2 {
-        required uint32 map_id = 1;
-        required uint32 online_area_id = 2;
-    }
-    required uint32 unknown_3 = 3;                      // 5 <- Thing this is max results to return
-    required MatchingParameter matching_parameter = 4;
+message PushRequestRemoveQuickMatch {
 }
 
-message RequestSearchQuickMatchResponse {
-    repeated QuickMatchSearchResult matches = 1;
-}
-
-message RequestRegisterQuickMatch {
-    required QuickMatchGameMode mode = 1;
-    required uint32 map_id = 2;
-    required uint32 online_area_id = 3; 
-    required MatchingParameter matching_parameter = 4;
-    required uint32 unknown_5 = 5;                      // 0
-}
-
-message RequestUnregisterQuickMatch {
-    required QuickMatchGameMode mode = 1;
-    required uint32 map_id = 2;
-    required uint32 online_area_id = 3; 
-    required uint32 unknown_4 = 4;                      // 0
-}
-
-message RequestRegisterQuickMatchResponse {
-    // Empty response.
-}
-
-message RequestUnregisterQuickMatchResponse {
-    // Empty response.
-}
-
-message RequestUpdateQuickMatch {
-    required QuickMatchGameMode mode = 1;
-    required uint32 map_id = 2;
-    required uint32 online_area_id = 3; 
-}
-
-message RequestUpdateQuickMatchResponse {
-    // Empty response.
+message QuickMatchData {
 }
 
 message RequestJoinQuickMatch {
-    required QuickMatchGameMode mode = 1;
-    required uint32 character_id = 2;
-    required uint32 host_player_id = 4;              
-    required uint32 map_id = 5;                  
-    required uint32 online_area_id = 6;             
-    required uint32 unknown_7 = 7;                  // 0
-    required string password = 8;                  
 }
 
 message RequestJoinQuickMatchResponse {
-    // Empty response.
 }
 
-message RequestAcceptQuickMatch {
-    required QuickMatchGameMode mode = 1;
-    required uint32 join_player_id = 4;                           
-    required bytes  data = 5;                  
+message RequestRegisterQuickMatch {
 }
 
-message RequestAcceptQuickMatchResponse {
-    // Empty response.
+message RequestRegisterQuickMatchResponse {
 }
 
 message RequestRejectQuickMatch {
-    required QuickMatchGameMode mode = 1;
-    required uint32 map_id = 2;  
-    required uint32 online_area_id = 3;
-    required uint32 join_player_id = 4; 
-    required uint32 unknown_5 = 5;              // 2
 }
 
 message RequestRejectQuickMatchResponse {
-    // Empty response.
 }
 
-message RequestSendQuickMatchStart {
-    required uint32 unknown_1 = 1;                  // 0                <- Probably game mode?
-    repeated group  Session_member_list = 2 {
-        required uint32 player_id = 1;
-        required uint32 character_id = 2;           
-    }
+message RequestSearchQuickMatch {
 }
 
-message RequestSendQuickMatchStartResponse {
-    // Empty response.
+message RequestSearchQuickMatchResponse {
 }
 
-enum QuickMatchResult{
-    QuickMatchResult_Win = 0;
-    QuickMatchResult_Lose = 1;
-    QuickMatchResult_Draw = 2;
-    QuickMatchResult_Disconnect = 3;                    
+message RequestUnregisterQuickMatch {
 }
 
-message RequestSendQuickMatchResult {
-    // I'm guessing one of these values is the number of people killed in brawl which will be used to determine xp.
-    required QuickMatchGameMode mode = 1;
-    required uint32 unknown_2 = 2;                      // 1
-    required QuickMatchResult result = 3;               // 0, 1     0 if win, 1 if lose, 2 if draw
-    required bool local_won = 4;                        // 0, 1     1 if win, 0 if lose, 0 if draw
-    required QuickMatchRank remote_rank = 5;            // lose{ 0, 0 }                         win{ 0, 0 } { 0, 0 } { 0, 0 } { 0, 0 } { 0, 0 }
-    required QuickMatchRank local_rank = 6;             // lose{ 0, 0 } { 0, 750 } { 0, 1500 }  win{ 0, 2250 } { 0, 4500 } { 0, 6750 } { 0, 9000 } { 1, 2000 }
-    optional string unknown_7 = 7;                      // Looks like a timestamp + player_id "202108171531370006872049"
+message RequestUnregisterQuickMatchResponse {
 }
 
-message RequestSendQuickMatchResultResponse {
-    required uint32 unknown_1 = 1;                      // 0            <- Probably game mode?
-    required QuickMatchRank new_local_rank = 2;         // { 0, 750 } { 0, 1500 } { 0, 2250 } { 0, 4450 } { 0, 6750 } { 0, 9000 } { 1, 2000 } { 1, 2200 }
+message RequestUpdateQuickMatch {
 }
 
-message RequestPushSendQuickMatchStart {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=0
-    // index=5 type=0
+message RequestUpdateQuickMatchResponse {
 }
 
 // ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Marks
+// Game Server Messages - Death counter
 // ------------------------------------------------------------------------------------------------------------
 
-// This is all cut content from map ceremonies. We can ignore all of this.
-
-message RitualMarkData {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=2
-    // index=4 type=0
-    // index=5 type=0
-    // index=6 type=2
+message RequestGetTotalDeathCount {
 }
 
-message LocatedRitualMark {
-    // index=1 type=0
-    // index=2 type=0
-}
-
-message RitualMarkDomainLimit {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-}
-
-message RequestCreateMark {
-    // index=1 type=0
-    // index=2 type=2
-    // index=3 type=0
-    // index=4 type=0
-    // index=5 type=0
-    // index=6 type=2
-}
-
-message RequestCreateMarkResponse {
-    // index=1 type=0
-}
-
-message RequestRemoveMark {
-    // index=1 type=0
-    // index=2 type=2
-    // index=3 type=0
-    // index=4 type=0
-    // index=5 type=0
-}
-
-message RequestRemoveMarkResponse {
-    // Empty
-}
-
-message RequestReentryMark {
-    // index=1 type=2 - Pretty sure this is a repeated LocatedRitualMark
-}
-
-message RequestReentryMarkResponse {
-    // Empty
-}
-
-message RequestGetMarkList {
-    // index=1 type=0
-    // index=2 type=2 - Pretty sure this is a repeated RitualMarkDomainLimit
-}
-
-message RequestGetMarkListResponse {
-    // index=1 type=2 - I'm guessing this is a repeated RitualMarkData
+message RequestGetTotalDeathCountResponse {
+	required uint32 total_death_count = 1;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -1575,196 +791,148 @@ message RequestGetMarkListResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestHeader {
-    required PushMessageId push_message_id = 1;
-}
-
-message RangedLimit {
-    // index=1 type=0
-    // index=2 type=0
-}
-
-message PlayerUserIDPair {
-    // index=1 type=0
-    // index=2 type=2
 }
 
 // ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Management tool artifacts?
+// Game Server Messages - Management artifacts / Useless junk
 // ------------------------------------------------------------------------------------------------------------
 
-// Show a scrolling message box at the top of the screen with a given message on it.
 message ManagementTextMessage {
-    required PushMessageId push_message_id = 1;
-    required string message = 2;
-    required DS2_Frpg2PlayerData.DateTime timestamp = 3;        // Seems to do nothing.
-    required uint32 unknown_4 = 4;                          // Seems to do nothing.
-    required uint32 unknown_5 = 5;                          // Seems to do nothing.
-}
-
-message NRLogUploadRequest {
-    required uint32 unknown_1 = 1;
-    required uint32 unknown_2 = 2;
+	required PushMessageId push_message_id = 1;
+	required string message = 2;
+	required DS2_Frpg2PlayerData.DateTime timestamp = 3;
+	required uint32 unknown_4 = 4;
+	required uint32 unknown_5 = 5;
 }
 
 message NRLoggingMessage {
-    required uint32 unknown_1 = 1;
-    required bytes unknown_2 = 2;
 }
 
-// Does nothing, client doesn't respond to it in any way.
+message NRLogUploadRequest {
+}
+
 message ServerPing {
-    required uint32 unknown_1 = 1;
 }
 
-// ------------------------------------------------------------------------------------------------------------
-// Game Server Messages - Online shop - This for showing DLC?
-// ------------------------------------------------------------------------------------------------------------
-
-message RequestGetOnlineShopItemList {
-    // index=1 type=0 
+message RequestBenchmarkThroughput {
 }
 
-message RequestGetOnlineShopItemListResponse {
-    // index=1 type=0 
-    repeated group Lineup = 2 {
-        // index=1 type=0
-        // index=2 type=0
-        // index=3 type=0
-        // index=4 type=0
-        // index=5 type=5
-        // index=6 type=0
-        // index=7 type=0
-        // index=8 type=0
-        // index=9 type=0
-    }
+message RequestBenchmarkThroughputResponse {
 }
 
-// ------------------------------------------------------------------------------------------------------------
-// Generally useless junk for our purposes. 
-// ------------------------------------------------------------------------------------------------------------
-
-message LoginForXboxOne {
-    // index=1 type=2
+message RequestGetLoginPlayerCharacter {
 }
 
-message SocketOptionSetting {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=0
-    // index=5 type=0
-    // index=6 type=0
-    // index=7 type=0
-    // index=8 type=0
-    // index=9 type=0
-    // index=10 type=0
+message RequestGetLoginPlayerCharacterResponse {
 }
 
-message GetConnectGameServerPortIdResponse {
-    // index=1 type=2
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=2
+message RequestGetPlayerCharacterListResponse {
 }
 
-// ------------------------------------------------------------------------------------------------------------
-// We have basically no need to implement any of the below, this is all management tool related
-// stuff, which we have our own webui solution for.
-// ------------------------------------------------------------------------------------------------------------
-
-message NotifyLoginToPushServer {
-    // index=1 type=2 // Looks like repeated instance of PushLoginUserInfo
+message RequestGetPlayerCharacterResponse {
 }
 
-message NotifyLogoutToPushServer {
-    // index=1 type=2
+message RequestMeasureDownloadBandwidth {
 }
 
-message UserLoginInfo {
-    // index=1 type=0
-    // index=2 type=0
+message RequestMeasureDownloadBandwidthResponse {
 }
 
-message UserLogout {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=0
+message RequestMeasureUploadBandwidth {
 }
 
-message LoginClientInfo {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=2
-    // index=5 type=2
-    // index=6 type=2
+message RequestMeasureUploadBandwidthResponse {
 }
 
-message NotifyClientServerInfoToPushServer {
-    required uint32 unknown_1 = 1;
-    required uint32 unknown_2 = 2;
-    required uint32 unknown_3 = 3;
+message RequestSendMessageToAllPlayers {
 }
 
-message PushLoginUserInfo {
-    required uint32 unknown_1 = 1;
-    required uint32 unknown_2 = 2;
+message RequestSendMessageToAllPlayersResponse {
 }
 
-message RequestCheckLogin {
-    // index=1 type=0 or 2 (looks like repeated ints?)
+message RequestSendMessageToPlayers {
 }
 
-message RequestCheckLoginResponse {
-    // index=1 type=2 // Looks like repeated UserLoginInfo
+message RequestSendMessageToPlayersResponse {
 }
 
-message RequestGetPlayerConnectGameServer {
-    // index=1 type=0 or 2 (looks like repeated ints?)
+message RequestSendMessageToSelectLanguagePlayers {
 }
 
-message PlayerConnectServerInfo {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=0
-    // index=4 type=0
-}
-
-message RequestGetPlayerConnectGameServerResponse {
-    // index=1 type=2 // Repeated PlayerConnectServerInfo's
-}
-
-message RequestGetServerConnectTime {
-    // index=1 type=0
-}
-
-message RequestGetServerConnectTimeResponse {
-    // index=1 type=0
-}
-
-message RequestGetConnectionCount {
-    // Empty
-}
-
-message RequestGetConnectionCountResponse {
-    // index=1 type=0
-}
-
-message RequestDisconnectUser {
-    // index=1 type=0 // 0 or 2 (looks like repeated ints?)
-}
-
-message RequestDisconnectAllUser {
-    // Empty
+message RequestSendMessageToSelectLanguagePlayersResponse {
 }
 
 message RequestSendMessageToPushClient {
-    // index=1 type=0
-    // index=2 type=0
-    // index=3 type=2
+}
+
+message RequestSendPlayerList {
+}
+
+message NotifyLoginToPushServer {
+}
+
+message NotifyLogoutToPushServer {
+}
+
+message UserLoginInfo {
+}
+
+message UserLogout {
+}
+
+message LoginClientInfo {
+}
+
+message LoginForXboxOne {
+}
+
+message SocketOptionSetting {
+}
+
+message GetConnectGameServerPortIdResponse {
+}
+
+message NotifyClientServerInfoToPushServer {
+}
+
+message PushLoginUserInfo {
+}
+
+message RequestCheckLogin {
+}
+
+message RequestCheckLoginResponse {
+}
+
+message RequestGetPlayerConnectGameServer {
+}
+
+message RequestGetPlayerConnectGameServerResponse {
+}
+
+message PlayerConnectServerInfo {
+}
+
+message RequestGetConnectionCount {
+}
+
+message RequestGetConnectionCountResponse {
+}
+
+message RequestDisconnectAllUser {
+}
+
+message RequestDisconnectUser {
 }
 
 message RequestGetServerSidePlayerStatus {
-    // index=1 type=0
 }
+
+message CellLimitData {
+	required uint32 cell_id = 1;
+	required uint32 max_count = 2;
+}
+
+message DateTime {
+}
+

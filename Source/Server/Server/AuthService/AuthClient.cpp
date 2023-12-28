@@ -43,6 +43,8 @@ AuthClient::AuthClient(AuthService* OwningService, std::shared_ptr<NetConnection
 
 bool AuthClient::Poll()
 {
+    GameTypeConfig& GameConfig = BuildConfig::GameConfig[(int)Service->GetServer()->GetGameType()];
+
     // Has this client timed out?
     double TimeSinceLastMessage = GetSeconds() - LastMessageRecievedTime;
     if (TimeSinceLastMessage >= BuildConfig::CLIENT_TIMEOUT)
@@ -85,7 +87,7 @@ bool AuthClient::Poll()
                 }
 
                 // First request is always the handshake request. 
-                DS3_Frpg2RequestMessage::RequestHandshake Request;
+                Shared_Frpg2RequestMessage::RequestHandshake Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
                     WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting RequestHandshake.");
@@ -136,7 +138,7 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                DS3_Frpg2RequestMessage::GetServiceStatus Request;
+                Shared_Frpg2RequestMessage::GetServiceStatus Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
                     WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting GetServiceStatus.");
@@ -147,8 +149,8 @@ bool AuthClient::Poll()
 
                 // Note: I think empty response is sent back here if an update is available.
 
-                DS3_Frpg2RequestMessage::GetServiceStatusResponse Response;
-                if (Request.app_version() >= BuildConfig::MIN_APP_VERSION && Request.app_version() <= BuildConfig::APP_VERSION)
+                Shared_Frpg2RequestMessage::GetServiceStatusResponse Response;
+                if (Request.app_version() >= GameConfig.MIN_APP_VERSION && Request.app_version() <= GameConfig.APP_VERSION)
                 {
                     Response.set_id(2);
                     Response.set_steam_id("\0");
@@ -157,7 +159,7 @@ bool AuthClient::Poll()
                 }
                 else
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as they have unsupported version: %zi, highest we support is %i.", Request.app_version(), BuildConfig::APP_VERSION);
+                    WarningS(GetName().c_str(), "Disconnecting client as they have unsupported version: %zi, highest we support is %i.", Request.app_version(), GameConfig.APP_VERSION);
                 }
 
                 if (!MessageStream->Send(&Response, Frpg2MessageType::Reply, Message.Header.msg_index))

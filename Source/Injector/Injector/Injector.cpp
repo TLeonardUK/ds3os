@@ -245,3 +245,34 @@ std::vector<intptr_t> Injector::SearchAOB(const std::vector<AOBByte>& pattern)
 
     return Matches;
 }
+
+
+std::vector<intptr_t> Injector::SearchString(const std::string& input)
+{
+    std::vector<AOBByte> aob;
+    aob.reserve(input.size());
+
+    for (size_t i = 0; i < input.size(); i++)
+    {
+        aob.push_back(input[i]);
+    }
+
+    return SearchAOB(aob);
+}
+
+std::vector<intptr_t> Injector::SearchString(const std::wstring& input)
+{
+    std::vector<AOBByte> aob;
+    aob.reserve(input.size() * 2);
+
+    for (size_t i = 0; i < input.size(); i++)
+    {
+        wchar_t val = input[i];
+        uint8_t upper = (val >> 8) & 0xFF;
+        uint8_t lower = (val >> 0) & 0xFF;
+        aob.push_back(upper);
+        aob.push_back(lower);
+    }
+
+    return SearchAOB(aob);
+}

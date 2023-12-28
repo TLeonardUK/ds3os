@@ -33,7 +33,7 @@ GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection
 {
     LastMessageRecievedTime = GetSeconds();
 
-    MessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(InConnection, CwcKey, AuthToken);
+    MessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(InConnection, CwcKey, AuthToken, false, Service->GetServer()->GetGameType());
 }
 
 bool GameClient::Poll()

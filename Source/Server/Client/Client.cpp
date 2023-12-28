@@ -283,7 +283,7 @@ void Client::Handle_LoginServer_RequestServerInfo()
 {
     LogS(GetName().c_str(), "Requesting server info.");
 
-    DS3_Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
+    Shared_Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
     Request.set_steam_id(ClientStreamId.c_str());
     Request.set_app_version(ClientAppVersion);
     Ensure(LoginServerMessageStream->Send(&Request, Frpg2MessageType::RequestQueryLoginServerInfo));
@@ -291,7 +291,7 @@ void Client::Handle_LoginServer_RequestServerInfo()
     Frpg2Message Response;
     WaitForNextMessage(LoginServerConnection, LoginServerMessageStream, Response);
 
-    DS3_Frpg2RequestMessage::RequestQueryLoginServerInfoResponse TypedResponse;
+    Shared_Frpg2RequestMessage::RequestQueryLoginServerInfoResponse TypedResponse;
     Ensure(TypedResponse.ParseFromArray(Response.Payload.data(), (int)Response.Payload.size()));
 
     AuthServerIP = TypedResponse.server_ip();
@@ -330,7 +330,7 @@ void Client::Handle_AuthServer_RequestHandshake()
     CwcKey.resize(16);
     FillRandomBytes(CwcKey);
 
-    DS3_Frpg2RequestMessage::RequestHandshake Request;
+    Shared_Frpg2RequestMessage::RequestHandshake Request;
     Request.set_aes_cwc_key(CwcKey.data(), CwcKey.size());
     Ensure(AuthServerMessageStream->Send(&Request, Frpg2MessageType::RequestHandshake));
 
@@ -351,7 +351,7 @@ void Client::Handle_AuthServer_RequestServiceStatus()
 {
     LogS(GetName().c_str(), "Requesting service status.");
 
-    DS3_Frpg2RequestMessage::GetServiceStatus Request;
+    Shared_Frpg2RequestMessage::GetServiceStatus Request;
     Request.set_id(1);
     Request.set_steam_id(ClientStreamId.c_str(), (int)ClientStreamId.size());
     Request.set_app_version(ClientAppVersion);
@@ -365,7 +365,7 @@ void Client::Handle_AuthServer_RequestServiceStatus()
         Abort("New version of application available or server is down for maintenance.");
     }
 
-    DS3_Frpg2RequestMessage::GetServiceStatusResponse TypedResponse;
+    Shared_Frpg2RequestMessage::GetServiceStatusResponse TypedResponse;
     Ensure(TypedResponse.ParseFromArray(Response.Payload.data(), (int)Response.Payload.size()));
 
     ChangeState(ClientState::AuthServer_ExchangeKeyData);
@@ -433,7 +433,7 @@ void Client::Handle_GameServer_Connect()
         Abort("Failed to connect to server at %s:%i", GameServerIP, GameServerPort);
     }
 
-    GameServerMessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(GameServerConnection, GameServerCwcKey, GameServerAuthToken, true);
+    GameServerMessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(GameServerConnection, GameServerCwcKey, GameServerAuthToken, true, GameType::DarkSouls3);
     GameServerMessageStream->Connect(ClientStreamId);
 
     while (GameServerMessageStream->GetState() != Frpg2ReliableUdpStreamState::Established)

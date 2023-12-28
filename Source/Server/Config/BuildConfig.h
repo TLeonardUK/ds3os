@@ -12,6 +12,26 @@
 #include <vector>
 #include <string>
 
+#include "Shared/Game/GameType.h"
+
+// Configuration for specific game types.
+struct GameTypeConfig
+{
+public:
+
+    // What minimum application version we support (this is the app version shown on the menu without the dot and -1).
+    // So 1.15 = 114
+    int MIN_APP_VERSION = 114;
+
+    // What application version we support (this is the app version shown on the menu without the dot and -1).
+    // So 1.15 = 114
+    int APP_VERSION = 116;
+
+    // AppId on steam for this title.
+    int STEAM_APPID = 374320;
+
+};
+
 // Abstract class that just holds various build-time 
 // configuration variables. Might be worth dumping this
 // into a json file at some point in future so it can 
@@ -21,6 +41,25 @@ class BuildConfig
 public:
     
     BuildConfig() = delete;
+
+    inline static GameTypeConfig GameConfig[(int)GameType::COUNT] = {
+        // Unknown
+        {},
+
+        // Dark Souls 2
+        {
+            17039618,
+            17039619,
+            335300
+        },
+
+        // Dark Souls 3
+        {
+            114,
+            116,
+            374320
+        }
+    };
 
     // Version to give to the master-server when trying to advertise, used to hard-cut-off older server versions from advertising.
     inline static const int MASTER_SERVER_CLIENT_VERSION = 2;
@@ -36,15 +75,6 @@ public:
 
     // Maximum length of a packet in an Frpg2PacketStream.
     inline static const int MAX_PACKET_LENGTH = 8192;
-
-    // What minimum application version we support (this is the app version shown on the menu without the dot and -1).
-    // So 1.15 = 114
-    inline static const int MIN_APP_VERSION = 114;
-
-    // What application version we support (this is the app version shown on the menu without the dot and -1).
-    // So 1.15 = 114
-    inline static const int APP_VERSION = 116;
-
     // If true clients are disconnected if we are unable to handle the message they send.
     // Be careful with this, if we don't reply to some messages the client will deadlock.
 #if defined(_DEBUG)

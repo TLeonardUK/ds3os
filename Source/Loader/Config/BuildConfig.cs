@@ -90,6 +90,18 @@ namespace Loader
             // Dark Souls II
             // -------------------------------------------------------------------------------------------
             { 
+                ExeUtils.MakeSimpleExeHash("1,0,2,0", 31605096), 
+                new DarkSoulsLoadConfig 
+                { 
+                    VersionName = "Dark Souls II - 1.0.2.0 (Steam)", 
+                    ServerInfoAddress = 0x0,
+                    UseInjector = true,
+                    UsesASLR = false,
+                    Key = new uint[0] { },
+                    SteamAppId = 335300
+                }
+            },
+            {
                 ExeUtils.MakeSimpleExeHash("1,0,3,0", 28200992), 
                 new DarkSoulsLoadConfig 
                 { 
