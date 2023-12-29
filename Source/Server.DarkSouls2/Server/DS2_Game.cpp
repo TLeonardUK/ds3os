@@ -9,8 +9,8 @@
 
 #include "Server/DS2_Game.h"
 #include "Protobuf/DS2_Protobufs.h"
-#include "Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessage.h"
-#include "Server/GameService/DarkSouls2/DS2_PlayerState.h"
+#include "Server/Streams/DS2_Frpg2ReliableUdpMessage.h"
+#include "Server/GameService/DS2_PlayerState.h"
 
 bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
@@ -32,7 +32,7 @@ bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite*
         Output = Frpg2ReliableUdpMessageType::Push; /* Not using push */            \
         return true;                                                                \
     }    
-#include "Server.DarkSouls2/Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessageTypes.inc"
+#include "Server.DarkSouls2/Server/Streams/DS2_Frpg2ReliableUdpMessageTypes.inc"
 #undef DEFINE_PUSH_MESSAGE
 #undef DEFINE_MESSAGE
 #undef DEFINE_REQUEST_RESPONSE
@@ -69,7 +69,7 @@ bool DS2_Game::ReliableUdpMessageType_To_Protobuf(Frpg2ReliableUdpMessageType In
         }                                                                                               \
     }
 #define DEFINE_PUSH_MESSAGE(OpCode, Type, ProtobufClass)                                                /* Not supported on server, server only sends these */
-#include "Server.DarkSouls2/Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessageTypes.inc"
+#include "Server.DarkSouls2/Server/Streams/DS2_Frpg2ReliableUdpMessageTypes.inc"
 #undef DEFINE_PUSH_MESSAGE
 #undef DEFINE_MESSAGE
 #undef DEFINE_REQUEST_RESPONSE
@@ -95,7 +95,7 @@ bool DS2_Game::ReliableUdpMessageType_Expects_Response(Frpg2ReliableUdpMessageTy
         return false;                                                                       \
     }
 #define DEFINE_PUSH_MESSAGE(OpCode, Type, ProtobufClass)                                    /* Not required, gets caught by Push test above */
-#include "Server.DarkSouls2/Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessageTypes.inc"
+#include "Server.DarkSouls2/Server/Streams/DS2_Frpg2ReliableUdpMessageTypes.inc"
 #undef DEFINE_PUSH_MESSAGE
 #undef DEFINE_MESSAGE
 #undef DEFINE_REQUEST_RESPONSE

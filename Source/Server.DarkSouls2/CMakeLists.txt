@@ -10,10 +10,10 @@ SET(SOURCES
     Protobuf/Generated/DS2_Frpg2PlayerData.pb.cc
     Protobuf/Generated/DS2_Frpg2RequestMessage.pb.cc
     
-    Server/GameService/DarkSouls2/DS2_PlayerState.h
+    Server/GameService/DS2_PlayerState.h
 
-    Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessageTypes.inc
-    Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessage.h
+    Server/Streams/DS2_Frpg2ReliableUdpMessageTypes.inc
+    Server/Streams/DS2_Frpg2ReliableUdpMessage.h
     
     Server/DS2_Game.h
     Server/DS2_Game.cpp

@@ -19,8 +19,8 @@
 #include "Shared/Core/Utils/WinApi.h"
 #include "Shared/Core/Utils/Strings.h"
 
-#include "Injector/Hooks//DarkSouls3/DS3_ReplaceServerAddressHook.h"
-#include "Injector/Hooks//DarkSouls2/DS2_ReplaceServerAddressHook.h"
+#include "Injector/Hooks/DarkSouls3/DS3_ReplaceServerAddressHook.h"
+#include "Injector/Hooks/DarkSouls2/DS2_ReplaceServerAddressHook.h"
 #include "Injector/Hooks/Shared/ReplaceServerPortHook.h"
 #include "Injector/Hooks/Shared/ChangeSaveGameFilenameHook.h"
 
