@@ -44,7 +44,7 @@ protected:
 	double MustSampleTime = 0.0;
 
 	std::unordered_map<std::string, std::string> Statistics;
-	std::map<OnlineAreaId, size_t> PopulatedAreas; 
+	std::map<uint32_t, size_t> PopulatedAreas; 
 
 	size_t UniquePlayerCount = 0;
 

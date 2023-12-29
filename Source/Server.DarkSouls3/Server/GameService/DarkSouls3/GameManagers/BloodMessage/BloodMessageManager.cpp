@@ -11,7 +11,9 @@
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
-#include "Server/Streams/Frpg2ReliableUdpMessageStream.h"*/
+#include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+#include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
 
 #include "Server/GameService/DarkSouls3/Utils/Data/BloodMessageData.h"
 
@@ -45,7 +47,7 @@ bool BloodMessageManager::Init()
     const std::vector<OnlineAreaId>* Areas = GetEnumValues<OnlineAreaId>();
     for (OnlineAreaId AreaId : *Areas)
     {
-        std::vector<std::shared_ptr<BloodMessage>> Messages = Database.FindRecentBloodMessage(AreaId, PrimeCountPerArea);
+        std::vector<std::shared_ptr<BloodMessage>> Messages = Database.FindRecentBloodMessage((uint32_t)AreaId, PrimeCountPerArea);
         for (const std::shared_ptr<BloodMessage>& Message : Messages)
         {
             LiveCache.Add(AreaId, Message->MessageId, Message);
@@ -169,7 +171,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
         MessageData.assign(MessageInfo.message_data().data(), MessageInfo.message_data().data() + MessageInfo.message_data().size());
 
         // Create the message in the database.
-        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((OnlineAreaId)MessageInfo.online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData);
+        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((uint32_t)MessageInfo.online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData);
         if (!BloodMessage)
         {
             WarningS(Client->GetName().c_str(), "Failed to recreate blood message.");
@@ -178,7 +180,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestReCreateBloodMessageList(
 
         LogS(Client->GetName().c_str(), "Recreated message %i.", BloodMessage->MessageId);
 
-        LiveCache.Add(BloodMessage->OnlineAreaId, BloodMessage->MessageId, BloodMessage);
+        LiveCache.Add((OnlineAreaId)BloodMessage->OnlineAreaId, BloodMessage->MessageId, BloodMessage);
         CreatedMessageIds->Add(BloodMessage->MessageId);
     }
 
@@ -221,7 +223,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestGetBloodMessageEvaluation
             EvalData.set_good(ActiveMessage->RatingGood);
             EvalData.set_poor(ActiveMessage->RatingPoor);
 
-            LiveCache.Add(ActiveMessage->OnlineAreaId, ActiveMessage->MessageId, ActiveMessage);
+            LiveCache.Add((OnlineAreaId)ActiveMessage->OnlineAreaId, ActiveMessage->MessageId, ActiveMessage);
         }
         // If we can't find it, just return 0 evaluation, this shouldn't happen in practice.
         else
@@ -260,11 +262,11 @@ MessageHandleResult BloodMessageManager::Handle_RequestCreateBloodMessage(GameCl
         LogS(Client->GetName().c_str(), "BloodMessage Created: %s", data.ToString().c_str());
     }
 
-    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData))
+    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((uint32_t)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData))
     {
         Response.set_message_id(ActiveMessage->MessageId);
 
-        LiveCache.Add(ActiveMessage->OnlineAreaId, ActiveMessage->MessageId, ActiveMessage);
+        LiveCache.Add((OnlineAreaId)ActiveMessage->OnlineAreaId, ActiveMessage->MessageId, ActiveMessage);
     }
     else
     {
@@ -388,7 +390,7 @@ MessageHandleResult BloodMessageManager::Handle_RequestEvaluateBloodMessage(Game
     // Otherwise try and get it out of database.
     else if (ActiveMessage = Database.FindBloodMessage(Request->message_id()))
     {
-        LiveCache.Add(ActiveMessage->OnlineAreaId, ActiveMessage->MessageId, ActiveMessage);
+        LiveCache.Add((OnlineAreaId)ActiveMessage->OnlineAreaId, ActiveMessage->MessageId, ActiveMessage);
     }
     // If we can't find it, just return 0 evaluation, this shouldn't happen in practice.
     else

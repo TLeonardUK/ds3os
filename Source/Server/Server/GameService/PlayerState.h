@@ -10,10 +10,11 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <unordered_map>
+#include <map>
 
-#include "Protobuf/Protobufs.h"
-
-#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
+#include "Shared/Platform/Platform.h"
 
 // Represents the in-game state of a player. Each game client owns an instance of this class.
 
@@ -86,17 +87,22 @@ public:
     DEFINE_FIELD(std::vector<uint32_t>, LitBonfires, {});
     DEFINE_FIELD(bool, HasInitialState, false);
 
-    // TODO: Split into derived class.
+    // Gets a game specific opaque identifier for the area the player is in.
+    virtual uint32_t GetCurrentAreaId() = 0;
 
-    // Current online matching area the player is in.
-    DEFINE_FIELD(OnlineAreaId, CurrentArea, OnlineAreaId::None)
-    
-    // What type of visitor the player can currently be summoned as.
-    DEFINE_FIELD(DS3_Frpg2RequestMessage::VisitorPool, VisitorPool, DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_None)
-    
-    // Information the player sends and periodically patches with 
-    // RequestUpdatePlayerStatus requests.
-    DEFINE_FIELD(DS3_Frpg2PlayerData::AllStatus, PlayerStatus, DS3_Frpg2PlayerData::AllStatus())
+    // Returns true when the player is fully logged in and in-game.
+    virtual bool IsInGame() = 0;
+
+    // Various bits of player information.
+    virtual size_t GetSoulCount() = 0;
+    virtual size_t GetSoulMemory() = 0;
+    virtual size_t GetDeathCount() = 0;
+    virtual size_t GetMultiplayerSessionCount() = 0;
+    virtual double GetPlayTime() = 0;
+
+    // Textural descriptions of the players status/covenant status, shown in the web-interface.
+    virtual std::string GetConvenantStatusDescription() = 0;
+    virtual std::string GetStatusDescription() = 0;
 
 };
 

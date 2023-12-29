@@ -16,6 +16,8 @@
 #include "Shared/Core/Crypto/RSAKeyPair.h"
 #include "Shared/Core/Network/NetIPAddress.h"
 
+#include "Shared/Core/Utils/Logging.h"
+
 #include <memory>
 #include <vector>
 #include <filesystem>
@@ -58,6 +60,7 @@ private:
         AuthServer_GetServerInfo,
 
         GameServer_Connect,
+#if 0
         GameServer_RequestWaitForUserLogin,
         GameServer_RequestGetAnnounceMessageList,
         GameServer_RequestUpdateLoginPlayerCharacter,
@@ -66,6 +69,7 @@ private:
         GameServer_RequestGetRightMatchingArea,
         GameServer_Idle,
         GameServer_GatherStatistics,
+#endif
 
         Complete
     };
@@ -80,6 +84,7 @@ private:
     void Handle_AuthServer_GetServerInfo();
 
     void Handle_GameServer_Connect();
+#if 0
     void Handle_GameServer_RequestWaitForUserLogin();
     void Handle_GameServer_RequestGetAnnounceMessageList();
     void Handle_GameServer_RequestUpdateLoginPlayerCharacter();
@@ -88,6 +93,7 @@ private:
     void Handle_GameServer_RequestGetRightMatchingArea();
     void Handle_GameServer_Idle();
     void Handle_GameServer_GatherStatistics();
+#endif
 
     void ChangeState(ClientState State);
 

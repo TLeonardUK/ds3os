@@ -10,7 +10,7 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
-#include "Protobuf/Protobufs.h"
+#include "Protobuf/DS3_Protobufs.h"
 
 #include <memory>
 

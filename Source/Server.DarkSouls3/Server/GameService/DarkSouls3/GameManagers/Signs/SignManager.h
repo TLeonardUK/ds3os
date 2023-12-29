@@ -12,6 +12,7 @@
 #include "Server/GameService/GameManager.h"
 #include "Server/GameService/DarkSouls3/Utils/OnlineAreaPool.h"
 #include "Server/Database/DatabaseTypes.h"
+#include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;

@@ -15,43 +15,13 @@
 #include <vector>
 #include <memory>
 
-#include "Protobuf/Protobufs.h"
+#include "Protobuf/SharedProtobufs.h"
 
-// All the id's of message type we can recieve.
+// ID's of messages we can recieve. Individual game interfaces may have additional values.
 enum class Frpg2ReliableUdpMessageType : int
 {
     Reply = 0x0,
     Push = 0x0320
-};
-
-// TODO: Move these to game projects
-
-enum class DS2_Frpg2ReliableUdpMessageType : int
-{
-    Reply = 0x0,
-    Push = 0x0320,
-
-#define DEFINE_REQUEST_RESPONSE(OpCode, Type, ProtobufClass, ResponseProtobufClass)         Type = OpCode,
-#define DEFINE_MESSAGE(OpCode, Type, ProtobufClass)                                         Type = OpCode,
-#define DEFINE_PUSH_MESSAGE(OpCode, Type, ProtobufClass)                                    /* Do Nothing */
-#include "Server.DarkSouls2/Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessageTypes.inc"
-#undef DEFINE_PUSH_MESSAGE
-#undef DEFINE_MESSAGE
-#undef DEFINE_REQUEST_RESPONSE
-};
-
-enum class DS3_Frpg2ReliableUdpMessageType : int
-{
-    Reply = 0x0,
-    Push = 0x0320,
-    
-#define DEFINE_REQUEST_RESPONSE(OpCode, Type, ProtobufClass, ResponseProtobufClass)         Type = OpCode,
-#define DEFINE_MESSAGE(OpCode, Type, ProtobufClass)                                         Type = OpCode,
-#define DEFINE_PUSH_MESSAGE(OpCode, Type, ProtobufClass)                                    /* Do Nothing */
-#include "Server.DarkSouls3/Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessageTypes.inc"
-#undef DEFINE_PUSH_MESSAGE
-#undef DEFINE_MESSAGE
-#undef DEFINE_REQUEST_RESPONSE
 };
 
 #pragma pack(push, 1)
@@ -92,7 +62,6 @@ public:
 static_assert(sizeof(Frpg2ReliableUdpMessageResponseHeader) == 16, "Message header is not expected size.");
 #pragma pack(pop)
 
-
 struct Frpg2ReliableUdpMessage
 {
 public:
@@ -111,8 +80,3 @@ public:
 
     std::string Disassembly;
 };
-
-
-bool Protobuf_To_ReliableUdpMessageType(GameType ServerGameType, google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output);
-bool ReliableUdpMessageType_To_Protobuf(GameType ServerGameType, Frpg2ReliableUdpMessageType Type, bool IsResponse, std::shared_ptr<google::protobuf::MessageLite>& Output);
-bool ReliableUdpMessageType_Expects_Response(GameType ServerGameType, Frpg2ReliableUdpMessageType Type);

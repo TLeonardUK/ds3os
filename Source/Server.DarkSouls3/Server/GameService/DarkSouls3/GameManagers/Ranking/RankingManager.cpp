@@ -11,6 +11,8 @@
 #include "Server/GameService/GameClient.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+#include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"

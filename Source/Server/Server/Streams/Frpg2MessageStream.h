@@ -12,7 +12,7 @@
 #include "Server/Streams/Frpg2PacketStream.h"
 #include "Server/Streams/Frpg2Message.h"
 
-#include "Protobuf/Protobufs.h"
+#include "Protobuf/SharedProtobufs.h"
 
 class RSAKeyPair;
 class Cipher;

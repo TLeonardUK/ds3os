@@ -9,20 +9,7 @@
 
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Boot/BootManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Logging/LoggingManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/PlayerData/PlayerDataManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/BloodMessage/BloodMessageManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Bloodstain/BloodstainManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Ghosts/GhostManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Signs/SignManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Ranking/RankingManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/QuickMatch/QuickMatchManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/BreakIn/BreakInManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Visitor/VisitorManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Mark/MarkManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Misc/MiscManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/AntiCheat/AntiCheatManager.h"
+#include "Server/GameService/GameManager.h"
 
 #include "Server/Server.h"
 #include "Server/Streams/Frpg2ReliableUdpPacketStream.h"
@@ -37,36 +24,25 @@
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
 
-#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
-
 GameService::GameService(Server* OwningServer, RSAKeyPair* InServerRSAKey)
     : ServerInstance(OwningServer)
     , ServerRSAKey(InServerRSAKey)
 {
-    // This list of managers are what actually do the grunt work of the server
-    // they recieve and response to messages.
-    Managers.push_back(std::make_shared<BootManager>(ServerInstance));
-    Managers.push_back(std::make_shared<LoggingManager>(ServerInstance));
-    Managers.push_back(std::make_shared<PlayerDataManager>(ServerInstance));
-    Managers.push_back(std::make_shared<BloodMessageManager>(ServerInstance, this));
-    Managers.push_back(std::make_shared<BloodstainManager>(ServerInstance));
-    Managers.push_back(std::make_shared<SignManager>(ServerInstance, this));
-    Managers.push_back(std::make_shared<GhostManager>(ServerInstance));
-    Managers.push_back(std::make_shared<RankingManager>(ServerInstance));
-    Managers.push_back(std::make_shared<QuickMatchManager>(ServerInstance, this));
-    Managers.push_back(std::make_shared<BreakInManager>(ServerInstance, this));
-    Managers.push_back(std::make_shared<VisitorManager>(ServerInstance, this));
-    Managers.push_back(std::make_shared<MarkManager>(ServerInstance));
-    Managers.push_back(std::make_shared<MiscManager>(ServerInstance, this));
-    Managers.push_back(std::make_shared<AntiCheatManager>(ServerInstance, this));
 }
 
 GameService::~GameService()
 {
 }
 
+void GameService::RegisterManager(std::shared_ptr<GameManager> Manager)
+{
+    Managers.push_back(Manager);
+}
+
 bool GameService::Init()
 {
+    ServerInstance->GetGameInterface().RegisterGameManagers(*this);
+
     Connection = std::make_shared<NetConnectionUDP>("Game Service");
     int Port = ServerInstance->GetConfig().GameServerPort;
     if (!Connection->Listen(Port))

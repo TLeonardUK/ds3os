@@ -8,10 +8,13 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/BreakIn/BreakInManager.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -84,7 +87,7 @@ bool BreakInManager::CanMatchWith(const DS3_Frpg2RequestMessage::MatchingParamet
 
 MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
-    PlayerState& Player = Client->GetPlayerState();
+    auto& Player = Client->GetPlayerStateType<DS3_PlayerState>();
 
     const RuntimeConfig& Config = ServerInstance->GetConfig();
 
@@ -101,7 +104,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
             for (size_t i = 0; i < Player.GetPlayerStatus().player_status().played_areas_size(); i++)
             {
                 OnlineAreaId AreaId = (OnlineAreaId)Player.GetPlayerStatus().player_status().played_areas((int)i);
-                if (OtherClient->GetPlayerState().GetCurrentArea() == AreaId)
+                if (OtherClient->GetPlayerStateType<DS3_PlayerState>().GetCurrentArea() == AreaId)
                 {
                     InValidArea = true;
                     break;
@@ -115,7 +118,7 @@ MessageHandleResult BreakInManager::Handle_RequestGetBreakInTargetList(GameClien
         }
         else
         {
-            if (OtherClient->GetPlayerState().GetCurrentArea() != (OnlineAreaId)Request->online_area_id())
+            if (OtherClient->GetPlayerStateType<DS3_PlayerState>().GetCurrentArea() != (OnlineAreaId)Request->online_area_id())
             {
                 return false;
             }

@@ -11,6 +11,8 @@
 #include "Server/GameService/GameClient.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+#include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -39,7 +41,7 @@ bool GhostManager::Init()
     const std::vector<OnlineAreaId>* Areas = GetEnumValues<OnlineAreaId>();
     for (OnlineAreaId AreaId : *Areas)
     {
-        std::vector<std::shared_ptr<Ghost>> Ghosts = Database.FindRecentGhosts(AreaId, PrimeCountPerArea);
+        std::vector<std::shared_ptr<Ghost>> Ghosts = Database.FindRecentGhosts((uint32_t)AreaId, PrimeCountPerArea);
         for (const std::shared_ptr<Ghost>& Ghost : Ghosts)
         {
             LiveCache.Add(AreaId, Ghost->GhostId, Ghost);
@@ -88,9 +90,9 @@ MessageHandleResult GhostManager::Handle_RequestCreateGhostData(GameClient* Clie
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
 
-    if (std::shared_ptr<Ghost> ActiveGhost = Database.CreateGhost((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data))
+    if (std::shared_ptr<Ghost> ActiveGhost = Database.CreateGhost((uint32_t)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data))
     {
-        LiveCache.Add(ActiveGhost->OnlineAreaId, ActiveGhost->GhostId, ActiveGhost);
+        LiveCache.Add((OnlineAreaId)ActiveGhost->OnlineAreaId, ActiveGhost->GhostId, ActiveGhost);
     }
     else
     {

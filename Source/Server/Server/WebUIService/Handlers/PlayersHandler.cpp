@@ -29,129 +29,24 @@ void PlayersHandler::Register(CivetServer* Server)
 
 void PlayersHandler::GatherPlayerInfo(PlayerInfo& Info, std::shared_ptr<GameClient> Client)
 {
-    auto State = Client->GetPlayerState();
+    auto& State = Client->GetPlayerState();
 
     Info.ConnectionDuration = Client->GetConnectionDuration();
-
-    auto Status = State.GetPlayerStatus().player_status();
-    auto LogInfo = State.GetPlayerStatus().log_info();
 
     Info.SteamId = State.GetSteamId();
     Info.PlayerId = State.GetPlayerId();
     Info.CharacterName = State.GetCharacterName();
-    Info.DeathCount = LogInfo.death_count();
-    Info.MultiplayCount = LogInfo.multiplay_count();
     Info.SoulLevel = State.GetSoulLevel();
-    Info.Souls = Status.souls();
-    Info.SoulMemory = Status.soul_memory();
-    Info.OnlineArea = State.GetCurrentArea();
-    Info.PlayTime = State.GetPlayerStatus().play_data().play_time_seconds();    
-    Info.Status = "Unknown";
-    Info.CovenantState = GetEnumString<CovenantId>((CovenantId)Status.covenant());
+    Info.OnlineArea = State.GetCurrentAreaId();
     Info.AntiCheatScore = State.GetAntiCheatState().Penalty;
-
-    switch ((CovenantId)Status.covenant())
-    {
-    case CovenantId::Blade_of_the_Darkmoon:
-    case CovenantId::Blue_Sentinels:
-        {
-            if (Status.has_can_summon_for_way_of_blue() && Status.can_summon_for_way_of_blue())
-            {
-                Info.CovenantState += " (Summonable)";
-            }
-            break;
-        }
-    case CovenantId::Watchdogs_of_Farron:
-        {
-            if (Status.has_can_summon_for_watchdog_of_farron() && Status.can_summon_for_watchdog_of_farron())
-            {
-                Info.CovenantState += " (Summonable)";
-            }
-            break;
-        }
-    case CovenantId::Aldrich_Faithfuls:
-        {
-            if (Status.has_can_summon_for_aldritch_faithful() && Status.can_summon_for_aldritch_faithful())
-            {
-                Info.CovenantState += " (Summonable)";
-            }
-            break;
-        }
-    case CovenantId::Spears_of_the_Church:
-        {
-            if (Status.has_can_summon_for_spear_of_church() && Status.can_summon_for_spear_of_church())
-            {
-                Info.CovenantState += " (Summonable)";
-            }
-            break;
-        }
-    }
-
-    switch (Status.world_type())
-    {
-    case DS3_Frpg2PlayerData::WorldType::WorldType_None:
-        {
-        Info.Status = "Loading or in menus";
-            break;
-        }
-    case DS3_Frpg2PlayerData::WorldType::WorldType_Multiplayer:
-        {
-            if (Status.net_mode() == DS3_Frpg2PlayerData::NetMode::NetMode_None)
-            {
-                Info.Status = "Multiplayer alone";
-            }
-            else if (Status.net_mode() == DS3_Frpg2PlayerData::NetMode::NetMode_Host)
-            {
-                InvasionTypeId TypeId = (InvasionTypeId)Status.invasion_type();
-                switch (TypeId)
-                {
-                case InvasionTypeId::Summon_White:
-                case InvasionTypeId::Summon_Red:
-                case InvasionTypeId::Summon_Purple_White:
-                case InvasionTypeId::Avatar:
-                case InvasionTypeId::Arena_Battle_Royal:
-                case InvasionTypeId::Umbasa_White:
-                case InvasionTypeId::Summon_Sunlight_White:
-                case InvasionTypeId::Summon_Sunlight_Dark:
-                case InvasionTypeId::Summon_Purple_Dark:
-                case InvasionTypeId::Covenant_Blade_of_the_Darkmoon:
-                case InvasionTypeId::Blue_Sentinel:
-                case InvasionTypeId::Force_Join_Session:
-                {
-                    Info.Status = "Hosting cooperation with " + GetEnumString<InvasionTypeId>(TypeId);
-                    break;
-                }
-                case InvasionTypeId::Red_Hunter:
-                case InvasionTypeId::Invade_Red:
-                case InvasionTypeId::Covenant_Spear_of_the_Church:
-                case InvasionTypeId::Guardian_of_Rosaria:
-                case InvasionTypeId::Covenant_Watchdog_of_Farron:
-                case InvasionTypeId::Covenant_Aldrich_Faithful:
-                case InvasionTypeId::Invade_Sunlight_Dark:
-                case InvasionTypeId::Invade_Purple_Dark:
-                {
-                    Info.Status = "Being invaded by " + GetEnumString<InvasionTypeId>(TypeId);
-                    break;
-                }
-                }
-            }
-            else if (Status.net_mode() == DS3_Frpg2PlayerData::NetMode::NetMode_Client)
-            {
-                Info.Status = "In another world";
-            }
-            break;
-        }
-    case DS3_Frpg2PlayerData::WorldType::WorldType_Singleplayer:
-        {
-            std::string status = "Playing solo";
-            if (Status.is_invadable())
-            {
-                status += " (Invadable)";
-            }
-            Info.Status = status;
-            break;
-        }
-    }
+    Info.Souls = State.GetSoulCount();
+    Info.SoulMemory = State.GetSoulMemory();
+    Info.DeathCount = State.GetDeathCount();
+    Info.MultiplayCount = State.GetMultiplayerSessionCount();
+    Info.PlayTime = State.GetPlayTime();
+    Info.Status = "Unknown";
+    Info.CovenantState = State.GetConvenantStatusDescription();
+    Info.Status = State.GetStatusDescription();
 }
 
 void PlayersHandler::GatherData()
@@ -164,11 +59,9 @@ void PlayersHandler::GatherData()
     std::vector<std::shared_ptr<GameClient>> ValidClients;
     for (auto Client : Clients)
     {
-        auto State = Client->GetPlayerState();
+        auto& State = Client->GetPlayerState();
 
-        if (!State.GetPlayerStatus().has_player_status() ||
-            !State.GetPlayerStatus().has_play_data() ||
-            State.GetPlayerId() == 0)
+        if (!State.IsInGame())
         {
             continue;
         }
@@ -250,7 +143,7 @@ bool PlayersHandler::handleGet(CivetServer* Server, struct mg_connection* Connec
             playerJson["soulMemory"] = Info.SoulMemory;
             playerJson["status"] = Info.Status;
             playerJson["covenant"] = Info.CovenantState;
-            playerJson["location"] = GetEnumString<OnlineAreaId>(Info.OnlineArea);
+            playerJson["location"] = Service->GetServer()->GetGameInterface().GetAreaName(Info.OnlineArea);
             playerJson["connectionTime"] = SecondsToString(Info.ConnectionDuration);
             playerJson["playTime"] = SecondsToString(Info.PlayTime);
             playerJson["antiCheatScore"] = Info.AntiCheatScore;

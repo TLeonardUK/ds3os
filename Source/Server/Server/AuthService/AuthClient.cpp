@@ -27,7 +27,7 @@
 
 #include "Shared/Core/Crypto/CWCCipher.h"
 
-#include "Protobuf/Protobufs.h"
+#include "Protobuf/SharedProtobufs.h"
 
 #include <steam/steam_api.h>
 #include <steam/steam_gameserver.h>

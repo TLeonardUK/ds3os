@@ -6,10 +6,17 @@
 project(DarkSouls2 C CXX)
 
 SET(SOURCES
-    Protobuf/DarkSouls2/DS2_Frpg2PlayerData.pb.cc
-    Protobuf/DarkSouls2/DS2_Frpg2RequestMessage.pb.cc
+    Protobuf/DS2_Protobufs.h
+    Protobuf/Generated/DS2_Frpg2PlayerData.pb.cc
+    Protobuf/Generated/DS2_Frpg2RequestMessage.pb.cc
+    
+    Server/GameService/DarkSouls2/DS2_PlayerState.h
 
     Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessageTypes.inc
+    Server/Streams/DarkSouls2/DS2_Frpg2ReliableUdpMessage.h
+    
+    Server/DS2_Game.h
+    Server/DS2_Game.cpp
 )
  
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${PLATFORM_SOURCES})

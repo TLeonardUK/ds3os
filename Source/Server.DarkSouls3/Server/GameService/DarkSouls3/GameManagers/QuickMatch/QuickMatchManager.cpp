@@ -8,10 +8,12 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/QuickMatch/QuickMatchManager.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -319,7 +321,7 @@ MessageHandleResult QuickMatchManager::Handle_RequestUpdateQuickMatch(GameClient
 MessageHandleResult QuickMatchManager::Handle_RequestJoinQuickMatch(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     ServerDatabase& Database = ServerInstance->GetDatabase();
-    PlayerState& Player = Client->GetPlayerState();
+    DS3_PlayerState& Player = Client->GetPlayerStateType<DS3_PlayerState>();
 
     DS3_Frpg2RequestMessage::RequestJoinQuickMatch* Request = (DS3_Frpg2RequestMessage::RequestJoinQuickMatch*)Message.Protobuf.get();
 

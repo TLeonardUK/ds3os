@@ -8,6 +8,8 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ImpossibleStats.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Server.h"
@@ -49,7 +51,7 @@ AntiCheatTrigger_ImpossibleStats::AntiCheatTrigger_ImpossibleStats(AntiCheatMana
 
 bool AntiCheatTrigger_ImpossibleStats::Scan(std::shared_ptr<GameClient> client, std::string& extraInfo)
 {
-    auto& AllStatus = client->GetPlayerState().GetPlayerStatus();
+    auto& AllStatus = client->GetPlayerStateType<DS3_PlayerState>().GetPlayerStatus();
     if (AllStatus.has_player_status() && AllStatus.has_equipment())
     {
         auto& PlayerStatus = AllStatus.player_status();

@@ -24,7 +24,7 @@
 #include "Config/BuildConfig.h"
 #include "Config/RuntimeConfig.h"
 
-#include "Protobuf/Protobufs.h"
+#include "Protobuf/SharedProtobufs.h"
 
 GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection> InConnection, const std::vector<uint8_t>& CwcKey, uint64_t InAuthToken)
     : Service(OwningService)
@@ -33,7 +33,9 @@ GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection
 {
     LastMessageRecievedTime = GetSeconds();
 
-    MessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(InConnection, CwcKey, AuthToken, false, Service->GetServer()->GetGameType());
+    MessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(InConnection, CwcKey, AuthToken, false, &Service->GetServer()->GetGameInterface());
+
+    State = Service->GetServer()->GetGameInterface().CreatePlayerState();
 }
 
 bool GameClient::Poll()
@@ -134,24 +136,5 @@ std::string GameClient::GetName()
 
 void GameClient::SendTextMessage(const std::string& TextMessage)
 {
-    DS3_Frpg2RequestMessage::ManagementTextMessage Message;
-    Message.set_push_message_id(DS3_Frpg2RequestMessage::PushID_ManagementTextMessage);
-    Message.set_message(TextMessage);
-    Message.set_unknown_4(0);
-    Message.set_unknown_5(0);
-
-    // Date makes no difference, just hard-code for now.
-    DS3_Frpg2PlayerData::DateTime* DateTime = Message.mutable_timestamp();
-    DateTime->set_year(2021);
-    DateTime->set_month(1);
-    DateTime->set_day(1);
-    DateTime->set_hours(0);
-    DateTime->set_minutes(0);
-    DateTime->set_seconds(0);
-    DateTime->set_tzdiff(0);
-
-    if (!MessageStream->Send(&Message))
-    {
-        WarningS(GetName().c_str(), "Failed to send game client text message.");
-    }
+    Service->GetServer()->GetGameInterface().SendManagementMessage(*MessageStream, TextMessage);
 }

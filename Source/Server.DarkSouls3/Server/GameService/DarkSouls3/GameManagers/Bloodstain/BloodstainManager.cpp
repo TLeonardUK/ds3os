@@ -11,6 +11,8 @@
 #include "Server/GameService/GameClient.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+#include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -39,7 +41,7 @@ bool BloodstainManager::Init()
     const std::vector<OnlineAreaId>* Areas = GetEnumValues<OnlineAreaId>();
     for (OnlineAreaId AreaId : *Areas)
     {
-        std::vector<std::shared_ptr<Bloodstain>> Stains = Database.FindRecentBloodstains(AreaId, PrimeCountPerArea);
+        std::vector<std::shared_ptr<Bloodstain>> Stains = Database.FindRecentBloodstains((uint32_t)AreaId, PrimeCountPerArea);
         for (const std::shared_ptr<Bloodstain>& Stain : Stains)
         {
             LiveCache.Add(AreaId, Stain->BloodstainId, Stain);
@@ -94,9 +96,9 @@ MessageHandleResult BloodstainManager::Handle_RequestCreateBloodstain(GameClient
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
     GhostData.assign(Request->ghost_data().data(), Request->ghost_data().data() + Request->ghost_data().size());
 
-    if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((OnlineAreaId)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
+    if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((uint32_t)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
     {
-        LiveCache.Add(ActiveStain->OnlineAreaId, ActiveStain->BloodstainId, ActiveStain);
+        LiveCache.Add((OnlineAreaId)ActiveStain->OnlineAreaId, ActiveStain->BloodstainId, ActiveStain);
     }
     else
     {
@@ -179,7 +181,7 @@ MessageHandleResult BloodstainManager::Handle_RequestGetDeadingGhost(GameClient*
     // If not in cache, grab it from database.
     else if (ActiveStain =  Database.FindBloodstain(Request->bloodstain_id()))
     {
-        LiveCache.Add(ActiveStain->OnlineAreaId, ActiveStain->BloodstainId, ActiveStain);
+        LiveCache.Add((OnlineAreaId)ActiveStain->OnlineAreaId, ActiveStain->BloodstainId, ActiveStain);
     }
     // Doesn't exist, no go.
     else

@@ -8,8 +8,10 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/AntiCheat/Triggers/AntiCheatTrigger_ClientFlagged.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 #include "Server/Server.h"
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"
@@ -22,7 +24,7 @@ AntiCheatTrigger_ClientFlagged::AntiCheatTrigger_ClientFlagged(AntiCheatManager*
 
 bool AntiCheatTrigger_ClientFlagged::Scan(std::shared_ptr<GameClient> client, std::string& extraInfo)
 {
-    auto& AllStatus = client->GetPlayerState().GetPlayerStatus();
+    auto& AllStatus = client->GetPlayerStateType<DS3_PlayerState>().GetPlayerStatus();
     if (AllStatus.has_player_status())
     {
         auto& PlayerStatus = AllStatus.player_status();

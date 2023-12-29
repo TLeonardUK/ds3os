@@ -37,7 +37,10 @@ public:
 
     std::string GetName();
 
-    PlayerState& GetPlayerState() { return State; }
+    PlayerState& GetPlayerState() { return *State; }
+
+    template <typename T>
+    T& GetPlayerStateType() { return static_cast<T&>(*State); }
 
     double GetConnectionDuration() { return GetSeconds() - ConnectTime; }
 
@@ -73,6 +76,6 @@ private:
 
     double LastMessageRecievedTime = 0.0;
 
-    PlayerState State;
+    std::unique_ptr<PlayerState> State;
 
 };

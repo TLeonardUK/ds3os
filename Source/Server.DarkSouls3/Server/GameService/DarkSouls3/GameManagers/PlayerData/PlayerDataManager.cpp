@@ -8,9 +8,12 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/PlayerData/PlayerDataManager.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -101,7 +104,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
 {
     DS3_Frpg2RequestMessage::RequestUpdatePlayerStatus* Request = (DS3_Frpg2RequestMessage::RequestUpdatePlayerStatus*)Message.Protobuf.get();
 
-    PlayerState& State = Client->GetPlayerState();
+    auto& State = Client->GetPlayerStateType<DS3_PlayerState>();
 
     // Merge the delta into the current state.
     std::string bytes = Request->status();
@@ -213,7 +216,7 @@ MessageHandleResult PlayerDataManager::Handle_RequestUpdatePlayerStatus(GameClie
         }
     }
 
-#ifdef _DEBUG
+#if 0//def _DEBUG
     static DiffTracker Tracker;
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_id_2", State.GetPlayerStatus().player_status().unknown_2());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_id_6", State.GetPlayerStatus().player_status().unknown_6());

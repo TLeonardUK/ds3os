@@ -8,10 +8,12 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/Visitor/VisitorManager.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -49,7 +51,7 @@ MessageHandleResult VisitorManager::OnMessageRecieved(GameClient* Client, const 
 bool VisitorManager::CanMatchWith(const DS3_Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
-    bool IsInvasion = (Match->GetPlayerState().GetVisitorPool() != DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue);
+    bool IsInvasion = (Match->GetPlayerStateType<DS3_PlayerState>().GetVisitorPool() != DS3_Frpg2RequestMessage::VisitorPool::VisitorPool_Way_of_Blue);
 
     const RuntimeConfigMatchingParameters* MatchingParams = &Config.CovenantInvasionMatchingParameters;
     if (!IsInvasion)
@@ -86,7 +88,7 @@ MessageHandleResult VisitorManager::Handle_RequestGetVisitorList(GameClient* Cli
         {
             return false;
         }
-        if (Request->visitor_pool() != OtherClient->GetPlayerState().GetVisitorPool())
+        if (Request->visitor_pool() != OtherClient->GetPlayerStateType<DS3_PlayerState>().GetVisitorPool())
         {
             return false;
         }

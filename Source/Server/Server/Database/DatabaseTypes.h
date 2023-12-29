@@ -9,9 +9,7 @@
 
 #pragma once
 
-#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
-
-#include "Protobuf/Protobufs.h"
+#include <Protobuf/SharedProtobufs.h>
 
 #include <unordered_set>
 
@@ -19,7 +17,7 @@
 struct BloodMessage
 {
     uint32_t MessageId;
-    OnlineAreaId OnlineAreaId;
+    uint32_t OnlineAreaId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;
@@ -36,7 +34,7 @@ struct BloodMessage
 struct Bloodstain
 {
     uint32_t BloodstainId;
-    OnlineAreaId OnlineAreaId;
+    uint32_t OnlineAreaId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;
@@ -49,7 +47,7 @@ struct Bloodstain
 struct Ghost
 {
     uint32_t GhostId;
-    OnlineAreaId OnlineAreaId;
+    uint32_t OnlineAreaId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;
@@ -61,14 +59,14 @@ struct Ghost
 struct SummonSign
 {
     uint32_t SignId;
-    OnlineAreaId OnlineAreaId;
+    uint32_t OnlineAreaId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;
 
     bool IsRedSign = false;
 
-    DS3_Frpg2RequestMessage::MatchingParameter MatchingParameters;
+    std::unique_ptr<google::protobuf::MessageLite> MatchingParameters;
 
     std::vector<uint8_t> PlayerStruct;
 

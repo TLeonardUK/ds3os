@@ -6,10 +6,13 @@
 project(DarkSouls3 C CXX)
 
 SET(SOURCES
-    Protobuf/DarkSouls3/DS3_FpdLogMessage.pb.cc
-    Protobuf/DarkSouls3/DS3_Frpg2PlayerData.pb.cc
-    Protobuf/DarkSouls3/DS3_Frpg2RequestMessage.pb.cc
+    Protobuf/DS3_Protobufs.h
+    Protobuf/Generated/DS3_FpdLogMessage.pb.cc
+    Protobuf/Generated/DS3_Frpg2PlayerData.pb.cc
+    Protobuf/Generated/DS3_Frpg2RequestMessage.pb.cc
     
+    Server/GameService/DarkSouls3/DS3_PlayerState.h
+
     Server/GameService/DarkSouls3/GameManagers/BloodMessage/BloodMessageManager.cpp
     Server/GameService/DarkSouls3/GameManagers/BloodMessage/BloodMessageManager.h
     Server/GameService/DarkSouls3/GameManagers/Bloodstain/BloodstainManager.cpp
@@ -71,6 +74,10 @@ SET(SOURCES
     Server/GameService/DarkSouls3/Utils/Data/BloodMessageData.cpp
     
     Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessageTypes.inc
+    Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h
+    
+    Server/DS3_Game.h
+    Server/DS3_Game.cpp
 )
  
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${PLATFORM_SOURCES})

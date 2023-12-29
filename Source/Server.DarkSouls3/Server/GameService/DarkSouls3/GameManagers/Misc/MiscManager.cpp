@@ -8,10 +8,14 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/Misc/MiscManager.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -84,7 +88,7 @@ MessageHandleResult MiscManager::Handle_RequestNotifyRingBell(GameClient* Client
     };
 
     std::vector<std::shared_ptr<GameClient>> PotentialTargets = GameServiceInstance->FindClients([Client, Request, NotifyLocations](const std::shared_ptr<GameClient>& OtherClient) {
-        return NotifyLocations.count(OtherClient->GetPlayerState().GetCurrentArea()) > 0;
+        return NotifyLocations.count(OtherClient->GetPlayerStateType<DS3_PlayerState>().GetCurrentArea()) > 0;
     });
 
     for (std::shared_ptr<GameClient>& OtherClient : PotentialTargets)

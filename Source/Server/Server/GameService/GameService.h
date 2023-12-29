@@ -59,6 +59,8 @@ public:
 
     const std::vector<std::shared_ptr<GameManager>>& GetManagers() { return Managers; }
 
+    void RegisterManager(std::shared_ptr<GameManager> Manager);
+
     template <typename T>
     std::shared_ptr<T> GetManager()
     {

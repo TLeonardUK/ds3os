@@ -47,7 +47,7 @@ protected:
 		size_t Souls;
 		size_t SoulMemory;
 		std::string CovenantState;
-		OnlineAreaId OnlineArea;
+		uint32_t OnlineArea;
 		std::string Status;
 		double PlayTime;
 		double AntiCheatScore;

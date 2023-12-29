@@ -12,17 +12,18 @@
 #include "Server/Streams/Frpg2ReliableUdpFragmentStream.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 
-#include "Protobuf/Protobufs.h"
+#include "Protobuf/SharedProtobufs.h"
 
 #include <unordered_map>
 
 class Cipher;
+class Game;
 
 class Frpg2ReliableUdpMessageStream
     : public Frpg2ReliableUdpFragmentStream
 {
 public:
-    Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient, GameType InGameType);
+    Frpg2ReliableUdpMessageStream(std::shared_ptr<NetConnection> Connection, const std::vector<uint8_t>& CwcKey, uint64_t AuthToken, bool AsClient, Game* InGameInterface);
 
     // Short hand version of Send for protobufs, takes care of constructing the wrapper message.
     virtual bool Send(google::protobuf::MessageLite* Message, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
@@ -66,7 +67,7 @@ private:
 
     uint32_t LastSentMessageIndex = 0;
 
-    GameType ServerGameType;
+    Game* GameInterface;
 
     static inline size_t DumpMessageIndex = 0;
 

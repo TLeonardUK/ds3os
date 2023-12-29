@@ -15,12 +15,14 @@ SET(SOURCES
     Config/RuntimeConfig.h
     Config/RuntimeConfig.cpp
 
-    Protobuf/Shared/Shared_FpdLogMessage.pb.cc
-    Protobuf/Shared/Shared_Frpg2PlayerData.pb.cc
-    Protobuf/Shared/Shared_Frpg2RequestMessage.pb.cc
+    Protobuf/Generated/Shared_FpdLogMessage.pb.cc
+    Protobuf/Generated/Shared_Frpg2PlayerData.pb.cc
+    Protobuf/Generated/Shared_Frpg2RequestMessage.pb.cc
     
-    Protobuf/Protobufs.h
-    
+    Protobuf/SharedProtobufs.h
+        
+    Server/Game.cpp
+    Server/Game.h
     Server/ServerManager.cpp
     Server/ServerManager.h
     Server/Server.cpp

@@ -133,7 +133,27 @@ bool Server::Init()
         if (!SteamGameServer_Init(0, 50001, 50002, eServerModeAuthentication, "1.0.0.0"))
         {
             Error("Failed to initialize steam game server api.");
-            return 1;
+            return false;
+        }
+    }
+
+    // Create game interface for this server.
+    switch (ServerGameType)
+    {
+        case GameType::DarkSouls2:
+        {
+            GameInterface = std::make_unique<DS2_Game>();
+            break;
+        }
+        case GameType::DarkSouls3:
+        {
+            GameInterface = std::make_unique<DS3_Game>();
+            break;
+        }
+        default:
+        {
+            assert(false);
+            return false;
         }
     }
 
@@ -609,11 +629,7 @@ void Server::PollDiscordNotices()
                         embed["color"] = "14423100"; // Red
                     }
 
-                    BossId bossId = static_cast<BossId>(Notice.extraId);
-                    if (auto Iter = DiscordBossThumbnails.find(bossId); Iter != DiscordBossThumbnails.end())
-                    {
-                        thumbnailUrl = Iter->second;
-                    }
+                    thumbnailUrl = GameInterface->GetBossDiscordThumbnailUrl(Notice.extraId);
 
                     break;
                 }

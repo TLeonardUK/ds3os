@@ -11,12 +11,6 @@
 #include "Server/Server.h"
 #include "Server/GameService/GameService.h"
 #include "Server/GameService/GameClient.h"
-#include "Server/GameService/DarkSouls3/GameManagers/BloodMessage/BloodMessageManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Bloodstain/BloodstainManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/QuickMatch/QuickMatchManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Signs/SignManager.h"
-#include "Server/GameService/DarkSouls3/GameManagers/Ghosts/GhostManager.h"
-
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"
 
@@ -75,26 +69,16 @@ void StatisticsHandler::GatherData()
     }
 
     // Grab some per-frame statistics.
-    std::shared_ptr<BloodMessageManager> BloodMessages = Game->GetManager<BloodMessageManager>();
-    std::shared_ptr<BloodstainManager> Bloodstains = Game->GetManager<BloodstainManager>();
-    std::shared_ptr<QuickMatchManager> QuickMatches = Game->GetManager<QuickMatchManager>();
-    std::shared_ptr<SignManager> Signs = Game->GetManager<SignManager>();
-    std::shared_ptr<GhostManager> Ghosts = Game->GetManager<GhostManager>();
-
     Statistics.clear();
     Statistics["Active Players"] = std::to_string(Clients.size());
     Statistics["Unique Players"] = std::to_string(UniquePlayerCount);
-    Statistics["Live Blood Messages"] = std::to_string(BloodMessages->GetLiveCount());
-    Statistics["Live Blood Stains"] = std::to_string(Bloodstains->GetLiveCount());
-    Statistics["Live Undead Matches"] = std::to_string(QuickMatches->GetLiveCount());
-    Statistics["Live Summon Signs"] = std::to_string(Signs->GetLiveCount());
-    Statistics["Live Ghosts"] = std::to_string(Ghosts->GetLiveCount());
+    Service->GetServer()->GetGameInterface().GetStatistics(*Game, Statistics);
 
     // Grab some populated areas stats.
     PopulatedAreas.clear();
     for (auto& Client : Clients)
     {
-        PopulatedAreas[Client->GetPlayerState().GetCurrentArea()]++;
+        PopulatedAreas[Client->GetPlayerState().GetCurrentAreaId()]++;
     }
 }
 
@@ -123,7 +107,7 @@ bool StatisticsHandler::handleGet(CivetServer* Server, struct mg_connection* Con
         for (auto& Stat : PopulatedAreas)
         {
             auto area = nlohmann::json::object();
-            area["areaName"] = GetEnumString(Stat.first);
+            area["areaName"] = Service->GetServer()->GetGameInterface().GetAreaName(Stat.first);
             area["playerCount"] = Stat.second;
             populatedAreas.push_back(area);
         }

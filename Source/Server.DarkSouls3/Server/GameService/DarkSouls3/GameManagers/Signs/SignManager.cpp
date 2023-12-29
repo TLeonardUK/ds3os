@@ -8,10 +8,14 @@
  */
 
 #include "Server/GameService/DarkSouls3/GameManagers/Signs/SignManager.h"
+#include "Server/GameService/DarkSouls3/DS3_PlayerState.h"
+#include "Server/GameService/DarkSouls3/Utils/GameIds.h"
 #include "Server/GameService/GameClient.h"
 #include "Server/GameService/GameService.h"
 #include "Server/Streams/Frpg2ReliableUdpMessage.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
+#include "Server/Streams/DarkSouls3/DS3_Frpg2ReliableUdpMessage.h"
+#include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
 
 #include "Config/RuntimeConfig.h"
 #include "Server/Server.h"
@@ -182,7 +186,11 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
         uint32_t GatherCount = std::min(MaxForArea, RemainingSignCount);
 
         std::vector<std::shared_ptr<SummonSign>> AreaSigns = LiveCache.GetRecentSet(AreaId, GatherCount, [this, &Player, &Request](const std::shared_ptr<SummonSign>& Sign) { 
-            return CanMatchWith(Request->matching_parameter(), Sign->MatchingParameters, Sign->IsRedSign);
+            return CanMatchWith(
+                Request->matching_parameter(), 
+                static_cast<DS3_Frpg2RequestMessage::MatchingParameter&>(*Sign->MatchingParameters.get()), 
+                Sign->IsRedSign
+            );
         });
 
         for (std::shared_ptr<SummonSign>& Sign : AreaSigns)
@@ -206,7 +214,7 @@ MessageHandleResult SignManager::Handle_RequestGetSignList(GameClient* Client, c
                 SignData->mutable_sign_info()->set_player_id(Sign->PlayerId);
                 SignData->mutable_sign_info()->set_sign_id(Sign->SignId);
                 SignData->set_online_area_id((uint32_t)Sign->OnlineAreaId);
-                SignData->mutable_matching_parameter()->CopyFrom(Sign->MatchingParameters);
+                SignData->mutable_matching_parameter()->CopyFrom(static_cast<DS3_Frpg2RequestMessage::MatchingParameter&>(*Sign->MatchingParameters));
                 SignData->set_player_struct(Sign->PlayerStruct.data(), Sign->PlayerStruct.size());
                 SignData->set_steam_id(Sign->PlayerSteamId);
                 SignData->set_is_red_sign(Sign->IsRedSign);
@@ -237,14 +245,14 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
 
     std::shared_ptr<SummonSign> Sign = std::make_shared<SummonSign>();
     Sign->SignId = NextSignId++;
-    Sign->OnlineAreaId = (OnlineAreaId)Request->online_area_id();
+    Sign->OnlineAreaId = (uint32_t)Request->online_area_id();
     Sign->PlayerId = Player.GetPlayerId();
     Sign->PlayerSteamId = Player.GetSteamId();
     Sign->IsRedSign = Request->is_red_sign();
     Sign->PlayerStruct.assign(Request->player_struct().data(), Request->player_struct().data() + Request->player_struct().size());
-    Sign->MatchingParameters = Request->matching_parameter();
+    Sign->MatchingParameters = std::make_unique<DS3_Frpg2RequestMessage::MatchingParameter>(Request->matching_parameter());
 
-    LiveCache.Add(Sign->OnlineAreaId, Sign->SignId, Sign);
+    LiveCache.Add((OnlineAreaId)Sign->OnlineAreaId, Sign->SignId, Sign);
     Client->ActiveSummonSigns.push_back(Sign);
 
     DS3_Frpg2RequestMessage::RequestCreateSignResponse Response;
@@ -262,7 +270,7 @@ MessageHandleResult SignManager::Handle_RequestCreateSign(GameClient* Client, co
 
     if (ServerInstance->GetConfig().SendDiscordNotice_SummonSign)
     {
-        if (Sign->MatchingParameters.password().empty())
+        if (Request->matching_parameter().password().empty())
         {
             if (Sign->IsRedSign)
             {
@@ -504,7 +512,7 @@ MessageHandleResult SignManager::Handle_RequestGetRightMatchingArea(GameClient* 
     {
         int OtherSoulLevel = OtherClient->GetPlayerState().GetSoulLevel();
         int OtherWeaponLevel = OtherClient->GetPlayerState().GetMaxWeaponLevel();
-        OnlineAreaId OtherArea = OtherClient->GetPlayerState().GetCurrentArea();
+        OnlineAreaId OtherArea = OtherClient->GetPlayerStateType<DS3_PlayerState>().GetCurrentArea();
 
         if (OtherArea == OnlineAreaId::None)
         {

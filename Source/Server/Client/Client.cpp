@@ -24,6 +24,8 @@
 #include "Server/Streams/Frpg2MessageStream.h"
 #include "Server/Streams/Frpg2ReliableUdpMessageStream.h"
 
+#include "Server.DarkSouls3/Server/DS3_Game.h"
+
 #include "Server/AuthService/AuthClient.h"
 
 #include <thread>
@@ -173,6 +175,7 @@ void Client::RunUntilQuit()
                 case ClientState::AuthServer_GetServerInfo:                             Handle_AuthServer_GetServerInfo();                              break;
 
                 case ClientState::GameServer_Connect:                                   Handle_GameServer_Connect();                                    break;
+#if 0
                 case ClientState::GameServer_RequestWaitForUserLogin:                   Handle_GameServer_RequestWaitForUserLogin();                    break;
                 case ClientState::GameServer_RequestGetAnnounceMessageList:             Handle_GameServer_RequestGetAnnounceMessageList();              break;
                 case ClientState::GameServer_RequestUpdateLoginPlayerCharacter:         Handle_GameServer_RequestUpdateLoginPlayerCharacter();          break;
@@ -181,6 +184,7 @@ void Client::RunUntilQuit()
                 case ClientState::GameServer_RequestGetRightMatchingArea:               Handle_GameServer_RequestGetRightMatchingArea();                break;
                 case ClientState::GameServer_Idle:                                      Handle_GameServer_Idle();                                       break;
                 case ClientState::GameServer_GatherStatistics:                          Handle_GameServer_GatherStatistics();                           break;
+#endif
             }
 
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -433,7 +437,7 @@ void Client::Handle_GameServer_Connect()
         Abort("Failed to connect to server at %s:%i", GameServerIP, GameServerPort);
     }
 
-    GameServerMessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(GameServerConnection, GameServerCwcKey, GameServerAuthToken, true, GameType::DarkSouls3);
+    GameServerMessageStream = std::make_shared<Frpg2ReliableUdpMessageStream>(GameServerConnection, GameServerCwcKey, GameServerAuthToken, true, new DS3_Game());
     GameServerMessageStream->Connect(ClientStreamId);
 
     while (GameServerMessageStream->GetState() != Frpg2ReliableUdpStreamState::Established)
@@ -450,10 +454,16 @@ void Client::Handle_GameServer_Connect()
         std::this_thread::sleep_for(std::chrono::milliseconds(1));        
     }
 
+#if 0
     ChangeState(ClientState::GameServer_RequestWaitForUserLogin);
+#else
+    ChangeState(ClientState::Complete);
+#endif
 
     LogS(GetName().c_str(), "Connected to game server.");
 }
+
+#if 0
 
 void Client::Handle_GameServer_RequestWaitForUserLogin()
 {
@@ -801,3 +811,5 @@ void Client::Handle_GameServer_GatherStatistics()
         }
     }
 }
+
+#endif
