@@ -5,14 +5,12 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
-<span style="color:red">NOTICE: Dark Souls 2 support is currently experimental, don't expect it to work well for the moment.</span>
+:bangbang: :bangbang: <span style="color:red">NOTICE: Dark Souls 2 support is currently experimental, don't expect it to work well for the moment.</span>
 
 # What is this project?
 An open source implementation of the game servers for dark souls 2 and 3. 
 
 Idealistically made for the purpose of allow better alternatives to playing mods than getting your account banned and using the retail ban server. As well as opening up opportunities to improve player safety and choice, by allowing them to segregate themselves off from the pool of cheaters on retail, without loosing network functionality.
-
-:bangbang: This project is still a work in progress, no guarantees are given over its stability (that said it works quite well now!). 
 
 If you have any trouble join the discord for tech-support: https://discord.gg/pBmquc9Jkj
 
