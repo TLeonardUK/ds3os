@@ -18,6 +18,7 @@ struct BloodMessage
 {
     uint32_t MessageId;
     uint32_t OnlineAreaId;
+    uint64_t CellId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;
@@ -35,6 +36,7 @@ struct Bloodstain
 {
     uint32_t BloodstainId;
     uint32_t OnlineAreaId;
+    uint64_t CellId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;
@@ -48,6 +50,7 @@ struct Ghost
 {
     uint32_t GhostId;
     uint32_t OnlineAreaId;
+    uint64_t CellId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;
@@ -60,6 +63,7 @@ struct SummonSign
 {
     uint32_t SignId;
     uint32_t OnlineAreaId;
+    uint64_t CellId;
 
     uint32_t PlayerId;
     std::string PlayerSteamId;

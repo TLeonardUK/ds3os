@@ -12,19 +12,21 @@
 #include "Server/GameService/GameManager.h"
 #include "Server/GameService/Utils/OnlineAreaPool.h"
 #include "Server/Database/DatabaseTypes.h"
-#include "Server.DarkSouls3/Server/GameService/Utils/DS3_GameIds.h"
+#include "Server.DarkSouls2/Server/GameService/Utils/DS2_GameIds.h"
+#include "Server.DarkSouls2/Server/GameService/Utils/DS2_CellAndAreaId.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
 
 // Handles client requests relating to leaving
-// and replaying bloodstain ghosts in the world.
+// and replaying ghosts in the world. These are the ones that
+// appear when you are near things like bonfires.
 
-class DS3_BloodstainManager
+class DS2_GhostManager
     : public GameManager
 {
 public:    
-    DS3_BloodstainManager(Server* InServerInstance);
+    DS2_GhostManager(Server* InServerInstance);
 
     virtual bool Init() override;
     virtual void TrimDatabase() override;
@@ -36,13 +38,12 @@ public:
     size_t GetLiveCount() { return LiveCache.GetTotalEntries(); }
 
 protected:
-    MessageHandleResult Handle_RequestCreateBloodstain(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    MessageHandleResult Handle_RequestGetBloodstainList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    MessageHandleResult Handle_RequestGetDeadingGhost(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestCreateGhostData(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestGetGhostDataList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;
 
-    OnlineAreaPool<DS3_OnlineAreaId, Bloodstain> LiveCache;
+    OnlineAreaPool<uint64_t, Ghost> LiveCache;
 
 };

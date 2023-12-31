@@ -16,6 +16,29 @@ SET(SOURCES
     Server/GameService/GameManagers/Boot/DS2_BootManager.h
     Server/GameService/GameManagers/PlayerData/DS2_PlayerDataManager.cpp
     Server/GameService/GameManagers/PlayerData/DS2_PlayerDataManager.h
+    Server/GameService/GameManagers/Ghosts/DS2_GhostManager.cpp
+    Server/GameService/GameManagers/Ghosts/DS2_GhostManager.h
+    Server/GameService/GameManagers/BloodMessage/DS2_BloodMessageManager.cpp
+    Server/GameService/GameManagers/BloodMessage/DS2_BloodMessageManager.h
+    Server/GameService/GameManagers/Bloodstain/DS2_BloodstainManager.cpp
+    Server/GameService/GameManagers/Bloodstain/DS2_BloodstainManager.h
+    
+    Server/GameService/Utils/DS2_GameIds.h
+    Server/GameService/Utils/DS2_CellAndAreaId.h
+
+    Server/GameService/Utils/Ids/BonfireId.inc
+    Server/GameService/Utils/Ids/CharacterTypeId.inc
+    Server/GameService/Utils/Ids/CovenantId.inc
+    Server/GameService/Utils/Ids/GestureId.inc
+    Server/GameService/Utils/Ids/InvasionTypeId.inc
+    Server/GameService/Utils/Ids/ItemId.inc
+    Server/GameService/Utils/Ids/OnlineAreaId.inc
+    Server/GameService/Utils/Ids/TeamTypeId.inc
+    Server/GameService/Utils/Ids/BossId.inc    
+    Server/GameService/Utils/Ids/BloodMessageConjunction.inc
+    Server/GameService/Utils/Ids/BloodMessageGesture.inc
+    Server/GameService/Utils/Ids/BloodMessageTemplate.inc
+    Server/GameService/Utils/Ids/BloodMessageWord.inc    
 
     Server/Streams/DS2_Frpg2ReliableUdpMessageTypes.inc
     Server/Streams/DS2_Frpg2ReliableUdpMessage.h

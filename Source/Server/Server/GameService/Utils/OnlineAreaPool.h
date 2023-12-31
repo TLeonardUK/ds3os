@@ -9,8 +9,6 @@
 
 #pragma once
 
-#include "Server/GameService/Utils/DS3_GameIds.h"
-
 #include <unordered_map>
 #include <deque>
 #include <numeric>
@@ -23,21 +21,54 @@
 
 // Super simple cache split up spatially based on the online area.
 
-template <typename ValueType>
-struct DS3_OnlineAreaPool
+template <typename IdType, typename ValueType>
+struct OnlineAreaPool
 {
 public:
     using EntryId = uint32_t;
 
+    using AreaFilterFunction_t = std::function<bool(IdType Id)>;
+
 private:
     struct Area
     {
+        IdType Id;
         std::unordered_map<EntryId, std::shared_ptr<ValueType>> Entries;
         std::deque<EntryId> RemoveOrderQueue;
     };
 
 private:
-    std::shared_ptr<Area> FindOrCreateArea(DS3_OnlineAreaId AreaId)
+    std::vector<std::shared_ptr<Area>> FindAreas(AreaFilterFunction_t Filter)
+    {
+        std::vector<std::shared_ptr<Area>> Result;
+
+        for (auto& Pair : AreaMap)
+        {
+            if (Filter(Pair.first))
+            {
+                Result.push_back(Pair.second);
+            }
+        }
+
+        return Result;
+    }
+
+    std::vector<std::shared_ptr<Area>> FindArea(AreaFilterFunction_t Filter)
+    {
+        std::vector<std::shared_ptr<Area>> Result;
+
+        for (auto& Pair : AreaMap)
+        {
+            if (Filter(Pair.first))
+            {
+                return Pair.second;
+            }
+        }
+
+        return nullptr;
+    }
+
+    std::shared_ptr<Area> FindOrCreateArea(IdType AreaId)
     {
         if (auto iter = AreaMap.find(AreaId); iter != AreaMap.end())
         {
@@ -45,17 +76,18 @@ private:
         }
 
         std::shared_ptr<Area> NewArea = std::make_shared<Area>();
+        NewArea->Id = AreaId;
         AreaMap.insert({ AreaId, NewArea });
         return NewArea;
     }
 
 public:
-    DS3_OnlineAreaPool()
+    OnlineAreaPool()
         : RandomGenerator(RandomDevice())
     {
     }
 
-    bool Remove(DS3_OnlineAreaId AreaId, EntryId Id)
+    bool Remove(IdType AreaId, EntryId Id)
     {
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
         if (auto iter = AreaInstance->Entries.find(Id); iter != AreaInstance->Entries.end())
@@ -72,7 +104,7 @@ public:
         return false;
     }
 
-    std::shared_ptr<ValueType> Find(DS3_OnlineAreaId AreaId, EntryId Id)
+    std::shared_ptr<ValueType> Find(IdType AreaId, EntryId Id)
     {
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
         if (auto iter = AreaInstance->Entries.find(Id); iter != AreaInstance->Entries.end())
@@ -107,7 +139,7 @@ public:
         return Total;
     }
 
-    std::vector<std::shared_ptr<ValueType>> GetRandomSet(DS3_OnlineAreaId AreaId, int MaxCount)
+    std::vector<std::shared_ptr<ValueType>> GetRandomSet(IdType AreaId, int MaxCount)
     {
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
 
@@ -137,7 +169,40 @@ public:
         return Result;
     }
 
-    std::vector<std::shared_ptr<ValueType>> GetRecentSet(DS3_OnlineAreaId AreaId, int MaxCount, std::function<bool(std::shared_ptr<ValueType>)> FilterCallback)
+    std::vector<std::shared_ptr<ValueType>> GetRandomSet(int MaxCount, AreaFilterFunction_t Filter)
+    {
+        std::vector<std::shared_ptr<Area>> Areas = FindAreas(Filter);
+
+        std::vector<std::shared_ptr<ValueType>> Result;
+
+        int Remaining = MaxCount;
+        for (auto& AreaInstance : Areas)
+        {
+            // Get a list of entry id's
+            std::vector<EntryId> EntryIds;
+            EntryIds.reserve(AreaInstance->Entries.size());
+
+            for (auto KeyPair : AreaInstance->Entries)
+            {
+                EntryIds.push_back(KeyPair.first);
+            }
+
+            // Shuffle them up.
+            std::shuffle(EntryIds.begin(), EntryIds.end(), RandomGenerator);
+
+            // Select however many we need.
+            int MaxToGather = std::min(Remaining, (int)EntryIds.size());
+            for (int i = 0; i < MaxToGather; i++)
+            {
+                Result.push_back(AreaInstance->Entries[EntryIds[i]]);
+                Remaining--;
+            }
+        }
+
+        return Result;
+    }
+
+    std::vector<std::shared_ptr<ValueType>> GetRecentSet(IdType AreaId, int MaxCount, std::function<bool(std::shared_ptr<ValueType>)> FilterCallback)
     {
         std::vector<std::shared_ptr<ValueType>> Result;
 
@@ -161,12 +226,12 @@ public:
         return Result;
     }
 
-    bool Contains(DS3_OnlineAreaId AreaId, EntryId Id)
+    bool Contains(IdType AreaId, EntryId Id)
     {
         return Find(AreaId, Id) != nullptr;
     }
 
-    bool Add(DS3_OnlineAreaId AreaId, EntryId Id, std::shared_ptr<ValueType> Value)
+    bool Add(IdType AreaId, EntryId Id, std::shared_ptr<ValueType> Value)
     {
         std::shared_ptr<Area> AreaInstance = FindOrCreateArea(AreaId);
         if (auto iter = AreaInstance->Entries.find(Id); iter != AreaInstance->Entries.end())
@@ -212,7 +277,7 @@ private:
     }
 
 private:
-    std::unordered_map<DS3_OnlineAreaId, std::shared_ptr<Area>> AreaMap;
+    std::unordered_map<IdType, std::shared_ptr<Area>> AreaMap;
     int MaxEntriesPerArea  = 100;
 
     std::random_device RandomDevice;

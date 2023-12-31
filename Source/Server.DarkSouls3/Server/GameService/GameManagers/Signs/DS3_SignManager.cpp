@@ -195,12 +195,6 @@ MessageHandleResult DS3_SignManager::Handle_RequestGetSignList(GameClient* Clien
 
         for (std::shared_ptr<SummonSign>& Sign : AreaSigns)
         {
-            // Filter players own signs.
-            if (Sign->PlayerId == Player.GetPlayerId())
-            {
-                continue;
-            }
-
             // If client already has sign data we only need to return a limited set of data.
             if (ClientExistingSignId.count(Sign->SignId) > 0)
             {

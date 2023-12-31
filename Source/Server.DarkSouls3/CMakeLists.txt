@@ -54,16 +54,12 @@ SET(SOURCES
 
     Server/GameService/Utils/DS3_GameIds.h
     Server/GameService/Utils/DS3_NRSSRSanitizer.h
-    Server/GameService/Utils/DS3_OnlineAreaPool.h
 
     Server/GameService/Utils/Ids/BonfireId.inc
     Server/GameService/Utils/Ids/CharacterTypeId.inc
-    Server/GameService/Utils/Ids/ConvenantId.h
-    Server/GameService/Utils/Ids/CovenantId.h
     Server/GameService/Utils/Ids/CovenantId.inc
     Server/GameService/Utils/Ids/GestureId.inc
     Server/GameService/Utils/Ids/InvasionTypeId.inc
-    Server/GameService/Utils/Ids/ItemId.h
     Server/GameService/Utils/Ids/ItemId.inc
     Server/GameService/Utils/Ids/OnlineAreaId.inc
     Server/GameService/Utils/Ids/TeamTypeId.inc

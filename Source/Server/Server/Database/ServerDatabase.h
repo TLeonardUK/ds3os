@@ -85,10 +85,13 @@ public:
     std::vector<std::shared_ptr<BloodMessage>> GetAllBloodMessages();
 
     // Gets the x most recent blood messages in the database.
+    std::vector<std::shared_ptr<BloodMessage>> FindRecentBloodMessage(uint32_t AreaId, uint64_t CellId, int Count);
+
+    // Gets the x most recent blood messages in the database.
     std::vector<std::shared_ptr<BloodMessage>> FindRecentBloodMessage(uint32_t AreaId, int Count);
 
     // Creates a new blood message with the given data and returns a representation of it.
-    std::shared_ptr<BloodMessage> CreateBloodMessage(uint32_t AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, uint32_t CharacterId, const std::vector<uint8_t>& Data);
+    std::shared_ptr<BloodMessage> CreateBloodMessage(uint32_t AreaId, uint64_t CellId, uint32_t PlayerId, const std::string& PlayerSteamId, uint32_t CharacterId, const std::vector<uint8_t>& Data);
 
     // Removes a blood message from the database that is owned by the given player.
     bool RemoveOwnBloodMessage(uint32_t PlayerId, uint32_t MessageId);
@@ -108,10 +111,13 @@ public:
     std::shared_ptr<Bloodstain> FindBloodstain(uint32_t BloodstainId);
 
     // Gets the x most recent blood stains in the database.
+    std::vector<std::shared_ptr<Bloodstain>> FindRecentBloodstains(uint32_t AreaId, uint64_t CellId, int Count);
+
+    // Gets the x most recent blood stains in the database.
     std::vector<std::shared_ptr<Bloodstain>> FindRecentBloodstains(uint32_t AreaId, int Count);
 
     // Creates a new blood stain with the given data and returns a representation of it.
-    std::shared_ptr<Bloodstain> CreateBloodstain(uint32_t AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData);
+    std::shared_ptr<Bloodstain> CreateBloodstain(uint32_t AreaId, uint64_t CellId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData);
 
     // Removes the oldest blood stains in the database until we are under max entries.
     void TrimBloodStains(size_t MaxEntries);
@@ -121,10 +127,13 @@ public:
     // ----------------------------------------------------------------
 
     // Gets the x most recent ghosts in the database.
+    std::vector<std::shared_ptr<Ghost>> FindRecentGhosts(uint32_t AreaId, uint64_t CellId, int Count);
+
+    // Gets the x most recent ghosts in the database.
     std::vector<std::shared_ptr<Ghost>> FindRecentGhosts(uint32_t AreaId, int Count);
 
     // Creates a new ghost with the given data and returns a representation of it.
-    std::shared_ptr<Ghost> CreateGhost(uint32_t AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
+    std::shared_ptr<Ghost> CreateGhost(uint32_t AreaId, uint64_t CellId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data);
 
     // Removes the oldest ghosts in the database until we are under max entries.
     void TrimGhosts(size_t MaxEntries);
@@ -197,7 +206,7 @@ public:
 
 protected:
 
-    using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>, int64_t>;
+    using DatabaseValue = std::variant<std::string, int, uint32_t, float, std::vector<uint8_t>, int64_t, uint64_t>;
 
     typedef std::function<void(sqlite3_stmt* statement)> RowCallback;
 

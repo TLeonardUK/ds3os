@@ -12,7 +12,8 @@
 #include "Server/GameService/GameManager.h"
 #include "Server/GameService/Utils/OnlineAreaPool.h"
 #include "Server/Database/DatabaseTypes.h"
-#include "Server.DarkSouls3/Server/GameService/Utils/DS3_GameIds.h"
+#include "Server.DarkSouls2/Server/GameService/Utils/DS2_GameIds.h"
+#include "Server.DarkSouls2/Server/GameService/Utils/DS2_CellAndAreaId.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
@@ -21,11 +22,11 @@ class GameService;
 // Handles client requests relating to placing, reading and 
 // upvoting blood message left in the world.
 
-class DS3_BloodMessageManager
+class DS2_BloodMessageManager
     : public GameManager
 {
 public:    
-    DS3_BloodMessageManager(Server* InServerInstance, GameService* InGameServiceInstance);
+    DS2_BloodMessageManager(Server* InServerInstance, GameService* InGameServiceInstance);
 
     virtual bool Init() override;
     virtual void Poll() override;
@@ -43,13 +44,13 @@ protected:
     MessageHandleResult Handle_RequestCreateBloodMessage(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestRemoveBloodMessage(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestGetBloodMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
+    MessageHandleResult Handle_RequestGetAreaBloodMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
     MessageHandleResult Handle_RequestEvaluateBloodMessage(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
-    MessageHandleResult Handle_RequestReCreateBloodMessageList(GameClient* Client, const Frpg2ReliableUdpMessage& Message);
 
 private:
     Server* ServerInstance;
     GameService* GameServiceInstance;
 
-    OnlineAreaPool<DS3_OnlineAreaId, BloodMessage> LiveCache;
+    OnlineAreaPool<DS2_CellAndAreaId, BloodMessage> LiveCache;
 
 };

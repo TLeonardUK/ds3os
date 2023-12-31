@@ -10,8 +10,9 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
-#include "Server/GameService/Utils/DS3_OnlineAreaPool.h"
+#include "Server/GameService/Utils/OnlineAreaPool.h"
 #include "Server/Database/DatabaseTypes.h"
+#include "Server.DarkSouls3/Server/GameService/Utils/DS3_GameIds.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
@@ -42,6 +43,6 @@ protected:
 private:
     Server* ServerInstance;
 
-    DS3_OnlineAreaPool<Ghost> LiveCache;
+    OnlineAreaPool<DS3_OnlineAreaId, Ghost> LiveCache;
 
 };

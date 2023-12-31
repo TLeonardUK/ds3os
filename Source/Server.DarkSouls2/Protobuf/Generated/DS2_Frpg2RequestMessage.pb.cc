@@ -53,10 +53,10 @@ void protobuf_ShutdownFile_DS2_5fFrpg2RequestMessage_2eproto() {
   delete RequestGetBloodMessageEvaluationResponse::default_instance_;
   delete PushRequestEvaluateBloodMessage::default_instance_;
   delete RequestGetAreaBloodMessageList::default_instance_;
-  delete RequestGetAreaBloodstainList::default_instance_;
   delete BloodstainInfo::default_instance_;
   delete RequestCreateBloodstain::default_instance_;
   delete RequestGetBloodstainList::default_instance_;
+  delete RequestGetAreaBloodstainList::default_instance_;
   delete RequestGetBloodstainListResponse::default_instance_;
   delete RequestGetDeadingGhost::default_instance_;
   delete RequestGetDeadingGhostResponse::default_instance_;
@@ -131,9 +131,9 @@ void protobuf_ShutdownFile_DS2_5fFrpg2RequestMessage_2eproto() {
   delete RequestGetBreakInTargetListResponse::default_instance_;
   delete RequestRejectBreakInTarget::default_instance_;
   delete RequestRejectBreakInTargetResponse::default_instance_;
+  delete GhostData::default_instance_;
   delete RequestGetGhostDataList::default_instance_;
   delete RequestGetGhostDataListResponse::default_instance_;
-  delete GhostData::default_instance_;
   delete RequestCreateGhostData::default_instance_;
   delete RequestCreateGhostDataResponse::default_instance_;
   delete VisitorData::default_instance_;
@@ -281,10 +281,10 @@ void protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto() {
   RequestGetBloodMessageEvaluationResponse::default_instance_ = new RequestGetBloodMessageEvaluationResponse();
   PushRequestEvaluateBloodMessage::default_instance_ = new PushRequestEvaluateBloodMessage();
   RequestGetAreaBloodMessageList::default_instance_ = new RequestGetAreaBloodMessageList();
-  RequestGetAreaBloodstainList::default_instance_ = new RequestGetAreaBloodstainList();
   BloodstainInfo::default_instance_ = new BloodstainInfo();
   RequestCreateBloodstain::default_instance_ = new RequestCreateBloodstain();
   RequestGetBloodstainList::default_instance_ = new RequestGetBloodstainList();
+  RequestGetAreaBloodstainList::default_instance_ = new RequestGetAreaBloodstainList();
   RequestGetBloodstainListResponse::default_instance_ = new RequestGetBloodstainListResponse();
   RequestGetDeadingGhost::default_instance_ = new RequestGetDeadingGhost();
   RequestGetDeadingGhostResponse::default_instance_ = new RequestGetDeadingGhostResponse();
@@ -359,9 +359,9 @@ void protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto() {
   RequestGetBreakInTargetListResponse::default_instance_ = new RequestGetBreakInTargetListResponse();
   RequestRejectBreakInTarget::default_instance_ = new RequestRejectBreakInTarget();
   RequestRejectBreakInTargetResponse::default_instance_ = new RequestRejectBreakInTargetResponse();
+  GhostData::default_instance_ = new GhostData();
   RequestGetGhostDataList::default_instance_ = new RequestGetGhostDataList();
   RequestGetGhostDataListResponse::default_instance_ = new RequestGetGhostDataListResponse();
-  GhostData::default_instance_ = new GhostData();
   RequestCreateGhostData::default_instance_ = new RequestCreateGhostData();
   RequestCreateGhostDataResponse::default_instance_ = new RequestCreateGhostDataResponse();
   VisitorData::default_instance_ = new VisitorData();
@@ -494,10 +494,10 @@ void protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto() {
   RequestGetBloodMessageEvaluationResponse::default_instance_->InitAsDefaultInstance();
   PushRequestEvaluateBloodMessage::default_instance_->InitAsDefaultInstance();
   RequestGetAreaBloodMessageList::default_instance_->InitAsDefaultInstance();
-  RequestGetAreaBloodstainList::default_instance_->InitAsDefaultInstance();
   BloodstainInfo::default_instance_->InitAsDefaultInstance();
   RequestCreateBloodstain::default_instance_->InitAsDefaultInstance();
   RequestGetBloodstainList::default_instance_->InitAsDefaultInstance();
+  RequestGetAreaBloodstainList::default_instance_->InitAsDefaultInstance();
   RequestGetBloodstainListResponse::default_instance_->InitAsDefaultInstance();
   RequestGetDeadingGhost::default_instance_->InitAsDefaultInstance();
   RequestGetDeadingGhostResponse::default_instance_->InitAsDefaultInstance();
@@ -572,9 +572,9 @@ void protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto() {
   RequestGetBreakInTargetListResponse::default_instance_->InitAsDefaultInstance();
   RequestRejectBreakInTarget::default_instance_->InitAsDefaultInstance();
   RequestRejectBreakInTargetResponse::default_instance_->InitAsDefaultInstance();
+  GhostData::default_instance_->InitAsDefaultInstance();
   RequestGetGhostDataList::default_instance_->InitAsDefaultInstance();
   RequestGetGhostDataListResponse::default_instance_->InitAsDefaultInstance();
-  GhostData::default_instance_->InitAsDefaultInstance();
   RequestCreateGhostData::default_instance_->InitAsDefaultInstance();
   RequestCreateGhostDataResponse::default_instance_->InitAsDefaultInstance();
   VisitorData::default_instance_->InitAsDefaultInstance();
@@ -5628,9 +5628,9 @@ void RequestGetLoginPlayerCharacterResponse::Swap(RequestGetLoginPlayerCharacter
 const int BloodMessageData::kPlayerIdFieldNumber;
 const int BloodMessageData::kCharacterIdFieldNumber;
 const int BloodMessageData::kMessageIdFieldNumber;
-const int BloodMessageData::kEvaluationsFieldNumber;
+const int BloodMessageData::kGoodFieldNumber;
 const int BloodMessageData::kMessageDataFieldNumber;
-const int BloodMessageData::kSteamIdFieldNumber;
+const int BloodMessageData::kPlayerSteamIdFieldNumber;
 const int BloodMessageData::kCellIdFieldNumber;
 const int BloodMessageData::kUnknown8FieldNumber;
 #endif  // !_MSC_VER
@@ -5657,9 +5657,9 @@ void BloodMessageData::SharedCtor() {
   player_id_ = 0u;
   character_id_ = 0u;
   message_id_ = 0u;
-  evaluations_ = 0u;
+  good_ = 0u;
   message_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   cell_id_ = 0u;
   unknown_8_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -5674,8 +5674,8 @@ void BloodMessageData::SharedDtor() {
   if (message_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete message_data_;
   }
-  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete steam_id_;
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
   }
   if (unknown_8_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete unknown_8_;
@@ -5720,15 +5720,15 @@ void BloodMessageData::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(player_id_, evaluations_);
+    ZR_(player_id_, good_);
     if (has_message_data()) {
       if (message_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         message_data_->clear();
       }
     }
-    if (has_steam_id()) {
-      if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        steam_id_->clear();
+    if (has_player_steam_id()) {
+      if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_steam_id_->clear();
       }
     }
     cell_id_ = 0u;
@@ -5800,18 +5800,18 @@ bool BloodMessageData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_evaluations;
+        if (input->ExpectTag(32)) goto parse_good;
         break;
       }
 
-      // required uint32 evaluations = 4;
+      // required uint32 good = 4;
       case 4: {
         if (tag == 32) {
-         parse_evaluations:
+         parse_good:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &evaluations_)));
-          set_has_evaluations();
+                 input, &good_)));
+          set_has_good();
         } else {
           goto handle_unusual;
         }
@@ -5828,16 +5828,16 @@ bool BloodMessageData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(50)) goto parse_steam_id;
+        if (input->ExpectTag(50)) goto parse_player_steam_id;
         break;
       }
 
-      // required string steam_id = 6;
+      // required string player_steam_id = 6;
       case 6: {
         if (tag == 50) {
-         parse_steam_id:
+         parse_player_steam_id:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_steam_id()));
+                input, this->mutable_player_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -5913,9 +5913,9 @@ void BloodMessageData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->message_id(), output);
   }
 
-  // required uint32 evaluations = 4;
-  if (has_evaluations()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->evaluations(), output);
+  // required uint32 good = 4;
+  if (has_good()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->good(), output);
   }
 
   // required bytes message_data = 5;
@@ -5924,10 +5924,10 @@ void BloodMessageData::SerializeWithCachedSizes(
       5, this->message_data(), output);
   }
 
-  // required string steam_id = 6;
-  if (has_steam_id()) {
+  // required string player_steam_id = 6;
+  if (has_player_steam_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      6, this->steam_id(), output);
+      6, this->player_steam_id(), output);
   }
 
   // required uint32 cell_id = 7;
@@ -5971,11 +5971,11 @@ int BloodMessageData::ByteSize() const {
           this->message_id());
     }
 
-    // required uint32 evaluations = 4;
-    if (has_evaluations()) {
+    // required uint32 good = 4;
+    if (has_good()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->evaluations());
+          this->good());
     }
 
     // required bytes message_data = 5;
@@ -5985,11 +5985,11 @@ int BloodMessageData::ByteSize() const {
           this->message_data());
     }
 
-    // required string steam_id = 6;
-    if (has_steam_id()) {
+    // required string player_steam_id = 6;
+    if (has_player_steam_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->steam_id());
+          this->player_steam_id());
     }
 
     // required uint32 cell_id = 7;
@@ -6032,14 +6032,14 @@ void BloodMessageData::MergeFrom(const BloodMessageData& from) {
     if (from.has_message_id()) {
       set_message_id(from.message_id());
     }
-    if (from.has_evaluations()) {
-      set_evaluations(from.evaluations());
+    if (from.has_good()) {
+      set_good(from.good());
     }
     if (from.has_message_data()) {
       set_message_data(from.message_data());
     }
-    if (from.has_steam_id()) {
-      set_steam_id(from.steam_id());
+    if (from.has_player_steam_id()) {
+      set_player_steam_id(from.player_steam_id());
     }
     if (from.has_cell_id()) {
       set_cell_id(from.cell_id());
@@ -6068,9 +6068,9 @@ void BloodMessageData::Swap(BloodMessageData* other) {
     std::swap(player_id_, other->player_id_);
     std::swap(character_id_, other->character_id_);
     std::swap(message_id_, other->message_id_);
-    std::swap(evaluations_, other->evaluations_);
+    std::swap(good_, other->good_);
     std::swap(message_data_, other->message_data_);
-    std::swap(steam_id_, other->steam_id_);
+    std::swap(player_steam_id_, other->player_steam_id_);
     std::swap(cell_id_, other->cell_id_);
     std::swap(unknown_8_, other->unknown_8_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -6359,6 +6359,9 @@ void BloodMessageCellLimitData::Swap(BloodMessageCellLimitData* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestReentryBloodMessage::kOnlineAreaIdFieldNumber;
+const int RequestReentryBloodMessage::kCellIdFieldNumber;
+const int RequestReentryBloodMessage::kMessageIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestReentryBloodMessage::RequestReentryBloodMessage()
@@ -6379,6 +6382,9 @@ RequestReentryBloodMessage::RequestReentryBloodMessage(const RequestReentryBlood
 
 void RequestReentryBloodMessage::SharedCtor() {
   _cached_size_ = 0;
+  online_area_id_ = 0u;
+  cell_id_ = 0u;
+  message_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -6417,6 +6423,21 @@ RequestReentryBloodMessage* RequestReentryBloodMessage::New() const {
 }
 
 void RequestReentryBloodMessage::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestReentryBloodMessage*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(online_area_id_, message_id_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -6434,14 +6455,63 @@ bool RequestReentryBloodMessage::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 online_area_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &online_area_id_)));
+          set_has_online_area_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_cell_id;
+        break;
+      }
+
+      // required uint32 cell_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_cell_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &cell_id_)));
+          set_has_cell_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_message_id;
+        break;
+      }
+
+      // required uint32 message_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_message_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &message_id_)));
+          set_has_message_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestReentryBloodMessage)
@@ -6455,6 +6525,21 @@ failure:
 void RequestReentryBloodMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestReentryBloodMessage)
+  // required uint32 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
+  }
+
+  // required uint32 cell_id = 2;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->cell_id(), output);
+  }
+
+  // required uint32 message_id = 3;
+  if (has_message_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->message_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestReentryBloodMessage)
@@ -6463,6 +6548,29 @@ void RequestReentryBloodMessage::SerializeWithCachedSizes(
 int RequestReentryBloodMessage::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 online_area_id = 1;
+    if (has_online_area_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->online_area_id());
+    }
+
+    // required uint32 cell_id = 2;
+    if (has_cell_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->cell_id());
+    }
+
+    // required uint32 message_id = 3;
+    if (has_message_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->message_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -6478,6 +6586,17 @@ void RequestReentryBloodMessage::CheckTypeAndMergeFrom(
 
 void RequestReentryBloodMessage::MergeFrom(const RequestReentryBloodMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
+    }
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
+    }
+    if (from.has_message_id()) {
+      set_message_id(from.message_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -6488,12 +6607,17 @@ void RequestReentryBloodMessage::CopyFrom(const RequestReentryBloodMessage& from
 }
 
 bool RequestReentryBloodMessage::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
 
 void RequestReentryBloodMessage::Swap(RequestReentryBloodMessage* other) {
   if (other != this) {
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
+    std::swap(message_id_, other->message_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -6507,6 +6631,7 @@ void RequestReentryBloodMessage::Swap(RequestReentryBloodMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestReentryBloodMessageResponse::kMessageIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestReentryBloodMessageResponse::RequestReentryBloodMessageResponse()
@@ -6527,6 +6652,7 @@ RequestReentryBloodMessageResponse::RequestReentryBloodMessageResponse(const Req
 
 void RequestReentryBloodMessageResponse::SharedCtor() {
   _cached_size_ = 0;
+  message_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -6565,6 +6691,7 @@ RequestReentryBloodMessageResponse* RequestReentryBloodMessageResponse::New() co
 }
 
 void RequestReentryBloodMessageResponse::Clear() {
+  message_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -6582,14 +6709,33 @@ bool RequestReentryBloodMessageResponse::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 message_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &message_id_)));
+          set_has_message_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestReentryBloodMessageResponse)
@@ -6603,6 +6749,11 @@ failure:
 void RequestReentryBloodMessageResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestReentryBloodMessageResponse)
+  // optional uint32 message_id = 1;
+  if (has_message_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->message_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestReentryBloodMessageResponse)
@@ -6611,6 +6762,15 @@ void RequestReentryBloodMessageResponse::SerializeWithCachedSizes(
 int RequestReentryBloodMessageResponse::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional uint32 message_id = 1;
+    if (has_message_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->message_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -6626,6 +6786,11 @@ void RequestReentryBloodMessageResponse::CheckTypeAndMergeFrom(
 
 void RequestReentryBloodMessageResponse::MergeFrom(const RequestReentryBloodMessageResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_message_id()) {
+      set_message_id(from.message_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -6642,6 +6807,8 @@ bool RequestReentryBloodMessageResponse::IsInitialized() const {
 
 void RequestReentryBloodMessageResponse::Swap(RequestReentryBloodMessageResponse* other) {
   if (other != this) {
+    std::swap(message_id_, other->message_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -7163,8 +7330,8 @@ void RequestCreateBloodMessageResponse::Swap(RequestCreateBloodMessageResponse* 
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestRemoveBloodMessage::kAreaIdFieldNumber;
-const int RequestRemoveBloodMessage::kPlayerIdFieldNumber;
+const int RequestRemoveBloodMessage::kOnlineAreaIdFieldNumber;
+const int RequestRemoveBloodMessage::kCellIdFieldNumber;
 const int RequestRemoveBloodMessage::kMessageIdFieldNumber;
 #endif  // !_MSC_VER
 
@@ -7186,8 +7353,8 @@ RequestRemoveBloodMessage::RequestRemoveBloodMessage(const RequestRemoveBloodMes
 
 void RequestRemoveBloodMessage::SharedCtor() {
   _cached_size_ = 0;
-  area_id_ = 0u;
-  player_id_ = 0u;
+  online_area_id_ = 0u;
+  cell_id_ = 0u;
   message_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -7237,7 +7404,7 @@ void RequestRemoveBloodMessage::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(area_id_, message_id_);
+  ZR_(online_area_id_, message_id_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -7260,28 +7427,28 @@ bool RequestRemoveBloodMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 area_id = 1;
+      // required uint32 online_area_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &area_id_)));
-          set_has_area_id();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_player_id;
+        if (input->ExpectTag(16)) goto parse_cell_id;
         break;
       }
 
-      // required uint32 player_id = 2;
+      // required uint32 cell_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_player_id:
+         parse_cell_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &player_id_)));
-          set_has_player_id();
+                 input, &cell_id_)));
+          set_has_cell_id();
         } else {
           goto handle_unusual;
         }
@@ -7329,14 +7496,14 @@ failure:
 void RequestRemoveBloodMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestRemoveBloodMessage)
-  // required uint32 area_id = 1;
-  if (has_area_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->area_id(), output);
+  // required uint32 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // required uint32 player_id = 2;
-  if (has_player_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->player_id(), output);
+  // required uint32 cell_id = 2;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->cell_id(), output);
   }
 
   // required uint32 message_id = 3;
@@ -7353,18 +7520,18 @@ int RequestRemoveBloodMessage::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 area_id = 1;
-    if (has_area_id()) {
+    // required uint32 online_area_id = 1;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->area_id());
+          this->online_area_id());
     }
 
-    // required uint32 player_id = 2;
-    if (has_player_id()) {
+    // required uint32 cell_id = 2;
+    if (has_cell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->player_id());
+          this->cell_id());
     }
 
     // required uint32 message_id = 3;
@@ -7391,11 +7558,11 @@ void RequestRemoveBloodMessage::CheckTypeAndMergeFrom(
 void RequestRemoveBloodMessage::MergeFrom(const RequestRemoveBloodMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_area_id()) {
-      set_area_id(from.area_id());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
-    if (from.has_player_id()) {
-      set_player_id(from.player_id());
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
     }
     if (from.has_message_id()) {
       set_message_id(from.message_id());
@@ -7418,8 +7585,8 @@ bool RequestRemoveBloodMessage::IsInitialized() const {
 
 void RequestRemoveBloodMessage::Swap(RequestRemoveBloodMessage* other) {
   if (other != this) {
-    std::swap(area_id_, other->area_id_);
-    std::swap(player_id_, other->player_id_);
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
     std::swap(message_id_, other->message_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -7584,7 +7751,7 @@ void RequestRemoveBloodMessageResponse::Swap(RequestRemoveBloodMessageResponse* 
 
 #ifndef _MSC_VER
 const int RequestGetBloodMessageList::kOnlineAreaIdFieldNumber;
-const int RequestGetBloodMessageList::kCountFieldNumber;
+const int RequestGetBloodMessageList::kMaxMessagesFieldNumber;
 const int RequestGetBloodMessageList::kSearchAreasFieldNumber;
 #endif  // !_MSC_VER
 
@@ -7607,7 +7774,7 @@ RequestGetBloodMessageList::RequestGetBloodMessageList(const RequestGetBloodMess
 void RequestGetBloodMessageList::SharedCtor() {
   _cached_size_ = 0;
   online_area_id_ = 0u;
-  count_ = 0u;
+  max_messages_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7656,7 +7823,7 @@ void RequestGetBloodMessageList::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(online_area_id_, count_);
+  ZR_(online_area_id_, max_messages_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -7690,18 +7857,18 @@ bool RequestGetBloodMessageList::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_count;
+        if (input->ExpectTag(16)) goto parse_max_messages;
         break;
       }
 
-      // required uint32 count = 2;
+      // required uint32 max_messages = 2;
       case 2: {
         if (tag == 16) {
-         parse_count:
+         parse_max_messages:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &count_)));
-          set_has_count();
+                 input, &max_messages_)));
+          set_has_max_messages();
         } else {
           goto handle_unusual;
         }
@@ -7753,9 +7920,9 @@ void RequestGetBloodMessageList::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // required uint32 count = 2;
-  if (has_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->count(), output);
+  // required uint32 max_messages = 2;
+  if (has_max_messages()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->max_messages(), output);
   }
 
   // repeated .DS2_Frpg2RequestMessage.BloodMessageCellLimitData search_areas = 3;
@@ -7780,11 +7947,11 @@ int RequestGetBloodMessageList::ByteSize() const {
           this->online_area_id());
     }
 
-    // required uint32 count = 2;
-    if (has_count()) {
+    // required uint32 max_messages = 2;
+    if (has_max_messages()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->count());
+          this->max_messages());
     }
 
   }
@@ -7816,8 +7983,8 @@ void RequestGetBloodMessageList::MergeFrom(const RequestGetBloodMessageList& fro
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_count()) {
-      set_count(from.count());
+    if (from.has_max_messages()) {
+      set_max_messages(from.max_messages());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -7839,7 +8006,7 @@ bool RequestGetBloodMessageList::IsInitialized() const {
 void RequestGetBloodMessageList::Swap(RequestGetBloodMessageList* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(count_, other->count_);
+    std::swap(max_messages_, other->max_messages_);
     search_areas_.Swap(&other->search_areas_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -8500,6 +8667,9 @@ void RequestEvaluateBloodMessageResponse::Swap(RequestEvaluateBloodMessageRespon
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestGetBloodMessageEvaluation::kOnlineAreaIdFieldNumber;
+const int RequestGetBloodMessageEvaluation::kCellIdFieldNumber;
+const int RequestGetBloodMessageEvaluation::kMessageIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetBloodMessageEvaluation::RequestGetBloodMessageEvaluation()
@@ -8520,6 +8690,9 @@ RequestGetBloodMessageEvaluation::RequestGetBloodMessageEvaluation(const Request
 
 void RequestGetBloodMessageEvaluation::SharedCtor() {
   _cached_size_ = 0;
+  online_area_id_ = 0u;
+  cell_id_ = 0u;
+  message_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -8558,6 +8731,21 @@ RequestGetBloodMessageEvaluation* RequestGetBloodMessageEvaluation::New() const 
 }
 
 void RequestGetBloodMessageEvaluation::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestGetBloodMessageEvaluation*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(online_area_id_, message_id_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -8575,14 +8763,63 @@ bool RequestGetBloodMessageEvaluation::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 online_area_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &online_area_id_)));
+          set_has_online_area_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_cell_id;
+        break;
+      }
+
+      // required uint32 cell_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_cell_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &cell_id_)));
+          set_has_cell_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_message_id;
+        break;
+      }
+
+      // required uint32 message_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_message_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &message_id_)));
+          set_has_message_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestGetBloodMessageEvaluation)
@@ -8596,6 +8833,21 @@ failure:
 void RequestGetBloodMessageEvaluation::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetBloodMessageEvaluation)
+  // required uint32 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
+  }
+
+  // required uint32 cell_id = 2;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->cell_id(), output);
+  }
+
+  // required uint32 message_id = 3;
+  if (has_message_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->message_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestGetBloodMessageEvaluation)
@@ -8604,6 +8856,29 @@ void RequestGetBloodMessageEvaluation::SerializeWithCachedSizes(
 int RequestGetBloodMessageEvaluation::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 online_area_id = 1;
+    if (has_online_area_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->online_area_id());
+    }
+
+    // required uint32 cell_id = 2;
+    if (has_cell_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->cell_id());
+    }
+
+    // required uint32 message_id = 3;
+    if (has_message_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->message_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -8619,6 +8894,17 @@ void RequestGetBloodMessageEvaluation::CheckTypeAndMergeFrom(
 
 void RequestGetBloodMessageEvaluation::MergeFrom(const RequestGetBloodMessageEvaluation& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
+    }
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
+    }
+    if (from.has_message_id()) {
+      set_message_id(from.message_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -8629,12 +8915,17 @@ void RequestGetBloodMessageEvaluation::CopyFrom(const RequestGetBloodMessageEval
 }
 
 bool RequestGetBloodMessageEvaluation::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
 
 void RequestGetBloodMessageEvaluation::Swap(RequestGetBloodMessageEvaluation* other) {
   if (other != this) {
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
+    std::swap(message_id_, other->message_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -8648,6 +8939,8 @@ void RequestGetBloodMessageEvaluation::Swap(RequestGetBloodMessageEvaluation* ot
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestGetBloodMessageEvaluationResponse::kMessageIdFieldNumber;
+const int RequestGetBloodMessageEvaluationResponse::kRatingFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetBloodMessageEvaluationResponse::RequestGetBloodMessageEvaluationResponse()
@@ -8668,6 +8961,8 @@ RequestGetBloodMessageEvaluationResponse::RequestGetBloodMessageEvaluationRespon
 
 void RequestGetBloodMessageEvaluationResponse::SharedCtor() {
   _cached_size_ = 0;
+  message_id_ = GOOGLE_LONGLONG(0);
+  rating_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -8706,6 +9001,21 @@ RequestGetBloodMessageEvaluationResponse* RequestGetBloodMessageEvaluationRespon
 }
 
 void RequestGetBloodMessageEvaluationResponse::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestGetBloodMessageEvaluationResponse*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(message_id_, rating_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -8723,14 +9033,48 @@ bool RequestGetBloodMessageEvaluationResponse::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 message_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &message_id_)));
+          set_has_message_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_rating;
+        break;
+      }
+
+      // required int64 rating = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_rating:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &rating_)));
+          set_has_rating();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestGetBloodMessageEvaluationResponse)
@@ -8744,6 +9088,16 @@ failure:
 void RequestGetBloodMessageEvaluationResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetBloodMessageEvaluationResponse)
+  // required int64 message_id = 1;
+  if (has_message_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->message_id(), output);
+  }
+
+  // required int64 rating = 2;
+  if (has_rating()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->rating(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestGetBloodMessageEvaluationResponse)
@@ -8752,6 +9106,22 @@ void RequestGetBloodMessageEvaluationResponse::SerializeWithCachedSizes(
 int RequestGetBloodMessageEvaluationResponse::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 message_id = 1;
+    if (has_message_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->message_id());
+    }
+
+    // required int64 rating = 2;
+    if (has_rating()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->rating());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -8767,6 +9137,14 @@ void RequestGetBloodMessageEvaluationResponse::CheckTypeAndMergeFrom(
 
 void RequestGetBloodMessageEvaluationResponse::MergeFrom(const RequestGetBloodMessageEvaluationResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_message_id()) {
+      set_message_id(from.message_id());
+    }
+    if (from.has_rating()) {
+      set_rating(from.rating());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -8777,12 +9155,16 @@ void RequestGetBloodMessageEvaluationResponse::CopyFrom(const RequestGetBloodMes
 }
 
 bool RequestGetBloodMessageEvaluationResponse::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
 
 void RequestGetBloodMessageEvaluationResponse::Swap(RequestGetBloodMessageEvaluationResponse* other) {
   if (other != this) {
+    std::swap(message_id_, other->message_id_);
+    std::swap(rating_, other->rating_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -8796,9 +9178,10 @@ void RequestGetBloodMessageEvaluationResponse::Swap(RequestGetBloodMessageEvalua
 // ===================================================================
 
 #ifndef _MSC_VER
-const int PushRequestEvaluateBloodMessage::kOnlineAreaIdFieldNumber;
+const int PushRequestEvaluateBloodMessage::kPushMessageIdFieldNumber;
 const int PushRequestEvaluateBloodMessage::kPlayerIdFieldNumber;
 const int PushRequestEvaluateBloodMessage::kMessageIdFieldNumber;
+const int PushRequestEvaluateBloodMessage::kPlayerSteamIdFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestEvaluateBloodMessage::PushRequestEvaluateBloodMessage()
@@ -8818,10 +9201,12 @@ PushRequestEvaluateBloodMessage::PushRequestEvaluateBloodMessage(const PushReque
 }
 
 void PushRequestEvaluateBloodMessage::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  online_area_id_ = 0u;
+  push_message_id_ = 829;
   player_id_ = 0u;
   message_id_ = 0u;
+  player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -8831,6 +9216,9 @@ PushRequestEvaluateBloodMessage::~PushRequestEvaluateBloodMessage() {
 }
 
 void PushRequestEvaluateBloodMessage::SharedDtor() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -8860,21 +9248,16 @@ PushRequestEvaluateBloodMessage* PushRequestEvaluateBloodMessage::New() const {
 }
 
 void PushRequestEvaluateBloodMessage::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<PushRequestEvaluateBloodMessage*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(online_area_id_, message_id_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
+  if (_has_bits_[0 / 32] & 15) {
+    push_message_id_ = 829;
+    player_id_ = 0u;
+    message_id_ = 0u;
+    if (has_player_steam_id()) {
+      if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_steam_id_->clear();
+      }
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -8893,13 +9276,19 @@ bool PushRequestEvaluateBloodMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 online_area_id = 1;
+      // required .DS2_Frpg2RequestMessage.PushMessageId push_message_id = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_area_id_)));
-          set_has_online_area_id();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::PushMessageId_IsValid(value)) {
+            set_push_message_id(static_cast< ::DS2_Frpg2RequestMessage::PushMessageId >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -8933,6 +9322,19 @@ bool PushRequestEvaluateBloodMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(34)) goto parse_player_steam_id;
+        break;
+      }
+
+      // required string player_steam_id = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_player_steam_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_player_steam_id()));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -8962,9 +9364,10 @@ failure:
 void PushRequestEvaluateBloodMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.PushRequestEvaluateBloodMessage)
-  // required uint32 online_area_id = 1;
-  if (has_online_area_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
+  // required .DS2_Frpg2RequestMessage.PushMessageId push_message_id = 1;
+  if (has_push_message_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->push_message_id(), output);
   }
 
   // required uint32 player_id = 2;
@@ -8977,6 +9380,12 @@ void PushRequestEvaluateBloodMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->message_id(), output);
   }
 
+  // required string player_steam_id = 4;
+  if (has_player_steam_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->player_steam_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.PushRequestEvaluateBloodMessage)
@@ -8986,11 +9395,10 @@ int PushRequestEvaluateBloodMessage::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 online_area_id = 1;
-    if (has_online_area_id()) {
+    // required .DS2_Frpg2RequestMessage.PushMessageId push_message_id = 1;
+    if (has_push_message_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->online_area_id());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
     }
 
     // required uint32 player_id = 2;
@@ -9005,6 +9413,13 @@ int PushRequestEvaluateBloodMessage::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->message_id());
+    }
+
+    // required string player_steam_id = 4;
+    if (has_player_steam_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->player_steam_id());
     }
 
   }
@@ -9024,14 +9439,17 @@ void PushRequestEvaluateBloodMessage::CheckTypeAndMergeFrom(
 void PushRequestEvaluateBloodMessage::MergeFrom(const PushRequestEvaluateBloodMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_online_area_id()) {
-      set_online_area_id(from.online_area_id());
+    if (from.has_push_message_id()) {
+      set_push_message_id(from.push_message_id());
     }
     if (from.has_player_id()) {
       set_player_id(from.player_id());
     }
     if (from.has_message_id()) {
       set_message_id(from.message_id());
+    }
+    if (from.has_player_steam_id()) {
+      set_player_steam_id(from.player_steam_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -9044,16 +9462,17 @@ void PushRequestEvaluateBloodMessage::CopyFrom(const PushRequestEvaluateBloodMes
 }
 
 bool PushRequestEvaluateBloodMessage::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
 
 void PushRequestEvaluateBloodMessage::Swap(PushRequestEvaluateBloodMessage* other) {
   if (other != this) {
-    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(push_message_id_, other->push_message_id_);
     std::swap(player_id_, other->player_id_);
     std::swap(message_id_, other->message_id_);
+    std::swap(player_steam_id_, other->player_steam_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -9070,8 +9489,8 @@ void PushRequestEvaluateBloodMessage::Swap(PushRequestEvaluateBloodMessage* othe
 #ifndef _MSC_VER
 const int RequestGetAreaBloodMessageList::kOnlineAreaIdFieldNumber;
 const int RequestGetAreaBloodMessageList::kCountFieldNumber;
-const int RequestGetAreaBloodMessageList::kUnknown3FieldNumber;
-const int RequestGetAreaBloodMessageList::kUnknown4FieldNumber;
+const int RequestGetAreaBloodMessageList::kMaxType1FieldNumber;
+const int RequestGetAreaBloodMessageList::kMaxType2FieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetAreaBloodMessageList::RequestGetAreaBloodMessageList()
@@ -9094,8 +9513,8 @@ void RequestGetAreaBloodMessageList::SharedCtor() {
   _cached_size_ = 0;
   online_area_id_ = 0u;
   count_ = 0u;
-  unknown_3_ = 0u;
-  unknown_4_ = 0u;
+  max_type_1_ = 0u;
+  max_type_2_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -9144,7 +9563,7 @@ void RequestGetAreaBloodMessageList::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(online_area_id_, unknown_4_);
+  ZR_(online_area_id_, max_type_2_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -9192,33 +9611,33 @@ bool RequestGetAreaBloodMessageList::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_max_type_1;
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // required uint32 max_type_1 = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_max_type_1:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &max_type_1_)));
+          set_has_max_type_1();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_max_type_2;
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // required uint32 max_type_2 = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_max_type_2:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                 input, &max_type_2_)));
+          set_has_max_type_2();
         } else {
           goto handle_unusual;
         }
@@ -9261,14 +9680,14 @@ void RequestGetAreaBloodMessageList::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->count(), output);
   }
 
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // required uint32 max_type_1 = 3;
+  if (has_max_type_1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->max_type_1(), output);
   }
 
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // required uint32 max_type_2 = 4;
+  if (has_max_type_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->max_type_2(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -9294,18 +9713,18 @@ int RequestGetAreaBloodMessageList::ByteSize() const {
           this->count());
     }
 
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // required uint32 max_type_1 = 3;
+    if (has_max_type_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->max_type_1());
     }
 
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required uint32 max_type_2 = 4;
+    if (has_max_type_2()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+          this->max_type_2());
     }
 
   }
@@ -9331,11 +9750,11 @@ void RequestGetAreaBloodMessageList::MergeFrom(const RequestGetAreaBloodMessageL
     if (from.has_count()) {
       set_count(from.count());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_max_type_1()) {
+      set_max_type_1(from.max_type_1());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_max_type_2()) {
+      set_max_type_2(from.max_type_2());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -9357,8 +9776,8 @@ void RequestGetAreaBloodMessageList::Swap(RequestGetAreaBloodMessageList* other)
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
     std::swap(count_, other->count_);
-    std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(max_type_1_, other->max_type_1_);
+    std::swap(max_type_2_, other->max_type_2_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -9373,315 +9792,10 @@ void RequestGetAreaBloodMessageList::Swap(RequestGetAreaBloodMessageList* other)
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestGetAreaBloodstainList::kOnlineAreaIdFieldNumber;
-const int RequestGetAreaBloodstainList::kCountFieldNumber;
-const int RequestGetAreaBloodstainList::kUnknown3FieldNumber;
-const int RequestGetAreaBloodstainList::kUnknown4FieldNumber;
-#endif  // !_MSC_VER
-
-RequestGetAreaBloodstainList::RequestGetAreaBloodstainList()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-}
-
-void RequestGetAreaBloodstainList::InitAsDefaultInstance() {
-}
-
-RequestGetAreaBloodstainList::RequestGetAreaBloodstainList(const RequestGetAreaBloodstainList& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-}
-
-void RequestGetAreaBloodstainList::SharedCtor() {
-  _cached_size_ = 0;
-  online_area_id_ = 0u;
-  count_ = 0u;
-  unknown_3_ = 0u;
-  unknown_4_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-RequestGetAreaBloodstainList::~RequestGetAreaBloodstainList() {
-  // @@protoc_insertion_point(destructor:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-  SharedDtor();
-}
-
-void RequestGetAreaBloodstainList::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void RequestGetAreaBloodstainList::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const RequestGetAreaBloodstainList& RequestGetAreaBloodstainList::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-RequestGetAreaBloodstainList* RequestGetAreaBloodstainList::default_instance_ = NULL;
-
-RequestGetAreaBloodstainList* RequestGetAreaBloodstainList::New() const {
-  return new RequestGetAreaBloodstainList;
-}
-
-void RequestGetAreaBloodstainList::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<RequestGetAreaBloodstainList*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(online_area_id_, unknown_4_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool RequestGetAreaBloodstainList::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 online_area_id = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_area_id_)));
-          set_has_online_area_id();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_count;
-        break;
-      }
-
-      // required uint32 count = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_count:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &count_)));
-          set_has_count();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
-        break;
-      }
-
-      // required uint32 unknown_3 = 3;
-      case 3: {
-        if (tag == 24) {
-         parse_unknown_3:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
-        break;
-      }
-
-      // required uint32 unknown_4 = 4;
-      case 4: {
-        if (tag == 32) {
-         parse_unknown_4:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-            input, tag, &unknown_fields_stream));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-  return false;
-#undef DO_
-}
-
-void RequestGetAreaBloodstainList::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-  // required uint32 online_area_id = 1;
-  if (has_online_area_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
-  }
-
-  // required uint32 count = 2;
-  if (has_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->count(), output);
-  }
-
-  // required uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
-  }
-
-  // required uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
-  }
-
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
-}
-
-int RequestGetAreaBloodstainList::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 online_area_id = 1;
-    if (has_online_area_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->online_area_id());
-    }
-
-    // required uint32 count = 2;
-    if (has_count()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->count());
-    }
-
-    // required uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
-    }
-
-    // required uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
-    }
-
-  }
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void RequestGetAreaBloodstainList::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const RequestGetAreaBloodstainList*>(&from));
-}
-
-void RequestGetAreaBloodstainList::MergeFrom(const RequestGetAreaBloodstainList& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_online_area_id()) {
-      set_online_area_id(from.online_area_id());
-    }
-    if (from.has_count()) {
-      set_count(from.count());
-    }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
-    }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
-    }
-  }
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void RequestGetAreaBloodstainList::CopyFrom(const RequestGetAreaBloodstainList& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool RequestGetAreaBloodstainList::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
-
-  return true;
-}
-
-void RequestGetAreaBloodstainList::Swap(RequestGetAreaBloodstainList* other) {
-  if (other != this) {
-    std::swap(online_area_id_, other->online_area_id_);
-    std::swap(count_, other->count_);
-    std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string RequestGetAreaBloodstainList::GetTypeName() const {
-  return "DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
 const int BloodstainInfo::kOnlineAreaIdFieldNumber;
 const int BloodstainInfo::kCellIdFieldNumber;
 const int BloodstainInfo::kBloodstainIdFieldNumber;
-const int BloodstainInfo::kBloodstainDataFieldNumber;
+const int BloodstainInfo::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 BloodstainInfo::BloodstainInfo()
@@ -9706,7 +9820,7 @@ void BloodstainInfo::SharedCtor() {
   online_area_id_ = 0u;
   cell_id_ = 0u;
   bloodstain_id_ = 0u;
-  bloodstain_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -9716,8 +9830,8 @@ BloodstainInfo::~BloodstainInfo() {
 }
 
 void BloodstainInfo::SharedDtor() {
-  if (bloodstain_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete bloodstain_data_;
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -9761,9 +9875,9 @@ void BloodstainInfo::Clear() {
   if (_has_bits_[0 / 32] & 15) {
     ZR_(online_area_id_, cell_id_);
     bloodstain_id_ = 0u;
-    if (has_bloodstain_data()) {
-      if (bloodstain_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        bloodstain_data_->clear();
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
       }
     }
   }
@@ -9829,16 +9943,16 @@ bool BloodstainInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_bloodstain_data;
+        if (input->ExpectTag(34)) goto parse_data;
         break;
       }
 
-      // required bytes bloodstain_data = 4;
+      // required bytes data = 4;
       case 4: {
         if (tag == 34) {
-         parse_bloodstain_data:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_bloodstain_data()));
+                input, this->mutable_data()));
         } else {
           goto handle_unusual;
         }
@@ -9886,10 +10000,10 @@ void BloodstainInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->bloodstain_id(), output);
   }
 
-  // required bytes bloodstain_data = 4;
-  if (has_bloodstain_data()) {
+  // required bytes data = 4;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      4, this->bloodstain_data(), output);
+      4, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -9922,11 +10036,11 @@ int BloodstainInfo::ByteSize() const {
           this->bloodstain_id());
     }
 
-    // required bytes bloodstain_data = 4;
-    if (has_bloodstain_data()) {
+    // required bytes data = 4;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->bloodstain_data());
+          this->data());
     }
 
   }
@@ -9955,8 +10069,8 @@ void BloodstainInfo::MergeFrom(const BloodstainInfo& from) {
     if (from.has_bloodstain_id()) {
       set_bloodstain_id(from.bloodstain_id());
     }
-    if (from.has_bloodstain_data()) {
-      set_bloodstain_data(from.bloodstain_data());
+    if (from.has_data()) {
+      set_data(from.data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -9979,7 +10093,7 @@ void BloodstainInfo::Swap(BloodstainInfo* other) {
     std::swap(online_area_id_, other->online_area_id_);
     std::swap(cell_id_, other->cell_id_);
     std::swap(bloodstain_id_, other->bloodstain_id_);
-    std::swap(bloodstain_data_, other->bloodstain_data_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -10582,6 +10696,311 @@ void RequestGetBloodstainList::Swap(RequestGetBloodstainList* other) {
 
 ::std::string RequestGetBloodstainList::GetTypeName() const {
   return "DS2_Frpg2RequestMessage.RequestGetBloodstainList";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int RequestGetAreaBloodstainList::kOnlineAreaIdFieldNumber;
+const int RequestGetAreaBloodstainList::kCountFieldNumber;
+const int RequestGetAreaBloodstainList::kMaxType1FieldNumber;
+const int RequestGetAreaBloodstainList::kMaxType2FieldNumber;
+#endif  // !_MSC_VER
+
+RequestGetAreaBloodstainList::RequestGetAreaBloodstainList()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+}
+
+void RequestGetAreaBloodstainList::InitAsDefaultInstance() {
+}
+
+RequestGetAreaBloodstainList::RequestGetAreaBloodstainList(const RequestGetAreaBloodstainList& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+}
+
+void RequestGetAreaBloodstainList::SharedCtor() {
+  _cached_size_ = 0;
+  online_area_id_ = 0u;
+  count_ = 0u;
+  max_type_1_ = 0u;
+  max_type_2_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+RequestGetAreaBloodstainList::~RequestGetAreaBloodstainList() {
+  // @@protoc_insertion_point(destructor:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+  SharedDtor();
+}
+
+void RequestGetAreaBloodstainList::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void RequestGetAreaBloodstainList::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const RequestGetAreaBloodstainList& RequestGetAreaBloodstainList::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+RequestGetAreaBloodstainList* RequestGetAreaBloodstainList::default_instance_ = NULL;
+
+RequestGetAreaBloodstainList* RequestGetAreaBloodstainList::New() const {
+  return new RequestGetAreaBloodstainList;
+}
+
+void RequestGetAreaBloodstainList::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestGetAreaBloodstainList*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(online_area_id_, max_type_2_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool RequestGetAreaBloodstainList::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 online_area_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &online_area_id_)));
+          set_has_online_area_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_count;
+        break;
+      }
+
+      // required uint32 count = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_count:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &count_)));
+          set_has_count();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_max_type_1;
+        break;
+      }
+
+      // required uint32 max_type_1 = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_max_type_1:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &max_type_1_)));
+          set_has_max_type_1();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_max_type_2;
+        break;
+      }
+
+      // required uint32 max_type_2 = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_max_type_2:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &max_type_2_)));
+          set_has_max_type_2();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+  return false;
+#undef DO_
+}
+
+void RequestGetAreaBloodstainList::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+  // required uint32 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
+  }
+
+  // required uint32 count = 2;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->count(), output);
+  }
+
+  // required uint32 max_type_1 = 3;
+  if (has_max_type_1()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->max_type_1(), output);
+  }
+
+  // required uint32 max_type_2 = 4;
+  if (has_max_type_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->max_type_2(), output);
+  }
+
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList)
+}
+
+int RequestGetAreaBloodstainList::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 online_area_id = 1;
+    if (has_online_area_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->online_area_id());
+    }
+
+    // required uint32 count = 2;
+    if (has_count()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->count());
+    }
+
+    // required uint32 max_type_1 = 3;
+    if (has_max_type_1()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->max_type_1());
+    }
+
+    // required uint32 max_type_2 = 4;
+    if (has_max_type_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->max_type_2());
+    }
+
+  }
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void RequestGetAreaBloodstainList::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const RequestGetAreaBloodstainList*>(&from));
+}
+
+void RequestGetAreaBloodstainList::MergeFrom(const RequestGetAreaBloodstainList& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
+    }
+    if (from.has_count()) {
+      set_count(from.count());
+    }
+    if (from.has_max_type_1()) {
+      set_max_type_1(from.max_type_1());
+    }
+    if (from.has_max_type_2()) {
+      set_max_type_2(from.max_type_2());
+    }
+  }
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void RequestGetAreaBloodstainList::CopyFrom(const RequestGetAreaBloodstainList& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RequestGetAreaBloodstainList::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+
+  return true;
+}
+
+void RequestGetAreaBloodstainList::Swap(RequestGetAreaBloodstainList* other) {
+  if (other != this) {
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(count_, other->count_);
+    std::swap(max_type_1_, other->max_type_1_);
+    std::swap(max_type_2_, other->max_type_2_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string RequestGetAreaBloodstainList::GetTypeName() const {
+  return "DS2_Frpg2RequestMessage.RequestGetAreaBloodstainList";
 }
 
 
@@ -27235,8 +27654,290 @@ void RequestRejectBreakInTargetResponse::Swap(RequestRejectBreakInTargetResponse
 // ===================================================================
 
 #ifndef _MSC_VER
+const int GhostData::kCellIdFieldNumber;
+const int GhostData::kGhostIdFieldNumber;
+const int GhostData::kDataFieldNumber;
+#endif  // !_MSC_VER
+
+GhostData::GhostData()
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:DS2_Frpg2RequestMessage.GhostData)
+}
+
+void GhostData::InitAsDefaultInstance() {
+}
+
+GhostData::GhostData(const GhostData& from)
+  : ::google::protobuf::MessageLite() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:DS2_Frpg2RequestMessage.GhostData)
+}
+
+void GhostData::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  cell_id_ = 0u;
+  ghost_id_ = 0u;
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GhostData::~GhostData() {
+  // @@protoc_insertion_point(destructor:DS2_Frpg2RequestMessage.GhostData)
+  SharedDtor();
+}
+
+void GhostData::SharedDtor() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void GhostData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const GhostData& GhostData::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
+#endif
+  return *default_instance_;
+}
+
+GhostData* GhostData::default_instance_ = NULL;
+
+GhostData* GhostData::New() const {
+  return new GhostData;
+}
+
+void GhostData::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<GhostData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 7) {
+    ZR_(cell_id_, ghost_id_);
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
+      }
+    }
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
+}
+
+bool GhostData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:DS2_Frpg2RequestMessage.GhostData)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 cell_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &cell_id_)));
+          set_has_cell_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_ghost_id;
+        break;
+      }
+
+      // required uint32 ghost_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_ghost_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &ghost_id_)));
+          set_has_ghost_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_data;
+        break;
+      }
+
+      // required bytes data = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_data:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_data()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.GhostData)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:DS2_Frpg2RequestMessage.GhostData)
+  return false;
+#undef DO_
+}
+
+void GhostData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.GhostData)
+  // required uint32 cell_id = 1;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->cell_id(), output);
+  }
+
+  // required uint32 ghost_id = 2;
+  if (has_ghost_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->ghost_id(), output);
+  }
+
+  // required bytes data = 3;
+  if (has_data()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      3, this->data(), output);
+  }
+
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.GhostData)
+}
+
+int GhostData::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 cell_id = 1;
+    if (has_cell_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->cell_id());
+    }
+
+    // required uint32 ghost_id = 2;
+    if (has_ghost_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->ghost_id());
+    }
+
+    // required bytes data = 3;
+    if (has_data()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->data());
+    }
+
+  }
+  total_size += unknown_fields().size();
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GhostData::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const GhostData*>(&from));
+}
+
+void GhostData::MergeFrom(const GhostData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
+    }
+    if (from.has_ghost_id()) {
+      set_ghost_id(from.ghost_id());
+    }
+    if (from.has_data()) {
+      set_data(from.data());
+    }
+  }
+  mutable_unknown_fields()->append(from.unknown_fields());
+}
+
+void GhostData::CopyFrom(const GhostData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GhostData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+
+  return true;
+}
+
+void GhostData::Swap(GhostData* other) {
+  if (other != this) {
+    std::swap(cell_id_, other->cell_id_);
+    std::swap(ghost_id_, other->ghost_id_);
+    std::swap(data_, other->data_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::std::string GhostData::GetTypeName() const {
+  return "DS2_Frpg2RequestMessage.GhostData";
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int RequestGetGhostDataList::kOnlineAreaIdFieldNumber;
-const int RequestGetGhostDataList::kMaxCountFieldNumber;
+const int RequestGetGhostDataList::kMaxGhostsFieldNumber;
 const int RequestGetGhostDataList::kSearchAreasFieldNumber;
 #endif  // !_MSC_VER
 
@@ -27259,7 +27960,7 @@ RequestGetGhostDataList::RequestGetGhostDataList(const RequestGetGhostDataList& 
 void RequestGetGhostDataList::SharedCtor() {
   _cached_size_ = 0;
   online_area_id_ = 0u;
-  max_count_ = 0u;
+  max_ghosts_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -27308,7 +28009,7 @@ void RequestGetGhostDataList::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(online_area_id_, max_count_);
+  ZR_(online_area_id_, max_ghosts_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -27342,18 +28043,18 @@ bool RequestGetGhostDataList::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_max_count;
+        if (input->ExpectTag(16)) goto parse_max_ghosts;
         break;
       }
 
-      // required uint32 max_count = 2;
+      // required uint32 max_ghosts = 2;
       case 2: {
         if (tag == 16) {
-         parse_max_count:
+         parse_max_ghosts:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &max_count_)));
-          set_has_max_count();
+                 input, &max_ghosts_)));
+          set_has_max_ghosts();
         } else {
           goto handle_unusual;
         }
@@ -27405,9 +28106,9 @@ void RequestGetGhostDataList::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // required uint32 max_count = 2;
-  if (has_max_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->max_count(), output);
+  // required uint32 max_ghosts = 2;
+  if (has_max_ghosts()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->max_ghosts(), output);
   }
 
   // repeated .DS2_Frpg2RequestMessage.CellLimitData search_areas = 3;
@@ -27432,11 +28133,11 @@ int RequestGetGhostDataList::ByteSize() const {
           this->online_area_id());
     }
 
-    // required uint32 max_count = 2;
-    if (has_max_count()) {
+    // required uint32 max_ghosts = 2;
+    if (has_max_ghosts()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->max_count());
+          this->max_ghosts());
     }
 
   }
@@ -27468,8 +28169,8 @@ void RequestGetGhostDataList::MergeFrom(const RequestGetGhostDataList& from) {
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_max_count()) {
-      set_max_count(from.max_count());
+    if (from.has_max_ghosts()) {
+      set_max_ghosts(from.max_ghosts());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -27491,7 +28192,7 @@ bool RequestGetGhostDataList::IsInitialized() const {
 void RequestGetGhostDataList::Swap(RequestGetGhostDataList* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(max_count_, other->max_count_);
+    std::swap(max_ghosts_, other->max_ghosts_);
     search_areas_.Swap(&other->search_areas_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -27732,291 +28433,9 @@ void RequestGetGhostDataListResponse::Swap(RequestGetGhostDataListResponse* othe
 // ===================================================================
 
 #ifndef _MSC_VER
-const int GhostData::kCellIdFieldNumber;
-const int GhostData::kGhostIdFieldNumber;
-const int GhostData::kGhostDataFieldNumber;
-#endif  // !_MSC_VER
-
-GhostData::GhostData()
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:DS2_Frpg2RequestMessage.GhostData)
-}
-
-void GhostData::InitAsDefaultInstance() {
-}
-
-GhostData::GhostData(const GhostData& from)
-  : ::google::protobuf::MessageLite() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:DS2_Frpg2RequestMessage.GhostData)
-}
-
-void GhostData::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
-  _cached_size_ = 0;
-  cell_id_ = 0u;
-  ghost_id_ = 0u;
-  ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-GhostData::~GhostData() {
-  // @@protoc_insertion_point(destructor:DS2_Frpg2RequestMessage.GhostData)
-  SharedDtor();
-}
-
-void GhostData::SharedDtor() {
-  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete ghost_data_;
-  }
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void GhostData::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const GhostData& GhostData::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto();
-#endif
-  return *default_instance_;
-}
-
-GhostData* GhostData::default_instance_ = NULL;
-
-GhostData* GhostData::New() const {
-  return new GhostData;
-}
-
-void GhostData::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<GhostData*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 7) {
-    ZR_(cell_id_, ghost_id_);
-    if (has_ghost_data()) {
-      if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        ghost_data_->clear();
-      }
-    }
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
-}
-
-bool GhostData::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  ::google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
-  // @@protoc_insertion_point(parse_start:DS2_Frpg2RequestMessage.GhostData)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 cell_id = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &cell_id_)));
-          set_has_cell_id();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_ghost_id;
-        break;
-      }
-
-      // required uint32 ghost_id = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_ghost_id:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &ghost_id_)));
-          set_has_ghost_id();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(26)) goto parse_ghost_data;
-        break;
-      }
-
-      // required bytes ghost_data = 3;
-      case 3: {
-        if (tag == 26) {
-         parse_ghost_data:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_ghost_data()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-            input, tag, &unknown_fields_stream));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.GhostData)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:DS2_Frpg2RequestMessage.GhostData)
-  return false;
-#undef DO_
-}
-
-void GhostData::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.GhostData)
-  // required uint32 cell_id = 1;
-  if (has_cell_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->cell_id(), output);
-  }
-
-  // required uint32 ghost_id = 2;
-  if (has_ghost_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->ghost_id(), output);
-  }
-
-  // required bytes ghost_data = 3;
-  if (has_ghost_data()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      3, this->ghost_data(), output);
-  }
-
-  output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
-  // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.GhostData)
-}
-
-int GhostData::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 cell_id = 1;
-    if (has_cell_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->cell_id());
-    }
-
-    // required uint32 ghost_id = 2;
-    if (has_ghost_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->ghost_id());
-    }
-
-    // required bytes ghost_data = 3;
-    if (has_ghost_data()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->ghost_data());
-    }
-
-  }
-  total_size += unknown_fields().size();
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void GhostData::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const GhostData*>(&from));
-}
-
-void GhostData::MergeFrom(const GhostData& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_cell_id()) {
-      set_cell_id(from.cell_id());
-    }
-    if (from.has_ghost_id()) {
-      set_ghost_id(from.ghost_id());
-    }
-    if (from.has_ghost_data()) {
-      set_ghost_data(from.ghost_data());
-    }
-  }
-  mutable_unknown_fields()->append(from.unknown_fields());
-}
-
-void GhostData::CopyFrom(const GhostData& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool GhostData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
-
-  return true;
-}
-
-void GhostData::Swap(GhostData* other) {
-  if (other != this) {
-    std::swap(cell_id_, other->cell_id_);
-    std::swap(ghost_id_, other->ghost_id_);
-    std::swap(ghost_data_, other->ghost_data_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::std::string GhostData::GetTypeName() const {
-  return "DS2_Frpg2RequestMessage.GhostData";
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
 const int RequestCreateGhostData::kOnlineAreaIdFieldNumber;
 const int RequestCreateGhostData::kCellIdFieldNumber;
-const int RequestCreateGhostData::kGhostDataFieldNumber;
+const int RequestCreateGhostData::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestCreateGhostData::RequestCreateGhostData()
@@ -28040,7 +28459,7 @@ void RequestCreateGhostData::SharedCtor() {
   _cached_size_ = 0;
   online_area_id_ = 0u;
   cell_id_ = 0u;
-  ghost_data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -28050,8 +28469,8 @@ RequestCreateGhostData::~RequestCreateGhostData() {
 }
 
 void RequestCreateGhostData::SharedDtor() {
-  if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete ghost_data_;
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -28094,9 +28513,9 @@ void RequestCreateGhostData::Clear() {
 
   if (_has_bits_[0 / 32] & 7) {
     ZR_(online_area_id_, cell_id_);
-    if (has_ghost_data()) {
-      if (ghost_data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        ghost_data_->clear();
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
       }
     }
   }
@@ -28147,16 +28566,16 @@ bool RequestCreateGhostData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_ghost_data;
+        if (input->ExpectTag(26)) goto parse_data;
         break;
       }
 
-      // required bytes ghost_data = 3;
+      // required bytes data = 3;
       case 3: {
         if (tag == 26) {
-         parse_ghost_data:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_ghost_data()));
+                input, this->mutable_data()));
         } else {
           goto handle_unusual;
         }
@@ -28199,10 +28618,10 @@ void RequestCreateGhostData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->cell_id(), output);
   }
 
-  // required bytes ghost_data = 3;
-  if (has_ghost_data()) {
+  // required bytes data = 3;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      3, this->ghost_data(), output);
+      3, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -28228,11 +28647,11 @@ int RequestCreateGhostData::ByteSize() const {
           this->cell_id());
     }
 
-    // required bytes ghost_data = 3;
-    if (has_ghost_data()) {
+    // required bytes data = 3;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->ghost_data());
+          this->data());
     }
 
   }
@@ -28258,8 +28677,8 @@ void RequestCreateGhostData::MergeFrom(const RequestCreateGhostData& from) {
     if (from.has_cell_id()) {
       set_cell_id(from.cell_id());
     }
-    if (from.has_ghost_data()) {
-      set_ghost_data(from.ghost_data());
+    if (from.has_data()) {
+      set_data(from.data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -28281,7 +28700,7 @@ void RequestCreateGhostData::Swap(RequestCreateGhostData* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
     std::swap(cell_id_, other->cell_id_);
-    std::swap(ghost_data_, other->ghost_data_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -44538,7 +44957,7 @@ void RequestGetServerSidePlayerStatus::Swap(RequestGetServerSidePlayerStatus* ot
 
 #ifndef _MSC_VER
 const int CellLimitData::kCellIdFieldNumber;
-const int CellLimitData::kMaxCountFieldNumber;
+const int CellLimitData::kMaxItemsFieldNumber;
 #endif  // !_MSC_VER
 
 CellLimitData::CellLimitData()
@@ -44560,7 +44979,7 @@ CellLimitData::CellLimitData(const CellLimitData& from)
 void CellLimitData::SharedCtor() {
   _cached_size_ = 0;
   cell_id_ = 0u;
-  max_count_ = 0u;
+  max_items_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -44609,7 +45028,7 @@ void CellLimitData::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(cell_id_, max_count_);
+  ZR_(cell_id_, max_items_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -44642,18 +45061,18 @@ bool CellLimitData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_max_count;
+        if (input->ExpectTag(16)) goto parse_max_items;
         break;
       }
 
-      // required uint32 max_count = 2;
+      // required uint32 max_items = 2;
       case 2: {
         if (tag == 16) {
-         parse_max_count:
+         parse_max_items:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &max_count_)));
-          set_has_max_count();
+                 input, &max_items_)));
+          set_has_max_items();
         } else {
           goto handle_unusual;
         }
@@ -44691,9 +45110,9 @@ void CellLimitData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->cell_id(), output);
   }
 
-  // required uint32 max_count = 2;
-  if (has_max_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->max_count(), output);
+  // required uint32 max_items = 2;
+  if (has_max_items()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->max_items(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -44712,11 +45131,11 @@ int CellLimitData::ByteSize() const {
           this->cell_id());
     }
 
-    // required uint32 max_count = 2;
-    if (has_max_count()) {
+    // required uint32 max_items = 2;
+    if (has_max_items()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->max_count());
+          this->max_items());
     }
 
   }
@@ -44739,8 +45158,8 @@ void CellLimitData::MergeFrom(const CellLimitData& from) {
     if (from.has_cell_id()) {
       set_cell_id(from.cell_id());
     }
-    if (from.has_max_count()) {
-      set_max_count(from.max_count());
+    if (from.has_max_items()) {
+      set_max_items(from.max_items());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -44761,7 +45180,7 @@ bool CellLimitData::IsInitialized() const {
 void CellLimitData::Swap(CellLimitData* other) {
   if (other != this) {
     std::swap(cell_id_, other->cell_id_);
-    std::swap(max_count_, other->max_count_);
+    std::swap(max_items_, other->max_items_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

@@ -175,9 +175,9 @@ message BloodMessageData {
 	required uint32 player_id = 1;
 	required uint32 character_id = 2;
 	required uint32 message_id = 3;
-	required uint32 evaluations = 4;
+	required uint32 good = 4;
 	required bytes message_data = 5;
-	required string steam_id = 6;
+	required string player_steam_id = 6;
 	required uint32 cell_id = 7;
 	optional string unknown_8 = 8;
 }
@@ -189,11 +189,12 @@ message BloodMessageCellLimitData {
 }
 
 message RequestReentryBloodMessage {
-    // TODO
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
+	required uint32 message_id = 3;
 }
 
 message RequestReentryBloodMessageResponse {
-    // TODO
 }
 
 message RequestCreateBloodMessage {
@@ -208,8 +209,8 @@ message RequestCreateBloodMessageResponse {
 }
 
 message RequestRemoveBloodMessage {
-	required uint32 area_id = 1;
-	required uint32 player_id = 2;
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
 	required uint32 message_id = 3;
 }
 
@@ -219,7 +220,7 @@ message RequestRemoveBloodMessageResponse {
 
 message RequestGetBloodMessageList {
 	required uint32 online_area_id = 1;
-	required uint32 count = 2;
+	required uint32 max_messages = 2;
 	repeated BloodMessageCellLimitData search_areas = 3;
 }
 
@@ -235,35 +236,32 @@ message RequestEvaluateBloodMessage {
 }
 
 message RequestEvaluateBloodMessageResponse {
-    // TODO
+    // Seems to just be empty response.
 }
 
 message RequestGetBloodMessageEvaluation {
-    // TODO
+    required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
+    required uint32 message_id = 3;
 }
 
 message RequestGetBloodMessageEvaluationResponse {
-    // TODO
+	required int64 message_id = 1;
+	required int64 rating = 2;
 }
 
 message PushRequestEvaluateBloodMessage {
-	required uint32 online_area_id = 1;
-	required uint32 player_id = 2;
+    required PushMessageId push_message_id = 1;     
+	required uint32 player_id = 2;          // Might be cell id
 	required uint32 message_id = 3;
+	required string player_steam_id = 4;
 }
 
 message RequestGetAreaBloodMessageList {
 	required uint32 online_area_id = 1;
 	required uint32 count = 2;              
-	required uint32 unknown_3 = 3;          // 5
-	required uint32 unknown_4 = 4;          // 27
-}
-
-message RequestGetAreaBloodstainList {
-	required uint32 online_area_id = 1;
-	required uint32 count = 2;              
-	required uint32 unknown_3 = 3;         // 5
-	required uint32 unknown_4 = 4;          // 27
+	required uint32 max_type_1 = 3;          // 5
+	required uint32 max_type_2 = 4;          // 27
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -274,7 +272,7 @@ message BloodstainInfo {
 	required uint32 online_area_id = 1;
 	required uint32 cell_id = 2;
 	required uint32 bloodstain_id = 3;
-	required bytes bloodstain_data = 4;
+	required bytes data = 4;
 }
 
 message RequestCreateBloodstain {
@@ -288,6 +286,13 @@ message RequestGetBloodstainList {
 	required uint32 online_area_id = 1;
 	required uint32 max_stains = 2;
 	repeated CellLimitData search_areas = 3;
+}
+
+message RequestGetAreaBloodstainList {
+	required uint32 online_area_id = 1;
+	required uint32 count = 2;              
+	required uint32 max_type_1 = 3;         // 5
+	required uint32 max_type_2 = 4;          // 27
 }
 
 message RequestGetBloodstainListResponse {
@@ -709,9 +714,15 @@ message RequestRejectBreakInTargetResponse {
 // Game Server Messages - Ghost Data
 // ------------------------------------------------------------------------------------------------------------
 
+message GhostData {
+	required uint32 cell_id = 1;        
+	required uint32 ghost_id = 2;       
+	required bytes data = 3;
+}
+
 message RequestGetGhostDataList {
 	required uint32 online_area_id = 1;     
-	required uint32 max_count = 2;
+	required uint32 max_ghosts = 2;
 	repeated CellLimitData search_areas = 3;
 }
 
@@ -720,16 +731,10 @@ message RequestGetGhostDataListResponse {
 	repeated GhostData ghosts = 3;
 }
 
-message GhostData {
-	required uint32 cell_id = 1;        
-	required uint32 ghost_id = 2;       
-	required bytes ghost_data = 3;
-}
-
 message RequestCreateGhostData {
 	required uint32 online_area_id = 1;
 	required uint32 cell_id = 2;      
-	required bytes ghost_data = 3;
+	required bytes data = 3;
 }
 
 message RequestCreateGhostDataResponse {
@@ -1133,7 +1138,7 @@ message RequestGetServerSidePlayerStatus {
 
 message CellLimitData {
 	required uint32 cell_id = 1;
-	required uint32 max_count = 2;
+	required uint32 max_items = 2;
 }
 
 message DateTime {

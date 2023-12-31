@@ -47,7 +47,7 @@ bool DS3_BloodMessageManager::Init()
     const std::vector<DS3_OnlineAreaId>* Areas = GetEnumValues<DS3_OnlineAreaId>();
     for (DS3_OnlineAreaId AreaId : *Areas)
     {
-        std::vector<std::shared_ptr<BloodMessage>> Messages = Database.FindRecentBloodMessage((uint32_t)AreaId, PrimeCountPerArea);
+        std::vector<std::shared_ptr<BloodMessage>> Messages = Database.FindRecentBloodMessage((uint32_t)AreaId, 0, PrimeCountPerArea);
         for (const std::shared_ptr<BloodMessage>& Message : Messages)
         {
             LiveCache.Add(AreaId, Message->MessageId, Message);
@@ -171,7 +171,7 @@ MessageHandleResult DS3_BloodMessageManager::Handle_RequestReCreateBloodMessageL
         MessageData.assign(MessageInfo.message_data().data(), MessageInfo.message_data().data() + MessageInfo.message_data().size());
 
         // Create the message in the database.
-        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((uint32_t)MessageInfo.online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData);
+        std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((uint32_t)MessageInfo.online_area_id(), 0, Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData);
         if (!BloodMessage)
         {
             WarningS(Client->GetName().c_str(), "Failed to recreate blood message.");
@@ -262,7 +262,7 @@ MessageHandleResult DS3_BloodMessageManager::Handle_RequestCreateBloodMessage(Ga
         LogS(Client->GetName().c_str(), "BloodMessage Created: %s", data.ToString().c_str());
     }
 
-    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((uint32_t)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData))
+    if (std::shared_ptr<BloodMessage> ActiveMessage = Database.CreateBloodMessage((uint32_t)Request->online_area_id(), 0, Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData))
     {
         Response.set_message_id(ActiveMessage->MessageId);
 
@@ -327,7 +327,7 @@ MessageHandleResult DS3_BloodMessageManager::Handle_RequestGetBloodMessageList(G
     DS3_Frpg2RequestMessage::RequestGetBloodMessageListResponse Response;
     Response.mutable_messages();
 
-    uint32_t RemainingMessageCount = Request->max_messages();
+    int RemainingMessageCount = (int)Request->max_messages();
 
     if (!Config.DisableBloodMessages)
     {
@@ -338,17 +338,11 @@ MessageHandleResult DS3_BloodMessageManager::Handle_RequestGetBloodMessageList(G
 
             DS3_OnlineAreaId AreaId = (DS3_OnlineAreaId)Area.online_area_id();
             uint32_t MaxForArea = Area.max_type_1() + Area.max_type_2(); // TODO: we need to figure out the difference between these two types.
-            uint32_t GatherCount = std::min(MaxForArea, RemainingMessageCount);
+            int GatherCount = std::min((int)MaxForArea, RemainingMessageCount);
 
             std::vector<std::shared_ptr<BloodMessage>> AreaMessages = LiveCache.GetRandomSet(AreaId, GatherCount);
             for (std::shared_ptr<BloodMessage>& AreaMsg : AreaMessages)
             {
-                // Filter players own messages.
-                if (AreaMsg->PlayerId == Player.GetPlayerId())
-                {
-                    continue;
-                }
-            
                 DS3_Frpg2RequestMessage::BloodMessageData& Data = *Response.mutable_messages()->Add();
                 Data.set_player_id(AreaMsg->PlayerId);
                 Data.set_character_id(AreaMsg->CharacterId); 

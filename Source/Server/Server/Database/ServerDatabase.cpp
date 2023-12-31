@@ -66,6 +66,7 @@ bool ServerDatabase::CreateTables()
         "CREATE TABLE IF NOT EXISTS BloodMessages("                                 \
         "   MessageId           INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
         "   OnlineAreaId        INTEGER,"                                           \
+        "   CellId              INTEGER,"                                           \
         "   PlayerId            INTEGER,"                                           \
         "   PlayerSteamId       CHAR(50),"                                          \
         "   CharacterId         INTEGER,"                                           \
@@ -79,6 +80,7 @@ bool ServerDatabase::CreateTables()
         "CREATE TABLE IF NOT EXISTS Bloodstains("                                   \
         "   BloodstainId        INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
         "   OnlineAreaId        INTEGER,"                                           \
+        "   CellId              INTEGER,"                                           \
         "   PlayerId            INTEGER,"                                           \
         "   PlayerSteamId       CHAR(50),"                                          \
         "   Data                BLOB,"                                              \
@@ -90,6 +92,7 @@ bool ServerDatabase::CreateTables()
         "CREATE TABLE IF NOT EXISTS Ghosts("                                        \
         "   GhostId             INTEGER PRIMARY KEY AUTOINCREMENT,"                 \
         "   OnlineAreaId        INTEGER,"                                           \
+        "   CellId              INTEGER,"                                           \
         "   PlayerId            INTEGER,"                                           \
         "   PlayerSteamId       CHAR(50),"                                          \
         "   Data                BLOB,"                                              \
@@ -212,6 +215,15 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
             }
         }
         else if (auto CastValue = std::get_if<int64_t>(&Value))
+        {
+            if (int result = sqlite3_bind_int64(statement, i + 1, *CastValue); result != SQLITE_OK)
+            {
+                Error("sqlite3_bind_int failed with error: %s", sqlite3_errstr(result));
+                sqlite3_finalize(statement);
+                return false;
+            }
+        }
+        else if (auto CastValue = std::get_if<uint64_t>(&Value))
         {
             if (int result = sqlite3_bind_int64(statement, i + 1, *CastValue); result != SQLITE_OK)
             {
@@ -353,17 +365,40 @@ std::shared_ptr<BloodMessage> ServerDatabase::FindBloodMessage(uint32_t MessageI
 {
     std::shared_ptr<BloodMessage> Result = nullptr;
 
-    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE MessageId = ?1", { MessageId }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT MessageId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE MessageId = ?1", { MessageId }, [&Result](sqlite3_stmt* statement) {
         Result = std::make_shared<BloodMessage>();
         Result->MessageId       = sqlite3_column_int(statement, 0);
         Result->OnlineAreaId    = (uint32_t)sqlite3_column_int(statement, 1);
-        Result->PlayerId        = sqlite3_column_int(statement, 2);
-        Result->PlayerSteamId   = (const char*)sqlite3_column_text(statement, 3);
-        Result->CharacterId     = sqlite3_column_int(statement, 4);
-        Result->RatingPoor      = sqlite3_column_int(statement, 5);
-        Result->RatingGood      = sqlite3_column_int(statement, 6);
-        const uint8_t* data_blob = (const uint8_t *)sqlite3_column_blob(statement, 7);
-        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 7));
+        Result->CellId          = (uint64_t)sqlite3_column_int64(statement, 2);
+        Result->PlayerId        = sqlite3_column_int(statement, 3);
+        Result->PlayerSteamId   = (const char*)sqlite3_column_text(statement, 4);
+        Result->CharacterId     = sqlite3_column_int(statement, 5);
+        Result->RatingPoor      = sqlite3_column_int(statement, 6);
+        Result->RatingGood      = sqlite3_column_int(statement, 7);
+        const uint8_t* data_blob = (const uint8_t *)sqlite3_column_blob(statement, 8);
+        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 8));
+    });
+
+    return Result;
+}
+
+std::vector<std::shared_ptr<BloodMessage>> ServerDatabase::FindRecentBloodMessage(uint32_t AreaId, uint64_t CellId, int Count)
+{
+    std::vector<std::shared_ptr<BloodMessage>> Result;
+
+    RunStatement("SELECT MessageId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE OnlineAreaId = ?1 AND CellId = ?2 ORDER BY rowid DESC LIMIT ?3", { (uint32_t)AreaId, CellId, Count }, [&Result](sqlite3_stmt* statement) {
+        std::shared_ptr<BloodMessage> Message = std::make_shared<BloodMessage>();
+        Message->MessageId = sqlite3_column_int(statement, 0);
+        Message->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
+        Message->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Message->PlayerId = sqlite3_column_int(statement, 3);
+        Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
+        Message->CharacterId = sqlite3_column_int(statement, 5);
+        Message->RatingPoor = sqlite3_column_int(statement, 6);
+        Message->RatingGood = sqlite3_column_int(statement, 7);
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 8);
+        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 8));
+        Result.push_back(Message);
     });
 
     return Result;
@@ -373,17 +408,18 @@ std::vector<std::shared_ptr<BloodMessage>> ServerDatabase::FindRecentBloodMessag
 {
     std::vector<std::shared_ptr<BloodMessage>> Result;
 
-    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT MessageId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
         std::shared_ptr<BloodMessage> Message = std::make_shared<BloodMessage>();
         Message->MessageId = sqlite3_column_int(statement, 0);
         Message->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
-        Message->PlayerId = sqlite3_column_int(statement, 2);
-        Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
-        Message->CharacterId = sqlite3_column_int(statement, 4);
-        Message->RatingPoor = sqlite3_column_int(statement, 5);
-        Message->RatingGood = sqlite3_column_int(statement, 6);
-        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 7);
-        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 7));
+        Message->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Message->PlayerId = sqlite3_column_int(statement, 3);
+        Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
+        Message->CharacterId = sqlite3_column_int(statement, 5);
+        Message->RatingPoor = sqlite3_column_int(statement, 6);
+        Message->RatingGood = sqlite3_column_int(statement, 7);
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 8);
+        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 8));
         Result.push_back(Message);
     });
 
@@ -394,26 +430,27 @@ std::vector<std::shared_ptr<BloodMessage>> ServerDatabase::GetAllBloodMessages()
 {
     std::vector<std::shared_ptr<BloodMessage>> Result;
 
-    RunStatement("SELECT MessageId, OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages", {  }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT MessageId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data FROM BloodMessages", {  }, [&Result](sqlite3_stmt* statement) {
         std::shared_ptr<BloodMessage> Message = std::make_shared<BloodMessage>();
         Message->MessageId = sqlite3_column_int(statement, 0);
         Message->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
-        Message->PlayerId = sqlite3_column_int(statement, 2);
-        Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
-        Message->CharacterId = sqlite3_column_int(statement, 4);
-        Message->RatingPoor = sqlite3_column_int(statement, 5);
-        Message->RatingGood = sqlite3_column_int(statement, 6);
-        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 7);
-        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 7));
+        Message->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Message->PlayerId = sqlite3_column_int(statement, 3);
+        Message->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
+        Message->CharacterId = sqlite3_column_int(statement, 5);
+        Message->RatingPoor = sqlite3_column_int(statement, 6);
+        Message->RatingGood = sqlite3_column_int(statement, 7);
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 8);
+        Message->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 8));
         Result.push_back(Message);
     });
 
     return Result;
 }
 
-std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(uint32_t AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, uint32_t CharacterId, const std::vector<uint8_t>& Data)
+std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(uint32_t AreaId, uint64_t CellId, uint32_t PlayerId, const std::string& PlayerSteamId, uint32_t CharacterId, const std::vector<uint8_t>& Data)
 {
-    if (!RunStatement("INSERT INTO BloodMessages(OnlineAreaId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, ?6, ?7, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, CharacterId, 0, 0, Data }, nullptr))
+    if (!RunStatement("INSERT INTO BloodMessages(OnlineAreaId, CellId, PlayerId, PlayerSteamId, CharacterId, RatingPoor, RatingGood, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, datetime('now'))", { (uint32_t)AreaId, (uint64_t)CellId, PlayerId, PlayerSteamId, CharacterId, 0, 0, Data }, nullptr))
     {
         return nullptr;
     }
@@ -421,6 +458,7 @@ std::shared_ptr<BloodMessage> ServerDatabase::CreateBloodMessage(uint32_t AreaId
     std::shared_ptr<BloodMessage> Result = std::make_shared<BloodMessage>();
     Result->MessageId = (uint32_t)sqlite3_last_insert_rowid(db_handle);
     Result->OnlineAreaId = AreaId;
+    Result->CellId = CellId;
     Result->CharacterId = CharacterId;
     Result->PlayerId = PlayerId;
     Result->PlayerSteamId = PlayerSteamId;
@@ -460,18 +498,43 @@ std::shared_ptr<Bloodstain> ServerDatabase::FindBloodstain(uint32_t BloodstainId
 {
     std::shared_ptr<Bloodstain> Result;
   
-    RunStatement("SELECT BloodstainId, OnlineAreaId, PlayerId, PlayerSteamId, Data, GhostData FROM Bloodstains WHERE BloodstainId = ?1", { BloodstainId }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT BloodstainId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, Data, GhostData FROM Bloodstains WHERE BloodstainId = ?1", { BloodstainId }, [&Result](sqlite3_stmt* statement) {
         Result = std::make_shared<Bloodstain>();
         Result->BloodstainId = sqlite3_column_int(statement, 0);
         Result->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
-        Result->PlayerId = sqlite3_column_int(statement, 2);
-        Result->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+        Result->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Result->PlayerId = sqlite3_column_int(statement, 3);
+        Result->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
 
-        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 4);
-        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 4));
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
+        Result->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 5));
 
-        const uint8_t* ghost_data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
-        Result->GhostData.assign(ghost_data_blob, ghost_data_blob + sqlite3_column_bytes(statement, 5));
+        const uint8_t* ghost_data_blob = (const uint8_t*)sqlite3_column_blob(statement, 6);
+        Result->GhostData.assign(ghost_data_blob, ghost_data_blob + sqlite3_column_bytes(statement, 6));
+    });
+
+    return Result;
+}
+
+std::vector<std::shared_ptr<Bloodstain>> ServerDatabase::FindRecentBloodstains(uint32_t AreaId, uint64_t CellId, int Count)
+{
+    std::vector<std::shared_ptr<Bloodstain>> Result;
+
+    RunStatement("SELECT BloodstainId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, Data, GhostData FROM Bloodstains WHERE OnlineAreaId = ?1 AND CellId = ?2 ORDER BY rowid DESC LIMIT ?3", { (uint32_t)AreaId, CellId, Count }, [&Result](sqlite3_stmt* statement) {
+        std::shared_ptr<Bloodstain> Stain = std::make_shared<Bloodstain>();
+        Stain->BloodstainId = sqlite3_column_int(statement, 0);
+        Stain->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
+        Stain->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Stain->PlayerId = sqlite3_column_int(statement, 3);
+        Stain->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
+        Stain->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 5));
+
+        const uint8_t* ghost_data_blob = (const uint8_t*)sqlite3_column_blob(statement, 6);
+        Stain->GhostData.assign(ghost_data_blob, ghost_data_blob + sqlite3_column_bytes(statement, 6));
+
+        Result.push_back(Stain);
     });
 
     return Result;
@@ -481,18 +544,19 @@ std::vector<std::shared_ptr<Bloodstain>> ServerDatabase::FindRecentBloodstains(u
 {
     std::vector<std::shared_ptr<Bloodstain>> Result;
 
-    RunStatement("SELECT BloodstainId, OnlineAreaId, PlayerId, PlayerSteamId, Data, GhostData FROM Bloodstains WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT BloodstainId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, Data, GhostData FROM Bloodstains WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
         std::shared_ptr<Bloodstain> Stain = std::make_shared<Bloodstain>();
         Stain->BloodstainId = sqlite3_column_int(statement, 0);
         Stain->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
-        Stain->PlayerId = sqlite3_column_int(statement, 2);
-        Stain->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+        Stain->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Stain->PlayerId = sqlite3_column_int(statement, 3);
+        Stain->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
 
-        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 4);
-        Stain->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 4));
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
+        Stain->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 5));
 
-        const uint8_t* ghost_data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
-        Stain->GhostData.assign(ghost_data_blob, ghost_data_blob + sqlite3_column_bytes(statement, 5));
+        const uint8_t* ghost_data_blob = (const uint8_t*)sqlite3_column_blob(statement, 6);
+        Stain->GhostData.assign(ghost_data_blob, ghost_data_blob + sqlite3_column_bytes(statement, 6));
 
         Result.push_back(Stain);
     });
@@ -500,9 +564,9 @@ std::vector<std::shared_ptr<Bloodstain>> ServerDatabase::FindRecentBloodstains(u
     return Result;
 }
 
-std::shared_ptr<Bloodstain> ServerDatabase::CreateBloodstain(uint32_t AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData)
+std::shared_ptr<Bloodstain> ServerDatabase::CreateBloodstain(uint32_t AreaId, uint64_t CellId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data, const std::vector<uint8_t>& GhostData)
 {
-    if (!RunStatement("INSERT INTO Bloodstains(OnlineAreaId, PlayerId, PlayerSteamId, Data, GhostData, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, Data, GhostData }, nullptr))
+    if (!RunStatement("INSERT INTO Bloodstains(OnlineAreaId, CellId, PlayerId, PlayerSteamId, Data, GhostData, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, ?6, datetime('now'))", { (uint32_t)AreaId, CellId, PlayerId, PlayerSteamId, Data, GhostData }, nullptr))
     {
         return nullptr;
     }
@@ -510,6 +574,7 @@ std::shared_ptr<Bloodstain> ServerDatabase::CreateBloodstain(uint32_t AreaId, ui
     std::shared_ptr<Bloodstain> Result = std::make_shared<Bloodstain>();
     Result->BloodstainId = (uint32_t)sqlite3_last_insert_rowid(db_handle);
     Result->OnlineAreaId = AreaId;
+    Result->CellId = CellId;
     Result->PlayerId = PlayerId;
     Result->PlayerSteamId = PlayerSteamId;
     Result->Data = Data;
@@ -523,19 +588,20 @@ void ServerDatabase::TrimBloodStains(size_t MaxEntries)
     TrimTable("Bloodstains", "BloodstainId", MaxEntries);
 }
 
-std::vector<std::shared_ptr<Ghost>> ServerDatabase::FindRecentGhosts(uint32_t AreaId, int Count)
+std::vector<std::shared_ptr<Ghost>> ServerDatabase::FindRecentGhosts(uint32_t AreaId, uint64_t CellId, int Count)
 {
     std::vector<std::shared_ptr<Ghost>> Result;
 
-    RunStatement("SELECT GhostId, OnlineAreaId, PlayerId, PlayerSteamId, Data FROM Ghosts WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+    RunStatement("SELECT GhostId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, Data FROM Ghosts WHERE OnlineAreaId = ?1 AND CellId = ?2 ORDER BY rowid DESC LIMIT ?3", { (uint32_t)AreaId, CellId, Count }, [&Result](sqlite3_stmt* statement) {
         std::shared_ptr<Ghost> Entry = std::make_shared<Ghost>();
         Entry->GhostId = sqlite3_column_int(statement, 0);
         Entry->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
-        Entry->PlayerId = sqlite3_column_int(statement, 2);
-        Entry->PlayerSteamId = (const char*)sqlite3_column_text(statement, 3);
+        Entry->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Entry->PlayerId = sqlite3_column_int(statement, 3);
+        Entry->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
 
-        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 4);
-        Entry->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 4));
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
+        Entry->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 5));
 
         Result.push_back(Entry);
     });
@@ -543,9 +609,30 @@ std::vector<std::shared_ptr<Ghost>> ServerDatabase::FindRecentGhosts(uint32_t Ar
     return Result;
 }
 
-std::shared_ptr<Ghost> ServerDatabase::CreateGhost(uint32_t AreaId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data)
+std::vector<std::shared_ptr<Ghost>> ServerDatabase::FindRecentGhosts(uint32_t AreaId,int Count)
 {
-    if (!RunStatement("INSERT INTO Ghosts(OnlineAreaId, PlayerId, PlayerSteamId, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, datetime('now'))", { (uint32_t)AreaId, PlayerId, PlayerSteamId, Data }, nullptr))
+    std::vector<std::shared_ptr<Ghost>> Result;
+
+    RunStatement("SELECT GhostId, OnlineAreaId, CellId, PlayerId, PlayerSteamId, Data FROM Ghosts WHERE OnlineAreaId = ?1 ORDER BY rowid DESC LIMIT ?2", { (uint32_t)AreaId, Count }, [&Result](sqlite3_stmt* statement) {
+        std::shared_ptr<Ghost> Entry = std::make_shared<Ghost>();
+        Entry->GhostId = sqlite3_column_int(statement, 0);
+        Entry->OnlineAreaId = (uint32_t)sqlite3_column_int(statement, 1);
+        Entry->CellId = (uint64_t)sqlite3_column_int64(statement, 2);
+        Entry->PlayerId = sqlite3_column_int(statement, 3);
+        Entry->PlayerSteamId = (const char*)sqlite3_column_text(statement, 4);
+
+        const uint8_t* data_blob = (const uint8_t*)sqlite3_column_blob(statement, 5);
+        Entry->Data.assign(data_blob, data_blob + sqlite3_column_bytes(statement, 5));
+
+        Result.push_back(Entry);
+    });
+
+    return Result;
+}
+
+std::shared_ptr<Ghost> ServerDatabase::CreateGhost(uint32_t AreaId, uint64_t CellId, uint32_t PlayerId, const std::string& PlayerSteamId, const std::vector<uint8_t>& Data)
+{
+    if (!RunStatement("INSERT INTO Ghosts(OnlineAreaId, CellId, PlayerId, PlayerSteamId, Data, CreatedTime) VALUES(?1, ?2, ?3, ?4, ?5, datetime('now'))", { (uint32_t)AreaId, CellId, PlayerId, PlayerSteamId, Data }, nullptr))
     {
         return nullptr;
     }
@@ -553,6 +640,7 @@ std::shared_ptr<Ghost> ServerDatabase::CreateGhost(uint32_t AreaId, uint32_t Pla
     std::shared_ptr<Ghost> Result = std::make_shared<Ghost>();
     Result->GhostId = (uint32_t)sqlite3_last_insert_rowid(db_handle);
     Result->OnlineAreaId = AreaId;
+    Result->CellId = CellId;
     Result->PlayerId = PlayerId;
     Result->PlayerSteamId = PlayerSteamId;
     Result->Data = Data;

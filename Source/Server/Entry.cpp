@@ -17,7 +17,7 @@
 #include "Shared/Core/Utils/Protobuf.h"
 #include "Shared/Core/Utils/File.h"
 #include "Shared/Core/Utils/Strings.h"
-#define DEBUG_TEST
+//#define DEBUG_TEST
 // DEBUG DEBUG DEBUG
 
 #include <filesystem>

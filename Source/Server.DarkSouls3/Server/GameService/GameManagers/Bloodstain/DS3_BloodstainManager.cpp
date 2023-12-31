@@ -41,7 +41,7 @@ bool DS3_BloodstainManager::Init()
     const std::vector<DS3_OnlineAreaId>* Areas = GetEnumValues<DS3_OnlineAreaId>();
     for (DS3_OnlineAreaId AreaId : *Areas)
     {
-        std::vector<std::shared_ptr<Bloodstain>> Stains = Database.FindRecentBloodstains((uint32_t)AreaId, PrimeCountPerArea);
+        std::vector<std::shared_ptr<Bloodstain>> Stains = Database.FindRecentBloodstains((uint32_t)AreaId, 0, PrimeCountPerArea);
         for (const std::shared_ptr<Bloodstain>& Stain : Stains)
         {
             LiveCache.Add(AreaId, Stain->BloodstainId, Stain);
@@ -96,7 +96,7 @@ MessageHandleResult DS3_BloodstainManager::Handle_RequestCreateBloodstain(GameCl
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
     GhostData.assign(Request->ghost_data().data(), Request->ghost_data().data() + Request->ghost_data().size());
 
-    if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((uint32_t)Request->online_area_id(), Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
+    if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((uint32_t)Request->online_area_id(), 0, Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
     {
         LiveCache.Add((DS3_OnlineAreaId)ActiveStain->OnlineAreaId, ActiveStain->BloodstainId, ActiveStain);
     }
@@ -122,7 +122,7 @@ MessageHandleResult DS3_BloodstainManager::Handle_RequestGetBloodstainList(GameC
     DS3_Frpg2RequestMessage::RequestGetBloodstainListResponse Response;
     Response.mutable_bloodstains();
 
-    uint32_t RemainingStainCount = Request->max_stains();
+    int RemainingStainCount = (int)Request->max_stains();
 
     if (!Config.DisableBloodStains)
     {
@@ -132,18 +132,12 @@ MessageHandleResult DS3_BloodstainManager::Handle_RequestGetBloodstainList(GameC
             const DS3_Frpg2RequestMessage::DomainLimitData& Area = Request->search_areas(i);
 
             DS3_OnlineAreaId AreaId = (DS3_OnlineAreaId)Area.online_area_id();
-            uint32_t MaxForArea = Area.max_items();
-            uint32_t GatherCount = std::min(MaxForArea, RemainingStainCount);
+            int MaxForArea = (int)Area.max_items();
+            int GatherCount = std::min(MaxForArea, RemainingStainCount);
 
             std::vector<std::shared_ptr<Bloodstain>> AreaStains = LiveCache.GetRandomSet(AreaId, GatherCount);
             for (std::shared_ptr<Bloodstain>& AreaMsg : AreaStains)
             {
-                // Filter players own messages.
-                if (AreaMsg->PlayerId == Player.GetPlayerId())
-                {
-                    continue;
-                }
-
                 DS3_Frpg2RequestMessage::BloodstainInfo& Data = *Response.mutable_bloodstains()->Add();
                 Data.set_online_area_id((uint32_t)AreaMsg->OnlineAreaId);
                 Data.set_bloodstain_id((uint32_t)AreaMsg->BloodstainId);

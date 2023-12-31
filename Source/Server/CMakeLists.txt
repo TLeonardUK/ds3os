@@ -41,6 +41,7 @@ SET(SOURCES
     Server/GameService/GameService.cpp
     Server/GameService/GameService.h
     Server/GameService/PlayerState.h
+    Server/GameService/Utils/OnlineAreaPool.h
 
     Server/LoginService/LoginClient.cpp
     Server/LoginService/LoginClient.h

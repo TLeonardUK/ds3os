@@ -10,9 +10,10 @@
 #pragma once
 
 #include "Server/GameService/GameManager.h"
-#include "Server/GameService/Utils/DS3_OnlineAreaPool.h"
+#include "Server/GameService/Utils/OnlineAreaPool.h"
 #include "Server/Database/DatabaseTypes.h"
 #include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
+#include "Server.DarkSouls3/Server/GameService/Utils/DS3_GameIds.h"
 
 struct Frpg2ReliableUdpMessage;
 class Server;
@@ -53,7 +54,7 @@ private:
     Server* ServerInstance;
     GameService* GameServiceInstance;
 
-    DS3_OnlineAreaPool<SummonSign> LiveCache;
+    OnlineAreaPool<DS3_OnlineAreaId, SummonSign> LiveCache;
 
     uint32_t NextSignId = 1000;
 

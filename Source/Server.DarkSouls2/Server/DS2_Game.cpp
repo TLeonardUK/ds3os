@@ -14,6 +14,9 @@
 
 #include "Server/GameService/GameManagers/Boot/DS2_BootManager.h"
 #include "Server/GameService/GameManagers/PlayerData/DS2_PlayerDataManager.h"
+#include "Server/GameService/GameManagers/Ghosts/DS2_GhostManager.h"
+#include "Server/GameService/GameManagers/BloodMessage/DS2_BloodMessageManager.h"
+#include "Server/GameService/GameManagers/Bloodstain/DS2_BloodstainManager.h"
 
 bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
@@ -119,6 +122,9 @@ void DS2_Game::RegisterGameManagers(GameService& Service)
 
     Service.RegisterManager(std::make_shared<DS2_BootManager>(ServerInstance));
     Service.RegisterManager(std::make_shared<DS2_PlayerDataManager>(ServerInstance));
+    Service.RegisterManager(std::make_shared<DS2_GhostManager>(ServerInstance));
+    Service.RegisterManager(std::make_shared<DS2_BloodMessageManager>(ServerInstance, &Service));
+    Service.RegisterManager(std::make_shared<DS2_BloodstainManager>(ServerInstance));
 }
 
 std::unique_ptr<PlayerState> DS2_Game::CreatePlayerState()
