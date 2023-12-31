@@ -5,12 +5,12 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
+:bangbang: :bangbang: Dark Souls 2 support is currently experimental, don't expect it to work well for the time being. :bangbang: :bangbang: 
+
 # What is this project?
-An open source implementation of the dark souls 3 game server. 
+An open source implementation of the game servers for dark souls 2 and 3. 
 
 Idealistically made for the purpose of allow better alternatives to playing mods than getting your account banned and using the retail ban server. As well as opening up opportunities to improve player safety and choice, by allowing them to segregate themselves off from the pool of cheaters on retail, without loosing network functionality.
-
-:bangbang: This project is still a work in progress, no guarantees are given over its stability (that said it works quite well now!). 
 
 If you have any trouble join the discord for tech-support: https://discord.gg/pBmquc9Jkj
 
@@ -25,13 +25,13 @@ Downloads are available on the github releases page - https://github.com/TLeonar
 # How do I use it?
 Once built you should have a folder called Bin, there are 2 subfolders of relevance. Loader and Server. 
 
-First run the Server.exe in Server, this will start the actual custom server running on your computer. 
+When running the loader you will get the option to create a server or join an existing server.
 
-The first time the server runs it will emit the file Saved\config.json which contains various matchmaking parameters that you can adjust (and apply by restarting the server) to customise the server.
+If you want to create a dedicated server yourself you should run Server.exe in the Server folder, this will start the actual custom server running on your computer. 
 
-User can join the server by opening the Loader.exe program in the Loader folder and finding the correct server in the list and clicking the launch button. If the server has been configured to not advertise on the master server (or if running on a LAN without an internet connection), then the server operator can distribute the Saved\server.ds3osconfig file that the server emits, which can be imported into the loader and used to directly connect to the server.
+The first time the server runs it will emit the file Saved\default\config.json which contains various matchmaking parameters that you can adjust (and apply by restarting the server) to customise the server.
 
-Servers can also be password protected if required by setting as password in Saved\config.json, a password will need to be entered when attempting to launch the game with a protected server.
+Servers can also be password protected if required by setting as password in Saved\default\config.json, a password will need to be entered when attempting to launch the game with a protected server.
 
 **NOTE**: The **steam** client (no login needed) must be installed when you run the **Server.exe**. Otherwise, **Server.exe** will fail to initialize.
 
@@ -61,20 +61,19 @@ Future roadmap:
 
 - [ ] Client-side mods dictated by server configuration (eg. Raising player limit, anti-cheat, reduce invasion cool downs, change params, etc). 
 - [ ] Better Anticheat (potentially we could do some more harsh checks than FROM does).
+- [ ] Dark Souls 2 support
 
 # Will this ban my account on the retail server?
-DS3OS uses its own save files, as long as you don't copy ds3os saves back to your retail saves you should be fine.
+DSOS uses its own save files, as long as you don't copy ds3os saves back to your retail saves you should be fine.
 
 # FAQ
 ## Why aren't my save files appearing?
-DS3OS uses its own saves to avoid any issues with retail game saves. If you want to transfer your retail saves to ds3os, you can copy the .sl2 files (your retail saves) in here and change them to use a .ds3os file extension (ds3os saves):
+DSOS uses its own saves to avoid any issues with retail game saves. If you want to transfer your retail saves to DSOS, click the settings (cog) icon at the bottom of the loader and press the copy retail saves button.
 
-C:\Users\\[Your-Username]\AppData\Roaming\DarkSoulsIII\\[Your-SteamId]
-
-Do not do this the otherway - Copying ds3os saves to retail saves, you risk being banned on retail servers doing that.
+We don't provide an automation option to copy ds3os saves back to retail saves for safety. If you ~really~ want to do this you can find the folder the saves are stored in and rename the .ds3os files to .sl2.
 
 ## Can I run the server via docker?
-Yes, there are 2 docker containers currently published for ds3os, these are automatically updated each time a new release is made:
+Yes, there are 2 docker containers currently published for DSOS, these are automatically updated each time a new release is made:
 
 timleonarduk/ds3os - This is the main server and the one you almost certainly want.
 timleonarduk/ds3os-master - This is for the master server, unless you are making a fork of ds3os, you probably don't need this.
@@ -109,17 +108,19 @@ Once generated the project files are stored in the intermediate folder, at this 
 # Whats in the repository?
 ```
 /
-├── Protobuf/             Contains the protobuf definitions used by the server's network traffic. Compiling them is done via the bat file in Tools/
-├── Resources/            General resources used for building and packaging - icons/readmes/etc.
-├── Source/               All source code for the project.
-│   ├── Injector/         This is the DLL that gets injected into the game to provide DS3OS's functionality.
-│   ├── Loader/           Simple winforms app that loads DS3 such that it will connect to a custom server.S3 such that it will connect to a custom server.
-│   ├── MasterServer/     NodeJS source code for a simple API server for advertising and listing active servers.
-│   ├── Server/           Source code for the main server.
-│   ├── Shared/           Source code that is shared between the server and injector projects.
-│   └── ThirdParty/       Source code for any third-party libraries used.
-│   └── WebUI/            Contains the static resources used to assemble the management web page for the server.
-├── Tools/                Various cheat engine tables, bat files and alike used for analysis.
+├── Protobuf/              Contains the protobuf definitions used by the server's network traffic. Compiling them is done via the bat file in Tools/
+├── Resources/             General resources used for building and packaging - icons/readmes/etc.
+├── Source/                All source code for the project.
+│   ├── Injector/          This is the DLL that gets injected into the game to provide DS3OS's functionality.
+│   ├── Loader/            Simple winforms app that loads DS3 such that it will connect to a custom server.S3 such that it will connect to a custom server.
+│   ├── MasterServer/      NodeJS source code for a simple API server for advertising and listing active servers.
+│   ├── Server/            Source code for the main server.
+│   ├── Server.DarkSouls3/ Source code thats special to dark souls 3 support.
+│   ├── Server.DarkSouls2/ Source code thats special to dark souls 2 support.
+│   ├── Shared/            Source code that is shared between the server and injector projects.
+│   └── ThirdParty/        Source code for any third-party libraries used.
+│   └── WebUI/             Contains the static resources used to assemble the management web page for the server.
+├── Tools/                 Various cheat engine tables, bat files and alike used for analysis.
 ```
 
 # How can I help?
