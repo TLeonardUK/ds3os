@@ -5,7 +5,7 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
-:bangbang: :bangbang: <span style="color:red">NOTICE: Dark Souls 2 support is currently experimental, don't expect it to work well for the moment.</span>
+:bangbang: :bangbang: Dark Souls 2 support is currently experimental, don't expect it to work well for the time being. :bangbang: :bangbang: 
 
 # What is this project?
 An open source implementation of the game servers for dark souls 2 and 3. 
