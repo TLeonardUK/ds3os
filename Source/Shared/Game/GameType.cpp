@@ -10,6 +10,7 @@
 #include "Shared/Game/GameType.h"
 
 #include <memory>
+#include <cstring>
 
 bool ParseGameType(const char* text, GameType& Output)
 {
