@@ -21,6 +21,8 @@ SET(SOURCES
     Hooks/DarkSouls3/DS3_ReplaceServerAddressHook.cpp
     Hooks/DarkSouls2/DS2_ReplaceServerAddressHook.h
     Hooks/DarkSouls2/DS2_ReplaceServerAddressHook.cpp
+    Hooks/DarkSouls2/DS2_LogProtobufsHook.h
+    Hooks/DarkSouls2/DS2_LogProtobufsHook.cpp
     Hooks/Shared/ReplaceServerPortHook.h
     Hooks/Shared/ReplaceServerPortHook.cpp
     Hooks/Shared/ChangeSaveGameFilenameHook.h

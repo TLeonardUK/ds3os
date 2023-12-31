@@ -661,23 +661,8 @@ bool AllStatus::IsInitialized() const {
   if (has_player_status()) {
     if (!this->player_status().IsInitialized()) return false;
   }
-  if (has_item_using_info()) {
-    if (!this->item_using_info().IsInitialized()) return false;
-  }
   if (has_stats_info()) {
     if (!this->stats_info().IsInitialized()) return false;
-  }
-  if (has_attributes()) {
-    if (!this->attributes().IsInitialized()) return false;
-  }
-  if (has_weapon_status()) {
-    if (!this->weapon_status().IsInitialized()) return false;
-  }
-  if (has_armor_status()) {
-    if (!this->armor_status().IsInitialized()) return false;
-  }
-  if (has_server_side_status()) {
-    if (!this->server_side_status().IsInitialized()) return false;
   }
   return true;
 }
@@ -807,7 +792,7 @@ bool ArmorStatus::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 strike_def = 1;
+      // optional uint32 strike_def = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -821,7 +806,7 @@ bool ArmorStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 slash_def = 2;
+      // optional uint32 slash_def = 2;
       case 2: {
         if (tag == 16) {
          parse_slash_def:
@@ -836,7 +821,7 @@ bool ArmorStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 thrust_def = 3;
+      // optional uint32 thrust_def = 3;
       case 3: {
         if (tag == 24) {
          parse_thrust_def:
@@ -851,7 +836,7 @@ bool ArmorStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required float poise = 4;
+      // optional float poise = 4;
       case 4: {
         if (tag == 37) {
          parse_poise:
@@ -891,22 +876,22 @@ failure:
 void ArmorStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.ArmorStatus)
-  // required uint32 strike_def = 1;
+  // optional uint32 strike_def = 1;
   if (has_strike_def()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->strike_def(), output);
   }
 
-  // required uint32 slash_def = 2;
+  // optional uint32 slash_def = 2;
   if (has_slash_def()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->slash_def(), output);
   }
 
-  // required uint32 thrust_def = 3;
+  // optional uint32 thrust_def = 3;
   if (has_thrust_def()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->thrust_def(), output);
   }
 
-  // required float poise = 4;
+  // optional float poise = 4;
   if (has_poise()) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->poise(), output);
   }
@@ -920,28 +905,28 @@ int ArmorStatus::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 strike_def = 1;
+    // optional uint32 strike_def = 1;
     if (has_strike_def()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->strike_def());
     }
 
-    // required uint32 slash_def = 2;
+    // optional uint32 slash_def = 2;
     if (has_slash_def()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->slash_def());
     }
 
-    // required uint32 thrust_def = 3;
+    // optional uint32 thrust_def = 3;
     if (has_thrust_def()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->thrust_def());
     }
 
-    // required float poise = 4;
+    // optional float poise = 4;
     if (has_poise()) {
       total_size += 1 + 4;
     }
@@ -986,7 +971,6 @@ void ArmorStatus::CopyFrom(const ArmorStatus& from) {
 }
 
 bool ArmorStatus::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -1443,6 +1427,12 @@ EquipmentInfo::EquipmentInfo(const EquipmentInfo& from)
 
 void EquipmentInfo::SharedCtor() {
   _cached_size_ = 0;
+  weapon_slots_ = 0u;
+  armor_slots_ = 0u;
+  ring_slots_ = 0u;
+  ammunition_slots_ = 0u;
+  belt_slots_ = 0u;
+  spell_slots_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1481,12 +1471,23 @@ EquipmentInfo* EquipmentInfo::New() const {
 }
 
 void EquipmentInfo::Clear() {
-  weapon_slots_.Clear();
-  armor_slots_.Clear();
-  ring_slots_.Clear();
-  ammunition_slots_.Clear();
-  belt_slots_.Clear();
-  spell_slots_.Clear();
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<EquipmentInfo*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 63) {
+    ZR_(weapon_slots_, spell_slots_);
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -1505,116 +1506,91 @@ bool EquipmentInfo::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 weapon_slots = 1;
+      // optional uint32 weapon_slots = 1;
       case 1: {
         if (tag == 8) {
-         parse_weapon_slots:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 8, input, this->mutable_weapon_slots())));
-        } else if (tag == 10) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_weapon_slots())));
+                 input, &weapon_slots_)));
+          set_has_weapon_slots();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(8)) goto parse_weapon_slots;
         if (input->ExpectTag(16)) goto parse_armor_slots;
         break;
       }
 
-      // repeated uint32 armor_slots = 2;
+      // optional uint32 armor_slots = 2;
       case 2: {
         if (tag == 16) {
          parse_armor_slots:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 16, input, this->mutable_armor_slots())));
-        } else if (tag == 18) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_armor_slots())));
+                 input, &armor_slots_)));
+          set_has_armor_slots();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_armor_slots;
         if (input->ExpectTag(24)) goto parse_ring_slots;
         break;
       }
 
-      // repeated uint32 ring_slots = 3;
+      // optional uint32 ring_slots = 3;
       case 3: {
         if (tag == 24) {
          parse_ring_slots:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 24, input, this->mutable_ring_slots())));
-        } else if (tag == 26) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_ring_slots())));
+                 input, &ring_slots_)));
+          set_has_ring_slots();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_ring_slots;
         if (input->ExpectTag(32)) goto parse_ammunition_slots;
         break;
       }
 
-      // repeated uint32 ammunition_slots = 4;
+      // optional uint32 ammunition_slots = 4;
       case 4: {
         if (tag == 32) {
          parse_ammunition_slots:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 32, input, this->mutable_ammunition_slots())));
-        } else if (tag == 34) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_ammunition_slots())));
+                 input, &ammunition_slots_)));
+          set_has_ammunition_slots();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_ammunition_slots;
         if (input->ExpectTag(40)) goto parse_belt_slots;
         break;
       }
 
-      // repeated uint32 belt_slots = 5;
+      // optional uint32 belt_slots = 5;
       case 5: {
         if (tag == 40) {
          parse_belt_slots:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 40, input, this->mutable_belt_slots())));
-        } else if (tag == 42) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_belt_slots())));
+                 input, &belt_slots_)));
+          set_has_belt_slots();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_belt_slots;
         if (input->ExpectTag(48)) goto parse_spell_slots;
         break;
       }
 
-      // repeated uint32 spell_slots = 6;
+      // optional uint32 spell_slots = 6;
       case 6: {
         if (tag == 48) {
          parse_spell_slots:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 48, input, this->mutable_spell_slots())));
-        } else if (tag == 50) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_spell_slots())));
+                 input, &spell_slots_)));
+          set_has_spell_slots();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_spell_slots;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1644,40 +1620,34 @@ failure:
 void EquipmentInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.EquipmentInfo)
-  // repeated uint32 weapon_slots = 1;
-  for (int i = 0; i < this->weapon_slots_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      1, this->weapon_slots(i), output);
+  // optional uint32 weapon_slots = 1;
+  if (has_weapon_slots()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->weapon_slots(), output);
   }
 
-  // repeated uint32 armor_slots = 2;
-  for (int i = 0; i < this->armor_slots_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      2, this->armor_slots(i), output);
+  // optional uint32 armor_slots = 2;
+  if (has_armor_slots()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->armor_slots(), output);
   }
 
-  // repeated uint32 ring_slots = 3;
-  for (int i = 0; i < this->ring_slots_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      3, this->ring_slots(i), output);
+  // optional uint32 ring_slots = 3;
+  if (has_ring_slots()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->ring_slots(), output);
   }
 
-  // repeated uint32 ammunition_slots = 4;
-  for (int i = 0; i < this->ammunition_slots_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      4, this->ammunition_slots(i), output);
+  // optional uint32 ammunition_slots = 4;
+  if (has_ammunition_slots()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->ammunition_slots(), output);
   }
 
-  // repeated uint32 belt_slots = 5;
-  for (int i = 0; i < this->belt_slots_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      5, this->belt_slots(i), output);
+  // optional uint32 belt_slots = 5;
+  if (has_belt_slots()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->belt_slots(), output);
   }
 
-  // repeated uint32 spell_slots = 6;
-  for (int i = 0; i < this->spell_slots_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      6, this->spell_slots(i), output);
+  // optional uint32 spell_slots = 6;
+  if (has_spell_slots()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->spell_slots(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -1688,66 +1658,50 @@ void EquipmentInfo::SerializeWithCachedSizes(
 int EquipmentInfo::ByteSize() const {
   int total_size = 0;
 
-  // repeated uint32 weapon_slots = 1;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->weapon_slots_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->weapon_slots(i));
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional uint32 weapon_slots = 1;
+    if (has_weapon_slots()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->weapon_slots());
     }
-    total_size += 1 * this->weapon_slots_size() + data_size;
-  }
 
-  // repeated uint32 armor_slots = 2;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->armor_slots_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->armor_slots(i));
+    // optional uint32 armor_slots = 2;
+    if (has_armor_slots()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->armor_slots());
     }
-    total_size += 1 * this->armor_slots_size() + data_size;
-  }
 
-  // repeated uint32 ring_slots = 3;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->ring_slots_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->ring_slots(i));
+    // optional uint32 ring_slots = 3;
+    if (has_ring_slots()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->ring_slots());
     }
-    total_size += 1 * this->ring_slots_size() + data_size;
-  }
 
-  // repeated uint32 ammunition_slots = 4;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->ammunition_slots_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->ammunition_slots(i));
+    // optional uint32 ammunition_slots = 4;
+    if (has_ammunition_slots()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->ammunition_slots());
     }
-    total_size += 1 * this->ammunition_slots_size() + data_size;
-  }
 
-  // repeated uint32 belt_slots = 5;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->belt_slots_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->belt_slots(i));
+    // optional uint32 belt_slots = 5;
+    if (has_belt_slots()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->belt_slots());
     }
-    total_size += 1 * this->belt_slots_size() + data_size;
-  }
 
-  // repeated uint32 spell_slots = 6;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->spell_slots_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->spell_slots(i));
+    // optional uint32 spell_slots = 6;
+    if (has_spell_slots()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->spell_slots());
     }
-    total_size += 1 * this->spell_slots_size() + data_size;
-  }
 
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1763,12 +1717,26 @@ void EquipmentInfo::CheckTypeAndMergeFrom(
 
 void EquipmentInfo::MergeFrom(const EquipmentInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
-  weapon_slots_.MergeFrom(from.weapon_slots_);
-  armor_slots_.MergeFrom(from.armor_slots_);
-  ring_slots_.MergeFrom(from.ring_slots_);
-  ammunition_slots_.MergeFrom(from.ammunition_slots_);
-  belt_slots_.MergeFrom(from.belt_slots_);
-  spell_slots_.MergeFrom(from.spell_slots_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_weapon_slots()) {
+      set_weapon_slots(from.weapon_slots());
+    }
+    if (from.has_armor_slots()) {
+      set_armor_slots(from.armor_slots());
+    }
+    if (from.has_ring_slots()) {
+      set_ring_slots(from.ring_slots());
+    }
+    if (from.has_ammunition_slots()) {
+      set_ammunition_slots(from.ammunition_slots());
+    }
+    if (from.has_belt_slots()) {
+      set_belt_slots(from.belt_slots());
+    }
+    if (from.has_spell_slots()) {
+      set_spell_slots(from.spell_slots());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -1785,12 +1753,12 @@ bool EquipmentInfo::IsInitialized() const {
 
 void EquipmentInfo::Swap(EquipmentInfo* other) {
   if (other != this) {
-    weapon_slots_.Swap(&other->weapon_slots_);
-    armor_slots_.Swap(&other->armor_slots_);
-    ring_slots_.Swap(&other->ring_slots_);
-    ammunition_slots_.Swap(&other->ammunition_slots_);
-    belt_slots_.Swap(&other->belt_slots_);
-    spell_slots_.Swap(&other->spell_slots_);
+    std::swap(weapon_slots_, other->weapon_slots_);
+    std::swap(armor_slots_, other->armor_slots_);
+    std::swap(ring_slots_, other->ring_slots_);
+    std::swap(ammunition_slots_, other->ammunition_slots_);
+    std::swap(belt_slots_, other->belt_slots_);
+    std::swap(spell_slots_, other->spell_slots_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1914,7 +1882,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // optional uint32 unknown_1 = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -1928,7 +1896,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_2 = 2;
+      // optional uint32 unknown_2 = 2;
       case 2: {
         if (tag == 16) {
          parse_unknown_2:
@@ -1943,7 +1911,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // optional uint32 unknown_3 = 3;
       case 3: {
         if (tag == 24) {
          parse_unknown_3:
@@ -1958,7 +1926,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_4 = 4;
+      // optional uint32 unknown_4 = 4;
       case 4: {
         if (tag == 32) {
          parse_unknown_4:
@@ -1973,7 +1941,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_5 = 5;
+      // optional uint32 unknown_5 = 5;
       case 5: {
         if (tag == 40) {
          parse_unknown_5:
@@ -1988,7 +1956,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_6 = 6;
+      // optional uint32 unknown_6 = 6;
       case 6: {
         if (tag == 48) {
          parse_unknown_6:
@@ -2003,7 +1971,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_7 = 7;
+      // optional uint32 unknown_7 = 7;
       case 7: {
         if (tag == 56) {
          parse_unknown_7:
@@ -2018,7 +1986,7 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_8 = 8;
+      // optional uint32 unknown_8 = 8;
       case 8: {
         if (tag == 64) {
          parse_unknown_8:
@@ -2058,42 +2026,42 @@ failure:
 void ItemUsingInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.ItemUsingInfo)
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   if (has_unknown_1()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
   }
 
-  // required uint32 unknown_2 = 2;
+  // optional uint32 unknown_2 = 2;
   if (has_unknown_2()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
   }
 
-  // required uint32 unknown_3 = 3;
+  // optional uint32 unknown_3 = 3;
   if (has_unknown_3()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
   }
 
-  // required uint32 unknown_4 = 4;
+  // optional uint32 unknown_4 = 4;
   if (has_unknown_4()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
   }
 
-  // required uint32 unknown_5 = 5;
+  // optional uint32 unknown_5 = 5;
   if (has_unknown_5()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
   }
 
-  // required uint32 unknown_6 = 6;
+  // optional uint32 unknown_6 = 6;
   if (has_unknown_6()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
   }
 
-  // required uint32 unknown_7 = 7;
+  // optional uint32 unknown_7 = 7;
   if (has_unknown_7()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
   }
 
-  // required uint32 unknown_8 = 8;
+  // optional uint32 unknown_8 = 8;
   if (has_unknown_8()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->unknown_8(), output);
   }
@@ -2107,56 +2075,56 @@ int ItemUsingInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
+    // optional uint32 unknown_1 = 1;
     if (has_unknown_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_1());
     }
 
-    // required uint32 unknown_2 = 2;
+    // optional uint32 unknown_2 = 2;
     if (has_unknown_2()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_2());
     }
 
-    // required uint32 unknown_3 = 3;
+    // optional uint32 unknown_3 = 3;
     if (has_unknown_3()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_3());
     }
 
-    // required uint32 unknown_4 = 4;
+    // optional uint32 unknown_4 = 4;
     if (has_unknown_4()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_4());
     }
 
-    // required uint32 unknown_5 = 5;
+    // optional uint32 unknown_5 = 5;
     if (has_unknown_5()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_5());
     }
 
-    // required uint32 unknown_6 = 6;
+    // optional uint32 unknown_6 = 6;
     if (has_unknown_6()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_6());
     }
 
-    // required uint32 unknown_7 = 7;
+    // optional uint32 unknown_7 = 7;
     if (has_unknown_7()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_7());
     }
 
-    // required uint32 unknown_8 = 8;
+    // optional uint32 unknown_8 = 8;
     if (has_unknown_8()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -2215,7 +2183,6 @@ void ItemUsingInfo::CopyFrom(const ItemUsingInfo& from) {
 }
 
 bool ItemUsingInfo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000000ff) != 0x000000ff) return false;
 
   return true;
 }
@@ -2356,7 +2323,7 @@ bool LevelStatus::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 vigor = 1;
+      // optional uint32 vigor = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -2370,7 +2337,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 endurance = 2;
+      // optional uint32 endurance = 2;
       case 2: {
         if (tag == 16) {
          parse_endurance:
@@ -2385,7 +2352,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 vitality = 3;
+      // optional uint32 vitality = 3;
       case 3: {
         if (tag == 24) {
          parse_vitality:
@@ -2400,7 +2367,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 attunement = 4;
+      // optional uint32 attunement = 4;
       case 4: {
         if (tag == 32) {
          parse_attunement:
@@ -2415,7 +2382,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 strenght = 5;
+      // optional uint32 strenght = 5;
       case 5: {
         if (tag == 40) {
          parse_strenght:
@@ -2430,7 +2397,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 dexterity = 6;
+      // optional uint32 dexterity = 6;
       case 6: {
         if (tag == 48) {
          parse_dexterity:
@@ -2445,7 +2412,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 intelligence = 7;
+      // optional uint32 intelligence = 7;
       case 7: {
         if (tag == 56) {
          parse_intelligence:
@@ -2460,7 +2427,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 faith = 8;
+      // optional uint32 faith = 8;
       case 8: {
         if (tag == 64) {
          parse_faith:
@@ -2475,7 +2442,7 @@ bool LevelStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 adaptability = 9;
+      // optional uint32 adaptability = 9;
       case 9: {
         if (tag == 72) {
          parse_adaptability:
@@ -2515,47 +2482,47 @@ failure:
 void LevelStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.LevelStatus)
-  // required uint32 vigor = 1;
+  // optional uint32 vigor = 1;
   if (has_vigor()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->vigor(), output);
   }
 
-  // required uint32 endurance = 2;
+  // optional uint32 endurance = 2;
   if (has_endurance()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->endurance(), output);
   }
 
-  // required uint32 vitality = 3;
+  // optional uint32 vitality = 3;
   if (has_vitality()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->vitality(), output);
   }
 
-  // required uint32 attunement = 4;
+  // optional uint32 attunement = 4;
   if (has_attunement()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->attunement(), output);
   }
 
-  // required uint32 strenght = 5;
+  // optional uint32 strenght = 5;
   if (has_strenght()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->strenght(), output);
   }
 
-  // required uint32 dexterity = 6;
+  // optional uint32 dexterity = 6;
   if (has_dexterity()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->dexterity(), output);
   }
 
-  // required uint32 intelligence = 7;
+  // optional uint32 intelligence = 7;
   if (has_intelligence()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->intelligence(), output);
   }
 
-  // required uint32 faith = 8;
+  // optional uint32 faith = 8;
   if (has_faith()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->faith(), output);
   }
 
-  // required uint32 adaptability = 9;
+  // optional uint32 adaptability = 9;
   if (has_adaptability()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->adaptability(), output);
   }
@@ -2569,56 +2536,56 @@ int LevelStatus::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 vigor = 1;
+    // optional uint32 vigor = 1;
     if (has_vigor()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->vigor());
     }
 
-    // required uint32 endurance = 2;
+    // optional uint32 endurance = 2;
     if (has_endurance()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->endurance());
     }
 
-    // required uint32 vitality = 3;
+    // optional uint32 vitality = 3;
     if (has_vitality()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->vitality());
     }
 
-    // required uint32 attunement = 4;
+    // optional uint32 attunement = 4;
     if (has_attunement()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->attunement());
     }
 
-    // required uint32 strenght = 5;
+    // optional uint32 strenght = 5;
     if (has_strenght()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->strenght());
     }
 
-    // required uint32 dexterity = 6;
+    // optional uint32 dexterity = 6;
     if (has_dexterity()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->dexterity());
     }
 
-    // required uint32 intelligence = 7;
+    // optional uint32 intelligence = 7;
     if (has_intelligence()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->intelligence());
     }
 
-    // required uint32 faith = 8;
+    // optional uint32 faith = 8;
     if (has_faith()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -2627,7 +2594,7 @@ int LevelStatus::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required uint32 adaptability = 9;
+    // optional uint32 adaptability = 9;
     if (has_adaptability()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -2691,7 +2658,6 @@ void LevelStatus::CopyFrom(const LevelStatus& from) {
 }
 
 bool LevelStatus::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000001ff) != 0x000001ff) return false;
 
   return true;
 }
@@ -2816,7 +2782,7 @@ bool PhantomTypeCount::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // optional uint32 unknown_1 = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -2830,7 +2796,7 @@ bool PhantomTypeCount::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_2 = 2;
+      // optional uint32 unknown_2 = 2;
       case 2: {
         if (tag == 16) {
          parse_unknown_2:
@@ -2870,12 +2836,12 @@ failure:
 void PhantomTypeCount::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.PhantomTypeCount)
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   if (has_unknown_1()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
   }
 
-  // required uint32 unknown_2 = 2;
+  // optional uint32 unknown_2 = 2;
   if (has_unknown_2()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
   }
@@ -2889,14 +2855,14 @@ int PhantomTypeCount::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
+    // optional uint32 unknown_1 = 1;
     if (has_unknown_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_1());
     }
 
-    // required uint32 unknown_2 = 2;
+    // optional uint32 unknown_2 = 2;
     if (has_unknown_2()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -2937,7 +2903,6 @@ void PhantomTypeCount::CopyFrom(const PhantomTypeCount& from) {
 }
 
 bool PhantomTypeCount::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -4050,7 +4015,7 @@ bool PlayerLocation::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 map_id = 1;
+      // optional uint32 map_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -4064,7 +4029,7 @@ bool PlayerLocation::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 online_area_id = 2;
+      // optional uint32 online_area_id = 2;
       case 2: {
         if (tag == 16) {
          parse_online_area_id:
@@ -4079,7 +4044,7 @@ bool PlayerLocation::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 unknown_3 = 3;
+      // optional uint32 unknown_3 = 3;
       case 3: {
         if (tag == 24) {
          parse_unknown_3:
@@ -4094,7 +4059,7 @@ bool PlayerLocation::MergePartialFromCodedStream(
         break;
       }
 
-      // required .DS2_Frpg2PlayerData.Vector position = 4;
+      // optional .DS2_Frpg2PlayerData.Vector position = 4;
       case 4: {
         if (tag == 34) {
          parse_position:
@@ -4107,7 +4072,7 @@ bool PlayerLocation::MergePartialFromCodedStream(
         break;
       }
 
-      // required float unknown_5 = 5;
+      // optional float unknown_5 = 5;
       case 5: {
         if (tag == 45) {
          parse_unknown_5:
@@ -4147,28 +4112,28 @@ failure:
 void PlayerLocation::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.PlayerLocation)
-  // required uint32 map_id = 1;
+  // optional uint32 map_id = 1;
   if (has_map_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->map_id(), output);
   }
 
-  // required uint32 online_area_id = 2;
+  // optional uint32 online_area_id = 2;
   if (has_online_area_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id(), output);
   }
 
-  // required uint32 unknown_3 = 3;
+  // optional uint32 unknown_3 = 3;
   if (has_unknown_3()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
   }
 
-  // required .DS2_Frpg2PlayerData.Vector position = 4;
+  // optional .DS2_Frpg2PlayerData.Vector position = 4;
   if (has_position()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->position(), output);
   }
 
-  // required float unknown_5 = 5;
+  // optional float unknown_5 = 5;
   if (has_unknown_5()) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(5, this->unknown_5(), output);
   }
@@ -4182,35 +4147,35 @@ int PlayerLocation::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 map_id = 1;
+    // optional uint32 map_id = 1;
     if (has_map_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->map_id());
     }
 
-    // required uint32 online_area_id = 2;
+    // optional uint32 online_area_id = 2;
     if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->online_area_id());
     }
 
-    // required uint32 unknown_3 = 3;
+    // optional uint32 unknown_3 = 3;
     if (has_unknown_3()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_3());
     }
 
-    // required .DS2_Frpg2PlayerData.Vector position = 4;
+    // optional .DS2_Frpg2PlayerData.Vector position = 4;
     if (has_position()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->position());
     }
 
-    // required float unknown_5 = 5;
+    // optional float unknown_5 = 5;
     if (has_unknown_5()) {
       total_size += 1 + 4;
     }
@@ -4258,7 +4223,6 @@ void PlayerLocation::CopyFrom(const PlayerLocation& from) {
 }
 
 bool PlayerLocation::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   if (has_position()) {
     if (!this->position().IsInitialized()) return false;
@@ -4380,7 +4344,7 @@ bool PlayerStatus_Phantom_leave_at::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // optional uint32 unknown_1 = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -4394,7 +4358,7 @@ bool PlayerStatus_Phantom_leave_at::MergePartialFromCodedStream(
         break;
       }
 
-      // required .DS2_Frpg2PlayerData.DateTime datetime = 2;
+      // optional .DS2_Frpg2PlayerData.DateTime datetime = 2;
       case 2: {
         if (tag == 18) {
          parse_datetime:
@@ -4432,12 +4396,12 @@ failure:
 void PlayerStatus_Phantom_leave_at::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.PlayerStatus_Phantom_leave_at)
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   if (has_unknown_1()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
   }
 
-  // required .DS2_Frpg2PlayerData.DateTime datetime = 2;
+  // optional .DS2_Frpg2PlayerData.DateTime datetime = 2;
   if (has_datetime()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       2, this->datetime(), output);
@@ -4452,14 +4416,14 @@ int PlayerStatus_Phantom_leave_at::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
+    // optional uint32 unknown_1 = 1;
     if (has_unknown_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->unknown_1());
     }
 
-    // required .DS2_Frpg2PlayerData.DateTime datetime = 2;
+    // optional .DS2_Frpg2PlayerData.DateTime datetime = 2;
     if (has_datetime()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -4500,7 +4464,6 @@ void PlayerStatus_Phantom_leave_at::CopyFrom(const PlayerStatus_Phantom_leave_at
 }
 
 bool PlayerStatus_Phantom_leave_at::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   if (has_datetime()) {
     if (!this->datetime().IsInitialized()) return false;
@@ -4526,7 +4489,7 @@ void PlayerStatus_Phantom_leave_at::Swap(PlayerStatus_Phantom_leave_at* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int PlayerStatus::kCharacterNameFieldNumber;
+const int PlayerStatus::kNameFieldNumber;
 const int PlayerStatus::kUnknown2FieldNumber;
 const int PlayerStatus::kCovenantFieldNumber;
 const int PlayerStatus::kUnknown4FieldNumber;
@@ -4574,7 +4537,7 @@ PlayerStatus::PlayerStatus(const PlayerStatus& from)
 void PlayerStatus::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  character_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   unknown_2_ = 0u;
   covenant_ = 0u;
   unknown_4_ = 0u;
@@ -4603,8 +4566,8 @@ PlayerStatus::~PlayerStatus() {
 }
 
 void PlayerStatus::SharedDtor() {
-  if (character_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete character_name_;
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
   }
   if (unknown_21_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete unknown_21_;
@@ -4651,9 +4614,9 @@ void PlayerStatus::Clear() {
 
   if (_has_bits_[0 / 32] & 255) {
     ZR_(unknown_2_, unknown_7_);
-    if (has_character_name()) {
-      if (character_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        character_name_->clear();
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        name_->clear();
       }
     }
     if (has_phantom_leave_at()) {
@@ -4696,11 +4659,11 @@ bool PlayerStatus::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string character_name = 1;
+      // optional string name = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_character_name()));
+                input, this->mutable_name()));
         } else {
           goto handle_unusual;
         }
@@ -5033,10 +4996,10 @@ failure:
 void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.PlayerStatus)
-  // optional string character_name = 1;
-  if (has_character_name()) {
+  // optional string name = 1;
+  if (has_name()) {
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->character_name(), output);
+      1, this->name(), output);
   }
 
   // optional uint32 unknown_2 = 2;
@@ -5151,11 +5114,11 @@ int PlayerStatus::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional string character_name = 1;
-    if (has_character_name()) {
+    // optional string name = 1;
+    if (has_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->character_name());
+          this->name());
     }
 
     // optional uint32 unknown_2 = 2;
@@ -5323,8 +5286,8 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
   GOOGLE_CHECK_NE(&from, this);
   unknown_12_.MergeFrom(from.unknown_12_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_character_name()) {
-      set_character_name(from.character_name());
+    if (from.has_name()) {
+      set_name(from.name());
     }
     if (from.has_unknown_2()) {
       set_unknown_2(from.unknown_2());
@@ -5407,7 +5370,7 @@ bool PlayerStatus::IsInitialized() const {
 
 void PlayerStatus::Swap(PlayerStatus* other) {
   if (other != this) {
-    std::swap(character_name_, other->character_name_);
+    std::swap(name_, other->name_);
     std::swap(unknown_2_, other->unknown_2_);
     std::swap(covenant_, other->covenant_);
     std::swap(unknown_4_, other->unknown_4_);
@@ -5521,7 +5484,7 @@ bool ServerSideStatus::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // optional uint32 unknown_1 = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -5560,7 +5523,7 @@ failure:
 void ServerSideStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.ServerSideStatus)
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   if (has_unknown_1()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
   }
@@ -5574,7 +5537,7 @@ int ServerSideStatus::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
+    // optional uint32 unknown_1 = 1;
     if (has_unknown_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -5612,7 +5575,6 @@ void ServerSideStatus::CopyFrom(const ServerSideStatus& from) {
 }
 
 bool ServerSideStatus::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
@@ -5729,7 +5691,7 @@ bool StatsInfo_Bonfire_levels::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 bonfire_id = 1;
+      // optional uint32 bonfire_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -5743,7 +5705,7 @@ bool StatsInfo_Bonfire_levels::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 bonfire_level = 2;
+      // optional uint32 bonfire_level = 2;
       case 2: {
         if (tag == 16) {
          parse_bonfire_level:
@@ -5783,12 +5745,12 @@ failure:
 void StatsInfo_Bonfire_levels::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.StatsInfo_Bonfire_levels)
-  // required uint32 bonfire_id = 1;
+  // optional uint32 bonfire_id = 1;
   if (has_bonfire_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->bonfire_id(), output);
   }
 
-  // required uint32 bonfire_level = 2;
+  // optional uint32 bonfire_level = 2;
   if (has_bonfire_level()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->bonfire_level(), output);
   }
@@ -5802,14 +5764,14 @@ int StatsInfo_Bonfire_levels::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 bonfire_id = 1;
+    // optional uint32 bonfire_id = 1;
     if (has_bonfire_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->bonfire_id());
     }
 
-    // required uint32 bonfire_level = 2;
+    // optional uint32 bonfire_level = 2;
     if (has_bonfire_level()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -5850,7 +5812,6 @@ void StatsInfo_Bonfire_levels::CopyFrom(const StatsInfo_Bonfire_levels& from) {
 }
 
 bool StatsInfo_Bonfire_levels::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -6735,11 +6696,6 @@ void StatsInfo::CopyFrom(const StatsInfo& from) {
 
 bool StatsInfo::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->bonfire_levels())) return false;
-  if (!::google::protobuf::internal::AllAreInitialized(this->phantom_type_count_6())) return false;
-  if (!::google::protobuf::internal::AllAreInitialized(this->phantom_type_count_7())) return false;
-  if (!::google::protobuf::internal::AllAreInitialized(this->phantom_type_count_8())) return false;
-  if (!::google::protobuf::internal::AllAreInitialized(this->phantom_type_count_9())) return false;
   if (has_datetime()) {
     if (!this->datetime().IsInitialized()) return false;
   }
@@ -7154,7 +7110,7 @@ bool WeaponStatus::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 left_ar_1 = 1;
+      // optional uint32 left_ar_1 = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -7168,7 +7124,7 @@ bool WeaponStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 left_ar_2 = 2;
+      // optional uint32 left_ar_2 = 2;
       case 2: {
         if (tag == 16) {
          parse_left_ar_2:
@@ -7183,7 +7139,7 @@ bool WeaponStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 left_ar_3 = 3;
+      // optional uint32 left_ar_3 = 3;
       case 3: {
         if (tag == 24) {
          parse_left_ar_3:
@@ -7198,7 +7154,7 @@ bool WeaponStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 right_ar_1 = 4;
+      // optional uint32 right_ar_1 = 4;
       case 4: {
         if (tag == 32) {
          parse_right_ar_1:
@@ -7213,7 +7169,7 @@ bool WeaponStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 right_ar_2 = 5;
+      // optional uint32 right_ar_2 = 5;
       case 5: {
         if (tag == 40) {
          parse_right_ar_2:
@@ -7228,7 +7184,7 @@ bool WeaponStatus::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 right_ar_3 = 6;
+      // optional uint32 right_ar_3 = 6;
       case 6: {
         if (tag == 48) {
          parse_right_ar_3:
@@ -7268,32 +7224,32 @@ failure:
 void WeaponStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.WeaponStatus)
-  // required uint32 left_ar_1 = 1;
+  // optional uint32 left_ar_1 = 1;
   if (has_left_ar_1()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->left_ar_1(), output);
   }
 
-  // required uint32 left_ar_2 = 2;
+  // optional uint32 left_ar_2 = 2;
   if (has_left_ar_2()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->left_ar_2(), output);
   }
 
-  // required uint32 left_ar_3 = 3;
+  // optional uint32 left_ar_3 = 3;
   if (has_left_ar_3()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->left_ar_3(), output);
   }
 
-  // required uint32 right_ar_1 = 4;
+  // optional uint32 right_ar_1 = 4;
   if (has_right_ar_1()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->right_ar_1(), output);
   }
 
-  // required uint32 right_ar_2 = 5;
+  // optional uint32 right_ar_2 = 5;
   if (has_right_ar_2()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->right_ar_2(), output);
   }
 
-  // required uint32 right_ar_3 = 6;
+  // optional uint32 right_ar_3 = 6;
   if (has_right_ar_3()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->right_ar_3(), output);
   }
@@ -7307,42 +7263,42 @@ int WeaponStatus::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 left_ar_1 = 1;
+    // optional uint32 left_ar_1 = 1;
     if (has_left_ar_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->left_ar_1());
     }
 
-    // required uint32 left_ar_2 = 2;
+    // optional uint32 left_ar_2 = 2;
     if (has_left_ar_2()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->left_ar_2());
     }
 
-    // required uint32 left_ar_3 = 3;
+    // optional uint32 left_ar_3 = 3;
     if (has_left_ar_3()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->left_ar_3());
     }
 
-    // required uint32 right_ar_1 = 4;
+    // optional uint32 right_ar_1 = 4;
     if (has_right_ar_1()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->right_ar_1());
     }
 
-    // required uint32 right_ar_2 = 5;
+    // optional uint32 right_ar_2 = 5;
     if (has_right_ar_2()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->right_ar_2());
     }
 
-    // required uint32 right_ar_3 = 6;
+    // optional uint32 right_ar_3 = 6;
     if (has_right_ar_3()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -7395,7 +7351,6 @@ void WeaponStatus::CopyFrom(const WeaponStatus& from) {
 }
 
 bool WeaponStatus::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
 
   return true;
 }

@@ -174,3 +174,17 @@ bool StringStartsWith(const std::string& subject, const std::string& needle)
     }
     return false;
 }
+
+bool StringIsHumanReadable(const std::string& subject)
+{
+    for (size_t i = 0; i < subject.size(); i++)
+    {
+        char c = subject[i];
+        bool readable = (c >= 0x20 && c <= 0x7E);
+        if (!readable)
+        {
+            return false;
+        }
+    }
+    return true;
+}

@@ -12,6 +12,9 @@
 #include "Server/Streams/DS2_Frpg2ReliableUdpMessage.h"
 #include "Server/GameService/DS2_PlayerState.h"
 
+#include "Server/GameService/GameManagers/Boot/DS2_BootManager.h"
+#include "Server/GameService/GameManagers/PlayerData/DS2_PlayerDataManager.h"
+
 bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
 #define DEFINE_REQUEST_RESPONSE(OpCode, Type, ProtobufClass, ResponseProtobufClass) \
@@ -112,7 +115,10 @@ std::string DS2_Game::GetBossDiscordThumbnailUrl(uint32_t BossId)
 
 void DS2_Game::RegisterGameManagers(GameService& Service)
 {
-    // TODO
+    Server* ServerInstance = Service.GetServer();
+
+    Service.RegisterManager(std::make_shared<DS2_BootManager>(ServerInstance));
+    Service.RegisterManager(std::make_shared<DS2_PlayerDataManager>(ServerInstance));
 }
 
 std::unique_ptr<PlayerState> DS2_Game::CreatePlayerState()

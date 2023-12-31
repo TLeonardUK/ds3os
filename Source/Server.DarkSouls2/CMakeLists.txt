@@ -11,6 +11,11 @@ SET(SOURCES
     Protobuf/Generated/DS2_Frpg2RequestMessage.pb.cc
     
     Server/GameService/DS2_PlayerState.h
+    
+    Server/GameService/GameManagers/Boot/DS2_BootManager.cpp
+    Server/GameService/GameManagers/Boot/DS2_BootManager.h
+    Server/GameService/GameManagers/PlayerData/DS2_PlayerDataManager.cpp
+    Server/GameService/GameManagers/PlayerData/DS2_PlayerDataManager.h
 
     Server/Streams/DS2_Frpg2ReliableUdpMessageTypes.inc
     Server/Streams/DS2_Frpg2ReliableUdpMessage.h

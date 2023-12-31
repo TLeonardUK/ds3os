@@ -15,9 +15,20 @@
 
 #include "Server/GameService/PlayerState.h"
 
+#define DEFINE_FIELD(type, name, default_value)                             \
+    private: type name = default_value;                                     \
+    public:                                                                 \
+        const type& Get##name() const { return name; }                      \
+        type& Get##name##_Mutable() { return name; }                        \
+        void Set##name(const type& input) { name = input; Mutated(); }   
+
 struct DS2_PlayerState : public PlayerState
 {
 public:
+
+    // Information the player sends and periodically patches with 
+    // RequestUpdatePlayerStatus requests.
+    DEFINE_FIELD(DS2_Frpg2PlayerData::AllStatus, PlayerStatus, DS2_Frpg2PlayerData::AllStatus())
 
     virtual uint32_t GetCurrentAreaId() override
     {

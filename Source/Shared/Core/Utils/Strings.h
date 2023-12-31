@@ -47,3 +47,6 @@ bool StringEndsWith(const std::string& subject, const std::string& needle);
 
 //  Determines if a given string starts with another string.
 bool StringStartsWith(const std::string& subject, const std::string& needle);
+
+// Returns true if all the characters in a string are human readable.
+bool StringIsHumanReadable(const std::string& subject);

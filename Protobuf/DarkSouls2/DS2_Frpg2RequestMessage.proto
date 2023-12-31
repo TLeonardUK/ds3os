@@ -22,23 +22,27 @@ import "DS2_Frpg2PlayerData.proto";
 // The message-id thats recieved on the reliable udp message layer is always 0x0320, and the first
 // field is read to disambiguate the actual message.
 enum PushMessageId {
-	PushID_PushRequestRemoveSign               = 829;
-	PushID_PushRequestSummonSign               = 830;
-	PushID_PushRequestRejectSign               = 831;
-	PushID_PushRequestJoinQuickMatch           = 832;
-	PushID_PushRequestAcceptQuickMatch         = 833;
-	PushID_PushRequestRejectQuickMatch         = 834;
-	PushID_PlayerInfoUploadConfigPushMessage   = 908;
-	PushID_PushRequestEvaluateBloodMessage     = 918;
-	PushID_PushRequestBreakInTarget            = 933;
-	PushID_PushRequestRejectBreakInTarget      = 934;
-	PushID_PushRequestAllowBreakInTarget       = 935;
-	PushID_PushRequestVisit                    = 951;
-	PushID_PushRequestRejectVisit              = 952;
-	PushID_PushRequestRemoveVisitor            = 953;
-	PushID_PushRequestNotifyRingBell           = 969;
-	PushID_RegulationFileUpdatePushMessage     = 907;
-	PushID_ManagementTextMessage               = 905;
+
+    // TODO: These all look wrong judging from the actual code reading them.
+    //       Need rechecking.
+	PushID_PushRequestRemoveSign               = 0x033D;
+	PushID_PushRequestSummonSign               = 0x033E;
+	PushID_PushRequestRejectSign               = 0x033F;
+	PushID_PushRequestJoinQuickMatch           = 0x0340;
+	PushID_PushRequestAcceptQuickMatch         = 0x0341;
+	PushID_PushRequestRejectQuickMatch         = 0x0342;
+	PushID_PlayerInfoUploadConfigPushMessage   = 0x038C;
+	PushID_PushRequestEvaluateBloodMessage     = 0x0396;
+	PushID_PushRequestBreakInTarget            = 0x03A5;
+	PushID_PushRequestRejectBreakInTarget      = 0x03A6;
+	PushID_PushRequestAllowBreakInTarget       = 0x03A7;
+	PushID_PushRequestVisit                    = 0x03B7;
+	PushID_PushRequestRejectVisit              = 0x03B8;
+	PushID_PushRequestRemoveVisitor            = 0x03B9;
+	PushID_PushRequestNotifyRingBell           = 0x03C9;
+	PushID_RegulationFileUpdatePushMessage     = 0x038B;
+	PushID_ManagementTextMessage               = 0x0389;
+
 }
 
 // Special empty response, some requests expect an empty response but
@@ -76,9 +80,9 @@ message PlayerStatusUploadConfig {
 // ------------------------------------------------------------------------------------------------------------
 
 message AnnounceMessageData {
-	required uint32 unknown_1 = 1;
-	required uint32 unknown_2 = 2;
-	required uint32 unknown_3 = 3;
+    required uint32 unknown_1 = 1;  // Seen as 20,104,24, changing it makes no visual difference.
+    required uint32 index = 2;
+    required uint32 unknown_2 = 3;  // always 1
 	required string header = 4;
 	required string message = 5;
 	required DS2_Frpg2PlayerData.DateTime datetime = 6;
@@ -95,8 +99,8 @@ message RequestGetAnnounceMessageList {
 }
 
 message RequestGetAnnounceMessageListResponse {
-	required AnnounceMessageDataList unknown_1 = 1;
-	required AnnounceMessageDataList unknown_2 = 2;
+	required AnnounceMessageDataList changes = 1;
+	required AnnounceMessageDataList notices = 2;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -110,10 +114,10 @@ message PlayerCharacterID {
 }
 
 message PlayerInfoUploadConfigPushMessage {
-	required PushMessageId push_message_id = 1;
-	required PlayerStatusUploadConfig config = 2;
-	required uint32 player_character_status_update_send_delay = 3;
-	required uint32 player_status_send_delay = 4;
+    required PushMessageId push_message_id = 1;                 // 908 - Push message id.
+    required PlayerStatusUploadConfig config = 2;               // massive list
+    required uint32 player_character_update_send_delay = 3;     // Delay, in seconds, before sending RequestUpdatePlayerCharacter calls. Defaults to 600 = 10 minutes. Clamped to 60->50000.
+    required uint32 player_status_send_delay = 4;               // Delay, in seconds, before sending RequestUpdatePlayerStatus. Defaults to 300 = 5 minutes. Clamped to 60->50000.
 }
 
 message RequestUpdateLoginPlayerCharacter {
@@ -126,29 +130,41 @@ message RequestUpdateLoginPlayerCharacterResponse {
 }
 
 message RequestUpdatePlayerStatus {
-	required DS2_Frpg2PlayerData.AllStatus status = 1;
+	required bytes status = 1;
 }
 
 message RequestUpdatePlayerStatusResponse {
+    // Never recieved.
 }
 
 message RequestUpdatePlayerCharacter {
 	required uint32 character_id = 1;
-	required bytes character_data = 2;
+	required bytes  character_data = 2;
 }
 
 message RequestUpdatePlayerCharacterResponse {
+    // Never recieved.
 }
 
 message RequestGetPlayerCharacter {
 	required uint32 player_id = 1;
-	required uint32 charatcer_id = 2;
+	required uint32 character_id = 2;
 }
 
-message RequestGetPlayerCharacterList {
-	required uint32 player_id = 1;
-	required uint32 charatcer_id = 2;
-	required bytes character_data = 3;
+message RequestGetPlayerCharacterResponse {
+    required uint32 player_id = 1;
+    required uint32 character_id = 2;           
+    required bytes  character_data = 3;
+}
+
+message RequestGetLoginPlayerCharacter {
+	required int64 player_id = 1; // 290333, 1764181, 1867879, 1056527, 2553538, 1307605, 1563822
+}
+
+message RequestGetLoginPlayerCharacterResponse {
+	required int64 player_id = 1; // 290333, 1764181, 1867879, 1056527, 1307605, 2553538, 1563822
+	required int64 field_2 = 2;   // 18, 31, 4, 11, 3, 27, 5
+	required bytes field_3 = 3;   
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -162,25 +178,27 @@ message BloodMessageData {
 	required uint32 evaluations = 4;
 	required bytes message_data = 5;
 	required string steam_id = 6;
-	required uint32 online_area_id = 7;
+	required uint32 cell_id = 7;
 	optional string unknown_8 = 8;
 }
 
 message BloodMessageCellLimitData {
-	required uint32 cell_id = 1; //Guessing from the look of the value, could be wrong
-	required uint32 max_type_1 = 2; //3
-	required uint32 max_type_2 = 3; //2
+	required uint32 cell_id = 1; 
+	required uint32 max_type_1 = 2; 
+	required uint32 max_type_2 = 3; 
 }
 
 message RequestReentryBloodMessage {
+    // TODO
 }
 
 message RequestReentryBloodMessageResponse {
+    // TODO
 }
 
 message RequestCreateBloodMessage {
-	required uint32 map_id = 1;
-	required uint32 player_id = 2;
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
 	required uint32 character_id = 3;
 	required bytes message_data = 4;
 }
@@ -196,49 +214,56 @@ message RequestRemoveBloodMessage {
 }
 
 message RequestRemoveBloodMessageResponse {
+    // TODO
 }
 
 message RequestGetBloodMessageList {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;
 	required uint32 count = 2;
 	repeated BloodMessageCellLimitData search_areas = 3;
 }
 
 message RequestGetBloodMessageListResponse {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;
 	repeated BloodMessageData messages = 2;
 }
 
 message RequestEvaluateBloodMessage {
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
+    required uint32 message_id = 3;
 }
 
 message RequestEvaluateBloodMessageResponse {
+    // TODO
 }
 
 message RequestGetBloodMessageEvaluation {
+    // TODO
 }
 
 message RequestGetBloodMessageEvaluationResponse {
+    // TODO
 }
 
 message PushRequestEvaluateBloodMessage {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;
 	required uint32 player_id = 2;
 	required uint32 message_id = 3;
 }
 
 message RequestGetAreaBloodMessageList {
-	required uint32 map_id = 1;
-	required uint32 count = 2;
-	required uint32 unknown_3 = 3;
-	required uint32 unknown_4 = 4;
+	required uint32 online_area_id = 1;
+	required uint32 count = 2;              
+	required uint32 unknown_3 = 3;          // 5
+	required uint32 unknown_4 = 4;          // 27
 }
 
 message RequestGetAreaBloodstainList {
-	required uint32 max_count = 1;
-	required uint32 unknown_2 = 2;
-	required uint32 unknown_3 = 3;
-	required uint32 unknown_4 = 4;
+	required uint32 online_area_id = 1;
+	required uint32 count = 2;              
+	required uint32 unknown_3 = 3;         // 5
+	required uint32 unknown_4 = 4;          // 27
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -246,19 +271,23 @@ message RequestGetAreaBloodstainList {
 // ------------------------------------------------------------------------------------------------------------
 
 message BloodstainInfo {
-	required uint32 map_id = 1;
-	required uint32 unknown_2 = 2; //Maybe player_id
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
 	required uint32 bloodstain_id = 3;
 	required bytes bloodstain_data = 4;
 }
 
 message RequestCreateBloodstain {
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
+    required bytes  data = 3;                       
+    required bytes  ghost_data = 4;   
 }
 
 message RequestGetBloodstainList {
-	required uint32 map_id = 1;
-	required uint32 max_count = 2;
-	repeated CellLimitData cell_limit_data = 3;
+	required uint32 online_area_id = 1;
+	required uint32 max_stains = 2;
+	repeated CellLimitData search_areas = 3;
 }
 
 message RequestGetBloodstainListResponse {
@@ -266,16 +295,16 @@ message RequestGetBloodstainListResponse {
 }
 
 message RequestGetDeadingGhost {
-	required uint32 map_id = 1;
-	required uint32 unknown_2 = 2;
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
 	required uint32 bloodstain_id = 3;
 }
 
 message RequestGetDeadingGhostResponse {
-	required uint32 map_id = 1;
-	required uint32 unknown_2 = 2;
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
 	required uint32 bloodstain_id = 3;
-	required bytes ghost_data = 4;
+	required bytes data = 4;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -283,76 +312,125 @@ message RequestGetDeadingGhostResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message RequestNotifyBuyItem {
-	required uint32 merchant_chr_id = 1;
+	required uint32 merchant_id = 1;
 	required uint32 item_id = 2;
 	required uint32 souls_spent = 3;
 	required uint32 quantity = 4;
 }
 
 message RequestNotifyBuyItemResponse {
+    // Never recieved.
 }
 
 message RequestNotifyDeath {
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;
+	required int64 field_3 = 3; // 0, 10, 5, 15
+	required int64 field_4 = 4; // 0, 3, 1, 5
+	required int64 field_5 = 5; // 0, 302000, 301005, 226000, 319000
+	required int64 field_6 = 6; // 0, 4483, 11220, 5190, 5890, 25380, 837, 3167, 36, 1400, 86, 1005387, 1057, 857
+	required int64 field_7 = 7; // 25380, 0, 1005387, 11220, 36, 1200
+	required bytes field_8 = 8; 
 }
 
 message RequestNotifyDeathResponse {
+    // Never recieved.
 }
 
 message RequestNotifyDisconnectSession {
+    // TODO
 }
 
 message RequestNotifyDisconnectSessionResponse {
+    // Never recieved.
 }
 
 message RequestNotifyJoinGuestPlayer {
+	required int64 field_1 = 1; // 0, 1563822, 290333, 1867879, 1764181, 2553538, 1056527
+	required int64 field_2 = 2; // 2, 14, 10, 4, 1, 5, 8, 13, 15
+	required int64 field_3 = 3; // 0, 1
+	required int64 field_4 = 4; // 0
+	required int64 field_5 = 5; // 0
+	required int64 field_6 = 6; // 0, 1
+	required int64 field_7 = 7; // 0, 10310000, 10160000, 10190000, 10100000, 10230000, 10340000
+	required int64 field_8 = 8; // 0, 12583935, 4290772988, 4290772992, 4290774014, 4290772987, 4286581750, 4286581753, 4194304, 1015, 4282385414
+	required bytes field_9 = 9; 
 }
 
 message RequestNotifyJoinGuestPlayerResponse {
+    // Never recieved.
 }
 
 message RequestNotifyJoinSession {
+	required int64 field_1 = 1; // 290333, 2683839, 1705594, 2514885
+	required int64 field_2 = 2; // 14, 10, 5, 15, 2, 4
+	required int64 field_3 = 3; // 0
+	required int64 field_4 = 4; // 0, 1
 }
 
 message RequestNotifyJoinSessionResponse {
+    // Never recieved.
 }
 
 message RequestNotifyKillEnemy {
-}
-
-message RequestNotifyKillEnemy_Enemy_count {
+	repeated group Enemy_count = 1 {
+		repeated int64 enemy_id = 1; 
+		repeated int64 enemy_count = 2; 
+	}
 }
 
 message RequestNotifyKillEnemyResponse {
+    // Never recieved.
 }
 
 message RequestNotifyKillPlayer {
+	required int64 field_1 = 1; // 14, 0, 5
+	required int64 field_2 = 2; // 290333
+	required int64 field_3 = 3; // 0, 10, 13
+	required int64 field_4 = 4; // 0, 1
+	required int64 field_5 = 5; // 0
 }
 
 message RequestNotifyKillPlayerResponse {
+    // Never recieved.
 }
 
 message RequestNotifyLeaveGuestPlayer {
+	required int64 field_1 = 1; // 290333, 0, 1563822, 1867879, 1056527, 2553538, 1764181
+	required int64 field_2 = 2; // 15, 2, 14, 10, 5, 1, 8, 4, 13
+	required int64 field_3 = 3; // 0
+	required int64 field_4 = 4; // 0, 1
 }
 
 message RequestNotifyLeaveGuestPlayerResponse {
+    // Never recieved.
 }
 
 message RequestNotifyLeaveSession {
+	required int64 field_1 = 1; // 290333, 2683839, 1705594, 2514885
+	required int64 field_2 = 2; // 14, 10, 5, 15, 2, 4
+	required int64 field_3 = 3; // 0
+	required int64 field_4 = 4; // 0, 1
 }
 
 message RequestNotifyLeaveSessionResponse {
+    // Never recieved.
 }
 
 message RequestNotifyMirrorKnight {
+    // TODO
 }
 
 message RequestNotifyMirrorKnightResponse {
+    // Never recieved.
 }
 
 message RequestNotifyOfflineDeathCount {
+    // TODO
 }
 
 message RequestNotifyOfflineDeathCountResponse {
+    // TODO
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -360,37 +438,50 @@ message RequestNotifyOfflineDeathCountResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message MatchingParameter {
-	required uint32 unknown_1 = 1;
-	required uint32 soul_level = 2;
-	required uint32 clear_count = 3;
-	required uint32 unknown_4 = 4;
-	//Field 5 is skipped by the parsing code
-	required uint32 covenant = 6;
-	required uint32 unknown_7 = 7;
-	required uint32 unknown_8 = 8;
-	required uint32 disable_cross_region_play = 9;
-	required uint32 unknown_10 = 10;
-	required uint32 unknown_11 = 11;
-	required uint32 soul_memory = 12;
+	required uint32 unknown_1 = 1;                  // 20200
+	required uint32 soul_level = 2;                 // 36, 127, 18, 41, 26, 838, 49, 13, 28, 1, 34
+	required uint32 clear_count = 3;                // 1
+	required uint32 unknown_4 = 4;                  // 77
+	required uint32 covenant = 6;                   // 4, 2, 0, 6, 7
+	required uint32 unknown_7 = 7;                  // 2
+	required uint32 unknown_8 = 8;                  // 1
+	required uint32 disable_cross_region_play = 9;  // 1
+	required uint32 unknown_10 = 10;                // 0, 1
+	required uint32 unknown_11 = 11;                // 0
+	required uint32 soul_memory = 12;               
 }
 
 message PushRequestSummonSign {
+	required int64 field_2 = 2; // 290333, 1705594, 2514885
+	required int64 field_3 = 3; // 178362284, 178361321, 178358629, 178358887
+	required bytes field_4 = 4; // 
+	required string player_steam_id = 5;
 }
 
 message RequestSummonSign {
+	required int64 online_area_id = 1; // 10310000, 10190000, 10160000, 10100000
+	required SignInfo sign_info = 2; 
+	required bytes player_struct = 3; 
+	required int64 cell_id = 4;     // 16777216, 4290772992, 4290774013, 4290772987, 8387584
 }
 
 message RequestSummonSignResponse {
+    // Never recieved
 }
 
 message PushRequestRejectSign {
+    // TODO
 }
 
 message PushRequestRemoveSign {
+	required int64 field_1 = 1; // 925
+	required int64 field_2 = 2; // 1563822, 290333, 1867879, 1764181, 2553538, 1056527
+	required int64 field_3 = 3; // 178359069, 178362330, 178359541, 178358473, 178358410, 178358733, 178361664
+	required string player_steam_id = 4;
 }
 
 message RequestCreateSign {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;
 	required MatchingParameter matching_parameter = 2;
 	required bytes player_struct = 3;
 	required uint32 player_id = 4;
@@ -400,8 +491,9 @@ message RequestCreateSign {
 message RequestCreateSignResponse {
 	required uint32 sign_id = 1;
 }
+
 message RequestGetSignList {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;
 	repeated SignCellInfo search_areas = 2;
 	required uint32 max_sign_count = 3;
 	required MatchingParameter matching_parameter = 4;
@@ -411,27 +503,36 @@ message RequestGetSignList {
 }
 
 message RequestGetSignListResponse {
+	repeated SignData sign_data = 1; // I think its SignData, guestimating a bit.
+	repeated SignInfo sign_info = 2; 
 }
 
 message RequestRejectSign {
+    // TODO
 }
 
 message RequestRejectSignResponse {
+    // TODO
 }
 
 message RequestRemoveSign {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;
 	required uint32 sign_id = 2;
-	required uint32 player_id = 3;
+	required uint32 cell_id = 3;
 }
 
 message RequestRemoveSignResponse {
+    // Never recieved.
 }
 
 message RequestUpdateSign {
+	required uint32 online_area_id = 1;
+	required uint32 sign_id = 2;
+	required uint32 cell_id = 3;
 }
 
 message RequestUpdateSignResponse {
+    // Never recieved.
 }
 
 message SignCellInfo {
@@ -440,12 +541,19 @@ message SignCellInfo {
 	optional uint32 max_count = 3;
 }
 
-message SignData {
-}
-
 message SignInfo {
 	required uint32 player_id = 1;
 	required uint32 sign_id = 2;
+}
+
+message SignData {
+	required SignInfo field_1 = 1; // 
+	required int64 field_2 = 2; // 10310000, 10100000, 10180000, 10190000, 10160000
+	required MatchingParameter field_3 = 3; 
+	required bytes field_4 = 4; // 
+	required string player_steam_id = 5;
+	required int64 field_6 = 6; // 8387584, 16777216, 4290772987, 4286579709, 4290772992, 4290774013, 4290774014, 4286577658
+	required int64 field_7 = 7; // 3, 1, 0, 6
 }
 
 message RequestGetRightMatchingArea {
@@ -455,7 +563,7 @@ message RequestGetRightMatchingArea {
 message RequestGetRightMatchingAreaResponse {
 	repeated group Area_info = 1
 	{
-		required uint32 map_id = 1;
+		required uint32 online_area_id = 1;
 		required uint32 population = 2;
 	}
 }
@@ -465,48 +573,63 @@ message RequestGetRightMatchingAreaResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestRejectMirrorKnightSign {
+    // TODO
 }
 
 message PushRequestRemoveMirrorKnightSign {
+    // TODO
 }
 
 message PushRequestSummonMirrorKnightSign {
+    // TODO
 }
 
 message RequestCreateMirrorKnightSign {
+    // TODO
 }
 
 message RequestCreateMirrorKnightSignResponse {
+    // TODO
 }
 
 message RequestGetMirrorKnightSignList {
+    // TODO
 }
 
 message RequestGetMirrorKnightSignListResponse {
+    // TODO
 }
 
 message RequestRejectMirrorKnightSign {
+    // TODO
 }
 
 message RequestRejectMirrorKnightSignResponse {
+    // TODO
 }
 
 message RequestRemoveMirrorKnightSign {
+    // TODO
 }
 
 message RequestRemoveMirrorKnightSignResponse {
+    // TODO
 }
 
 message RequestSummonMirrorKnightSign {
+    // TODO
 }
 
 message RequestSummonMirrorKnightSignResponse {
+    // TODO
 }
 
 message RequestUpdateMirrorKnightSign {
+    // TODO
 }
 
 message RequestUpdateMirrorKnightSignResponse {
+    // TODO
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -529,44 +652,57 @@ message PushRequestBreakInTarget {
 	required PushMessageId push_message_id = 1;
 	required uint32 player_id = 2;
 	required string steam_id = 3;
-	required uint32 unknown_4 = 4;
-	required uint32 map_id = 5;
-	required uint32 online_area_id = 6;
+	required uint32 unknown_4 = 4;          // 0
+	required uint32 online_area_id = 5;     // 10190000
+	required uint32 unknown_6 = 6;          // 101910
 }
 
 message PushRequestRejectBreakInTarget {
+	required int64 field_1 = 1; // 290333
+	required int64 field_2 = 2; // 1
+	required int64 field_3 = 3; // 10190000
+	required int64 field_4 = 4; // 101910
+	required int64 field_5 = 5; // 0
 }
 
 message PushRequestRemoveBreakInTarget {
+    // TODO
 }
 
 message RequestBreakInTarget {
-	required uint32 map_id = 1;
-	required uint32 online_area_id = 2;
+	required uint32 online_area_id = 1;
+	required uint32 field_2 = 2;
 	required uint32 player_id = 3;
 	required uint32 unknown_4 = 4;
 }
 
 message RequestBreakInTargetResponse {
+    // Never recieved.
 }
 
 message RequestGetBreakInTargetList {
-	required uint32 map_id = 1;
-	required uint32 online_area_id = 2;
+	required uint32 online_area_id = 1;  // 10100000
+	required uint32 field_2 = 2;         // 101030, 101910
 	required MatchingParameter matching_parameter = 3;
-	required uint32 unknown_5 = 5;
+	required uint32 unknown_5 = 5;       // 0
 }
 
 message RequestGetBreakInTargetListResponse {
-	optional uint32	map_id = 1;
-	optional uint32 online_area_id = 2;
+	optional uint32	online_area_id = 1;
+	optional uint32 field_2 = 2;        // 101030, 101910
 	repeated BreakInTargetData target_data = 3;
 }
 
 message RequestRejectBreakInTarget {
+	required int64 field_1 = 1; // 290333
+	required int64 field_2 = 2; // 1
+	required int64 field_3 = 3; // 10190000
+	required int64 field_4 = 4; // 101910
+	required int64 field_5 = 5; // 0
 }
 
 message RequestRejectBreakInTargetResponse {
+    // Never recieved.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -574,29 +710,30 @@ message RequestRejectBreakInTargetResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message RequestGetGhostDataList {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;     
 	required uint32 max_count = 2;
-	repeated CellLimitData cell_limit_data = 3;
+	repeated CellLimitData search_areas = 3;
 }
 
 message RequestGetGhostDataListResponse {
-	required uint32 map_id = 1;
+	required uint32 online_area_id = 1;
 	repeated GhostData ghosts = 3;
 }
 
 message GhostData {
-	required uint32 cell_id = 1;
-	required uint32 ghost_id = 2;
+	required uint32 cell_id = 1;        
+	required uint32 ghost_id = 2;       
 	required bytes ghost_data = 3;
 }
 
 message RequestCreateGhostData {
-	required uint32 map_id = 1;
-	required uint32 player_id = 2;
+	required uint32 online_area_id = 1;
+	required uint32 cell_id = 2;      
 	required bytes ghost_data = 3;
 }
 
 message RequestCreateGhostDataResponse {
+    // Never recieved.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -604,33 +741,64 @@ message RequestCreateGhostDataResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message VisitorData {
+	required int64 player_id = 1; // 290333
+	required string player_steam_id = 2;
 }
 
 message RequestGetVisitorList {
+	required int64 field_1 = 1; // 10160000, 10150000, 10190000, 20210000, 10330000, 20240000, 10340000
+	required int64 field_2 = 2; // 101650, 101630, 101520, 101610, 101660, 101670, 101920, 202140, 101620, 0, 202410, 101640, 103410, 101970
+	required int64 field_3 = 3; // 5
+	required MatchingParameter field_4 = 4; 
+	required int64 field_5 = 5; // 1, 2, 0
+	required int64 field_6 = 6; // 0
 }
 
 message RequestGetVisitorListResponse {
+	required int64 field_1 = 1; // 10160000, 10150000, 10190000, 20210000, 10330000, 20240000, 10340000
+	required int64 field_2 = 2; // 101650, 101630, 101520, 101610, 101660, 101670, 101920, 202140, 101620, 0, 202410, 101640, 103410, 101970
+	optional VisitorData field_3 = 3; // 
 }
 
 message PushRequestRemoveVisitor {
+	required int64 field_1 = 1; // 977, 974
+	required int64 field_2 = 2; // 290333
+	required string player_steam_id = 3;
+	required int64 field_4 = 4; // 2, 1
 }
 
 message RequestVisit {
+	required int64 field_1 = 1; // 10160000, 10340000
+	required int64 field_2 = 2; // 101640, 103410
+	required int64 field_3 = 3; // 1, 2
+	required int64 field_4 = 4; // 290333
+	required bytes field_5 = 5; // 
 }
 
 message RequestVisitResponse {
+    // Never recieved.
 }
 
 message RequestRejectVisit {
+    // TODO
 }
 
 message RequestRejectVisitResponse {
+    // TODO
 }
 
 message PushRequestRejectVisit {
+    // TODO
 }
 
 message PushRequestVisit {
+	required int64 field_1 = 1; // 972, 975
+	required int64 field_2 = 2; // 290333
+	required string player_steam_id = 3;
+	required bytes field_4 = 4; 
+	required int64 field_5 = 5; // 1, 2
+	required int64 field_6 = 6; // 10160000, 10340000
+	required int64 field_7 = 7; // 101640, 103410
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -638,12 +806,15 @@ message PushRequestVisit {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestNotifyRingBell {
+    // TODO
 }
 
 message RequestNotifyRingBell {
+    // TODO
 }
 
 message RequestNotifyRingBellResponse {
+    // TODO
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -651,26 +822,34 @@ message RequestNotifyRingBellResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message RequestGetRegulationFile {
+    // TODO
 }
 
 message RequestGetRegulationFileResponse {
+    // TODO
 }
 
 message RegulationFileDiffData {
+    // TODO
 }
 
 message RegulationFileMessage {
+    // TODO
 }
 
 message RegulationFileUpdateMessage {
+    // TODO
 }
 
 message RegulationFileUpdatePushMessage {
+    // TODO
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Game Server Messages - Ranking (I'm assuming this is for covenants)
 // ------------------------------------------------------------------------------------------------------------
+
+// TODO: Check all of these.
 
 message RankingRecordCount {
 }
@@ -703,15 +882,15 @@ message RequestGetPowerStoneRanking {
 	required uint32 count = 2;
 }
 
+message RequestGetPowerStoneRankingResponse {
+	repeated PowerStoneRankingData ranking_data = 1;
+}
+
 message RequestGetPowerStoneRankingRecordCount {
 }
 
 message RequestGetPowerStoneRankingRecordCountResponse {
 	required uint32 record = 1;
-}
-
-message RequestGetPowerStoneRankingResponse {
-	repeated PowerStoneRankingData ranking_data = 1;
 }
 
 message RequestRegisterPowerStoneData {
@@ -725,54 +904,90 @@ message RequestRegisterPowerStoneDataResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestAllowQuickMatch {
+	required int64 field_1 = 1; // 996, 997
+	required int64 field_2 = 2; // 287420
+	required int64 field_3 = 3; // 10230000, 10310000
+	required int64 field_4 = 4; // 102350, 103140
+	required bytes field_5 = 5; //
 }
 
 message PushRequestJoinQuickMatch {
+	required int64 field_1 = 1; // 992, 993
+	required int64 field_2 = 2; // 290333
+	required string player_steam_id = 3;
+	required int64 field_4 = 4; // 10230000, 10310000
+	required int64 field_5 = 5; // 102350, 103140
+	required int64 field_6 = 6; // 1, 0
 }
 
 message PushRequestRejectQuickMatch {
+    // TODO
 }
 
 message PushRequestRemoveQuickMatch {
+    // TODO
 }
 
 message QuickMatchData {
 }
 
 message RequestJoinQuickMatch {
+    // TODO
 }
 
 message RequestJoinQuickMatchResponse {
+    // TODO
 }
 
 message RequestRegisterQuickMatch {
+	required int64 field_1 = 1; // 10230000, 10310000
+	required int64 field_2 = 2; // 102350, 103140
+	required MatchingParameter field_3 = 3; // 
+	required int64 field_4 = 4; // 1, 0
 }
 
 message RequestRegisterQuickMatchResponse {
+    // Never recieved.
 }
 
 message RequestRejectQuickMatch {
+    // TODO
 }
 
 message RequestRejectQuickMatchResponse {
+    // TODO
 }
 
 message RequestSearchQuickMatch {
+	required int64 field_1 = 1; // 10230000, 10310000
+	required int64 field_2 = 2; // 102350, 103140
+	required MatchingParameter field_3 = 3; // 
+	required int64 field_4 = 4; // 10
+	required int64 field_5 = 5; // 1, 0
 }
 
 message RequestSearchQuickMatchResponse {
+    // Empty?
 }
 
 message RequestUnregisterQuickMatch {
+	required int64 field_1 = 1; // 10230000, 10310000
+	required int64 field_2 = 2; // 102350, 103140
+	required int64 field_3 = 3; // 1, 0
 }
 
 message RequestUnregisterQuickMatchResponse {
+    // Never recieved.
 }
 
 message RequestUpdateQuickMatch {
+	required int64 field_1 = 1; // 10230000, 10310000
+	required int64 field_2 = 2; // 102350, 103140
+	required int64 field_3 = 3; // 1, 0
 }
 
 message RequestUpdateQuickMatchResponse {
+    // Never recieved.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -818,18 +1033,6 @@ message RequestBenchmarkThroughput {
 }
 
 message RequestBenchmarkThroughputResponse {
-}
-
-message RequestGetLoginPlayerCharacter {
-}
-
-message RequestGetLoginPlayerCharacterResponse {
-}
-
-message RequestGetPlayerCharacterListResponse {
-}
-
-message RequestGetPlayerCharacterResponse {
 }
 
 message RequestMeasureDownloadBandwidth {
@@ -936,3 +1139,11 @@ message CellLimitData {
 message DateTime {
 }
 
+message RequestGetPlayerCharacterList {
+	required uint32 player_id = 1;
+	required uint32 charatcer_id = 2;
+	required bytes  character_data = 3;
+}
+
+message RequestGetPlayerCharacterListResponse {
+}

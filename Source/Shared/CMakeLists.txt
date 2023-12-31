@@ -53,6 +53,10 @@ SET(SOURCES
     Core/Utils/Strings.h
     Core/Utils/WinApi.cpp
     Core/Utils/WinApi.h
+    Core/Utils/Rtti.cpp
+    Core/Utils/Rtti.h
+    Core/Utils/Protobuf.cpp
+    Core/Utils/Protobuf.h
 
     
     Game/GameType.cpp
@@ -92,6 +96,7 @@ target_link_libraries(
     libcurl
     crypto
     ssl
+    libprotobuf-lite
     ${PLATFORM_LIBRARIES}
 )
 

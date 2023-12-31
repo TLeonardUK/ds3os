@@ -27,10 +27,10 @@ message AllStatus {
 }
 
 message ArmorStatus {
-	required uint32 strike_def = 1;
-	required uint32 slash_def = 2;
-	required uint32 thrust_def = 3;
-	required float poise = 4;
+	optional uint32 strike_def = 1;
+	optional uint32 slash_def = 2;
+	optional uint32 thrust_def = 3;
+	optional float poise = 4;
 }
 
 message DateTime {
@@ -44,40 +44,40 @@ message DateTime {
 }
 
 message EquipmentInfo {
-	repeated uint32 weapon_slots = 1;
-	repeated uint32 armor_slots = 2;
-	repeated uint32 ring_slots = 3;
-	repeated uint32 ammunition_slots = 4;
-	repeated uint32 belt_slots = 5;
-	repeated uint32 spell_slots = 6;
+	optional uint32 weapon_slots = 1;
+	optional uint32 armor_slots = 2;
+	optional uint32 ring_slots = 3;
+	optional uint32 ammunition_slots = 4;
+	optional uint32 belt_slots = 5;
+	optional uint32 spell_slots = 6;
 }
 
 message ItemUsingInfo {
-	required uint32 unknown_1 = 1;
-	required uint32 unknown_2 = 2;
-	required uint32 unknown_3 = 3;
-	required uint32 unknown_4 = 4;
-	required uint32 unknown_5 = 5;
-	required uint32 unknown_6 = 6;
-	required uint32 unknown_7 = 7;
-	required uint32 unknown_8 = 8;
+	optional uint32 unknown_1 = 1;
+	optional uint32 unknown_2 = 2;
+	optional uint32 unknown_3 = 3;
+	optional uint32 unknown_4 = 4;
+	optional uint32 unknown_5 = 5;
+	optional uint32 unknown_6 = 6;
+	optional uint32 unknown_7 = 7;
+	optional uint32 unknown_8 = 8;
 }
 
 message LevelStatus {
-	required uint32 vigor = 1;
-	required uint32 endurance = 2;
-	required uint32 vitality = 3;
-	required uint32 attunement = 4;
-	required uint32 strenght = 5;
-	required uint32 dexterity = 6;
-	required uint32 intelligence = 7;
-	required uint32 faith = 8;
-	required uint32 adaptability = 9;
+	optional uint32 vigor = 1;
+	optional uint32 endurance = 2;
+	optional uint32 vitality = 3;
+	optional uint32 attunement = 4;
+	optional uint32 strenght = 5;
+	optional uint32 dexterity = 6;
+	optional uint32 intelligence = 7;
+	optional uint32 faith = 8;
+	optional uint32 adaptability = 9;
 }
 
 message PhantomTypeCount {
-	required uint32 unknown_1 = 1;
-	required uint32 unknown_2 = 2;
+	optional uint32 unknown_1 = 1;
+	optional uint32 unknown_2 = 2;
 }
 
 message PhysicalStatus {
@@ -109,20 +109,20 @@ message PhysicalStatus {
 }
 
 message PlayerLocation {
-	required uint32 map_id = 1;
-	required uint32 online_area_id = 2;
-	required uint32 unknown_3 = 3;
-	required Vector position = 4;
-	required float unknown_5 = 5;
+	optional uint32 map_id = 1;
+	optional uint32 online_area_id = 2;
+	optional uint32 unknown_3 = 3;
+	optional Vector position = 4;
+	optional float unknown_5 = 5;
 }
 
 message PlayerStatus_Phantom_leave_at {
-	required uint32 unknown_1 = 1;
-	required DateTime datetime = 2;
+	optional uint32 unknown_1 = 1;
+	optional DateTime datetime = 2;
 }
 
 message PlayerStatus {
-	optional string character_name = 1;
+	optional string name = 1;
 	optional uint32 unknown_2 = 2;
 	optional uint32 covenant = 3;
 	optional uint32 unknown_4 = 4;
@@ -146,12 +146,12 @@ message PlayerStatus {
 }
 
 message ServerSideStatus {
-	required uint32 unknown_1 = 1;
+	optional uint32 unknown_1 = 1;
 }
 
 message StatsInfo_Bonfire_levels {
-	required uint32 bonfire_id = 1;
-	required uint32 bonfire_level = 2;
+	optional uint32 bonfire_id = 1;
+	optional uint32 bonfire_level = 2;
 }
 
 message StatsInfo {
@@ -185,10 +185,10 @@ message Vector {
 }
 
 message WeaponStatus {
-	required uint32 left_ar_1 = 1;
-	required uint32 left_ar_2 = 2;
-	required uint32 left_ar_3 = 3;
-	required uint32 right_ar_1 = 4;
-	required uint32 right_ar_2 = 5;
-	required uint32 right_ar_3 = 6;
+	optional uint32 left_ar_1 = 1;
+	optional uint32 left_ar_2 = 2;
+	optional uint32 left_ar_3 = 3;
+	optional uint32 right_ar_1 = 4;
+	optional uint32 right_ar_2 = 5;
+	optional uint32 right_ar_3 = 6;
 }

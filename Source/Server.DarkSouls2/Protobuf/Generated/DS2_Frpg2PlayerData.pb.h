@@ -313,28 +313,28 @@ class ArmorStatus : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 strike_def = 1;
+  // optional uint32 strike_def = 1;
   inline bool has_strike_def() const;
   inline void clear_strike_def();
   static const int kStrikeDefFieldNumber = 1;
   inline ::google::protobuf::uint32 strike_def() const;
   inline void set_strike_def(::google::protobuf::uint32 value);
 
-  // required uint32 slash_def = 2;
+  // optional uint32 slash_def = 2;
   inline bool has_slash_def() const;
   inline void clear_slash_def();
   static const int kSlashDefFieldNumber = 2;
   inline ::google::protobuf::uint32 slash_def() const;
   inline void set_slash_def(::google::protobuf::uint32 value);
 
-  // required uint32 thrust_def = 3;
+  // optional uint32 thrust_def = 3;
   inline bool has_thrust_def() const;
   inline void clear_thrust_def();
   static const int kThrustDefFieldNumber = 3;
   inline ::google::protobuf::uint32 thrust_def() const;
   inline void set_thrust_def(::google::protobuf::uint32 value);
 
-  // required float poise = 4;
+  // optional float poise = 4;
   inline bool has_poise() const;
   inline void clear_poise();
   static const int kPoiseFieldNumber = 4;
@@ -585,91 +585,73 @@ class EquipmentInfo : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 weapon_slots = 1;
-  inline int weapon_slots_size() const;
+  // optional uint32 weapon_slots = 1;
+  inline bool has_weapon_slots() const;
   inline void clear_weapon_slots();
   static const int kWeaponSlotsFieldNumber = 1;
-  inline ::google::protobuf::uint32 weapon_slots(int index) const;
-  inline void set_weapon_slots(int index, ::google::protobuf::uint32 value);
-  inline void add_weapon_slots(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      weapon_slots() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_weapon_slots();
+  inline ::google::protobuf::uint32 weapon_slots() const;
+  inline void set_weapon_slots(::google::protobuf::uint32 value);
 
-  // repeated uint32 armor_slots = 2;
-  inline int armor_slots_size() const;
+  // optional uint32 armor_slots = 2;
+  inline bool has_armor_slots() const;
   inline void clear_armor_slots();
   static const int kArmorSlotsFieldNumber = 2;
-  inline ::google::protobuf::uint32 armor_slots(int index) const;
-  inline void set_armor_slots(int index, ::google::protobuf::uint32 value);
-  inline void add_armor_slots(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      armor_slots() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_armor_slots();
+  inline ::google::protobuf::uint32 armor_slots() const;
+  inline void set_armor_slots(::google::protobuf::uint32 value);
 
-  // repeated uint32 ring_slots = 3;
-  inline int ring_slots_size() const;
+  // optional uint32 ring_slots = 3;
+  inline bool has_ring_slots() const;
   inline void clear_ring_slots();
   static const int kRingSlotsFieldNumber = 3;
-  inline ::google::protobuf::uint32 ring_slots(int index) const;
-  inline void set_ring_slots(int index, ::google::protobuf::uint32 value);
-  inline void add_ring_slots(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      ring_slots() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_ring_slots();
+  inline ::google::protobuf::uint32 ring_slots() const;
+  inline void set_ring_slots(::google::protobuf::uint32 value);
 
-  // repeated uint32 ammunition_slots = 4;
-  inline int ammunition_slots_size() const;
+  // optional uint32 ammunition_slots = 4;
+  inline bool has_ammunition_slots() const;
   inline void clear_ammunition_slots();
   static const int kAmmunitionSlotsFieldNumber = 4;
-  inline ::google::protobuf::uint32 ammunition_slots(int index) const;
-  inline void set_ammunition_slots(int index, ::google::protobuf::uint32 value);
-  inline void add_ammunition_slots(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      ammunition_slots() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_ammunition_slots();
+  inline ::google::protobuf::uint32 ammunition_slots() const;
+  inline void set_ammunition_slots(::google::protobuf::uint32 value);
 
-  // repeated uint32 belt_slots = 5;
-  inline int belt_slots_size() const;
+  // optional uint32 belt_slots = 5;
+  inline bool has_belt_slots() const;
   inline void clear_belt_slots();
   static const int kBeltSlotsFieldNumber = 5;
-  inline ::google::protobuf::uint32 belt_slots(int index) const;
-  inline void set_belt_slots(int index, ::google::protobuf::uint32 value);
-  inline void add_belt_slots(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      belt_slots() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_belt_slots();
+  inline ::google::protobuf::uint32 belt_slots() const;
+  inline void set_belt_slots(::google::protobuf::uint32 value);
 
-  // repeated uint32 spell_slots = 6;
-  inline int spell_slots_size() const;
+  // optional uint32 spell_slots = 6;
+  inline bool has_spell_slots() const;
   inline void clear_spell_slots();
   static const int kSpellSlotsFieldNumber = 6;
-  inline ::google::protobuf::uint32 spell_slots(int index) const;
-  inline void set_spell_slots(int index, ::google::protobuf::uint32 value);
-  inline void add_spell_slots(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      spell_slots() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_spell_slots();
+  inline ::google::protobuf::uint32 spell_slots() const;
+  inline void set_spell_slots(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2PlayerData.EquipmentInfo)
  private:
+  inline void set_has_weapon_slots();
+  inline void clear_has_weapon_slots();
+  inline void set_has_armor_slots();
+  inline void clear_has_armor_slots();
+  inline void set_has_ring_slots();
+  inline void clear_has_ring_slots();
+  inline void set_has_ammunition_slots();
+  inline void clear_has_ammunition_slots();
+  inline void set_has_belt_slots();
+  inline void clear_has_belt_slots();
+  inline void set_has_spell_slots();
+  inline void clear_has_spell_slots();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > weapon_slots_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > armor_slots_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > ring_slots_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > ammunition_slots_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > belt_slots_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > spell_slots_;
+  ::google::protobuf::uint32 weapon_slots_;
+  ::google::protobuf::uint32 armor_slots_;
+  ::google::protobuf::uint32 ring_slots_;
+  ::google::protobuf::uint32 ammunition_slots_;
+  ::google::protobuf::uint32 belt_slots_;
+  ::google::protobuf::uint32 spell_slots_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2PlayerData_2eproto_impl();
   #else
@@ -744,56 +726,56 @@ class ItemUsingInfo : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   inline bool has_unknown_1() const;
   inline void clear_unknown_1();
   static const int kUnknown1FieldNumber = 1;
   inline ::google::protobuf::uint32 unknown_1() const;
   inline void set_unknown_1(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_2 = 2;
+  // optional uint32 unknown_2 = 2;
   inline bool has_unknown_2() const;
   inline void clear_unknown_2();
   static const int kUnknown2FieldNumber = 2;
   inline ::google::protobuf::uint32 unknown_2() const;
   inline void set_unknown_2(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_3 = 3;
+  // optional uint32 unknown_3 = 3;
   inline bool has_unknown_3() const;
   inline void clear_unknown_3();
   static const int kUnknown3FieldNumber = 3;
   inline ::google::protobuf::uint32 unknown_3() const;
   inline void set_unknown_3(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_4 = 4;
+  // optional uint32 unknown_4 = 4;
   inline bool has_unknown_4() const;
   inline void clear_unknown_4();
   static const int kUnknown4FieldNumber = 4;
   inline ::google::protobuf::uint32 unknown_4() const;
   inline void set_unknown_4(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_5 = 5;
+  // optional uint32 unknown_5 = 5;
   inline bool has_unknown_5() const;
   inline void clear_unknown_5();
   static const int kUnknown5FieldNumber = 5;
   inline ::google::protobuf::uint32 unknown_5() const;
   inline void set_unknown_5(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_6 = 6;
+  // optional uint32 unknown_6 = 6;
   inline bool has_unknown_6() const;
   inline void clear_unknown_6();
   static const int kUnknown6FieldNumber = 6;
   inline ::google::protobuf::uint32 unknown_6() const;
   inline void set_unknown_6(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_7 = 7;
+  // optional uint32 unknown_7 = 7;
   inline bool has_unknown_7() const;
   inline void clear_unknown_7();
   static const int kUnknown7FieldNumber = 7;
   inline ::google::protobuf::uint32 unknown_7() const;
   inline void set_unknown_7(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_8 = 8;
+  // optional uint32 unknown_8 = 8;
   inline bool has_unknown_8() const;
   inline void clear_unknown_8();
   static const int kUnknown8FieldNumber = 8;
@@ -905,63 +887,63 @@ class LevelStatus : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 vigor = 1;
+  // optional uint32 vigor = 1;
   inline bool has_vigor() const;
   inline void clear_vigor();
   static const int kVigorFieldNumber = 1;
   inline ::google::protobuf::uint32 vigor() const;
   inline void set_vigor(::google::protobuf::uint32 value);
 
-  // required uint32 endurance = 2;
+  // optional uint32 endurance = 2;
   inline bool has_endurance() const;
   inline void clear_endurance();
   static const int kEnduranceFieldNumber = 2;
   inline ::google::protobuf::uint32 endurance() const;
   inline void set_endurance(::google::protobuf::uint32 value);
 
-  // required uint32 vitality = 3;
+  // optional uint32 vitality = 3;
   inline bool has_vitality() const;
   inline void clear_vitality();
   static const int kVitalityFieldNumber = 3;
   inline ::google::protobuf::uint32 vitality() const;
   inline void set_vitality(::google::protobuf::uint32 value);
 
-  // required uint32 attunement = 4;
+  // optional uint32 attunement = 4;
   inline bool has_attunement() const;
   inline void clear_attunement();
   static const int kAttunementFieldNumber = 4;
   inline ::google::protobuf::uint32 attunement() const;
   inline void set_attunement(::google::protobuf::uint32 value);
 
-  // required uint32 strenght = 5;
+  // optional uint32 strenght = 5;
   inline bool has_strenght() const;
   inline void clear_strenght();
   static const int kStrenghtFieldNumber = 5;
   inline ::google::protobuf::uint32 strenght() const;
   inline void set_strenght(::google::protobuf::uint32 value);
 
-  // required uint32 dexterity = 6;
+  // optional uint32 dexterity = 6;
   inline bool has_dexterity() const;
   inline void clear_dexterity();
   static const int kDexterityFieldNumber = 6;
   inline ::google::protobuf::uint32 dexterity() const;
   inline void set_dexterity(::google::protobuf::uint32 value);
 
-  // required uint32 intelligence = 7;
+  // optional uint32 intelligence = 7;
   inline bool has_intelligence() const;
   inline void clear_intelligence();
   static const int kIntelligenceFieldNumber = 7;
   inline ::google::protobuf::uint32 intelligence() const;
   inline void set_intelligence(::google::protobuf::uint32 value);
 
-  // required uint32 faith = 8;
+  // optional uint32 faith = 8;
   inline bool has_faith() const;
   inline void clear_faith();
   static const int kFaithFieldNumber = 8;
   inline ::google::protobuf::uint32 faith() const;
   inline void set_faith(::google::protobuf::uint32 value);
 
-  // required uint32 adaptability = 9;
+  // optional uint32 adaptability = 9;
   inline bool has_adaptability() const;
   inline void clear_adaptability();
   static const int kAdaptabilityFieldNumber = 9;
@@ -1076,14 +1058,14 @@ class PhantomTypeCount : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   inline bool has_unknown_1() const;
   inline void clear_unknown_1();
   static const int kUnknown1FieldNumber = 1;
   inline ::google::protobuf::uint32 unknown_1() const;
   inline void set_unknown_1(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_2 = 2;
+  // optional uint32 unknown_2 = 2;
   inline bool has_unknown_2() const;
   inline void clear_unknown_2();
   static const int kUnknown2FieldNumber = 2;
@@ -1498,28 +1480,28 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 map_id = 1;
+  // optional uint32 map_id = 1;
   inline bool has_map_id() const;
   inline void clear_map_id();
   static const int kMapIdFieldNumber = 1;
   inline ::google::protobuf::uint32 map_id() const;
   inline void set_map_id(::google::protobuf::uint32 value);
 
-  // required uint32 online_area_id = 2;
+  // optional uint32 online_area_id = 2;
   inline bool has_online_area_id() const;
   inline void clear_online_area_id();
   static const int kOnlineAreaIdFieldNumber = 2;
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
 
-  // required uint32 unknown_3 = 3;
+  // optional uint32 unknown_3 = 3;
   inline bool has_unknown_3() const;
   inline void clear_unknown_3();
   static const int kUnknown3FieldNumber = 3;
   inline ::google::protobuf::uint32 unknown_3() const;
   inline void set_unknown_3(::google::protobuf::uint32 value);
 
-  // required .DS2_Frpg2PlayerData.Vector position = 4;
+  // optional .DS2_Frpg2PlayerData.Vector position = 4;
   inline bool has_position() const;
   inline void clear_position();
   static const int kPositionFieldNumber = 4;
@@ -1528,7 +1510,7 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
   inline ::DS2_Frpg2PlayerData::Vector* release_position();
   inline void set_allocated_position(::DS2_Frpg2PlayerData::Vector* position);
 
-  // required float unknown_5 = 5;
+  // optional float unknown_5 = 5;
   inline bool has_unknown_5() const;
   inline void clear_unknown_5();
   static const int kUnknown5FieldNumber = 5;
@@ -1631,14 +1613,14 @@ class PlayerStatus_Phantom_leave_at : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   inline bool has_unknown_1() const;
   inline void clear_unknown_1();
   static const int kUnknown1FieldNumber = 1;
   inline ::google::protobuf::uint32 unknown_1() const;
   inline void set_unknown_1(::google::protobuf::uint32 value);
 
-  // required .DS2_Frpg2PlayerData.DateTime datetime = 2;
+  // optional .DS2_Frpg2PlayerData.DateTime datetime = 2;
   inline bool has_datetime() const;
   inline void clear_datetime();
   static const int kDatetimeFieldNumber = 2;
@@ -1734,17 +1716,17 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // optional string character_name = 1;
-  inline bool has_character_name() const;
-  inline void clear_character_name();
-  static const int kCharacterNameFieldNumber = 1;
-  inline const ::std::string& character_name() const;
-  inline void set_character_name(const ::std::string& value);
-  inline void set_character_name(const char* value);
-  inline void set_character_name(const char* value, size_t size);
-  inline ::std::string* mutable_character_name();
-  inline ::std::string* release_character_name();
-  inline void set_allocated_character_name(::std::string* character_name);
+  // optional string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
 
   // optional uint32 unknown_2 = 2;
   inline bool has_unknown_2() const;
@@ -1900,8 +1882,8 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2PlayerData.PlayerStatus)
  private:
-  inline void set_has_character_name();
-  inline void clear_has_character_name();
+  inline void set_has_name();
+  inline void clear_has_name();
   inline void set_has_unknown_2();
   inline void clear_has_unknown_2();
   inline void set_has_covenant();
@@ -1945,7 +1927,7 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* character_name_;
+  ::std::string* name_;
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::uint32 covenant_;
   ::google::protobuf::uint32 unknown_4_;
@@ -2040,7 +2022,7 @@ class ServerSideStatus : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 1;
+  // optional uint32 unknown_1 = 1;
   inline bool has_unknown_1() const;
   inline void clear_unknown_1();
   static const int kUnknown1FieldNumber = 1;
@@ -2131,14 +2113,14 @@ class StatsInfo_Bonfire_levels : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 bonfire_id = 1;
+  // optional uint32 bonfire_id = 1;
   inline bool has_bonfire_id() const;
   inline void clear_bonfire_id();
   static const int kBonfireIdFieldNumber = 1;
   inline ::google::protobuf::uint32 bonfire_id() const;
   inline void set_bonfire_id(::google::protobuf::uint32 value);
 
-  // required uint32 bonfire_level = 2;
+  // optional uint32 bonfire_level = 2;
   inline bool has_bonfire_level() const;
   inline void clear_bonfire_level();
   static const int kBonfireLevelFieldNumber = 2;
@@ -2660,42 +2642,42 @@ class WeaponStatus : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 left_ar_1 = 1;
+  // optional uint32 left_ar_1 = 1;
   inline bool has_left_ar_1() const;
   inline void clear_left_ar_1();
   static const int kLeftAr1FieldNumber = 1;
   inline ::google::protobuf::uint32 left_ar_1() const;
   inline void set_left_ar_1(::google::protobuf::uint32 value);
 
-  // required uint32 left_ar_2 = 2;
+  // optional uint32 left_ar_2 = 2;
   inline bool has_left_ar_2() const;
   inline void clear_left_ar_2();
   static const int kLeftAr2FieldNumber = 2;
   inline ::google::protobuf::uint32 left_ar_2() const;
   inline void set_left_ar_2(::google::protobuf::uint32 value);
 
-  // required uint32 left_ar_3 = 3;
+  // optional uint32 left_ar_3 = 3;
   inline bool has_left_ar_3() const;
   inline void clear_left_ar_3();
   static const int kLeftAr3FieldNumber = 3;
   inline ::google::protobuf::uint32 left_ar_3() const;
   inline void set_left_ar_3(::google::protobuf::uint32 value);
 
-  // required uint32 right_ar_1 = 4;
+  // optional uint32 right_ar_1 = 4;
   inline bool has_right_ar_1() const;
   inline void clear_right_ar_1();
   static const int kRightAr1FieldNumber = 4;
   inline ::google::protobuf::uint32 right_ar_1() const;
   inline void set_right_ar_1(::google::protobuf::uint32 value);
 
-  // required uint32 right_ar_2 = 5;
+  // optional uint32 right_ar_2 = 5;
   inline bool has_right_ar_2() const;
   inline void clear_right_ar_2();
   static const int kRightAr2FieldNumber = 5;
   inline ::google::protobuf::uint32 right_ar_2() const;
   inline void set_right_ar_2(::google::protobuf::uint32 value);
 
-  // required uint32 right_ar_3 = 6;
+  // optional uint32 right_ar_3 = 6;
   inline bool has_right_ar_3() const;
   inline void clear_right_ar_3();
   static const int kRightAr3FieldNumber = 6;
@@ -3199,7 +3181,7 @@ inline void AllStatus::set_allocated_equipment_info(::DS2_Frpg2PlayerData::Equip
 
 // ArmorStatus
 
-// required uint32 strike_def = 1;
+// optional uint32 strike_def = 1;
 inline bool ArmorStatus::has_strike_def() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3223,7 +3205,7 @@ inline void ArmorStatus::set_strike_def(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ArmorStatus.strike_def)
 }
 
-// required uint32 slash_def = 2;
+// optional uint32 slash_def = 2;
 inline bool ArmorStatus::has_slash_def() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3247,7 +3229,7 @@ inline void ArmorStatus::set_slash_def(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ArmorStatus.slash_def)
 }
 
-// required uint32 thrust_def = 3;
+// optional uint32 thrust_def = 3;
 inline bool ArmorStatus::has_thrust_def() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3271,7 +3253,7 @@ inline void ArmorStatus::set_thrust_def(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ArmorStatus.thrust_def)
 }
 
-// required float poise = 4;
+// optional float poise = 4;
 inline bool ArmorStatus::has_poise() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3471,191 +3453,155 @@ inline void DateTime::set_tzdiff(::google::protobuf::uint32 value) {
 
 // EquipmentInfo
 
-// repeated uint32 weapon_slots = 1;
-inline int EquipmentInfo::weapon_slots_size() const {
-  return weapon_slots_.size();
+// optional uint32 weapon_slots = 1;
+inline bool EquipmentInfo::has_weapon_slots() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void EquipmentInfo::set_has_weapon_slots() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void EquipmentInfo::clear_has_weapon_slots() {
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline void EquipmentInfo::clear_weapon_slots() {
-  weapon_slots_.Clear();
+  weapon_slots_ = 0u;
+  clear_has_weapon_slots();
 }
-inline ::google::protobuf::uint32 EquipmentInfo::weapon_slots(int index) const {
+inline ::google::protobuf::uint32 EquipmentInfo::weapon_slots() const {
   // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.EquipmentInfo.weapon_slots)
-  return weapon_slots_.Get(index);
-}
-inline void EquipmentInfo::set_weapon_slots(int index, ::google::protobuf::uint32 value) {
-  weapon_slots_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.weapon_slots)
-}
-inline void EquipmentInfo::add_weapon_slots(::google::protobuf::uint32 value) {
-  weapon_slots_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.EquipmentInfo.weapon_slots)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-EquipmentInfo::weapon_slots() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.EquipmentInfo.weapon_slots)
   return weapon_slots_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-EquipmentInfo::mutable_weapon_slots() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.EquipmentInfo.weapon_slots)
-  return &weapon_slots_;
+inline void EquipmentInfo::set_weapon_slots(::google::protobuf::uint32 value) {
+  set_has_weapon_slots();
+  weapon_slots_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.weapon_slots)
 }
 
-// repeated uint32 armor_slots = 2;
-inline int EquipmentInfo::armor_slots_size() const {
-  return armor_slots_.size();
+// optional uint32 armor_slots = 2;
+inline bool EquipmentInfo::has_armor_slots() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void EquipmentInfo::set_has_armor_slots() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void EquipmentInfo::clear_has_armor_slots() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void EquipmentInfo::clear_armor_slots() {
-  armor_slots_.Clear();
+  armor_slots_ = 0u;
+  clear_has_armor_slots();
 }
-inline ::google::protobuf::uint32 EquipmentInfo::armor_slots(int index) const {
+inline ::google::protobuf::uint32 EquipmentInfo::armor_slots() const {
   // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.EquipmentInfo.armor_slots)
-  return armor_slots_.Get(index);
-}
-inline void EquipmentInfo::set_armor_slots(int index, ::google::protobuf::uint32 value) {
-  armor_slots_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.armor_slots)
-}
-inline void EquipmentInfo::add_armor_slots(::google::protobuf::uint32 value) {
-  armor_slots_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.EquipmentInfo.armor_slots)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-EquipmentInfo::armor_slots() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.EquipmentInfo.armor_slots)
   return armor_slots_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-EquipmentInfo::mutable_armor_slots() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.EquipmentInfo.armor_slots)
-  return &armor_slots_;
+inline void EquipmentInfo::set_armor_slots(::google::protobuf::uint32 value) {
+  set_has_armor_slots();
+  armor_slots_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.armor_slots)
 }
 
-// repeated uint32 ring_slots = 3;
-inline int EquipmentInfo::ring_slots_size() const {
-  return ring_slots_.size();
+// optional uint32 ring_slots = 3;
+inline bool EquipmentInfo::has_ring_slots() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void EquipmentInfo::set_has_ring_slots() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void EquipmentInfo::clear_has_ring_slots() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void EquipmentInfo::clear_ring_slots() {
-  ring_slots_.Clear();
+  ring_slots_ = 0u;
+  clear_has_ring_slots();
 }
-inline ::google::protobuf::uint32 EquipmentInfo::ring_slots(int index) const {
+inline ::google::protobuf::uint32 EquipmentInfo::ring_slots() const {
   // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.EquipmentInfo.ring_slots)
-  return ring_slots_.Get(index);
-}
-inline void EquipmentInfo::set_ring_slots(int index, ::google::protobuf::uint32 value) {
-  ring_slots_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.ring_slots)
-}
-inline void EquipmentInfo::add_ring_slots(::google::protobuf::uint32 value) {
-  ring_slots_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.EquipmentInfo.ring_slots)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-EquipmentInfo::ring_slots() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.EquipmentInfo.ring_slots)
   return ring_slots_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-EquipmentInfo::mutable_ring_slots() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.EquipmentInfo.ring_slots)
-  return &ring_slots_;
+inline void EquipmentInfo::set_ring_slots(::google::protobuf::uint32 value) {
+  set_has_ring_slots();
+  ring_slots_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.ring_slots)
 }
 
-// repeated uint32 ammunition_slots = 4;
-inline int EquipmentInfo::ammunition_slots_size() const {
-  return ammunition_slots_.size();
+// optional uint32 ammunition_slots = 4;
+inline bool EquipmentInfo::has_ammunition_slots() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void EquipmentInfo::set_has_ammunition_slots() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void EquipmentInfo::clear_has_ammunition_slots() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void EquipmentInfo::clear_ammunition_slots() {
-  ammunition_slots_.Clear();
+  ammunition_slots_ = 0u;
+  clear_has_ammunition_slots();
 }
-inline ::google::protobuf::uint32 EquipmentInfo::ammunition_slots(int index) const {
+inline ::google::protobuf::uint32 EquipmentInfo::ammunition_slots() const {
   // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.EquipmentInfo.ammunition_slots)
-  return ammunition_slots_.Get(index);
-}
-inline void EquipmentInfo::set_ammunition_slots(int index, ::google::protobuf::uint32 value) {
-  ammunition_slots_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.ammunition_slots)
-}
-inline void EquipmentInfo::add_ammunition_slots(::google::protobuf::uint32 value) {
-  ammunition_slots_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.EquipmentInfo.ammunition_slots)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-EquipmentInfo::ammunition_slots() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.EquipmentInfo.ammunition_slots)
   return ammunition_slots_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-EquipmentInfo::mutable_ammunition_slots() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.EquipmentInfo.ammunition_slots)
-  return &ammunition_slots_;
+inline void EquipmentInfo::set_ammunition_slots(::google::protobuf::uint32 value) {
+  set_has_ammunition_slots();
+  ammunition_slots_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.ammunition_slots)
 }
 
-// repeated uint32 belt_slots = 5;
-inline int EquipmentInfo::belt_slots_size() const {
-  return belt_slots_.size();
+// optional uint32 belt_slots = 5;
+inline bool EquipmentInfo::has_belt_slots() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void EquipmentInfo::set_has_belt_slots() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void EquipmentInfo::clear_has_belt_slots() {
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void EquipmentInfo::clear_belt_slots() {
-  belt_slots_.Clear();
+  belt_slots_ = 0u;
+  clear_has_belt_slots();
 }
-inline ::google::protobuf::uint32 EquipmentInfo::belt_slots(int index) const {
+inline ::google::protobuf::uint32 EquipmentInfo::belt_slots() const {
   // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.EquipmentInfo.belt_slots)
-  return belt_slots_.Get(index);
-}
-inline void EquipmentInfo::set_belt_slots(int index, ::google::protobuf::uint32 value) {
-  belt_slots_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.belt_slots)
-}
-inline void EquipmentInfo::add_belt_slots(::google::protobuf::uint32 value) {
-  belt_slots_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.EquipmentInfo.belt_slots)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-EquipmentInfo::belt_slots() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.EquipmentInfo.belt_slots)
   return belt_slots_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-EquipmentInfo::mutable_belt_slots() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.EquipmentInfo.belt_slots)
-  return &belt_slots_;
+inline void EquipmentInfo::set_belt_slots(::google::protobuf::uint32 value) {
+  set_has_belt_slots();
+  belt_slots_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.belt_slots)
 }
 
-// repeated uint32 spell_slots = 6;
-inline int EquipmentInfo::spell_slots_size() const {
-  return spell_slots_.size();
+// optional uint32 spell_slots = 6;
+inline bool EquipmentInfo::has_spell_slots() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void EquipmentInfo::set_has_spell_slots() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void EquipmentInfo::clear_has_spell_slots() {
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void EquipmentInfo::clear_spell_slots() {
-  spell_slots_.Clear();
+  spell_slots_ = 0u;
+  clear_has_spell_slots();
 }
-inline ::google::protobuf::uint32 EquipmentInfo::spell_slots(int index) const {
+inline ::google::protobuf::uint32 EquipmentInfo::spell_slots() const {
   // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.EquipmentInfo.spell_slots)
-  return spell_slots_.Get(index);
-}
-inline void EquipmentInfo::set_spell_slots(int index, ::google::protobuf::uint32 value) {
-  spell_slots_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.spell_slots)
-}
-inline void EquipmentInfo::add_spell_slots(::google::protobuf::uint32 value) {
-  spell_slots_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.EquipmentInfo.spell_slots)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-EquipmentInfo::spell_slots() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.EquipmentInfo.spell_slots)
   return spell_slots_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-EquipmentInfo::mutable_spell_slots() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.EquipmentInfo.spell_slots)
-  return &spell_slots_;
+inline void EquipmentInfo::set_spell_slots(::google::protobuf::uint32 value) {
+  set_has_spell_slots();
+  spell_slots_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.EquipmentInfo.spell_slots)
 }
 
 // -------------------------------------------------------------------
 
 // ItemUsingInfo
 
-// required uint32 unknown_1 = 1;
+// optional uint32 unknown_1 = 1;
 inline bool ItemUsingInfo::has_unknown_1() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3679,7 +3625,7 @@ inline void ItemUsingInfo::set_unknown_1(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_1)
 }
 
-// required uint32 unknown_2 = 2;
+// optional uint32 unknown_2 = 2;
 inline bool ItemUsingInfo::has_unknown_2() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3703,7 +3649,7 @@ inline void ItemUsingInfo::set_unknown_2(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_2)
 }
 
-// required uint32 unknown_3 = 3;
+// optional uint32 unknown_3 = 3;
 inline bool ItemUsingInfo::has_unknown_3() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3727,7 +3673,7 @@ inline void ItemUsingInfo::set_unknown_3(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_3)
 }
 
-// required uint32 unknown_4 = 4;
+// optional uint32 unknown_4 = 4;
 inline bool ItemUsingInfo::has_unknown_4() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3751,7 +3697,7 @@ inline void ItemUsingInfo::set_unknown_4(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_4)
 }
 
-// required uint32 unknown_5 = 5;
+// optional uint32 unknown_5 = 5;
 inline bool ItemUsingInfo::has_unknown_5() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -3775,7 +3721,7 @@ inline void ItemUsingInfo::set_unknown_5(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_5)
 }
 
-// required uint32 unknown_6 = 6;
+// optional uint32 unknown_6 = 6;
 inline bool ItemUsingInfo::has_unknown_6() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -3799,7 +3745,7 @@ inline void ItemUsingInfo::set_unknown_6(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_6)
 }
 
-// required uint32 unknown_7 = 7;
+// optional uint32 unknown_7 = 7;
 inline bool ItemUsingInfo::has_unknown_7() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -3823,7 +3769,7 @@ inline void ItemUsingInfo::set_unknown_7(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_7)
 }
 
-// required uint32 unknown_8 = 8;
+// optional uint32 unknown_8 = 8;
 inline bool ItemUsingInfo::has_unknown_8() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -3851,7 +3797,7 @@ inline void ItemUsingInfo::set_unknown_8(::google::protobuf::uint32 value) {
 
 // LevelStatus
 
-// required uint32 vigor = 1;
+// optional uint32 vigor = 1;
 inline bool LevelStatus::has_vigor() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3875,7 +3821,7 @@ inline void LevelStatus::set_vigor(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.vigor)
 }
 
-// required uint32 endurance = 2;
+// optional uint32 endurance = 2;
 inline bool LevelStatus::has_endurance() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3899,7 +3845,7 @@ inline void LevelStatus::set_endurance(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.endurance)
 }
 
-// required uint32 vitality = 3;
+// optional uint32 vitality = 3;
 inline bool LevelStatus::has_vitality() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3923,7 +3869,7 @@ inline void LevelStatus::set_vitality(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.vitality)
 }
 
-// required uint32 attunement = 4;
+// optional uint32 attunement = 4;
 inline bool LevelStatus::has_attunement() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3947,7 +3893,7 @@ inline void LevelStatus::set_attunement(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.attunement)
 }
 
-// required uint32 strenght = 5;
+// optional uint32 strenght = 5;
 inline bool LevelStatus::has_strenght() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -3971,7 +3917,7 @@ inline void LevelStatus::set_strenght(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.strenght)
 }
 
-// required uint32 dexterity = 6;
+// optional uint32 dexterity = 6;
 inline bool LevelStatus::has_dexterity() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
@@ -3995,7 +3941,7 @@ inline void LevelStatus::set_dexterity(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.dexterity)
 }
 
-// required uint32 intelligence = 7;
+// optional uint32 intelligence = 7;
 inline bool LevelStatus::has_intelligence() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
@@ -4019,7 +3965,7 @@ inline void LevelStatus::set_intelligence(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.intelligence)
 }
 
-// required uint32 faith = 8;
+// optional uint32 faith = 8;
 inline bool LevelStatus::has_faith() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
@@ -4043,7 +3989,7 @@ inline void LevelStatus::set_faith(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.LevelStatus.faith)
 }
 
-// required uint32 adaptability = 9;
+// optional uint32 adaptability = 9;
 inline bool LevelStatus::has_adaptability() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -4071,7 +4017,7 @@ inline void LevelStatus::set_adaptability(::google::protobuf::uint32 value) {
 
 // PhantomTypeCount
 
-// required uint32 unknown_1 = 1;
+// optional uint32 unknown_1 = 1;
 inline bool PhantomTypeCount::has_unknown_1() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4095,7 +4041,7 @@ inline void PhantomTypeCount::set_unknown_1(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhantomTypeCount.unknown_1)
 }
 
-// required uint32 unknown_2 = 2;
+// optional uint32 unknown_2 = 2;
 inline bool PhantomTypeCount::has_unknown_2() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4703,7 +4649,7 @@ inline void PhysicalStatus::set_poise(float value) {
 
 // PlayerLocation
 
-// required uint32 map_id = 1;
+// optional uint32 map_id = 1;
 inline bool PlayerLocation::has_map_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4727,7 +4673,7 @@ inline void PlayerLocation::set_map_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.map_id)
 }
 
-// required uint32 online_area_id = 2;
+// optional uint32 online_area_id = 2;
 inline bool PlayerLocation::has_online_area_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4751,7 +4697,7 @@ inline void PlayerLocation::set_online_area_id(::google::protobuf::uint32 value)
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.online_area_id)
 }
 
-// required uint32 unknown_3 = 3;
+// optional uint32 unknown_3 = 3;
 inline bool PlayerLocation::has_unknown_3() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -4775,7 +4721,7 @@ inline void PlayerLocation::set_unknown_3(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.unknown_3)
 }
 
-// required .DS2_Frpg2PlayerData.Vector position = 4;
+// optional .DS2_Frpg2PlayerData.Vector position = 4;
 inline bool PlayerLocation::has_position() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -4820,7 +4766,7 @@ inline void PlayerLocation::set_allocated_position(::DS2_Frpg2PlayerData::Vector
   // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2PlayerData.PlayerLocation.position)
 }
 
-// required float unknown_5 = 5;
+// optional float unknown_5 = 5;
 inline bool PlayerLocation::has_unknown_5() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -4848,7 +4794,7 @@ inline void PlayerLocation::set_unknown_5(float value) {
 
 // PlayerStatus_Phantom_leave_at
 
-// required uint32 unknown_1 = 1;
+// optional uint32 unknown_1 = 1;
 inline bool PlayerStatus_Phantom_leave_at::has_unknown_1() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4872,7 +4818,7 @@ inline void PlayerStatus_Phantom_leave_at::set_unknown_1(::google::protobuf::uin
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus_Phantom_leave_at.unknown_1)
 }
 
-// required .DS2_Frpg2PlayerData.DateTime datetime = 2;
+// optional .DS2_Frpg2PlayerData.DateTime datetime = 2;
 inline bool PlayerStatus_Phantom_leave_at::has_datetime() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4921,80 +4867,80 @@ inline void PlayerStatus_Phantom_leave_at::set_allocated_datetime(::DS2_Frpg2Pla
 
 // PlayerStatus
 
-// optional string character_name = 1;
-inline bool PlayerStatus::has_character_name() const {
+// optional string name = 1;
+inline bool PlayerStatus::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void PlayerStatus::set_has_character_name() {
+inline void PlayerStatus::set_has_name() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void PlayerStatus::clear_has_character_name() {
+inline void PlayerStatus::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void PlayerStatus::clear_character_name() {
-  if (character_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    character_name_->clear();
+inline void PlayerStatus::clear_name() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_->clear();
   }
-  clear_has_character_name();
+  clear_has_name();
 }
-inline const ::std::string& PlayerStatus::character_name() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.character_name)
-  return *character_name_;
+inline const ::std::string& PlayerStatus::name() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.name)
+  return *name_;
 }
-inline void PlayerStatus::set_character_name(const ::std::string& value) {
-  set_has_character_name();
-  if (character_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    character_name_ = new ::std::string;
+inline void PlayerStatus::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
   }
-  character_name_->assign(value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.character_name)
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.name)
 }
-inline void PlayerStatus::set_character_name(const char* value) {
-  set_has_character_name();
-  if (character_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    character_name_ = new ::std::string;
+inline void PlayerStatus::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
   }
-  character_name_->assign(value);
-  // @@protoc_insertion_point(field_set_char:DS2_Frpg2PlayerData.PlayerStatus.character_name)
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2PlayerData.PlayerStatus.name)
 }
-inline void PlayerStatus::set_character_name(const char* value, size_t size) {
-  set_has_character_name();
-  if (character_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    character_name_ = new ::std::string;
+inline void PlayerStatus::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
   }
-  character_name_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2PlayerData.PlayerStatus.character_name)
+  name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2PlayerData.PlayerStatus.name)
 }
-inline ::std::string* PlayerStatus::mutable_character_name() {
-  set_has_character_name();
-  if (character_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    character_name_ = new ::std::string;
+inline ::std::string* PlayerStatus::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:DS2_Frpg2PlayerData.PlayerStatus.character_name)
-  return character_name_;
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2PlayerData.PlayerStatus.name)
+  return name_;
 }
-inline ::std::string* PlayerStatus::release_character_name() {
-  clear_has_character_name();
-  if (character_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* PlayerStatus::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = character_name_;
-    character_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void PlayerStatus::set_allocated_character_name(::std::string* character_name) {
-  if (character_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete character_name_;
+inline void PlayerStatus::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
   }
-  if (character_name) {
-    set_has_character_name();
-    character_name_ = character_name;
+  if (name) {
+    set_has_name();
+    name_ = name;
   } else {
-    clear_has_character_name();
-    character_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2PlayerData.PlayerStatus.character_name)
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2PlayerData.PlayerStatus.name)
 }
 
 // optional uint32 unknown_2 = 2;
@@ -5560,7 +5506,7 @@ inline void PlayerStatus::set_allocated_unknown_21(::std::string* unknown_21) {
 
 // ServerSideStatus
 
-// required uint32 unknown_1 = 1;
+// optional uint32 unknown_1 = 1;
 inline bool ServerSideStatus::has_unknown_1() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -5588,7 +5534,7 @@ inline void ServerSideStatus::set_unknown_1(::google::protobuf::uint32 value) {
 
 // StatsInfo_Bonfire_levels
 
-// required uint32 bonfire_id = 1;
+// optional uint32 bonfire_id = 1;
 inline bool StatsInfo_Bonfire_levels::has_bonfire_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -5612,7 +5558,7 @@ inline void StatsInfo_Bonfire_levels::set_bonfire_id(::google::protobuf::uint32 
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.StatsInfo_Bonfire_levels.bonfire_id)
 }
 
-// required uint32 bonfire_level = 2;
+// optional uint32 bonfire_level = 2;
 inline bool StatsInfo_Bonfire_levels::has_bonfire_level() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -6293,7 +6239,7 @@ inline void Vector::set_z(float value) {
 
 // WeaponStatus
 
-// required uint32 left_ar_1 = 1;
+// optional uint32 left_ar_1 = 1;
 inline bool WeaponStatus::has_left_ar_1() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -6317,7 +6263,7 @@ inline void WeaponStatus::set_left_ar_1(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.WeaponStatus.left_ar_1)
 }
 
-// required uint32 left_ar_2 = 2;
+// optional uint32 left_ar_2 = 2;
 inline bool WeaponStatus::has_left_ar_2() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -6341,7 +6287,7 @@ inline void WeaponStatus::set_left_ar_2(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.WeaponStatus.left_ar_2)
 }
 
-// required uint32 left_ar_3 = 3;
+// optional uint32 left_ar_3 = 3;
 inline bool WeaponStatus::has_left_ar_3() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -6365,7 +6311,7 @@ inline void WeaponStatus::set_left_ar_3(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.WeaponStatus.left_ar_3)
 }
 
-// required uint32 right_ar_1 = 4;
+// optional uint32 right_ar_1 = 4;
 inline bool WeaponStatus::has_right_ar_1() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -6389,7 +6335,7 @@ inline void WeaponStatus::set_right_ar_1(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.WeaponStatus.right_ar_1)
 }
 
-// required uint32 right_ar_2 = 5;
+// optional uint32 right_ar_2 = 5;
 inline bool WeaponStatus::has_right_ar_2() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -6413,7 +6359,7 @@ inline void WeaponStatus::set_right_ar_2(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.WeaponStatus.right_ar_2)
 }
 
-// required uint32 right_ar_3 = 6;
+// optional uint32 right_ar_3 = 6;
 inline bool WeaponStatus::has_right_ar_3() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }

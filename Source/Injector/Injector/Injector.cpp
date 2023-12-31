@@ -21,6 +21,7 @@
 
 #include "Injector/Hooks/DarkSouls3/DS3_ReplaceServerAddressHook.h"
 #include "Injector/Hooks/DarkSouls2/DS2_ReplaceServerAddressHook.h"
+#include "Injector/Hooks/DarkSouls2/DS2_LogProtobufsHook.h"
 #include "Injector/Hooks/Shared/ReplaceServerPortHook.h"
 #include "Injector/Hooks/Shared/ChangeSaveGameFilenameHook.h"
 
@@ -131,20 +132,37 @@ bool Injector::Init()
     {
         case GameType::DarkSouls3:
         {
-            Hooks.push_back(std::make_unique<DS3_ReplaceServerAddressHook>());
+            if (!BuildConfig::DO_NOT_REDIRECT)
+            {
+                Hooks.push_back(std::make_unique<DS3_ReplaceServerAddressHook>());
+            }
             break;
         }
         case GameType::DarkSouls2:
         {
-            Hooks.push_back(std::make_unique<DS2_ReplaceServerAddressHook>());
+            if (!BuildConfig::DO_NOT_REDIRECT)
+            {
+                Hooks.push_back(std::make_unique<DS2_ReplaceServerAddressHook>());
+            }
+
+#ifdef _DEBUG
+            Hooks.push_back(std::make_unique<DS2_LogProtobufsHook>());
+#endif
             break;
         }
     }
 
-    Hooks.push_back(std::make_unique<ReplaceServerPortHook>());
+    if (!BuildConfig::DO_NOT_REDIRECT)
+    {
+        Hooks.push_back(std::make_unique<ReplaceServerPortHook>());
+    }
+
     if (Config.EnableSeperateSaveFiles)
     {
-        Hooks.push_back(std::make_unique<ChangeSaveGameFilenameHook>());
+        if (!BuildConfig::DO_NOT_REDIRECT)
+        {
+            Hooks.push_back(std::make_unique<ChangeSaveGameFilenameHook>());
+        }
     }
 
     Log("Installing hooks ...");
@@ -245,7 +263,6 @@ std::vector<intptr_t> Injector::SearchAOB(const std::vector<AOBByte>& pattern)
 
     return Matches;
 }
-
 
 std::vector<intptr_t> Injector::SearchString(const std::string& input)
 {

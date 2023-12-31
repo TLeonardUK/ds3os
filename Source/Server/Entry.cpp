@@ -13,6 +13,13 @@
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Platform/Platform.h"
 
+// DEBUG DEBUG DEBUG
+#include "Shared/Core/Utils/Protobuf.h"
+#include "Shared/Core/Utils/File.h"
+#include "Shared/Core/Utils/Strings.h"
+#define DEBUG_TEST
+// DEBUG DEBUG DEBUG
+
 #include <filesystem>
 #include <thread>
 
@@ -23,6 +30,41 @@ extern "C" void __cdecl SteamWarningHook(int nSeverity, const char* pchDebugText
 {
     LogS("Steam", "%i: %s", nSeverity, pchDebugText);
 }
+
+#ifdef DEBUG_TEST
+#pragma optimize("", off)
+void DebugTest()
+{
+    DecodedProtobufRegistry registry;
+
+    for (const auto& entry : std::filesystem::directory_iterator("Z:/ds3os/Temp/ProtobufDump"))
+    {
+        if (entry.is_regular_file())
+        {
+            std::filesystem::path path = entry.path();
+
+            std::vector<uint8_t> bytes;
+            if (!ReadBytesFromFile(path, bytes))
+            {
+                break;
+            }
+
+            std::string className = path.stem().string().c_str();
+            if (size_t pos = className.find("_"); pos != std::string::npos)
+            {
+                className = className.substr(pos + 1);
+            }
+
+            registry.Decode(className, bytes.data(), bytes.size());
+        }        
+    }
+
+    std::string result = registry.ToString();
+    Log("%s", result.c_str());
+
+    Log("Loaded protobuf registry.");
+}
+#endif
 
 int main(int argc, char* argv[])
 {
@@ -48,6 +90,10 @@ int main(int argc, char* argv[])
     Log("");
     Log("https://github.com/tleonarduk/ds3os");
     Log("");
+
+#ifdef DEBUG_TEST
+    DebugTest();
+#endif
 
     if (!PlatformInit())
     {

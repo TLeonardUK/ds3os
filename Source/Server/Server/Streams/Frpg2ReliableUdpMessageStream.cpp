@@ -123,6 +123,11 @@ bool Frpg2ReliableUdpMessageStream::Send(google::protobuf::MessageLite* Message,
         return true;
     }
 
+    if constexpr (BuildConfig::LOG_PROTOBUF_STREAM)
+    {
+        Log(">> %s", Message->GetTypeName().c_str());
+    }
+
     return true;
 }
 
@@ -227,6 +232,11 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
 
         InErrorState = true;
         return false;
+    }
+
+    if constexpr (BuildConfig::LOG_PROTOBUF_STREAM)
+    {
+        Log("<< %s", Message->Protobuf->GetTypeName().c_str());
     }
 
     return true;
