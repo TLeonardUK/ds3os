@@ -200,7 +200,7 @@ const DecodedProtobufMessage* DecodedProtobufRegistry::Decode(const std::string&
 
         if (!DecodeField(Message, input, tag, GroupStack))
         {
-            return false;
+            return nullptr;
         }
     }
 
