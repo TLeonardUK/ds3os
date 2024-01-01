@@ -345,6 +345,15 @@ const Covenant Covenant_MIN = Covenant_None;
 const Covenant Covenant_MAX = Covenant_Blue_Sentinels;
 const int Covenant_ARRAYSIZE = Covenant_MAX + 1;
 
+enum SignType {
+  SignType_WhiteSoapstone = 0,
+  SignType_RedSoapstone = 1
+};
+bool SignType_IsValid(int value);
+const SignType SignType_MIN = SignType_WhiteSoapstone;
+const SignType SignType_MAX = SignType_RedSoapstone;
+const int SignType_ARRAYSIZE = SignType_MAX + 1;
+
 enum VisitorPool {
   VisitorPool_None = -1,
   VisitorPool_Way_of_Blue = 0,
@@ -8166,12 +8175,12 @@ class SignData : public ::google::protobuf::MessageLite {
   inline ::std::string* release_steam_id();
   inline void set_allocated_steam_id(::std::string* steam_id);
 
-  // required uint32 is_red_sign = 6;
-  inline bool has_is_red_sign() const;
-  inline void clear_is_red_sign();
-  static const int kIsRedSignFieldNumber = 6;
-  inline ::google::protobuf::uint32 is_red_sign() const;
-  inline void set_is_red_sign(::google::protobuf::uint32 value);
+  // required .DS3_Frpg2RequestMessage.SignType sign_type = 6;
+  inline bool has_sign_type() const;
+  inline void clear_sign_type();
+  static const int kSignTypeFieldNumber = 6;
+  inline ::DS3_Frpg2RequestMessage::SignType sign_type() const;
+  inline void set_sign_type(::DS3_Frpg2RequestMessage::SignType value);
 
   // @@protoc_insertion_point(class_scope:DS3_Frpg2RequestMessage.SignData)
  private:
@@ -8185,8 +8194,8 @@ class SignData : public ::google::protobuf::MessageLite {
   inline void clear_has_player_struct();
   inline void set_has_steam_id();
   inline void clear_has_steam_id();
-  inline void set_has_is_red_sign();
-  inline void clear_has_is_red_sign();
+  inline void set_has_sign_type();
+  inline void clear_has_sign_type();
 
   ::std::string _unknown_fields_;
 
@@ -8196,7 +8205,7 @@ class SignData : public ::google::protobuf::MessageLite {
   ::DS3_Frpg2RequestMessage::MatchingParameter* matching_parameter_;
   ::std::string* player_struct_;
   ::google::protobuf::uint32 online_area_id_;
-  ::google::protobuf::uint32 is_red_sign_;
+  int sign_type_;
   ::std::string* steam_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS3_5fFrpg2RequestMessage_2eproto_impl();
@@ -8977,12 +8986,12 @@ class RequestCreateSign : public ::google::protobuf::MessageLite {
   inline ::DS3_Frpg2RequestMessage::MatchingParameter* release_matching_parameter();
   inline void set_allocated_matching_parameter(::DS3_Frpg2RequestMessage::MatchingParameter* matching_parameter);
 
-  // required bool is_red_sign = 4;
-  inline bool has_is_red_sign() const;
-  inline void clear_is_red_sign();
-  static const int kIsRedSignFieldNumber = 4;
-  inline bool is_red_sign() const;
-  inline void set_is_red_sign(bool value);
+  // required uint32 sign_type = 4;
+  inline bool has_sign_type() const;
+  inline void clear_sign_type();
+  static const int kSignTypeFieldNumber = 4;
+  inline ::google::protobuf::uint32 sign_type() const;
+  inline void set_sign_type(::google::protobuf::uint32 value);
 
   // required bytes player_struct = 5;
   inline bool has_player_struct() const;
@@ -9004,8 +9013,8 @@ class RequestCreateSign : public ::google::protobuf::MessageLite {
   inline void clear_has_online_area_id();
   inline void set_has_matching_parameter();
   inline void clear_has_matching_parameter();
-  inline void set_has_is_red_sign();
-  inline void clear_has_is_red_sign();
+  inline void set_has_sign_type();
+  inline void clear_has_sign_type();
   inline void set_has_player_struct();
   inline void clear_has_player_struct();
 
@@ -9017,7 +9026,7 @@ class RequestCreateSign : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 online_area_id_;
   ::DS3_Frpg2RequestMessage::MatchingParameter* matching_parameter_;
   ::std::string* player_struct_;
-  bool is_red_sign_;
+  ::google::protobuf::uint32 sign_type_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS3_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -31273,28 +31282,29 @@ inline void SignData::set_allocated_steam_id(::std::string* steam_id) {
   // @@protoc_insertion_point(field_set_allocated:DS3_Frpg2RequestMessage.SignData.steam_id)
 }
 
-// required uint32 is_red_sign = 6;
-inline bool SignData::has_is_red_sign() const {
+// required .DS3_Frpg2RequestMessage.SignType sign_type = 6;
+inline bool SignData::has_sign_type() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void SignData::set_has_is_red_sign() {
+inline void SignData::set_has_sign_type() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void SignData::clear_has_is_red_sign() {
+inline void SignData::clear_has_sign_type() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void SignData::clear_is_red_sign() {
-  is_red_sign_ = 0u;
-  clear_has_is_red_sign();
+inline void SignData::clear_sign_type() {
+  sign_type_ = 0;
+  clear_has_sign_type();
 }
-inline ::google::protobuf::uint32 SignData::is_red_sign() const {
-  // @@protoc_insertion_point(field_get:DS3_Frpg2RequestMessage.SignData.is_red_sign)
-  return is_red_sign_;
+inline ::DS3_Frpg2RequestMessage::SignType SignData::sign_type() const {
+  // @@protoc_insertion_point(field_get:DS3_Frpg2RequestMessage.SignData.sign_type)
+  return static_cast< ::DS3_Frpg2RequestMessage::SignType >(sign_type_);
 }
-inline void SignData::set_is_red_sign(::google::protobuf::uint32 value) {
-  set_has_is_red_sign();
-  is_red_sign_ = value;
-  // @@protoc_insertion_point(field_set:DS3_Frpg2RequestMessage.SignData.is_red_sign)
+inline void SignData::set_sign_type(::DS3_Frpg2RequestMessage::SignType value) {
+  assert(::DS3_Frpg2RequestMessage::SignType_IsValid(value));
+  set_has_sign_type();
+  sign_type_ = value;
+  // @@protoc_insertion_point(field_set:DS3_Frpg2RequestMessage.SignData.sign_type)
 }
 
 // -------------------------------------------------------------------
@@ -32246,28 +32256,28 @@ inline void RequestCreateSign::set_allocated_matching_parameter(::DS3_Frpg2Reque
   // @@protoc_insertion_point(field_set_allocated:DS3_Frpg2RequestMessage.RequestCreateSign.matching_parameter)
 }
 
-// required bool is_red_sign = 4;
-inline bool RequestCreateSign::has_is_red_sign() const {
+// required uint32 sign_type = 4;
+inline bool RequestCreateSign::has_sign_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void RequestCreateSign::set_has_is_red_sign() {
+inline void RequestCreateSign::set_has_sign_type() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void RequestCreateSign::clear_has_is_red_sign() {
+inline void RequestCreateSign::clear_has_sign_type() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void RequestCreateSign::clear_is_red_sign() {
-  is_red_sign_ = false;
-  clear_has_is_red_sign();
+inline void RequestCreateSign::clear_sign_type() {
+  sign_type_ = 0u;
+  clear_has_sign_type();
 }
-inline bool RequestCreateSign::is_red_sign() const {
-  // @@protoc_insertion_point(field_get:DS3_Frpg2RequestMessage.RequestCreateSign.is_red_sign)
-  return is_red_sign_;
+inline ::google::protobuf::uint32 RequestCreateSign::sign_type() const {
+  // @@protoc_insertion_point(field_get:DS3_Frpg2RequestMessage.RequestCreateSign.sign_type)
+  return sign_type_;
 }
-inline void RequestCreateSign::set_is_red_sign(bool value) {
-  set_has_is_red_sign();
-  is_red_sign_ = value;
-  // @@protoc_insertion_point(field_set:DS3_Frpg2RequestMessage.RequestCreateSign.is_red_sign)
+inline void RequestCreateSign::set_sign_type(::google::protobuf::uint32 value) {
+  set_has_sign_type();
+  sign_type_ = value;
+  // @@protoc_insertion_point(field_set:DS3_Frpg2RequestMessage.RequestCreateSign.sign_type)
 }
 
 // required bytes player_struct = 5;

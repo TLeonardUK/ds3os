@@ -25,24 +25,26 @@ enum PushMessageId {
 
     // TODO: These all look wrong judging from the actual code reading them.
     //       Need rechecking.
-	PushID_PushRequestRemoveSign               = 0x033D;
-	PushID_PushRequestSummonSign               = 0x033E;
-	PushID_PushRequestRejectSign               = 0x033F;
-	PushID_PushRequestJoinQuickMatch           = 0x0340;
-	PushID_PushRequestAcceptQuickMatch         = 0x0341;
-	PushID_PushRequestRejectQuickMatch         = 0x0342;
-	PushID_PlayerInfoUploadConfigPushMessage   = 0x038C;
-	PushID_PushRequestEvaluateBloodMessage     = 0x0396;
-	PushID_PushRequestBreakInTarget            = 0x03A5;
-	PushID_PushRequestRejectBreakInTarget      = 0x03A6;
-	PushID_PushRequestAllowBreakInTarget       = 0x03A7;
-	PushID_PushRequestVisit                    = 0x03B7;
-	PushID_PushRequestRejectVisit              = 0x03B8;
-	PushID_PushRequestRemoveVisitor            = 0x03B9;
-	PushID_PushRequestNotifyRingBell           = 0x03C9;
-	PushID_RegulationFileUpdatePushMessage     = 0x038B;
-	PushID_ManagementTextMessage               = 0x0389;
-
+	PushID_PushRequestRemoveSign               = 0x039D; 
+	PushID_PushRequestSummonSign               = 0x039B; 
+	PushID_PushRequestRejectSign               = 0x039C; 
+	PushID_PushRequestAllowQuickMatch          = 0x03E5;
+	PushID_PushRequestJoinQuickMatch           = 0x03E1;
+	PushID_PushRequestRemoveQuickMatch         = 0x03E7;
+	PushID_PushRequestRejectQuickMatch         = 0x03E3;
+	PushID_PlayerInfoUploadConfigPushMessage   = 0x038C; 
+	PushID_PushRequestEvaluateBloodMessage     = 0x03AA; 
+	PushID_PushRequestBreakInTarget            = 0x03FB; 
+	PushID_PushRequestRejectBreakInTarget      = 0x03FC; 
+	PushID_PushRequestAllowBreakInTarget       = 0x03FD; 
+	PushID_PushRequestVisit                    = 0x03CF;
+	PushID_PushRequestRejectVisit              = 0x03D0;
+	PushID_PushRequestRemoveVisitor            = 0x03D1;
+	PushID_PushRequestNotifyRingBell           = 0x03C9; // check
+	PushID_RegulationFileUpdatePushMessage     = 0x038B; // check
+	PushID_PushRequestRejectMirrorKnightSign   = 0x03A6; 
+	PushID_PushRequestRemoveMirrorKnightSign   = 0x03A7; 
+	PushID_PushRequestSummonMirrorKnightSign   = 0x03A5; 
 }
 
 // Special empty response, some requests expect an empty response but
@@ -57,7 +59,7 @@ message EmptyResponse {
 
 message RequestWaitForUserLogin {
 	required string steam_id = 1;
-	required uint32 unknown_1 = 2;	//1
+	required uint32 unknown_1 = 2;	//1 // one of these is going to be the profile index
 	required uint32 unknown_2 = 3;	//0
 	required uint32 unknown_3 = 4;	//1
 	required uint32 unknown_4 = 5;	//2
@@ -122,7 +124,7 @@ message PlayerInfoUploadConfigPushMessage {
 
 message RequestUpdateLoginPlayerCharacter {
 	required uint32 character_id = 1;
-	repeated uint32 unknown = 2;
+	repeated uint32 local_character_ids = 2;
 }
 
 message RequestUpdateLoginPlayerCharacterResponse {
@@ -163,8 +165,8 @@ message RequestGetLoginPlayerCharacter {
 
 message RequestGetLoginPlayerCharacterResponse {
 	required int64 player_id = 1; // 290333, 1764181, 1867879, 1056527, 1307605, 2553538, 1563822
-	required int64 field_2 = 2;   // 18, 31, 4, 11, 3, 27, 5
-	required bytes field_3 = 3;   
+    required uint32 character_id = 2;           
+    required bytes  character_data = 3;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -457,9 +459,10 @@ message MatchingParameter {
 }
 
 message PushRequestSummonSign {
-	required int64 field_2 = 2; // 290333, 1705594, 2514885
-	required int64 field_3 = 3; // 178362284, 178361321, 178358629, 178358887
-	required bytes field_4 = 4; // 
+	required PushMessageId push_message_id = 1;
+	required int64 player_id = 2; // 290333, 1705594, 2514885
+	required int64 sign_id = 3; // 178362284, 178361321, 178358629, 178358887
+	required bytes player_struct = 4; // 
 	required string player_steam_id = 5;
 }
 
@@ -475,13 +478,18 @@ message RequestSummonSignResponse {
 }
 
 message PushRequestRejectSign {
-    // TODO
+	required PushMessageId push_message_id = 1;
+
+    // Based on ghidra, investigate further.
+    required SignInfo sign_info = 2;
+    required int64 player_id = 3;
+    required string player_steam_id = 4;
 }
 
 message PushRequestRemoveSign {
-	required int64 field_1 = 1; // 925
-	required int64 field_2 = 2; // 1563822, 290333, 1867879, 1764181, 2553538, 1056527
-	required int64 field_3 = 3; // 178359069, 178362330, 178359541, 178358473, 178358410, 178358733, 178361664
+	required PushMessageId push_message_id = 1;
+	required int64 player_id = 2; 
+	required int64 sign_id = 3;         
 	required string player_steam_id = 4;
 }
 
@@ -489,7 +497,7 @@ message RequestCreateSign {
 	required uint32 online_area_id = 1;
 	required MatchingParameter matching_parameter = 2;
 	required bytes player_struct = 3;
-	required uint32 player_id = 4;
+	required uint32 cell_id = 4;
 	required uint32 sign_type = 5;
 }
 
@@ -500,7 +508,7 @@ message RequestCreateSignResponse {
 message RequestGetSignList {
 	required uint32 online_area_id = 1;
 	repeated SignCellInfo search_areas = 2;
-	required uint32 max_sign_count = 3;
+	required uint32 max_signs = 3;
 	required MatchingParameter matching_parameter = 4;
 	required uint32 unknown_5 = 5; //1
 	required uint32 unknown_6 = 6; //1
@@ -508,12 +516,18 @@ message RequestGetSignList {
 }
 
 message RequestGetSignListResponse {
-	repeated SignData sign_data = 1; // I think its SignData, guestimating a bit.
-	repeated SignInfo sign_info = 2; 
+	repeated SignInfo sign_info = 1; 
+	repeated SignData sign_data = 2; // I think its SignData, guestimating a bit.
 }
 
 message RequestRejectSign {
-    // TODO
+    // Based on ghidra, investigate further.
+    /*
+    required uint64 player_id = 1;    // 0
+    required bytes player_steam_id = 2;     // 2
+    required uint64 sign_id = 3;    // 0
+    required bytes field_4 = 4;     // 2
+    */
 }
 
 message RequestRejectSignResponse {
@@ -541,9 +555,9 @@ message RequestUpdateSignResponse {
 }
 
 message SignCellInfo {
-	required uint32 online_area_id = 1;
-	optional SignInfo local_signs = 2;
-	optional uint32 max_count = 3;
+	required uint32 cell_id = 1;
+	repeated SignInfo local_signs = 2;
+	optional uint32 max_signs = 3;
 }
 
 message SignInfo {
@@ -551,14 +565,22 @@ message SignInfo {
 	required uint32 sign_id = 2;
 }
 
+enum SignType {
+    // TODO: Probably a mirror knight sign type as well in here.
+    SignType_WhiteSoapstone = 1;
+    SignType_SmallWhiteSoapstone = 3;
+    SignType_RedSoapstone = 4;
+    SignType_Dragon = 6;
+};
+
 message SignData {
-	required SignInfo field_1 = 1; // 
-	required int64 field_2 = 2; // 10310000, 10100000, 10180000, 10190000, 10160000
-	required MatchingParameter field_3 = 3; 
-	required bytes field_4 = 4; // 
+	required SignInfo sign_info = 1; 
+	required int64 online_area_id = 2; // 10310000, 10100000, 10180000, 10190000, 10160000
+	required MatchingParameter matching_parameter = 3; 
+	required bytes player_struct = 4; 
 	required string player_steam_id = 5;
-	required int64 field_6 = 6; // 8387584, 16777216, 4290772987, 4286579709, 4290772992, 4290774013, 4290774014, 4286577658
-	required int64 field_7 = 7; // 3, 1, 0, 6
+	required int64 cell_id = 6; // 8387584, 16777216, 4290772987, 4286579709, 4290772992, 4290774013, 4290774014, 4286577658
+	required SignType sign_type = 7; // 3, 1, 0, 6
 }
 
 message RequestGetRightMatchingArea {
@@ -578,14 +600,17 @@ message RequestGetRightMatchingAreaResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestRejectMirrorKnightSign {
+	required PushMessageId push_message_id = 1;
     // TODO
 }
 
 message PushRequestRemoveMirrorKnightSign {
+	required PushMessageId push_message_id = 1;
     // TODO
 }
 
 message PushRequestSummonMirrorKnightSign {
+	required PushMessageId push_message_id = 1;
     // TODO
 }
 
@@ -663,7 +688,8 @@ message PushRequestBreakInTarget {
 }
 
 message PushRequestRejectBreakInTarget {
-	required int64 field_1 = 1; // 290333
+	required PushMessageId push_message_id = 1;
+//	required int64 field_1 = 1; // 290333
 	required int64 field_2 = 2; // 1
 	required int64 field_3 = 3; // 10190000
 	required int64 field_4 = 4; // 101910
@@ -766,7 +792,7 @@ message RequestGetVisitorListResponse {
 }
 
 message PushRequestRemoveVisitor {
-	required int64 field_1 = 1; // 977, 974
+	required PushMessageId push_message_id = 1;
 	required int64 field_2 = 2; // 290333
 	required string player_steam_id = 3;
 	required int64 field_4 = 4; // 2, 1
@@ -793,11 +819,11 @@ message RequestRejectVisitResponse {
 }
 
 message PushRequestRejectVisit {
-    // TODO
+	required PushMessageId push_message_id = 1;
 }
 
 message PushRequestVisit {
-	required int64 field_1 = 1; // 972, 975
+	required PushMessageId push_message_id = 1;
 	required int64 field_2 = 2; // 290333
 	required string player_steam_id = 3;
 	required bytes field_4 = 4; 
@@ -811,6 +837,7 @@ message PushRequestVisit {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestNotifyRingBell {
+	required PushMessageId push_message_id = 1;
     // TODO
 }
 
@@ -909,7 +936,7 @@ message RequestRegisterPowerStoneDataResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestAllowQuickMatch {
-	required int64 field_1 = 1; // 996, 997
+	required PushMessageId push_message_id = 1;
 	required int64 field_2 = 2; // 287420
 	required int64 field_3 = 3; // 10230000, 10310000
 	required int64 field_4 = 4; // 102350, 103140
@@ -917,7 +944,7 @@ message PushRequestAllowQuickMatch {
 }
 
 message PushRequestJoinQuickMatch {
-	required int64 field_1 = 1; // 992, 993
+	required PushMessageId push_message_id = 1;
 	required int64 field_2 = 2; // 290333
 	required string player_steam_id = 3;
 	required int64 field_4 = 4; // 10230000, 10310000
@@ -926,10 +953,12 @@ message PushRequestJoinQuickMatch {
 }
 
 message PushRequestRejectQuickMatch {
+	required PushMessageId push_message_id = 1;
     // TODO
 }
 
 message PushRequestRemoveQuickMatch {
+	required PushMessageId push_message_id = 1;
     // TODO
 }
 

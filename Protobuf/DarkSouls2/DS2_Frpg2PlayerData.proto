@@ -109,11 +109,11 @@ message PhysicalStatus {
 }
 
 message PlayerLocation {
-	optional uint32 map_id = 1;
-	optional uint32 online_area_id = 2;
-	optional uint32 unknown_3 = 3;
+	optional uint32 online_area_id = 1;
+	optional uint32 unknown_2 = 2;      // 1074321607, 3225573558, 1078414675,
+	optional uint32 unknown_3 = 3;      // 0, 101640, 103130, 103110, 103120,
 	optional Vector position = 4;
-	optional float unknown_5 = 5;
+	optional float unknown_5 = 5;       // 1074321607, 3225573558, 1078414675
 }
 
 message PlayerStatus_Phantom_leave_at {
@@ -123,20 +123,20 @@ message PlayerStatus_Phantom_leave_at {
 
 message PlayerStatus {
 	optional string name = 1;
-	optional uint32 unknown_2 = 2;
+	optional uint32 unknown_2 = 2;      // 10, 2
 	optional uint32 covenant = 3;
-	optional uint32 unknown_4 = 4;
-	optional uint32 unknown_5 = 5;
-	optional uint32 unknown_6 = 6;
+    optional uint32 unknown_4 = 4;      // 1, 0
+	optional uint32 unknown_5 = 5;      // 0, 1, 2
+	optional uint32 unknown_6 = 6;      // 0
 	optional uint32 unknown_7 = 7;
 	optional PlayerStatus_Phantom_leave_at phantom_leave_at = 8;
 	optional uint32 disable_cross_region_play = 9;
-	optional uint32 unknown_10 = 10;
-	optional uint32 unknown_11 = 11;
-	repeated uint32 unknown_12 = 12;
+	optional uint32 character_id = 10;    
+	optional uint32 unknown_11 = 11;    // 0, 1
+	repeated uint32 unknown_12 = 12;    // 50350000, 50360000, 50370000, 50380000
 	optional uint32 unknown_13 = 13;
 	optional uint32 unknown_14 = 14;
-	optional uint32 soul_level = 15;
+	optional uint32 soul_level = 15;    
 	optional uint32 unknown_16 = 16;
 	optional uint32 unknown_17 = 17;
 	optional uint32 unknown_18 = 18;

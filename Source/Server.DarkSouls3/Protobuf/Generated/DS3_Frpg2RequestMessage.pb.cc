@@ -835,6 +835,16 @@ bool Covenant_IsValid(int value) {
   }
 }
 
+bool SignType_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
 bool VisitorPool_IsValid(int value) {
   switch(value) {
     case -1:
@@ -18836,7 +18846,7 @@ const int SignData::kOnlineAreaIdFieldNumber;
 const int SignData::kMatchingParameterFieldNumber;
 const int SignData::kPlayerStructFieldNumber;
 const int SignData::kSteamIdFieldNumber;
-const int SignData::kIsRedSignFieldNumber;
+const int SignData::kSignTypeFieldNumber;
 #endif  // !_MSC_VER
 
 SignData::SignData()
@@ -18875,7 +18885,7 @@ void SignData::SharedCtor() {
   matching_parameter_ = NULL;
   player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  is_red_sign_ = 0u;
+  sign_type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -18933,7 +18943,7 @@ void SignData::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 63) {
-    ZR_(online_area_id_, is_red_sign_);
+    ZR_(online_area_id_, sign_type_);
     if (has_sign_info()) {
       if (sign_info_ != NULL) sign_info_->::DS3_Frpg2RequestMessage::SignInfo::Clear();
     }
@@ -19035,18 +19045,24 @@ bool SignData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_is_red_sign;
+        if (input->ExpectTag(48)) goto parse_sign_type;
         break;
       }
 
-      // required uint32 is_red_sign = 6;
+      // required .DS3_Frpg2RequestMessage.SignType sign_type = 6;
       case 6: {
         if (tag == 48) {
-         parse_is_red_sign:
+         parse_sign_type:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &is_red_sign_)));
-          set_has_is_red_sign();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS3_Frpg2RequestMessage::SignType_IsValid(value)) {
+            set_sign_type(static_cast< ::DS3_Frpg2RequestMessage::SignType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -19108,9 +19124,10 @@ void SignData::SerializeWithCachedSizes(
       5, this->steam_id(), output);
   }
 
-  // required uint32 is_red_sign = 6;
-  if (has_is_red_sign()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->is_red_sign(), output);
+  // required .DS3_Frpg2RequestMessage.SignType sign_type = 6;
+  if (has_sign_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      6, this->sign_type(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -19157,11 +19174,10 @@ int SignData::ByteSize() const {
           this->steam_id());
     }
 
-    // required uint32 is_red_sign = 6;
-    if (has_is_red_sign()) {
+    // required .DS3_Frpg2RequestMessage.SignType sign_type = 6;
+    if (has_sign_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->is_red_sign());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->sign_type());
     }
 
   }
@@ -19196,8 +19212,8 @@ void SignData::MergeFrom(const SignData& from) {
     if (from.has_steam_id()) {
       set_steam_id(from.steam_id());
     }
-    if (from.has_is_red_sign()) {
-      set_is_red_sign(from.is_red_sign());
+    if (from.has_sign_type()) {
+      set_sign_type(from.sign_type());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -19228,7 +19244,7 @@ void SignData::Swap(SignData* other) {
     std::swap(matching_parameter_, other->matching_parameter_);
     std::swap(player_struct_, other->player_struct_);
     std::swap(steam_id_, other->steam_id_);
-    std::swap(is_red_sign_, other->is_red_sign_);
+    std::swap(sign_type_, other->sign_type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -20998,7 +21014,7 @@ void RequestGetSignListResponse::Swap(RequestGetSignListResponse* other) {
 const int RequestCreateSign::kMapIdFieldNumber;
 const int RequestCreateSign::kOnlineAreaIdFieldNumber;
 const int RequestCreateSign::kMatchingParameterFieldNumber;
-const int RequestCreateSign::kIsRedSignFieldNumber;
+const int RequestCreateSign::kSignTypeFieldNumber;
 const int RequestCreateSign::kPlayerStructFieldNumber;
 #endif  // !_MSC_VER
 
@@ -21030,7 +21046,7 @@ void RequestCreateSign::SharedCtor() {
   map_id_ = 0u;
   online_area_id_ = 0u;
   matching_parameter_ = NULL;
-  is_red_sign_ = false;
+  sign_type_ = 0u;
   player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -21089,7 +21105,7 @@ void RequestCreateSign::Clear() {
     if (has_matching_parameter()) {
       if (matching_parameter_ != NULL) matching_parameter_->::DS3_Frpg2RequestMessage::MatchingParameter::Clear();
     }
-    is_red_sign_ = false;
+    sign_type_ = 0u;
     if (has_player_struct()) {
       if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         player_struct_->clear();
@@ -21156,18 +21172,18 @@ bool RequestCreateSign::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_is_red_sign;
+        if (input->ExpectTag(32)) goto parse_sign_type;
         break;
       }
 
-      // required bool is_red_sign = 4;
+      // required uint32 sign_type = 4;
       case 4: {
         if (tag == 32) {
-         parse_is_red_sign:
+         parse_sign_type:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &is_red_sign_)));
-          set_has_is_red_sign();
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &sign_type_)));
+          set_has_sign_type();
         } else {
           goto handle_unusual;
         }
@@ -21229,9 +21245,9 @@ void RequestCreateSign::SerializeWithCachedSizes(
       3, this->matching_parameter(), output);
   }
 
-  // required bool is_red_sign = 4;
-  if (has_is_red_sign()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->is_red_sign(), output);
+  // required uint32 sign_type = 4;
+  if (has_sign_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->sign_type(), output);
   }
 
   // required bytes player_struct = 5;
@@ -21270,9 +21286,11 @@ int RequestCreateSign::ByteSize() const {
           this->matching_parameter());
     }
 
-    // required bool is_red_sign = 4;
-    if (has_is_red_sign()) {
-      total_size += 1 + 1;
+    // required uint32 sign_type = 4;
+    if (has_sign_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->sign_type());
     }
 
     // required bytes player_struct = 5;
@@ -21308,8 +21326,8 @@ void RequestCreateSign::MergeFrom(const RequestCreateSign& from) {
     if (from.has_matching_parameter()) {
       mutable_matching_parameter()->::DS3_Frpg2RequestMessage::MatchingParameter::MergeFrom(from.matching_parameter());
     }
-    if (from.has_is_red_sign()) {
-      set_is_red_sign(from.is_red_sign());
+    if (from.has_sign_type()) {
+      set_sign_type(from.sign_type());
     }
     if (from.has_player_struct()) {
       set_player_struct(from.player_struct());
@@ -21338,7 +21356,7 @@ void RequestCreateSign::Swap(RequestCreateSign* other) {
     std::swap(map_id_, other->map_id_);
     std::swap(online_area_id_, other->online_area_id_);
     std::swap(matching_parameter_, other->matching_parameter_);
-    std::swap(is_red_sign_, other->is_red_sign_);
+    std::swap(sign_type_, other->sign_type_);
     std::swap(player_struct_, other->player_struct_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);

@@ -17,7 +17,6 @@
 template <typename T>
 inline std::string GetEnumString(T Input)
 {
-    Ensure(false);
     return "";
 }
 

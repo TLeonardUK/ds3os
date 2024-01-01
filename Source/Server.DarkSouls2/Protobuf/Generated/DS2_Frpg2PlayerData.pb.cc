@@ -3901,8 +3901,8 @@ void PhysicalStatus::Swap(PhysicalStatus* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int PlayerLocation::kMapIdFieldNumber;
 const int PlayerLocation::kOnlineAreaIdFieldNumber;
+const int PlayerLocation::kUnknown2FieldNumber;
 const int PlayerLocation::kUnknown3FieldNumber;
 const int PlayerLocation::kPositionFieldNumber;
 const int PlayerLocation::kUnknown5FieldNumber;
@@ -3932,8 +3932,8 @@ PlayerLocation::PlayerLocation(const PlayerLocation& from)
 
 void PlayerLocation::SharedCtor() {
   _cached_size_ = 0;
-  map_id_ = 0u;
   online_area_id_ = 0u;
+  unknown_2_ = 0u;
   unknown_3_ = 0u;
   position_ = NULL;
   unknown_5_ = 0;
@@ -3987,7 +3987,7 @@ void PlayerLocation::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(map_id_, online_area_id_);
+    ZR_(online_area_id_, unknown_2_);
     ZR_(unknown_3_, unknown_5_);
     if (has_position()) {
       if (position_ != NULL) position_->::DS2_Frpg2PlayerData::Vector::Clear();
@@ -4015,28 +4015,28 @@ bool PlayerLocation::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 map_id = 1;
+      // optional uint32 online_area_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &map_id_)));
-          set_has_map_id();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_online_area_id;
+        if (input->ExpectTag(16)) goto parse_unknown_2;
         break;
       }
 
-      // optional uint32 online_area_id = 2;
+      // optional uint32 unknown_2 = 2;
       case 2: {
         if (tag == 16) {
-         parse_online_area_id:
+         parse_unknown_2:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &online_area_id_)));
-          set_has_online_area_id();
+                 input, &unknown_2_)));
+          set_has_unknown_2();
         } else {
           goto handle_unusual;
         }
@@ -4112,14 +4112,14 @@ failure:
 void PlayerLocation::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.PlayerLocation)
-  // optional uint32 map_id = 1;
-  if (has_map_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->map_id(), output);
+  // optional uint32 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // optional uint32 online_area_id = 2;
-  if (has_online_area_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->online_area_id(), output);
+  // optional uint32 unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
   }
 
   // optional uint32 unknown_3 = 3;
@@ -4147,18 +4147,18 @@ int PlayerLocation::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional uint32 map_id = 1;
-    if (has_map_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->map_id());
-    }
-
-    // optional uint32 online_area_id = 2;
+    // optional uint32 online_area_id = 1;
     if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->online_area_id());
+    }
+
+    // optional uint32 unknown_2 = 2;
+    if (has_unknown_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unknown_2());
     }
 
     // optional uint32 unknown_3 = 3;
@@ -4197,11 +4197,11 @@ void PlayerLocation::CheckTypeAndMergeFrom(
 void PlayerLocation::MergeFrom(const PlayerLocation& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_map_id()) {
-      set_map_id(from.map_id());
-    }
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
+    }
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
     }
     if (from.has_unknown_3()) {
       set_unknown_3(from.unknown_3());
@@ -4232,8 +4232,8 @@ bool PlayerLocation::IsInitialized() const {
 
 void PlayerLocation::Swap(PlayerLocation* other) {
   if (other != this) {
-    std::swap(map_id_, other->map_id_);
     std::swap(online_area_id_, other->online_area_id_);
+    std::swap(unknown_2_, other->unknown_2_);
     std::swap(unknown_3_, other->unknown_3_);
     std::swap(position_, other->position_);
     std::swap(unknown_5_, other->unknown_5_);
@@ -4498,7 +4498,7 @@ const int PlayerStatus::kUnknown6FieldNumber;
 const int PlayerStatus::kUnknown7FieldNumber;
 const int PlayerStatus::kPhantomLeaveAtFieldNumber;
 const int PlayerStatus::kDisableCrossRegionPlayFieldNumber;
-const int PlayerStatus::kUnknown10FieldNumber;
+const int PlayerStatus::kCharacterIdFieldNumber;
 const int PlayerStatus::kUnknown11FieldNumber;
 const int PlayerStatus::kUnknown12FieldNumber;
 const int PlayerStatus::kUnknown13FieldNumber;
@@ -4546,7 +4546,7 @@ void PlayerStatus::SharedCtor() {
   unknown_7_ = 0u;
   phantom_leave_at_ = NULL;
   disable_cross_region_play_ = 0u;
-  unknown_10_ = 0u;
+  character_id_ = 0u;
   unknown_11_ = 0u;
   unknown_13_ = 0u;
   unknown_14_ = 0u;
@@ -4624,7 +4624,7 @@ void PlayerStatus::Clear() {
     }
   }
   if (_has_bits_[8 / 32] & 63232) {
-    ZR_(disable_cross_region_play_, unknown_10_);
+    ZR_(disable_cross_region_play_, character_id_);
     ZR_(unknown_11_, unknown_16_);
   }
   if (_has_bits_[16 / 32] & 2031616) {
@@ -4785,18 +4785,18 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(80)) goto parse_unknown_10;
+        if (input->ExpectTag(80)) goto parse_character_id;
         break;
       }
 
-      // optional uint32 unknown_10 = 10;
+      // optional uint32 character_id = 10;
       case 10: {
         if (tag == 80) {
-         parse_unknown_10:
+         parse_character_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_10_)));
-          set_has_unknown_10();
+                 input, &character_id_)));
+          set_has_character_id();
         } else {
           goto handle_unusual;
         }
@@ -5043,9 +5043,9 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->disable_cross_region_play(), output);
   }
 
-  // optional uint32 unknown_10 = 10;
-  if (has_unknown_10()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->unknown_10(), output);
+  // optional uint32 character_id = 10;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->character_id(), output);
   }
 
   // optional uint32 unknown_11 = 11;
@@ -5179,11 +5179,11 @@ int PlayerStatus::ByteSize() const {
           this->disable_cross_region_play());
     }
 
-    // optional uint32 unknown_10 = 10;
-    if (has_unknown_10()) {
+    // optional uint32 character_id = 10;
+    if (has_character_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_10());
+          this->character_id());
     }
 
     // optional uint32 unknown_11 = 11;
@@ -5315,8 +5315,8 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_disable_cross_region_play()) {
       set_disable_cross_region_play(from.disable_cross_region_play());
     }
-    if (from.has_unknown_10()) {
-      set_unknown_10(from.unknown_10());
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
     }
     if (from.has_unknown_11()) {
       set_unknown_11(from.unknown_11());
@@ -5379,7 +5379,7 @@ void PlayerStatus::Swap(PlayerStatus* other) {
     std::swap(unknown_7_, other->unknown_7_);
     std::swap(phantom_leave_at_, other->phantom_leave_at_);
     std::swap(disable_cross_region_play_, other->disable_cross_region_play_);
-    std::swap(unknown_10_, other->unknown_10_);
+    std::swap(character_id_, other->character_id_);
     std::swap(unknown_11_, other->unknown_11_);
     unknown_12_.Swap(&other->unknown_12_);
     std::swap(unknown_13_, other->unknown_13_);

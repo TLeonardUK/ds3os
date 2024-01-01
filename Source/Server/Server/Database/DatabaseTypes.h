@@ -58,7 +58,6 @@ struct Ghost
     std::vector<uint8_t> Data;
 };
 
-// Summon sign, only stored in live cache for now.
 struct SummonSign
 {
     uint32_t SignId;
@@ -68,7 +67,7 @@ struct SummonSign
     uint32_t PlayerId;
     std::string PlayerSteamId;
 
-    bool IsRedSign = false;
+    uint32_t Type;
 
     std::unique_ptr<google::protobuf::MessageLite> MatchingParameters;
 

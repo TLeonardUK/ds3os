@@ -28,6 +28,7 @@ DEFINE_REQUEST_RESPONSE     (0x03EC, RequestGetAnnounceMessageList,      Request
 // -----------------------------------------------------------------------------------------------
 // Player Data
 // -----------------------------------------------------------------------------------------------
+DEFINE_REQUEST_RESPONSE     (0x03B3, RequestGetLoginPlayerCharacter,     RequestGetLoginPlayerCharacter,     RequestGetLoginPlayerCharacterResponse)
 DEFINE_REQUEST_RESPONSE     (0x03B6, RequestUpdateLoginPlayerCharacter,  RequestUpdateLoginPlayerCharacter,  RequestUpdateLoginPlayerCharacterResponse)
 DEFINE_REQUEST_RESPONSE     (0x03B8, RequestUpdatePlayerStatus,          RequestUpdatePlayerStatus,          RequestUpdatePlayerStatusResponse)
 DEFINE_REQUEST_RESPONSE     (0x03A8, RequestUpdatePlayerCharacter,       RequestUpdatePlayerCharacter,       RequestUpdatePlayerCharacterResponse)
@@ -38,7 +39,7 @@ DEFINE_REQUEST_RESPONSE     (0x03A9, RequestGetPlayerCharacter,          Request
 // -----------------------------------------------------------------------------------------------
 
 // Can't find usage in code.
-//DEFINE_PUSH_MESSAGE         (0x0000, PushRequestEvaluateBloodMessage,    PushRequestEvaluateBloodMessage)
+DEFINE_PUSH_MESSAGE         (0x03AA, PushRequestEvaluateBloodMessage,    PushRequestEvaluateBloodMessage)
 
 DEFINE_REQUEST_RESPONSE     (0x03AD, RequestReentryBloodMessage,         RequestReentryBloodMessage,        RequestReentryBloodMessageResponse)
 DEFINE_REQUEST_RESPONSE     (0x03AB, RequestCreateBloodMessage,          RequestCreateBloodMessage,         RequestCreateBloodMessageResponse)

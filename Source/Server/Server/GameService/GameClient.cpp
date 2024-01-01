@@ -87,7 +87,7 @@ bool GameClient::Poll()
             }
             else
             {
-                WarningS(GetName().c_str(), "Failed to handle message, ignoring and hoping nothing breaks ...");
+                WarningS(GetName().c_str(), "Failed to handle message '%s', ignoring and hoping nothing breaks ...", Message.Protobuf ? Message.Protobuf->GetTypeName() : "Unknown");
             }
         }
 

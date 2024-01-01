@@ -12,6 +12,7 @@
 #include <string>
 
 #include "Protobuf/DS2_Protobufs.h"
+#include "Server/GameService/Utils/DS2_GameIds.h"
 
 #include "Server/GameService/PlayerState.h"
 
@@ -26,13 +27,16 @@ struct DS2_PlayerState : public PlayerState
 {
 public:
 
+    // Current online matching area the player is in.
+    DEFINE_FIELD(DS2_OnlineAreaId, CurrentArea, DS2_OnlineAreaId::None)
+
     // Information the player sends and periodically patches with 
     // RequestUpdatePlayerStatus requests.
     DEFINE_FIELD(DS2_Frpg2PlayerData::AllStatus, PlayerStatus, DS2_Frpg2PlayerData::AllStatus())
 
     virtual uint32_t GetCurrentAreaId() override
     {
-        return 0;
+        return (uint32_t)CurrentArea;
     }
 
     virtual bool IsInGame() override

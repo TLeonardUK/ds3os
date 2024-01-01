@@ -592,13 +592,18 @@ message SignInfo {
     required uint32 sign_id = 2;                        // index=2 type=0
 }
 
+enum SignType {
+    SignType_WhiteSoapstone = 0;
+    SignType_RedSoapstone = 1;
+};
+
 message SignData {
     required SignInfo sign_info = 1;                    // index=1 type=2
     required uint32 online_area_id = 2;                 // index=2 type=0
     required MatchingParameter matching_parameter = 3;  // index=3 type=2
     required bytes player_struct = 4;                   // index=4 type=2
     required string steam_id = 5;                       // index=5 type=2  // sometimes a steamid, sometimes a 3 value substruct
-    required uint32 is_red_sign = 6;                    // index=6 type=0  // I *think* this is correct, needs further testing.
+    required SignType sign_type = 6;                    // index=6 type=0  // I *think* this is correct, needs further testing.
 }
 
 message MatchingParameter {
@@ -657,7 +662,7 @@ message RequestCreateSign {
     required uint32 map_id = 1;
     required uint32 online_area_id = 2;
     required MatchingParameter matching_parameter = 3;
-    required bool is_red_sign = 4;
+    required uint32 sign_type = 4;
     required bytes player_struct = 5;
 }
 

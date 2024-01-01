@@ -1480,19 +1480,19 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 map_id = 1;
-  inline bool has_map_id() const;
-  inline void clear_map_id();
-  static const int kMapIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 map_id() const;
-  inline void set_map_id(::google::protobuf::uint32 value);
-
-  // optional uint32 online_area_id = 2;
+  // optional uint32 online_area_id = 1;
   inline bool has_online_area_id() const;
   inline void clear_online_area_id();
-  static const int kOnlineAreaIdFieldNumber = 2;
+  static const int kOnlineAreaIdFieldNumber = 1;
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
+
+  // optional uint32 unknown_2 = 2;
+  inline bool has_unknown_2() const;
+  inline void clear_unknown_2();
+  static const int kUnknown2FieldNumber = 2;
+  inline ::google::protobuf::uint32 unknown_2() const;
+  inline void set_unknown_2(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_3 = 3;
   inline bool has_unknown_3() const;
@@ -1519,10 +1519,10 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2PlayerData.PlayerLocation)
  private:
-  inline void set_has_map_id();
-  inline void clear_has_map_id();
   inline void set_has_online_area_id();
   inline void clear_has_online_area_id();
+  inline void set_has_unknown_2();
+  inline void clear_has_unknown_2();
   inline void set_has_unknown_3();
   inline void clear_has_unknown_3();
   inline void set_has_position();
@@ -1534,8 +1534,8 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 map_id_;
   ::google::protobuf::uint32 online_area_id_;
+  ::google::protobuf::uint32 unknown_2_;
   ::DS2_Frpg2PlayerData::Vector* position_;
   ::google::protobuf::uint32 unknown_3_;
   float unknown_5_;
@@ -1786,12 +1786,12 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 disable_cross_region_play() const;
   inline void set_disable_cross_region_play(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_10 = 10;
-  inline bool has_unknown_10() const;
-  inline void clear_unknown_10();
-  static const int kUnknown10FieldNumber = 10;
-  inline ::google::protobuf::uint32 unknown_10() const;
-  inline void set_unknown_10(::google::protobuf::uint32 value);
+  // optional uint32 character_id = 10;
+  inline bool has_character_id() const;
+  inline void clear_character_id();
+  static const int kCharacterIdFieldNumber = 10;
+  inline ::google::protobuf::uint32 character_id() const;
+  inline void set_character_id(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_11 = 11;
   inline bool has_unknown_11() const;
@@ -1900,8 +1900,8 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_phantom_leave_at();
   inline void set_has_disable_cross_region_play();
   inline void clear_has_disable_cross_region_play();
-  inline void set_has_unknown_10();
-  inline void clear_has_unknown_10();
+  inline void set_has_character_id();
+  inline void clear_has_character_id();
   inline void set_has_unknown_11();
   inline void clear_has_unknown_11();
   inline void set_has_unknown_13();
@@ -1936,7 +1936,7 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 unknown_7_;
   ::DS2_Frpg2PlayerData::PlayerStatus_Phantom_leave_at* phantom_leave_at_;
   ::google::protobuf::uint32 disable_cross_region_play_;
-  ::google::protobuf::uint32 unknown_10_;
+  ::google::protobuf::uint32 character_id_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > unknown_12_;
   ::google::protobuf::uint32 unknown_11_;
   ::google::protobuf::uint32 unknown_13_;
@@ -4649,39 +4649,15 @@ inline void PhysicalStatus::set_poise(float value) {
 
 // PlayerLocation
 
-// optional uint32 map_id = 1;
-inline bool PlayerLocation::has_map_id() const {
+// optional uint32 online_area_id = 1;
+inline bool PlayerLocation::has_online_area_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void PlayerLocation::set_has_map_id() {
+inline void PlayerLocation::set_has_online_area_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void PlayerLocation::clear_has_map_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void PlayerLocation::clear_map_id() {
-  map_id_ = 0u;
-  clear_has_map_id();
-}
-inline ::google::protobuf::uint32 PlayerLocation::map_id() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerLocation.map_id)
-  return map_id_;
-}
-inline void PlayerLocation::set_map_id(::google::protobuf::uint32 value) {
-  set_has_map_id();
-  map_id_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.map_id)
-}
-
-// optional uint32 online_area_id = 2;
-inline bool PlayerLocation::has_online_area_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void PlayerLocation::set_has_online_area_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
 inline void PlayerLocation::clear_has_online_area_id() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline void PlayerLocation::clear_online_area_id() {
   online_area_id_ = 0u;
@@ -4695,6 +4671,30 @@ inline void PlayerLocation::set_online_area_id(::google::protobuf::uint32 value)
   set_has_online_area_id();
   online_area_id_ = value;
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.online_area_id)
+}
+
+// optional uint32 unknown_2 = 2;
+inline bool PlayerLocation::has_unknown_2() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PlayerLocation::set_has_unknown_2() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PlayerLocation::clear_has_unknown_2() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PlayerLocation::clear_unknown_2() {
+  unknown_2_ = 0u;
+  clear_has_unknown_2();
+}
+inline ::google::protobuf::uint32 PlayerLocation::unknown_2() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerLocation.unknown_2)
+  return unknown_2_;
+}
+inline void PlayerLocation::set_unknown_2(::google::protobuf::uint32 value) {
+  set_has_unknown_2();
+  unknown_2_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.unknown_2)
 }
 
 // optional uint32 unknown_3 = 3;
@@ -5156,28 +5156,28 @@ inline void PlayerStatus::set_disable_cross_region_play(::google::protobuf::uint
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.disable_cross_region_play)
 }
 
-// optional uint32 unknown_10 = 10;
-inline bool PlayerStatus::has_unknown_10() const {
+// optional uint32 character_id = 10;
+inline bool PlayerStatus::has_character_id() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
-inline void PlayerStatus::set_has_unknown_10() {
+inline void PlayerStatus::set_has_character_id() {
   _has_bits_[0] |= 0x00000200u;
 }
-inline void PlayerStatus::clear_has_unknown_10() {
+inline void PlayerStatus::clear_has_character_id() {
   _has_bits_[0] &= ~0x00000200u;
 }
-inline void PlayerStatus::clear_unknown_10() {
-  unknown_10_ = 0u;
-  clear_has_unknown_10();
+inline void PlayerStatus::clear_character_id() {
+  character_id_ = 0u;
+  clear_has_character_id();
 }
-inline ::google::protobuf::uint32 PlayerStatus::unknown_10() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.unknown_10)
-  return unknown_10_;
+inline ::google::protobuf::uint32 PlayerStatus::character_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.character_id)
+  return character_id_;
 }
-inline void PlayerStatus::set_unknown_10(::google::protobuf::uint32 value) {
-  set_has_unknown_10();
-  unknown_10_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_10)
+inline void PlayerStatus::set_character_id(::google::protobuf::uint32 value) {
+  set_has_character_id();
+  character_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.character_id)
 }
 
 // optional uint32 unknown_11 = 11;

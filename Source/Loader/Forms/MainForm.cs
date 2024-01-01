@@ -807,6 +807,7 @@ namespace Loader
             if (ExistingProcess != null)
             {
                 WinAPIProcesses.KillMutex(ExistingProcess, "\\BaseNamedObjects\\DarkSoulsIIIMutex");
+                WinAPIProcesses.KillMutex(ExistingProcess, "\\BaseNamedObjects\\DarkSoulsIIMutex");
             }
         }
 
