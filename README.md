@@ -37,25 +37,27 @@ Servers can also be password protected if required by setting as password in Sav
 
 # What currently works?
 Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer match retail server behaviour and make some general improvements to the running of unoffical servers.
-
-- [x] Login, key exchange and network transport
-- [x] Announcement messages
-- [x] Profile management
-- [x] Blood messages
-- [x] Bloodstains
-- [x] Ghosts
-- [x] Summoning
-- [x] Invasions
-- [x] Visitors (Auto-Summoning via covenant)
-- [x] Matchmaking (eg. Correctly matching summoning/invasions/visits with player level)
-- [x] Roster of knights
-- [x] Archdragon peak bell ringing
-- [x] Undead match
-- [x] Telemetry and misc server calls (the few that are of use to us)
-- [x] Steam ticket authentication.
-- [x] Master server support for loader (show available servers).
-- [x] WebUI for server showing gameplay statistics / allowing admin control.
-- [x] Sharding support. So we can have a single server and people can shard off their own game instance on it. Much simpler for end-users, less tech-support required.
+| Feature | Dark Souls 3 | Dark Souls 2 |
+| --- | --- | --- |
+| Network transport | [x] | [x] |
+| Announcement messages | [x] | [x] |
+| Profile management | [x] | [x] |
+| Blood messages | [x] | [x] |
+| Bloodstains | [x] | [x] |
+| Ghosts | [x] | [x] |
+| Summoning | [x] | [x] |
+| Invasions | [x] | [ ] |
+| Auto-Summoning (Convenants) | [x] | [ ] |
+| Matchmaking | [x] | [ ] |
+| Leaderboards | [x] | [ ] |
+| Bell Ringing | [x] | [ ] |
+| Quick Matches (Arenas) | [x] | [ ] |
+| Telemetry/Misc | [x] | [ ] |
+| Ticket Authentication | [x] | [x] |
+| Master Server Support | [x] | [x] |
+| Loader Support | [x] | [x] |
+| WebUI For Admin | [x] | [x] |
+| Sharing Support | [x] | [x] |
 
 Future roadmap:
 
