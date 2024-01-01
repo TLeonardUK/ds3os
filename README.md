@@ -62,9 +62,8 @@ Most of the games core functionality works now, with some degree of variance to 
 
 Future roadmap:
 
-- [ ] Client-side mods dictated by server configuration (eg. Raising player limit, anti-cheat, reduce invasion cool downs, change params, etc). 
-- [ ] Better Anticheat (potentially we could do some more harsh checks than FROM does).
-- [ ] Dark Souls 2 support
+- Support for various mod-settings per server (eg. allow servers to remove summon limit)
+- Better Anticheat (potentially we could do some more harsh checks than FROM does).
 
 # Will this ban my account on the retail server?
 DSOS uses its own save files, as long as you don't copy ds3os saves back to your retail saves you should be fine.
