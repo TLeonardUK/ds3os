@@ -37,31 +37,33 @@ Servers can also be password protected if required by setting as password in Sav
 
 # What currently works?
 Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer match retail server behaviour and make some general improvements to the running of unoffical servers.
-
-- [x] Login, key exchange and network transport
-- [x] Announcement messages
-- [x] Profile management
-- [x] Blood messages
-- [x] Bloodstains
-- [x] Ghosts
-- [x] Summoning
-- [x] Invasions
-- [x] Visitors (Auto-Summoning via covenant)
-- [x] Matchmaking (eg. Correctly matching summoning/invasions/visits with player level)
-- [x] Roster of knights
-- [x] Archdragon peak bell ringing
-- [x] Undead match
-- [x] Telemetry and misc server calls (the few that are of use to us)
-- [x] Steam ticket authentication.
-- [x] Master server support for loader (show available servers).
-- [x] WebUI for server showing gameplay statistics / allowing admin control.
-- [x] Sharding support. So we can have a single server and people can shard off their own game instance on it. Much simpler for end-users, less tech-support required.
+| Feature | Dark Souls 3 | Dark Souls 2 |
+| --- | --- | --- |
+| Stable enough for use | :heavy_check_mark: |  |
+| Network transport | :heavy_check_mark: | :heavy_check_mark:  |
+| Announcement messages | :heavy_check_mark:  | :heavy_check_mark:  |
+| Profile management | :heavy_check_mark:  | :heavy_check_mark:  |
+| Blood messages | :heavy_check_mark: | :heavy_check_mark:  |
+| Bloodstains | :heavy_check_mark: | :heavy_check_mark:  |
+| Ghosts | :heavy_check_mark: | :heavy_check_mark:  |
+| Summoning | :heavy_check_mark: | :heavy_check_mark: |
+| Invasions | :heavy_check_mark: |  |
+| Auto-Summoning (Convenants) | :heavy_check_mark: | |
+| Matchmaking | :heavy_check_mark: | |
+| Leaderboards | :heavy_check_mark: |  |
+| Bell Ringing | :heavy_check_mark: | |
+| Quick Matches (Arenas) | :heavy_check_mark: |  |
+| Telemetry/Misc | :heavy_check_mark: | |
+| Ticket Authentication | :heavy_check_mark: | :heavy_check_mark: |
+| Master Server Support | :heavy_check_mark: | :heavy_check_mark: |
+| Loader Support | :heavy_check_mark: | :heavy_check_mark: |
+| WebUI For Admin | :heavy_check_mark: | :heavy_check_mark: |
+| Sharing Support | :heavy_check_mark: | :heavy_check_mark: |
 
 Future roadmap:
 
-- [ ] Client-side mods dictated by server configuration (eg. Raising player limit, anti-cheat, reduce invasion cool downs, change params, etc). 
-- [ ] Better Anticheat (potentially we could do some more harsh checks than FROM does).
-- [ ] Dark Souls 2 support
+- Support for various mod-settings per server (eg. allow servers to remove summon limit)
+- Better Anticheat (potentially we could do some more harsh checks than FROM does).
 
 # Will this ban my account on the retail server?
 DSOS uses its own save files, as long as you don't copy ds3os saves back to your retail saves you should be fine.
