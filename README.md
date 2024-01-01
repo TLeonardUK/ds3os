@@ -39,25 +39,26 @@ Servers can also be password protected if required by setting as password in Sav
 Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer match retail server behaviour and make some general improvements to the running of unoffical servers.
 | Feature | Dark Souls 3 | Dark Souls 2 |
 | --- | --- | --- |
-| Network transport | [x] | [x] |
-| Announcement messages | [x] | [x] |
-| Profile management | [x] | [x] |
-| Blood messages | [x] | [x] |
-| Bloodstains | [x] | [x] |
-| Ghosts | [x] | [x] |
-| Summoning | [x] | [x] |
-| Invasions | [x] | [ ] |
-| Auto-Summoning (Convenants) | [x] | [ ] |
-| Matchmaking | [x] | [ ] |
-| Leaderboards | [x] | [ ] |
-| Bell Ringing | [x] | [ ] |
-| Quick Matches (Arenas) | [x] | [ ] |
-| Telemetry/Misc | [x] | [ ] |
-| Ticket Authentication | [x] | [x] |
-| Master Server Support | [x] | [x] |
-| Loader Support | [x] | [x] |
-| WebUI For Admin | [x] | [x] |
-| Sharing Support | [x] | [x] |
+| Stable enough for use | :heavy_check_mark: |  |
+| Network transport | :heavy_check_mark: | :heavy_check_mark:  |
+| Announcement messages | :heavy_check_mark:  | :heavy_check_mark:  |
+| Profile management | :heavy_check_mark:  | :heavy_check_mark:  |
+| Blood messages | :heavy_check_mark: | :heavy_check_mark:  |
+| Bloodstains | :heavy_check_mark: | :heavy_check_mark:  |
+| Ghosts | :heavy_check_mark: | :heavy_check_mark:  |
+| Summoning | :heavy_check_mark: | :heavy_check_mark: |
+| Invasions | :heavy_check_mark: |  |
+| Auto-Summoning (Convenants) | :heavy_check_mark: | |
+| Matchmaking | :heavy_check_mark: | |
+| Leaderboards | :heavy_check_mark: |  |
+| Bell Ringing | :heavy_check_mark: | |
+| Quick Matches (Arenas) | :heavy_check_mark: |  |
+| Telemetry/Misc | :heavy_check_mark: | |
+| Ticket Authentication | :heavy_check_mark: | :heavy_check_mark: |
+| Master Server Support | :heavy_check_mark: | :heavy_check_mark: |
+| Loader Support | :heavy_check_mark: | :heavy_check_mark: |
+| WebUI For Admin | :heavy_check_mark: | :heavy_check_mark: |
+| Sharing Support | :heavy_check_mark: | :heavy_check_mark: |
 
 Future roadmap:
 
