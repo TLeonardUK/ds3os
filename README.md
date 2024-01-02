@@ -58,7 +58,7 @@ Most of the games core functionality works now, with some degree of variance to 
 | Master Server Support | :heavy_check_mark: | :heavy_check_mark: |
 | Loader Support | :heavy_check_mark: | :heavy_check_mark: |
 | WebUI For Admin | :heavy_check_mark: | :heavy_check_mark: |
-| Sharing Support | :heavy_check_mark: | :heavy_check_mark: |
+| Sharding Support | :heavy_check_mark: | :heavy_check_mark: |
 
 Future roadmap:
 
