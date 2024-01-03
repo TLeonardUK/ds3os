@@ -142,9 +142,9 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
 
     // MergeFrom combines arrays, so we need to do some fuckyness here to handle this.
     // TODO
-    if (status.has_player_status() && status.player_status().unknown_12_size() > 0)
+    if (status.has_player_status() && status.player_status().played_areas_size() > 0)
     {
-        State.GetPlayerStatus_Mutable().mutable_player_status()->clear_unknown_12();
+        State.GetPlayerStatus_Mutable().mutable_player_status()->clear_played_areas();
     }
     /*
     if (status.has_player_status() && status.player_status().played_areas_size() > 0)

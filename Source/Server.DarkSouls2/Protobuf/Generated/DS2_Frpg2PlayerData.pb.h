@@ -1800,17 +1800,17 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 human_effigy_burnt() const;
   inline void set_human_effigy_burnt(::google::protobuf::uint32 value);
 
-  // repeated uint32 played_online_areas = 12;
-  inline int played_online_areas_size() const;
-  inline void clear_played_online_areas();
-  static const int kPlayedOnlineAreasFieldNumber = 12;
-  inline ::google::protobuf::uint32 played_online_areas(int index) const;
-  inline void set_played_online_areas(int index, ::google::protobuf::uint32 value);
-  inline void add_played_online_areas(::google::protobuf::uint32 value);
+  // repeated uint32 played_areas = 12;
+  inline int played_areas_size() const;
+  inline void clear_played_areas();
+  static const int kPlayedAreasFieldNumber = 12;
+  inline ::google::protobuf::uint32 played_areas(int index) const;
+  inline void set_played_areas(int index, ::google::protobuf::uint32 value);
+  inline void add_played_areas(::google::protobuf::uint32 value);
   inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      played_online_areas() const;
+      played_areas() const;
   inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_played_online_areas();
+      mutable_played_areas();
 
   // optional uint32 unknown_13 = 13;
   inline bool has_unknown_13() const;
@@ -1937,7 +1937,7 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   ::DS2_Frpg2PlayerData::PlayerStatus_Phantom_leave_at* phantom_leave_at_;
   ::google::protobuf::uint32 disable_cross_region_play_;
   ::google::protobuf::uint32 character_id_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > played_online_areas_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > played_areas_;
   ::google::protobuf::uint32 human_effigy_burnt_;
   ::google::protobuf::uint32 unknown_13_;
   ::google::protobuf::uint32 unknown_14_;
@@ -5204,34 +5204,34 @@ inline void PlayerStatus::set_human_effigy_burnt(::google::protobuf::uint32 valu
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.human_effigy_burnt)
 }
 
-// repeated uint32 played_online_areas = 12;
-inline int PlayerStatus::played_online_areas_size() const {
-  return played_online_areas_.size();
+// repeated uint32 played_areas = 12;
+inline int PlayerStatus::played_areas_size() const {
+  return played_areas_.size();
 }
-inline void PlayerStatus::clear_played_online_areas() {
-  played_online_areas_.Clear();
+inline void PlayerStatus::clear_played_areas() {
+  played_areas_.Clear();
 }
-inline ::google::protobuf::uint32 PlayerStatus::played_online_areas(int index) const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
-  return played_online_areas_.Get(index);
+inline ::google::protobuf::uint32 PlayerStatus::played_areas(int index) const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.played_areas)
+  return played_areas_.Get(index);
 }
-inline void PlayerStatus::set_played_online_areas(int index, ::google::protobuf::uint32 value) {
-  played_online_areas_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
+inline void PlayerStatus::set_played_areas(int index, ::google::protobuf::uint32 value) {
+  played_areas_.Set(index, value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.played_areas)
 }
-inline void PlayerStatus::add_played_online_areas(::google::protobuf::uint32 value) {
-  played_online_areas_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
+inline void PlayerStatus::add_played_areas(::google::protobuf::uint32 value) {
+  played_areas_.Add(value);
+  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.PlayerStatus.played_areas)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-PlayerStatus::played_online_areas() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
-  return played_online_areas_;
+PlayerStatus::played_areas() const {
+  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.PlayerStatus.played_areas)
+  return played_areas_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-PlayerStatus::mutable_played_online_areas() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
-  return &played_online_areas_;
+PlayerStatus::mutable_played_areas() {
+  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.PlayerStatus.played_areas)
+  return &played_areas_;
 }
 
 // optional uint32 unknown_13 = 13;

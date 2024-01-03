@@ -133,7 +133,7 @@ message PlayerStatus {
 	optional uint32 disable_cross_region_play = 9;
 	optional uint32 character_id = 10;    
 	optional uint32 human_effigy_burnt = 11;
-	repeated uint32 played_online_areas = 12;    
+	repeated uint32 played_areas = 12;    
 	optional uint32 unknown_13 = 13;
 	optional uint32 unknown_14 = 14;
 	optional uint32 soul_level = 15;    

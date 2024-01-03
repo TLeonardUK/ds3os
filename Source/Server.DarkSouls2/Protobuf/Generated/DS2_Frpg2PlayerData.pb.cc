@@ -4500,7 +4500,7 @@ const int PlayerStatus::kPhantomLeaveAtFieldNumber;
 const int PlayerStatus::kDisableCrossRegionPlayFieldNumber;
 const int PlayerStatus::kCharacterIdFieldNumber;
 const int PlayerStatus::kHumanEffigyBurntFieldNumber;
-const int PlayerStatus::kPlayedOnlineAreasFieldNumber;
+const int PlayerStatus::kPlayedAreasFieldNumber;
 const int PlayerStatus::kUnknown13FieldNumber;
 const int PlayerStatus::kUnknown14FieldNumber;
 const int PlayerStatus::kSoulLevelFieldNumber;
@@ -4640,7 +4640,7 @@ void PlayerStatus::Clear() {
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
-  played_online_areas_.Clear();
+  played_areas_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -4815,25 +4815,25 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(96)) goto parse_played_online_areas;
+        if (input->ExpectTag(96)) goto parse_played_areas;
         break;
       }
 
-      // repeated uint32 played_online_areas = 12;
+      // repeated uint32 played_areas = 12;
       case 12: {
         if (tag == 96) {
-         parse_played_online_areas:
+         parse_played_areas:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 96, input, this->mutable_played_online_areas())));
+                 1, 96, input, this->mutable_played_areas())));
         } else if (tag == 98) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_played_online_areas())));
+                 input, this->mutable_played_areas())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(96)) goto parse_played_online_areas;
+        if (input->ExpectTag(96)) goto parse_played_areas;
         if (input->ExpectTag(104)) goto parse_unknown_13;
         break;
       }
@@ -5053,10 +5053,10 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->human_effigy_burnt(), output);
   }
 
-  // repeated uint32 played_online_areas = 12;
-  for (int i = 0; i < this->played_online_areas_size(); i++) {
+  // repeated uint32 played_areas = 12;
+  for (int i = 0; i < this->played_areas_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      12, this->played_online_areas(i), output);
+      12, this->played_areas(i), output);
   }
 
   // optional uint32 unknown_13 = 13;
@@ -5259,14 +5259,14 @@ int PlayerStatus::ByteSize() const {
     }
 
   }
-  // repeated uint32 played_online_areas = 12;
+  // repeated uint32 played_areas = 12;
   {
     int data_size = 0;
-    for (int i = 0; i < this->played_online_areas_size(); i++) {
+    for (int i = 0; i < this->played_areas_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->played_online_areas(i));
+        UInt32Size(this->played_areas(i));
     }
-    total_size += 1 * this->played_online_areas_size() + data_size;
+    total_size += 1 * this->played_areas_size() + data_size;
   }
 
   total_size += unknown_fields().size();
@@ -5284,7 +5284,7 @@ void PlayerStatus::CheckTypeAndMergeFrom(
 
 void PlayerStatus::MergeFrom(const PlayerStatus& from) {
   GOOGLE_CHECK_NE(&from, this);
-  played_online_areas_.MergeFrom(from.played_online_areas_);
+  played_areas_.MergeFrom(from.played_areas_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_name()) {
       set_name(from.name());
@@ -5381,7 +5381,7 @@ void PlayerStatus::Swap(PlayerStatus* other) {
     std::swap(disable_cross_region_play_, other->disable_cross_region_play_);
     std::swap(character_id_, other->character_id_);
     std::swap(human_effigy_burnt_, other->human_effigy_burnt_);
-    played_online_areas_.Swap(&other->played_online_areas_);
+    played_areas_.Swap(&other->played_areas_);
     std::swap(unknown_13_, other->unknown_13_);
     std::swap(unknown_14_, other->unknown_14_);
     std::swap(soul_level_, other->soul_level_);
