@@ -24,6 +24,10 @@ SET(SOURCES
     Server/GameService/GameManagers/Bloodstain/DS2_BloodstainManager.h
     Server/GameService/GameManagers/Signs/DS2_SignManager.cpp
     Server/GameService/GameManagers/Signs/DS2_SignManager.h
+    Server/GameService/GameManagers/BreakIn/DS2_BreakInManager.cpp
+    Server/GameService/GameManagers/BreakIn/DS2_BreakInManager.h
+    Server/GameService/GameManagers/Logging/DS2_LoggingManager.cpp
+    Server/GameService/GameManagers/Logging/DS2_LoggingManager.h
     
     Server/GameService/Utils/DS2_GameIds.h
     Server/GameService/Utils/DS2_CellAndAreaId.h

@@ -244,22 +244,20 @@ MessageHandleResult DS2_SignManager::Handle_RequestCreateSign(GameClient* Client
         if (Sign->Type == DS2_Frpg2RequestMessage::SignType_RedSoapstone)
         {
             ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSignPvP,
-                StringFormat("Placed a public red summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                StringFormat("Placed a red summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
                 0,
                 {
-                    { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), true },
-                    { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), true }
+                    { "Soul Memory", std::to_string(Client->GetPlayerState().GetSoulMemory()), true },
                 }
             );
         }
         else
         {
             ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, 
-                StringFormat("Placed a public summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                StringFormat("Placed a summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
                 0,
                 {
-                    { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), true },
-                    { "Weapon Level", std::to_string(Client->GetPlayerState().GetMaxWeaponLevel()), true }
+                    { "Soul Memory", std::to_string(Client->GetPlayerState().GetSoulMemory()), true },
                 }
             );
         }
@@ -333,6 +331,7 @@ MessageHandleResult DS2_SignManager::Handle_RequestSummonSign(GameClient* Client
     DS2_Frpg2RequestMessage::RequestSummonSign* Request = (DS2_Frpg2RequestMessage::RequestSummonSign*)Message.Protobuf.get();
 
     bool bSuccess = true;
+    DS2_Frpg2RequestMessage::SummonErrorId SummonError = DS2_Frpg2RequestMessage::SummonErrorId_NoLongerBeSummonable;
 
     DS2_CellAndAreaId LocationId = { (uint64_t)Request->cell_id(), (DS2_OnlineAreaId)Request->online_area_id() };
 
@@ -342,6 +341,7 @@ MessageHandleResult DS2_SignManager::Handle_RequestSummonSign(GameClient* Client
     {
         WarningS(Client->GetName().c_str(), "Client attempted to use invalid summon sign, sending back rejection, %i.", Request->sign_info().sign_id());
         bSuccess = false;
+        SummonError = DS2_Frpg2RequestMessage::SummonErrorId_SignHasDisappeared;
     }
 
     // Sign is already being summoned, send rejection.
@@ -349,6 +349,7 @@ MessageHandleResult DS2_SignManager::Handle_RequestSummonSign(GameClient* Client
     {
         WarningS(Client->GetName().c_str(), "Client attempted to use summon sign that is already being summoned, sending back rejection, %i.", Request->sign_info().sign_id());
         bSuccess = false;        
+        SummonError = DS2_Frpg2RequestMessage::SummonErrorId_SignAlreadyUsed;
     }
 
     // Send an accept message to the source client of the sign telling them someone is trying to summon them.
@@ -387,11 +388,9 @@ MessageHandleResult DS2_SignManager::Handle_RequestSummonSign(GameClient* Client
     // If failure then send a reject message.
     if (!bSuccess)
     {
-        // TODO: This is all guesswork, investigate further.
-
         DS2_Frpg2RequestMessage::PushRequestRejectSign PushMessage;
         PushMessage.set_push_message_id(DS2_Frpg2RequestMessage::PushID_PushRequestRejectSign);
-        PushMessage.set_player_id(Player.GetPlayerId());
+        PushMessage.set_error(SummonError);
         PushMessage.set_player_steam_id(Player.GetSteamId());
         PushMessage.mutable_sign_info()->CopyFrom(Request->sign_info());
 
@@ -419,9 +418,10 @@ MessageHandleResult DS2_SignManager::Handle_RequestRejectSign(GameClient* Client
 {
     DS2_Frpg2RequestMessage::RequestRejectSign* Request = (DS2_Frpg2RequestMessage::RequestRejectSign*)Message.Protobuf.get();
 
-#if 0
+    DS2_CellAndAreaId LocationId = { (uint64_t)Request->cell_id(), (DS2_OnlineAreaId)Request->online_area_id() };
+
     // First check the sign still exists, if it doesn't, send a reject message as its probably already used.
-    std::shared_ptr<SummonSign> Sign = LiveCache.Find(Request->sign_id());
+    std::shared_ptr<SummonSign> Sign = LiveCache.Find(LocationId, Request->sign_id());
     if (!Sign)
     {
         WarningS(Client->GetName().c_str(), "Client attempted to reject summoning for invalid sign (or sign cancelled), %i.", Request->sign_id());
@@ -433,10 +433,14 @@ MessageHandleResult DS2_SignManager::Handle_RequestRejectSign(GameClient* Client
     {
         if (std::shared_ptr<GameClient> OtherClient = GameServiceInstance->FindClientByPlayerId(Sign->BeingSummonedByPlayerId))
         {
+            // TODO: Needs validation.
+
             DS2_Frpg2RequestMessage::PushRequestRejectSign PushMessage;
             PushMessage.set_push_message_id(DS2_Frpg2RequestMessage::PushID_PushRequestRejectSign);
-            PushMessage.mutable_message()->set_unknown_2(1);
-            PushMessage.mutable_message()->set_sign_id(Sign->SignId);
+            PushMessage.set_error(Request->error());
+            PushMessage.set_player_steam_id(Sign->PlayerSteamId);
+            PushMessage.mutable_sign_info()->set_player_id(Sign->PlayerId);
+            PushMessage.mutable_sign_info()->set_sign_id(Sign->SignId);
 
             if (!OtherClient->MessageStream->Send(&PushMessage))
             {
@@ -460,7 +464,6 @@ MessageHandleResult DS2_SignManager::Handle_RequestRejectSign(GameClient* Client
         WarningS(Client->GetName().c_str(), "Disconnecting client as failed to send RequestRejectSignResponse response.");
         return MessageHandleResult::Error;
     }
-#endif
 
     return MessageHandleResult::Handled;
 }

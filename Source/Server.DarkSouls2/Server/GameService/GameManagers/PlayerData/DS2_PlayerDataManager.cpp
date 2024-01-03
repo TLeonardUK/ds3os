@@ -203,6 +203,76 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
 
     State.SetHasInitialState(true);
 
+
+#if 0
+
+    static DiffTracker Tracker;
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_2", State.GetPlayerStatus().player_status().unknown_2());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_4", State.GetPlayerStatus().player_status().unknown_4());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_5", State.GetPlayerStatus().player_status().unknown_5());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_6", State.GetPlayerStatus().player_status().unknown_6());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_7", State.GetPlayerStatus().player_status().unknown_7());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.character_id", State.GetPlayerStatus().player_status().character_id());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_11", State.GetPlayerStatus().player_status().unknown_11());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_13", State.GetPlayerStatus().player_status().unknown_13());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_14", State.GetPlayerStatus().player_status().unknown_14());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_16", State.GetPlayerStatus().player_status().unknown_16());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_17", State.GetPlayerStatus().player_status().unknown_17());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_18", State.GetPlayerStatus().player_status().unknown_18());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_20", State.GetPlayerStatus().player_status().unknown_20());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_21", State.GetPlayerStatus().player_status().unknown_21());
+    
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.server_side_status.unknown_1", State.GetPlayerStatus().server_side_status().unknown_1());
+    
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_location.unknown_2", State.GetPlayerStatus().player_location().unknown_2());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_location.unknown_3", State.GetPlayerStatus().player_location().unknown_3());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_location.unknown_5", State.GetPlayerStatus().player_location().unknown_5());
+
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_1", State.GetPlayerStatus().item_using_info().unknown_1());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_2", State.GetPlayerStatus().item_using_info().unknown_2());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_3", State.GetPlayerStatus().item_using_info().unknown_3());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_4", State.GetPlayerStatus().item_using_info().unknown_4());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_5", State.GetPlayerStatus().item_using_info().unknown_5());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_6", State.GetPlayerStatus().item_using_info().unknown_6());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_7", State.GetPlayerStatus().item_using_info().unknown_7());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_8", State.GetPlayerStatus().item_using_info().unknown_8());
+
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_1", State.GetPlayerStatus().stats_info().unknown_1());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_2", State.GetPlayerStatus().stats_info().unknown_2());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_3", State.GetPlayerStatus().stats_info().unknown_3());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_5", State.GetPlayerStatus().stats_info().unknown_5());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_10", State.GetPlayerStatus().stats_info().unknown_10());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_12", State.GetPlayerStatus().stats_info().unknown_12());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_13", State.GetPlayerStatus().stats_info().unknown_13());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_14", State.GetPlayerStatus().stats_info().unknown_14());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_15", State.GetPlayerStatus().stats_info().unknown_15());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_16", State.GetPlayerStatus().stats_info().unknown_16());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_18", State.GetPlayerStatus().stats_info().unknown_18());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_20", State.GetPlayerStatus().stats_info().unknown_20());
+
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_4", State.GetPlayerStatus().physical_status().unknown_4());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_5", State.GetPlayerStatus().physical_status().unknown_5());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_6", State.GetPlayerStatus().physical_status().unknown_6());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_7", State.GetPlayerStatus().physical_status().unknown_7());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_8", State.GetPlayerStatus().physical_status().unknown_8());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_9", State.GetPlayerStatus().physical_status().unknown_9());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_10", State.GetPlayerStatus().physical_status().unknown_10());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_11", State.GetPlayerStatus().physical_status().unknown_11());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_12", State.GetPlayerStatus().physical_status().unknown_12());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_13", State.GetPlayerStatus().physical_status().unknown_13());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_14", State.GetPlayerStatus().physical_status().unknown_14());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_15", State.GetPlayerStatus().physical_status().unknown_15());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_16", State.GetPlayerStatus().physical_status().unknown_16());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_17", State.GetPlayerStatus().physical_status().unknown_17());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_18", State.GetPlayerStatus().physical_status().unknown_18());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_19", State.GetPlayerStatus().physical_status().unknown_19());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_20", State.GetPlayerStatus().physical_status().unknown_20());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_21", State.GetPlayerStatus().physical_status().unknown_21());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_22", State.GetPlayerStatus().physical_status().unknown_22());
+    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_23", State.GetPlayerStatus().physical_status().unknown_23());
+
+#endif
+
     return MessageHandleResult::Handled;
 }
 

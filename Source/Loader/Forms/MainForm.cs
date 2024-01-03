@@ -288,8 +288,9 @@ namespace Loader
             minimumPlayersBox.Value = ProgramSettings.Default.minimum_players;
             ServerConfigList.FromJson(ProgramSettings.Default.server_config_json, out ServerList);
             IgnoreInputChanges = false;
-
-#if DEBUG
+            
+            ProgramSettings.Default.Reset();
+#if false//DEBUG
             ProgramSettings.Default.master_server_url = "http://127.0.0.1:50020";
 #endif
             

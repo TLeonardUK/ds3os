@@ -77,7 +77,7 @@ public:
     inline static const int MAX_PACKET_LENGTH = 8192;
     // If true clients are disconnected if we are unable to handle the message they send.
     // Be careful with this, if we don't reply to some messages the client will deadlock.
-#if defined(_DEBUG)
+#if true// defined(_DEBUG)
     inline static const bool DISCONNECT_ON_UNHANDLED_MESSAGE = false;
 #else
     inline static const bool DISCONNECT_ON_UNHANDLED_MESSAGE = true;

@@ -22,9 +22,6 @@ import "DS2_Frpg2PlayerData.proto";
 // The message-id thats recieved on the reliable udp message layer is always 0x0320, and the first
 // field is read to disambiguate the actual message.
 enum PushMessageId {
-
-    // TODO: These all look wrong judging from the actual code reading them.
-    //       Need rechecking.
 	PushID_PushRequestRemoveSign               = 0x039D; 
 	PushID_PushRequestSummonSign               = 0x039B; 
 	PushID_PushRequestRejectSign               = 0x039C; 
@@ -444,17 +441,27 @@ message RequestNotifyOfflineDeathCountResponse {
 // Game Server Messages - Summon Signs
 // ------------------------------------------------------------------------------------------------------------
 
+enum SummonErrorId {
+	SummonErrorId_NoLongerBeSummonable = 0;
+	SummonErrorId_SignAlreadyUsed = 1;
+	SummonErrorId_SignHasDisappeared = 2;
+};
+
 message MatchingParameter {
-	required uint32 unknown_1 = 1;                  // 20200
-	required uint32 soul_level = 2;                 // 36, 127, 18, 41, 26, 838, 49, 13, 28, 1, 34
-	required uint32 clear_count = 3;                // 1
-	required uint32 unknown_4 = 4;                  // 77
+    // Possible values:
+    //      region
+    //      nat type
+    
+	required uint32 calibration_version = 1;        // 20200
+	required uint32 soul_level = 2;                 
+	required uint32 clear_count = 3;                 
+	required uint32 unknown_4 = 4;                  // 77, 154, 231, 693 77 Seems to change in tandem with clear_count
 	required uint32 covenant = 6;                   // 4, 2, 0, 6, 7
-	required uint32 unknown_7 = 7;                  // 2
-	required uint32 unknown_8 = 8;                  // 1
-	required uint32 disable_cross_region_play = 9;  // 1
+	required uint32 unknown_7 = 7;                  // 2            nat type?
+	required uint32 disable_cross_region_play = 8;  // 1
+	required uint32 unknown_9 = 9;                  // 1            region?
 	required uint32 unknown_10 = 10;                // 0, 1
-	required uint32 unknown_11 = 11;                // 0
+	required uint32 name_engraved_ring = 11;        
 	required uint32 soul_memory = 12;               
 }
 
@@ -482,7 +489,7 @@ message PushRequestRejectSign {
 
     // Based on ghidra, investigate further.
     required SignInfo sign_info = 2;
-    required int64 player_id = 3;
+    required SummonErrorId error = 3;
     required string player_steam_id = 4;
 }
 
@@ -521,17 +528,15 @@ message RequestGetSignListResponse {
 }
 
 message RequestRejectSign {
-    // Based on ghidra, investigate further.
-    /*
-    required uint64 player_id = 1;    // 0
-    required bytes player_steam_id = 2;     // 2
-    required uint64 sign_id = 3;    // 0
-    required bytes field_4 = 4;     // 2
-    */
+	required int64 online_area_id = 1;  // 10190000
+	required int64 sign_id = 2;         // 1001
+	required SummonErrorId error = 3;   // 2
+	required int64 unknown_4 = 4;       // 2
+	required int64 cell_id = 5;         // 4294966272
 }
 
 message RequestRejectSignResponse {
-    // TODO
+    // Never recieved.
 }
 
 message RequestRemoveSign {
@@ -714,7 +719,8 @@ message RequestBreakInTargetResponse {
 message RequestGetBreakInTargetList {
 	required uint32 online_area_id = 1;  // 10100000
 	required uint32 field_2 = 2;         // 101030, 101910
-	required MatchingParameter matching_parameter = 3;
+	required uint32 field_3 = 3;         // 5
+	required MatchingParameter matching_parameter = 4;
 	required uint32 unknown_5 = 5;       // 0
 }
 

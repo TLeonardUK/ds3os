@@ -726,19 +726,19 @@ class ItemUsingInfo : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // optional uint32 named_ring_god = 1;
+  inline bool has_named_ring_god() const;
+  inline void clear_named_ring_god();
+  static const int kNamedRingGodFieldNumber = 1;
+  inline ::google::protobuf::uint32 named_ring_god() const;
+  inline void set_named_ring_god(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
+  // optional uint32 using_dried_fingers = 2;
+  inline bool has_using_dried_fingers() const;
+  inline void clear_using_dried_fingers();
+  static const int kUsingDriedFingersFieldNumber = 2;
+  inline ::google::protobuf::uint32 using_dried_fingers() const;
+  inline void set_using_dried_fingers(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_3 = 3;
   inline bool has_unknown_3() const;
@@ -747,26 +747,26 @@ class ItemUsingInfo : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_3() const;
   inline void set_unknown_3(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_4 = 4;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 4;
-  inline ::google::protobuf::uint32 unknown_4() const;
-  inline void set_unknown_4(::google::protobuf::uint32 value);
+  // optional uint32 guardians_seal = 4;
+  inline bool has_guardians_seal() const;
+  inline void clear_guardians_seal();
+  static const int kGuardiansSealFieldNumber = 4;
+  inline ::google::protobuf::uint32 guardians_seal() const;
+  inline void set_guardians_seal(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_5 = 5;
-  inline bool has_unknown_5() const;
-  inline void clear_unknown_5();
-  static const int kUnknown5FieldNumber = 5;
-  inline ::google::protobuf::uint32 unknown_5() const;
-  inline void set_unknown_5(::google::protobuf::uint32 value);
+  // optional uint32 bell_keepers_seal = 5;
+  inline bool has_bell_keepers_seal() const;
+  inline void clear_bell_keepers_seal();
+  static const int kBellKeepersSealFieldNumber = 5;
+  inline ::google::protobuf::uint32 bell_keepers_seal() const;
+  inline void set_bell_keepers_seal(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_6 = 6;
-  inline bool has_unknown_6() const;
-  inline void clear_unknown_6();
-  static const int kUnknown6FieldNumber = 6;
-  inline ::google::protobuf::uint32 unknown_6() const;
-  inline void set_unknown_6(::google::protobuf::uint32 value);
+  // optional uint32 crest_of_the_rat = 6;
+  inline bool has_crest_of_the_rat() const;
+  inline void clear_crest_of_the_rat();
+  static const int kCrestOfTheRatFieldNumber = 6;
+  inline ::google::protobuf::uint32 crest_of_the_rat() const;
+  inline void set_crest_of_the_rat(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_7 = 7;
   inline bool has_unknown_7() const;
@@ -784,18 +784,18 @@ class ItemUsingInfo : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2PlayerData.ItemUsingInfo)
  private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
+  inline void set_has_named_ring_god();
+  inline void clear_has_named_ring_god();
+  inline void set_has_using_dried_fingers();
+  inline void clear_has_using_dried_fingers();
   inline void set_has_unknown_3();
   inline void clear_has_unknown_3();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
-  inline void set_has_unknown_5();
-  inline void clear_has_unknown_5();
-  inline void set_has_unknown_6();
-  inline void clear_has_unknown_6();
+  inline void set_has_guardians_seal();
+  inline void clear_has_guardians_seal();
+  inline void set_has_bell_keepers_seal();
+  inline void clear_has_bell_keepers_seal();
+  inline void set_has_crest_of_the_rat();
+  inline void clear_has_crest_of_the_rat();
   inline void set_has_unknown_7();
   inline void clear_has_unknown_7();
   inline void set_has_unknown_8();
@@ -805,12 +805,12 @@ class ItemUsingInfo : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
-  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 named_ring_god_;
+  ::google::protobuf::uint32 using_dried_fingers_;
   ::google::protobuf::uint32 unknown_3_;
-  ::google::protobuf::uint32 unknown_4_;
-  ::google::protobuf::uint32 unknown_5_;
-  ::google::protobuf::uint32 unknown_6_;
+  ::google::protobuf::uint32 guardians_seal_;
+  ::google::protobuf::uint32 bell_keepers_seal_;
+  ::google::protobuf::uint32 crest_of_the_rat_;
   ::google::protobuf::uint32 unknown_7_;
   ::google::protobuf::uint32 unknown_8_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1194,19 +1194,19 @@ class PhysicalStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_5() const;
   inline void set_unknown_5(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_6 = 6;
-  inline bool has_unknown_6() const;
-  inline void clear_unknown_6();
-  static const int kUnknown6FieldNumber = 6;
-  inline ::google::protobuf::uint32 unknown_6() const;
-  inline void set_unknown_6(::google::protobuf::uint32 value);
+  // optional uint32 attack_strength = 6;
+  inline bool has_attack_strength() const;
+  inline void clear_attack_strength();
+  static const int kAttackStrengthFieldNumber = 6;
+  inline ::google::protobuf::uint32 attack_strength() const;
+  inline void set_attack_strength(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_7 = 7;
-  inline bool has_unknown_7() const;
-  inline void clear_unknown_7();
-  static const int kUnknown7FieldNumber = 7;
-  inline ::google::protobuf::uint32 unknown_7() const;
-  inline void set_unknown_7(::google::protobuf::uint32 value);
+  // optional uint32 attack_dexterity = 7;
+  inline bool has_attack_dexterity() const;
+  inline void clear_attack_dexterity();
+  static const int kAttackDexterityFieldNumber = 7;
+  inline ::google::protobuf::uint32 attack_dexterity() const;
+  inline void set_attack_dexterity(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_8 = 8;
   inline bool has_unknown_8() const;
@@ -1250,12 +1250,12 @@ class PhysicalStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_13() const;
   inline void set_unknown_13(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_14 = 14;
-  inline bool has_unknown_14() const;
-  inline void clear_unknown_14();
-  static const int kUnknown14FieldNumber = 14;
-  inline ::google::protobuf::uint32 unknown_14() const;
-  inline void set_unknown_14(::google::protobuf::uint32 value);
+  // optional uint32 physical_defence = 14;
+  inline bool has_physical_defence() const;
+  inline void clear_physical_defence();
+  static const int kPhysicalDefenceFieldNumber = 14;
+  inline ::google::protobuf::uint32 physical_defence() const;
+  inline void set_physical_defence(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_15 = 15;
   inline bool has_unknown_15() const;
@@ -1299,26 +1299,26 @@ class PhysicalStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_20() const;
   inline void set_unknown_20(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_21 = 21;
-  inline bool has_unknown_21() const;
-  inline void clear_unknown_21();
-  static const int kUnknown21FieldNumber = 21;
-  inline ::google::protobuf::uint32 unknown_21() const;
-  inline void set_unknown_21(::google::protobuf::uint32 value);
+  // optional uint32 petrify_resist = 21;
+  inline bool has_petrify_resist() const;
+  inline void clear_petrify_resist();
+  static const int kPetrifyResistFieldNumber = 21;
+  inline ::google::protobuf::uint32 petrify_resist() const;
+  inline void set_petrify_resist(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_22 = 22;
-  inline bool has_unknown_22() const;
-  inline void clear_unknown_22();
-  static const int kUnknown22FieldNumber = 22;
-  inline ::google::protobuf::uint32 unknown_22() const;
-  inline void set_unknown_22(::google::protobuf::uint32 value);
+  // optional uint32 curse_resist = 22;
+  inline bool has_curse_resist() const;
+  inline void clear_curse_resist();
+  static const int kCurseResistFieldNumber = 22;
+  inline ::google::protobuf::uint32 curse_resist() const;
+  inline void set_curse_resist(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_23 = 23;
-  inline bool has_unknown_23() const;
-  inline void clear_unknown_23();
-  static const int kUnknown23FieldNumber = 23;
-  inline ::google::protobuf::uint32 unknown_23() const;
-  inline void set_unknown_23(::google::protobuf::uint32 value);
+  // optional uint32 agility = 23;
+  inline bool has_agility() const;
+  inline void clear_agility();
+  static const int kAgilityFieldNumber = 23;
+  inline ::google::protobuf::uint32 agility() const;
+  inline void set_agility(::google::protobuf::uint32 value);
 
   // optional float poise = 24;
   inline bool has_poise() const;
@@ -1339,10 +1339,10 @@ class PhysicalStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_4();
   inline void set_has_unknown_5();
   inline void clear_has_unknown_5();
-  inline void set_has_unknown_6();
-  inline void clear_has_unknown_6();
-  inline void set_has_unknown_7();
-  inline void clear_has_unknown_7();
+  inline void set_has_attack_strength();
+  inline void clear_has_attack_strength();
+  inline void set_has_attack_dexterity();
+  inline void clear_has_attack_dexterity();
   inline void set_has_unknown_8();
   inline void clear_has_unknown_8();
   inline void set_has_unknown_9();
@@ -1355,8 +1355,8 @@ class PhysicalStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_12();
   inline void set_has_unknown_13();
   inline void clear_has_unknown_13();
-  inline void set_has_unknown_14();
-  inline void clear_has_unknown_14();
+  inline void set_has_physical_defence();
+  inline void clear_has_physical_defence();
   inline void set_has_unknown_15();
   inline void clear_has_unknown_15();
   inline void set_has_unknown_16();
@@ -1369,12 +1369,12 @@ class PhysicalStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_19();
   inline void set_has_unknown_20();
   inline void clear_has_unknown_20();
-  inline void set_has_unknown_21();
-  inline void clear_has_unknown_21();
-  inline void set_has_unknown_22();
-  inline void clear_has_unknown_22();
-  inline void set_has_unknown_23();
-  inline void clear_has_unknown_23();
+  inline void set_has_petrify_resist();
+  inline void clear_has_petrify_resist();
+  inline void set_has_curse_resist();
+  inline void clear_has_curse_resist();
+  inline void set_has_agility();
+  inline void clear_has_agility();
   inline void set_has_poise();
   inline void clear_has_poise();
 
@@ -1387,24 +1387,24 @@ class PhysicalStatus : public ::google::protobuf::MessageLite {
   float equip_load_;
   ::google::protobuf::uint32 unknown_4_;
   ::google::protobuf::uint32 unknown_5_;
-  ::google::protobuf::uint32 unknown_6_;
-  ::google::protobuf::uint32 unknown_7_;
+  ::google::protobuf::uint32 attack_strength_;
+  ::google::protobuf::uint32 attack_dexterity_;
   ::google::protobuf::uint32 unknown_8_;
   ::google::protobuf::uint32 unknown_9_;
   ::google::protobuf::uint32 unknown_10_;
   ::google::protobuf::uint32 unknown_11_;
   ::google::protobuf::uint32 unknown_12_;
   ::google::protobuf::uint32 unknown_13_;
-  ::google::protobuf::uint32 unknown_14_;
+  ::google::protobuf::uint32 physical_defence_;
   ::google::protobuf::uint32 unknown_15_;
   ::google::protobuf::uint32 unknown_16_;
   ::google::protobuf::uint32 unknown_17_;
   ::google::protobuf::uint32 unknown_18_;
   ::google::protobuf::uint32 unknown_19_;
   ::google::protobuf::uint32 unknown_20_;
-  ::google::protobuf::uint32 unknown_21_;
-  ::google::protobuf::uint32 unknown_22_;
-  ::google::protobuf::uint32 unknown_23_;
+  ::google::protobuf::uint32 petrify_resist_;
+  ::google::protobuf::uint32 curse_resist_;
+  ::google::protobuf::uint32 agility_;
   float poise_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2PlayerData_2eproto_impl();
@@ -1487,12 +1487,12 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 online_area_id() const;
   inline void set_online_area_id(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
+  // optional uint32 cell_id = 2;
+  inline bool has_cell_id() const;
+  inline void clear_cell_id();
+  static const int kCellIdFieldNumber = 2;
+  inline ::google::protobuf::uint32 cell_id() const;
+  inline void set_cell_id(::google::protobuf::uint32 value);
 
   // optional uint32 unknown_3 = 3;
   inline bool has_unknown_3() const;
@@ -1521,8 +1521,8 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
  private:
   inline void set_has_online_area_id();
   inline void clear_has_online_area_id();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
+  inline void set_has_cell_id();
+  inline void clear_has_cell_id();
   inline void set_has_unknown_3();
   inline void clear_has_unknown_3();
   inline void set_has_position();
@@ -1535,7 +1535,7 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::uint32 online_area_id_;
-  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 cell_id_;
   ::DS2_Frpg2PlayerData::Vector* position_;
   ::google::protobuf::uint32 unknown_3_;
   float unknown_5_;
@@ -1728,12 +1728,12 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // optional uint32 unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline ::google::protobuf::uint32 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::uint32 value);
+  // optional uint32 archetype = 2;
+  inline bool has_archetype() const;
+  inline void clear_archetype();
+  static const int kArchetypeFieldNumber = 2;
+  inline ::google::protobuf::uint32 archetype() const;
+  inline void set_archetype(::google::protobuf::uint32 value);
 
   // optional uint32 covenant = 3;
   inline bool has_covenant() const;
@@ -1763,12 +1763,12 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_6() const;
   inline void set_unknown_6(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_7 = 7;
-  inline bool has_unknown_7() const;
-  inline void clear_unknown_7();
-  static const int kUnknown7FieldNumber = 7;
-  inline ::google::protobuf::uint32 unknown_7() const;
-  inline void set_unknown_7(::google::protobuf::uint32 value);
+  // optional uint32 sitting_at_bonfire = 7;
+  inline bool has_sitting_at_bonfire() const;
+  inline void clear_sitting_at_bonfire();
+  static const int kSittingAtBonfireFieldNumber = 7;
+  inline ::google::protobuf::uint32 sitting_at_bonfire() const;
+  inline void set_sitting_at_bonfire(::google::protobuf::uint32 value);
 
   // optional .DS2_Frpg2PlayerData.PlayerStatus_Phantom_leave_at phantom_leave_at = 8;
   inline bool has_phantom_leave_at() const;
@@ -1793,24 +1793,24 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 character_id() const;
   inline void set_character_id(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_11 = 11;
-  inline bool has_unknown_11() const;
-  inline void clear_unknown_11();
-  static const int kUnknown11FieldNumber = 11;
-  inline ::google::protobuf::uint32 unknown_11() const;
-  inline void set_unknown_11(::google::protobuf::uint32 value);
+  // optional uint32 human_effigy_burnt = 11;
+  inline bool has_human_effigy_burnt() const;
+  inline void clear_human_effigy_burnt();
+  static const int kHumanEffigyBurntFieldNumber = 11;
+  inline ::google::protobuf::uint32 human_effigy_burnt() const;
+  inline void set_human_effigy_burnt(::google::protobuf::uint32 value);
 
-  // repeated uint32 unknown_12 = 12;
-  inline int unknown_12_size() const;
-  inline void clear_unknown_12();
-  static const int kUnknown12FieldNumber = 12;
-  inline ::google::protobuf::uint32 unknown_12(int index) const;
-  inline void set_unknown_12(int index, ::google::protobuf::uint32 value);
-  inline void add_unknown_12(::google::protobuf::uint32 value);
+  // repeated uint32 played_online_areas = 12;
+  inline int played_online_areas_size() const;
+  inline void clear_played_online_areas();
+  static const int kPlayedOnlineAreasFieldNumber = 12;
+  inline ::google::protobuf::uint32 played_online_areas(int index) const;
+  inline void set_played_online_areas(int index, ::google::protobuf::uint32 value);
+  inline void add_played_online_areas(::google::protobuf::uint32 value);
   inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      unknown_12() const;
+      played_online_areas() const;
   inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_unknown_12();
+      mutable_played_online_areas();
 
   // optional uint32 unknown_13 = 13;
   inline bool has_unknown_13() const;
@@ -1847,12 +1847,12 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_17() const;
   inline void set_unknown_17(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_18 = 18;
-  inline bool has_unknown_18() const;
-  inline void clear_unknown_18();
-  static const int kUnknown18FieldNumber = 18;
-  inline ::google::protobuf::uint32 unknown_18() const;
-  inline void set_unknown_18(::google::protobuf::uint32 value);
+  // optional uint32 play_time_seconds = 18;
+  inline bool has_play_time_seconds() const;
+  inline void clear_play_time_seconds();
+  static const int kPlayTimeSecondsFieldNumber = 18;
+  inline ::google::protobuf::uint32 play_time_seconds() const;
+  inline void set_play_time_seconds(::google::protobuf::uint32 value);
 
   // optional uint32 soul_memory = 19;
   inline bool has_soul_memory() const;
@@ -1884,8 +1884,8 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
  private:
   inline void set_has_name();
   inline void clear_has_name();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
+  inline void set_has_archetype();
+  inline void clear_has_archetype();
   inline void set_has_covenant();
   inline void clear_has_covenant();
   inline void set_has_unknown_4();
@@ -1894,16 +1894,16 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_5();
   inline void set_has_unknown_6();
   inline void clear_has_unknown_6();
-  inline void set_has_unknown_7();
-  inline void clear_has_unknown_7();
+  inline void set_has_sitting_at_bonfire();
+  inline void clear_has_sitting_at_bonfire();
   inline void set_has_phantom_leave_at();
   inline void clear_has_phantom_leave_at();
   inline void set_has_disable_cross_region_play();
   inline void clear_has_disable_cross_region_play();
   inline void set_has_character_id();
   inline void clear_has_character_id();
-  inline void set_has_unknown_11();
-  inline void clear_has_unknown_11();
+  inline void set_has_human_effigy_burnt();
+  inline void clear_has_human_effigy_burnt();
   inline void set_has_unknown_13();
   inline void clear_has_unknown_13();
   inline void set_has_unknown_14();
@@ -1914,8 +1914,8 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_16();
   inline void set_has_unknown_17();
   inline void clear_has_unknown_17();
-  inline void set_has_unknown_18();
-  inline void clear_has_unknown_18();
+  inline void set_has_play_time_seconds();
+  inline void clear_has_play_time_seconds();
   inline void set_has_soul_memory();
   inline void clear_has_soul_memory();
   inline void set_has_unknown_20();
@@ -1928,23 +1928,23 @@ class PlayerStatus : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* name_;
-  ::google::protobuf::uint32 unknown_2_;
+  ::google::protobuf::uint32 archetype_;
   ::google::protobuf::uint32 covenant_;
   ::google::protobuf::uint32 unknown_4_;
   ::google::protobuf::uint32 unknown_5_;
   ::google::protobuf::uint32 unknown_6_;
-  ::google::protobuf::uint32 unknown_7_;
+  ::google::protobuf::uint32 sitting_at_bonfire_;
   ::DS2_Frpg2PlayerData::PlayerStatus_Phantom_leave_at* phantom_leave_at_;
   ::google::protobuf::uint32 disable_cross_region_play_;
   ::google::protobuf::uint32 character_id_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > unknown_12_;
-  ::google::protobuf::uint32 unknown_11_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > played_online_areas_;
+  ::google::protobuf::uint32 human_effigy_burnt_;
   ::google::protobuf::uint32 unknown_13_;
   ::google::protobuf::uint32 unknown_14_;
   ::google::protobuf::uint32 soul_level_;
   ::google::protobuf::uint32 unknown_16_;
   ::google::protobuf::uint32 unknown_17_;
-  ::google::protobuf::uint32 unknown_18_;
+  ::google::protobuf::uint32 play_time_seconds_;
   ::google::protobuf::uint32 soul_memory_;
   ::std::string* unknown_21_;
   ::google::protobuf::uint32 unknown_20_;
@@ -2228,12 +2228,12 @@ class StatsInfo : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 unknown_2() const;
   inline void set_unknown_2(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_3 = 3;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 3;
-  inline ::google::protobuf::uint32 unknown_3() const;
-  inline void set_unknown_3(::google::protobuf::uint32 value);
+  // optional uint32 sinner_points = 3;
+  inline bool has_sinner_points() const;
+  inline void clear_sinner_points();
+  static const int kSinnerPointsFieldNumber = 3;
+  inline ::google::protobuf::uint32 sinner_points() const;
+  inline void set_sinner_points(::google::protobuf::uint32 value);
 
   // repeated .DS2_Frpg2PlayerData.StatsInfo_Bonfire_levels bonfire_levels = 4;
   inline int bonfire_levels_size() const;
@@ -2409,8 +2409,8 @@ class StatsInfo : public ::google::protobuf::MessageLite {
   inline void clear_has_unknown_1();
   inline void set_has_unknown_2();
   inline void clear_has_unknown_2();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
+  inline void set_has_sinner_points();
+  inline void clear_has_sinner_points();
   inline void set_has_unknown_5();
   inline void clear_has_unknown_5();
   inline void set_has_unknown_10();
@@ -2439,7 +2439,7 @@ class StatsInfo : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 unknown_1_;
   ::google::protobuf::uint32 unknown_2_;
   ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2PlayerData::StatsInfo_Bonfire_levels > bonfire_levels_;
-  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 sinner_points_;
   ::google::protobuf::uint32 unknown_5_;
   ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2PlayerData::PhantomTypeCount > phantom_type_count_6_;
   ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2PlayerData::PhantomTypeCount > phantom_type_count_7_;
@@ -3601,52 +3601,52 @@ inline void EquipmentInfo::set_spell_slots(::google::protobuf::uint32 value) {
 
 // ItemUsingInfo
 
-// optional uint32 unknown_1 = 1;
-inline bool ItemUsingInfo::has_unknown_1() const {
+// optional uint32 named_ring_god = 1;
+inline bool ItemUsingInfo::has_named_ring_god() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void ItemUsingInfo::set_has_unknown_1() {
+inline void ItemUsingInfo::set_has_named_ring_god() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void ItemUsingInfo::clear_has_unknown_1() {
+inline void ItemUsingInfo::clear_has_named_ring_god() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void ItemUsingInfo::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void ItemUsingInfo::clear_named_ring_god() {
+  named_ring_god_ = 0u;
+  clear_has_named_ring_god();
 }
-inline ::google::protobuf::uint32 ItemUsingInfo::unknown_1() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 ItemUsingInfo::named_ring_god() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.named_ring_god)
+  return named_ring_god_;
 }
-inline void ItemUsingInfo::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_1)
+inline void ItemUsingInfo::set_named_ring_god(::google::protobuf::uint32 value) {
+  set_has_named_ring_god();
+  named_ring_god_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.named_ring_god)
 }
 
-// optional uint32 unknown_2 = 2;
-inline bool ItemUsingInfo::has_unknown_2() const {
+// optional uint32 using_dried_fingers = 2;
+inline bool ItemUsingInfo::has_using_dried_fingers() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void ItemUsingInfo::set_has_unknown_2() {
+inline void ItemUsingInfo::set_has_using_dried_fingers() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void ItemUsingInfo::clear_has_unknown_2() {
+inline void ItemUsingInfo::clear_has_using_dried_fingers() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void ItemUsingInfo::clear_unknown_2() {
-  unknown_2_ = 0u;
-  clear_has_unknown_2();
+inline void ItemUsingInfo::clear_using_dried_fingers() {
+  using_dried_fingers_ = 0u;
+  clear_has_using_dried_fingers();
 }
-inline ::google::protobuf::uint32 ItemUsingInfo::unknown_2() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_2)
-  return unknown_2_;
+inline ::google::protobuf::uint32 ItemUsingInfo::using_dried_fingers() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.using_dried_fingers)
+  return using_dried_fingers_;
 }
-inline void ItemUsingInfo::set_unknown_2(::google::protobuf::uint32 value) {
-  set_has_unknown_2();
-  unknown_2_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_2)
+inline void ItemUsingInfo::set_using_dried_fingers(::google::protobuf::uint32 value) {
+  set_has_using_dried_fingers();
+  using_dried_fingers_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.using_dried_fingers)
 }
 
 // optional uint32 unknown_3 = 3;
@@ -3673,76 +3673,76 @@ inline void ItemUsingInfo::set_unknown_3(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_3)
 }
 
-// optional uint32 unknown_4 = 4;
-inline bool ItemUsingInfo::has_unknown_4() const {
+// optional uint32 guardians_seal = 4;
+inline bool ItemUsingInfo::has_guardians_seal() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void ItemUsingInfo::set_has_unknown_4() {
+inline void ItemUsingInfo::set_has_guardians_seal() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void ItemUsingInfo::clear_has_unknown_4() {
+inline void ItemUsingInfo::clear_has_guardians_seal() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void ItemUsingInfo::clear_unknown_4() {
-  unknown_4_ = 0u;
-  clear_has_unknown_4();
+inline void ItemUsingInfo::clear_guardians_seal() {
+  guardians_seal_ = 0u;
+  clear_has_guardians_seal();
 }
-inline ::google::protobuf::uint32 ItemUsingInfo::unknown_4() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_4)
-  return unknown_4_;
+inline ::google::protobuf::uint32 ItemUsingInfo::guardians_seal() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.guardians_seal)
+  return guardians_seal_;
 }
-inline void ItemUsingInfo::set_unknown_4(::google::protobuf::uint32 value) {
-  set_has_unknown_4();
-  unknown_4_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_4)
+inline void ItemUsingInfo::set_guardians_seal(::google::protobuf::uint32 value) {
+  set_has_guardians_seal();
+  guardians_seal_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.guardians_seal)
 }
 
-// optional uint32 unknown_5 = 5;
-inline bool ItemUsingInfo::has_unknown_5() const {
+// optional uint32 bell_keepers_seal = 5;
+inline bool ItemUsingInfo::has_bell_keepers_seal() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void ItemUsingInfo::set_has_unknown_5() {
+inline void ItemUsingInfo::set_has_bell_keepers_seal() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void ItemUsingInfo::clear_has_unknown_5() {
+inline void ItemUsingInfo::clear_has_bell_keepers_seal() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void ItemUsingInfo::clear_unknown_5() {
-  unknown_5_ = 0u;
-  clear_has_unknown_5();
+inline void ItemUsingInfo::clear_bell_keepers_seal() {
+  bell_keepers_seal_ = 0u;
+  clear_has_bell_keepers_seal();
 }
-inline ::google::protobuf::uint32 ItemUsingInfo::unknown_5() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_5)
-  return unknown_5_;
+inline ::google::protobuf::uint32 ItemUsingInfo::bell_keepers_seal() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.bell_keepers_seal)
+  return bell_keepers_seal_;
 }
-inline void ItemUsingInfo::set_unknown_5(::google::protobuf::uint32 value) {
-  set_has_unknown_5();
-  unknown_5_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_5)
+inline void ItemUsingInfo::set_bell_keepers_seal(::google::protobuf::uint32 value) {
+  set_has_bell_keepers_seal();
+  bell_keepers_seal_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.bell_keepers_seal)
 }
 
-// optional uint32 unknown_6 = 6;
-inline bool ItemUsingInfo::has_unknown_6() const {
+// optional uint32 crest_of_the_rat = 6;
+inline bool ItemUsingInfo::has_crest_of_the_rat() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void ItemUsingInfo::set_has_unknown_6() {
+inline void ItemUsingInfo::set_has_crest_of_the_rat() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void ItemUsingInfo::clear_has_unknown_6() {
+inline void ItemUsingInfo::clear_has_crest_of_the_rat() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void ItemUsingInfo::clear_unknown_6() {
-  unknown_6_ = 0u;
-  clear_has_unknown_6();
+inline void ItemUsingInfo::clear_crest_of_the_rat() {
+  crest_of_the_rat_ = 0u;
+  clear_has_crest_of_the_rat();
 }
-inline ::google::protobuf::uint32 ItemUsingInfo::unknown_6() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_6)
-  return unknown_6_;
+inline ::google::protobuf::uint32 ItemUsingInfo::crest_of_the_rat() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.ItemUsingInfo.crest_of_the_rat)
+  return crest_of_the_rat_;
 }
-inline void ItemUsingInfo::set_unknown_6(::google::protobuf::uint32 value) {
-  set_has_unknown_6();
-  unknown_6_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.unknown_6)
+inline void ItemUsingInfo::set_crest_of_the_rat(::google::protobuf::uint32 value) {
+  set_has_crest_of_the_rat();
+  crest_of_the_rat_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.ItemUsingInfo.crest_of_the_rat)
 }
 
 // optional uint32 unknown_7 = 7;
@@ -4189,52 +4189,52 @@ inline void PhysicalStatus::set_unknown_5(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_5)
 }
 
-// optional uint32 unknown_6 = 6;
-inline bool PhysicalStatus::has_unknown_6() const {
+// optional uint32 attack_strength = 6;
+inline bool PhysicalStatus::has_attack_strength() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void PhysicalStatus::set_has_unknown_6() {
+inline void PhysicalStatus::set_has_attack_strength() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void PhysicalStatus::clear_has_unknown_6() {
+inline void PhysicalStatus::clear_has_attack_strength() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void PhysicalStatus::clear_unknown_6() {
-  unknown_6_ = 0u;
-  clear_has_unknown_6();
+inline void PhysicalStatus::clear_attack_strength() {
+  attack_strength_ = 0u;
+  clear_has_attack_strength();
 }
-inline ::google::protobuf::uint32 PhysicalStatus::unknown_6() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.unknown_6)
-  return unknown_6_;
+inline ::google::protobuf::uint32 PhysicalStatus::attack_strength() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.attack_strength)
+  return attack_strength_;
 }
-inline void PhysicalStatus::set_unknown_6(::google::protobuf::uint32 value) {
-  set_has_unknown_6();
-  unknown_6_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_6)
+inline void PhysicalStatus::set_attack_strength(::google::protobuf::uint32 value) {
+  set_has_attack_strength();
+  attack_strength_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.attack_strength)
 }
 
-// optional uint32 unknown_7 = 7;
-inline bool PhysicalStatus::has_unknown_7() const {
+// optional uint32 attack_dexterity = 7;
+inline bool PhysicalStatus::has_attack_dexterity() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void PhysicalStatus::set_has_unknown_7() {
+inline void PhysicalStatus::set_has_attack_dexterity() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void PhysicalStatus::clear_has_unknown_7() {
+inline void PhysicalStatus::clear_has_attack_dexterity() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void PhysicalStatus::clear_unknown_7() {
-  unknown_7_ = 0u;
-  clear_has_unknown_7();
+inline void PhysicalStatus::clear_attack_dexterity() {
+  attack_dexterity_ = 0u;
+  clear_has_attack_dexterity();
 }
-inline ::google::protobuf::uint32 PhysicalStatus::unknown_7() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.unknown_7)
-  return unknown_7_;
+inline ::google::protobuf::uint32 PhysicalStatus::attack_dexterity() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.attack_dexterity)
+  return attack_dexterity_;
 }
-inline void PhysicalStatus::set_unknown_7(::google::protobuf::uint32 value) {
-  set_has_unknown_7();
-  unknown_7_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_7)
+inline void PhysicalStatus::set_attack_dexterity(::google::protobuf::uint32 value) {
+  set_has_attack_dexterity();
+  attack_dexterity_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.attack_dexterity)
 }
 
 // optional uint32 unknown_8 = 8;
@@ -4381,28 +4381,28 @@ inline void PhysicalStatus::set_unknown_13(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_13)
 }
 
-// optional uint32 unknown_14 = 14;
-inline bool PhysicalStatus::has_unknown_14() const {
+// optional uint32 physical_defence = 14;
+inline bool PhysicalStatus::has_physical_defence() const {
   return (_has_bits_[0] & 0x00002000u) != 0;
 }
-inline void PhysicalStatus::set_has_unknown_14() {
+inline void PhysicalStatus::set_has_physical_defence() {
   _has_bits_[0] |= 0x00002000u;
 }
-inline void PhysicalStatus::clear_has_unknown_14() {
+inline void PhysicalStatus::clear_has_physical_defence() {
   _has_bits_[0] &= ~0x00002000u;
 }
-inline void PhysicalStatus::clear_unknown_14() {
-  unknown_14_ = 0u;
-  clear_has_unknown_14();
+inline void PhysicalStatus::clear_physical_defence() {
+  physical_defence_ = 0u;
+  clear_has_physical_defence();
 }
-inline ::google::protobuf::uint32 PhysicalStatus::unknown_14() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.unknown_14)
-  return unknown_14_;
+inline ::google::protobuf::uint32 PhysicalStatus::physical_defence() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.physical_defence)
+  return physical_defence_;
 }
-inline void PhysicalStatus::set_unknown_14(::google::protobuf::uint32 value) {
-  set_has_unknown_14();
-  unknown_14_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_14)
+inline void PhysicalStatus::set_physical_defence(::google::protobuf::uint32 value) {
+  set_has_physical_defence();
+  physical_defence_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.physical_defence)
 }
 
 // optional uint32 unknown_15 = 15;
@@ -4549,76 +4549,76 @@ inline void PhysicalStatus::set_unknown_20(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_20)
 }
 
-// optional uint32 unknown_21 = 21;
-inline bool PhysicalStatus::has_unknown_21() const {
+// optional uint32 petrify_resist = 21;
+inline bool PhysicalStatus::has_petrify_resist() const {
   return (_has_bits_[0] & 0x00100000u) != 0;
 }
-inline void PhysicalStatus::set_has_unknown_21() {
+inline void PhysicalStatus::set_has_petrify_resist() {
   _has_bits_[0] |= 0x00100000u;
 }
-inline void PhysicalStatus::clear_has_unknown_21() {
+inline void PhysicalStatus::clear_has_petrify_resist() {
   _has_bits_[0] &= ~0x00100000u;
 }
-inline void PhysicalStatus::clear_unknown_21() {
-  unknown_21_ = 0u;
-  clear_has_unknown_21();
+inline void PhysicalStatus::clear_petrify_resist() {
+  petrify_resist_ = 0u;
+  clear_has_petrify_resist();
 }
-inline ::google::protobuf::uint32 PhysicalStatus::unknown_21() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.unknown_21)
-  return unknown_21_;
+inline ::google::protobuf::uint32 PhysicalStatus::petrify_resist() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.petrify_resist)
+  return petrify_resist_;
 }
-inline void PhysicalStatus::set_unknown_21(::google::protobuf::uint32 value) {
-  set_has_unknown_21();
-  unknown_21_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_21)
+inline void PhysicalStatus::set_petrify_resist(::google::protobuf::uint32 value) {
+  set_has_petrify_resist();
+  petrify_resist_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.petrify_resist)
 }
 
-// optional uint32 unknown_22 = 22;
-inline bool PhysicalStatus::has_unknown_22() const {
+// optional uint32 curse_resist = 22;
+inline bool PhysicalStatus::has_curse_resist() const {
   return (_has_bits_[0] & 0x00200000u) != 0;
 }
-inline void PhysicalStatus::set_has_unknown_22() {
+inline void PhysicalStatus::set_has_curse_resist() {
   _has_bits_[0] |= 0x00200000u;
 }
-inline void PhysicalStatus::clear_has_unknown_22() {
+inline void PhysicalStatus::clear_has_curse_resist() {
   _has_bits_[0] &= ~0x00200000u;
 }
-inline void PhysicalStatus::clear_unknown_22() {
-  unknown_22_ = 0u;
-  clear_has_unknown_22();
+inline void PhysicalStatus::clear_curse_resist() {
+  curse_resist_ = 0u;
+  clear_has_curse_resist();
 }
-inline ::google::protobuf::uint32 PhysicalStatus::unknown_22() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.unknown_22)
-  return unknown_22_;
+inline ::google::protobuf::uint32 PhysicalStatus::curse_resist() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.curse_resist)
+  return curse_resist_;
 }
-inline void PhysicalStatus::set_unknown_22(::google::protobuf::uint32 value) {
-  set_has_unknown_22();
-  unknown_22_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_22)
+inline void PhysicalStatus::set_curse_resist(::google::protobuf::uint32 value) {
+  set_has_curse_resist();
+  curse_resist_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.curse_resist)
 }
 
-// optional uint32 unknown_23 = 23;
-inline bool PhysicalStatus::has_unknown_23() const {
+// optional uint32 agility = 23;
+inline bool PhysicalStatus::has_agility() const {
   return (_has_bits_[0] & 0x00400000u) != 0;
 }
-inline void PhysicalStatus::set_has_unknown_23() {
+inline void PhysicalStatus::set_has_agility() {
   _has_bits_[0] |= 0x00400000u;
 }
-inline void PhysicalStatus::clear_has_unknown_23() {
+inline void PhysicalStatus::clear_has_agility() {
   _has_bits_[0] &= ~0x00400000u;
 }
-inline void PhysicalStatus::clear_unknown_23() {
-  unknown_23_ = 0u;
-  clear_has_unknown_23();
+inline void PhysicalStatus::clear_agility() {
+  agility_ = 0u;
+  clear_has_agility();
 }
-inline ::google::protobuf::uint32 PhysicalStatus::unknown_23() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.unknown_23)
-  return unknown_23_;
+inline ::google::protobuf::uint32 PhysicalStatus::agility() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PhysicalStatus.agility)
+  return agility_;
 }
-inline void PhysicalStatus::set_unknown_23(::google::protobuf::uint32 value) {
-  set_has_unknown_23();
-  unknown_23_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.unknown_23)
+inline void PhysicalStatus::set_agility(::google::protobuf::uint32 value) {
+  set_has_agility();
+  agility_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PhysicalStatus.agility)
 }
 
 // optional float poise = 24;
@@ -4673,28 +4673,28 @@ inline void PlayerLocation::set_online_area_id(::google::protobuf::uint32 value)
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.online_area_id)
 }
 
-// optional uint32 unknown_2 = 2;
-inline bool PlayerLocation::has_unknown_2() const {
+// optional uint32 cell_id = 2;
+inline bool PlayerLocation::has_cell_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void PlayerLocation::set_has_unknown_2() {
+inline void PlayerLocation::set_has_cell_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void PlayerLocation::clear_has_unknown_2() {
+inline void PlayerLocation::clear_has_cell_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void PlayerLocation::clear_unknown_2() {
-  unknown_2_ = 0u;
-  clear_has_unknown_2();
+inline void PlayerLocation::clear_cell_id() {
+  cell_id_ = 0u;
+  clear_has_cell_id();
 }
-inline ::google::protobuf::uint32 PlayerLocation::unknown_2() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerLocation.unknown_2)
-  return unknown_2_;
+inline ::google::protobuf::uint32 PlayerLocation::cell_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerLocation.cell_id)
+  return cell_id_;
 }
-inline void PlayerLocation::set_unknown_2(::google::protobuf::uint32 value) {
-  set_has_unknown_2();
-  unknown_2_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.unknown_2)
+inline void PlayerLocation::set_cell_id(::google::protobuf::uint32 value) {
+  set_has_cell_id();
+  cell_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.cell_id)
 }
 
 // optional uint32 unknown_3 = 3;
@@ -4943,28 +4943,28 @@ inline void PlayerStatus::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2PlayerData.PlayerStatus.name)
 }
 
-// optional uint32 unknown_2 = 2;
-inline bool PlayerStatus::has_unknown_2() const {
+// optional uint32 archetype = 2;
+inline bool PlayerStatus::has_archetype() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void PlayerStatus::set_has_unknown_2() {
+inline void PlayerStatus::set_has_archetype() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void PlayerStatus::clear_has_unknown_2() {
+inline void PlayerStatus::clear_has_archetype() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void PlayerStatus::clear_unknown_2() {
-  unknown_2_ = 0u;
-  clear_has_unknown_2();
+inline void PlayerStatus::clear_archetype() {
+  archetype_ = 0u;
+  clear_has_archetype();
 }
-inline ::google::protobuf::uint32 PlayerStatus::unknown_2() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.unknown_2)
-  return unknown_2_;
+inline ::google::protobuf::uint32 PlayerStatus::archetype() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.archetype)
+  return archetype_;
 }
-inline void PlayerStatus::set_unknown_2(::google::protobuf::uint32 value) {
-  set_has_unknown_2();
-  unknown_2_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_2)
+inline void PlayerStatus::set_archetype(::google::protobuf::uint32 value) {
+  set_has_archetype();
+  archetype_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.archetype)
 }
 
 // optional uint32 covenant = 3;
@@ -5063,28 +5063,28 @@ inline void PlayerStatus::set_unknown_6(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_6)
 }
 
-// optional uint32 unknown_7 = 7;
-inline bool PlayerStatus::has_unknown_7() const {
+// optional uint32 sitting_at_bonfire = 7;
+inline bool PlayerStatus::has_sitting_at_bonfire() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void PlayerStatus::set_has_unknown_7() {
+inline void PlayerStatus::set_has_sitting_at_bonfire() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void PlayerStatus::clear_has_unknown_7() {
+inline void PlayerStatus::clear_has_sitting_at_bonfire() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void PlayerStatus::clear_unknown_7() {
-  unknown_7_ = 0u;
-  clear_has_unknown_7();
+inline void PlayerStatus::clear_sitting_at_bonfire() {
+  sitting_at_bonfire_ = 0u;
+  clear_has_sitting_at_bonfire();
 }
-inline ::google::protobuf::uint32 PlayerStatus::unknown_7() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.unknown_7)
-  return unknown_7_;
+inline ::google::protobuf::uint32 PlayerStatus::sitting_at_bonfire() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.sitting_at_bonfire)
+  return sitting_at_bonfire_;
 }
-inline void PlayerStatus::set_unknown_7(::google::protobuf::uint32 value) {
-  set_has_unknown_7();
-  unknown_7_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_7)
+inline void PlayerStatus::set_sitting_at_bonfire(::google::protobuf::uint32 value) {
+  set_has_sitting_at_bonfire();
+  sitting_at_bonfire_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.sitting_at_bonfire)
 }
 
 // optional .DS2_Frpg2PlayerData.PlayerStatus_Phantom_leave_at phantom_leave_at = 8;
@@ -5180,58 +5180,58 @@ inline void PlayerStatus::set_character_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.character_id)
 }
 
-// optional uint32 unknown_11 = 11;
-inline bool PlayerStatus::has_unknown_11() const {
+// optional uint32 human_effigy_burnt = 11;
+inline bool PlayerStatus::has_human_effigy_burnt() const {
   return (_has_bits_[0] & 0x00000400u) != 0;
 }
-inline void PlayerStatus::set_has_unknown_11() {
+inline void PlayerStatus::set_has_human_effigy_burnt() {
   _has_bits_[0] |= 0x00000400u;
 }
-inline void PlayerStatus::clear_has_unknown_11() {
+inline void PlayerStatus::clear_has_human_effigy_burnt() {
   _has_bits_[0] &= ~0x00000400u;
 }
-inline void PlayerStatus::clear_unknown_11() {
-  unknown_11_ = 0u;
-  clear_has_unknown_11();
+inline void PlayerStatus::clear_human_effigy_burnt() {
+  human_effigy_burnt_ = 0u;
+  clear_has_human_effigy_burnt();
 }
-inline ::google::protobuf::uint32 PlayerStatus::unknown_11() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.unknown_11)
-  return unknown_11_;
+inline ::google::protobuf::uint32 PlayerStatus::human_effigy_burnt() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.human_effigy_burnt)
+  return human_effigy_burnt_;
 }
-inline void PlayerStatus::set_unknown_11(::google::protobuf::uint32 value) {
-  set_has_unknown_11();
-  unknown_11_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_11)
+inline void PlayerStatus::set_human_effigy_burnt(::google::protobuf::uint32 value) {
+  set_has_human_effigy_burnt();
+  human_effigy_burnt_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.human_effigy_burnt)
 }
 
-// repeated uint32 unknown_12 = 12;
-inline int PlayerStatus::unknown_12_size() const {
-  return unknown_12_.size();
+// repeated uint32 played_online_areas = 12;
+inline int PlayerStatus::played_online_areas_size() const {
+  return played_online_areas_.size();
 }
-inline void PlayerStatus::clear_unknown_12() {
-  unknown_12_.Clear();
+inline void PlayerStatus::clear_played_online_areas() {
+  played_online_areas_.Clear();
 }
-inline ::google::protobuf::uint32 PlayerStatus::unknown_12(int index) const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.unknown_12)
-  return unknown_12_.Get(index);
+inline ::google::protobuf::uint32 PlayerStatus::played_online_areas(int index) const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
+  return played_online_areas_.Get(index);
 }
-inline void PlayerStatus::set_unknown_12(int index, ::google::protobuf::uint32 value) {
-  unknown_12_.Set(index, value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_12)
+inline void PlayerStatus::set_played_online_areas(int index, ::google::protobuf::uint32 value) {
+  played_online_areas_.Set(index, value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
 }
-inline void PlayerStatus::add_unknown_12(::google::protobuf::uint32 value) {
-  unknown_12_.Add(value);
-  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.PlayerStatus.unknown_12)
+inline void PlayerStatus::add_played_online_areas(::google::protobuf::uint32 value) {
+  played_online_areas_.Add(value);
+  // @@protoc_insertion_point(field_add:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-PlayerStatus::unknown_12() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.PlayerStatus.unknown_12)
-  return unknown_12_;
+PlayerStatus::played_online_areas() const {
+  // @@protoc_insertion_point(field_list:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
+  return played_online_areas_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-PlayerStatus::mutable_unknown_12() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.PlayerStatus.unknown_12)
-  return &unknown_12_;
+PlayerStatus::mutable_played_online_areas() {
+  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2PlayerData.PlayerStatus.played_online_areas)
+  return &played_online_areas_;
 }
 
 // optional uint32 unknown_13 = 13;
@@ -5354,28 +5354,28 @@ inline void PlayerStatus::set_unknown_17(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_17)
 }
 
-// optional uint32 unknown_18 = 18;
-inline bool PlayerStatus::has_unknown_18() const {
+// optional uint32 play_time_seconds = 18;
+inline bool PlayerStatus::has_play_time_seconds() const {
   return (_has_bits_[0] & 0x00020000u) != 0;
 }
-inline void PlayerStatus::set_has_unknown_18() {
+inline void PlayerStatus::set_has_play_time_seconds() {
   _has_bits_[0] |= 0x00020000u;
 }
-inline void PlayerStatus::clear_has_unknown_18() {
+inline void PlayerStatus::clear_has_play_time_seconds() {
   _has_bits_[0] &= ~0x00020000u;
 }
-inline void PlayerStatus::clear_unknown_18() {
-  unknown_18_ = 0u;
-  clear_has_unknown_18();
+inline void PlayerStatus::clear_play_time_seconds() {
+  play_time_seconds_ = 0u;
+  clear_has_play_time_seconds();
 }
-inline ::google::protobuf::uint32 PlayerStatus::unknown_18() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.unknown_18)
-  return unknown_18_;
+inline ::google::protobuf::uint32 PlayerStatus::play_time_seconds() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerStatus.play_time_seconds)
+  return play_time_seconds_;
 }
-inline void PlayerStatus::set_unknown_18(::google::protobuf::uint32 value) {
-  set_has_unknown_18();
-  unknown_18_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.unknown_18)
+inline void PlayerStatus::set_play_time_seconds(::google::protobuf::uint32 value) {
+  set_has_play_time_seconds();
+  play_time_seconds_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerStatus.play_time_seconds)
 }
 
 // optional uint32 soul_memory = 19;
@@ -5634,28 +5634,28 @@ inline void StatsInfo::set_unknown_2(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.StatsInfo.unknown_2)
 }
 
-// optional uint32 unknown_3 = 3;
-inline bool StatsInfo::has_unknown_3() const {
+// optional uint32 sinner_points = 3;
+inline bool StatsInfo::has_sinner_points() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void StatsInfo::set_has_unknown_3() {
+inline void StatsInfo::set_has_sinner_points() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void StatsInfo::clear_has_unknown_3() {
+inline void StatsInfo::clear_has_sinner_points() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void StatsInfo::clear_unknown_3() {
-  unknown_3_ = 0u;
-  clear_has_unknown_3();
+inline void StatsInfo::clear_sinner_points() {
+  sinner_points_ = 0u;
+  clear_has_sinner_points();
 }
-inline ::google::protobuf::uint32 StatsInfo::unknown_3() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.StatsInfo.unknown_3)
-  return unknown_3_;
+inline ::google::protobuf::uint32 StatsInfo::sinner_points() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.StatsInfo.sinner_points)
+  return sinner_points_;
 }
-inline void StatsInfo::set_unknown_3(::google::protobuf::uint32 value) {
-  set_has_unknown_3();
-  unknown_3_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.StatsInfo.unknown_3)
+inline void StatsInfo::set_sinner_points(::google::protobuf::uint32 value) {
+  set_has_sinner_points();
+  sinner_points_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.StatsInfo.sinner_points)
 }
 
 // repeated .DS2_Frpg2PlayerData.StatsInfo_Bonfire_levels bonfire_levels = 4;

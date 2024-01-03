@@ -53,12 +53,12 @@ message EquipmentInfo {
 }
 
 message ItemUsingInfo {
-	optional uint32 unknown_1 = 1;
-	optional uint32 unknown_2 = 2;
+	optional uint32 named_ring_god = 1;
+	optional uint32 using_dried_fingers = 2;
 	optional uint32 unknown_3 = 3;
-	optional uint32 unknown_4 = 4;
-	optional uint32 unknown_5 = 5;
-	optional uint32 unknown_6 = 6;
+	optional uint32 guardians_seal = 4;
+	optional uint32 bell_keepers_seal = 5;
+	optional uint32 crest_of_the_rat = 6;
 	optional uint32 unknown_7 = 7;
 	optional uint32 unknown_8 = 8;
 }
@@ -87,30 +87,30 @@ message PhysicalStatus {
 	//optional uint32 unknown_3 = 3;
 	optional uint32 unknown_4 = 4;
 	optional uint32 unknown_5 = 5;
-	optional uint32 unknown_6 = 6;
-	optional uint32 unknown_7 = 7;
+	optional uint32 attack_strength = 6;  
+	optional uint32 attack_dexterity = 7; 
 	optional uint32 unknown_8 = 8;
 	optional uint32 unknown_9 = 9;
 	optional uint32 unknown_10 = 10;
 	optional uint32 unknown_11 = 11;
 	optional uint32 unknown_12 = 12;
 	optional uint32 unknown_13 = 13;
-	optional uint32 unknown_14 = 14;
-	optional uint32 unknown_15 = 15;
-	optional uint32 unknown_16 = 16;
-	optional uint32 unknown_17 = 17;
-	optional uint32 unknown_18 = 18;
-	optional uint32 unknown_19 = 19;
-	optional uint32 unknown_20 = 20;
-	optional uint32 unknown_21 = 21;
-	optional uint32 unknown_22 = 22;
-	optional uint32 unknown_23 = 23;
+	optional uint32 physical_defence = 14;
+	optional uint32 unknown_15 = 15;    // changes with int    
+	optional uint32 unknown_16 = 16;    // changes with int            
+	optional uint32 unknown_17 = 17;    // changes with faith  
+	optional uint32 unknown_18 = 18;    // changes with int       
+	optional uint32 unknown_19 = 19;    // changes with adaptability
+	optional uint32 unknown_20 = 20;    // changes with faith    
+	optional uint32 petrify_resist = 21;
+	optional uint32 curse_resist = 22; 
+	optional uint32 agility = 23;    
 	optional float poise = 24;
 }
 
 message PlayerLocation {
 	optional uint32 online_area_id = 1;
-	optional uint32 unknown_2 = 2;      // 1074321607, 3225573558, 1078414675,
+	optional uint32 cell_id = 2;        // 1074321607, 3225573558, 1078414675,
 	optional uint32 unknown_3 = 3;      // 0, 101640, 103130, 103110, 103120,
 	optional Vector position = 4;
 	optional float unknown_5 = 5;       // 1074321607, 3225573558, 1078414675
@@ -123,23 +123,23 @@ message PlayerStatus_Phantom_leave_at {
 
 message PlayerStatus {
 	optional string name = 1;
-	optional uint32 unknown_2 = 2;      // 10, 2
+	optional uint32 archetype = 2;
 	optional uint32 covenant = 3;
     optional uint32 unknown_4 = 4;      // 1, 0
 	optional uint32 unknown_5 = 5;      // 0, 1, 2
 	optional uint32 unknown_6 = 6;      // 0
-	optional uint32 unknown_7 = 7;
+	optional uint32 sitting_at_bonfire = 7;      
 	optional PlayerStatus_Phantom_leave_at phantom_leave_at = 8;
 	optional uint32 disable_cross_region_play = 9;
 	optional uint32 character_id = 10;    
-	optional uint32 unknown_11 = 11;    // 0, 1
-	repeated uint32 unknown_12 = 12;    // 50350000, 50360000, 50370000, 50380000
+	optional uint32 human_effigy_burnt = 11;
+	repeated uint32 played_online_areas = 12;    
 	optional uint32 unknown_13 = 13;
 	optional uint32 unknown_14 = 14;
 	optional uint32 soul_level = 15;    
 	optional uint32 unknown_16 = 16;
 	optional uint32 unknown_17 = 17;
-	optional uint32 unknown_18 = 18;
+	optional uint32 play_time_seconds = 18;        
 	optional uint32 soul_memory = 19;
 	optional uint32 unknown_20 = 20;
 	optional string unknown_21 = 21;
@@ -157,7 +157,7 @@ message StatsInfo_Bonfire_levels {
 message StatsInfo {
 	optional uint32 unknown_1 = 1;
 	optional uint32 unknown_2 = 2;
-	optional uint32 unknown_3 = 3;
+	optional uint32 sinner_points = 3;
 	repeated StatsInfo_Bonfire_levels bonfire_levels = 4;
 	optional uint32 unknown_5 = 5;
 	repeated PhantomTypeCount phantom_type_count_6 = 6;

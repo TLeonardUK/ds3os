@@ -1773,12 +1773,12 @@ void EquipmentInfo::Swap(EquipmentInfo* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int ItemUsingInfo::kUnknown1FieldNumber;
-const int ItemUsingInfo::kUnknown2FieldNumber;
+const int ItemUsingInfo::kNamedRingGodFieldNumber;
+const int ItemUsingInfo::kUsingDriedFingersFieldNumber;
 const int ItemUsingInfo::kUnknown3FieldNumber;
-const int ItemUsingInfo::kUnknown4FieldNumber;
-const int ItemUsingInfo::kUnknown5FieldNumber;
-const int ItemUsingInfo::kUnknown6FieldNumber;
+const int ItemUsingInfo::kGuardiansSealFieldNumber;
+const int ItemUsingInfo::kBellKeepersSealFieldNumber;
+const int ItemUsingInfo::kCrestOfTheRatFieldNumber;
 const int ItemUsingInfo::kUnknown7FieldNumber;
 const int ItemUsingInfo::kUnknown8FieldNumber;
 #endif  // !_MSC_VER
@@ -1801,12 +1801,12 @@ ItemUsingInfo::ItemUsingInfo(const ItemUsingInfo& from)
 
 void ItemUsingInfo::SharedCtor() {
   _cached_size_ = 0;
-  unknown_1_ = 0u;
-  unknown_2_ = 0u;
+  named_ring_god_ = 0u;
+  using_dried_fingers_ = 0u;
   unknown_3_ = 0u;
-  unknown_4_ = 0u;
-  unknown_5_ = 0u;
-  unknown_6_ = 0u;
+  guardians_seal_ = 0u;
+  bell_keepers_seal_ = 0u;
+  crest_of_the_rat_ = 0u;
   unknown_7_ = 0u;
   unknown_8_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1858,7 +1858,7 @@ void ItemUsingInfo::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(unknown_1_, unknown_8_);
+    ZR_(named_ring_god_, unknown_8_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -1882,28 +1882,28 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 unknown_1 = 1;
+      // optional uint32 named_ring_god = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &named_ring_god_)));
+          set_has_named_ring_god();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(16)) goto parse_using_dried_fingers;
         break;
       }
 
-      // optional uint32 unknown_2 = 2;
+      // optional uint32 using_dried_fingers = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_using_dried_fingers:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &using_dried_fingers_)));
+          set_has_using_dried_fingers();
         } else {
           goto handle_unusual;
         }
@@ -1922,48 +1922,48 @@ bool ItemUsingInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_unknown_4;
+        if (input->ExpectTag(32)) goto parse_guardians_seal;
         break;
       }
 
-      // optional uint32 unknown_4 = 4;
+      // optional uint32 guardians_seal = 4;
       case 4: {
         if (tag == 32) {
-         parse_unknown_4:
+         parse_guardians_seal:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_4_)));
-          set_has_unknown_4();
+                 input, &guardians_seal_)));
+          set_has_guardians_seal();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_unknown_5;
+        if (input->ExpectTag(40)) goto parse_bell_keepers_seal;
         break;
       }
 
-      // optional uint32 unknown_5 = 5;
+      // optional uint32 bell_keepers_seal = 5;
       case 5: {
         if (tag == 40) {
-         parse_unknown_5:
+         parse_bell_keepers_seal:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_5_)));
-          set_has_unknown_5();
+                 input, &bell_keepers_seal_)));
+          set_has_bell_keepers_seal();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_unknown_6;
+        if (input->ExpectTag(48)) goto parse_crest_of_the_rat;
         break;
       }
 
-      // optional uint32 unknown_6 = 6;
+      // optional uint32 crest_of_the_rat = 6;
       case 6: {
         if (tag == 48) {
-         parse_unknown_6:
+         parse_crest_of_the_rat:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_6_)));
-          set_has_unknown_6();
+                 input, &crest_of_the_rat_)));
+          set_has_crest_of_the_rat();
         } else {
           goto handle_unusual;
         }
@@ -2026,14 +2026,14 @@ failure:
 void ItemUsingInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2PlayerData.ItemUsingInfo)
-  // optional uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // optional uint32 named_ring_god = 1;
+  if (has_named_ring_god()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->named_ring_god(), output);
   }
 
-  // optional uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // optional uint32 using_dried_fingers = 2;
+  if (has_using_dried_fingers()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->using_dried_fingers(), output);
   }
 
   // optional uint32 unknown_3 = 3;
@@ -2041,19 +2041,19 @@ void ItemUsingInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
   }
 
-  // optional uint32 unknown_4 = 4;
-  if (has_unknown_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->unknown_4(), output);
+  // optional uint32 guardians_seal = 4;
+  if (has_guardians_seal()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->guardians_seal(), output);
   }
 
-  // optional uint32 unknown_5 = 5;
-  if (has_unknown_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
+  // optional uint32 bell_keepers_seal = 5;
+  if (has_bell_keepers_seal()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->bell_keepers_seal(), output);
   }
 
-  // optional uint32 unknown_6 = 6;
-  if (has_unknown_6()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
+  // optional uint32 crest_of_the_rat = 6;
+  if (has_crest_of_the_rat()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->crest_of_the_rat(), output);
   }
 
   // optional uint32 unknown_7 = 7;
@@ -2075,18 +2075,18 @@ int ItemUsingInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // optional uint32 named_ring_god = 1;
+    if (has_named_ring_god()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->named_ring_god());
     }
 
-    // optional uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // optional uint32 using_dried_fingers = 2;
+    if (has_using_dried_fingers()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+          this->using_dried_fingers());
     }
 
     // optional uint32 unknown_3 = 3;
@@ -2096,25 +2096,25 @@ int ItemUsingInfo::ByteSize() const {
           this->unknown_3());
     }
 
-    // optional uint32 unknown_4 = 4;
-    if (has_unknown_4()) {
+    // optional uint32 guardians_seal = 4;
+    if (has_guardians_seal()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_4());
+          this->guardians_seal());
     }
 
-    // optional uint32 unknown_5 = 5;
-    if (has_unknown_5()) {
+    // optional uint32 bell_keepers_seal = 5;
+    if (has_bell_keepers_seal()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_5());
+          this->bell_keepers_seal());
     }
 
-    // optional uint32 unknown_6 = 6;
-    if (has_unknown_6()) {
+    // optional uint32 crest_of_the_rat = 6;
+    if (has_crest_of_the_rat()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_6());
+          this->crest_of_the_rat());
     }
 
     // optional uint32 unknown_7 = 7;
@@ -2148,23 +2148,23 @@ void ItemUsingInfo::CheckTypeAndMergeFrom(
 void ItemUsingInfo::MergeFrom(const ItemUsingInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_named_ring_god()) {
+      set_named_ring_god(from.named_ring_god());
     }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_using_dried_fingers()) {
+      set_using_dried_fingers(from.using_dried_fingers());
     }
     if (from.has_unknown_3()) {
       set_unknown_3(from.unknown_3());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_guardians_seal()) {
+      set_guardians_seal(from.guardians_seal());
     }
-    if (from.has_unknown_5()) {
-      set_unknown_5(from.unknown_5());
+    if (from.has_bell_keepers_seal()) {
+      set_bell_keepers_seal(from.bell_keepers_seal());
     }
-    if (from.has_unknown_6()) {
-      set_unknown_6(from.unknown_6());
+    if (from.has_crest_of_the_rat()) {
+      set_crest_of_the_rat(from.crest_of_the_rat());
     }
     if (from.has_unknown_7()) {
       set_unknown_7(from.unknown_7());
@@ -2189,12 +2189,12 @@ bool ItemUsingInfo::IsInitialized() const {
 
 void ItemUsingInfo::Swap(ItemUsingInfo* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
-    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(named_ring_god_, other->named_ring_god_);
+    std::swap(using_dried_fingers_, other->using_dried_fingers_);
     std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
-    std::swap(unknown_5_, other->unknown_5_);
-    std::swap(unknown_6_, other->unknown_6_);
+    std::swap(guardians_seal_, other->guardians_seal_);
+    std::swap(bell_keepers_seal_, other->bell_keepers_seal_);
+    std::swap(crest_of_the_rat_, other->crest_of_the_rat_);
     std::swap(unknown_7_, other->unknown_7_);
     std::swap(unknown_8_, other->unknown_8_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -2930,24 +2930,24 @@ const int PhysicalStatus::kStaminaFieldNumber;
 const int PhysicalStatus::kEquipLoadFieldNumber;
 const int PhysicalStatus::kUnknown4FieldNumber;
 const int PhysicalStatus::kUnknown5FieldNumber;
-const int PhysicalStatus::kUnknown6FieldNumber;
-const int PhysicalStatus::kUnknown7FieldNumber;
+const int PhysicalStatus::kAttackStrengthFieldNumber;
+const int PhysicalStatus::kAttackDexterityFieldNumber;
 const int PhysicalStatus::kUnknown8FieldNumber;
 const int PhysicalStatus::kUnknown9FieldNumber;
 const int PhysicalStatus::kUnknown10FieldNumber;
 const int PhysicalStatus::kUnknown11FieldNumber;
 const int PhysicalStatus::kUnknown12FieldNumber;
 const int PhysicalStatus::kUnknown13FieldNumber;
-const int PhysicalStatus::kUnknown14FieldNumber;
+const int PhysicalStatus::kPhysicalDefenceFieldNumber;
 const int PhysicalStatus::kUnknown15FieldNumber;
 const int PhysicalStatus::kUnknown16FieldNumber;
 const int PhysicalStatus::kUnknown17FieldNumber;
 const int PhysicalStatus::kUnknown18FieldNumber;
 const int PhysicalStatus::kUnknown19FieldNumber;
 const int PhysicalStatus::kUnknown20FieldNumber;
-const int PhysicalStatus::kUnknown21FieldNumber;
-const int PhysicalStatus::kUnknown22FieldNumber;
-const int PhysicalStatus::kUnknown23FieldNumber;
+const int PhysicalStatus::kPetrifyResistFieldNumber;
+const int PhysicalStatus::kCurseResistFieldNumber;
+const int PhysicalStatus::kAgilityFieldNumber;
 const int PhysicalStatus::kPoiseFieldNumber;
 #endif  // !_MSC_VER
 
@@ -2974,24 +2974,24 @@ void PhysicalStatus::SharedCtor() {
   equip_load_ = 0;
   unknown_4_ = 0u;
   unknown_5_ = 0u;
-  unknown_6_ = 0u;
-  unknown_7_ = 0u;
+  attack_strength_ = 0u;
+  attack_dexterity_ = 0u;
   unknown_8_ = 0u;
   unknown_9_ = 0u;
   unknown_10_ = 0u;
   unknown_11_ = 0u;
   unknown_12_ = 0u;
   unknown_13_ = 0u;
-  unknown_14_ = 0u;
+  physical_defence_ = 0u;
   unknown_15_ = 0u;
   unknown_16_ = 0u;
   unknown_17_ = 0u;
   unknown_18_ = 0u;
   unknown_19_ = 0u;
   unknown_20_ = 0u;
-  unknown_21_ = 0u;
-  unknown_22_ = 0u;
-  unknown_23_ = 0u;
+  petrify_resist_ = 0u;
+  curse_resist_ = 0u;
+  agility_ = 0u;
   poise_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -3142,33 +3142,33 @@ bool PhysicalStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_unknown_6;
+        if (input->ExpectTag(48)) goto parse_attack_strength;
         break;
       }
 
-      // optional uint32 unknown_6 = 6;
+      // optional uint32 attack_strength = 6;
       case 6: {
         if (tag == 48) {
-         parse_unknown_6:
+         parse_attack_strength:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_6_)));
-          set_has_unknown_6();
+                 input, &attack_strength_)));
+          set_has_attack_strength();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_unknown_7;
+        if (input->ExpectTag(56)) goto parse_attack_dexterity;
         break;
       }
 
-      // optional uint32 unknown_7 = 7;
+      // optional uint32 attack_dexterity = 7;
       case 7: {
         if (tag == 56) {
-         parse_unknown_7:
+         parse_attack_dexterity:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_7_)));
-          set_has_unknown_7();
+                 input, &attack_dexterity_)));
+          set_has_attack_dexterity();
         } else {
           goto handle_unusual;
         }
@@ -3262,18 +3262,18 @@ bool PhysicalStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(112)) goto parse_unknown_14;
+        if (input->ExpectTag(112)) goto parse_physical_defence;
         break;
       }
 
-      // optional uint32 unknown_14 = 14;
+      // optional uint32 physical_defence = 14;
       case 14: {
         if (tag == 112) {
-         parse_unknown_14:
+         parse_physical_defence:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_14_)));
-          set_has_unknown_14();
+                 input, &physical_defence_)));
+          set_has_physical_defence();
         } else {
           goto handle_unusual;
         }
@@ -3367,48 +3367,48 @@ bool PhysicalStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(168)) goto parse_unknown_21;
+        if (input->ExpectTag(168)) goto parse_petrify_resist;
         break;
       }
 
-      // optional uint32 unknown_21 = 21;
+      // optional uint32 petrify_resist = 21;
       case 21: {
         if (tag == 168) {
-         parse_unknown_21:
+         parse_petrify_resist:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_21_)));
-          set_has_unknown_21();
+                 input, &petrify_resist_)));
+          set_has_petrify_resist();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(176)) goto parse_unknown_22;
+        if (input->ExpectTag(176)) goto parse_curse_resist;
         break;
       }
 
-      // optional uint32 unknown_22 = 22;
+      // optional uint32 curse_resist = 22;
       case 22: {
         if (tag == 176) {
-         parse_unknown_22:
+         parse_curse_resist:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_22_)));
-          set_has_unknown_22();
+                 input, &curse_resist_)));
+          set_has_curse_resist();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(184)) goto parse_unknown_23;
+        if (input->ExpectTag(184)) goto parse_agility;
         break;
       }
 
-      // optional uint32 unknown_23 = 23;
+      // optional uint32 agility = 23;
       case 23: {
         if (tag == 184) {
-         parse_unknown_23:
+         parse_agility:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_23_)));
-          set_has_unknown_23();
+                 input, &agility_)));
+          set_has_agility();
         } else {
           goto handle_unusual;
         }
@@ -3481,14 +3481,14 @@ void PhysicalStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->unknown_5(), output);
   }
 
-  // optional uint32 unknown_6 = 6;
-  if (has_unknown_6()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
+  // optional uint32 attack_strength = 6;
+  if (has_attack_strength()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->attack_strength(), output);
   }
 
-  // optional uint32 unknown_7 = 7;
-  if (has_unknown_7()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
+  // optional uint32 attack_dexterity = 7;
+  if (has_attack_dexterity()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->attack_dexterity(), output);
   }
 
   // optional uint32 unknown_8 = 8;
@@ -3521,9 +3521,9 @@ void PhysicalStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(13, this->unknown_13(), output);
   }
 
-  // optional uint32 unknown_14 = 14;
-  if (has_unknown_14()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(14, this->unknown_14(), output);
+  // optional uint32 physical_defence = 14;
+  if (has_physical_defence()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(14, this->physical_defence(), output);
   }
 
   // optional uint32 unknown_15 = 15;
@@ -3556,19 +3556,19 @@ void PhysicalStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(20, this->unknown_20(), output);
   }
 
-  // optional uint32 unknown_21 = 21;
-  if (has_unknown_21()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(21, this->unknown_21(), output);
+  // optional uint32 petrify_resist = 21;
+  if (has_petrify_resist()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(21, this->petrify_resist(), output);
   }
 
-  // optional uint32 unknown_22 = 22;
-  if (has_unknown_22()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(22, this->unknown_22(), output);
+  // optional uint32 curse_resist = 22;
+  if (has_curse_resist()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(22, this->curse_resist(), output);
   }
 
-  // optional uint32 unknown_23 = 23;
-  if (has_unknown_23()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(23, this->unknown_23(), output);
+  // optional uint32 agility = 23;
+  if (has_agility()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(23, this->agility(), output);
   }
 
   // optional float poise = 24;
@@ -3618,18 +3618,18 @@ int PhysicalStatus::ByteSize() const {
           this->unknown_5());
     }
 
-    // optional uint32 unknown_6 = 6;
-    if (has_unknown_6()) {
+    // optional uint32 attack_strength = 6;
+    if (has_attack_strength()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_6());
+          this->attack_strength());
     }
 
-    // optional uint32 unknown_7 = 7;
-    if (has_unknown_7()) {
+    // optional uint32 attack_dexterity = 7;
+    if (has_attack_dexterity()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_7());
+          this->attack_dexterity());
     }
 
     // optional uint32 unknown_8 = 8;
@@ -3676,11 +3676,11 @@ int PhysicalStatus::ByteSize() const {
           this->unknown_13());
     }
 
-    // optional uint32 unknown_14 = 14;
-    if (has_unknown_14()) {
+    // optional uint32 physical_defence = 14;
+    if (has_physical_defence()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_14());
+          this->physical_defence());
     }
 
     // optional uint32 unknown_15 = 15;
@@ -3727,25 +3727,25 @@ int PhysicalStatus::ByteSize() const {
           this->unknown_20());
     }
 
-    // optional uint32 unknown_21 = 21;
-    if (has_unknown_21()) {
+    // optional uint32 petrify_resist = 21;
+    if (has_petrify_resist()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_21());
+          this->petrify_resist());
     }
 
-    // optional uint32 unknown_22 = 22;
-    if (has_unknown_22()) {
+    // optional uint32 curse_resist = 22;
+    if (has_curse_resist()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_22());
+          this->curse_resist());
     }
 
-    // optional uint32 unknown_23 = 23;
-    if (has_unknown_23()) {
+    // optional uint32 agility = 23;
+    if (has_agility()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_23());
+          this->agility());
     }
 
     // optional float poise = 24;
@@ -3785,11 +3785,11 @@ void PhysicalStatus::MergeFrom(const PhysicalStatus& from) {
     if (from.has_unknown_5()) {
       set_unknown_5(from.unknown_5());
     }
-    if (from.has_unknown_6()) {
-      set_unknown_6(from.unknown_6());
+    if (from.has_attack_strength()) {
+      set_attack_strength(from.attack_strength());
     }
-    if (from.has_unknown_7()) {
-      set_unknown_7(from.unknown_7());
+    if (from.has_attack_dexterity()) {
+      set_attack_dexterity(from.attack_dexterity());
     }
     if (from.has_unknown_8()) {
       set_unknown_8(from.unknown_8());
@@ -3811,8 +3811,8 @@ void PhysicalStatus::MergeFrom(const PhysicalStatus& from) {
     if (from.has_unknown_13()) {
       set_unknown_13(from.unknown_13());
     }
-    if (from.has_unknown_14()) {
-      set_unknown_14(from.unknown_14());
+    if (from.has_physical_defence()) {
+      set_physical_defence(from.physical_defence());
     }
     if (from.has_unknown_15()) {
       set_unknown_15(from.unknown_15());
@@ -3834,14 +3834,14 @@ void PhysicalStatus::MergeFrom(const PhysicalStatus& from) {
     if (from.has_unknown_20()) {
       set_unknown_20(from.unknown_20());
     }
-    if (from.has_unknown_21()) {
-      set_unknown_21(from.unknown_21());
+    if (from.has_petrify_resist()) {
+      set_petrify_resist(from.petrify_resist());
     }
-    if (from.has_unknown_22()) {
-      set_unknown_22(from.unknown_22());
+    if (from.has_curse_resist()) {
+      set_curse_resist(from.curse_resist());
     }
-    if (from.has_unknown_23()) {
-      set_unknown_23(from.unknown_23());
+    if (from.has_agility()) {
+      set_agility(from.agility());
     }
     if (from.has_poise()) {
       set_poise(from.poise());
@@ -3868,24 +3868,24 @@ void PhysicalStatus::Swap(PhysicalStatus* other) {
     std::swap(equip_load_, other->equip_load_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(unknown_5_, other->unknown_5_);
-    std::swap(unknown_6_, other->unknown_6_);
-    std::swap(unknown_7_, other->unknown_7_);
+    std::swap(attack_strength_, other->attack_strength_);
+    std::swap(attack_dexterity_, other->attack_dexterity_);
     std::swap(unknown_8_, other->unknown_8_);
     std::swap(unknown_9_, other->unknown_9_);
     std::swap(unknown_10_, other->unknown_10_);
     std::swap(unknown_11_, other->unknown_11_);
     std::swap(unknown_12_, other->unknown_12_);
     std::swap(unknown_13_, other->unknown_13_);
-    std::swap(unknown_14_, other->unknown_14_);
+    std::swap(physical_defence_, other->physical_defence_);
     std::swap(unknown_15_, other->unknown_15_);
     std::swap(unknown_16_, other->unknown_16_);
     std::swap(unknown_17_, other->unknown_17_);
     std::swap(unknown_18_, other->unknown_18_);
     std::swap(unknown_19_, other->unknown_19_);
     std::swap(unknown_20_, other->unknown_20_);
-    std::swap(unknown_21_, other->unknown_21_);
-    std::swap(unknown_22_, other->unknown_22_);
-    std::swap(unknown_23_, other->unknown_23_);
+    std::swap(petrify_resist_, other->petrify_resist_);
+    std::swap(curse_resist_, other->curse_resist_);
+    std::swap(agility_, other->agility_);
     std::swap(poise_, other->poise_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -3902,7 +3902,7 @@ void PhysicalStatus::Swap(PhysicalStatus* other) {
 
 #ifndef _MSC_VER
 const int PlayerLocation::kOnlineAreaIdFieldNumber;
-const int PlayerLocation::kUnknown2FieldNumber;
+const int PlayerLocation::kCellIdFieldNumber;
 const int PlayerLocation::kUnknown3FieldNumber;
 const int PlayerLocation::kPositionFieldNumber;
 const int PlayerLocation::kUnknown5FieldNumber;
@@ -3933,7 +3933,7 @@ PlayerLocation::PlayerLocation(const PlayerLocation& from)
 void PlayerLocation::SharedCtor() {
   _cached_size_ = 0;
   online_area_id_ = 0u;
-  unknown_2_ = 0u;
+  cell_id_ = 0u;
   unknown_3_ = 0u;
   position_ = NULL;
   unknown_5_ = 0;
@@ -3987,7 +3987,7 @@ void PlayerLocation::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(online_area_id_, unknown_2_);
+    ZR_(online_area_id_, cell_id_);
     ZR_(unknown_3_, unknown_5_);
     if (has_position()) {
       if (position_ != NULL) position_->::DS2_Frpg2PlayerData::Vector::Clear();
@@ -4025,18 +4025,18 @@ bool PlayerLocation::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(16)) goto parse_cell_id;
         break;
       }
 
-      // optional uint32 unknown_2 = 2;
+      // optional uint32 cell_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_cell_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &cell_id_)));
+          set_has_cell_id();
         } else {
           goto handle_unusual;
         }
@@ -4117,9 +4117,9 @@ void PlayerLocation::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->online_area_id(), output);
   }
 
-  // optional uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // optional uint32 cell_id = 2;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->cell_id(), output);
   }
 
   // optional uint32 unknown_3 = 3;
@@ -4154,11 +4154,11 @@ int PlayerLocation::ByteSize() const {
           this->online_area_id());
     }
 
-    // optional uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // optional uint32 cell_id = 2;
+    if (has_cell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+          this->cell_id());
     }
 
     // optional uint32 unknown_3 = 3;
@@ -4200,8 +4200,8 @@ void PlayerLocation::MergeFrom(const PlayerLocation& from) {
     if (from.has_online_area_id()) {
       set_online_area_id(from.online_area_id());
     }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
     }
     if (from.has_unknown_3()) {
       set_unknown_3(from.unknown_3());
@@ -4233,7 +4233,7 @@ bool PlayerLocation::IsInitialized() const {
 void PlayerLocation::Swap(PlayerLocation* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
-    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(cell_id_, other->cell_id_);
     std::swap(unknown_3_, other->unknown_3_);
     std::swap(position_, other->position_);
     std::swap(unknown_5_, other->unknown_5_);
@@ -4490,23 +4490,23 @@ void PlayerStatus_Phantom_leave_at::Swap(PlayerStatus_Phantom_leave_at* other) {
 
 #ifndef _MSC_VER
 const int PlayerStatus::kNameFieldNumber;
-const int PlayerStatus::kUnknown2FieldNumber;
+const int PlayerStatus::kArchetypeFieldNumber;
 const int PlayerStatus::kCovenantFieldNumber;
 const int PlayerStatus::kUnknown4FieldNumber;
 const int PlayerStatus::kUnknown5FieldNumber;
 const int PlayerStatus::kUnknown6FieldNumber;
-const int PlayerStatus::kUnknown7FieldNumber;
+const int PlayerStatus::kSittingAtBonfireFieldNumber;
 const int PlayerStatus::kPhantomLeaveAtFieldNumber;
 const int PlayerStatus::kDisableCrossRegionPlayFieldNumber;
 const int PlayerStatus::kCharacterIdFieldNumber;
-const int PlayerStatus::kUnknown11FieldNumber;
-const int PlayerStatus::kUnknown12FieldNumber;
+const int PlayerStatus::kHumanEffigyBurntFieldNumber;
+const int PlayerStatus::kPlayedOnlineAreasFieldNumber;
 const int PlayerStatus::kUnknown13FieldNumber;
 const int PlayerStatus::kUnknown14FieldNumber;
 const int PlayerStatus::kSoulLevelFieldNumber;
 const int PlayerStatus::kUnknown16FieldNumber;
 const int PlayerStatus::kUnknown17FieldNumber;
-const int PlayerStatus::kUnknown18FieldNumber;
+const int PlayerStatus::kPlayTimeSecondsFieldNumber;
 const int PlayerStatus::kSoulMemoryFieldNumber;
 const int PlayerStatus::kUnknown20FieldNumber;
 const int PlayerStatus::kUnknown21FieldNumber;
@@ -4538,22 +4538,22 @@ void PlayerStatus::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  unknown_2_ = 0u;
+  archetype_ = 0u;
   covenant_ = 0u;
   unknown_4_ = 0u;
   unknown_5_ = 0u;
   unknown_6_ = 0u;
-  unknown_7_ = 0u;
+  sitting_at_bonfire_ = 0u;
   phantom_leave_at_ = NULL;
   disable_cross_region_play_ = 0u;
   character_id_ = 0u;
-  unknown_11_ = 0u;
+  human_effigy_burnt_ = 0u;
   unknown_13_ = 0u;
   unknown_14_ = 0u;
   soul_level_ = 0u;
   unknown_16_ = 0u;
   unknown_17_ = 0u;
-  unknown_18_ = 0u;
+  play_time_seconds_ = 0u;
   soul_memory_ = 0u;
   unknown_20_ = 0u;
   unknown_21_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -4613,7 +4613,7 @@ void PlayerStatus::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(unknown_2_, unknown_7_);
+    ZR_(archetype_, sitting_at_bonfire_);
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         name_->clear();
@@ -4625,7 +4625,7 @@ void PlayerStatus::Clear() {
   }
   if (_has_bits_[8 / 32] & 63232) {
     ZR_(disable_cross_region_play_, character_id_);
-    ZR_(unknown_11_, unknown_16_);
+    ZR_(human_effigy_burnt_, unknown_16_);
   }
   if (_has_bits_[16 / 32] & 2031616) {
     ZR_(unknown_17_, soul_memory_);
@@ -4640,7 +4640,7 @@ void PlayerStatus::Clear() {
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
-  unknown_12_.Clear();
+  played_online_areas_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -4667,18 +4667,18 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(16)) goto parse_archetype;
         break;
       }
 
-      // optional uint32 unknown_2 = 2;
+      // optional uint32 archetype = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_archetype:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &archetype_)));
+          set_has_archetype();
         } else {
           goto handle_unusual;
         }
@@ -4742,18 +4742,18 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_unknown_7;
+        if (input->ExpectTag(56)) goto parse_sitting_at_bonfire;
         break;
       }
 
-      // optional uint32 unknown_7 = 7;
+      // optional uint32 sitting_at_bonfire = 7;
       case 7: {
         if (tag == 56) {
-         parse_unknown_7:
+         parse_sitting_at_bonfire:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_7_)));
-          set_has_unknown_7();
+                 input, &sitting_at_bonfire_)));
+          set_has_sitting_at_bonfire();
         } else {
           goto handle_unusual;
         }
@@ -4800,40 +4800,40 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(88)) goto parse_unknown_11;
+        if (input->ExpectTag(88)) goto parse_human_effigy_burnt;
         break;
       }
 
-      // optional uint32 unknown_11 = 11;
+      // optional uint32 human_effigy_burnt = 11;
       case 11: {
         if (tag == 88) {
-         parse_unknown_11:
+         parse_human_effigy_burnt:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_11_)));
-          set_has_unknown_11();
+                 input, &human_effigy_burnt_)));
+          set_has_human_effigy_burnt();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(96)) goto parse_unknown_12;
+        if (input->ExpectTag(96)) goto parse_played_online_areas;
         break;
       }
 
-      // repeated uint32 unknown_12 = 12;
+      // repeated uint32 played_online_areas = 12;
       case 12: {
         if (tag == 96) {
-         parse_unknown_12:
+         parse_played_online_areas:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 96, input, this->mutable_unknown_12())));
+                 1, 96, input, this->mutable_played_online_areas())));
         } else if (tag == 98) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_unknown_12())));
+                 input, this->mutable_played_online_areas())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(96)) goto parse_unknown_12;
+        if (input->ExpectTag(96)) goto parse_played_online_areas;
         if (input->ExpectTag(104)) goto parse_unknown_13;
         break;
       }
@@ -4909,18 +4909,18 @@ bool PlayerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(144)) goto parse_unknown_18;
+        if (input->ExpectTag(144)) goto parse_play_time_seconds;
         break;
       }
 
-      // optional uint32 unknown_18 = 18;
+      // optional uint32 play_time_seconds = 18;
       case 18: {
         if (tag == 144) {
-         parse_unknown_18:
+         parse_play_time_seconds:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_18_)));
-          set_has_unknown_18();
+                 input, &play_time_seconds_)));
+          set_has_play_time_seconds();
         } else {
           goto handle_unusual;
         }
@@ -5002,9 +5002,9 @@ void PlayerStatus::SerializeWithCachedSizes(
       1, this->name(), output);
   }
 
-  // optional uint32 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
+  // optional uint32 archetype = 2;
+  if (has_archetype()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->archetype(), output);
   }
 
   // optional uint32 covenant = 3;
@@ -5027,9 +5027,9 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->unknown_6(), output);
   }
 
-  // optional uint32 unknown_7 = 7;
-  if (has_unknown_7()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->unknown_7(), output);
+  // optional uint32 sitting_at_bonfire = 7;
+  if (has_sitting_at_bonfire()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->sitting_at_bonfire(), output);
   }
 
   // optional .DS2_Frpg2PlayerData.PlayerStatus_Phantom_leave_at phantom_leave_at = 8;
@@ -5048,15 +5048,15 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->character_id(), output);
   }
 
-  // optional uint32 unknown_11 = 11;
-  if (has_unknown_11()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->unknown_11(), output);
+  // optional uint32 human_effigy_burnt = 11;
+  if (has_human_effigy_burnt()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->human_effigy_burnt(), output);
   }
 
-  // repeated uint32 unknown_12 = 12;
-  for (int i = 0; i < this->unknown_12_size(); i++) {
+  // repeated uint32 played_online_areas = 12;
+  for (int i = 0; i < this->played_online_areas_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      12, this->unknown_12(i), output);
+      12, this->played_online_areas(i), output);
   }
 
   // optional uint32 unknown_13 = 13;
@@ -5084,9 +5084,9 @@ void PlayerStatus::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(17, this->unknown_17(), output);
   }
 
-  // optional uint32 unknown_18 = 18;
-  if (has_unknown_18()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(18, this->unknown_18(), output);
+  // optional uint32 play_time_seconds = 18;
+  if (has_play_time_seconds()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(18, this->play_time_seconds(), output);
   }
 
   // optional uint32 soul_memory = 19;
@@ -5121,11 +5121,11 @@ int PlayerStatus::ByteSize() const {
           this->name());
     }
 
-    // optional uint32 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // optional uint32 archetype = 2;
+    if (has_archetype()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_2());
+          this->archetype());
     }
 
     // optional uint32 covenant = 3;
@@ -5156,11 +5156,11 @@ int PlayerStatus::ByteSize() const {
           this->unknown_6());
     }
 
-    // optional uint32 unknown_7 = 7;
-    if (has_unknown_7()) {
+    // optional uint32 sitting_at_bonfire = 7;
+    if (has_sitting_at_bonfire()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_7());
+          this->sitting_at_bonfire());
     }
 
     // optional .DS2_Frpg2PlayerData.PlayerStatus_Phantom_leave_at phantom_leave_at = 8;
@@ -5186,11 +5186,11 @@ int PlayerStatus::ByteSize() const {
           this->character_id());
     }
 
-    // optional uint32 unknown_11 = 11;
-    if (has_unknown_11()) {
+    // optional uint32 human_effigy_burnt = 11;
+    if (has_human_effigy_burnt()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_11());
+          this->human_effigy_burnt());
     }
 
     // optional uint32 unknown_13 = 13;
@@ -5230,11 +5230,11 @@ int PlayerStatus::ByteSize() const {
           this->unknown_17());
     }
 
-    // optional uint32 unknown_18 = 18;
-    if (has_unknown_18()) {
+    // optional uint32 play_time_seconds = 18;
+    if (has_play_time_seconds()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_18());
+          this->play_time_seconds());
     }
 
     // optional uint32 soul_memory = 19;
@@ -5259,14 +5259,14 @@ int PlayerStatus::ByteSize() const {
     }
 
   }
-  // repeated uint32 unknown_12 = 12;
+  // repeated uint32 played_online_areas = 12;
   {
     int data_size = 0;
-    for (int i = 0; i < this->unknown_12_size(); i++) {
+    for (int i = 0; i < this->played_online_areas_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->unknown_12(i));
+        UInt32Size(this->played_online_areas(i));
     }
-    total_size += 1 * this->unknown_12_size() + data_size;
+    total_size += 1 * this->played_online_areas_size() + data_size;
   }
 
   total_size += unknown_fields().size();
@@ -5284,13 +5284,13 @@ void PlayerStatus::CheckTypeAndMergeFrom(
 
 void PlayerStatus::MergeFrom(const PlayerStatus& from) {
   GOOGLE_CHECK_NE(&from, this);
-  unknown_12_.MergeFrom(from.unknown_12_);
+  played_online_areas_.MergeFrom(from.played_online_areas_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_name()) {
       set_name(from.name());
     }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_archetype()) {
+      set_archetype(from.archetype());
     }
     if (from.has_covenant()) {
       set_covenant(from.covenant());
@@ -5304,8 +5304,8 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_unknown_6()) {
       set_unknown_6(from.unknown_6());
     }
-    if (from.has_unknown_7()) {
-      set_unknown_7(from.unknown_7());
+    if (from.has_sitting_at_bonfire()) {
+      set_sitting_at_bonfire(from.sitting_at_bonfire());
     }
     if (from.has_phantom_leave_at()) {
       mutable_phantom_leave_at()->::DS2_Frpg2PlayerData::PlayerStatus_Phantom_leave_at::MergeFrom(from.phantom_leave_at());
@@ -5318,8 +5318,8 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_character_id()) {
       set_character_id(from.character_id());
     }
-    if (from.has_unknown_11()) {
-      set_unknown_11(from.unknown_11());
+    if (from.has_human_effigy_burnt()) {
+      set_human_effigy_burnt(from.human_effigy_burnt());
     }
     if (from.has_unknown_13()) {
       set_unknown_13(from.unknown_13());
@@ -5338,8 +5338,8 @@ void PlayerStatus::MergeFrom(const PlayerStatus& from) {
     if (from.has_unknown_17()) {
       set_unknown_17(from.unknown_17());
     }
-    if (from.has_unknown_18()) {
-      set_unknown_18(from.unknown_18());
+    if (from.has_play_time_seconds()) {
+      set_play_time_seconds(from.play_time_seconds());
     }
     if (from.has_soul_memory()) {
       set_soul_memory(from.soul_memory());
@@ -5371,23 +5371,23 @@ bool PlayerStatus::IsInitialized() const {
 void PlayerStatus::Swap(PlayerStatus* other) {
   if (other != this) {
     std::swap(name_, other->name_);
-    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(archetype_, other->archetype_);
     std::swap(covenant_, other->covenant_);
     std::swap(unknown_4_, other->unknown_4_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(unknown_6_, other->unknown_6_);
-    std::swap(unknown_7_, other->unknown_7_);
+    std::swap(sitting_at_bonfire_, other->sitting_at_bonfire_);
     std::swap(phantom_leave_at_, other->phantom_leave_at_);
     std::swap(disable_cross_region_play_, other->disable_cross_region_play_);
     std::swap(character_id_, other->character_id_);
-    std::swap(unknown_11_, other->unknown_11_);
-    unknown_12_.Swap(&other->unknown_12_);
+    std::swap(human_effigy_burnt_, other->human_effigy_burnt_);
+    played_online_areas_.Swap(&other->played_online_areas_);
     std::swap(unknown_13_, other->unknown_13_);
     std::swap(unknown_14_, other->unknown_14_);
     std::swap(soul_level_, other->soul_level_);
     std::swap(unknown_16_, other->unknown_16_);
     std::swap(unknown_17_, other->unknown_17_);
-    std::swap(unknown_18_, other->unknown_18_);
+    std::swap(play_time_seconds_, other->play_time_seconds_);
     std::swap(soul_memory_, other->soul_memory_);
     std::swap(unknown_20_, other->unknown_20_);
     std::swap(unknown_21_, other->unknown_21_);
@@ -5836,7 +5836,7 @@ void StatsInfo_Bonfire_levels::Swap(StatsInfo_Bonfire_levels* other) {
 #ifndef _MSC_VER
 const int StatsInfo::kUnknown1FieldNumber;
 const int StatsInfo::kUnknown2FieldNumber;
-const int StatsInfo::kUnknown3FieldNumber;
+const int StatsInfo::kSinnerPointsFieldNumber;
 const int StatsInfo::kBonfireLevelsFieldNumber;
 const int StatsInfo::kUnknown5FieldNumber;
 const int StatsInfo::kPhantomTypeCount6FieldNumber;
@@ -5883,7 +5883,7 @@ void StatsInfo::SharedCtor() {
   _cached_size_ = 0;
   unknown_1_ = 0u;
   unknown_2_ = 0u;
-  unknown_3_ = 0u;
+  sinner_points_ = 0u;
   unknown_5_ = 0u;
   unknown_10_ = 0u;
   unknown_12_ = 0u;
@@ -5944,7 +5944,7 @@ void StatsInfo::Clear() {
   } while (0)
 
   ZR_(unknown_1_, unknown_2_);
-  ZR_(unknown_3_, unknown_5_);
+  ZR_(sinner_points_, unknown_5_);
   if (_has_bits_[8 / 32] & 64000) {
     ZR_(unknown_10_, unknown_16_);
   }
@@ -6009,18 +6009,18 @@ bool StatsInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_sinner_points;
         break;
       }
 
-      // optional uint32 unknown_3 = 3;
+      // optional uint32 sinner_points = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_sinner_points:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &sinner_points_)));
+          set_has_sinner_points();
         } else {
           goto handle_unusual;
         }
@@ -6338,9 +6338,9 @@ void StatsInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->unknown_2(), output);
   }
 
-  // optional uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // optional uint32 sinner_points = 3;
+  if (has_sinner_points()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->sinner_points(), output);
   }
 
   // repeated .DS2_Frpg2PlayerData.StatsInfo_Bonfire_levels bonfire_levels = 4;
@@ -6465,11 +6465,11 @@ int StatsInfo::ByteSize() const {
           this->unknown_2());
     }
 
-    // optional uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // optional uint32 sinner_points = 3;
+    if (has_sinner_points()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->sinner_points());
     }
 
     // optional uint32 unknown_5 = 5;
@@ -6647,8 +6647,8 @@ void StatsInfo::MergeFrom(const StatsInfo& from) {
     if (from.has_unknown_2()) {
       set_unknown_2(from.unknown_2());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_sinner_points()) {
+      set_sinner_points(from.sinner_points());
     }
     if (from.has_unknown_5()) {
       set_unknown_5(from.unknown_5());
@@ -6706,7 +6706,7 @@ void StatsInfo::Swap(StatsInfo* other) {
   if (other != this) {
     std::swap(unknown_1_, other->unknown_1_);
     std::swap(unknown_2_, other->unknown_2_);
-    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(sinner_points_, other->sinner_points_);
     bonfire_levels_.Swap(&other->bonfire_levels_);
     std::swap(unknown_5_, other->unknown_5_);
     phantom_type_count_6_.Swap(&other->phantom_type_count_6_);
