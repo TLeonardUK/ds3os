@@ -26313,9 +26313,9 @@ void PushRequestBreakInTarget::Swap(PushRequestBreakInTarget* other) {
 
 #ifndef _MSC_VER
 const int PushRequestRejectBreakInTarget::kPushMessageIdFieldNumber;
-const int PushRequestRejectBreakInTarget::kUnknown2FieldNumber;
+const int PushRequestRejectBreakInTarget::kPlayerIdFieldNumber;
 const int PushRequestRejectBreakInTarget::kUnknown3FieldNumber;
-const int PushRequestRejectBreakInTarget::kUnknown4FieldNumber;
+const int PushRequestRejectBreakInTarget::kSteamIdFieldNumber;
 const int PushRequestRejectBreakInTarget::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
 
@@ -26339,9 +26339,9 @@ void PushRequestRejectBreakInTarget::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 925;
-  unknown_2_ = GOOGLE_LONGLONG(0);
+  player_id_ = GOOGLE_LONGLONG(0);
   unknown_3_ = GOOGLE_LONGLONG(0);
-  unknown_4_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   unknown_5_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -26352,8 +26352,8 @@ PushRequestRejectBreakInTarget::~PushRequestRejectBreakInTarget() {
 }
 
 void PushRequestRejectBreakInTarget::SharedDtor() {
-  if (unknown_4_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete unknown_4_;
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete steam_id_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -26395,11 +26395,11 @@ void PushRequestRejectBreakInTarget::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(unknown_2_, unknown_3_);
+    ZR_(player_id_, unknown_3_);
     push_message_id_ = 925;
-    if (has_unknown_4()) {
-      if (unknown_4_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        unknown_4_->clear();
+    if (has_steam_id()) {
+      if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        steam_id_->clear();
       }
     }
     unknown_5_ = GOOGLE_LONGLONG(0);
@@ -26442,18 +26442,18 @@ bool PushRequestRejectBreakInTarget::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_unknown_2;
+        if (input->ExpectTag(16)) goto parse_player_id;
         break;
       }
 
-      // required int64 unknown_2 = 2;
+      // required int64 player_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_unknown_2:
+         parse_player_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &unknown_2_)));
-          set_has_unknown_2();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
@@ -26472,16 +26472,16 @@ bool PushRequestRejectBreakInTarget::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_unknown_4;
+        if (input->ExpectTag(34)) goto parse_steam_id;
         break;
       }
 
-      // required string unknown_4 = 4;
+      // required string steam_id = 4;
       case 4: {
         if (tag == 34) {
-         parse_unknown_4:
+         parse_steam_id:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_unknown_4()));
+                input, this->mutable_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -26535,9 +26535,9 @@ void PushRequestRejectBreakInTarget::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
-  // required int64 unknown_2 = 2;
-  if (has_unknown_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->unknown_2(), output);
+  // required int64 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->player_id(), output);
   }
 
   // required int64 unknown_3 = 3;
@@ -26545,10 +26545,10 @@ void PushRequestRejectBreakInTarget::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->unknown_3(), output);
   }
 
-  // required string unknown_4 = 4;
-  if (has_unknown_4()) {
+  // required string steam_id = 4;
+  if (has_steam_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      4, this->unknown_4(), output);
+      4, this->steam_id(), output);
   }
 
   // required int64 unknown_5 = 5;
@@ -26571,11 +26571,11 @@ int PushRequestRejectBreakInTarget::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
     }
 
-    // required int64 unknown_2 = 2;
-    if (has_unknown_2()) {
+    // required int64 player_id = 2;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->unknown_2());
+          this->player_id());
     }
 
     // required int64 unknown_3 = 3;
@@ -26585,11 +26585,11 @@ int PushRequestRejectBreakInTarget::ByteSize() const {
           this->unknown_3());
     }
 
-    // required string unknown_4 = 4;
-    if (has_unknown_4()) {
+    // required string steam_id = 4;
+    if (has_steam_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->unknown_4());
+          this->steam_id());
     }
 
     // required int64 unknown_5 = 5;
@@ -26619,14 +26619,14 @@ void PushRequestRejectBreakInTarget::MergeFrom(const PushRequestRejectBreakInTar
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
-    if (from.has_unknown_2()) {
-      set_unknown_2(from.unknown_2());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
     if (from.has_unknown_3()) {
       set_unknown_3(from.unknown_3());
     }
-    if (from.has_unknown_4()) {
-      set_unknown_4(from.unknown_4());
+    if (from.has_steam_id()) {
+      set_steam_id(from.steam_id());
     }
     if (from.has_unknown_5()) {
       set_unknown_5(from.unknown_5());
@@ -26650,9 +26650,9 @@ bool PushRequestRejectBreakInTarget::IsInitialized() const {
 void PushRequestRejectBreakInTarget::Swap(PushRequestRejectBreakInTarget* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
-    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(player_id_, other->player_id_);
     std::swap(unknown_3_, other->unknown_3_);
-    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(steam_id_, other->steam_id_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);

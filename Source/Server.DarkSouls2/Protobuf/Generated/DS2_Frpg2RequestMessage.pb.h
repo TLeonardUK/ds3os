@@ -11626,12 +11626,12 @@ class PushRequestRejectBreakInTarget : public ::google::protobuf::MessageLite {
   inline ::DS2_Frpg2RequestMessage::PushMessageId push_message_id() const;
   inline void set_push_message_id(::DS2_Frpg2RequestMessage::PushMessageId value);
 
-  // required int64 unknown_2 = 2;
-  inline bool has_unknown_2() const;
-  inline void clear_unknown_2();
-  static const int kUnknown2FieldNumber = 2;
-  inline ::google::protobuf::int64 unknown_2() const;
-  inline void set_unknown_2(::google::protobuf::int64 value);
+  // required int64 player_id = 2;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  inline ::google::protobuf::int64 player_id() const;
+  inline void set_player_id(::google::protobuf::int64 value);
 
   // required int64 unknown_3 = 3;
   inline bool has_unknown_3() const;
@@ -11640,17 +11640,17 @@ class PushRequestRejectBreakInTarget : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int64 unknown_3() const;
   inline void set_unknown_3(::google::protobuf::int64 value);
 
-  // required string unknown_4 = 4;
-  inline bool has_unknown_4() const;
-  inline void clear_unknown_4();
-  static const int kUnknown4FieldNumber = 4;
-  inline const ::std::string& unknown_4() const;
-  inline void set_unknown_4(const ::std::string& value);
-  inline void set_unknown_4(const char* value);
-  inline void set_unknown_4(const char* value, size_t size);
-  inline ::std::string* mutable_unknown_4();
-  inline ::std::string* release_unknown_4();
-  inline void set_allocated_unknown_4(::std::string* unknown_4);
+  // required string steam_id = 4;
+  inline bool has_steam_id() const;
+  inline void clear_steam_id();
+  static const int kSteamIdFieldNumber = 4;
+  inline const ::std::string& steam_id() const;
+  inline void set_steam_id(const ::std::string& value);
+  inline void set_steam_id(const char* value);
+  inline void set_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_steam_id();
+  inline ::std::string* release_steam_id();
+  inline void set_allocated_steam_id(::std::string* steam_id);
 
   // required int64 unknown_5 = 5;
   inline bool has_unknown_5() const;
@@ -11663,12 +11663,12 @@ class PushRequestRejectBreakInTarget : public ::google::protobuf::MessageLite {
  private:
   inline void set_has_push_message_id();
   inline void clear_has_push_message_id();
-  inline void set_has_unknown_2();
-  inline void clear_has_unknown_2();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
   inline void set_has_unknown_3();
   inline void clear_has_unknown_3();
-  inline void set_has_unknown_4();
-  inline void clear_has_unknown_4();
+  inline void set_has_steam_id();
+  inline void clear_has_steam_id();
   inline void set_has_unknown_5();
   inline void clear_has_unknown_5();
 
@@ -11676,9 +11676,9 @@ class PushRequestRejectBreakInTarget : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::int64 unknown_2_;
+  ::google::protobuf::int64 player_id_;
   ::google::protobuf::int64 unknown_3_;
-  ::std::string* unknown_4_;
+  ::std::string* steam_id_;
   ::google::protobuf::int64 unknown_5_;
   int push_message_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -29422,28 +29422,28 @@ inline void PushRequestRejectBreakInTarget::set_push_message_id(::DS2_Frpg2Reque
   // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.push_message_id)
 }
 
-// required int64 unknown_2 = 2;
-inline bool PushRequestRejectBreakInTarget::has_unknown_2() const {
+// required int64 player_id = 2;
+inline bool PushRequestRejectBreakInTarget::has_player_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void PushRequestRejectBreakInTarget::set_has_unknown_2() {
+inline void PushRequestRejectBreakInTarget::set_has_player_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void PushRequestRejectBreakInTarget::clear_has_unknown_2() {
+inline void PushRequestRejectBreakInTarget::clear_has_player_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void PushRequestRejectBreakInTarget::clear_unknown_2() {
-  unknown_2_ = GOOGLE_LONGLONG(0);
-  clear_has_unknown_2();
+inline void PushRequestRejectBreakInTarget::clear_player_id() {
+  player_id_ = GOOGLE_LONGLONG(0);
+  clear_has_player_id();
 }
-inline ::google::protobuf::int64 PushRequestRejectBreakInTarget::unknown_2() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_2)
-  return unknown_2_;
+inline ::google::protobuf::int64 PushRequestRejectBreakInTarget::player_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.player_id)
+  return player_id_;
 }
-inline void PushRequestRejectBreakInTarget::set_unknown_2(::google::protobuf::int64 value) {
-  set_has_unknown_2();
-  unknown_2_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_2)
+inline void PushRequestRejectBreakInTarget::set_player_id(::google::protobuf::int64 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.player_id)
 }
 
 // required int64 unknown_3 = 3;
@@ -29470,80 +29470,80 @@ inline void PushRequestRejectBreakInTarget::set_unknown_3(::google::protobuf::in
   // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_3)
 }
 
-// required string unknown_4 = 4;
-inline bool PushRequestRejectBreakInTarget::has_unknown_4() const {
+// required string steam_id = 4;
+inline bool PushRequestRejectBreakInTarget::has_steam_id() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void PushRequestRejectBreakInTarget::set_has_unknown_4() {
+inline void PushRequestRejectBreakInTarget::set_has_steam_id() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void PushRequestRejectBreakInTarget::clear_has_unknown_4() {
+inline void PushRequestRejectBreakInTarget::clear_has_steam_id() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void PushRequestRejectBreakInTarget::clear_unknown_4() {
-  if (unknown_4_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_4_->clear();
+inline void PushRequestRejectBreakInTarget::clear_steam_id() {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_->clear();
   }
-  clear_has_unknown_4();
+  clear_has_steam_id();
 }
-inline const ::std::string& PushRequestRejectBreakInTarget::unknown_4() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_4)
-  return *unknown_4_;
+inline const ::std::string& PushRequestRejectBreakInTarget::steam_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.steam_id)
+  return *steam_id_;
 }
-inline void PushRequestRejectBreakInTarget::set_unknown_4(const ::std::string& value) {
-  set_has_unknown_4();
-  if (unknown_4_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_4_ = new ::std::string;
+inline void PushRequestRejectBreakInTarget::set_steam_id(const ::std::string& value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
   }
-  unknown_4_->assign(value);
-  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_4)
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.steam_id)
 }
-inline void PushRequestRejectBreakInTarget::set_unknown_4(const char* value) {
-  set_has_unknown_4();
-  if (unknown_4_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_4_ = new ::std::string;
+inline void PushRequestRejectBreakInTarget::set_steam_id(const char* value) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
   }
-  unknown_4_->assign(value);
-  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_4)
+  steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.steam_id)
 }
-inline void PushRequestRejectBreakInTarget::set_unknown_4(const char* value, size_t size) {
-  set_has_unknown_4();
-  if (unknown_4_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_4_ = new ::std::string;
+inline void PushRequestRejectBreakInTarget::set_steam_id(const char* value, size_t size) {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
   }
-  unknown_4_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_4)
+  steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.steam_id)
 }
-inline ::std::string* PushRequestRejectBreakInTarget::mutable_unknown_4() {
-  set_has_unknown_4();
-  if (unknown_4_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    unknown_4_ = new ::std::string;
+inline ::std::string* PushRequestRejectBreakInTarget::mutable_steam_id() {
+  set_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    steam_id_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_4)
-  return unknown_4_;
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.steam_id)
+  return steam_id_;
 }
-inline ::std::string* PushRequestRejectBreakInTarget::release_unknown_4() {
-  clear_has_unknown_4();
-  if (unknown_4_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* PushRequestRejectBreakInTarget::release_steam_id() {
+  clear_has_steam_id();
+  if (steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = unknown_4_;
-    unknown_4_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = steam_id_;
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void PushRequestRejectBreakInTarget::set_allocated_unknown_4(::std::string* unknown_4) {
-  if (unknown_4_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete unknown_4_;
+inline void PushRequestRejectBreakInTarget::set_allocated_steam_id(::std::string* steam_id) {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete steam_id_;
   }
-  if (unknown_4) {
-    set_has_unknown_4();
-    unknown_4_ = unknown_4;
+  if (steam_id) {
+    set_has_steam_id();
+    steam_id_ = steam_id;
   } else {
-    clear_has_unknown_4();
-    unknown_4_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_steam_id();
+    steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.unknown_4)
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.PushRequestRejectBreakInTarget.steam_id)
 }
 
 // required int64 unknown_5 = 5;
