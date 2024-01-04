@@ -177,3 +177,8 @@ DEFINE_REQUEST_RESPONSE     (0x03db, RequestUpdateQuickMatch,           RequestU
 // -----------------------------------------------------------------------------------------------
 DEFINE_REQUEST_RESPONSE     (0x03F0, RequestGetTotalDeathCount,         RequestGetTotalDeathCount,          RequestGetTotalDeathCountResponse)
 
+// -----------------------------------------------------------------------------------------------
+// Misc
+// -----------------------------------------------------------------------------------------------
+DEFINE_REQUEST_RESPONSE     (0x0320, RequestSendMessageToPlayers,       RequestSendMessageToPlayers,        RequestSendMessageToPlayersResponse)
+

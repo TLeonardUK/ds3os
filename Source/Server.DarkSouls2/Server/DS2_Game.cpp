@@ -20,6 +20,7 @@
 #include "Server/GameService/GameManagers/Signs/DS2_SignManager.h"
 #include "Server/GameService/GameManagers/BreakIn/DS2_BreakInManager.h"
 #include "Server/GameService/GameManagers/Logging/DS2_LoggingManager.h"
+#include "Server/GameService/GameManagers/Misc/DS2_MiscManager.h"
 
 bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
@@ -131,6 +132,7 @@ void DS2_Game::RegisterGameManagers(GameService& Service)
     Service.RegisterManager(std::make_shared<DS2_SignManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_BreakInManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_LoggingManager>(ServerInstance));
+    Service.RegisterManager(std::make_shared<DS2_MiscManager>(ServerInstance, &Service));
 }
 
 std::unique_ptr<PlayerState> DS2_Game::CreatePlayerState()

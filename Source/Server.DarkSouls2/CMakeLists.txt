@@ -28,6 +28,8 @@ SET(SOURCES
     Server/GameService/GameManagers/BreakIn/DS2_BreakInManager.h
     Server/GameService/GameManagers/Logging/DS2_LoggingManager.cpp
     Server/GameService/GameManagers/Logging/DS2_LoggingManager.h
+    Server/GameService/GameManagers/Misc/DS2_MiscManager.cpp
+    Server/GameService/GameManagers/Misc/DS2_MiscManager.h
     
     Server/GameService/Utils/DS2_GameIds.h
     Server/GameService/Utils/DS2_CellAndAreaId.h

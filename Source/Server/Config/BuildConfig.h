@@ -136,6 +136,6 @@ public:
     // Enables or disables player/global statistics gathering. This adds a good
     // bit of database overhead, so don't use it unless you are actually using
     // the statistics its generating.
-    constexpr inline static const bool DATABASE_STAT_GATHERING_ENABLED = false;
+    constexpr inline static const bool DATABASE_STAT_GATHERING_ENABLED = true;
 
 };

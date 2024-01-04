@@ -41,7 +41,8 @@ public:
 
     virtual bool IsInGame() override
     {
-        return false;
+        return GetPlayerStatus().has_player_status() &&
+               GetPlayerId() != 0;
     }
 
     virtual size_t GetSoulCount() override
@@ -51,7 +52,8 @@ public:
 
     virtual size_t GetSoulMemory() override
     {
-        return 0;
+        auto Status = GetPlayerStatus().player_status();
+        return Status.soul_memory();
     }
 
     virtual size_t GetDeathCount() override
@@ -66,7 +68,8 @@ public:
 
     virtual double GetPlayTime() override
     {
-        return 0.0;
+        auto Status = GetPlayerStatus().player_status();
+        return Status.play_time_seconds();
     }
 
     virtual std::string GetConvenantStatusDescription() override

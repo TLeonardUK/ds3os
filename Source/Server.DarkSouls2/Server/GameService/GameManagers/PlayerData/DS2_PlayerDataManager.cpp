@@ -141,26 +141,21 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
     }
 
     // MergeFrom combines arrays, so we need to do some fuckyness here to handle this.
-    // TODO
     if (status.has_player_status() && status.player_status().played_areas_size() > 0)
     {
         State.GetPlayerStatus_Mutable().mutable_player_status()->clear_played_areas();
     }
-    /*
-    if (status.has_player_status() && status.player_status().played_areas_size() > 0)
+    if (status.has_stats_info())
     {
-        State.GetPlayerStatus_Mutable().mutable_player_status()->clear_played_areas();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_bonfire_levels();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_phantom_type_count_6();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_phantom_type_count_7();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_phantom_type_count_8();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_phantom_type_count_9();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_unknown_11();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_unlocked_bonfires();
+        State.GetPlayerStatus_Mutable().mutable_stats_info()->clear_unknown_21();
     }
-    if (status.has_player_status() && status.player_status().unknown_18_size() > 0)
-    {
-        State.GetPlayerStatus_Mutable().mutable_player_status()->clear_unknown_18();
-    }
-    if (status.has_player_status() && status.player_status().anticheat_data_size() > 0)
-    {
-        State.GetPlayerStatus_Mutable().mutable_player_status()->clear_anticheat_data();
-    }
-    */
-
     State.GetPlayerStatus_Mutable().MergeFrom(status);
 
     // Keep track of the players character name, useful for logging.
@@ -192,7 +187,28 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
     }
 
     // Grab some matchmaking values.
-    // TODO
+    if (State.GetPlayerStatus().has_player_status())
+    {
+        // Grab invadability state.
+        bool NewState = true;
+        if (State.GetPlayerStatus().player_status().sitting_at_bonfire() ||
+            State.GetPlayerStatus().player_status().human_effigy_burnt())
+        {
+            NewState = false;
+        }
+
+        if (NewState != State.GetIsInvadable())
+        {
+            VerboseS(Client->GetName().c_str(), "User is now %s", NewState ? "invadable" : "no longer invadable");
+            State.SetIsInvadable(NewState);
+        }
+
+        // Grab soul level / weapon level.
+        if (State.GetPlayerStatus().player_status().has_soul_level())
+        {
+            State.SetSoulLevel(State.GetPlayerStatus().player_status().soul_level());
+        }
+    }
 
     DS2_Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

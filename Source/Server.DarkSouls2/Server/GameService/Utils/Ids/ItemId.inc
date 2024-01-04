@@ -8,1213 +8,1344 @@
  */
 
 ENTRY(Empty,                                                      "Empty",                                                    -1)
-ENTRY(Dark_Hand,                                                  "Dark Hand",                                                0x00A87500)
-ENTRY(Fists,                                                      "Fists",                                                    0x0001ADB0)
-ENTRY(Standard_Arrow,                                             "Standard Arrow",                                           0x00061A80)
-ENTRY(Fire_Arrow,                                                 "Fire Arrow",                                               0x00061AE4)
-ENTRY(Poison_Arrow,                                               "Poison Arrow",                                             0x00061B48)
-ENTRY(Large_Arrow,                                                "Large Arrow",                                              0x00061BAC)
-ENTRY(Feather_Arrow,                                              "Feather Arrow",                                            0x00061C10)
-ENTRY(Moonlight_Arrow,                                            "Moonlight Arrow",                                          0x00061C74)
-ENTRY(Wood_Arrow,                                                 "Wood Arrow",                                               0x00061CD8)
-ENTRY(Dark_Arrow,                                                 "Dark Arrow",                                               0x00061D3C)
-ENTRY(Dragonslayer_Greatarrow,                                    "Dragonslayer Greatarrow",                                  0x00062250)
-ENTRY(Dragonslayer_Lightning_Arrow,                               "Dragonslayer Lightning Arrow",                             0x00062318)
-ENTRY(Onislayer_Greatarrow,                                       "Onislayer Greatarrow",                                     0x0006237C)
-ENTRY(Millwood_Greatarrow,                                        "Millwood Greatarrow",                                      0x000623E0)
-ENTRY(Standard_Bolt,                                              "Standard Bolt",                                            0x00062A20)
-ENTRY(Heavy_Bolt,                                                 "Heavy Bolt",                                               0x00062A84)
-ENTRY(Sniper_Bolt,                                                "Sniper Bolt",                                              0x00062AE8)
-ENTRY(Wood_Bolt,                                                  "Wood Bolt",                                                0x00062B4C)
-ENTRY(Lightning_Bolt,                                             "Lightning Bolt",                                           0x00062BB0)
-ENTRY(Splintering_Bolt,                                           "Splintering Bolt",                                         0x00062C14)
-ENTRY(Exploding_Bolt,                                             "Exploding Bolt",                                           0x00062C78)
-ENTRY(Smoldering_Straight_Sword,                                  "Smoldering Straight Sword",                                0x000D9490)
-ENTRY(Dagger,                                                     "Dagger",                                                   0x000F4240)
-ENTRY(Bandits_Knife,                                              "Bandit's Knife",                                           0x000F6950)
-ENTRY(Parrying_Dagger,                                            "Parrying Dagger",                                          0x000F9060)
-ENTRY(Rotten_Ghru_Dagger,                                         "Rotten Ghru Dagger",                                       0x000FDE80)
-ENTRY(Harpe,                                                      "Harpe",                                                    0x00102CA0)
-ENTRY(Scholars_Candlestick,                                       "Scholar's Candlestick",                                    0x001053B0)
-ENTRY(Tailbone_Short_Sword,                                       "Tailbone Short Sword",                                     0x00107AC0)
-ENTRY(Corvian_Greatknife,                                         "Corvian Greatknife",                                       0x0010A1D0)
-ENTRY(Handmaids_Dagger,                                           "Handmaid's Dagger",                                        0x00111700)
-ENTRY(Aquamarine_Dagger,                                          "Aquamarine Dagger",                                        0x00116520)
-ENTRY(Murky_Hand_Scythe,                                          "Murky Hand Scythe",                                        0x00118C30)
-ENTRY(Shortsword,                                                 "Shortsword",                                               0x001E8480)
-ENTRY(Long_Sword,                                                 "Long Sword",                                               0x001EAB90)
-ENTRY(Broadsword_2020000,                                         "Broadsword 2020000",                                       0x001ED2A0)
-ENTRY(Broken_Straight_Sword,                                      "Broken Straight Sword",                                    0x001EF9B0)
-ENTRY(Lothric_Knight_Sword,                                       "Lothric Knight Sword",                                     0x001F6EE0)
-ENTRY(Sunlight_Straight_Sword,                                    "Sunlight Straight Sword",                                  0x00203230)
-ENTRY(Rotten_Ghru_Curved_Sword,                                   "Rotten Ghru Curved Sword",                                 0x00205940)
-ENTRY(Irithyll_Straight_Sword,                                    "Irithyll Straight Sword",                                  0x0020A760)
-ENTRY(Clerics_Candlestick,                                        "Cleric's Candlestick",                                     0x0020F580)
-ENTRY(Morion_Blade,                                               "Morion Blade",                                             0x002143A0)
-ENTRY(Astora_Straight_Sword,                                      "Astora Straight Sword",                                    0x002191C0)
-ENTRY(Barbed_Straight_Sword,                                      "Barbed Straight Sword",                                    0x0021B8D0)
-ENTRY(Executioners_Greatsword,                                    "Executioner's Greatsword",                                 0x0021DFE0)
-ENTRY(Anris_Straight_Sword,                                       "Anri's Straight Sword",                                    0x002206F0)
-ENTRY(Onyx_Blade,                                                 "Onyx Blade",                                               0x00222E00)
-ENTRY(Ringed_Knight_Straight_Sword,                               "Ringed Knight Straight Sword",                             0x00225510)
-ENTRY(Gaels_Greatsword,                                           "Gael's Greatsword",                                        0x00227C20)
-ENTRY(Estoc,                                                      "Estoc",                                                    0x002DC6C0)
-ENTRY(Mail_Breaker,                                               "Mail Breaker",                                             0x002DEDD0)
-ENTRY(Rapier,                                                     "Rapier",                                                   0x002E14E0)
-ENTRY(Ricards_Rapier,                                             "Ricard's Rapier",                                          0x002E3BF0)
-ENTRY(Crystal_Sages_Rapier,                                       "Crystal Sage's Rapier",                                    0x002E6300)
-ENTRY(Irithyll_Rapier,                                            "Irithyll Rapier",                                          0x002E8A10)
-ENTRY(Shotel,                                                     "Shotel",                                                   0x003D3010)
-ENTRY(Scimitar,                                                   "Scimitar",                                                 0x003D7E30)
-ENTRY(Falchion,                                                   "Falchion",                                                 0x003DA540)
-ENTRY(Carthus_Curved_Sword,                                       "Carthus Curved Sword",                                     0x003DCC50)
-ENTRY(Carthus_Curved_Greatsword,                                  "Carthus Curved Greatsword",                                0x003DF360)
-ENTRY(Pontiff_Knight_Curved_Sword,                                "Pontiff Knight Curved Sword",                              0x003E1A70)
-ENTRY(Storm_Curved_Sword,                                         "Storm Curved Sword",                                       0x003E4180)
-ENTRY(Painting_Guardians_Curved_Sword,                            "Painting Guardian's Curved Sword",                         0x003E6890)
-ENTRY(Crescent_Moon_Sword,                                        "Crescent Moon Sword",                                      0x003E8FA0)
-ENTRY(Carthus_Shotel,                                             "Carthus Shotel",                                           0x003EB6B0)
-ENTRY(Follower_Sabre,                                             "Follower Sabre",                                           0x003EDDC0)
-ENTRY(Demon_Scar,                                                 "Demon Scar",                                               0x003F04D0)
-ENTRY(Uchigatana,                                                 "Uchigatana",                                               0x004C4B40)
-ENTRY(Washing_Pole,                                               "Washing Pole",                                             0x004C7250)
-ENTRY(Chaos_Blade,                                                "Chaos Blade",                                              0x004C9960)
-ENTRY(Black_Blade,                                                "Black Blade",                                              0x004CC070)
-ENTRY(Bloodlust,                                                  "Bloodlust",                                                0x004CE780)
-ENTRY(Darkdrift,                                                  "Darkdrift",                                                0x004D0E90)
-ENTRY(Frayed_Blade,                                               "Frayed Blade",                                             0x004D35A0)
-ENTRY(Bastard_Sword,                                              "Bastard Sword",                                            0x005B8D80)
-ENTRY(Claymore,                                                   "Claymore",                                                 0x005BDBA0)
-ENTRY(Zweihander,                                                 "Zweihander",                                               0x005C29C0)
-ENTRY(Greatsword,                                                 "Greatsword",                                               0x005C50D0)
-ENTRY(Astora_Greatsword,                                          "Astora Greatsword",                                        0x005C9EF0)
-ENTRY(Murakumo,                                                   "Murakumo",                                                 0x005CC600)
-ENTRY(Lothric_Knight_Greatsword,                                  "Lothric Knight Greatsword",                                0x005D1420)
-ENTRY(Black_Knight_Greatsword,                                    "Black Knight Greatsword",                                  0x005D8950)
-ENTRY(Flamberge,                                                  "Flamberge",                                                0x005DB060)
-ENTRY(Exile_Greatsword,                                           "Exile Greatsword",                                         0x005DD770)
-ENTRY(Greatsword_of_Judgment,                                     "Greatsword of Judgment",                                   0x005E2590)
-ENTRY(Profaned_Greatsword,                                        "Profaned Greatsword",                                      0x005E4CA0)
-ENTRY(Cathedral_Knight_Greatsword,                                "Cathedral Knight Greatsword",                              0x005E73B0)
-ENTRY(Farron_Greatsword,                                          "Farron Greatsword",                                        0x005E9AC0)
-ENTRY(Yhorms_Great_Machete,                                       "Yhorm's Great Machete",                                    0x005F0FF0)
-ENTRY(Dark_Sword,                                                 "Dark Sword",                                               0x005F3700)
-ENTRY(Black_Knight_Sword,                                         "Black Knight Sword",                                       0x005F5E10)
-ENTRY(Lorians_Greatsword,                                         "Lorian's Greatsword",                                      0x005F8520)
-ENTRY(Twin_Princes_Greatsword,                                    "Twin Princes' Greatsword",                                 0x005FAC30)
-ENTRY(Lothrics_Holy_Sword,                                        "Lothric's Holy Sword",                                     0x005FD340)
-ENTRY(Wolnirs_Holy_Sword,                                         "Wolnir's Holy Sword",                                      0x005FFA50)
-ENTRY(Wolf_Knights_Greatsword,                                    "Wolf Knight's Greatsword",                                 0x00602160)
-ENTRY(Hollowslayer_Greatsword,                                    "Hollowslayer Greatsword",                                  0x00604870)
-ENTRY(Moonlight_Greatsword,                                       "Moonlight Greatsword",                                     0x00606F80)
-ENTRY(Drakeblood_Greatsword,                                      "Drakeblood Greatsword",                                    0x00609690)
-ENTRY(Firelink_Greatsword,                                        "Firelink Greatsword",                                      0x0060BDA0)
-ENTRY(Fume_Ultra_Greatsword,                                      "Fume Ultra Greatsword",                                    0x0060E4B0)
-ENTRY(Old_Wolf_Curved_Sword,                                      "Old Wolf Curved Sword",                                    0x00610BC0)
-ENTRY(Storm_Ruler,                                                "Storm Ruler",                                              0x006132D0)
-ENTRY(Harald_Curved_Greatsword,                                   "Harald Curved Greatsword",                                 0x006159E0)
-ENTRY(Hand_Axe,                                                   "Hand Axe",                                                 0x006ACFC0)
-ENTRY(Battle_Axe,                                                 "Battle Axe",                                               0x006AF6D0)
-ENTRY(Brigand_Axe,                                                "Brigand Axe",                                              0x006B1DE0)
-ENTRY(Crescent_Axe,                                               "Crescent Axe",                                             0x006B6C00)
-ENTRY(Greataxe,                                                   "Greataxe",                                                 0x006B9310)
-ENTRY(Butcher_Knife,                                              "Butcher Knife",                                            0x006BE130)
-ENTRY(Dragonslayers_Axe,                                          "Dragonslayer's Axe",                                       0x006C0840)
-ENTRY(Thrall_Axe,                                                 "Thrall Axe",                                               0x006C5660)
-ENTRY(Dragonslayer_Greataxe,                                      "Dragonslayer Greataxe",                                    0x006C7D70)
-ENTRY(Demons_Greataxe,                                            "Demon's Greataxe",                                         0x006CA480)
-ENTRY(Eleonora,                                                   "Eleonora",                                                 0x006CCB90)
-ENTRY(Man_Serpent_Hatchet,                                        "Man Serpent Hatchet",                                      0x006D19B0)
-ENTRY(Dragon_King_Greataxe,                                       "Dragon King Greataxe",                                     0x006D40C0)
-ENTRY(Millwood_Battle_Axe,                                        "Millwood Battle Axe",                                      0x006D67D0)
-ENTRY(Earth_Seeker,                                               "Earth Seeker",                                             0x006D8EE0)
-ENTRY(Club,                                                       "Club",                                                     0x007A1200)
-ENTRY(Mace,                                                       "Mace",                                                     0x007A3910)
-ENTRY(Morning_Star,                                               "Morning Star",                                             0x007A6020)
-ENTRY(Reinforced_Club,                                            "Reinforced Club",                                          0x007A8730)
-ENTRY(Large_Club,                                                 "Large Club",                                               0x007AFC60)
-ENTRY(Great_Club,                                                 "Great Club",                                               0x007B4A80)
-ENTRY(Great_Mace,                                                 "Great Mace",                                               0x007BBFB0)
-ENTRY(Great_Wooden_Hammer,                                        "Great Wooden Hammer",                                      0x007C8300)
-ENTRY(Gargoyle_Flame_Hammer,                                      "Gargoyle Flame Hammer",                                    0x007CAA10)
-ENTRY(Vordts_Great_Hammer,                                        "Vordt's Great Hammer",                                     0x007CD120)
-ENTRY(Old_Kings_Great_Hammer,                                     "Old King's Great Hammer",                                  0x007CF830)
-ENTRY(Heysel_Pick,                                                "Heysel Pick",                                              0x007D6D60)
-ENTRY(Warpick,                                                    "Warpick",                                                  0x007DBB80)
-ENTRY(Pickaxe,                                                    "Pickaxe",                                                  0x007DE290)
-ENTRY(Dragon_Tooth,                                               "Dragon Tooth",                                             0x007E09A0)
-ENTRY(Smoughs_Great_Hammer,                                       "Smough's Great Hammer",                                    0x007E30B0)
-ENTRY(Blacksmith_Hammer,                                          "Blacksmith Hammer",                                        0x007E57C0)
-ENTRY(Mornes_Great_Hammer,                                        "Morne's Great Hammer",                                     0x007E7ED0)
-ENTRY(Spiked_Mace,                                                "Spiked Mace",                                              0x007EA5E0)
-ENTRY(Quakestone_Hammer,                                          "Quakestone Hammer",                                        0x007ECCF0)
-ENTRY(Ledos_Great_Hammer,                                         "Ledo's Great Hammer",                                      0x007EF400)
-ENTRY(Spear,                                                      "Spear",                                                    0x00895440)
-ENTRY(Winged_Spear,                                               "Winged Spear",                                             0x00897B50)
-ENTRY(Partizan,                                                   "Partizan",                                                 0x0089C970)
-ENTRY(Greatlance,                                                 "Greatlance",                                               0x008A8CC0)
-ENTRY(Lothric_Knight_Long_Spear,                                  "Lothric Knight Long Spear",                                0x008AB3D0)
-ENTRY(Four_Pronged_Plow,                                          "Four-Pronged Plow",                                        0x008ADAE0)
-ENTRY(Gargoyle_Flame_Spear,                                       "Gargoyle Flame Spear",                                     0x008B01F0)
-ENTRY(Rotten_Ghru_Spear,                                          "Rotten Ghru Spear",                                        0x008B2900)
-ENTRY(Tailbone_Spear,                                             "Tailbone Spear",                                           0x008B5010)
-ENTRY(Soldering_Iron,                                             "Soldering Iron",                                           0x008B7720)
-ENTRY(Dragonslayer_Swordspear,                                    "Dragonslayer Swordspear",                                  0x008BC540)
-ENTRY(Arstors_Spear,                                              "Arstor's Spear",                                           0x008BEC50)
-ENTRY(Saint_Bident,                                               "Saint Bident",                                             0x008C1360)
-ENTRY(Yorshkas_Spear,                                             "Yorshka's Spear",                                          0x008C3A70)
-ENTRY(Pike,                                                       "Pike",                                                     0x008C6180)
-ENTRY(Dragonslayer_Spear,                                         "Dragonslayer Spear",                                       0x008CAFA0)
-ENTRY(Follower_Javelin,                                           "Follower Javelin",                                         0x008CD6B0)
-ENTRY(Ringed_Knight_Spear,                                        "Ringed Knight Spear",                                      0x008CFDC0)
-ENTRY(Lothric_War_Banner,                                         "Lothric War Banner",                                       0x008D24D0)
-ENTRY(Crucifix_of_the_Mad_King,                                   "Crucifix of the Mad King",                                 0x008D4BE0)
-ENTRY(Great_Scythe,                                               "Great Scythe",                                             0x00989680)
-ENTRY(Lucerne,                                                    "Lucerne",                                                  0x0098BD90)
-ENTRY(Glaive,                                                     "Glaive",                                                   0x0098E4A0)
-ENTRY(Halberd,                                                    "Halberd",                                                  0x00990BB0)
-ENTRY(Black_Knight_Greataxe,                                      "Black Knight Greataxe",                                    0x009959D0)
-ENTRY(Pontiff_Knight_Great_Scythe,                                "Pontiff Knight Great Scythe",                              0x0099A7F0)
-ENTRY(Great_Corvian_Scythe,                                       "Great Corvian Scythe",                                     0x0099CF00)
-ENTRY(Winged_Knight_Halberd,                                      "Winged Knight Halberd",                                    0x0099F610)
-ENTRY(Gundyrs_Halberd,                                            "Gundyr's Halberd",                                         0x009A1D20)
-ENTRY(Red_Hilted_Halberd,                                         "Red Hilted Halberd",                                       0x009AB960)
-ENTRY(Black_Knight_Glaive,                                        "Black Knight Glaive",                                      0x009AE070)
-ENTRY(Immolation_Tinder,                                          "Immolation Tinder",                                        0x009B0780)
-ENTRY(Splitleaf_Greatsword,                                       "Splitleaf Greatsword",                                     0x009B2E90)
-ENTRY(Friedes_Great_Scythe,                                       "Friede's Great Scythe",                                    0x009B55A0)
-ENTRY(Claw,                                                       "Claw",                                                     0x00A7D8C0)
-ENTRY(Caestus,                                                    "Caestus",                                                  0x00A7FFD0)
-ENTRY(Manikin_Claws,                                              "Manikin Claws",                                            0x00A826E0)
-ENTRY(Demons_Fist,                                                "Demon's Fist",                                             0x00A84DF0)
-ENTRY(Crow_Talons,                                                "Crow Talons",                                              0x00A89C10)
-ENTRY(Whip,                                                       "Whip",                                                     0x00B71B00)
-ENTRY(Witchs_Locks,                                               "Witch's Locks",                                            0x00B7B740)
-ENTRY(Notched_Whip,                                               "Notched Whip",                                             0x00B7DE50)
-ENTRY(Spotted_Whip,                                               "Spotted Whip",                                             0x00B80560)
-ENTRY(Rose_of_Ariandel,                                           "Rose of Ariandel",                                         0x00B82C70)
-ENTRY(Talisman,                                                   "Talisman",                                                 0x00C72090)
-ENTRY(Sorcerers_Staff,                                            "Sorcerer's Staff",                                         0x00C747A0)
-ENTRY(Storytellers_Staff,                                         "Storyteller's Staff",                                      0x00C76EB0)
-ENTRY(Mendicants_Staff,                                           "Mendicant's Staff",                                        0x00C795C0)
-ENTRY(Man_grubs_Staff,                                            "Man-grub's Staff",                                         0x00C7E3E0)
-ENTRY(Archdeacons_Great_Staff,                                    "Archdeacon's Great Staff",                                 0x00C80AF0)
-ENTRY(Golden_Ritual_Spear,                                        "Golden Ritual Spear",                                      0x00C83200)
-ENTRY(Yorshkas_Chime,                                             "Yorshka's Chime",                                          0x00C88020)
-ENTRY(Sages_Crystal_Staff,                                        "Sage's Crystal Staff",                                     0x00C8CE40)
-ENTRY(Heretics_Staff,                                             "Heretic's Staff",                                          0x00C8F550)
-ENTRY(Court_Sorcerers_Staff,                                      "Court Sorcerer's Staff",                                   0x00C91C60)
-ENTRY(Witchtree_Branch,                                           "Witchtree Branch",                                         0x00C94370)
-ENTRY(Izalith_Staff,                                              "Izalith Staff",                                            0x00C96A80)
-ENTRY(Clerics_Sacred_Chime,                                       "Cleric's Sacred Chime",                                    0x00C99190)
-ENTRY(Priests_Chime,                                              "Priest's Chime",                                           0x00C9B8A0)
-ENTRY(Saint_tree_Bellvine,                                        "Saint-tree Bellvine",                                      0x00C9DFB0)
-ENTRY(Caithas_Chime,                                              "Caitha's Chime",                                           0x00CA06C0)
-ENTRY(Crystal_Chime,                                              "Crystal Chime",                                            0x00CA2DD0)
-ENTRY(Sunlight_Talisman,                                          "Sunlight Talisman",                                        0x00CA54E0)
-ENTRY(Canvas_Talisman,                                            "Canvas Talisman",                                          0x00CA7BF0)
-ENTRY(Sunless_Talisman,                                           "Sunless Talisman",                                         0x00CAA300)
-ENTRY(Saints_Talisman,                                            "Saint's Talisman",                                         0x00CACA10)
-ENTRY(White_Hair_Talisman,                                        "White Hair Talisman",                                      0x00CAF120)
-ENTRY(Pyromancy_Flame,                                            "Pyromancy Flame",                                          0x00CC77C0)
-ENTRY(Pyromancers_Parting_Flame,                                  "Pyromancer's Parting Flame",                               0x00CC9ED0)
-ENTRY(Murky_Longstaff,                                            "Murky Longstaff",                                          0x00CCC5E0)
-ENTRY(Sacred_Chime_of_Filianore,                                  "Sacred Chime of Filianore",                                0x00CCECF0)
-ENTRY(Preachers_Right_Arm,                                        "Preacher's Right Arm",                                     0x00CD1400)
-ENTRY(Dragonslayer_Greatbow,                                      "Dragonslayer Greatbow",                                    0x00CF8500)
-ENTRY(Short_Bow,                                                  "Short Bow",                                                0x00D5C690)
-ENTRY(Composite_Bow,                                              "Composite Bow",                                            0x00D5EDA0)
-ENTRY(Light_Crossbow,                                             "Light Crossbow",                                           0x00D63BC0)
-ENTRY(Arbalest,                                                   "Arbalest",                                                 0x00D662D0)
-ENTRY(Longbow,                                                    "Longbow",                                                  0x00D689E0)
-ENTRY(Dragonrider_Bow,                                            "Dragonrider Bow",                                          0x00D6B0F0)
-ENTRY(Avelyn,                                                     "Avelyn",                                                   0x00D6FF10)
-ENTRY(Knights_Crossbow,                                           "Knight's Crossbow",                                        0x00D72620)
-ENTRY(Heavy_Crossbow,                                             "Heavy Crossbow",                                           0x00D74D30)
-ENTRY(White_Birch_Bow,                                            "White Birch Bow",                                          0x00D77440)
-ENTRY(Darkmoon_Longbow,                                           "Darkmoon Longbow",                                         0x00D79B50)
-ENTRY(Onislayer_Greatbow,                                         "Onislayer Greatbow",                                       0x00D7C260)
-ENTRY(Black_Bow_of_Pharis,                                        "Black Bow of Pharis",                                      0x00D7E970)
-ENTRY(Sniper_Crossbow,                                            "Sniper Crossbow",                                          0x00D83790)
-ENTRY(Millwood_Greatbow,                                          "Millwood Greatbow",                                        0x00D85EA0)
-ENTRY(Repeating_Crossbow,                                         "Repeating Crossbow",                                       0x00D885B0)
-ENTRY(Sellsword_Twinblades,                                       "Sellsword Twinblades",                                     0x00F42400)
-ENTRY(Warden_Twinblades,                                          "Warden Twinblades",                                        0x00F47220)
-ENTRY(Winged_Knight_Twinaxes,                                     "Winged Knight Twinaxes",                                   0x00F49930)
-ENTRY(Dancers_Enchanted_Swords,                                   "Dancer's Enchanted Swords",                                0x00F4C040)
-ENTRY(Great_Machete,                                              "Great Machete",                                            0x00F4E750)
-ENTRY(Brigand_Twindaggers,                                        "Brigand Twindaggers",                                      0x00F50E60)
-ENTRY(Gotthard_Twinswords,                                        "Gotthard Twinswords",                                      0x00F53570)
-ENTRY(Onikiri_and_Ubadachi,                                       "Onikiri and Ubadachi",                                     0x00F58390)
-ENTRY(Drang_Twinspears,                                           "Drang Twinspears",                                         0x00F5AAA0)
-ENTRY(Giant_Door_Shield,                                          "Giant Door Shield",                                        0x00F5F8C0)
-ENTRY(Drang_Hammers,                                              "Drang Hammers",                                            0x00F61FD0)
-ENTRY(Valorheart,                                                 "Valorheart",                                               0x00F646E0)
-ENTRY(Crow_Quills,                                                "Crow Quills",                                              0x00F66DF0)
-ENTRY(Ringed_Knight_Paired_Greatswords,                           "Ringed Knight Paired Greatswords",                         0x00F69500)
-ENTRY(Buckler,                                                    "Buckler",                                                  0x01312D00)
-ENTRY(Small_Leather_Shield,                                       "Small Leather Shield",                                     0x01315410)
-ENTRY(Round_Shield,                                               "Round Shield",                                             0x0131A230)
-ENTRY(Large_Leather_Shield,                                       "Large Leather Shield",                                     0x0131C940)
-ENTRY(Hawkwoods_Shield,                                           "Hawkwood's Shield",                                        0x01323E70)
-ENTRY(Iron_Round_Shield,                                          "Iron Round Shield",                                        0x01326580)
-ENTRY(Wooden_Shield,                                              "Wooden Shield",                                            0x0132DAB0)
-ENTRY(Kite_Shield,                                                "Kite Shield",                                              0x013301C0)
-ENTRY(Ghru_Rotshield,                                             "Ghru Rotshield",                                           0x013328D0)
-ENTRY(Havels_Greatshield,                                         "Havel's Greatshield",                                      0x013376F0)
-ENTRY(Target_Shield,                                              "Target Shield",                                            0x01339E00)
-ENTRY(Elkhorn_Round_Shield,                                       "Elkhorn Round Shield",                                     0x0133C510)
-ENTRY(Warriors_Round_Shield,                                      "Warrior's Round Shield",                                   0x0133EC20)
-ENTRY(Caduceus_Round_Shield,                                      "Caduceus Round Shield",                                    0x01341330)
-ENTRY(Red_and_White_Round_Shield,                                 "Red and White Round Shield",                               0x01343A40)
-ENTRY(Plank_Shield,                                               "Plank Shield",                                             0x01346150)
-ENTRY(Leather_Shield,                                             "Leather Shield",                                           0x01348860)
-ENTRY(Crimson_Parma,                                              "Crimson Parma",                                            0x0134AF70)
-ENTRY(Eastern_Iron_Shield,                                        "Eastern Iron Shield",                                      0x0134D680)
-ENTRY(Llewellyn_Shield,                                           "Llewellyn Shield",                                         0x0134FD90)
-ENTRY(Golden_Falcon_Shield,                                       "Golden Falcon Shield",                                     0x01354BB0)
-ENTRY(Sacred_Bloom_Shield,                                        "Sacred Bloom Shield",                                      0x013572C0)
-ENTRY(Ancient_Dragon_Greatshield,                                 "Ancient Dragon Greatshield",                               0x013599D0)
-ENTRY(Followers_Shield,                                           "Followers Shield",                                         0x0135C0E0)
-ENTRY(Dragonhead_Shield,                                          "Dragonhead Shield",                                        0x0135E7F0)
-ENTRY(Lothric_Knight_Shield,                                      "Lothric Knight Shield",                                    0x01409650)
-ENTRY(Knight_Shield,                                              "Knight Shield",                                            0x01410B80)
-ENTRY(Pontiff_Knight_Shield,                                      "Pontiff Knight Shield",                                    0x014159A0)
-ENTRY(Carthus_Shield,                                             "Carthus Shield",                                           0x014180B0)
-ENTRY(Black_Knight_Shield,                                        "Black Knight Shield",                                      0x0141F5E0)
-ENTRY(Silver_Knight_Shield,                                       "Silver Knight Shield",                                     0x01424400)
-ENTRY(Spiked_Shield,                                              "Spiked Shield",                                            0x01426B10)
-ENTRY(Pierce_Shield,                                              "Pierce Shield",                                            0x01429220)
-ENTRY(East_West_Shield,                                           "East-West Shield",                                         0x0142B930)
-ENTRY(Sunlight_Shield,                                            "Sunlight Shield",                                          0x0142E040)
-ENTRY(Crest_Shield,                                               "Crest Shield",                                             0x01430750)
-ENTRY(Dragon_Crest_Shield,                                        "Dragon Crest Shield",                                      0x01432E60)
-ENTRY(Spider_Shield,                                              "Spider Shield",                                            0x01435570)
-ENTRY(Grass_Crest_Shield,                                         "Grass Crest Shield",                                       0x01437C80)
-ENTRY(Sunset_Shield,                                              "Sunset Shield",                                            0x0143A390)
-ENTRY(Golden_Wing_Crest_Shield,                                   "Golden Wing Crest Shield",                                 0x0143CAA0)
-ENTRY(Blue_Wooden_Shield,                                         "Blue Wooden Shield",                                       0x0143F1B0)
-ENTRY(Silver_Eagle_Kite_Shield,                                   "Silver Eagle Kite Shield",                                 0x014418C0)
-ENTRY(Stone_Parma,                                                "Stone Parma",                                              0x01443FD0)
-ENTRY(Spirit_Tree_Crest_Shield,                                   "Spirit Tree Crest Shield",                                 0x014466E0)
-ENTRY(Porcine_Shield,                                             "Porcine Shield",                                           0x01448DF0)
-ENTRY(Shield_of_Want,                                             "Shield of Want",                                           0x0144B500)
-ENTRY(Wargod_Wooden_Shield,                                       "Wargod Wooden Shield",                                     0x0144DC10)
-ENTRY(Ethereal_Oak_Shield,                                        "Ethereal Oak Shield",                                      0x01450320)
-ENTRY(Dragonhead_Greatshield,                                     "Dragonhead Greatshield",                                   0x01452A30)
-ENTRY(Lothric_Knight_Greatshield,                                 "Lothric Knight Greatshield",                               0x014FD890)
-ENTRY(Cathedral_Knight_Greatshield,                               "Cathedral Knight Greatshield",                             0x014FFFA0)
-ENTRY(Dragonslayer_Greatshield,                                   "Dragonslayer Greatshield",                                 0x01504DC0)
-ENTRY(Moaning_Shield,                                             "Moaning Shield",                                           0x015074D0)
-ENTRY(Yhorms_Greatshield,                                         "Yhorm's Greatshield",                                      0x0150C2F0)
-ENTRY(Black_Iron_Greatshield,                                     "Black Iron Greatshield",                                   0x0150EA00)
-ENTRY(Wolf_Knights_Greatshield,                                   "Wolf Knight's Greatshield",                                0x01511110)
-ENTRY(Twin_Dragon_Greatshield,                                    "Twin Dragon Greatshield",                                  0x01513820)
-ENTRY(Greatshield_of_Glory,                                       "Greatshield of Glory",                                     0x01515F30)
-ENTRY(Curse_Ward_Greatshield,                                     "Curse Ward Greatshield",                                   0x01518640)
-ENTRY(Bonewheel_Shield,                                           "Bonewheel Shield",                                         0x0151AD50)
-ENTRY(Stone_Greatshield,                                          "Stone Greatshield",                                        0x0151D460)
-ENTRY(Torch,                                                      "Torch",                                                    0x015EF3C0)
-ENTRY(Follower_Torch,                                             "Follower Torch",                                           0x015F1AD0)
-ENTRY(Dragon_Head,                                                "Dragon Head",                                              0x100F4240)
-ENTRY(Dragon_Body,                                                "Dragon Body",                                              0x100F4628)
-ENTRY(Dragon_Arms,                                                "Dragon Arms",                                              0x100F4A10)
-ENTRY(Dragon_Legs,                                                "Dragon Legs",                                              0x100F4DF8)
-ENTRY(Fallen_Knight_Helm,                                         "Fallen Knight Helm",                                       0x1121EAC0)
-ENTRY(Fallen_Knight_Armor,                                        "Fallen Knight Armor",                                      0x1121EEA8)
-ENTRY(Fallen_Knight_Gauntlets,                                    "Fallen Knight Gauntlets",                                  0x1121F290)
-ENTRY(Fallen_Knight_Trousers,                                     "Fallen Knight Trousers",                                   0x1121F678)
-ENTRY(Knight_Helm,                                                "Knight Helm",                                              0x11298BE0)
-ENTRY(Knight_Armor,                                               "Knight Armor",                                             0x11298FC8)
-ENTRY(Knight_Gauntlets,                                           "Knight Gauntlets",                                         0x112993B0)
-ENTRY(Knight_Leggings,                                            "Knight Leggings",                                          0x11299798)
-ENTRY(Vilhelms_Helm,                                              "Vilhelm's Helm",                                           0x11312D00)
-ENTRY(Vilhelms_Armor,                                             "Vilhelm's Armor",                                          0x113130E8)
-ENTRY(Vilhelms_Gauntlets,                                         "Vilhelm's Gauntlets",                                      0x113134D0)
-ENTRY(Vilhelms_Leggings,                                          "Vilhelm's Leggings",                                       0x113138B8)
-ENTRY(Firelink_Helm,                                              "Firelink Helm",                                            0x11406F40)
-ENTRY(Firelink_Armor,                                             "Firelink Armor",                                           0x11407328)
-ENTRY(Firelink_Gauntlets,                                         "Firelink Gauntlets",                                       0x11407710)
-ENTRY(Firelink_Leggings,                                          "Firelink Leggings",                                        0x11407AF8)
-ENTRY(Sellsword_Helm,                                             "Sellsword Helm",                                           0x11481060)
-ENTRY(Sellsword_Armor,                                            "Sellsword Armor",                                          0x11481448)
-ENTRY(Sellsword_Gauntlet,                                         "Sellsword Gauntlet",                                       0x11481830)
-ENTRY(Sellsword_Trousers,                                         "Sellsword Trousers",                                       0x11481C18)
-ENTRY(Herald_Helm,                                                "Herald Helm",                                              0x114FB180)
-ENTRY(Herald_Armor,                                               "Herald Armor",                                             0x114FB568)
-ENTRY(Herald_Gloves,                                              "Herald Gloves",                                            0x114FB950)
-ENTRY(Herald_Trousers,                                            "Herald Trousers",                                          0x114FBD38)
-ENTRY(Sunless_Veil,                                               "Sunless Veil",                                             0x115752A0)
-ENTRY(Sunless_Armor,                                              "Sunless Armor",                                            0x11575688)
-ENTRY(Sunless_Gauntlets,                                          "Sunless Gauntlets",                                        0x11575A70)
-ENTRY(Sunless_Leggings,                                           "Sunless Leggings",                                         0x11575E58)
-ENTRY(Black_Hand_Hat,                                             "Black Hand Hat",                                           0x115EF3C0)
-ENTRY(Black_Hand_Armor,                                           "Black Hand Armor",                                         0x115EF7A8)
-ENTRY(Assassin_Gloves,                                            "Assassin Gloves",                                          0x115EFB90)
-ENTRY(Assassin_Trousers,                                          "Assassin Trousers",                                        0x115EFF78)
-ENTRY(Assassin_Hood,                                              "Assassin Hood",                                            0x11607A60)
-ENTRY(Assassin_Armor,                                             "Assassin Armor",                                           0x11607E48)
-ENTRY(Xanthous_Crown,                                             "Xanthous Crown",                                           0x116694E0)
-ENTRY(Xanthous_Overcoat,                                          "Xanthous Overcoat",                                        0x116698C8)
-ENTRY(Xanthous_Gloves,                                            "Xanthous Gloves",                                          0x11669CB0)
-ENTRY(Xanthous_Trousers,                                          "Xanthous Trousers",                                        0x1166A098)
-ENTRY(Northern_Helm,                                              "Northern Helm",                                            0x116E3600)
-ENTRY(Northern_Armor,                                             "Northern Armor",                                           0x116E39E8)
-ENTRY(Northern_Gloves,                                            "Northern Gloves",                                          0x116E3DD0)
-ENTRY(Northern_Trousers,                                          "Northern Trousers",                                        0x116E41B8)
-ENTRY(Mornes_Helm,                                                "Morne's Helm",                                             0x1175D720)
-ENTRY(Mornes_Armor,                                               "Morne's Armor",                                            0x1175DB08)
-ENTRY(Mornes_Gauntlets,                                           "Morne's Gauntlets",                                        0x1175DEF0)
-ENTRY(Mornes_Leggings,                                            "Morne's Leggings",                                         0x1175E2D8)
-ENTRY(Silver_Mask,                                                "Silver Mask",                                              0x117D7840)
-ENTRY(Leonhards_Garb,                                             "Leonhard's Garb",                                          0x117D7C28)
-ENTRY(Leonhards_Gauntlets,                                        "Leonhard's Gauntlets",                                     0x117D8010)
-ENTRY(Leonhards_Trousers,                                         "Leonhard's Trousers",                                      0x117D83F8)
-ENTRY(Sneering_Mask,                                              "Sneering Mask",                                            0x11851960)
-ENTRY(Pale_Shade_Robe,                                            "Pale Shade Robe",                                          0x11851D48)
-ENTRY(Pale_Shade_Gloves,                                          "Pale Shade Gloves",                                        0x11852130)
-ENTRY(Pale_Shade_Trousers,                                        "Pale Shade Trousers",                                      0x11852518)
-ENTRY(Sunset_Helm,                                                "Sunset Helm",                                              0x118CBA80)
-ENTRY(Sunset_Armor,                                               "Sunset Armor",                                             0x118CBE68)
-ENTRY(Sunset_Gauntlets,                                           "Sunset Gauntlets",                                         0x118CC250)
-ENTRY(Sunset_Leggings,                                            "Sunset Leggings",                                          0x118CC638)
-ENTRY(Old_Sages_Blindfold,                                        "Old Sage's Blindfold",                                     0x11945BA0)
-ENTRY(Cornyxs_Garb,                                               "Cornyx's Garb",                                            0x11945F88)
-ENTRY(Cornyxs_Wrap,                                               "Cornyx's Wrap",                                            0x11946370)
-ENTRY(Cornyxs_Skirt,                                              "Cornyx's Skirt",                                           0x11946758)
-ENTRY(Executioner_Helm,                                           "Executioner Helm",                                         0x119BFCC0)
-ENTRY(Executioner_Armor,                                          "Executioner Armor",                                        0x119C00A8)
-ENTRY(Executioner_Gauntlets,                                      "Executioner Gauntlets",                                    0x119C0490)
-ENTRY(Executioner_Leggings,                                       "Executioner Leggings",                                     0x119C0878)
-ENTRY(Billed_Mask,                                                "Billed Mask",                                              0x11A39DE0)
-ENTRY(Black_Dress,                                                "Black Dress",                                              0x11A3A1C8)
-ENTRY(Black_Gauntlets,                                            "Black Gauntlets",                                          0x11A3A5B0)
-ENTRY(Black_Leggings,                                             "Black Leggings",                                           0x11A3A998)
-ENTRY(Pyromancer_Crown,                                           "Pyromancer Crown",                                         0x11AB3F00)
-ENTRY(Pyromancer_Garb,                                            "Pyromancer Garb",                                          0x11AB42E8)
-ENTRY(Pyromancer_Wrap,                                            "Pyromancer Wrap",                                          0x11AB46D0)
-ENTRY(Pyromancer_Trousers,                                        "Pyromancer Trousers",                                      0x11AB4AB8)
-ENTRY(Antiquated_Plain_Garb,                                      "Antiquated Plain Garb",                                    0x11B2E408)
-ENTRY(Violet_Wrappings,                                           "Violet Wrappings",                                         0x11B2E7F0)
-ENTRY(Loincloth_TRC,                                              "Loincloth TRC",                                            0x11B2EBD8)
-ENTRY(Court_Sorcerer_Hood,                                        "Court Sorcerer Hood",                                      0x11BA8140)
-ENTRY(Court_Sorcerer_Robe,                                        "Court Sorcerer Robe",                                      0x11BA8528)
-ENTRY(Court_Sorcerer_Gloves,                                      "Court Sorcerer Gloves",                                    0x11BA8910)
-ENTRY(Court_Sorcerer_Trousers,                                    "Court Sorcerer Trousers",                                  0x11BA8CF8)
-ENTRY(Shiras_Crown,                                               "Shira's Crown",                                            0x11C22260)
-ENTRY(Shiras_Armor,                                               "Shira's Armor",                                            0x11C22648)
-ENTRY(Shiras_Gloves,                                              "Shira's Gloves",                                           0x11C22A30)
-ENTRY(Shiras_Trousers,                                            "Shira's Trousers",                                         0x11C22E18)
-ENTRY(Sorcerer_Hood,                                              "Sorcerer Hood",                                            0x11C9C380)
-ENTRY(Sorcerer_Robe,                                              "Sorcerer Robe",                                            0x11C9C768)
-ENTRY(Sorcerer_Gloves,                                            "Sorcerer Gloves",                                          0x11C9CB50)
-ENTRY(Sorcerer_Trousers,                                          "Sorcerer Trousers",                                        0x11C9CF38)
-ENTRY(Clandestine_Coat,                                           "Clandestine Coat",                                         0x11CB4E08)
-ENTRY(Cleric_Hat,                                                 "Cleric Hat",                                               0x11D905C0)
-ENTRY(Cleric_Blue_Robe,                                           "Cleric Blue Robe",                                         0x11D909A8)
-ENTRY(Cleric_Gloves,                                              "Cleric Gloves",                                            0x11D90D90)
-ENTRY(Cleric_Trousers,                                            "Cleric Trousers",                                          0x11D91178)
-ENTRY(Lapps_Helm,                                                 "Lapp's Helm",                                              0x11E84800)
-ENTRY(Lapps_Armor,                                                "Lapp's Armor",                                             0x11E84BE8)
-ENTRY(Lapps_Gauntlets,                                            "Lapp's Gauntlets",                                         0x11E84FD0)
-ENTRY(Lapps_Leggings,                                             "Lapp's Leggings",                                          0x11E853B8)
-ENTRY(Steel_Soldier_Helm,                                         "Steel Soldier Helm",                                       0x12625A00)
-ENTRY(Deserter_Armor,                                             "Deserter Armor",                                           0x12625DE8)
-ENTRY(Deserter_Trousers,                                          "Deserter Trousers",                                        0x126265B8)
-ENTRY(Thief_Mask_2,                                               "Thief Mask 2",                                             0x12656740)
-ENTRY(Sages_Big_Hat,                                              "Sage's Big Hat",                                           0x129020C0)
-ENTRY(Aristocrats_Mask,                                           "Aristocrat's Mask",                                        0x129F6300)
-ENTRY(Jailer_Robe,                                                "Jailer Robe",                                              0x129F66E8)
-ENTRY(Jailer_Gloves,                                              "Jailer Gloves",                                            0x129F6AD0)
-ENTRY(Jailer_Trousers,                                            "Jailer Trousers",                                          0x129F6EB8)
-ENTRY(Grave_Warden_Hood,                                          "Grave Warden Hood",                                        0x12BDE780)
-ENTRY(Grave_Warden_Robe,                                          "Grave Warden Robe",                                        0x12BDEB68)
-ENTRY(Grave_Warden_Wrap,                                          "Grave Warden Wrap",                                        0x12BDEF50)
-ENTRY(Grave_Warden_Skirt,                                         "Grave Warden Skirt",                                       0x12BDF338)
-ENTRY(Worker_Hat,                                                 "Worker Hat",                                               0x12CD29C0)
-ENTRY(Worker_Garb,                                                "Worker Garb",                                              0x12CD2DA8)
-ENTRY(Worker_Gloves,                                              "Worker Gloves",                                            0x12CD3190)
-ENTRY(Worker_Trousers,                                            "Worker Trousers",                                          0x12CD3578)
-ENTRY(Thrall_Hood,                                                "Thrall Hood",                                              0x12D4CAE0)
-ENTRY(Evangelist_Hat,                                             "Evangelist Hat",                                           0x12DC6C00)
-ENTRY(Evangelist_Robe,                                            "Evangelist Robe",                                          0x12DC6FE8)
-ENTRY(Evangelist_Gloves,                                          "Evangelist Gloves",                                        0x12DC73D0)
-ENTRY(Evangelist_Trousers,                                        "Evangelist Trousers",                                      0x12DC77B8)
-ENTRY(Scholars_Shed_Skin,                                         "Scholar's Shed Skin",                                      0x12E40D20)
-ENTRY(Scholars_Robe,                                              "Scholar's Robe",                                           0x12E41108)
-ENTRY(Winged_Knight_Helm,                                         "Winged Knight Helm",                                       0x12EBAE40)
-ENTRY(Winged_Knight_Armor,                                        "Winged Knight Armor",                                      0x12EBB228)
-ENTRY(Winged_Knight_Gauntlets,                                    "Winged Knight Gauntlets",                                  0x12EBB610)
-ENTRY(Winged_Knight_Leggings,                                     "Winged Knight Leggings",                                   0x12EBB9F8)
-ENTRY(Cathedral_Knight_Helm,                                      "Cathedral Knight Helm",                                    0x130291A0)
-ENTRY(Cathedral_Knight_Armor,                                     "Cathedral Knight Armor",                                   0x13029588)
-ENTRY(Cathedral_Knight_Gauntlets,                                 "Cathedral Knight Gauntlets",                               0x13029970)
-ENTRY(Cathedral_Knight_Leggings,                                  "Cathedral Knight Leggings",                                0x13029D58)
-ENTRY(Lothric_Knight_Helm,                                        "Lothric Knight Helm",                                      0x13197500)
-ENTRY(Lothric_Knight_Armor,                                       "Lothric Knight Armor",                                     0x131978E8)
-ENTRY(Lothric_Knight_Gauntlets,                                   "Lothric Knight Gauntlets",                                 0x13197CD0)
-ENTRY(Lothric_Knight_Leggings,                                    "Lothric Knight Leggings",                                  0x131980B8)
-ENTRY(Outrider_Knight_Helm,                                       "Outrider Knight Helm",                                     0x1328B740)
-ENTRY(Outrider_Knight_Armor,                                      "Outrider Knight Armor",                                    0x1328BB28)
-ENTRY(Outrider_Knight_Gauntlets,                                  "Outrider Knight Gauntlets",                                0x1328BF10)
-ENTRY(Outrider_Knight_Leggings,                                   "Outrider Knight Leggings",                                 0x1328C2F8)
-ENTRY(Black_Knight_Helm,                                          "Black Knight Helm",                                        0x1337F980)
-ENTRY(Black_Knight_Armor,                                         "Black Knight Armor",                                       0x1337FD68)
-ENTRY(Black_Knight_Gauntlets,                                     "Black Knight Gauntlets",                                   0x13380150)
-ENTRY(Black_Knight_Leggings,                                      "Black Knight Leggings",                                    0x13380538)
-ENTRY(Dark_Mask,                                                  "Dark Mask",                                                0x133F9AA0)
-ENTRY(Dark_Armor,                                                 "Dark Armor",                                               0x133F9E88)
-ENTRY(Dark_Gauntlets,                                             "Dark Gauntlets",                                           0x133FA270)
-ENTRY(Dark_Leggings,                                              "Dark Leggings",                                            0x133FA658)
-ENTRY(Exile_Mask,                                                 "Exile Mask",                                               0x13473BC0)
-ENTRY(Exile_Armor,                                                "Exile Armor",                                              0x13473FA8)
-ENTRY(Exile_Gauntlets,                                            "Exile Gauntlets",                                          0x13474390)
-ENTRY(Exile_Leggings,                                             "Exile Leggings",                                           0x13474778)
-ENTRY(Slave_Knight_Hood,                                          "Slave Knight Hood",                                        0x134EDCE0)
-ENTRY(Slave_Knight_Armor,                                         "Slave Knight Armor",                                       0x134EE0C8)
-ENTRY(Slave_Knight_Gauntlets,                                     "Slave Knight Gauntlets",                                   0x134EE4B0)
-ENTRY(Slave_Knight_Leggings,                                      "Slave Knight Leggings",                                    0x134EE898)
-ENTRY(Pontiff_Knight_Crown,                                       "Pontiff Knight Crown",                                     0x13567E00)
-ENTRY(Pontiff_Knight_Armor,                                       "Pontiff Knight Armor",                                     0x135681E8)
-ENTRY(Pontiff_Knight_Gauntlets,                                   "Pontiff Knight Gauntlets",                                 0x135685D0)
-ENTRY(Pontiff_Knight_Leggings,                                    "Pontiff Knight Leggings",                                  0x135689B8)
-ENTRY(Ordained_Hood,                                              "Ordained Hood",                                            0x135E1F20)
-ENTRY(Ordained_Dress,                                             "Ordained Dress",                                           0x135E2308)
-ENTRY(Ordained_Trousers,                                          "Ordained Trousers",                                        0x135E2AD8)
-ENTRY(Golden_Crown,                                               "Golden Crown",                                             0x1365C040)
-ENTRY(Dragonscale_Armor,                                          "Dragonscale Armor",                                        0x1365C428)
-ENTRY(Golden_Bracelets,                                           "Golden Bracelets",                                         0x1365C810)
-ENTRY(Dragonscale_Waistcloth,                                     "Dragonscale Waistcloth",                                   0x1365CBF8)
-ENTRY(Wolnirs_Crown,                                              "Wolnir's Crown",                                           0x136D6160)
-ENTRY(Undead_Legion_Helm,                                         "Undead Legion Helm",                                       0x13750280)
-ENTRY(Undead_Legion_Armor,                                        "Undead Legion Armor",                                      0x13750668)
-ENTRY(Undead_Legion_Gauntlet,                                     "Undead Legion Gauntlet",                                   0x13750A50)
-ENTRY(Undead_Legion_Leggings,                                     "Undead Legion Leggings",                                   0x13750E38)
-ENTRY(Follower_Helm,                                              "Follower Helm",                                            0x137CA3A0)
-ENTRY(Follower_Armor,                                             "Follower Armor",                                           0x137CA788)
-ENTRY(Follower_Gloves,                                            "Follower Gloves",                                          0x137CAB70)
-ENTRY(Follower_Boots,                                             "Follower Boots",                                           0x137CAF58)
-ENTRY(Fire_Witch_Helm,                                            "Fire Witch Helm",                                          0x13938700)
-ENTRY(Fire_Witch_Armor,                                           "Fire Witch Armor",                                         0x13938AE8)
-ENTRY(Fire_Witch_Gauntlets,                                       "Fire Witch Gauntlets",                                     0x13938ED0)
-ENTRY(Fire_Witch_Leggings,                                        "Fire Witch Leggings",                                      0x139392B8)
-ENTRY(Millwood_Knight_Helm,                                       "Millwood Knight Helm",                                     0x139B2820)
-ENTRY(Millwood_Knight_Armor,                                      "Millwood Knight Armor",                                    0x139B2C08)
-ENTRY(Millwood_Knight_Gauntlets,                                  "Millwood Knight Gauntlets",                                0x139B2FF0)
-ENTRY(Millwood_Knight_Leggings,                                   "Millwood Knight Leggings",                                 0x139B33D8)
-ENTRY(Lorians_Helm,                                               "Lorian's Helm",                                            0x13A2C940)
-ENTRY(Lorians_Armor,                                              "Lorian's Armor",                                           0x13A2CD28)
-ENTRY(Lorians_Gauntlets,                                          "Lorian's Gauntlets",                                       0x13A2D110)
-ENTRY(Lorians_Leggings,                                           "Lorian's Leggings",                                        0x13A2D4F8)
-ENTRY(Hood_of_Prayer,                                             "Hood of Prayer",                                           0x13AA6A60)
-ENTRY(Robe_of_Prayer,                                             "Robe of Prayer",                                           0x13AA6E48)
-ENTRY(Skirt_of_Prayer,                                            "Skirt of Prayer",                                          0x13AA7618)
-ENTRY(Dancers_Crown,                                              "Dancer's Crown",                                           0x13C14DC0)
-ENTRY(Dancers_Armor,                                              "Dancer's Armor",                                           0x13C151A8)
-ENTRY(Dancers_Gauntlets,                                          "Dancer's Gauntlets",                                       0x13C15590)
-ENTRY(Dancers_Leggings,                                           "Dancer's Leggings",                                        0x13C15978)
-ENTRY(Ringed_Knight_Hood,                                         "Ringed Knight Hood",                                       0x13C8EEE0)
-ENTRY(Ringed_Knight_Armor,                                        "Ringed Knight Armor",                                      0x13C8F2C8)
-ENTRY(Ringed_Knight_Gauntlets,                                    "Ringed Knight Gauntlets",                                  0x13C8F6B0)
-ENTRY(Ringed_Knight_Leggings,                                     "Ringed Knight Leggings",                                   0x13C8FA98)
-ENTRY(Gundyrs_Helm,                                               "Gundyr's Helm",                                            0x13D09000)
-ENTRY(Gundyrs_Armor,                                              "Gundyr's Armor",                                           0x13D093E8)
-ENTRY(Gundyrs_Gauntlets,                                          "Gundyr's Gauntlets",                                       0x13D097D0)
-ENTRY(Gundyrs_Leggings,                                           "Gundyr's Leggings",                                        0x13D09BB8)
-ENTRY(Harald_Legion_Armor,                                        "Harald Legion Armor",                                      0x13D83508)
-ENTRY(Harald_Legion_Gauntlets,                                    "Harald Legion Gauntlets",                                  0x13D838F0)
-ENTRY(Harald_Legion_Leggings,                                     "Harald Legion Leggings",                                   0x13D83CD8)
-ENTRY(Archdeacon_White_Crown,                                     "Archdeacon White Crown",                                   0x13EF1480)
-ENTRY(Archdeacon_Holy_Garb,                                       "Archdeacon Holy Garb",                                     0x13EF1868)
-ENTRY(Archdeacon_Skirt,                                           "Archdeacon Skirt",                                         0x13EF2038)
-ENTRY(Deacon_Robe,                                                "Deacon Robe",                                              0x13F6B988)
-ENTRY(Deacon_Skirt,                                               "Deacon Skirt",                                             0x13F6C158)
-ENTRY(Iron_Dragonslayer_Helm,                                     "Iron Dragonslayer Helm",                                   0x1405F7E0)
-ENTRY(Iron_Dragonslayer_Armor,                                    "Iron Dragonslayer Armor",                                  0x1405FBC8)
-ENTRY(Iron_Dragonslayer_Gauntlets,                                "Iron Dragonslayer Gauntlets",                              0x1405FFB0)
-ENTRY(Iron_Dragonslayer_Leggings,                                 "Iron Dragonslayer Leggings",                               0x14060398)
-ENTRY(Fire_Keeper_Robe,                                           "Fire Keeper Robe",                                         0x140D9CE8)
-ENTRY(Fire_Keeper_Gloves,                                         "Fire Keeper Gloves",                                       0x140DA0D0)
-ENTRY(Fire_Keeper_Skirt,                                          "Fire Keeper Skirt",                                        0x140DA4B8)
-ENTRY(White_Preacher_Head,                                        "White Preacher Head",                                      0x14153A20)
-ENTRY(Chain_Helm,                                                 "Chain Helm",                                               0x142C1D80)
-ENTRY(Chain_Armor,                                                "Chain Armor",                                              0x142C2168)
-ENTRY(Leather_Gauntlets,                                          "Leather Gauntlets",                                        0x142C2550)
-ENTRY(Chain_Leggings,                                             "Chain Leggings",                                           0x142C2938)
-ENTRY(Nameless_Knight_Helm,                                       "Nameless Knight Helm",                                     0x143B5FC0)
-ENTRY(Nameless_Knight_Armor,                                      "Nameless Knight Armor",                                    0x143B63A8)
-ENTRY(Nameless_Knight_Gauntlets,                                  "Nameless Knight Gauntlets",                                0x143B6790)
-ENTRY(Nameless_Knight_Leggings,                                   "Nameless Knight Leggings",                                 0x143B6B78)
-ENTRY(Elite_Knight_Helm,                                          "Elite Knight Helm",                                        0x144AA200)
-ENTRY(Elite_Knight_Armor,                                         "Elite Knight Armor",                                       0x144AA5E8)
-ENTRY(Elite_Knight_Gauntlets,                                     "Elite Knight Gauntlets",                                   0x144AA9D0)
-ENTRY(Elite_Knight_Leggings,                                      "Elite Knight Leggings",                                    0x144AADB8)
-ENTRY(Faraam_Helm,                                                "Faraam Helm",                                              0x1459E440)
-ENTRY(Faraam_Armor,                                               "Faraam Armor",                                             0x1459E828)
-ENTRY(Faraam_Gauntlets,                                           "Faraam Gauntlets",                                         0x1459EC10)
-ENTRY(Faraam_Boots,                                               "Faraam Boots",                                             0x1459EFF8)
-ENTRY(Catarina_Helm,                                              "Catarina Helm",                                            0x14692680)
-ENTRY(Catarina_Armor,                                             "Catarina Armor",                                           0x14692A68)
-ENTRY(Catarina_Gauntlets,                                         "Catarina Gauntlets",                                       0x14692E50)
-ENTRY(Catarina_Leggings,                                          "Catarina Leggings",                                        0x14693238)
-ENTRY(Standard_Helm,                                              "Standard Helm",                                            0x1470C7A0)
-ENTRY(Hard_Leather_Armor,                                         "Hard Leather Armor",                                       0x1470CB88)
-ENTRY(Hard_Leather_Gauntlets,                                     "Hard Leather Gauntlets",                                   0x1470CF70)
-ENTRY(Hard_Leather_Boots,                                         "Hard Leather Boots",                                       0x1470D358)
-ENTRY(Havels_Helm,                                                "Havel's Helm",                                             0x147868C0)
-ENTRY(Havels_Armor,                                               "Havel's Armor",                                            0x14786CA8)
-ENTRY(Havels_Gauntlets,                                           "Havel's Gauntlets",                                        0x14787090)
-ENTRY(Havels_Leggings,                                            "Havel's Leggings",                                         0x14787478)
-ENTRY(Brigand_Hood,                                               "Brigand Hood",                                             0x148009E0)
-ENTRY(Brigand_Armor,                                              "Brigand Armor",                                            0x14800DC8)
-ENTRY(Brigand_Gauntlets,                                          "Brigand Gauntlets",                                        0x148011B0)
-ENTRY(Brigand_Trousers,                                           "Brigand Trousers",                                         0x14801598)
-ENTRY(Phariss_Hat,                                                "Pharis's Hat",                                             0x1487AB00)
-ENTRY(Leather_Armor,                                              "Leather Armor",                                            0x1487AEE8)
-ENTRY(Leather_Gloves,                                             "Leather Gloves",                                           0x1487B2D0)
-ENTRY(Leather_Boots,                                              "Leather Boots",                                            0x1487B6B8)
-ENTRY(Ragged_Mask,                                                "Ragged Mask",                                              0x148F4C20)
-ENTRY(Masters_Attire,                                             "Master's Attire",                                          0x148F5008)
-ENTRY(Masters_Gloves,                                             "Master's Gloves",                                          0x148F53F0)
-ENTRY(Loincloth,                                                  "Loincloth",                                                0x148F57D8)
-ENTRY(Old_Sorcerer_Hat,                                           "Old Sorcerer Hat",                                         0x1496ED40)
-ENTRY(Old_Sorcerer_Coat,                                          "Old Sorcerer Coat",                                        0x1496F128)
-ENTRY(Old_Sorcerer_Gauntlets,                                     "Old Sorcerer Gauntlets",                                   0x1496F510)
-ENTRY(Old_Sorcerer_Boots,                                         "Old Sorcerer Boots",                                       0x1496F8F8)
-ENTRY(Conjurator_Hood,                                            "Conjurator Hood",                                          0x149E8E60)
-ENTRY(Conjurator_Robe,                                            "Conjurator Robe",                                          0x149E9248)
-ENTRY(Conjurator_Manchettes,                                      "Conjurator Manchettes",                                    0x149E9630)
-ENTRY(Conjurator_Boots,                                           "Conjurator Boots",                                         0x149E9A18)
-ENTRY(Thief_Mask_1,                                               "Thief Mask 1",                                             0x14A62F80)
-ENTRY(Black_Leather_Armor,                                        "Black Leather Armor",                                      0x14A63368)
-ENTRY(Black_Leather_Gloves,                                       "Black Leather Gloves",                                     0x14A63750)
-ENTRY(Black_Leather_Boots,                                        "Black Leather Boots",                                      0x14A63B38)
-ENTRY(Symbol_of_Avarice,                                          "Symbol of Avarice",                                        0x14ADD0A0)
-ENTRY(Creightons_Steel_Mask,                                      "Creighton's Steel Mask",                                   0x14B571C0)
-ENTRY(Mirrah_Chain_Mail,                                          "Mirrah Chain Mail",                                        0x14B575A8)
-ENTRY(Mirrah_Chain_Gloves,                                        "Mirrah Chain Gloves",                                      0x14B57990)
-ENTRY(Mirrah_Chain_Leggings,                                      "Mirrah Chain Leggings",                                    0x14B57D78)
-ENTRY(Maiden_Hood,                                                "Maiden Hood",                                              0x14BD12E0)
-ENTRY(Maiden_Robe,                                                "Maiden Robe",                                              0x14BD16C8)
-ENTRY(Maiden_Gloves,                                              "Maiden Gloves",                                            0x14BD1AB0)
-ENTRY(Maiden_Skirt,                                               "Maiden Skirt",                                             0x14BD1E98)
-ENTRY(Alva_Helm,                                                  "Alva Helm",                                                0x14C4B400)
-ENTRY(Alva_Armor,                                                 "Alva Armor",                                               0x14C4B7E8)
-ENTRY(Alva_Gauntlets,                                             "Alva Gauntlets",                                           0x14C4BBD0)
-ENTRY(Alva_Leggings,                                              "Alva Leggings",                                            0x14C4BFB8)
-ENTRY(Ruin_Sentinel_Helm,                                         "Ruin Sentinel Helm",                                       0x14CC5520)
-ENTRY(Ruin_Sentinel_Armor,                                        "Ruin Sentinel Armor",                                      0x14CC5908)
-ENTRY(Ruin_Sentinel_Gauntlets,                                    "Ruin Sentinel Gauntlets",                                  0x14CC5CF0)
-ENTRY(Ruin_Sentinel_Leggings,                                     "Ruin Sentinel Leggings",                                   0x14CC60D8)
-ENTRY(Shadow_Mask,                                                "Shadow Mask",                                              0x14D3F640)
-ENTRY(Shadow_Garb,                                                "Shadow Garb",                                              0x14D3FA28)
-ENTRY(Shadow_Gauntlets,                                           "Shadow Gauntlets",                                         0x14D3FE10)
-ENTRY(Shadow_Leggings,                                            "Shadow Leggings",                                          0x14D401F8)
-ENTRY(Desert_Pyromancer_Hood,                                     "Desert Pyromancer Hood",                                   0x14DB9760)
-ENTRY(Desert_Pyromancer_Garb,                                     "Desert Pyromancer Garb",                                   0x14DB9B48)
-ENTRY(Desert_Pyromancer_Gloves,                                   "Desert Pyromancer Gloves",                                 0x14DB9F30)
-ENTRY(Desert_Pyromancer_Skirt,                                    "Desert Pyromancer Skirt",                                  0x14DBA318)
-ENTRY(Eastern_Helm,                                               "Eastern Helm",                                             0x14E33880)
-ENTRY(Eastern_Armor,                                              "Eastern Armor",                                            0x14E33C68)
-ENTRY(Eastern_Gauntlets,                                          "Eastern Gauntlets",                                        0x14E34050)
-ENTRY(Eastern_Leggings,                                           "Eastern Leggings",                                         0x14E34438)
-ENTRY(Black_Witch_Hat,                                            "Black Witch Hat",                                          0x14EAD9A0)
-ENTRY(Black_Witch_Garb,                                           "Black Witch Garb",                                         0x14EADD88)
-ENTRY(Black_Witch_Wrappings,                                      "Black Witch Wrappings",                                    0x14EAE170)
-ENTRY(Black_Witch_Trousers,                                       "Black Witch Trousers",                                     0x14EAE558)
-ENTRY(Helm_of_Favor,                                              "Helm of Favor",                                            0x14F27AC0)
-ENTRY(Embraced_Armor_of_Favor,                                    "Embraced Armor of Favor",                                  0x14F27EA8)
-ENTRY(Gauntlets_of_Favor,                                         "Gauntlets of Favor",                                       0x14F28290)
-ENTRY(Leggings_of_Favor,                                          "Leggings of Favor",                                        0x14F28678)
-ENTRY(Black_Witch_Veil,                                           "Black Witch Veil",                                         0x14FA1BE0)
-ENTRY(Brass_Helm,                                                 "Brass Helm",                                               0x1501BD00)
-ENTRY(Brass_Armor,                                                "Brass Armor",                                              0x1501C0E8)
-ENTRY(Brass_Gauntlets,                                            "Brass Gauntlets",                                          0x1501C4D0)
-ENTRY(Brass_Leggings,                                             "Brass Leggings",                                           0x1501C8B8)
-ENTRY(Blindfold_Mask,                                             "Blindfold Mask",                                           0x15095E20)
-ENTRY(Silver_Knight_Helm,                                         "Silver Knight Helm",                                       0x1510FF40)
-ENTRY(Silver_Knight_Armor,                                        "Silver Knight Armor",                                      0x15110328)
-ENTRY(Silver_Knight_Gauntlets,                                    "Silver Knight Gauntlets",                                  0x15110710)
-ENTRY(Silver_Knight_Leggings,                                     "Silver Knight Leggings",                                   0x15110AF8)
-ENTRY(Lucatiels_Mask,                                             "Lucatiel's Mask",                                          0x15204180)
-ENTRY(Mirrah_Vest,                                                "Mirrah Vest",                                              0x15204568)
-ENTRY(Mirrah_Gloves,                                              "Mirrah Gloves",                                            0x15204950)
-ENTRY(Mirrah_Trousers,                                            "Mirrah Trousers",                                          0x15204D38)
-ENTRY(Iron_Helm,                                                  "Iron Helm",                                                0x152F83C0)
-ENTRY(Armor_of_the_Sun,                                           "Armor of the Sun",                                         0x152F87A8)
-ENTRY(Iron_Bracelets,                                             "Iron Bracelets",                                           0x152F8B90)
-ENTRY(Iron_Leggings,                                              "Iron Leggings",                                            0x152F8F78)
-ENTRY(Drakeblood_Helm,                                            "Drakeblood Helm",                                          0x153EC600)
-ENTRY(Drakeblood_Armor,                                           "Drakeblood Armor",                                         0x153EC9E8)
-ENTRY(Drakeblood_Gauntlets,                                       "Drakeblood Gauntlets",                                     0x153ECDD0)
-ENTRY(Drakeblood_Leggings,                                        "Drakeblood Leggings",                                      0x153ED1B8)
-ENTRY(Drang_Armor,                                                "Drang Armor",                                              0x154E0C28)
-ENTRY(Drang_Gauntlets,                                            "Drang Gauntlets",                                          0x154E1010)
-ENTRY(Drang_Shoes,                                                "Drang Shoes",                                              0x154E13F8)
-ENTRY(Black_Iron_Helm,                                            "Black Iron Helm",                                          0x155D4A80)
-ENTRY(Black_Iron_Armor,                                           "Black Iron Armor",                                         0x155D4E68)
-ENTRY(Black_Iron_Gauntlets,                                       "Black Iron Gauntlets",                                     0x155D5250)
-ENTRY(Black_Iron_Leggings,                                        "Black Iron Leggings",                                      0x155D5638)
-ENTRY(Painting_Guardian_Hood,                                     "Painting Guardian Hood",                                   0x156C8CC0)
-ENTRY(Painting_Guardian_Gown,                                     "Painting Guardian Gown",                                   0x156C90A8)
-ENTRY(Painting_Guardian_Gloves,                                   "Painting Guardian Gloves",                                 0x156C9490)
-ENTRY(Painting_Guardian_Waistcloth,                               "Painting Guardian Waistcloth",                             0x156C9878)
-ENTRY(Wolf_Knight_Helm,                                           "Wolf Knight Helm",                                         0x157BCF00)
-ENTRY(Wolf_Knight_Armor,                                          "Wolf Knight Armor",                                        0x157BD2E8)
-ENTRY(Wolf_Knight_Gauntlets,                                      "Wolf Knight Gauntlets",                                    0x157BD6D0)
-ENTRY(Wolf_Knight_Leggings,                                       "Wolf Knight Leggings",                                     0x157BDAB8)
-ENTRY(Dragonslayer_Helm,                                          "Dragonslayer Helm",                                        0x158B1140)
-ENTRY(Dragonslayer_Armor,                                         "Dragonslayer Armor",                                       0x158B1528)
-ENTRY(Dragonslayer_Gauntlets,                                     "Dragonslayer Gauntlets",                                   0x158B1910)
-ENTRY(Dragonslayer_Leggings,                                      "Dragonslayer Leggings",                                    0x158B1CF8)
-ENTRY(Smoughs_Helm,                                               "Smough's Helm",                                            0x159A5380)
-ENTRY(Smoughs_Armor,                                              "Smough's Armor",                                           0x159A5768)
-ENTRY(Smoughs_Gauntlets,                                          "Smough's Gauntlets",                                       0x159A5B50)
-ENTRY(Smoughs_Leggings,                                           "Smough's Leggings",                                        0x159A5F38)
-ENTRY(Helm_of_Thorns,                                             "Helm of Thorns",                                           0x15B8D800)
-ENTRY(Armor_of_Thorns,                                            "Armor of Thorns",                                          0x15B8DBE8)
-ENTRY(Gauntlets_of_Thorns,                                        "Gauntlets of Thorns",                                      0x15B8DFD0)
-ENTRY(Leggings_of_Thorns,                                         "Leggings of Thorns",                                       0x15B8E3B8)
-ENTRY(Crown_of_Dusk,                                              "Crown of Dusk",                                            0x15D75C80)
-ENTRY(Antiquated_Dress,                                           "Antiquated Dress",                                         0x15D76068)
-ENTRY(Antiquated_Gloves,                                          "Antiquated Gloves",                                        0x15D76450)
-ENTRY(Antiquated_Skirt,                                           "Antiquated Skirt",                                         0x15D76838)
-ENTRY(Karlas_Pointed_Hat,                                         "Karla's Pointed Hat",                                      0x15E69EC0)
-ENTRY(Karlas_Coat,                                                "Karla's Coat",                                             0x15E6A2A8)
-ENTRY(Karlas_Gloves,                                              "Karla's Gloves",                                           0x15E6A690)
-ENTRY(Karlas_Trousers,                                            "Karla's Trousers",                                         0x15E6AA78)
-ENTRY(Blade_of_the_Darkmoon,                                      "Blade of the Darkmoon",                                    0x20002710)
-ENTRY(Watchdogs_of_Farron,                                        "Watchdogs of Farron",                                      0x20002724)
-ENTRY(Aldrich_Faithful,                                           "Aldrich Faithful",                                         0x2000272E)
-ENTRY(Warrior_of_Sunlight,                                        "Warrior of Sunlight",                                      0x20002738)
-ENTRY(Mound_makers,                                               "Mound-makers",                                             0x20002742)
-ENTRY(Way_of_Blue,                                                "Way of Blue",                                              0x2000274C)
-ENTRY(Blue_Sentinels,                                             "Blue Sentinels",                                           0x20002756)
-ENTRY(Rosarias_Fingers,                                           "Rosaria's Fingers",                                        0x20002760)
-ENTRY(Spear_of_the_Church,                                        "Spear of the Church",                                      0x2000276A)
-ENTRY(Life_Ring,                                                  "Life Ring",                                                0x20004E20)
-ENTRY(Life_Ring_1,                                                "Life Ring_1",                                              0x20004E21)
-ENTRY(Life_Ring_2,                                                "Life Ring_2",                                              0x20004E22)
-ENTRY(Life_Ring_3,                                                "Life Ring_3",                                              0x20004E23)
-ENTRY(Chloranthy_Ring,                                            "Chloranthy Ring",                                          0x20004E2A)
-ENTRY(Chloranthy_Ring_1,                                          "Chloranthy Ring_1",                                        0x20004E2B)
-ENTRY(Chloranthy_Ring_2,                                          "Chloranthy Ring_2",                                        0x20004E2C)
-ENTRY(Chloranthy_Ring_3,                                          "Chloranthy Ring_3",                                        0x20004E2D)
-ENTRY(Havels_Ring,                                                "Havel's Ring",                                             0x20004E34)
-ENTRY(Havels_Ring_1,                                              "Havel's Ring_1",                                           0x20004E35)
-ENTRY(Havels_Ring_2,                                              "Havel's Ring_2",                                           0x20004E36)
-ENTRY(Havels_ring_3,                                              "Havel's ring_3",                                           0x20004E37)
-ENTRY(Ring_of_Favor,                                              "Ring of Favor",                                            0x20004E3E)
-ENTRY(Ring_of_Favor_1,                                            "Ring of Favor_1",                                          0x20004E3F)
-ENTRY(Ring_of_Favor_2,                                            "Ring of Favor_2",                                          0x20004E40)
-ENTRY(Ring_of_Favor_3,                                            "Ring of Favor_3",                                          0x20004E41)
-ENTRY(Ring_of_Steel_Protection,                                   "Ring of Steel Protection",                                 0x20004E48)
-ENTRY(Ring_of_Steel_Protection_1,                                 "Ring of Steel Protection_1",                               0x20004E49)
-ENTRY(Ring_of_Steel_Protection_2,                                 "Ring of Steel Protection_2",                               0x20004E4A)
-ENTRY(Ring_of_Steel_Protection_3,                                 "Ring of Steel Protection_3",                               0x20004E4B)
-ENTRY(Flame_Stoneplate_Ring,                                      "Flame Stoneplate Ring",                                    0x20004E52)
-ENTRY(Flame_Stoneplate_Ring_1,                                    "Flame Stoneplate Ring_1",                                  0x20004E53)
-ENTRY(Flame_Stoneplate_Ring_2,                                    "Flame Stoneplate Ring_2",                                  0x20004E54)
-ENTRY(Thunder_Stoneplate_Ring,                                    "Thunder Stoneplate Ring",                                  0x20004E5C)
-ENTRY(Thunder_Stoneplate_Ring_1,                                  "Thunder Stoneplate Ring_1",                                0x20004E5D)
-ENTRY(Thunder_Stoneplate_Ring_2,                                  "Thunder Stoneplate Ring_2",                                0x20004E5E)
-ENTRY(Magic_Stoneplate_Ring,                                      "Magic Stoneplate Ring",                                    0x20004E66)
-ENTRY(Magic_Stoneplate_Ring_1,                                    "Magic Stoneplate Ring_1",                                  0x20004E67)
-ENTRY(Magic_Stoneplate_Ring_2,                                    "Magic Stoneplate Ring_2",                                  0x20004E68)
-ENTRY(Dark_Stoneplate_Ring,                                       "Dark Stoneplate Ring",                                     0x20004E70)
-ENTRY(Dark_Stoneplate_Ring_1,                                     "Dark Stoneplate Ring_1",                                   0x20004E71)
-ENTRY(Dark_Stoneplate_Ring_2,                                     "Dark Stoneplate Ring_2",                                   0x20004E72)
-ENTRY(Speckled_Stoneplate_Ring,                                   "Speckled Stoneplate Ring",                                 0x20004E7A)
-ENTRY(Speckled_Stoneplate_Ring_1,                                 "Speckled Stoneplate Ring_1",                               0x20004E7B)
-ENTRY(Bloodbite_Ring,                                             "Bloodbite Ring",                                           0x20004E84)
-ENTRY(Bloodbite_Ring_1,                                           "Bloodbite Ring_1",                                         0x20004E85)
-ENTRY(Poisonbite_Ring,                                            "Poisonbite Ring",                                          0x20004E8E)
-ENTRY(Poisonbite_Ring_1,                                          "Poisonbite Ring_1",                                        0x20004E8F)
-ENTRY(Cursebite_Ring,                                             "Cursebite Ring",                                           0x20004E98)
-ENTRY(Fleshbite_Ring,                                             "Fleshbite Ring",                                           0x20004EA2)
-ENTRY(Fleshbite_Ring_1,                                           "Fleshbite Ring_1",                                         0x20004EA3)
-ENTRY(Wood_Grain_Ring,                                            "Wood Grain Ring",                                          0x20004EAC)
-ENTRY(Wood_Grain_Ring_1,                                          "Wood Grain Ring_1",                                        0x20004EAD)
-ENTRY(Wood_Grain_Ring_2,                                          "Wood Grain Ring_2",                                        0x20004EAE)
-ENTRY(Scholar_Ring,                                               "Scholar Ring",                                             0x20004EB6)
-ENTRY(Priestess_Ring,                                             "Priestess Ring",                                           0x20004EC0)
-ENTRY(Red_Tearstone_Ring,                                         "Red Tearstone Ring",                                       0x20004ECA)
-ENTRY(Blue_Tearstone_Ring,                                        "Blue Tearstone Ring",                                      0x20004ED4)
-ENTRY(Wolf_Ring,                                                  "Wolf Ring",                                                0x20004EDE)
-ENTRY(Wolf_Ring_1,                                                "Wolf Ring_1",                                              0x20004EDF)
-ENTRY(Wolf_Ring_2,                                                "Wolf Ring_2",                                              0x20004EE0)
-ENTRY(Wolf_Ring_3,                                                "Wolf Ring_3",                                              0x20004EE1)
-ENTRY(Leo_Ring_2,                                                 "Leo Ring 2",                                               0x20004EE8)
-ENTRY(Ring_of_Sacrifice,                                          "Ring of Sacrifice",                                        0x20004EF2)
-ENTRY(Young_Dragon_Ring,                                          "Young Dragon Ring",                                        0x20004F06)
-ENTRY(Bellowing_Dragoncrest_Ring,                                 "Bellowing Dragoncrest Ring",                               0x20004F07)
-ENTRY(Great_Swamp_Ring,                                           "Great Swamp Ring",                                         0x20004F10)
-ENTRY(Witchs_Ring,                                                "Witch's Ring",                                             0x20004F11)
-ENTRY(Mornes_Ring,                                                "Morne's Ring",                                             0x20004F1A)
-ENTRY(Ring_of_the_Suns_First_Born,                                "Ring of the Sun's First Born",                             0x20004F1B)
-ENTRY(Lingering_Dragoncrest_Ring,                                 "Lingering Dragoncrest Ring",                               0x20004F2E)
-ENTRY(Lingering_Dragoncrest_Ring_1,                               "Lingering Dragoncrest Ring_1",                             0x20004F2F)
-ENTRY(Lingering_Dragoncrest_Ring_2,                               "Lingering Dragoncrest Ring_2",                             0x20004F30)
-ENTRY(Sage_Ring,                                                  "Sage Ring",                                                0x20004F38)
-ENTRY(Sage_Ring_1,                                                "Sage Ring_1",                                              0x20004F39)
-ENTRY(Sage_Ring_2,                                                "Sage Ring_2",                                              0x20004F3A)
-ENTRY(Slumbering_Dragoncrest_Ring,                                "Slumbering Dragoncrest Ring",                              0x20004F42)
-ENTRY(Dusk_Crown_Ring,                                            "Dusk Crown Ring",                                          0x20004F4C)
-ENTRY(Saints_Ring,                                                "Saint's Ring",                                             0x20004F56)
-ENTRY(Deep_Ring,                                                  "Deep Ring",                                                0x20004F60)
-ENTRY(Darkmoon_Ring,                                              "Darkmoon Ring",                                            0x20004F6A)
-ENTRY(Leo_Ring_1,                                                 "Leo Ring 1",                                               0x20004F88)
-ENTRY(Hawk_Ring,                                                  "Hawk Ring",                                                0x20004F92)
-ENTRY(Hornet_Ring,                                                "Hornet Ring",                                              0x20004F9C)
-ENTRY(Covetous_Gold_Serpent_Ring,                                 "Covetous Gold Serpent Ring",                               0x20004FA6)
-ENTRY(Covetous_Gold_Serpent_Ring_1,                               "Covetous Gold Serpent Ring_1",                             0x20004FA7)
-ENTRY(Covetous_Gold_Serpent_Ring_2,                               "Covetous Gold Serpent Ring_2",                             0x20004FA8)
-ENTRY(Covetous_Gold_Serpent_Ring_3,                               "Covetous Gold Serpent Ring_3",                             0x20004FA9)
-ENTRY(Covetous_Silver_Serpent_Ring,                               "Covetous Silver Serpent Ring",                             0x20004FB0)
-ENTRY(Covetous_Silver_Serpent_Ring_1,                             "Covetous Silver Serpent Ring_1",                           0x20004FB1)
-ENTRY(Covetous_Silver_Serpent_Ring_2,                             "Covetous Silver Serpent Ring_2",                           0x20004FB2)
-ENTRY(Covetous_Silver_Serpent_Ring_3,                             "Covetous Silver Serpent Ring_3",                           0x20004FB3)
-ENTRY(Sun_Princess_Ring,                                          "Sun Princess Ring",                                        0x20004FBA)
-ENTRY(Silvercat_Ring,                                             "Silvercat Ring",                                           0x20004FC4)
-ENTRY(Skull_Ring,                                                 "Skull Ring",                                               0x20004FCE)
-ENTRY(Untrue_White_Ring,                                          "Untrue White Ring",                                        0x20004FD8)
-ENTRY(Carthus_Milkring,                                           "Carthus Milkring",                                         0x20004FE2)
-ENTRY(Knights_Ring,                                               "Knight's Ring",                                            0x20004FEC)
-ENTRY(Hunters_Ring,                                               "Hunter's Ring",                                            0x20004FF6)
-ENTRY(Knight_Slayers_Ring,                                        "Knight Slayer's Ring",                                     0x20005000)
-ENTRY(Magic_Clutch_Ring,                                          "Magic Clutch Ring",                                        0x2000500A)
-ENTRY(Lightning_Clutch_Ring,                                      "Lightning Clutch Ring",                                    0x20005014)
-ENTRY(Fire_Clutch_Ring,                                           "Fire Clutch Ring",                                         0x2000501E)
-ENTRY(Dark_Clutch_Ring,                                           "Dark Clutch Ring",                                         0x20005028)
-ENTRY(Flynns_Ring,                                                "Flynn's Ring",                                             0x2000503C)
-ENTRY(Prisoners_Chain,                                            "Prisoner's Chain",                                         0x20005046)
-ENTRY(Untrue_Dark_Ring,                                           "Untrue Dark Ring",                                         0x20005050)
-ENTRY(Obscuring_Ring,                                             "Obscuring Ring",                                           0x20005064)
-ENTRY(Ring_of_the_Evil_Eye,                                       "Ring of the Evil Eye",                                     0x2000506E)
-ENTRY(Ring_of_the_Evil_Eye_1,                                     "Ring of the Evil Eye_1",                                   0x2000506F)
-ENTRY(Ring_of_the_Evil_Eye_2,                                     "Ring of the Evil Eye_2",                                   0x20005070)
-ENTRY(Ring_of_the_Evil_Eye_3,                                     "Ring of the Evil Eye_3",                                   0x20005071)
-ENTRY(Calamity_Ring,                                              "Calamity Ring",                                            0x20005078)
-ENTRY(Farron_Ring,                                                "Farron Ring",                                              0x20005082)
-ENTRY(Aldrichs_Ruby,                                              "Aldrich's Ruby",                                           0x2000508C)
-ENTRY(Aldrichs_Sapphire,                                          "Aldrich's Sapphire",                                       0x20005096)
-ENTRY(Lloyds_Sword_Ring,                                          "Lloyd's Sword Ring",                                       0x200050B4)
-ENTRY(Lloyds_Shield_Ring,                                         "Lloyd's Shield Ring",                                      0x200050BE)
-ENTRY(Estus_Ring,                                                 "Estus Ring",                                               0x200050DC)
-ENTRY(Ashen_Estus_Ring,                                           "Ashen Estus Ring",                                         0x200050E6)
-ENTRY(Horsehoof_Ring,                                             "Horsehoof Ring",                                           0x200050F0)
-ENTRY(Carthus_Bloodring,                                          "Carthus Bloodring",                                        0x200050FA)
-ENTRY(Reversal_Ring,                                              "Reversal Ring",                                            0x20005104)
-ENTRY(Pontiffs_Right_Eye,                                         "Pontiff's Right Eye",                                      0x2000510E)
-ENTRY(Pontiffs_Left_Eye,                                          "Pontiff's Left Eye",                                       0x20005136)
-ENTRY(Dragonscale_Ring,                                           "Dragonscale Ring",                                         0x2000515E)
-ENTRY(Chillbite_Ring,                                             "Chillbite Ring",                                           0x20005208)
-ENTRY(Debug_Life_Ring,                                            "Debug Life Ring",                                          0x200DBC68)
-ENTRY(Debug_Life_Ring_1,                                          "Debug Life Ring_1",                                        0x200DBC69)
-ENTRY(Debug_Life_Ring_2,                                          "Debug Life Ring_2",                                        0x200DBC6A)
-ENTRY(Debug_Life_Ring_3,                                          "Debug Life Ring_3",                                        0x200DBC6C)
-ENTRY(Debug_Stamina_Ring,                                         "Debug Stamina Ring",                                       0x200DBC72)
-ENTRY(Debug_Stamina_Ring_1,                                       "Debug Stamina Ring_1",                                     0x200DBC73)
-ENTRY(Debug_Stamina_Ring_2,                                       "Debug Stamina Ring_2",                                     0x200DBC74)
-ENTRY(Debug_Effects_Ring,                                         "Debug Effects Ring",                                       0x200DE2B0)
-ENTRY(White_Sign_Soapstone,                                       "White Sign Soapstone",                                     0x40000064)
-ENTRY(Red_Sign_Soapstone,                                         "Red Sign Soapstone",                                       0x40000065)
-ENTRY(Red_Eye_Orb,                                                "Red Eye Orb",                                              0x40000066)
-ENTRY(Black_Separation_Crystal,                                   "Black Separation Crystal",                                 0x40000067)
-ENTRY(Roster_of_Knights,                                          "Roster of Knights",                                        0x4000006C)
-ENTRY(Cracked_Red_Eye_Orb,                                        "Cracked Red Eye Orb",                                      0x4000006F)
-ENTRY(Black_Eye_Orb,                                              "Black Eye Orb",                                            0x40000073)
-ENTRY(Darksign,                                                   "Darksign",                                                 0x40000075)
-ENTRY(Way_of_White_Circlet,                                       "Way of White Circlet",                                     0x40000077)
-ENTRY(Estus_Flask_0,                                              "Estus Flask 0",                                            0x40000096)
-ENTRY(Estus_Flask_0_1,                                            "Estus Flask 0 1",                                          0x40000097)
-ENTRY(Estus_Flask_1,                                              "Estus Flask_1",                                            0x40000098)
-ENTRY(Estus_Flask_1_1,                                            "Estus Flask_1_1",                                          0x40000099)
-ENTRY(Estus_Flask_2,                                              "Estus Flask_2",                                            0x4000009A)
-ENTRY(Estus_Flask_2_1,                                            "Estus Flask_2_1",                                          0x4000009B)
-ENTRY(Estus_Flask_3,                                              "Estus Flask_3",                                            0x4000009C)
-ENTRY(Estus_Flask_3_1,                                            "Estus Flask_3_1",                                          0x4000009D)
-ENTRY(Estus_Flask_4,                                              "Estus Flask_4",                                            0x4000009E)
-ENTRY(Estus_Flask_4_1,                                            "Estus Flask_4_1",                                          0x4000009F)
-ENTRY(Estus_Flask_5,                                              "Estus Flask_5",                                            0x400000A0)
-ENTRY(Estus_Flask_5_1,                                            "Estus Flask_5_1",                                          0x400000A1)
-ENTRY(Estus_Flask_6,                                              "Estus Flask_6",                                            0x400000A2)
-ENTRY(Estus_Flask_6_1,                                            "Estus Flask_6_1",                                          0x400000A3)
-ENTRY(Estus_Flask_7,                                              "Estus Flask_7",                                            0x400000A4)
-ENTRY(Estus_Flask_7_1,                                            "Estus Flask_7_1",                                          0x400000A5)
-ENTRY(Estus_Flask_8,                                              "Estus Flask_8",                                            0x400000A6)
-ENTRY(Estus_Flask_8_1,                                            "Estus Flask_8_1",                                          0x400000A7)
-ENTRY(Estus_Flask_9,                                              "Estus Flask_9",                                            0x400000A8)
-ENTRY(Estus_Flask_9_1,                                            "Estus Flask_9_1",                                          0x400000A9)
-ENTRY(Estus_Flask_10,                                             "Estus Flask_10",                                           0x400000AA)
-ENTRY(Estus_Flask_10_1,                                           "Estus Flask_10_1",                                         0x400000AB)
-ENTRY(Ashen_Estus_Flask_0,                                        "Ashen Estus Flask 0",                                      0x400000BE)
-ENTRY(Ashen_Estus_Flask_0_1,                                      "Ashen Estus Flask 0 1",                                    0x400000BF)
-ENTRY(Ashen_Estus_Flask_1,                                        "Ashen Estus Flask_1",                                      0x400000C0)
-ENTRY(Ashen_Estus_Flask_1_1,                                      "Ashen Estus Flask_1_1",                                    0x400000C1)
-ENTRY(Ashen_Estus_Flask_2,                                        "Ashen Estus Flask_2",                                      0x400000C2)
-ENTRY(Ashen_Estus_Flask_2_1,                                      "Ashen Estus Flask_2_1",                                    0x400000C3)
-ENTRY(Ashen_Estus_Flask_3,                                        "Ashen Estus Flask_3",                                      0x400000C4)
-ENTRY(Ashen_Estus_Flask_3_1,                                      "Ashen Estus Flask_3_1",                                    0x400000C5)
-ENTRY(Ashen_Estus_Flask_4,                                        "Ashen Estus Flask_4",                                      0x400000C6)
-ENTRY(Ashen_Estus_Flask_4_1,                                      "Ashen Estus Flask_4_1",                                    0x400000C7)
-ENTRY(Ashen_Estus_Flask_5,                                        "Ashen Estus Flask_5",                                      0x400000C8)
-ENTRY(Ashen_Estus_Flask_5_1,                                      "Ashen Estus Flask_5_1",                                    0x400000C9)
-ENTRY(Ashen_Estus_Flask_6,                                        "Ashen Estus Flask_6",                                      0x400000CA)
-ENTRY(Ashen_Estus_Flask_6_1,                                      "Ashen Estus Flask_6_1",                                    0x400000CB)
-ENTRY(Ashen_Estus_Flask_7,                                        "Ashen Estus Flask_7",                                      0x400000CC)
-ENTRY(Ashen_Estus_Flask_7_1,                                      "Ashen Estus Flask_7_1",                                    0x400000CD)
-ENTRY(Ashen_Estus_Flask_8,                                        "Ashen Estus Flask_8",                                      0x400000CE)
-ENTRY(Ashen_Estus_Flask_8_1,                                      "Ashen Estus Flask_8_1",                                    0x400000CF)
-ENTRY(Ashen_Estus_Flask_9,                                        "Ashen Estus Flask_9",                                      0x400000D0)
-ENTRY(Ashen_Estus_Flask_9_1,                                      "Ashen Estus Flask_9_1",                                    0x400000D1)
-ENTRY(Ashen_Estus_Flask_10,                                       "Ashen Estus Flask_10",                                     0x400000D2)
-ENTRY(Ashen_Estus_Flask_10_1,                                     "Ashen Estus Flask_10_1",                                   0x400000D3)
-ENTRY(Divine_Blessing,                                            "Divine Blessing",                                          0x400000F0)
-ENTRY(Hidden_Blessing,                                            "Hidden Blessing",                                          0x400000F1)
-ENTRY(Green_Blossom,                                              "Green Blossom",                                            0x40000104)
-ENTRY(Budding_Green_Blossom,                                      "Budding Green Blossom",                                    0x40000105)
-ENTRY(Budding_Green_Blossom_Sirris,                               "Budding Green Blossom (Sirris)",                           0x40000106)
-ENTRY(Bloodred_Moss_Clump,                                        "Bloodred Moss Clump",                                      0x4000010E)
-ENTRY(Purple_Moss_Clump,                                          "Purple Moss Clump",                                        0x4000010F)
-ENTRY(Blooming_Purple_Moss_Clump,                                 "Blooming Purple Moss Clump",                               0x40000110)
-ENTRY(Purging_Stone,                                              "Purging Stone",                                            0x40000112)
-ENTRY(Rime_blue_Moss_Clump,                                       "Rime-blue Moss Clump",                                     0x40000114)
-ENTRY(Repair_Powder,                                              "Repair Powder",                                            0x40000118)
-ENTRY(Kukri,                                                      "Kukri",                                                    0x40000122)
-ENTRY(Firebomb,                                                   "Firebomb",                                                 0x40000124)
-ENTRY(Dung_Pie,                                                   "Dung Pie",                                                 0x40000125)
-ENTRY(Alluring_Skull,                                             "Alluring Skull",                                           0x40000126)
-ENTRY(Undead_Hunter_Charm,                                        "Undead Hunter Charm",                                      0x40000128)
-ENTRY(Black_Firebomb,                                             "Black Firebomb",                                           0x40000129)
-ENTRY(Rope_Firebomb,                                              "Rope Firebomb",                                            0x4000012B)
-ENTRY(Lightning_Urn,                                              "Lightning Urn",                                            0x4000012C)
-ENTRY(Rope_Black_Firebomb,                                        "Rope Black Firebomb",                                      0x4000012E)
-ENTRY(Stalk_Dung_Pie,                                             "Stalk Dung Pie",                                           0x4000012F)
-ENTRY(Duel_Charm,                                                 "Duel Charm",                                               0x40000130)
-ENTRY(Throwing_Knife,                                             "Throwing Knife",                                           0x40000136)
-ENTRY(Poison_Throwing_Knife,                                      "Poison Throwing Knife",                                    0x40000137)
-ENTRY(Church_Guardian_Shiv,                                       "Church Guardian Shiv",                                     0x4000013B)
-ENTRY(Charcoal_Pine_Resin,                                        "Charcoal Pine Resin",                                      0x4000014A)
-ENTRY(Gold_Pine_Resin,                                            "Gold Pine Resin",                                          0x4000014B)
-ENTRY(Human_Pine_Resin,                                           "Human Pine Resin",                                         0x4000014E)
-ENTRY(Carthus_Rouge,                                              "Carthus Rouge",                                            0x4000014F)
-ENTRY(Pale_Pine_Resin,                                            "Pale Pine Resin",                                          0x40000150)
-ENTRY(Charcoal_Pine_Bundle,                                       "Charcoal Pine Bundle",                                     0x40000154)
-ENTRY(Gold_Pine_Bundle,                                           "Gold Pine Bundle",                                         0x40000155)
-ENTRY(Rotten_Pine_Resin,                                          "Rotten Pine Resin",                                        0x40000157)
-ENTRY(Homeward_Bone,                                              "Homeward Bone",                                            0x4000015E)
-ENTRY(Coiled_Sword_Fragment,                                      "Coiled Sword Fragment",                                    0x4000015F)
-ENTRY(Wolfs_Blood_Swordgrass,                                     "Wolf's Blood Swordgrass",                                  0x4000016E)
-ENTRY(Human_Dregs,                                                "Human Dregs",                                              0x4000016F)
-ENTRY(Forked_Pale_Tongue,                                         "Forked Pale Tongue",                                       0x40000170)
-ENTRY(Proof_of_a_Concord_Well_Kept,                               "Proof of a Concord Well Kept",                             0x40000171)
-ENTRY(Prism_Stone,                                                "Prism Stone",                                              0x40000172)
-ENTRY(Binoculars,                                                 "Binoculars",                                               0x40000173)
-ENTRY(Proof_of_a_Concord_Kept,                                    "Proof of a Concord Kept",                                  0x40000174)
-ENTRY(Pale_Tongue,                                                "Pale Tongue",                                              0x40000175)
-ENTRY(Vertebra_Shackle,                                           "Vertebra Shackle",                                         0x40000176)
-ENTRY(Sunlight_Medal,                                             "Sunlight Medal",                                           0x40000177)
-ENTRY(Pendant,                                                    "Pendant",                                                  0x40000178)
-ENTRY(Dragon_Head_Stone,                                          "Dragon Head Stone",                                        0x40000179)
-ENTRY(Dragon_Torso_Stone,                                         "Dragon Torso Stone",                                       0x4000017A)
-ENTRY(Filianores_Spear_Ornament,                                  "Filianore's Spear Ornament",                               0x4000017B)
-ENTRY(Rubbish,                                                    "Rubbish",                                                  0x4000017C)
-ENTRY(Dried_Finger,                                               "Dried Finger",                                             0x40000181)
-ENTRY(Twinkling_Dragon_Head_Stone,                                "Twinkling Dragon Head Stone",                              0x40000183)
-ENTRY(Twinkling_Dragon_Torso_Stone,                               "Twinkling Dragon Torso Stone",                             0x40000184)
-ENTRY(Fire_Keeper_Soul,                                           "Fire Keeper Soul",                                         0x40000186)
-ENTRY(Fading_Soul,                                                "Fading Soul",                                              0x40000190)
-ENTRY(Soul_of_a_Deserted_Corpse,                                  "Soul of a Deserted Corpse",                                0x40000191)
-ENTRY(Large_Soul_of_a_Deserted_Corpse,                            "Large Soul of a Deserted Corpse",                          0x40000192)
-ENTRY(Soul_of_an_Unknown_Traveler,                                "Soul of an Unknown Traveler",                              0x40000193)
-ENTRY(Large_Soul_of_an_Unknown_Traveler,                          "Large Soul of an Unknown Traveler",                        0x40000194)
-ENTRY(Soul_of_a_Nameless_Soldier,                                 "Soul of a Nameless Soldier",                               0x40000195)
-ENTRY(Large_Soul_of_a_Nameless_Soldier,                           "Large Soul of a Nameless Soldier",                         0x40000196)
-ENTRY(Soul_of_a_Weary_Warrior,                                    "Soul of a Weary Warrior",                                  0x40000197)
-ENTRY(Large_Soul_of_a_Weary_Warrior,                              "Large Soul of a Weary Warrior",                            0x40000198)
-ENTRY(Soul_of_a_Crestfallen_Knight,                               "Soul of a Crestfallen Knight",                             0x40000199)
-ENTRY(Large_Soul_of_a_Crestfallen_Knight,                         "Large Soul of a Crestfallen Knight",                       0x4000019A)
-ENTRY(Soul_of_a_Proud_Paladin,                                    "Soul of a Proud Paladin",                                  0x4000019B)
-ENTRY(Large_Soul_of_a_Proud_Paladin,                              "Large Soul of a Proud Paladin",                            0x4000019C)
-ENTRY(Soul_of_an_Intrepid_Hero,                                   "Soul of an Intrepid Hero",                                 0x4000019D)
-ENTRY(Large_Soul_of_an_Intrepid_Hero,                             "Large Soul of an Intrepid Hero",                           0x4000019E)
-ENTRY(Soul_of_a_Seasoned_Warrior,                                 "Soul of a Seasoned Warrior",                               0x4000019F)
-ENTRY(Large_Soul_of_a_Seasoned_Warrior,                           "Large Soul of a Seasoned Warrior",                         0x400001A0)
-ENTRY(Soul_of_an_Old_Hand,                                        "Soul of an Old Hand",                                      0x400001A1)
-ENTRY(Soul_of_a_Venerable_Old_Hand,                               "Soul of a Venerable Old Hand",                             0x400001A2)
-ENTRY(Soul_of_a_Champion,                                         "Soul of a Champion",                                       0x400001A3)
-ENTRY(Soul_of_a_Great_Champion,                                   "Soul of a Great Champion",                                 0x400001A4)
-ENTRY(Seed_of_a_Giant_Tree,                                       "Seed of a Giant Tree",                                     0x400001B8)
-ENTRY(Young_White_Branch_1,                                       "Young White Branch 1",                                     0x400001C6)
-ENTRY(Rusted_Coin,                                                "Rusted Coin",                                              0x400001C7)
-ENTRY(Siegbrau,                                                   "Siegbrau",                                                 0x400001C8)
-ENTRY(Rusted_Gold_Coin,                                           "Rusted Gold Coin",                                         0x400001C9)
-ENTRY(Blue_Bug_Pellet,                                            "Blue Bug Pellet",                                          0x400001CA)
-ENTRY(Red_Bug_Pellet,                                             "Red Bug Pellet",                                           0x400001CB)
-ENTRY(Yellow_Bug_Pellet,                                          "Yellow Bug Pellet",                                        0x400001CC)
-ENTRY(Black_Bug_Pellet,                                           "Black Bug Pellet",                                         0x400001CD)
-ENTRY(Young_White_Branch_2,                                       "Young White Branch 2",                                     0x400001CF)
-ENTRY(Dark_Sigil,                                                 "Dark Sigil",                                               0x400001EA)
-ENTRY(Ember,                                                      "Ember",                                                    0x400001F4)
-ENTRY(Hello_Carving,                                              "Hello Carving",                                            0x40000208)
-ENTRY(Thank_you_Carving,                                          "Thank you Carving",                                        0x40000209)
-ENTRY(Very_good_Carving,                                          "Very good! Carving",                                       0x4000020A)
-ENTRY(Im_sorry_Carving,                                           "I'm sorry Carving",                                        0x4000020B)
-ENTRY(Help_me_Carving,                                            "Help me! Carving",                                         0x4000020C)
-ENTRY(Ritual_Spear_Fragment,                                      "Ritual Spear Fragment",                                    0x4000028A)
-ENTRY(Divine_Spear_Fragment,                                      "Divine Spear Fragment",                                    0x4000028B)
-ENTRY(Soul_of_Champion_Gundyr,                                    "Soul of Champion Gundyr",                                  0x400002C8)
-ENTRY(Soul_of_the_Dancer,                                         "Soul of the Dancer",                                       0x400002CA)
-ENTRY(Soul_of_a_Crystal_Sage,                                     "Soul of a Crystal Sage",                                   0x400002CB)
-ENTRY(Soul_of_the_Blood_of_the_Wolf,                              "Soul of the Blood of the Wolf",                            0x400002CD)
-ENTRY(Soul_of_Consumed_Oceiros,                                   "Soul of Consumed Oceiros",                                 0x400002CE)
-ENTRY(Soul_of_Boreal_Valley_Vordt,                                "Soul of Boreal Valley Vordt",                              0x400002CF)
-ENTRY(Soul_of_the_Old_Demon_King,                                 "Soul of the Old Demon King",                               0x400002D0)
-ENTRY(Soul_of_Dragonslayer_Armour,                                "Soul of Dragonslayer Armour",                              0x400002D1)
-ENTRY(Soul_of_the_Nameless_King,                                  "Soul of the Nameless King",                                0x400002D2)
-ENTRY(Soul_of_Pontiff_Sulyvahn,                                   "Soul of Pontiff Sulyvahn",                                 0x400002D4)
-ENTRY(Soul_of_Aldrich,                                            "Soul of Aldrich",                                          0x400002D5)
-ENTRY(Soul_of_High_Lord_Wolnir,                                   "Soul of High Lord Wolnir",                                 0x400002D6)
-ENTRY(Soul_of_the_Rotted_Greatwood,                               "Soul of the Rotted Greatwood",                             0x400002D7)
-ENTRY(Soul_of_Rosaria,                                            "Soul of Rosaria",                                          0x400002D8)
-ENTRY(Soul_of_the_Deacons_of_the_Deep,                            "Soul of the Deacons of the Deep",                          0x400002D9)
-ENTRY(Soul_of_the_Twin_Princes_1,                                 "Soul of the Twin Princes 1",                               0x400002DB)
-ENTRY(Soul_of_Yhorm_the_Giant,                                    "Soul of Yhorm the Giant",                                  0x400002DC)
-ENTRY(Soul_of_the_Lords,                                          "Soul of the Lords",                                        0x400002DD)
-ENTRY(Soul_of_a_Demon,                                            "Soul of a Demon",                                          0x400002E3)
-ENTRY(Soul_of_the_Twin_Princes_2,                                 "Soul of the Twin Princes 2",                               0x400002E6)
-ENTRY(Soul_of_a_Stray_Demon,                                      "Soul of a Stray Demon",                                    0x400002E7)
-ENTRY(Soul_of_Sister_Friede,                                      "Soul of Sister Friede",                                    0x400002E8)
-ENTRY(Soul_of_Slave_Knight_Gael,                                  "Soul of Slave Knight Gael",                                0x400002E9)
-ENTRY(Soul_of_the_Demon_Prince,                                   "Soul of the Demon Prince",                                 0x400002EA)
-ENTRY(Soul_of_Darkeater_Midir,                                    "Soul of Darkeater Midir",                                  0x400002EB)
-ENTRY(Titanite_Shard,                                             "Titanite Shard",                                           0x400003E8)
-ENTRY(Large_Titanite_Shard,                                       "Large Titanite Shard",                                     0x400003E9)
-ENTRY(Titanite_Chunk,                                             "Titanite Chunk",                                           0x400003EA)
-ENTRY(Titanite_Slab,                                              "Titanite Slab",                                            0x400003EB)
-ENTRY(Titanite_Scale,                                             "Titanite Scale",                                           0x400003FC)
-ENTRY(Twinkling_Titanite,                                         "Twinkling Titanite",                                       0x40000406)
-ENTRY(Heavy_Gem,                                                  "Heavy Gem",                                                0x4000044C)
-ENTRY(Sharp_Gem,                                                  "Sharp Gem",                                                0x40000456)
-ENTRY(Refined_Gem,                                                "Refined Gem",                                              0x40000460)
-ENTRY(Crystal_Gem,                                                "Crystal Gem",                                              0x4000046A)
-ENTRY(Simple_Gem,                                                 "Simple Gem",                                               0x40000474)
-ENTRY(Fire_Gem,                                                   "Fire Gem",                                                 0x4000047E)
-ENTRY(Chaos_Gem,                                                  "Chaos Gem",                                                0x40000488)
-ENTRY(Lightning_Gem,                                              "Lightning Gem",                                            0x40000492)
-ENTRY(Deep_Gem,                                                   "Deep Gem",                                                 0x4000049C)
-ENTRY(Dark_Gem,                                                   "Dark Gem",                                                 0x400004A6)
-ENTRY(Poison_Gem,                                                 "Poison Gem",                                               0x400004B0)
-ENTRY(Blood_Gem,                                                  "Blood Gem",                                                0x400004BA)
-ENTRY(Raw_Gem,                                                    "Raw Gem",                                                  0x400004C4)
-ENTRY(Blessed_Gem,                                                "Blessed Gem",                                              0x400004CE)
-ENTRY(Hollow_Gem,                                                 "Hollow Gem",                                               0x400004D8)
-ENTRY(Shriving_Stone,                                             "Shriving Stone",                                           0x400004E2)
-ENTRY(Lift_Chamber_Key,                                           "Lift Chamber Key",                                         0x400007D1)
-ENTRY(Small_Doll,                                                 "Small Doll",                                               0x400007D5)
-ENTRY(Jailbreakers_Key,                                           "Jailbreaker's Key",                                        0x400007D7)
-ENTRY(Jailers_Key_Ring,                                           "Jailer's Key Ring",                                        0x400007D8)
-ENTRY(Grave_Key,                                                  "Grave Key",                                                0x400007D9)
-ENTRY(Cell_Key,                                                   "Cell Key",                                                 0x400007DA)
-ENTRY(Dungeon_Ground_Floor_Key,                                   "Dungeon Ground Floor Key",                                 0x400007DB)
-ENTRY(Old_Cell_Key,                                               "Old Cell Key",                                             0x400007DC)
-ENTRY(Tower_Key_1,                                                "Tower Key 1",                                              0x400007DD)
-ENTRY(Grand_Archives_Key,                                         "Grand Archives Key",                                       0x400007DE)
-ENTRY(Tower_Key_2,                                                "Tower Key 2",                                              0x400007DF)
-ENTRY(Small_Lothric_Banner,                                       "Small Lothric Banner",                                     0x40000836)
-ENTRY(Farron_Coal,                                                "Farron Coal",                                              0x40000837)
-ENTRY(Sages_Coal,                                                 "Sage's Coal",                                              0x40000838)
-ENTRY(Giants_Coal,                                                "Giant's Coal",                                             0x40000839)
-ENTRY(Profaned_Coal,                                              "Profaned Coal",                                            0x4000083A)
-ENTRY(Morticians_Ashes,                                           "Mortician's Ashes",                                        0x4000083B)
-ENTRY(Dreamchasers_Ashes,                                         "Dreamchaser's Ashes",                                      0x4000083C)
-ENTRY(Paladins_Ashes,                                             "Paladin's Ashes",                                          0x4000083D)
-ENTRY(Grave_Wardens_Ashes,                                        "Grave Warden's Ashes",                                     0x4000083E)
-ENTRY(Greirats_Ashes,                                             "Greirat's Ashes",                                          0x4000083F)
-ENTRY(Orbecks_Ashes,                                              "Orbeck's Ashes",                                           0x40000840)
-ENTRY(Cornyxs_Ashes,                                              "Cornyx's Ashes",                                           0x40000841)
-ENTRY(Karlas_Ashes,                                               "Karla's Ashes",                                            0x40000842)
-ENTRY(Irinas_Ashes,                                               "Irina's Ashes",                                            0x40000843)
-ENTRY(Yurias_Ashes,                                               "Yuria's Ashes",                                            0x40000844)
-ENTRY(Basin_of_Vows,                                              "Basin of Vows",                                            0x40000845)
-ENTRY(Lorettas_Bone,                                              "Loretta's Bone",                                           0x40000846)
-ENTRY(Braille_Divine_Tome_of_Carim,                               "Braille Divine Tome of Carim",                             0x40000847)
-ENTRY(Braille_Divine_Tome_of_Lothric,                             "Braille Divine Tome of Lothric",                           0x40000848)
-ENTRY(Braille_Divine_Sunlight_Tome,                               "Braille Divine Sunlight Tome",                             0x40000849)
-ENTRY(Cinders_of_a_Lord_1,                                        "Cinders of a Lord 1",                                      0x4000084B)
-ENTRY(Cinders_of_a_Lord_2,                                        "Cinders of a Lord 2",                                      0x4000084C)
-ENTRY(Cinders_of_a_Lord_3,                                        "Cinders of a Lord 3",                                      0x4000084D)
-ENTRY(Cinders_of_a_Lord_4,                                        "Cinders of a Lord 4",                                      0x4000084E)
-ENTRY(Great_Swamp_Pyromancy_Tome,                                 "Great Swamp Pyromancy Tome",                               0x4000084F)
-ENTRY(Carthus_Pyromancy_Tome,                                     "Carthus Pyromancy Tome",                                   0x40000850)
-ENTRY(Izalith_Pyromancy_Tome,                                     "Izalith Pyromancy Tome",                                   0x40000851)
-ENTRY(Quelana_Pyromancy_Tome,                                     "Quelana Pyromancy Tome",                                   0x40000852)
-ENTRY(Grave_Warden_Pyromancy_Tome,                                "Grave Warden Pyromancy Tome",                              0x40000853)
-ENTRY(Sages_Scroll,                                               "Sage's Scroll",                                            0x40000854)
-ENTRY(Logans_Scroll,                                              "Logan's Scroll",                                           0x40000855)
-ENTRY(Crystal_Scroll,                                             "Crystal Scroll",                                           0x40000856)
-ENTRY(Transposing_Kiln,                                           "Transposing Kiln",                                         0x40000857)
-ENTRY(Coiled_Sword,                                               "Coiled Sword",                                             0x40000859)
-ENTRY(Champions_Bones,                                            "Champion's Bones",                                         0x40000869)
-ENTRY(Eyes_of_a_Fire_Keeper,                                      "Eyes of a Fire Keeper",                                    0x4000085A)
-ENTRY(Sword_of_Avowal,                                            "Sword of Avowal",                                          0x4000085B)
-ENTRY(Golden_Scroll,                                              "Golden Scroll",                                            0x4000085C)
-ENTRY(Estus_Shard,                                                "Estus Shard",                                              0x4000085D)
-ENTRY(Hawkwoods_Swordgrass,                                       "Hawkwood's Swordgrass",                                    0x4000085E)
-ENTRY(Undead_Bone_Shard,                                          "Undead Bone Shard",                                        0x4000085F)
-ENTRY(Deep_Braille_Divine_Tome,                                   "Deep Braille Divine Tome",                                 0x40000860)
-ENTRY(Londor_Braille_Divine_Tome,                                 "Londor Braille Divine Tome",                               0x40000861)
-ENTRY(Excrement_covered_Ashes,                                    "Excrement-covered Ashes",                                  0x40000862)
-ENTRY(Prisoner_Chiefs_Ashes,                                      "Prisoner Chief's Ashes",                                   0x40000863)
-ENTRY(Xanthous_Ashes,                                             "Xanthous Ashes",                                           0x40000864)
-ENTRY(Hollows_Ashes,                                              "Hollow's Ashes",                                           0x40000865)
-ENTRY(Patches_Ashes,                                              "Patches' Ashes",                                           0x40000866)
-ENTRY(Dragon_Chasers_Ashes,                                       "Dragon Chaser's Ashes",                                    0x40000867)
-ENTRY(Easterners_Ashes,                                           "Easterner's Ashes",                                        0x40000868)
-ENTRY(Captains_Ashes,                                             "Captain's Ashes",                                          0x4000086A)
-ENTRY(Contraption_Key,                                            "Contraption Key",                                          0x4000086B)
-ENTRY(Small_Envoy_Banner,                                         "Small Envoy Banner",                                       0x4000086C)
-ENTRY(Old_Womans_Ashes,                                           "Old Woman's Ashes",                                        0x4000086D)
-ENTRY(Blood_of_the_Dark_Soul,                                     "Blood of the Dark Soul",                                   0x4000086E)
-ENTRY(Young_Grass_Dew,                                            "Young Grass Dew",                                          0x4000086F)
-ENTRY(Beckon,                                                     "Beckon",                                                   0x40002328)
-ENTRY(Point_forward,                                              "Point forward",                                            0x40002329)
-ENTRY(Hurrah,                                                     "Hurrah!",                                                  0x4000232A)
-ENTRY(Bow,                                                        "Bow",                                                      0x4000232B)
-ENTRY(Jump_for_joy,                                               "Jump for joy",                                             0x4000232C)
-ENTRY(Duel_bow,                                                   "Duel bow",                                                 0x4000232D)
-ENTRY(Wave,                                                       "Wave",                                                     0x4000232E)
-ENTRY(Praise_the_Sun,                                             "Praise the Sun",                                           0x4000232F)
-ENTRY(Point_up,                                                   "Point up",                                                 0x40002330)
-ENTRY(Point_down,                                                 "Point down",                                               0x40002331)
-ENTRY(Prostration,                                                "Prostration",                                              0x40002334)
-ENTRY(Proper_bow,                                                 "Proper bow",                                               0x40002335)
-ENTRY(Prayer,                                                     "Prayer",                                                   0x40002336)
-ENTRY(Welcome,                                                    "Welcome",                                                  0x40002337)
-ENTRY(Joy,                                                        "Joy",                                                      0x40002338)
-ENTRY(My_thanks,                                                  "My thanks!",                                               0x40002339)
-ENTRY(Rejoice,                                                    "Rejoice",                                                  0x4000233A)
-ENTRY(Rest,                                                       "Rest",                                                     0x4000233B)
-ENTRY(By_my_sword,                                                "By my sword",                                              0x4000233C)
-ENTRY(Dignified_bow,                                              "Dignified bow",                                            0x4000233D)
-ENTRY(Curl_up,                                                    "Curl up",                                                  0x4000233F)
-ENTRY(Stretch_out,                                                "Stretch out",                                              0x40002340)
-ENTRY(Call_over,                                                  "Call over",                                                0x40002341)
-ENTRY(Collapse,                                                   "Collapse",                                                 0x40002342)
-ENTRY(Quiet_Resolve,                                              "Quiet Resolve",                                            0x40002343)
-ENTRY(Patches_Squat,                                              "Patches Squat",                                            0x40002344)
-ENTRY(Applause,                                                   "Applause",                                                 0x40002345)
-ENTRY(Path_of_the_Dragon,                                         "Path of the Dragon",                                       0x40002346)
-ENTRY(Legion_Etiquette,                                           "Legion Etiquette",                                         0x40002347)
-ENTRY(Darkmoon_Loyalty,                                           "Darkmoon Loyalty",                                         0x40002348)
-ENTRY(Sleep,                                                      "Sleep",                                                    0x40002349)
-ENTRY(Toast,                                                      "Toast",                                                    0x4000234A)
-ENTRY(Silent_Ally,                                                "Silent Ally!",                                             0x4000234B)
-ENTRY(Farron_Dart,                                                "Farron Dart",                                              0x40124F80)
-ENTRY(Great_Farron_Dart,                                          "Great Farron Dart",                                        0x40127690)
-ENTRY(Soul_Arrow,                                                 "Soul Arrow",                                               0x4013D620)
-ENTRY(Great_Soul_Arrow,                                           "Great Soul Arrow",                                         0x4013DA08)
-ENTRY(Heavy_Soul_Arrow,                                           "Heavy Soul Arrow",                                         0x4013DDF0)
-ENTRY(Great_Heavy_Soul_Arrow,                                     "Great Heavy Soul Arrow",                                   0x4013E1D8)
-ENTRY(Homing_Soulmass,                                            "Homing Soulmass",                                          0x4013E5C0)
-ENTRY(Homing_Crystal_Soulmass,                                    "Homing Crystal Soulmass",                                  0x4013E9A8)
-ENTRY(Soul_Spear,                                                 "Soul Spear",                                               0x4013ED90)
-ENTRY(Crystal_Soul_Spear,                                         "Crystal Soul Spear",                                       0x4013F178)
-ENTRY(Deep_Soul,                                                  "Deep Soul",                                                0x4013F560)
-ENTRY(Great_Deep_Soul,                                            "Great Deep Soul",                                          0x4013F948)
-ENTRY(Magic_Weapon,                                               "Magic Weapon",                                             0x4013FD30)
-ENTRY(Great_Magic_Weapon,                                         "Great Magic Weapon",                                       0x40140118)
-ENTRY(Crystal_Magic_Weapon,                                       "Crystal Magic Weapon",                                     0x40140500)
-ENTRY(Frozen_Weapon,                                              "Frozen Weapon",                                            0x401408E8)
-ENTRY(Magic_Shield,                                               "Magic Shield",                                             0x40144B50)
-ENTRY(Great_Magic_Shield,                                         "Great Magic Shield",                                       0x40144F38)
-ENTRY(Hidden_Weapon,                                              "Hidden Weapon",                                            0x40147260)
-ENTRY(Hidden_Body,                                                "Hidden Body",                                              0x40147648)
-ENTRY(Cast_Light,                                                 "Cast Light",                                               0x40149970)
-ENTRY(Repair,                                                     "Repair",                                                   0x4014A528)
-ENTRY(Spook,                                                      "Spook",                                                    0x4014A910)
-ENTRY(Chameleon,                                                  "Chameleon",                                                0x4014ACF8)
-ENTRY(Aural_Decoy,                                                "Aural Decoy",                                              0x4014B0E0)
-ENTRY(White_Dragon_Breath,                                        "White Dragon Breath",                                      0x4014E790)
-ENTRY(Farron_Hail,                                                "Farron Hail",                                              0x4014EF60)
-ENTRY(Crystal_Hail,                                               "Crystal Hail",                                             0x4014F348)
-ENTRY(Soul_Greatsword,                                            "Soul Greatsword",                                          0x4014F730)
-ENTRY(Farron_Flashsword,                                          "Farron Flashsword",                                        0x4014FB18)
-ENTRY(Old_Moonlight,                                              "Old Moonlight",                                            0x4014FF00)
-ENTRY(Affinity,                                                   "Affinity",                                                 0x401875B8)
-ENTRY(Great_Soul_Dregs,                                           "Great Soul Dregs",                                         0x401879A0)
-ENTRY(Dark_Edge,                                                  "Dark Edge",                                                0x40189CC8)
-ENTRY(Soul_Stream,                                                "Soul Stream",                                              0x4018B820)
-ENTRY(Twisted_Wall_of_Light,                                      "Twisted Wall of Light",                                    0x40193138)
-ENTRY(Pestilent_Mercury,                                          "Pestilent Mercury",                                        0x401A8CE0)
-ENTRY(Snap_Freeze,                                                "Snap Freeze",                                              0x401A90C8)
-ENTRY(Fireball,                                                   "Fireball",                                                 0x40249F00)
-ENTRY(Fire_Orb,                                                   "Fire Orb",                                                 0x4024A6D0)
-ENTRY(Firestorm,                                                  "Firestorm",                                                0x4024AAB8)
-ENTRY(Fire_Surge,                                                 "Fire Surge",                                               0x4024B288)
-ENTRY(Black_Serpent,                                              "Black Serpent",                                            0x4024BA58)
-ENTRY(Combustion,                                                 "Combustion",                                               0x4024C610)
-ENTRY(Great_Combustion,                                           "Great Combustion",                                         0x4024C9F8)
-ENTRY(Poison_Mist,                                                "Poison Mist",                                              0x4024ED20)
-ENTRY(Toxic_Mist,                                                 "Toxic Mist",                                               0x4024F108)
-ENTRY(Acid_Surge,                                                 "Acid Surge",                                               0x4024F4F0)
-ENTRY(Iron_Flesh,                                                 "Iron Flesh",                                               0x40251430)
-ENTRY(Flash_Sweat,                                                "Flash Sweat",                                              0x40251818)
-ENTRY(Carthus_Flame_Arc,                                          "Carthus Flame Arc",                                        0x402527B8)
-ENTRY(Rapport,                                                    "Rapport",                                                  0x40252BA0)
-ENTRY(Power_Within,                                               "Power Within",                                             0x40253B40)
-ENTRY(Great_Chaos_Fire_Orb,                                       "Great Chaos Fire Orb",                                     0x40256250)
-ENTRY(Chaos_Storm,                                                "Chaos Storm",                                              0x40256638)
-ENTRY(Fire_Whip,                                                  "Fire Whip",                                                0x40256A20)
-ENTRY(Black_Flame,                                                "Black Flame",                                              0x40256E08)
-ENTRY(Profaned_Flame,                                             "Profaned Flame",                                           0x402575D8)
-ENTRY(Chaos_Bed_Vestiges,                                         "Chaos Bed Vestiges",                                       0x402579C0)
-ENTRY(Floating_Chaos,                                             "Floating Chaos",                                           0x40257DA8)
-ENTRY(Flame_Fan,                                                  "Flame Fan",                                                0x40258190)
-ENTRY(Warmth,                                                     "Warmth",                                                   0x4025B070)
-ENTRY(Profuse_Sweat,                                              "Profuse Sweat",                                            0x402717D0)
-ENTRY(Black_Fire_Orb,                                             "Black Fire Orb",                                           0x4027D350)
-ENTRY(Bursting_Fireball,                                          "Bursting Fireball",                                        0x4027FA60)
-ENTRY(Boulder_Heave,                                              "Boulder Heave",                                            0x40282170)
-ENTRY(Sacred_Flame,                                               "Sacred Flame",                                             0x40284880)
-ENTRY(Carthus_Beacon,                                             "Carthus Beacon",                                           0x40286F90)
-ENTRY(Seething_Chaos,                                             "Seething Chaos",                                           0x402896A0)
-ENTRY(Heal_Aid,                                                   "Heal Aid",                                                 0x403540D0)
-ENTRY(Heal,                                                       "Heal",                                                     0x403567E0)
-ENTRY(Med_Heal,                                                   "Med Heal",                                                 0x40356BC8)
-ENTRY(Great_Heal,                                                 "Great Heal",                                               0x40356FB0)
-ENTRY(Soothing_Sunlight,                                          "Soothing Sunlight",                                        0x40357398)
-ENTRY(Replenishment,                                              "Replenishment",                                            0x40357780)
-ENTRY(Bountiful_Sunlight,                                         "Bountiful Sunlight",                                       0x40357B68)
-ENTRY(Bountiful_Light,                                            "Bountiful Light",                                          0x40358338)
-ENTRY(Caressing_Tears,                                            "Caressing Tears",                                          0x40358720)
-ENTRY(Lightning_Arrow,                                            "Lightning Arrow",                                          0x40358B08)
-ENTRY(Tears_of_Denial,                                            "Tears of Denial",                                          0x4035B600)
-ENTRY(Homeward,                                                   "Homeward",                                                 0x4035B9E8)
-ENTRY(Force,                                                      "Force",                                                    0x4035DD10)
-ENTRY(Wrath_of_the_Gods,                                          "Wrath of the Gods",                                        0x4035E0F8)
-ENTRY(Emit_Force,                                                 "Emit Force",                                               0x4035E4E0)
-ENTRY(Seek_Guidance,                                              "Seek Guidance",                                            0x40360420)
-ENTRY(Lightning_Spear,                                            "Lightning Spear",                                          0x40362B30)
-ENTRY(Great_Lightning_Spear,                                      "Great Lightning Spear",                                    0x40362F18)
-ENTRY(Sunlight_Spear,                                             "Sunlight Spear",                                           0x40363300)
-ENTRY(Lightning_Storm,                                            "Lightning Storm",                                          0x403636E8)
-ENTRY(Gnaw,                                                       "Gnaw",                                                     0x40363AD0)
-ENTRY(Dorhys_Gnawing,                                             "Dorhys' Gnawing",                                          0x40363EB8)
-ENTRY(Way_of_White_Corona,                                        "Way of White Corona",                                      0x403642A0)
-ENTRY(Projected_Heal,                                             "Projected Heal",                                           0x40364688)
-ENTRY(Magic_Barrier,                                              "Magic Barrier",                                            0x40365240)
-ENTRY(Great_Magic_Barrier,                                        "Great Magic Barrier",                                      0x40365628)
-ENTRY(Sacred_Oath,                                                "Sacred Oath",                                              0x40365DF8)
-ENTRY(Vow_of_Silence,                                             "Vow of Silence",                                           0x4036A448)
-ENTRY(Lightning_Blade,                                            "Lightning Blade",                                          0x4036C770)
-ENTRY(Darkmoon_Blade,                                             "Darkmoon Blade",                                           0x4036CB58)
-ENTRY(Dark_Blade,                                                 "Dark Blade",                                               0x40378AC0)
-ENTRY(Dead_Again,                                                 "Dead Again",                                               0x40387520)
-ENTRY(Lightning_Stake,                                            "Lightning Stake",                                          0x40389C30)
-ENTRY(Divine_Pillars_of_Light,                                    "Divine Pillars of Light",                                  0x4038C340)
-ENTRY(Lifehunt_Scythe,                                            "Lifehunt Scythe",                                          0x4038EA50)
-ENTRY(Blessed_Weapon,                                             "Blessed Weapon",                                           0x40395F80)
-ENTRY(Deep_Protection,                                            "Deep Protection",                                          0x40398690)
-ENTRY(Atonement,                                                  "Atonement",                                                0x4039ADA0)
+
+/*
+
+03B2F5E0:Cracked Red Eye Orb
+03B2CED0:Cracked Blue Eye Orb
+03B2BB48:Red Sign Soapstone
+03B20B80:Dried Fingers
+03B259A0:Bone of Order
+03B280B0:White Sign Soapstone
+03B2A7C0:Small White Sign Soapstone
+03B31CF0:Dragon Eye
+03B39220:Token of Fidelity
+03B3B930:Token of Spite
+03B3E040:Sunlight Medal
+03B40750:Dragon Scale
+03B42E60:Rat Tail
+03B45570:Awestone
+0395D4D8:Human Effigy
+000F4240:Dagger
+000F6950:Bandit's Knife
+000FDE80:Mytha's Bent Blade
+00100590:Shadow Dagger
+00102CA0:Thief Dagger
+001053B0:Broken Thief Sword
+0010C8E0:Parrying Dagger
+0010EFF0:Manikin Knife
+00113E10:Royal Dirk
+00116520:Blue Dagger
+00118C30:Umbral Dagger
+0011B340:Retainer's Short Sword
+00124F80:Broken Straight Sword
+00127690:Shortsword
+00129DA0:Longsword
+0012C4B0:Broadsword
+0012EBC0:Foot Soldier Sword
+001312D0:Puzzling Stone Sword
+001339E0:Possessed Armor Sword
+001360F0:Varangian Sword
+00138800:Blue Flame
+0013AF10:Fume Sword
+00142440:Heide Knight Sword
+00144B50:Red Rust Sword
+00147260:no text
+00149970:Black Dragon Sword
+0014C080:Sun Sword
+0014E790:Drakekeeper's Sword
+00150EA0:Ashen Warrior Sword
+001535B0:Ivory Straight Sword
+00155CC0:Estoc
+001583D0:Mail Breaker
+0015AAE0:Chaos Rapier
+0015D1F0:Spider's Silk
+0015F900:Espada Ropera
+0016E360:Rapier
+00173180:Black Scorpion Stinger
+00175890:Ricard's Rapier
+00181BE0:Ice Rapier
+00186A00:Falchion
+00189110:Shotel
+0018B820:Warped Sword
+0018DF30:Eleum Loyce
+00190640:Manikin Sabre
+00192D50:Scimitar
+00195460:Red Rust Scimitar
+00197B70:Spider Fang
+0019A280:Melu Scimitar
+0019C990:Monastery Scimitar
+0019F0A0:Uchigatana
+001A17B0:Washing Pole
+001A3EC0:Chaos Blade
+001A65D0:Blacksteel Katana
+001A8CE0:Manslayer
+001ADB00:Darkdrift
+001B0210:Berserker Blade
+001B5030:Bewitched Alonne Sword
+001B7740:Bastard Sword
+001B9E50:Flamberge
+001BC560:Claymore
+001BEC70:Majestic Greatsword
+001BF058:Majestic Greatsword
+001C3A90:Drangleic Sword
+001C61A0:Thorned Greatsword
+001C88B0:Bluemoon Greatsword
+001C8C98:Moonlight Greatsword
+001CAFC0:Mastodon Greatsword
+001CFDE0:Ruler's Sword
+001D24F0:Mirrah Greatsword
+001D28D8:Old Mirrah Greatsword
+001D4C00:Black Dragon Greatsword
+001D7310:Black Knight Greatsword
+001D9A20:Royal Greatsword
+001DC130:Old Knight Greatsword
+001DE840:Defender Greatsword
+001E0F50:Watcher Greatsword
+001E3660:Key to the Embedded
+001E5D70:Drakeblood Greatsword
+001E70F8:Loyce Greatsword
+001E74E0:Charred Loyce Greatsword
+001E8480:Hand Axe
+001EAB90:Battle Axe
+001ED2A0:Bandit Axe
+001EF9B0:Infantry Axe
+001F95F0:Gyrm Axe
+001FBD00:Dragonslayer's Crescent Axe
+001FE410:Butcher's Knife
+00200B20:Silverblack Sickle
+002191C0:Crescent Axe
+0021B8D0:Greataxe
+0021DFE0:Bandit Greataxe
+00222E00:Lion Greataxe
+00225510:Giant Stone Axe
+00227C20:Gyrm Greataxe
+0022F150:Black Dragon Greataxe
+00231860:Black Knight Greataxe
+00233F70:Drakekeeper's Greataxe
+00249F00:Club
+0024C610:Mace
+0024ED20:Morning Star
+00251430:Reinforced Club
+00253B40:Craftsman's Hammer
+0025B070:Mace of the Insolent
+002625A0:Handmaid's Ladle
+002673C0:Blacksmith's Hammer
+00269AD0:Black Dragon Warpick
+0026C1E0:Aldia Hammer
+00271000:Barbed Club
+0027AC40:Large Club
+0027D350:Pickaxe
+0027FA60:Great Club
+00282170:Gyrm Great Hammer
+002896A0:Iron King Hammer
+0028BDB0:Malformed Skull
+0028E4C0:Dragon Tooth
+00290BD0:Giant Warrior Club
+002932E0:Malformed Shell
+002959F0:Demon's Great Hammer
+00298100:Archdrake Mace
+0029A810:Old Knight Hammer
+0029CF20:Drakekeeper's Great Hammer
+0029F630:Sacred Chime Hammer
+002A1D40:Sanctum Mace
+002AB980:Spear
+002AE090:Winged Spear
+002B07A0:Pike
+002B2EB0:Partizan
+002B55C0:Stone Soldier Spear
+002B7CD0:Spitfire Spear
+002B9058:Yorgh's Spear
+002BA3E0:Silverblack Spear
+002BCAF0:Heide Spear
+002BF200:Pate's Spear
+002C1910:Channeler's Trident
+002C2C98:Gargoyle Bident
+002C3080:Dragonslayer Spear
+002C4020:Heide Lance
+002C8E40:Heide Greatlance
+002CB550:Grand Lance
+002CDC60:Chariot Lance
+002D0370:Rampart Golem Lance
+002D2A80:Smelter Hammer
+002DC6C0:Great Scythe
+002DEDD0:Great Machete
+002E14E0:Full Moon Sickle
+002E6300:Crescent Sickle
+002E8A10:Scythe of Nahr Alma
+002EB120:Bone Scythe
+002ED830:Scythe of Want
+0030D400:Lucerne
+0030FB10:Scythe
+00312220:Halberd
+00317040:Helix Halberd
+00319750:Santier's Spear
+00319B38:Santier's Spear
+0031E570:Mastodon Halberd
+00320C80:Blue Knight's Halberd
+00323390:Dragonrider's Halberd
+00325AA0:Black Knight Halberd
+003281B0:Syan's Halberd
+0032A8C0:Roaring Halberd
+0032CFD0:Old Knight Halberd
+0032F6E0:Old Knight Pike
+00331DF0:Drakekeeper's Warpick
+00336C10:Wrathful Axe
+00340850:Claws
+00342F60:Malformed Claws
+00345670:Manikin Claws
+00347D80:Work Hook
+003567E0:Caestus
+00358EF0:Shadow Claws
+0035DD10:Bone Fist
+0036EE80:Whip
+00371590:Notched Whip
+00373CA0:Bloodied Whip
+003763B0:Spotted Whip
+0037D8E0:Old Whip
+0039FBC0:Sorcerer's Staff
+003A22D0:Staff of Amana
+003A49E0:Witchtree Branch
+003A70F0:Lizard Staff
+003ABF10:Olenford's Staff
+003AE620:Archdrake Staff
+003B0D30:Bat Staff
+003B3440:Bone Staff
+003B5B50:Staff of Wisdom
+003B8260:Sunset Staff
+003BA970:Pilgrim's Spontoon
+003BF790:Azal's Staff
+003C1EA0:Retainer Staff
+003D3010:Cleric's Sacred Chime
+003D5720:Witchtree Bellvine
+003D7E30:Priest's Chime
+003DA540:Dragon Chime
+003DCC50:Chime of Want
+003DF360:Archdrake Chime
+003E4180:Idol's Chime
+003E6890:Caitha's Chime
+003E8FA0:Protective Chime
+003EB6B0:Disc Chime
+003EDDC0:Chime of Screams
+003F52F0:Black Witch's Staff
+00401640:Short Bow
+00403D50:Long Bow
+00406460:Composite Bow
+00408B70:Sea Bow
+0040B280:Dragonrider Bow
+004127B0:Bell Keeper Bow
+00414EC0:Bow of Want
+004175D0:Hunter's Blackbow
+00432380:Alonne Greatbow
+004371A0:Dragonslayer Greatbow
+004398B0:Possessed Armor Greatbow
+0043BFC0:Twin-headed Greatbow
+004630C0:Light Crossbow
+004657D0:Heavy Crossbow
+0046A5F0:Shield Crossbow
+00471B20:Avelyn
+00474230:Sanctum Crossbow
+00476940:Sanctum Repeating Crossbow
+004C4B40:Murakumo
+004C7250:Arced Sword
+004CE780:Curved Dragon Greatsword
+004D0E90:Curved Nil Greatsword
+004F5880:Zweihander
+004F7F90:Greatsword
+004FA6A0:Smelter Sword
+004FBA28:Aged Smelter Sword
+004FCDB0:Drakewing Ultra Greatsword
+004FF4C0:King's Ultra Greatsword
+00501BD0:Fume Ultra Greatsword
+00502F58:Ivory King Ultra Greatsword
+005069F0:Pursuer's Ultra Greatsword
+00507D78:Drakekeeper's Ultra Greatsword
+00509100:Crypt Blacksword
+0050A488:Old Knight Ultra Greatsword
+0050B810:Black Knight Ultra Greatsword
+0050CB98:Lost Sinner's Sword
+00510630:Stone Twinblade
+00515450:Dragonrider Twinblade
+00517B60:Twinblade
+0051A270:Red Iron Twinblade
+0051C980:Curved Twinblade
+0051F090:Sorcerer's Twinblade
+005265C0:Pyromancy Flame
+00528CD0:Dark Pyromancy Flame
+0053EC60:Black Flamestone Dagger
+00541370:Yellow Quartz Longsword
+00543A80:Bound Hand Axe
+00546190:Homunculus Mace
+005488A0:Transgressor's Staff
+00557300:Longsword
+00559A10:Murakumo
+0055C120:Blacksteel Katana
+0055E830:Rapier
+00560F40:Greataxe
+00563650:Great Club
+00565D60:Caestus
+005D1420:Binoculars
+00A7D8C0:Buckler
+00A7EC48:Benhart's Parma
+00A7FFD0:Small Leather Shield
+00A826E0:Iron Parma
+00A84DF0:Foot Soldier Shield
+00A87500:Target Shield
+00A89C10:Golden Falcon Shield
+00A8EA30:Manikin Shield
+00A91140:Llewellyn Shield
+00A93C38:Crimson Parma
+00A98670:Cleric's Parma
+00A9AD80:Cleric's Small Shield
+00A9D490:Magic Shield
+00A9FBA0:Cursed Bone Shield
+00AA22B0:Sanctum Shield
+00AA49C0:Varangian Shield
+00AAAB68:Watcher's Shield
+00AAE600:Large Leather Shield
+00AB0D10:Blue Wooden Shield
+00AB3420:Silver Eagle Kite Shield
+00AB5B30:Drangleic Shield
+00AB8240:Lion Clan Shield
+00ABA950:Archdrake Shield
+00ABD060:King's Shield
+00ABF770:Mirrah Shield
+00AC1E80:Old Knight's Shield
+00AC4590:Loyce Shield
+00AC5918:Charred Loyce Shield
+00AC6CA0:Spirit Tree Shield
+00AC93B0:Golden Wing Shield
+00ACBAC0:Vessel Shield
+00ACE1D0:Shield of the Insolent
+00AD2FF0:Silverblack Shield
+00AD5700:Stone Parma
+00AD7E10:Grand Spirit Tree Shield
+00ADA520:Moon Butterfly Shield
+00ADCC30:Slumbering Dragon Shield
+00ADDFB8:Chaos Shield
+00ADF340:Wooden Shield
+00AE4160:Hollow Soldier Shield
+00AE6870:Royal Kite Shield
+00AEB690:Red Rust Shield
+00AECA18:Rampart Golem Shield
+00AF04B0:Bell Keeper Shield
+00AF1838:Defender's Shield
+00AF2BC0:Black Dragon Shield
+00AF3F48:Drakekeeper's Shield
+00AF52D0:Porcine Shield
+00AF6658:Bone Shield
+00AF79E0:Twin Dragon Greatshield
+00AFA0F0:Tower Shield
+00AFEF10:Orma's Greatshield
+00B01620:Reeve's Greatshield
+00B03D30:King's Mirror
+00B06440:Dragonrider Greatshield
+00B08B50:Mastodon Greatshield
+00B0D970:Havel's Greatshield
+00B10080:Gyrm Greatshield
+00B12790:Pursuer's Greatshield
+00B14EA0:Pate's Shield
+00B175B0:Old Knight Greatshield
+00B19CC0:Drakekeeper's Greatshield
+00B1C3D0:Greatshield of Glory
+00B28720:Phoenix Parma
+00B2AE30:Sunlight Parma
+00B2D540:Watchdragon Parma
+00B2FC50:Blossom Kite Shield
+00B32360:Rebel's Greatshield
+00B34A70:Wicked Eye Greatshield
+00B40DC0:Black Flamestone Parma
+00B434D0:Yellow Quartz Shield
+00B45BE0:Bound Wooden Shield
+00B482F0:Homunculus Wooden Shield
+00B4AA00:Transgressor's Leather Shield
+014096B4:Pate's Helm
+014096B5:Pate's Armor
+014096B6:Pate's Gloves
+014096B7:Pate's Trousers
+0140BDC4:Thief Mask
+0140BDC5:Black Leather Armor
+0140BDC6:Black Leather Gloves
+0140BDC7:Black Leather Boots
+0140E4D4:Wanderer Hood
+0140E4D5:Wanderer Coat
+0140E4D6:Wanderer Manchettes
+0140E4D7:Wanderer Boots
+01410BE4:Hunter's Hat
+01410BE5:Leather Armor
+01410BE6:Leather Gloves
+01410BE7:Leather Boots
+01410FCC:Hunter's Hat
+014132F4:Knight Helm
+014132F5:Knight Armor
+014132F6:Knight Gauntlets
+014132F7:Knight Leggings
+01415A04:Elite Knight Helm
+01415A05:Elite Knight Armor
+01415A06:Elite Knight Gloves
+01415A07:Elite Knight Leggings
+01418114:Tattered Cloth Hood
+01418115:Tattered Cloth Robe
+01418116:Tattered Cloth Manchettes
+01418117:Heavy Boots
+0141A824:Brigand Hood
+0141A825:Brigand Armor
+0141A826:Brigand Gauntlets
+0141A827:Brigand Trousers
+0141F644:Imported Hood
+0141F645:Imported Tunic
+0141F646:Imported Manchettes
+0141F647:Imported Trousers
+01429284:Traveling Merchant Hat
+01429285:Traveling Merchant Coat
+01429286:Traveling Merchant Gloves
+01429287:Traveling Merchant Boots
+0142E0A4:Havel's Helm
+0142E0A5:Havel's Armor
+0142E0A6:Havel's Gauntlets
+0142E0A7:Havel's Leggings
+0143A3F4:Jester's Cap
+0143A3F5:Jester's Robes
+0143A3F6:Jester's Gloves
+0143A3F7:Jester's Tights
+0143F214:Moon Hat
+0143F215:Astrologist's Robe
+0143F216:Astrologist's Gauntlets
+0143F217:Astrologist's Bottoms
+014551A4:Faraam Helm
+014551A5:Faraam Armor
+014551A6:Faraam Gauntlets
+014551A7:Faraam Boots
+014578B4:Black Dragon Helm
+014578B5:Black Dragon Armor
+014578B6:Black Dragon Gauntlets
+014578B7:Black Dragon Leggings
+01459FC4:Xanthous Crown
+01459FC5:Xanthous Overcoat
+01459FC6:Xanthous Gloves
+01459FC7:Xanthous Waistcloth
+0145C6D4:Mask of Judgment
+0145C6D5:Robe of Judgment
+0145C6D6:Manchettes of Judgment
+0145C6D7:Tights of Judgment
+0145EDE4:Helm of Aurous
+0145EDE5:Armor of Aurous
+0145EDE6:Gauntlets of Aurous
+0145EDE7:Leggings of Aurous
+0145F1CC:Helm of Aurous
+0145F1CD:Armor of Aurous
+0145F1CE:Gauntlets of Aurous
+0145F1CF:Leggings of Aurous
+014614F4:Monastery Headcloth
+014614F5:Monastery Longshirt
+014614F6:Monastery Long Gloves
+014614F7:Monastery Skirt
+01466314:Dingy Hood
+01466315:Dingy Robe
+01466316:Dingy Cuffs
+01466317:Blood-Stained Skirt
+0146FF54:Durgo's Hat
+01472666:Engraved Gauntlets
+01474D75:Barrel
+01477487:Flying Feline Boots
+01479B94:Moon Butterfly Hat
+01479B95:Moon Butterfly Wings
+01479B96:Moon Butterfly Cuffs
+01479B97:Moon Butterfly Skirt
+0147C2A4:Catarina Helm
+0147C2A5:Catarina Armor
+0147C2A6:Catarina Gauntlets
+0147C2A7:Catarina Leggings
+0147E9B4:Alva Helm
+0147E9B5:Alva Armor
+0147E9B6:Alva Gauntlets
+0147E9B7:Alva Leggings
+014810C4:Black Witch Veil
+014810C5:Black Witch Robe
+014810C6:Black Witch Gloves
+014810C7:Black Witch Trousers
+014814AC:Black Witch Hat
+01481894:Black Witch Domino Mask
+01499764:Drakeblood Helm
+01499765:Drakeblood Armor
+01499766:Drakeblood Gauntlets
+01499767:Drakeblood Leggings
+0149BE74:Northwarder Hood
+0149BE75:Northwarder Robe
+0149BE76:Northwarder Manchettes
+0149BE77:Northwarder Trousers
+014A0C94:Crown of the Old Iron King
+014A33A4:Crown of the Ivory King
+014A5AB4:Crown of the Sunken King
+014A81C4:Old Bell Helm
+014AA8D4:Hollow Skin
+014ACFE4:Pharros Mask
+014AF6F7:Flower Skirt
+014B1E04:Minotaur Helm
+014B4514:Symbol of Avarice
+01500004:Hollow Soldier Helm
+01500005:Hollow Soldier Armor
+01500006:Hollow Soldier Gauntlets
+01500007:Hollow Soldier Leggings
+015003EC:Royal Soldier Helm
+015003ED:Royal Soldier Armor
+015003EE:Royal Soldier Gauntlets
+015003EF:Royal Soldier Leggings
+01502714:Hollow Infantry Helm
+01502715:Hollow Infantry Armor
+01502716:Hollow Infantry Gloves
+01502717:Hollow Infantry Boots
+01502AFC:Infantry Helm
+01502AFD:Infantry Armor
+01502AFE:Infantry Gloves
+01502AFF:Infantry Boots
+01509C44:White Priest Headpiece
+01509C45:White Priest Robe
+01509C46:White Priest Gloves
+01509C47:White Priest Skirt
+0150A414:Priestess Headpiece
+0150A415:Priestess Robe
+0150A416:Priestess Gloves
+0150A417:Priestess Skirt
+0150EA64:Rogue Hood
+0150EA65:Rogue Armor
+0150EA66:Rogue Gauntlets
+0150EA67:Rogue Leggings
+01515F94:Spiked Bandit Helm
+01515F95:Bandit Armor
+01515F96:Bandit Gauntlets
+01515F97:Bandit Boots
+0151ADB4:Varangian Helm
+0151ADB5:Varangian Armor
+0151ADB6:Varangian Cuffs
+0151ADB7:Varangian Leggings
+01527104:Black Hollow Mage Hood
+01527105:Black Hollow Mage Robe
+015278D4:White Hollow Mage Hood
+015278D5:White Hollow Mage Robe
+01529815:Lion Mage Robe
+01529816:Lion Mage Cuffs
+01529817:Lion Mage Skirt
+01530D44:Steel Helm
+01530D45:Steel Armor
+01530D46:Steel Gauntlets
+01530D47:Steel Leggings
+01533454:Shadow Mask
+01533455:Shadow Top
+01533456:Shadow Gauntlets
+01533457:Shadow Leggings
+01535B64:Manikin Mask
+01535B65:Manikin Top
+01535B66:Manikin Gloves
+01535B67:Manikin Boots
+0153D094:Prisoner's Hood
+0153D095:Prisoner's Tatters
+0153D096:Prisoner's Gloves
+0153D097:Prisoner's Waistcloth
+0153D47C:Prisoner's Hood
+0153D47D:Prisoner's Tatters
+01546CD4:Archdrake Helm
+01546CD5:Archdrake Robes
+01546CD6:Archdrake Gloves
+01546CD7:Archdrake Boots
+0154E204:Gyrm Helm
+0154E205:Gyrm Armor
+0154E206:Gyrm Gloves
+0154E207:Gyrm Boots
+01550914:Gyrm Warrior Helm
+01550915:Gyrm Warrior Armor
+01550916:Gyrm Warrior Gloves
+01550917:Gyrm Warrior Boots
+01550CFC:Gyrm Warrior Greathelm
+01553024:Dark Mask
+01553025:Dark Armor
+01553026:Dark Gauntlets
+01553027:Dark Leggings
+01555734:Warlock Mask
+0156B6C4:Tseldora Cap
+0156B6C5:Tseldora Robe
+0156B6C6:Tseldora Manchettes
+0156B6C7:Tseldora Trousers
+015704E4:Peasant Hat
+015704E5:Peasant Attire
+015704E6:Peasant Long Gloves
+015704E7:Peasant Trousers
+01577A14:Ironclad Helm
+01577A15:Ironclad Armor
+01577A16:Ironclad Gauntlets
+01577A17:Ironclad Leggings
+015781E4:Old Ironclad Helm
+015781E5:Old Ironclad Armor
+015781E6:Old Ironclad Gauntlets
+015781E7:Old Ironclad Leggings
+0157A124:Royal Swordsman Helm
+0157A125:Royal Swordsman Armor
+0157A126:Royal Swordsman Gloves
+0157A127:Royal Swordsman Leggings
+0157C834:Syan's Helm
+0157C835:Syan's Armor
+0157C836:Syan's Gauntlets
+0157C837:Syan's Leggings
+0157EF44:Bone Crown
+0157EF45:Bone King Robe
+0157EF46:Bone King Cuffs
+0157EF47:Bone King Skirt
+015F1B34:Heide Knight Greathelm
+015F1B35:Heide Knight Chainmail
+015F1B36:Heide Knight Gauntlets
+015F1B37:Heide Knight Leggings
+015F1F1C:Heide Knight Iron Mask
+015F9065:Singer's Dress
+015F944D:Singer's Dress
+015F9835:Singer's Dress
+015FB774:Smelter Demon Helm
+015FB775:Smelter Demon Armor
+015FB776:Smelter Demon Gauntlets
+015FB777:Smelter Demon Leggings
+015FDE84:Alonne Captain Helm
+015FDE85:Alonne Captain Armor
+015FE26C:Alonne Knight Helm
+015FE26D:Alonne Knight Armor
+015FE26E:Alonne Knight Gauntlets
+015FE26F:Alonne Knight Leggings
+01600594:Vengarl's Helm
+01600595:Vengarl's Armor
+01600596:Vengarl's Gloves
+01600597:Vengarl's Boots
+01602CA5:Lion Warrior Cape
+01602CA6:Lion Warrior Cuffs
+01602CA7:Lion Warrior Skirt
+0160308C:Lion Warrior Helm
+0160308D:Red Lion Warrior Cape
+0160C8E4:Grave Warden Mask
+0160C8E5:Grave Warden Top
+0160C8E6:Grave Warden Cuffs
+0160C8E7:Grave Warden Bottoms
+0160EFF4:Falconer Helm
+0160EFF5:Falconer Armor
+0160EFF6:Falconer Gloves
+0160EFF7:Falconer Boots
+01611704:Rusted Mastodon Helm
+01611705:Rusted Mastodon Armor
+01611706:Rusted Mastodon Gauntlets
+01611707:Rusted Mastodon Leggings
+01613E14:Mastodon Helm
+01613E15:Mastodon Armor
+01613E16:Mastodon Gauntlets
+01613E17:Mastodon Leggings
+01616524:Desert Sorceress Hood
+01616525:Desert Sorceress Top
+01616526:Desert Sorceress Gloves
+01616527:Desert Sorceress Skirt
+01618C34:Dragon Acolyte Mask
+01618C35:Dragon Acolyte Robe
+01618C36:Dragon Acolyte Gloves
+01618C37:Dragon Acolyte Boots
+0161901C:Dragon Sage Hood
+0162C4B4:Ruin Helm
+0162C4B5:Ruin Armor
+0162C4B6:Ruin Gauntlets
+0162C4B7:Ruin Leggings
+01638804:Old Knight Helm
+01638805:Old Knight Armor
+01638806:Old Knight Gauntlets
+01638807:Old Knight Leggings
+0163AF14:Drakekeeper Helm
+0163AF15:Drakekeeper Armor
+0163AF16:Drakekeeper Gauntlets
+0163AF17:Drakekeeper Boots
+0163D624:Throne Defender Helm
+0163D625:Throne Defender Armor
+0163D626:Throne Defender Gauntlets
+0163D627:Throne Defender Leggings
+0163FD34:Velstadt's Helm
+0163FD35:Velstadt's Armor
+0163FD36:Velstadt's Gauntlets
+0163FD37:Velstadt's Leggings
+01642444:Throne Watcher Helm
+01642445:Throne Watcher Armor
+01642446:Throne Watcher Gauntlets
+01642447:Throne Watcher Leggings
+017E14E4:Looking Glass Mask
+017E14E5:Looking Glass Armor
+017E14E6:Looking Glass Gauntlets
+017E14E7:Looking Glass Leggings
+017E6305:Agdayne's Black Robe
+017E6306:Agdayne's Cuffs
+017E6307:Agdayne's Kilt
+017ED834:Leydia Black Hood
+017ED835:Leydia Black Robe
+017EFF44:Insolent Helm
+017EFF45:Insolent Armor
+017EFF46:Insolent Gloves
+017EFF47:Insolent Boots
+017F2654:Imperious Helm
+017F2655:Imperious Armor
+017F2656:Imperious Gloves
+017F2657:Imperious Leggings
+017F4D64:Leydia White Hood
+017F4D65:Leydia White Robe
+017F4D66:Leydia Gauntlets
+017F7474:King's Crown
+017F7475:King's Armor
+017F7476:King's Gauntlets
+017F7477:King's Leggings
+018E4184:Dragonrider Helm
+018E4185:Dragonrider Armor
+018E4186:Dragonrider Gauntlets
+018E4187:Dragonrider Leggings
+018F7A04:Executioner Helm
+018F7A05:Executioner Armor
+018F7A06:Executioner Gauntlets
+018F7A07:Executioner Leggings
+0190B284:Penal Mask
+0190B285:Penal Straightjacket
+0190B286:Penal Handcuffs
+0190B287:Penal Skirt
+01948314:Fume Sorcerer Mask
+01948315:Fume Sorcerer Robes
+01948316:Fume Sorcerer Gloves
+01948317:Fume Sorcerer Boots
+0195BB94:Rampart Golem Helm
+0195BB95:Rampart Golem Armor
+0195BB96:Rampart Golem Gauntlets
+0195BB97:Rampart Golem Leggings
+0196A5F4:Sanctum Knight Helm
+0196A5F5:Sanctum Knight Armor
+0196A5F6:Sanctum Knight Gauntlets
+0196A5F7:Sanctum Knight Leggings
+0196CD06:Sanctum Soldier Gauntlet
+01976944:Sanctum Priestess Tiara
+01982C94:Raime's Helm
+01982C95:Raime's Armor
+01982C96:Raime's Gauntlets
+01982C97:Raime's Leggings
+01987AB5:Retainer Robe
+0198EFE4:Alonne's Helm
+0198EFE5:Alonne's Armor
+0198EFE6:Alonne's Gauntlets
+0198EFE7:Alonne's Leggings
+019A2864:Loyce Helm
+019A2865:Loyce Armor
+019A2866:Loyce Gauntlets
+019A2867:Loyce Leggings
+019A4F74:Charred Loyce Helm
+019A4F75:Charred Loyce Armor
+019A4F76:Charred Loyce Gauntlets
+019A4F77:Charred Loyce Leggings
+019A7684:Ivory King Helm
+019A7685:Ivory King Armor
+019A7686:Ivory King Gauntlets
+019A7687:Ivory King Leggings
+019F3175:Llewellyn Armor
+019F3176:Llewellyn Gloves
+019F3177:Llewellyn Shoes
+019FA6A4:Drangleic Helm
+019FA6A5:Drangleic Mail
+019FA6A6:Drangleic Gauntlets
+019FA6A7:Drangleic Leggings
+01A265C4:Creighton's Steel Mask
+01A265C5:Creighton's Chainmail
+01A265C6:Creighton's Chain Gloves
+01A265C7:Creighton's Chain Leggings
+01A28CD4:Benhart's Knight Helm
+01A28CD5:Benhart's Armor
+01A28CD6:Benhart's Gauntlets
+01A28CD7:Benhart's Boots
+01A2B3E4:Standard Helm
+01A2B3E5:Hard Leather Armor
+01A2B3E6:Hard Leather Gauntlets
+01A2B3E7:Hard Leather Boots
+01A3C554:Cale's Helm
+01A3C555:Cale's Leather Armor
+01A3C557:Cale's Shoes
+01A3EC64:Lucatiel's Mask
+01A3EC65:Lucatiel's Vest
+01A3EC66:Lucatiel's Gloves
+01A3EC67:Lucatiel's Trousers
+01A3F04C:Mirrah Hat
+01A41374:Bell Keeper Helmet
+01A41375:Bell Keeper Bellyband
+01A41376:Bell Keeper Cuffs
+01A41377:Bell Keeper Trousers
+01A46194:Mad Warrior Mask
+01A46195:Mad Warrior Armor
+01A46196:Mad Warrior Gauntlets
+01A46197:Mad Warrior Leggings
+01A59A15:Rosabeth's Dress
+01A65D64:Black Hood
+01A65D65:Black Robes
+01A65D66:Black Gloves
+01A65D67:Black Boots
+01A68474:Saint's Hood
+01A68475:Saint's Dress
+01A68476:Saint's Long Gloves
+01A68477:Saint's Trousers
+01A6AB84:Hexer's Hood
+01A6AB85:Hexer's Robes
+01A6AB86:Hexer's Gloves
+01A6AB87:Hexer's Boots
+01A6D294:Chaos Hood
+01A6D295:Chaos Robe
+01A6D296:Chaos Gloves
+01A6D297:Chaos Boots
+01A8A754:Nahr Alma Hood
+01A8A755:Nahr Alma Robes
+01AA7C14:Targray's Helm
+01AA7C15:Targray's Armor
+01AA7C16:Targray's Manifers
+01AA7C17:Targray's Leggings
+01D92CD0:Soul Arrow
+01D953E0:Great Soul Arrow
+01D97AF0:Heavy Soul Arrow
+01D9A200:Great Heavy Soul Arrow
+01D9C910:Homing Soul Arrow
+01D9F020:Heavy Homing Soul Arrow
+01DA1730:Homing Soulmass
+01DA3E40:Homing Crystal Soulmass
+01DA6550:Soul Spear
+01DA8C60:Crystal Soul Spear
+01DAB370:Shockwave
+01DADA80:Soul Spear Barrage
+01DB0190:Soul Shower
+01DB28A0:Soul Greatsword
+01DB4FB0:Soul Vortex
+01DB76C0:Soul Bolt
+01DB9DD0:Soul Geyser
+01DBC4E0:Magic Weapon
+01DBEBF0:Great Magic Weapon
+01DC1300:Crystal Magic Weapon
+01DC3A10:Strong Magic Shield
+01DC6120:Yearn
+01DC8830:Hush
+01DCAF40:Fall Control
+01DCD650:Hidden Weapon
+01DCFD60:Repair
+01DD2470:Cast Light
+01DD4B80:Chameleon
+01DD7290:Unleash Magic
+01DD99A0:Soul Flash
+01DDC0B0:Focus Souls
+01E86F10:Heal
+01E89620:Med Heal
+01E8BD30:Great Heal Excerpt
+01E8E440:Great Heal
+01E90B50:Soothing Sunlight
+01E93260:Replenishment
+01E95970:Resplendent Life
+01E98080:Bountiful Sunlight
+01E9A790:Caressing Prayer
+01E9CEA0:Force
+01E9F5B0:Wrath of the Gods
+01EA1CC0:Emit Force
+01EA43D0:Heavenly Thunder
+01EA6AE0:Lightning Spear
+01EA91F0:Great Lightning Spear
+01EAB900:Sunlight Spear
+01EAE010:Soul Appease
+01EB0720:Blinding Bolt
+01EB2E30:Magic Barrier
+01EB5540:Great Magic Barrier
+01EB7C50:Homeward
+01EBA360:Guidance
+01EBCA70:Sacred Oath
+01EBF180:Unveil
+01EC1890:Perseverance
+01EC3FA0:Sunlight Blade
+01ECDBE0:Denial
+01ED02F0:Splintering Lightning Spear
+01F7B150:Fireball
+01F7D860:Fire Orb
+01F7FF70:Great Fireball
+01F82680:Great Chaos Fireball
+01F84D90:Firestorm
+01F874A0:Fire Tempest
+01F89BB0:Chaos Storm
+01F8C2C0:Combustion
+01F8E9D0:Great Combustion
+01F910E0:Fire Whip
+01F937F0:Poison Mist
+01F95F00:Toxic Mist
+01F98610:Acid Surge
+01F9AD20:Lingering Flame
+01F9D430:Flame Swathe
+01F9FB40:Forbidden Sun
+01FA2250:Flame Weapon
+01FA4960:Flash Sweat
+01FA7070:Iron Flesh
+01FA9780:Warmth
+01FABE90:Immolation
+01FC1E20:Fire Snake
+01FC4530:Dance of Fire
+01FC6C40:Outcry
+0206F390:Dark Orb
+02071AA0:Dark Hail
+020741B0:Dark Fog
+020768C0:Affinity
+02078FD0:Dead Again
+0207B6E0:Dark Weapon
+0207DDF0:Whisper of Despair
+02080500:Repel
+02082C10:Twisted Barricade
+02085320:Numbness
+020B6060:Dark Greatsword
+020B8770:Recollection
+021635D0:Scraps of Life
+02165CE0:Darkstorm
+021683F0:Resonant Soul
+0216AB00:Great Resonant Soul
+0216D210:Climax
+0216F920:Resonant Flesh
+02172030:Resonant Weapon
+02174740:Lifedrain Patch
+02176E50:Profound Still
+021AA2A0:Promised Walk of Peace
+021AC9B0:Dark Dance
+02628110:Life Ring
+02628111:Life Ring+1
+02628112:Life Ring+2
+02628113:Life Ring+3
+0262A820:Chloranthy Ring
+0262A821:Chloranthy Ring+1
+0262A822:Chloranthy Ring+2
+0262CF30:Royal Soldier's Ring
+0262CF31:Royal Soldier's Ring+1
+0262CF32:Royal Soldier's Ring+2
+0262F640:First Dragon Ring
+0262F641:Second Dragon Ring
+0262F642:Third Dragon Ring
+02631D50:Ring of Steel Protection
+02631D51:Ring of Steel Protection+1
+02631D52:Ring of Steel Protection+2
+02631D53:no text
+02634460:Spell Quartz Ring
+02634461:Spell Quartz Ring+1
+02634462:Spell Quartz Ring+2
+02634463:Spell Quartz Ring+3
+02636B70:Flame Quartz Ring
+02636B71:Flame Quartz Ring+1
+02636B72:Flame Quartz Ring+2
+02636B73:Flame Quartz Ring+3
+02639280:Thunder Quartz Ring
+02639281:Thunder Quartz Ring+1
+02639282:Thunder Quartz Ring+2
+02639283:Thunder Quartz Ring+3
+0263B990:Dark Quartz Ring
+0263B991:Dark Quartz Ring+1
+0263B992:Dark Quartz Ring+2
+0263B993:Dark Quartz Ring+3
+0263E0A0:Poisonbite Ring
+0263E0A1:Poisonbite Ring+1
+026407B0:Bloodbite Ring
+026407B1:Bloodbite Ring+1
+02642EC0:Bracing Knuckle Ring
+02642EC1:Bracing Knuckle Ring+1
+02642EC2:Bracing Knuckle Ring+2
+026455D0:Cursebite Ring
+02646958:Ash Knuckle Ring
+02647CE0:Dispelling Ring
+02647CE1:Dispelling Ring+1
+0264A3F0:Ring of Resistance
+0264A3F1:Ring of Resistance+1
+0264CB00:Ring of Blades
+0264CB01:Ring of Blades+1
+0264CB02:Ring of Blades+2
+02658E50:Ring of Knowledge
+0265B560:Ring of Prayer
+0265DC70:Stone Ring
+026651A0:Red Tearstone Ring
+02669FC0:Blue Tearstone Ring
+0266C6D0:Ring of Giants
+0266C6D1:Ring of Giants+1
+0266C6D2:Ring of Giants+2
+0266DA58:Old Leo Ring
+0266EDE0:Ring of Soul Protection
+026714F0:Ring of Life Protection
+02673C00:Lingering Dragoncrest Ring
+02673C01:Lingering Dragoncrest Ring+1
+02673C02:Lingering Dragoncrest Ring+2
+02676310:Clear Bluestone Ring
+02676311:Clear Bluestone Ring+1
+02676312:Clear Bluestone Ring+2
+02678A20:Northern Ritual Band
+02678A21:Northern Ritual Band+1
+02678A22:Northern Ritual Band+2
+0267B130:Southern Ritual Band
+0267B131:Southern Ritual Band+1
+0267B132:Southern Ritual Band+2
+0267D840:Covetous Gold Serpent Ring
+0267D841:Covetous Gold Serpent Ring+1
+0267D842:Covetous Gold Serpent Ring+2
+0267FF50:Covetous Silver Serpent Ring
+0267FF51:Covetous Silver Serpent Ring+1
+0267FF52:Covetous Silver Serpent Ring+2
+02684D70:Ring of the Evil Eye
+02684D71:Ring of the Evil Eye+1
+02684D72:Ring of the Evil Eye+2
+02687480:Ring of Restoration
+02689B90:Ring of Binding
+0268C2A0:Silvercat Ring
+0268E9B0:Redeye Ring
+026910C0:Gower's Ring of Protection
+026937D0:Name-engraved Ring
+02695EE0:Slumbering Dragoncrest Ring
+026985F0:Hawk Ring
+0269AD00:Old Sun Ring
+0269FB20:Illusory Ring of a Conqueror
+026A2230:King's Ring
+026A4940:Ring of the Dead
+026A7050:Ring of Thorns
+026A7051:Ring of Thorns+1
+026A7052:Ring of Thorns+2
+026A9760:Delicate String
+026ABE70:White Ring
+026AE580:Illusory Ring of the Vengeful
+026B0C90:Illusory Ring of the Guilty
+026BA8D0:Ring of Whispers
+026BCFE0:Illusory Ring of the Exalted
+026D0860:Crest of the Rat
+026D2F70:Bell Keeper's Seal
+026D5680:Guardian's Seal
+026D7D90:Crest of Blood
+026DA4A0:Blue Seal
+026DCBB0:Abyss Seal
+026DF2C0:Vanquisher's Seal
+026E19D0:Sun Seal
+026E40E0:Ancient Dragon Seal
+02719C40:Simpleton's Ring
+0271C350:Strength Ring
+0271EA60:Dexterity Ring
+02721170:Ivory Warrior Ring
+02723880:Sorcery Clutch Ring
+02725F90:Lightning Clutch Ring
+027286A0:Fire Clutch Ring
+0272ADB0:Dark Clutch Ring
+0272FBD0:Baneful Bird Ring
+027322E0:Flynn's Ring
+027349F0:Ring of the Embedded
+02737100:Ring of the Living
+02739810:Yorgh's Ring
+0280DE80:Agape Ring
+03041840:Soldier Key
+03043F50:Key to King's Passage
+0304B480:Weapon Smithbox
+0304DB90:Armor Smithbox
+03072580:Bastille Key
+03074C90:Iron Key
+030773A0:Forgotten Key
+03079AB0:Brightstone Key
+0307C1C0:Antiquated Key
+0307E8D0:Fang Key
+03080FE0:House Key
+030836F0:Lenigrast's Key
+03085E00:Smooth &amp; Silky Stone
+03087188:Small Smooth &amp; Silky Stone
+03088510:Rotunda Lockstone
+0308AC20:Giant's Kinship
+0308D330:Ashen Mist Heart
+0308FA40:Soul of a Giant
+03092150:Tseldora Den Key
+03094860:Champion's Tablet
+03096F70:Ladder Miniature
+03099680:Soul Vessel
+0309BD90:Undead Lockaway Key
+030A0BB0:Dull Ember
+030A32C0:Crushed Eye Orb
+030A59D0:Simpleton's Spice
+030A80E0:Skeptic's Spice
+030AA7F0:Aldia Key
+03197500:Dragon Talon
+031AFBA0:Heavy Iron Key
+031C8240:Frozen Flower
+031E08E0:Eternal Sanctum Key
+031F8F80:Tower Key
+03211620:Garrison Ward Key
+03229CC0:no text
+03236010:Dragon Stone
+03242360:no text
+0325AA00:no text
+032730A0:no text
+0328B740:no text
+032A3DE0:Scorching Iron Scepter
+032BC480:Smelter Wedge
+032D4B20:Soul of Nadalia, Bride of Ash
+032ED1C0:no text
+03305860:no text
+0331DF00:Eye of the Priestess
+0393AE10:Lifegem
+0393D520:Radiant Lifegem
+0393FC30:Old Radiant Lifegem
+03940FB8:Elizabeth Mushroom
+039413A0:Dried Root
+03942340:Amber Herb
+03944A50:Twilight Herb
+03947160:Wilted Dusk Herb
+03949870:Poison Moss
+0394E690:Monastery Charm
+03950DA0:Dragon Charm
+03952128:Divine Blessing
+039534B0:Rouge Water
+03955BC0:Crimson Water
+0395E478:Estus Flask
+0395E860:Estus Flask
+0395F800:Small Blue Burr
+03961F10:Small Yellow Burr
+03964620:Small Orange Burr
+03966D30:Dark Troches
+03969440:Common Fruit
+0396BB50:Red Leech Troches
+0396E260:Yellow Sea Troches
+03970970:Triclops Snake Troches
+03971CF8:Old Growth Balm
+039720E0:Vine Balm
+039724C8:Blackweed Balm
+039728B0:Goldenfruit Balm
+03972C98:Brightbug
+03973080:Aromatic Ooze
+03974408:Pungent Ooze
+03975790:Gold Pine Resin
+03977EA0:Charcoal Pine Resin
+0397A5B0:Dark Pine Resin
+0397CCC0:Rotten Pine Resin
+0397F3D0:Bleeding Serum
+039841F0:Green Blossom
+03986900:Rusted Coin
+03989010:Rhoy's Stone
+0398B720:Rhoy's Stone of Knowledge
+0398DE30:Homeward Bone
+0398F1B8:Aged Feather
+03990540:Darksign
+03992C50:Silver Talisman
+03995360:Gold Talisman
+03997A70:Fake Dead Talisman
+0399A180:Illusory Talisman
+0399B8F0:Dragon Torso Stone
+0399B8FA:Dragon Torso Stone
+0399C890:Repair Powder
+0399EFA0:Torch
+039A16B0:Flame Butterfly
+039A64D0:Prism Stone
+039AB2F0:Hello Carving
+039ADA00:Thank You Carving
+039B0110:I'm Sorry Carving
+039B2820:Very Good! Carving
+039B4F30:Rubbish
+039B5318:Petrified Something
+039B89C8:Estus Flask Shard
+039B8DB0:Sublime Bone Dust
+039B9198:Bonfire Ascetic
+039B9D50:Alluring Skull
+039BA138:Lloyd's Talisman
+039BB4C0:Pharros' Lockstone
+039BB8A8:Fragrant Branch of Yore
+039BBC90:Fire Seed
+039BC460:Throwing Knife
+039BEB70:Witching Urn
+039C1280:Lightning Urn
+039C3990:Firebomb
+039C4D18:Black Firebomb
+039C60A0:Hexing Urn
+039C87B0:Poison Throwing Knife
+039C9B38:Dung Pie
+039CAEC0:Lacerating Knife
+039CD5D0:Corrosive Urn
+039CFCE0:Holy Water Urn
+039D1068:Fading Soul
+039D23F0:Soul of a Lost Undead
+039D4B00:Large Soul of a Lost Undead
+039D7210:Soul of a Nameless Soldier
+039D9920:Large Soul of a Nameless Soldier
+039DC030:Soul of a Proud Knight
+039DE740:Large Soul of a Proud Knight
+039E0E50:Soul of a Brave Warrior
+039E3560:Large Soul of a Brave Warrior
+039E5C70:Soul of a Hero
+039E8380:Soul of a Great Hero
+039F1FC0:Wood Arrow
+039F46D0:Iron Arrow
+039F6DE0:Magic Arrow
+039F94F0:Lightning Arrow
+039FBC00:Fire Arrow
+039FE310:Dark Arrow
+03A00A20:Poison Arrow
+03A03130:Lacerating Arrow
+03A05840:Wooden Greatarrow
+03A07F50:Iron Greatarrow
+03A0A660:Magic Greatarrow
+03A0CD70:Lightning Greatarrow
+03A0F480:Fire Greatarrow
+03A11B90:Dark Greatarrow
+03A142A0:Destructive Greatarrow
+03A169B0:Wood Bolt
+03A190C0:Heavy Bolt
+03A1B7D0:Magic Bolt
+03A1DEE0:Lightning Bolt
+03A205F0:Fire Bolt
+03A22D00:Dark Bolt
+03A25410:Titanite Shard
+03A26798:Large Titanite Shard
+03A27B20:Titanite Chunk
+03A2A230:Titanite Slab
+03A2C940:Twinkling Titanite
+03A33E70:Petrified Dragon Bone
+03A3B3A0:Faintstone
+03A3DAB0:Boltstone
+03A401C0:Firedrake Stone
+03A428D0:Darknight Stone
+03A44FE0:Poison Stone
+03A476F0:Bleed Stone
+03A4C510:Raw Stone
+03A4EC20:Magic Stone
+03A51330:Old Mundane Stone
+03A53A40:Palestone
+03B47C80:Black Separation Crystal
+03B4A390:Seed of a Tree of Giants
+03B4F1B0:Petrified Egg
+03C14DC0:"Point" Gesture
+03C151A8:"I won't bite" Gesture
+03C15590:"Proper bow" Gesture
+03C15978:"Bow" Gesture
+03C15D60:"Welcome" Gesture
+03C16148:"Duel bow" Gesture
+03C16530:"Wave" Gesture
+03C16918:"Pumped up" Gesture
+03C16D00:"Joy" Gesture
+03C170E8:"Warcry" Gesture
+03C174D0:"Warmup" Gesture
+03C178B8:"Hurrah!" Gesture
+03C17CA0:"Righty-ho!" Gesture
+03C18088:"No way" Gesture
+03C18470:"This one's me" Gesture
+03C18858:"Have mercy!" Gesture
+03C18C40:"Prostration" Gesture
+03C19028:"Decapitate" Gesture
+03C19410:"Fist pump" Gesture
+03C197F8:"Mock" Gesture
+03C19FC8:"Praise the Sun" Gesture
+03D09000:Soul of the Pursuer
+03D0B710:Soul of the Last Giant
+03D0DE20:Dragonrider Soul
+03D10530:Old Dragonslayer Soul
+03D12C40:Flexile Sentry Soul
+03D15350:Ruin Sentinel Soul
+03D17A60:Soul of the Lost Sinner
+03D1A170:Executioner's Chariot Soul
+03D1C880:Skeleton Lord's Soul
+03D1EF90:Covetous Demon Soul
+03D216A0:Mytha, the Baneful Queen Soul
+03D23DB0:Smelter Demon Soul
+03D264C0:Old Iron King Soul
+03D28BD0:Royal Rat Vanguard Soul
+03D2B2E0:Soul of the Rotten
+03D2D9F0:Scorpioness Najka Soul
+03D30100:Royal Rat Authority Soul
+03D32810:Soul of the Duke's Dear Freja
+03D34F20:Looking Glass Knight Soul
+03D37630:Demon of Song Soul
+03D39D40:Soul of Velstadt
+03D3C450:Soul of the King
+03D3EB60:Guardian Dragon Soul
+03D41270:Ancient Dragon Soul
+03D43980:Giant Lord Soul
+03D46090:Soul of Nashandra
+03D487A0:Throne Defender Soul
+03D4AEB0:Throne Watcher Soul
+03D4D5C0:Darklurker Soul
+03D4FCD0:Belfry Gargoyle Soul
+03D523E0:Old Witch Soul
+03D54AF0:Old King Soul
+03D57200:Old Dead One Soul
+03D59910:Old Paledrake Soul
+03D83120:Soul of Sinh, the Slumbering Dragon
+03D85830:Soul of the Fume Knight
+03D87F40:Soul of Aava, the King's Pet
+03D8A650:Soul of Elana, Squalid Queen
+03D8CD60:Soul of Nadalia, Bride of Ash
+03D8F470:Soul of Alsanna, Silent Oracle
+03D91B80:Soul of Sir Alonne
+03D969A0:Soul of the Ivory King
+03D990B0:Soul of Zallen, the King's Pet
+03D9B7C0:Loyce Soul
+03D9DED0:Soul of Lud, the King's Pet
+352ADAE8:Faraam Helm
+352ADAE9:Faraam Armor
+352ADAEA:Faraam Gauntlets
+352ADAEB:Faraam Boots
+352ADB4C:Chaos Hood
+352ADB4D:Chaos Robes
+352ADB4E:Chaos Gloves
+352ADB4F:Chaos Boots
+352ADBB0:Dragonknight Helm
+352ADBB1:Dragonknight Robes
+352ADBB2:Dragonknight Gloves
+352ADBB3:Dragonknight Boots
+352ADC14:Black Hood
+352ADC15:Black Robes
+352ADC16:Black Gloves
+352ADC17:Black Boots
+352ADC78:Hunter's Hat
+352ADC79:Leather Armor
+352ADC7A:Leather Gloves
+352ADC7B:Leather Boots
+352ADCDC:Knight Helm
+352ADCDD:Knight Armor
+352ADCDE:Knight Gauntlets
+352ADCDF:Knight Leggings
+352ADD40:Rogue Hood
+352ADD41:Rogue Armor
+352ADD42:Rogue Gauntlets
+352ADD43:Rogue Leggings
+352ADDA4:Prisoner's Hood
+352ADDA5:Prisoner's Tatters
+352ADDA6:Prisoner's Gloves
+352ADDA7:Prisoner's Waistcloth
+352ADE08:Prisoner's Hood
+352ADE09:Prisoner's Tatters
+352ADE0A:Prisoner's Gloves
+352ADE0B:Prisoner's Waistcloth
+352ADE6C:Hollow Mage Hood
+352ADE6D:Hollow Mage Robes
+352ADED0:Defender Helm
+352ADED1:Defender Mail
+352ADED2:Defender's Gauntlet
+352ADED3:Defender's Leggings
+352ADF35:Llewellyn Armor
+352ADF36:Llewellyn Gloves
+352ADF37:Llewellyn Shoes
+352ADF98:Despatcher's Hood
+352ADF99:Despatcher's Robes
+35A509D0:Dagger
+35A509D1:Royal Dirk
+35A509D2:Longsword
+35A509D3:Shortsword
+35A509D4:Dragonslayer's Crescent Axe
+35A509D5:Greataxe
+35A509D6:Dragonrider's Halberd
+35A509D7:Witchtree Branch
+35A509D8:Lizard Staff
+35A509D9:Dragonknight's Bell
+35A509DA:Bell of the Idol
+35A509DB:Short Bow
+35A509DC:Light Crossbow
+35A509DD:Target Shield
+35A509DE:Small Leather Shield
+35A509DF:Golden Wing Shield
+35A509E0:Dragonknight's Shield
+35A509E1:Silver Eagle Kite Shield
+35A509E2:Imperial Shield
+35A509E3:Disc Bell
+35A509E4:Pursuer's Greatsword
+35A509E5:Zweihander
+35A509E6:Winged Spear
+35A509E7:Estoc
+35A509E8:Bastard Sword
+35A509E9:Knight's Greatsword
+35A509EA:Inquisitor's Blade
+019B12C4:Forlorn Helm
+019B12C5:Forlorn Armor
+019B12C6:Forlorn Gauntlets
+019B12C7:Forlorn Leggings
+001E78C8:Greatsword of the Forlorn
+002EFF40:Scythe of the Forlorn
+
+*/

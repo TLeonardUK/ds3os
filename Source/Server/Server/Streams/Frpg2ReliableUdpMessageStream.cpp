@@ -20,6 +20,7 @@
 #include "Shared/Core/Utils/File.h"
 #include "Shared/Core/Utils/Strings.h"
 #include "Shared/Core/Utils/DebugObjects.h"
+#include "Shared/Core/Utils/Protobuf.h"
 
 #include "Protobuf/SharedProtobufs.h"
 
@@ -222,6 +223,10 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
     if (!Message->Protobuf->ParseFromArray(Message->Payload.data(), (int)Message->Payload.size()))
     {
         WarningS(Connection->GetName().c_str(), "Failed to deserialize protobuf instance for message: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
+
+        DecodedProtobufRegistry registry;
+        registry.Decode("FailedMessage", Message->Payload.data(), (int)Message->Payload.size());
+        WarningS(Connection->GetName().c_str(), "Decoded:\n%s", registry.ToString().c_str());
 
         if constexpr (BuildConfig::DUMP_FAILED_DISASSEMBLED_PACKETS)
         {
