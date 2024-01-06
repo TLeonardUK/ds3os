@@ -15474,25 +15474,25 @@ class RequestGetPowerStoneMyRankingResponse : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-  inline bool has_ranking_data() const;
-  inline void clear_ranking_data();
-  static const int kRankingDataFieldNumber = 1;
-  inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& ranking_data() const;
-  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* mutable_ranking_data();
-  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* release_ranking_data();
-  inline void set_allocated_ranking_data(::DS2_Frpg2RequestMessage::PowerStoneRankingData* ranking_data);
+  // required .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 1;
+  inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& data() const;
+  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* mutable_data();
+  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* release_data();
+  inline void set_allocated_data(::DS2_Frpg2RequestMessage::PowerStoneRankingData* data);
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse)
  private:
-  inline void set_has_ranking_data();
-  inline void clear_has_ranking_data();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::DS2_Frpg2RequestMessage::PowerStoneRankingData* ranking_data_;
+  ::DS2_Frpg2RequestMessage::PowerStoneRankingData* data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -15567,12 +15567,12 @@ class RequestGetPowerStoneRanking : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 unknown_1 = 1;
-  inline bool has_unknown_1() const;
-  inline void clear_unknown_1();
-  static const int kUnknown1FieldNumber = 1;
-  inline ::google::protobuf::uint32 unknown_1() const;
-  inline void set_unknown_1(::google::protobuf::uint32 value);
+  // required uint32 offset = 1;
+  inline bool has_offset() const;
+  inline void clear_offset();
+  static const int kOffsetFieldNumber = 1;
+  inline ::google::protobuf::uint32 offset() const;
+  inline void set_offset(::google::protobuf::uint32 value);
 
   // required uint32 count = 2;
   inline bool has_count() const;
@@ -15583,8 +15583,8 @@ class RequestGetPowerStoneRanking : public ::google::protobuf::MessageLite {
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestGetPowerStoneRanking)
  private:
-  inline void set_has_unknown_1();
-  inline void clear_has_unknown_1();
+  inline void set_has_offset();
+  inline void clear_has_offset();
   inline void set_has_count();
   inline void clear_has_count();
 
@@ -15592,7 +15592,7 @@ class RequestGetPowerStoneRanking : public ::google::protobuf::MessageLite {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 unknown_1_;
+  ::google::protobuf::uint32 offset_;
   ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
@@ -15668,17 +15668,17 @@ class RequestGetPowerStoneRankingResponse : public ::google::protobuf::MessageLi
 
   // accessors -------------------------------------------------------
 
-  // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-  inline int ranking_data_size() const;
-  inline void clear_ranking_data();
-  static const int kRankingDataFieldNumber = 1;
-  inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& ranking_data(int index) const;
-  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* mutable_ranking_data(int index);
-  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* add_ranking_data();
+  // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+  inline int data_size() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 1;
+  inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& data(int index) const;
+  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* mutable_data(int index);
+  inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* add_data();
   inline const ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::PowerStoneRankingData >&
-      ranking_data() const;
+      data() const;
   inline ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::PowerStoneRankingData >*
-      mutable_ranking_data();
+      mutable_data();
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse)
  private:
@@ -15687,7 +15687,7 @@ class RequestGetPowerStoneRankingResponse : public ::google::protobuf::MessageLi
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::PowerStoneRankingData > ranking_data_;
+  ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::PowerStoneRankingData > data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -15843,23 +15843,23 @@ class RequestGetPowerStoneRankingRecordCountResponse : public ::google::protobuf
 
   // accessors -------------------------------------------------------
 
-  // required uint32 record = 1;
-  inline bool has_record() const;
-  inline void clear_record();
-  static const int kRecordFieldNumber = 1;
-  inline ::google::protobuf::uint32 record() const;
-  inline void set_record(::google::protobuf::uint32 value);
+  // required uint32 count = 1;
+  inline bool has_count() const;
+  inline void clear_count();
+  static const int kCountFieldNumber = 1;
+  inline ::google::protobuf::uint32 count() const;
+  inline void set_count(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingRecordCountResponse)
  private:
-  inline void set_has_record();
-  inline void clear_has_record();
+  inline void set_has_count();
+  inline void clear_has_count();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 record_;
+  ::google::protobuf::uint32 count_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -15934,13 +15934,48 @@ class RequestRegisterPowerStoneData : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required uint32 character_id = 1;
+  inline bool has_character_id() const;
+  inline void clear_character_id();
+  static const int kCharacterIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 character_id() const;
+  inline void set_character_id(::google::protobuf::uint32 value);
+
+  // required uint32 increment = 2;
+  inline bool has_increment() const;
+  inline void clear_increment();
+  static const int kIncrementFieldNumber = 2;
+  inline ::google::protobuf::uint32 increment() const;
+  inline void set_increment(::google::protobuf::uint32 value);
+
+  // required bytes data = 3;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 3;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData)
  private:
+  inline void set_has_character_id();
+  inline void clear_has_character_id();
+  inline void set_has_increment();
+  inline void clear_has_increment();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint32 character_id_;
+  ::google::protobuf::uint32 increment_;
+  ::std::string* data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -32124,77 +32159,77 @@ inline void RequestGetPowerStoneMyRanking::set_character_id(::google::protobuf::
 
 // RequestGetPowerStoneMyRankingResponse
 
-// required .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-inline bool RequestGetPowerStoneMyRankingResponse::has_ranking_data() const {
+// required .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+inline bool RequestGetPowerStoneMyRankingResponse::has_data() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RequestGetPowerStoneMyRankingResponse::set_has_ranking_data() {
+inline void RequestGetPowerStoneMyRankingResponse::set_has_data() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RequestGetPowerStoneMyRankingResponse::clear_has_ranking_data() {
+inline void RequestGetPowerStoneMyRankingResponse::clear_has_data() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RequestGetPowerStoneMyRankingResponse::clear_ranking_data() {
-  if (ranking_data_ != NULL) ranking_data_->::DS2_Frpg2RequestMessage::PowerStoneRankingData::Clear();
-  clear_has_ranking_data();
+inline void RequestGetPowerStoneMyRankingResponse::clear_data() {
+  if (data_ != NULL) data_->::DS2_Frpg2RequestMessage::PowerStoneRankingData::Clear();
+  clear_has_data();
 }
-inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& RequestGetPowerStoneMyRankingResponse::ranking_data() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse.ranking_data)
+inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& RequestGetPowerStoneMyRankingResponse::data() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse.data)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  return ranking_data_ != NULL ? *ranking_data_ : *default_instance().ranking_data_;
+  return data_ != NULL ? *data_ : *default_instance().data_;
 #else
-  return ranking_data_ != NULL ? *ranking_data_ : *default_instance_->ranking_data_;
+  return data_ != NULL ? *data_ : *default_instance_->data_;
 #endif
 }
-inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneMyRankingResponse::mutable_ranking_data() {
-  set_has_ranking_data();
-  if (ranking_data_ == NULL) ranking_data_ = new ::DS2_Frpg2RequestMessage::PowerStoneRankingData;
-  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse.ranking_data)
-  return ranking_data_;
+inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneMyRankingResponse::mutable_data() {
+  set_has_data();
+  if (data_ == NULL) data_ = new ::DS2_Frpg2RequestMessage::PowerStoneRankingData;
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse.data)
+  return data_;
 }
-inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneMyRankingResponse::release_ranking_data() {
-  clear_has_ranking_data();
-  ::DS2_Frpg2RequestMessage::PowerStoneRankingData* temp = ranking_data_;
-  ranking_data_ = NULL;
+inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneMyRankingResponse::release_data() {
+  clear_has_data();
+  ::DS2_Frpg2RequestMessage::PowerStoneRankingData* temp = data_;
+  data_ = NULL;
   return temp;
 }
-inline void RequestGetPowerStoneMyRankingResponse::set_allocated_ranking_data(::DS2_Frpg2RequestMessage::PowerStoneRankingData* ranking_data) {
-  delete ranking_data_;
-  ranking_data_ = ranking_data;
-  if (ranking_data) {
-    set_has_ranking_data();
+inline void RequestGetPowerStoneMyRankingResponse::set_allocated_data(::DS2_Frpg2RequestMessage::PowerStoneRankingData* data) {
+  delete data_;
+  data_ = data;
+  if (data) {
+    set_has_data();
   } else {
-    clear_has_ranking_data();
+    clear_has_data();
   }
-  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse.ranking_data)
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse.data)
 }
 
 // -------------------------------------------------------------------
 
 // RequestGetPowerStoneRanking
 
-// required uint32 unknown_1 = 1;
-inline bool RequestGetPowerStoneRanking::has_unknown_1() const {
+// required uint32 offset = 1;
+inline bool RequestGetPowerStoneRanking::has_offset() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RequestGetPowerStoneRanking::set_has_unknown_1() {
+inline void RequestGetPowerStoneRanking::set_has_offset() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RequestGetPowerStoneRanking::clear_has_unknown_1() {
+inline void RequestGetPowerStoneRanking::clear_has_offset() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RequestGetPowerStoneRanking::clear_unknown_1() {
-  unknown_1_ = 0u;
-  clear_has_unknown_1();
+inline void RequestGetPowerStoneRanking::clear_offset() {
+  offset_ = 0u;
+  clear_has_offset();
 }
-inline ::google::protobuf::uint32 RequestGetPowerStoneRanking::unknown_1() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneRanking.unknown_1)
-  return unknown_1_;
+inline ::google::protobuf::uint32 RequestGetPowerStoneRanking::offset() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneRanking.offset)
+  return offset_;
 }
-inline void RequestGetPowerStoneRanking::set_unknown_1(::google::protobuf::uint32 value) {
-  set_has_unknown_1();
-  unknown_1_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestGetPowerStoneRanking.unknown_1)
+inline void RequestGetPowerStoneRanking::set_offset(::google::protobuf::uint32 value) {
+  set_has_offset();
+  offset_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestGetPowerStoneRanking.offset)
 }
 
 // required uint32 count = 2;
@@ -32225,34 +32260,34 @@ inline void RequestGetPowerStoneRanking::set_count(::google::protobuf::uint32 va
 
 // RequestGetPowerStoneRankingResponse
 
-// repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-inline int RequestGetPowerStoneRankingResponse::ranking_data_size() const {
-  return ranking_data_.size();
+// repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+inline int RequestGetPowerStoneRankingResponse::data_size() const {
+  return data_.size();
 }
-inline void RequestGetPowerStoneRankingResponse::clear_ranking_data() {
-  ranking_data_.Clear();
+inline void RequestGetPowerStoneRankingResponse::clear_data() {
+  data_.Clear();
 }
-inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& RequestGetPowerStoneRankingResponse::ranking_data(int index) const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.ranking_data)
-  return ranking_data_.Get(index);
+inline const ::DS2_Frpg2RequestMessage::PowerStoneRankingData& RequestGetPowerStoneRankingResponse::data(int index) const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.data)
+  return data_.Get(index);
 }
-inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneRankingResponse::mutable_ranking_data(int index) {
-  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.ranking_data)
-  return ranking_data_.Mutable(index);
+inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneRankingResponse::mutable_data(int index) {
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.data)
+  return data_.Mutable(index);
 }
-inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneRankingResponse::add_ranking_data() {
-  // @@protoc_insertion_point(field_add:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.ranking_data)
-  return ranking_data_.Add();
+inline ::DS2_Frpg2RequestMessage::PowerStoneRankingData* RequestGetPowerStoneRankingResponse::add_data() {
+  // @@protoc_insertion_point(field_add:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.data)
+  return data_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::PowerStoneRankingData >&
-RequestGetPowerStoneRankingResponse::ranking_data() const {
-  // @@protoc_insertion_point(field_list:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.ranking_data)
-  return ranking_data_;
+RequestGetPowerStoneRankingResponse::data() const {
+  // @@protoc_insertion_point(field_list:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.data)
+  return data_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::PowerStoneRankingData >*
-RequestGetPowerStoneRankingResponse::mutable_ranking_data() {
-  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.ranking_data)
-  return &ranking_data_;
+RequestGetPowerStoneRankingResponse::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse.data)
+  return &data_;
 }
 
 // -------------------------------------------------------------------
@@ -32263,33 +32298,157 @@ RequestGetPowerStoneRankingResponse::mutable_ranking_data() {
 
 // RequestGetPowerStoneRankingRecordCountResponse
 
-// required uint32 record = 1;
-inline bool RequestGetPowerStoneRankingRecordCountResponse::has_record() const {
+// required uint32 count = 1;
+inline bool RequestGetPowerStoneRankingRecordCountResponse::has_count() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RequestGetPowerStoneRankingRecordCountResponse::set_has_record() {
+inline void RequestGetPowerStoneRankingRecordCountResponse::set_has_count() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RequestGetPowerStoneRankingRecordCountResponse::clear_has_record() {
+inline void RequestGetPowerStoneRankingRecordCountResponse::clear_has_count() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RequestGetPowerStoneRankingRecordCountResponse::clear_record() {
-  record_ = 0u;
-  clear_has_record();
+inline void RequestGetPowerStoneRankingRecordCountResponse::clear_count() {
+  count_ = 0u;
+  clear_has_count();
 }
-inline ::google::protobuf::uint32 RequestGetPowerStoneRankingRecordCountResponse::record() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingRecordCountResponse.record)
-  return record_;
+inline ::google::protobuf::uint32 RequestGetPowerStoneRankingRecordCountResponse::count() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingRecordCountResponse.count)
+  return count_;
 }
-inline void RequestGetPowerStoneRankingRecordCountResponse::set_record(::google::protobuf::uint32 value) {
-  set_has_record();
-  record_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingRecordCountResponse.record)
+inline void RequestGetPowerStoneRankingRecordCountResponse::set_count(::google::protobuf::uint32 value) {
+  set_has_count();
+  count_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingRecordCountResponse.count)
 }
 
 // -------------------------------------------------------------------
 
 // RequestRegisterPowerStoneData
+
+// required uint32 character_id = 1;
+inline bool RequestRegisterPowerStoneData::has_character_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestRegisterPowerStoneData::set_has_character_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestRegisterPowerStoneData::clear_has_character_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestRegisterPowerStoneData::clear_character_id() {
+  character_id_ = 0u;
+  clear_has_character_id();
+}
+inline ::google::protobuf::uint32 RequestRegisterPowerStoneData::character_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.character_id)
+  return character_id_;
+}
+inline void RequestRegisterPowerStoneData::set_character_id(::google::protobuf::uint32 value) {
+  set_has_character_id();
+  character_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.character_id)
+}
+
+// required uint32 increment = 2;
+inline bool RequestRegisterPowerStoneData::has_increment() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestRegisterPowerStoneData::set_has_increment() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestRegisterPowerStoneData::clear_has_increment() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestRegisterPowerStoneData::clear_increment() {
+  increment_ = 0u;
+  clear_has_increment();
+}
+inline ::google::protobuf::uint32 RequestRegisterPowerStoneData::increment() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.increment)
+  return increment_;
+}
+inline void RequestRegisterPowerStoneData::set_increment(::google::protobuf::uint32 value) {
+  set_has_increment();
+  increment_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.increment)
+}
+
+// required bytes data = 3;
+inline bool RequestRegisterPowerStoneData::has_data() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestRegisterPowerStoneData::set_has_data() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestRegisterPowerStoneData::clear_has_data() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestRegisterPowerStoneData::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& RequestRegisterPowerStoneData::data() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.data)
+  return *data_;
+}
+inline void RequestRegisterPowerStoneData::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.data)
+}
+inline void RequestRegisterPowerStoneData::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.data)
+}
+inline void RequestRegisterPowerStoneData::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.data)
+}
+inline ::std::string* RequestRegisterPowerStoneData::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.data)
+  return data_;
+}
+inline ::std::string* RequestRegisterPowerStoneData::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestRegisterPowerStoneData::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData.data)
+}
 
 // -------------------------------------------------------------------
 

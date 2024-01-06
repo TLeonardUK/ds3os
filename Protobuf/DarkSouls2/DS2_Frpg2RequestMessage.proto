@@ -909,8 +909,6 @@ message RegulationFileUpdatePushMessage {
 // Game Server Messages - Ranking (I'm assuming this is for covenants)
 // ------------------------------------------------------------------------------------------------------------
 
-// TODO: Check all of these.
-
 message RankingRecordCount {
 }
 
@@ -934,26 +932,29 @@ message RequestGetPowerStoneMyRanking {
 }
 
 message RequestGetPowerStoneMyRankingResponse {
-	required PowerStoneRankingData ranking_data = 1;
+	required PowerStoneRankingData data = 1;
 }
 
 message RequestGetPowerStoneRanking {
-	required uint32 unknown_1 = 1;
+	required uint32 offset = 1;
 	required uint32 count = 2;
 }
 
 message RequestGetPowerStoneRankingResponse {
-	repeated PowerStoneRankingData ranking_data = 1;
+	repeated PowerStoneRankingData data = 1;
 }
 
 message RequestGetPowerStoneRankingRecordCount {
 }
 
 message RequestGetPowerStoneRankingRecordCountResponse {
-	required uint32 record = 1;
+	required uint32 count = 1;
 }
 
 message RequestRegisterPowerStoneData {
+	required uint32 character_id = 1;
+	required uint32 increment = 2;
+	required bytes data = 3;
 }
 
 message RequestRegisterPowerStoneDataResponse {

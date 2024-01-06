@@ -35026,7 +35026,7 @@ void RequestGetPowerStoneMyRanking::Swap(RequestGetPowerStoneMyRanking* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestGetPowerStoneMyRankingResponse::kRankingDataFieldNumber;
+const int RequestGetPowerStoneMyRankingResponse::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetPowerStoneMyRankingResponse::RequestGetPowerStoneMyRankingResponse()
@@ -35037,10 +35037,10 @@ RequestGetPowerStoneMyRankingResponse::RequestGetPowerStoneMyRankingResponse()
 
 void RequestGetPowerStoneMyRankingResponse::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  ranking_data_ = const_cast< ::DS2_Frpg2RequestMessage::PowerStoneRankingData*>(
+  data_ = const_cast< ::DS2_Frpg2RequestMessage::PowerStoneRankingData*>(
       ::DS2_Frpg2RequestMessage::PowerStoneRankingData::internal_default_instance());
 #else
-  ranking_data_ = const_cast< ::DS2_Frpg2RequestMessage::PowerStoneRankingData*>(&::DS2_Frpg2RequestMessage::PowerStoneRankingData::default_instance());
+  data_ = const_cast< ::DS2_Frpg2RequestMessage::PowerStoneRankingData*>(&::DS2_Frpg2RequestMessage::PowerStoneRankingData::default_instance());
 #endif
 }
 
@@ -35053,7 +35053,7 @@ RequestGetPowerStoneMyRankingResponse::RequestGetPowerStoneMyRankingResponse(con
 
 void RequestGetPowerStoneMyRankingResponse::SharedCtor() {
   _cached_size_ = 0;
-  ranking_data_ = NULL;
+  data_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -35068,7 +35068,7 @@ void RequestGetPowerStoneMyRankingResponse::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
-    delete ranking_data_;
+    delete data_;
   }
 }
 
@@ -35093,8 +35093,8 @@ RequestGetPowerStoneMyRankingResponse* RequestGetPowerStoneMyRankingResponse::Ne
 }
 
 void RequestGetPowerStoneMyRankingResponse::Clear() {
-  if (has_ranking_data()) {
-    if (ranking_data_ != NULL) ranking_data_->::DS2_Frpg2RequestMessage::PowerStoneRankingData::Clear();
+  if (has_data()) {
+    if (data_ != NULL) data_->::DS2_Frpg2RequestMessage::PowerStoneRankingData::Clear();
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -35114,11 +35114,11 @@ bool RequestGetPowerStoneMyRankingResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
+      // required .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_ranking_data()));
+               input, mutable_data()));
         } else {
           goto handle_unusual;
         }
@@ -35151,10 +35151,10 @@ failure:
 void RequestGetPowerStoneMyRankingResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetPowerStoneMyRankingResponse)
-  // required .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-  if (has_ranking_data()) {
+  // required .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+  if (has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->ranking_data(), output);
+      1, this->data(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -35166,11 +35166,11 @@ int RequestGetPowerStoneMyRankingResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-    if (has_ranking_data()) {
+    // required .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+    if (has_data()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->ranking_data());
+          this->data());
     }
 
   }
@@ -35190,8 +35190,8 @@ void RequestGetPowerStoneMyRankingResponse::CheckTypeAndMergeFrom(
 void RequestGetPowerStoneMyRankingResponse::MergeFrom(const RequestGetPowerStoneMyRankingResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_ranking_data()) {
-      mutable_ranking_data()->::DS2_Frpg2RequestMessage::PowerStoneRankingData::MergeFrom(from.ranking_data());
+    if (from.has_data()) {
+      mutable_data()->::DS2_Frpg2RequestMessage::PowerStoneRankingData::MergeFrom(from.data());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -35206,15 +35206,15 @@ void RequestGetPowerStoneMyRankingResponse::CopyFrom(const RequestGetPowerStoneM
 bool RequestGetPowerStoneMyRankingResponse::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (has_ranking_data()) {
-    if (!this->ranking_data().IsInitialized()) return false;
+  if (has_data()) {
+    if (!this->data().IsInitialized()) return false;
   }
   return true;
 }
 
 void RequestGetPowerStoneMyRankingResponse::Swap(RequestGetPowerStoneMyRankingResponse* other) {
   if (other != this) {
-    std::swap(ranking_data_, other->ranking_data_);
+    std::swap(data_, other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -35229,7 +35229,7 @@ void RequestGetPowerStoneMyRankingResponse::Swap(RequestGetPowerStoneMyRankingRe
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestGetPowerStoneRanking::kUnknown1FieldNumber;
+const int RequestGetPowerStoneRanking::kOffsetFieldNumber;
 const int RequestGetPowerStoneRanking::kCountFieldNumber;
 #endif  // !_MSC_VER
 
@@ -35251,7 +35251,7 @@ RequestGetPowerStoneRanking::RequestGetPowerStoneRanking(const RequestGetPowerSt
 
 void RequestGetPowerStoneRanking::SharedCtor() {
   _cached_size_ = 0;
-  unknown_1_ = 0u;
+  offset_ = 0u;
   count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -35301,7 +35301,7 @@ void RequestGetPowerStoneRanking::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(unknown_1_, count_);
+  ZR_(offset_, count_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -35324,13 +35324,13 @@ bool RequestGetPowerStoneRanking::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 unknown_1 = 1;
+      // required uint32 offset = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_1_)));
-          set_has_unknown_1();
+                 input, &offset_)));
+          set_has_offset();
         } else {
           goto handle_unusual;
         }
@@ -35378,9 +35378,9 @@ failure:
 void RequestGetPowerStoneRanking::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetPowerStoneRanking)
-  // required uint32 unknown_1 = 1;
-  if (has_unknown_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->unknown_1(), output);
+  // required uint32 offset = 1;
+  if (has_offset()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->offset(), output);
   }
 
   // required uint32 count = 2;
@@ -35397,11 +35397,11 @@ int RequestGetPowerStoneRanking::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 unknown_1 = 1;
-    if (has_unknown_1()) {
+    // required uint32 offset = 1;
+    if (has_offset()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_1());
+          this->offset());
     }
 
     // required uint32 count = 2;
@@ -35428,8 +35428,8 @@ void RequestGetPowerStoneRanking::CheckTypeAndMergeFrom(
 void RequestGetPowerStoneRanking::MergeFrom(const RequestGetPowerStoneRanking& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_unknown_1()) {
-      set_unknown_1(from.unknown_1());
+    if (from.has_offset()) {
+      set_offset(from.offset());
     }
     if (from.has_count()) {
       set_count(from.count());
@@ -35452,7 +35452,7 @@ bool RequestGetPowerStoneRanking::IsInitialized() const {
 
 void RequestGetPowerStoneRanking::Swap(RequestGetPowerStoneRanking* other) {
   if (other != this) {
-    std::swap(unknown_1_, other->unknown_1_);
+    std::swap(offset_, other->offset_);
     std::swap(count_, other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -35468,7 +35468,7 @@ void RequestGetPowerStoneRanking::Swap(RequestGetPowerStoneRanking* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestGetPowerStoneRankingResponse::kRankingDataFieldNumber;
+const int RequestGetPowerStoneRankingResponse::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetPowerStoneRankingResponse::RequestGetPowerStoneRankingResponse()
@@ -35527,7 +35527,7 @@ RequestGetPowerStoneRankingResponse* RequestGetPowerStoneRankingResponse::New() 
 }
 
 void RequestGetPowerStoneRankingResponse::Clear() {
-  ranking_data_.Clear();
+  data_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -35546,16 +35546,16 @@ bool RequestGetPowerStoneRankingResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
+      // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
       case 1: {
         if (tag == 10) {
-         parse_ranking_data:
+         parse_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_ranking_data()));
+                input, add_data()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_ranking_data;
+        if (input->ExpectTag(10)) goto parse_data;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -35585,10 +35585,10 @@ failure:
 void RequestGetPowerStoneRankingResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingResponse)
-  // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-  for (int i = 0; i < this->ranking_data_size(); i++) {
+  // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+  for (int i = 0; i < this->data_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->ranking_data(i), output);
+      1, this->data(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -35599,12 +35599,12 @@ void RequestGetPowerStoneRankingResponse::SerializeWithCachedSizes(
 int RequestGetPowerStoneRankingResponse::ByteSize() const {
   int total_size = 0;
 
-  // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData ranking_data = 1;
-  total_size += 1 * this->ranking_data_size();
-  for (int i = 0; i < this->ranking_data_size(); i++) {
+  // repeated .DS2_Frpg2RequestMessage.PowerStoneRankingData data = 1;
+  total_size += 1 * this->data_size();
+  for (int i = 0; i < this->data_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->ranking_data(i));
+        this->data(i));
   }
 
   total_size += unknown_fields().size();
@@ -35622,7 +35622,7 @@ void RequestGetPowerStoneRankingResponse::CheckTypeAndMergeFrom(
 
 void RequestGetPowerStoneRankingResponse::MergeFrom(const RequestGetPowerStoneRankingResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
-  ranking_data_.MergeFrom(from.ranking_data_);
+  data_.MergeFrom(from.data_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -35634,13 +35634,13 @@ void RequestGetPowerStoneRankingResponse::CopyFrom(const RequestGetPowerStoneRan
 
 bool RequestGetPowerStoneRankingResponse::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->ranking_data())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->data())) return false;
   return true;
 }
 
 void RequestGetPowerStoneRankingResponse::Swap(RequestGetPowerStoneRankingResponse* other) {
   if (other != this) {
-    ranking_data_.Swap(&other->ranking_data_);
+    data_.Swap(&other->data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -35803,7 +35803,7 @@ void RequestGetPowerStoneRankingRecordCount::Swap(RequestGetPowerStoneRankingRec
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestGetPowerStoneRankingRecordCountResponse::kRecordFieldNumber;
+const int RequestGetPowerStoneRankingRecordCountResponse::kCountFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetPowerStoneRankingRecordCountResponse::RequestGetPowerStoneRankingRecordCountResponse()
@@ -35824,7 +35824,7 @@ RequestGetPowerStoneRankingRecordCountResponse::RequestGetPowerStoneRankingRecor
 
 void RequestGetPowerStoneRankingRecordCountResponse::SharedCtor() {
   _cached_size_ = 0;
-  record_ = 0u;
+  count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -35863,7 +35863,7 @@ RequestGetPowerStoneRankingRecordCountResponse* RequestGetPowerStoneRankingRecor
 }
 
 void RequestGetPowerStoneRankingRecordCountResponse::Clear() {
-  record_ = 0u;
+  count_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -35882,13 +35882,13 @@ bool RequestGetPowerStoneRankingRecordCountResponse::MergePartialFromCodedStream
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 record = 1;
+      // required uint32 count = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &record_)));
-          set_has_record();
+                 input, &count_)));
+          set_has_count();
         } else {
           goto handle_unusual;
         }
@@ -35921,9 +35921,9 @@ failure:
 void RequestGetPowerStoneRankingRecordCountResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetPowerStoneRankingRecordCountResponse)
-  // required uint32 record = 1;
-  if (has_record()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->record(), output);
+  // required uint32 count = 1;
+  if (has_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->count(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -35935,11 +35935,11 @@ int RequestGetPowerStoneRankingRecordCountResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 record = 1;
-    if (has_record()) {
+    // required uint32 count = 1;
+    if (has_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->record());
+          this->count());
     }
 
   }
@@ -35959,8 +35959,8 @@ void RequestGetPowerStoneRankingRecordCountResponse::CheckTypeAndMergeFrom(
 void RequestGetPowerStoneRankingRecordCountResponse::MergeFrom(const RequestGetPowerStoneRankingRecordCountResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_record()) {
-      set_record(from.record());
+    if (from.has_count()) {
+      set_count(from.count());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -35980,7 +35980,7 @@ bool RequestGetPowerStoneRankingRecordCountResponse::IsInitialized() const {
 
 void RequestGetPowerStoneRankingRecordCountResponse::Swap(RequestGetPowerStoneRankingRecordCountResponse* other) {
   if (other != this) {
-    std::swap(record_, other->record_);
+    std::swap(count_, other->count_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -35995,6 +35995,9 @@ void RequestGetPowerStoneRankingRecordCountResponse::Swap(RequestGetPowerStoneRa
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestRegisterPowerStoneData::kCharacterIdFieldNumber;
+const int RequestRegisterPowerStoneData::kIncrementFieldNumber;
+const int RequestRegisterPowerStoneData::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestRegisterPowerStoneData::RequestRegisterPowerStoneData()
@@ -36014,7 +36017,11 @@ RequestRegisterPowerStoneData::RequestRegisterPowerStoneData(const RequestRegist
 }
 
 void RequestRegisterPowerStoneData::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  character_id_ = 0u;
+  increment_ = 0u;
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -36024,6 +36031,9 @@ RequestRegisterPowerStoneData::~RequestRegisterPowerStoneData() {
 }
 
 void RequestRegisterPowerStoneData::SharedDtor() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -36053,6 +36063,28 @@ RequestRegisterPowerStoneData* RequestRegisterPowerStoneData::New() const {
 }
 
 void RequestRegisterPowerStoneData::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestRegisterPowerStoneData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 7) {
+    ZR_(character_id_, increment_);
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
+      }
+    }
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -36070,14 +36102,61 @@ bool RequestRegisterPowerStoneData::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 character_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &character_id_)));
+          set_has_character_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_increment;
+        break;
+      }
+
+      // required uint32 increment = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_increment:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &increment_)));
+          set_has_increment();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_data;
+        break;
+      }
+
+      // required bytes data = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_data:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_data()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData)
@@ -36091,6 +36170,22 @@ failure:
 void RequestRegisterPowerStoneData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData)
+  // required uint32 character_id = 1;
+  if (has_character_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->character_id(), output);
+  }
+
+  // required uint32 increment = 2;
+  if (has_increment()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->increment(), output);
+  }
+
+  // required bytes data = 3;
+  if (has_data()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      3, this->data(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestRegisterPowerStoneData)
@@ -36099,6 +36194,29 @@ void RequestRegisterPowerStoneData::SerializeWithCachedSizes(
 int RequestRegisterPowerStoneData::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 character_id = 1;
+    if (has_character_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->character_id());
+    }
+
+    // required uint32 increment = 2;
+    if (has_increment()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->increment());
+    }
+
+    // required bytes data = 3;
+    if (has_data()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->data());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -36114,6 +36232,17 @@ void RequestRegisterPowerStoneData::CheckTypeAndMergeFrom(
 
 void RequestRegisterPowerStoneData::MergeFrom(const RequestRegisterPowerStoneData& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_character_id()) {
+      set_character_id(from.character_id());
+    }
+    if (from.has_increment()) {
+      set_increment(from.increment());
+    }
+    if (from.has_data()) {
+      set_data(from.data());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -36124,12 +36253,17 @@ void RequestRegisterPowerStoneData::CopyFrom(const RequestRegisterPowerStoneData
 }
 
 bool RequestRegisterPowerStoneData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
 
 void RequestRegisterPowerStoneData::Swap(RequestRegisterPowerStoneData* other) {
   if (other != this) {
+    std::swap(character_id_, other->character_id_);
+    std::swap(increment_, other->increment_);
+    std::swap(data_, other->data_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
