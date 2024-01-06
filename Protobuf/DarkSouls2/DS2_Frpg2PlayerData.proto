@@ -111,7 +111,7 @@ message PhysicalStatus {
 message PlayerLocation {
 	optional uint32 online_area_id = 1;
 	optional uint32 cell_id = 2;        // 1074321607, 3225573558, 1078414675,
-	optional uint32 unknown_3 = 3;      // 0, 101640, 103130, 103110, 103120,
+	optional uint32 online_activity_area_id = 3;      // 0, 101640, 103130, 103110, 103120,
 	optional Vector position = 4;
 	optional float unknown_5 = 5;       // 1074321607, 3225573558, 1078414675
 }

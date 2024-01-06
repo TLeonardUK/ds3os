@@ -781,39 +781,48 @@ message RequestCreateGhostDataResponse {
 // Game Server Messages - Vistors (Join via covenenant I think)
 // ------------------------------------------------------------------------------------------------------------
 
+enum VisitorType {
+    // One of these is the blue sentinel one.
+	VisitorType_None           = -1;
+	VisitorType_BlueSentinels  = 0; // Guessing, needs validation.
+	VisitorType_BellKeepers    = 1; 
+	VisitorType_Rat            = 2; 
+	VisitorType_3              = 3;
+};
+
 message VisitorData {
 	required int64 player_id = 1; // 290333
 	required string player_steam_id = 2;
 }
 
 message RequestGetVisitorList {
-	required int64 field_1 = 1; // 10160000, 10150000, 10190000, 20210000, 10330000, 20240000, 10340000
-	required int64 field_2 = 2; // 101650, 101630, 101520, 101610, 101660, 101670, 101920, 202140, 101620, 0, 202410, 101640, 103410, 101970
-	required int64 field_3 = 3; // 5
-	required MatchingParameter field_4 = 4; 
-	required int64 field_5 = 5; // 1, 2, 0
+	required int64 online_area_id = 1; // 10160000, 10150000, 10190000, 20210000, 10330000, 20240000, 10340000
+	required int64 cell_id = 2; // 101650, 101630, 101520, 101610, 101660, 101670, 101920, 202140, 101620, 0, 202410, 101640, 103410, 101970
+	required int64 max_targets = 3; // 5
+	required MatchingParameter matching_parameter = 4; 
+	required VisitorType type = 5; // 1, 2, 0
 	required int64 field_6 = 6; // 0
 }
 
 message RequestGetVisitorListResponse {
-	required int64 field_1 = 1; // 10160000, 10150000, 10190000, 20210000, 10330000, 20240000, 10340000
-	required int64 field_2 = 2; // 101650, 101630, 101520, 101610, 101660, 101670, 101920, 202140, 101620, 0, 202410, 101640, 103410, 101970
-	optional VisitorData field_3 = 3; // 
+	required int64 online_area_id = 1; // 10160000, 10150000, 10190000, 20210000, 10330000, 20240000, 10340000
+	required int64 cell_id = 2; // 101650, 101630, 101520, 101610, 101660, 101670, 101920, 202140, 101620, 0, 202410, 101640, 103410, 101970
+	repeated VisitorData target_data = 3; // 
 }
 
 message PushRequestRemoveVisitor {
 	required PushMessageId push_message_id = 1;
-	required int64 field_2 = 2; // 290333
+	required int64 player_id = 2; // 290333
 	required string player_steam_id = 3;
-	required int64 field_4 = 4; // 2, 1
+	required VisitorType type = 4; // 2, 1
 }
 
 message RequestVisit {
-	required int64 field_1 = 1; // 10160000, 10340000
-	required int64 field_2 = 2; // 101640, 103410
-	required int64 field_3 = 3; // 1, 2
-	required int64 field_4 = 4; // 290333
-	required bytes field_5 = 5; // 
+	required int64 online_area_id = 1; // 10160000, 10340000
+	required int64 cell_id = 2; // 101640, 103410
+	required VisitorType type = 3; // 1, 2
+	required int64 player_id = 4; // 290333
+	required bytes player_struct = 5; // 
 }
 
 message RequestVisitResponse {
@@ -821,25 +830,34 @@ message RequestVisitResponse {
 }
 
 message RequestRejectVisit {
-    // TODO
+	required int64 player_id = 1;       // 1
+	required int64 unknown_2 = 2;       // 2 - pretty sure this is rejection reason
+	required int64 online_area_id = 3;  // 10190000
+	required int64 cell_id = 4;         // 101940
+	optional VisitorType type = 5;      // 1
 }
 
 message RequestRejectVisitResponse {
-    // TODO
+    // Not recieved.
 }
 
 message PushRequestRejectVisit {
+    // Base on ghidra.
 	required PushMessageId push_message_id = 1;
+    required int64 player_id = 2;
+    required int64 unknown_3 = 3; // reason?
+    required string steam_id = 4;
+    required VisitorType type = 5;
 }
 
 message PushRequestVisit {
 	required PushMessageId push_message_id = 1;
-	required int64 field_2 = 2; // 290333
+	required int64 player_id = 2; // 290333
 	required string player_steam_id = 3;
-	required bytes field_4 = 4; 
-	required int64 field_5 = 5; // 1, 2
-	required int64 field_6 = 6; // 10160000, 10340000
-	required int64 field_7 = 7; // 101640, 103410
+	required bytes player_struct = 4; 
+	required VisitorType type = 5; // 1, 2
+	required int64 online_area_id = 6; // 10160000, 10340000
+	required int64 cell_id = 7; // 101640, 103410
 }
 
 // ------------------------------------------------------------------------------------------------------------

@@ -3903,7 +3903,7 @@ void PhysicalStatus::Swap(PhysicalStatus* other) {
 #ifndef _MSC_VER
 const int PlayerLocation::kOnlineAreaIdFieldNumber;
 const int PlayerLocation::kCellIdFieldNumber;
-const int PlayerLocation::kUnknown3FieldNumber;
+const int PlayerLocation::kOnlineActivityAreaIdFieldNumber;
 const int PlayerLocation::kPositionFieldNumber;
 const int PlayerLocation::kUnknown5FieldNumber;
 #endif  // !_MSC_VER
@@ -3934,7 +3934,7 @@ void PlayerLocation::SharedCtor() {
   _cached_size_ = 0;
   online_area_id_ = 0u;
   cell_id_ = 0u;
-  unknown_3_ = 0u;
+  online_activity_area_id_ = 0u;
   position_ = NULL;
   unknown_5_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -3988,7 +3988,7 @@ void PlayerLocation::Clear() {
 
   if (_has_bits_[0 / 32] & 31) {
     ZR_(online_area_id_, cell_id_);
-    ZR_(unknown_3_, unknown_5_);
+    ZR_(online_activity_area_id_, unknown_5_);
     if (has_position()) {
       if (position_ != NULL) position_->::DS2_Frpg2PlayerData::Vector::Clear();
     }
@@ -4040,18 +4040,18 @@ bool PlayerLocation::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_unknown_3;
+        if (input->ExpectTag(24)) goto parse_online_activity_area_id;
         break;
       }
 
-      // optional uint32 unknown_3 = 3;
+      // optional uint32 online_activity_area_id = 3;
       case 3: {
         if (tag == 24) {
-         parse_unknown_3:
+         parse_online_activity_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &unknown_3_)));
-          set_has_unknown_3();
+                 input, &online_activity_area_id_)));
+          set_has_online_activity_area_id();
         } else {
           goto handle_unusual;
         }
@@ -4122,9 +4122,9 @@ void PlayerLocation::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->cell_id(), output);
   }
 
-  // optional uint32 unknown_3 = 3;
-  if (has_unknown_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unknown_3(), output);
+  // optional uint32 online_activity_area_id = 3;
+  if (has_online_activity_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->online_activity_area_id(), output);
   }
 
   // optional .DS2_Frpg2PlayerData.Vector position = 4;
@@ -4161,11 +4161,11 @@ int PlayerLocation::ByteSize() const {
           this->cell_id());
     }
 
-    // optional uint32 unknown_3 = 3;
-    if (has_unknown_3()) {
+    // optional uint32 online_activity_area_id = 3;
+    if (has_online_activity_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->unknown_3());
+          this->online_activity_area_id());
     }
 
     // optional .DS2_Frpg2PlayerData.Vector position = 4;
@@ -4203,8 +4203,8 @@ void PlayerLocation::MergeFrom(const PlayerLocation& from) {
     if (from.has_cell_id()) {
       set_cell_id(from.cell_id());
     }
-    if (from.has_unknown_3()) {
-      set_unknown_3(from.unknown_3());
+    if (from.has_online_activity_area_id()) {
+      set_online_activity_area_id(from.online_activity_area_id());
     }
     if (from.has_position()) {
       mutable_position()->::DS2_Frpg2PlayerData::Vector::MergeFrom(from.position());
@@ -4234,7 +4234,7 @@ void PlayerLocation::Swap(PlayerLocation* other) {
   if (other != this) {
     std::swap(online_area_id_, other->online_area_id_);
     std::swap(cell_id_, other->cell_id_);
-    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(online_activity_area_id_, other->online_activity_area_id_);
     std::swap(position_, other->position_);
     std::swap(unknown_5_, other->unknown_5_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

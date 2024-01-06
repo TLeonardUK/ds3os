@@ -7,21 +7,15 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-ENTRY(None,                                                       "None",                                                     0)
-
-/*
-
-0:Host
--1:Hollow
-2:While Phantom
-5:Arbiter Spirit
-7:Dark Spirit
-9:Gray Spirit
-12:Dragon Spirit
-16:Arena Spirit
-17:Friendly NPC
-18:Friendly NPC
-20:Summoned Friendly NPC
-23:Hostility NPC
-
-*/
+ENTRY(Host, "Host", 0)
+ENTRY(Hollow, "Hollow", -1)
+ENTRY(While_Phantom, "While Phantom", 2)
+ENTRY(Arbiter_Spirit, "Arbiter Spirit", 5)
+ENTRY(Dark_Spirit, "Dark Spirit", 7)
+ENTRY(Gray_Spirit, "Gray Spirit", 9)
+ENTRY(Dragon_Spirit, "Dragon Spirit", 12)
+ENTRY(Arena_Spirit, "Arena Spirit", 16)
+ENTRY(Friendly_NPC, "Friendly NPC", 17)
+ENTRY(Friendly_NPC_2, "Friendly NPC", 18)
+ENTRY(Summoned_Friendly_NPC, "Summoned Friendly NPC", 20)
+ENTRY(Hostility_NPC, "Hostility NPC", 23)

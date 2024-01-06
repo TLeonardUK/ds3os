@@ -1,5 +1,5 @@
 /*
- * Dark Souls 3 - Open Server
+ * Dark Souls 3 _ Open Server
  * Copyright (C) 2021 Tim Leonard
  *
  * This program is free software; licensed under the MIT license.
@@ -7,1345 +7,1340 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
 
-ENTRY(Empty,                                                      "Empty",                                                    -1)
-
-/*
-
-03B2F5E0:Cracked Red Eye Orb
-03B2CED0:Cracked Blue Eye Orb
-03B2BB48:Red Sign Soapstone
-03B20B80:Dried Fingers
-03B259A0:Bone of Order
-03B280B0:White Sign Soapstone
-03B2A7C0:Small White Sign Soapstone
-03B31CF0:Dragon Eye
-03B39220:Token of Fidelity
-03B3B930:Token of Spite
-03B3E040:Sunlight Medal
-03B40750:Dragon Scale
-03B42E60:Rat Tail
-03B45570:Awestone
-0395D4D8:Human Effigy
-000F4240:Dagger
-000F6950:Bandit's Knife
-000FDE80:Mytha's Bent Blade
-00100590:Shadow Dagger
-00102CA0:Thief Dagger
-001053B0:Broken Thief Sword
-0010C8E0:Parrying Dagger
-0010EFF0:Manikin Knife
-00113E10:Royal Dirk
-00116520:Blue Dagger
-00118C30:Umbral Dagger
-0011B340:Retainer's Short Sword
-00124F80:Broken Straight Sword
-00127690:Shortsword
-00129DA0:Longsword
-0012C4B0:Broadsword
-0012EBC0:Foot Soldier Sword
-001312D0:Puzzling Stone Sword
-001339E0:Possessed Armor Sword
-001360F0:Varangian Sword
-00138800:Blue Flame
-0013AF10:Fume Sword
-00142440:Heide Knight Sword
-00144B50:Red Rust Sword
-00147260:no text
-00149970:Black Dragon Sword
-0014C080:Sun Sword
-0014E790:Drakekeeper's Sword
-00150EA0:Ashen Warrior Sword
-001535B0:Ivory Straight Sword
-00155CC0:Estoc
-001583D0:Mail Breaker
-0015AAE0:Chaos Rapier
-0015D1F0:Spider's Silk
-0015F900:Espada Ropera
-0016E360:Rapier
-00173180:Black Scorpion Stinger
-00175890:Ricard's Rapier
-00181BE0:Ice Rapier
-00186A00:Falchion
-00189110:Shotel
-0018B820:Warped Sword
-0018DF30:Eleum Loyce
-00190640:Manikin Sabre
-00192D50:Scimitar
-00195460:Red Rust Scimitar
-00197B70:Spider Fang
-0019A280:Melu Scimitar
-0019C990:Monastery Scimitar
-0019F0A0:Uchigatana
-001A17B0:Washing Pole
-001A3EC0:Chaos Blade
-001A65D0:Blacksteel Katana
-001A8CE0:Manslayer
-001ADB00:Darkdrift
-001B0210:Berserker Blade
-001B5030:Bewitched Alonne Sword
-001B7740:Bastard Sword
-001B9E50:Flamberge
-001BC560:Claymore
-001BEC70:Majestic Greatsword
-001BF058:Majestic Greatsword
-001C3A90:Drangleic Sword
-001C61A0:Thorned Greatsword
-001C88B0:Bluemoon Greatsword
-001C8C98:Moonlight Greatsword
-001CAFC0:Mastodon Greatsword
-001CFDE0:Ruler's Sword
-001D24F0:Mirrah Greatsword
-001D28D8:Old Mirrah Greatsword
-001D4C00:Black Dragon Greatsword
-001D7310:Black Knight Greatsword
-001D9A20:Royal Greatsword
-001DC130:Old Knight Greatsword
-001DE840:Defender Greatsword
-001E0F50:Watcher Greatsword
-001E3660:Key to the Embedded
-001E5D70:Drakeblood Greatsword
-001E70F8:Loyce Greatsword
-001E74E0:Charred Loyce Greatsword
-001E8480:Hand Axe
-001EAB90:Battle Axe
-001ED2A0:Bandit Axe
-001EF9B0:Infantry Axe
-001F95F0:Gyrm Axe
-001FBD00:Dragonslayer's Crescent Axe
-001FE410:Butcher's Knife
-00200B20:Silverblack Sickle
-002191C0:Crescent Axe
-0021B8D0:Greataxe
-0021DFE0:Bandit Greataxe
-00222E00:Lion Greataxe
-00225510:Giant Stone Axe
-00227C20:Gyrm Greataxe
-0022F150:Black Dragon Greataxe
-00231860:Black Knight Greataxe
-00233F70:Drakekeeper's Greataxe
-00249F00:Club
-0024C610:Mace
-0024ED20:Morning Star
-00251430:Reinforced Club
-00253B40:Craftsman's Hammer
-0025B070:Mace of the Insolent
-002625A0:Handmaid's Ladle
-002673C0:Blacksmith's Hammer
-00269AD0:Black Dragon Warpick
-0026C1E0:Aldia Hammer
-00271000:Barbed Club
-0027AC40:Large Club
-0027D350:Pickaxe
-0027FA60:Great Club
-00282170:Gyrm Great Hammer
-002896A0:Iron King Hammer
-0028BDB0:Malformed Skull
-0028E4C0:Dragon Tooth
-00290BD0:Giant Warrior Club
-002932E0:Malformed Shell
-002959F0:Demon's Great Hammer
-00298100:Archdrake Mace
-0029A810:Old Knight Hammer
-0029CF20:Drakekeeper's Great Hammer
-0029F630:Sacred Chime Hammer
-002A1D40:Sanctum Mace
-002AB980:Spear
-002AE090:Winged Spear
-002B07A0:Pike
-002B2EB0:Partizan
-002B55C0:Stone Soldier Spear
-002B7CD0:Spitfire Spear
-002B9058:Yorgh's Spear
-002BA3E0:Silverblack Spear
-002BCAF0:Heide Spear
-002BF200:Pate's Spear
-002C1910:Channeler's Trident
-002C2C98:Gargoyle Bident
-002C3080:Dragonslayer Spear
-002C4020:Heide Lance
-002C8E40:Heide Greatlance
-002CB550:Grand Lance
-002CDC60:Chariot Lance
-002D0370:Rampart Golem Lance
-002D2A80:Smelter Hammer
-002DC6C0:Great Scythe
-002DEDD0:Great Machete
-002E14E0:Full Moon Sickle
-002E6300:Crescent Sickle
-002E8A10:Scythe of Nahr Alma
-002EB120:Bone Scythe
-002ED830:Scythe of Want
-0030D400:Lucerne
-0030FB10:Scythe
-00312220:Halberd
-00317040:Helix Halberd
-00319750:Santier's Spear
-00319B38:Santier's Spear
-0031E570:Mastodon Halberd
-00320C80:Blue Knight's Halberd
-00323390:Dragonrider's Halberd
-00325AA0:Black Knight Halberd
-003281B0:Syan's Halberd
-0032A8C0:Roaring Halberd
-0032CFD0:Old Knight Halberd
-0032F6E0:Old Knight Pike
-00331DF0:Drakekeeper's Warpick
-00336C10:Wrathful Axe
-00340850:Claws
-00342F60:Malformed Claws
-00345670:Manikin Claws
-00347D80:Work Hook
-003567E0:Caestus
-00358EF0:Shadow Claws
-0035DD10:Bone Fist
-0036EE80:Whip
-00371590:Notched Whip
-00373CA0:Bloodied Whip
-003763B0:Spotted Whip
-0037D8E0:Old Whip
-0039FBC0:Sorcerer's Staff
-003A22D0:Staff of Amana
-003A49E0:Witchtree Branch
-003A70F0:Lizard Staff
-003ABF10:Olenford's Staff
-003AE620:Archdrake Staff
-003B0D30:Bat Staff
-003B3440:Bone Staff
-003B5B50:Staff of Wisdom
-003B8260:Sunset Staff
-003BA970:Pilgrim's Spontoon
-003BF790:Azal's Staff
-003C1EA0:Retainer Staff
-003D3010:Cleric's Sacred Chime
-003D5720:Witchtree Bellvine
-003D7E30:Priest's Chime
-003DA540:Dragon Chime
-003DCC50:Chime of Want
-003DF360:Archdrake Chime
-003E4180:Idol's Chime
-003E6890:Caitha's Chime
-003E8FA0:Protective Chime
-003EB6B0:Disc Chime
-003EDDC0:Chime of Screams
-003F52F0:Black Witch's Staff
-00401640:Short Bow
-00403D50:Long Bow
-00406460:Composite Bow
-00408B70:Sea Bow
-0040B280:Dragonrider Bow
-004127B0:Bell Keeper Bow
-00414EC0:Bow of Want
-004175D0:Hunter's Blackbow
-00432380:Alonne Greatbow
-004371A0:Dragonslayer Greatbow
-004398B0:Possessed Armor Greatbow
-0043BFC0:Twin-headed Greatbow
-004630C0:Light Crossbow
-004657D0:Heavy Crossbow
-0046A5F0:Shield Crossbow
-00471B20:Avelyn
-00474230:Sanctum Crossbow
-00476940:Sanctum Repeating Crossbow
-004C4B40:Murakumo
-004C7250:Arced Sword
-004CE780:Curved Dragon Greatsword
-004D0E90:Curved Nil Greatsword
-004F5880:Zweihander
-004F7F90:Greatsword
-004FA6A0:Smelter Sword
-004FBA28:Aged Smelter Sword
-004FCDB0:Drakewing Ultra Greatsword
-004FF4C0:King's Ultra Greatsword
-00501BD0:Fume Ultra Greatsword
-00502F58:Ivory King Ultra Greatsword
-005069F0:Pursuer's Ultra Greatsword
-00507D78:Drakekeeper's Ultra Greatsword
-00509100:Crypt Blacksword
-0050A488:Old Knight Ultra Greatsword
-0050B810:Black Knight Ultra Greatsword
-0050CB98:Lost Sinner's Sword
-00510630:Stone Twinblade
-00515450:Dragonrider Twinblade
-00517B60:Twinblade
-0051A270:Red Iron Twinblade
-0051C980:Curved Twinblade
-0051F090:Sorcerer's Twinblade
-005265C0:Pyromancy Flame
-00528CD0:Dark Pyromancy Flame
-0053EC60:Black Flamestone Dagger
-00541370:Yellow Quartz Longsword
-00543A80:Bound Hand Axe
-00546190:Homunculus Mace
-005488A0:Transgressor's Staff
-00557300:Longsword
-00559A10:Murakumo
-0055C120:Blacksteel Katana
-0055E830:Rapier
-00560F40:Greataxe
-00563650:Great Club
-00565D60:Caestus
-005D1420:Binoculars
-00A7D8C0:Buckler
-00A7EC48:Benhart's Parma
-00A7FFD0:Small Leather Shield
-00A826E0:Iron Parma
-00A84DF0:Foot Soldier Shield
-00A87500:Target Shield
-00A89C10:Golden Falcon Shield
-00A8EA30:Manikin Shield
-00A91140:Llewellyn Shield
-00A93C38:Crimson Parma
-00A98670:Cleric's Parma
-00A9AD80:Cleric's Small Shield
-00A9D490:Magic Shield
-00A9FBA0:Cursed Bone Shield
-00AA22B0:Sanctum Shield
-00AA49C0:Varangian Shield
-00AAAB68:Watcher's Shield
-00AAE600:Large Leather Shield
-00AB0D10:Blue Wooden Shield
-00AB3420:Silver Eagle Kite Shield
-00AB5B30:Drangleic Shield
-00AB8240:Lion Clan Shield
-00ABA950:Archdrake Shield
-00ABD060:King's Shield
-00ABF770:Mirrah Shield
-00AC1E80:Old Knight's Shield
-00AC4590:Loyce Shield
-00AC5918:Charred Loyce Shield
-00AC6CA0:Spirit Tree Shield
-00AC93B0:Golden Wing Shield
-00ACBAC0:Vessel Shield
-00ACE1D0:Shield of the Insolent
-00AD2FF0:Silverblack Shield
-00AD5700:Stone Parma
-00AD7E10:Grand Spirit Tree Shield
-00ADA520:Moon Butterfly Shield
-00ADCC30:Slumbering Dragon Shield
-00ADDFB8:Chaos Shield
-00ADF340:Wooden Shield
-00AE4160:Hollow Soldier Shield
-00AE6870:Royal Kite Shield
-00AEB690:Red Rust Shield
-00AECA18:Rampart Golem Shield
-00AF04B0:Bell Keeper Shield
-00AF1838:Defender's Shield
-00AF2BC0:Black Dragon Shield
-00AF3F48:Drakekeeper's Shield
-00AF52D0:Porcine Shield
-00AF6658:Bone Shield
-00AF79E0:Twin Dragon Greatshield
-00AFA0F0:Tower Shield
-00AFEF10:Orma's Greatshield
-00B01620:Reeve's Greatshield
-00B03D30:King's Mirror
-00B06440:Dragonrider Greatshield
-00B08B50:Mastodon Greatshield
-00B0D970:Havel's Greatshield
-00B10080:Gyrm Greatshield
-00B12790:Pursuer's Greatshield
-00B14EA0:Pate's Shield
-00B175B0:Old Knight Greatshield
-00B19CC0:Drakekeeper's Greatshield
-00B1C3D0:Greatshield of Glory
-00B28720:Phoenix Parma
-00B2AE30:Sunlight Parma
-00B2D540:Watchdragon Parma
-00B2FC50:Blossom Kite Shield
-00B32360:Rebel's Greatshield
-00B34A70:Wicked Eye Greatshield
-00B40DC0:Black Flamestone Parma
-00B434D0:Yellow Quartz Shield
-00B45BE0:Bound Wooden Shield
-00B482F0:Homunculus Wooden Shield
-00B4AA00:Transgressor's Leather Shield
-014096B4:Pate's Helm
-014096B5:Pate's Armor
-014096B6:Pate's Gloves
-014096B7:Pate's Trousers
-0140BDC4:Thief Mask
-0140BDC5:Black Leather Armor
-0140BDC6:Black Leather Gloves
-0140BDC7:Black Leather Boots
-0140E4D4:Wanderer Hood
-0140E4D5:Wanderer Coat
-0140E4D6:Wanderer Manchettes
-0140E4D7:Wanderer Boots
-01410BE4:Hunter's Hat
-01410BE5:Leather Armor
-01410BE6:Leather Gloves
-01410BE7:Leather Boots
-01410FCC:Hunter's Hat
-014132F4:Knight Helm
-014132F5:Knight Armor
-014132F6:Knight Gauntlets
-014132F7:Knight Leggings
-01415A04:Elite Knight Helm
-01415A05:Elite Knight Armor
-01415A06:Elite Knight Gloves
-01415A07:Elite Knight Leggings
-01418114:Tattered Cloth Hood
-01418115:Tattered Cloth Robe
-01418116:Tattered Cloth Manchettes
-01418117:Heavy Boots
-0141A824:Brigand Hood
-0141A825:Brigand Armor
-0141A826:Brigand Gauntlets
-0141A827:Brigand Trousers
-0141F644:Imported Hood
-0141F645:Imported Tunic
-0141F646:Imported Manchettes
-0141F647:Imported Trousers
-01429284:Traveling Merchant Hat
-01429285:Traveling Merchant Coat
-01429286:Traveling Merchant Gloves
-01429287:Traveling Merchant Boots
-0142E0A4:Havel's Helm
-0142E0A5:Havel's Armor
-0142E0A6:Havel's Gauntlets
-0142E0A7:Havel's Leggings
-0143A3F4:Jester's Cap
-0143A3F5:Jester's Robes
-0143A3F6:Jester's Gloves
-0143A3F7:Jester's Tights
-0143F214:Moon Hat
-0143F215:Astrologist's Robe
-0143F216:Astrologist's Gauntlets
-0143F217:Astrologist's Bottoms
-014551A4:Faraam Helm
-014551A5:Faraam Armor
-014551A6:Faraam Gauntlets
-014551A7:Faraam Boots
-014578B4:Black Dragon Helm
-014578B5:Black Dragon Armor
-014578B6:Black Dragon Gauntlets
-014578B7:Black Dragon Leggings
-01459FC4:Xanthous Crown
-01459FC5:Xanthous Overcoat
-01459FC6:Xanthous Gloves
-01459FC7:Xanthous Waistcloth
-0145C6D4:Mask of Judgment
-0145C6D5:Robe of Judgment
-0145C6D6:Manchettes of Judgment
-0145C6D7:Tights of Judgment
-0145EDE4:Helm of Aurous
-0145EDE5:Armor of Aurous
-0145EDE6:Gauntlets of Aurous
-0145EDE7:Leggings of Aurous
-0145F1CC:Helm of Aurous
-0145F1CD:Armor of Aurous
-0145F1CE:Gauntlets of Aurous
-0145F1CF:Leggings of Aurous
-014614F4:Monastery Headcloth
-014614F5:Monastery Longshirt
-014614F6:Monastery Long Gloves
-014614F7:Monastery Skirt
-01466314:Dingy Hood
-01466315:Dingy Robe
-01466316:Dingy Cuffs
-01466317:Blood-Stained Skirt
-0146FF54:Durgo's Hat
-01472666:Engraved Gauntlets
-01474D75:Barrel
-01477487:Flying Feline Boots
-01479B94:Moon Butterfly Hat
-01479B95:Moon Butterfly Wings
-01479B96:Moon Butterfly Cuffs
-01479B97:Moon Butterfly Skirt
-0147C2A4:Catarina Helm
-0147C2A5:Catarina Armor
-0147C2A6:Catarina Gauntlets
-0147C2A7:Catarina Leggings
-0147E9B4:Alva Helm
-0147E9B5:Alva Armor
-0147E9B6:Alva Gauntlets
-0147E9B7:Alva Leggings
-014810C4:Black Witch Veil
-014810C5:Black Witch Robe
-014810C6:Black Witch Gloves
-014810C7:Black Witch Trousers
-014814AC:Black Witch Hat
-01481894:Black Witch Domino Mask
-01499764:Drakeblood Helm
-01499765:Drakeblood Armor
-01499766:Drakeblood Gauntlets
-01499767:Drakeblood Leggings
-0149BE74:Northwarder Hood
-0149BE75:Northwarder Robe
-0149BE76:Northwarder Manchettes
-0149BE77:Northwarder Trousers
-014A0C94:Crown of the Old Iron King
-014A33A4:Crown of the Ivory King
-014A5AB4:Crown of the Sunken King
-014A81C4:Old Bell Helm
-014AA8D4:Hollow Skin
-014ACFE4:Pharros Mask
-014AF6F7:Flower Skirt
-014B1E04:Minotaur Helm
-014B4514:Symbol of Avarice
-01500004:Hollow Soldier Helm
-01500005:Hollow Soldier Armor
-01500006:Hollow Soldier Gauntlets
-01500007:Hollow Soldier Leggings
-015003EC:Royal Soldier Helm
-015003ED:Royal Soldier Armor
-015003EE:Royal Soldier Gauntlets
-015003EF:Royal Soldier Leggings
-01502714:Hollow Infantry Helm
-01502715:Hollow Infantry Armor
-01502716:Hollow Infantry Gloves
-01502717:Hollow Infantry Boots
-01502AFC:Infantry Helm
-01502AFD:Infantry Armor
-01502AFE:Infantry Gloves
-01502AFF:Infantry Boots
-01509C44:White Priest Headpiece
-01509C45:White Priest Robe
-01509C46:White Priest Gloves
-01509C47:White Priest Skirt
-0150A414:Priestess Headpiece
-0150A415:Priestess Robe
-0150A416:Priestess Gloves
-0150A417:Priestess Skirt
-0150EA64:Rogue Hood
-0150EA65:Rogue Armor
-0150EA66:Rogue Gauntlets
-0150EA67:Rogue Leggings
-01515F94:Spiked Bandit Helm
-01515F95:Bandit Armor
-01515F96:Bandit Gauntlets
-01515F97:Bandit Boots
-0151ADB4:Varangian Helm
-0151ADB5:Varangian Armor
-0151ADB6:Varangian Cuffs
-0151ADB7:Varangian Leggings
-01527104:Black Hollow Mage Hood
-01527105:Black Hollow Mage Robe
-015278D4:White Hollow Mage Hood
-015278D5:White Hollow Mage Robe
-01529815:Lion Mage Robe
-01529816:Lion Mage Cuffs
-01529817:Lion Mage Skirt
-01530D44:Steel Helm
-01530D45:Steel Armor
-01530D46:Steel Gauntlets
-01530D47:Steel Leggings
-01533454:Shadow Mask
-01533455:Shadow Top
-01533456:Shadow Gauntlets
-01533457:Shadow Leggings
-01535B64:Manikin Mask
-01535B65:Manikin Top
-01535B66:Manikin Gloves
-01535B67:Manikin Boots
-0153D094:Prisoner's Hood
-0153D095:Prisoner's Tatters
-0153D096:Prisoner's Gloves
-0153D097:Prisoner's Waistcloth
-0153D47C:Prisoner's Hood
-0153D47D:Prisoner's Tatters
-01546CD4:Archdrake Helm
-01546CD5:Archdrake Robes
-01546CD6:Archdrake Gloves
-01546CD7:Archdrake Boots
-0154E204:Gyrm Helm
-0154E205:Gyrm Armor
-0154E206:Gyrm Gloves
-0154E207:Gyrm Boots
-01550914:Gyrm Warrior Helm
-01550915:Gyrm Warrior Armor
-01550916:Gyrm Warrior Gloves
-01550917:Gyrm Warrior Boots
-01550CFC:Gyrm Warrior Greathelm
-01553024:Dark Mask
-01553025:Dark Armor
-01553026:Dark Gauntlets
-01553027:Dark Leggings
-01555734:Warlock Mask
-0156B6C4:Tseldora Cap
-0156B6C5:Tseldora Robe
-0156B6C6:Tseldora Manchettes
-0156B6C7:Tseldora Trousers
-015704E4:Peasant Hat
-015704E5:Peasant Attire
-015704E6:Peasant Long Gloves
-015704E7:Peasant Trousers
-01577A14:Ironclad Helm
-01577A15:Ironclad Armor
-01577A16:Ironclad Gauntlets
-01577A17:Ironclad Leggings
-015781E4:Old Ironclad Helm
-015781E5:Old Ironclad Armor
-015781E6:Old Ironclad Gauntlets
-015781E7:Old Ironclad Leggings
-0157A124:Royal Swordsman Helm
-0157A125:Royal Swordsman Armor
-0157A126:Royal Swordsman Gloves
-0157A127:Royal Swordsman Leggings
-0157C834:Syan's Helm
-0157C835:Syan's Armor
-0157C836:Syan's Gauntlets
-0157C837:Syan's Leggings
-0157EF44:Bone Crown
-0157EF45:Bone King Robe
-0157EF46:Bone King Cuffs
-0157EF47:Bone King Skirt
-015F1B34:Heide Knight Greathelm
-015F1B35:Heide Knight Chainmail
-015F1B36:Heide Knight Gauntlets
-015F1B37:Heide Knight Leggings
-015F1F1C:Heide Knight Iron Mask
-015F9065:Singer's Dress
-015F944D:Singer's Dress
-015F9835:Singer's Dress
-015FB774:Smelter Demon Helm
-015FB775:Smelter Demon Armor
-015FB776:Smelter Demon Gauntlets
-015FB777:Smelter Demon Leggings
-015FDE84:Alonne Captain Helm
-015FDE85:Alonne Captain Armor
-015FE26C:Alonne Knight Helm
-015FE26D:Alonne Knight Armor
-015FE26E:Alonne Knight Gauntlets
-015FE26F:Alonne Knight Leggings
-01600594:Vengarl's Helm
-01600595:Vengarl's Armor
-01600596:Vengarl's Gloves
-01600597:Vengarl's Boots
-01602CA5:Lion Warrior Cape
-01602CA6:Lion Warrior Cuffs
-01602CA7:Lion Warrior Skirt
-0160308C:Lion Warrior Helm
-0160308D:Red Lion Warrior Cape
-0160C8E4:Grave Warden Mask
-0160C8E5:Grave Warden Top
-0160C8E6:Grave Warden Cuffs
-0160C8E7:Grave Warden Bottoms
-0160EFF4:Falconer Helm
-0160EFF5:Falconer Armor
-0160EFF6:Falconer Gloves
-0160EFF7:Falconer Boots
-01611704:Rusted Mastodon Helm
-01611705:Rusted Mastodon Armor
-01611706:Rusted Mastodon Gauntlets
-01611707:Rusted Mastodon Leggings
-01613E14:Mastodon Helm
-01613E15:Mastodon Armor
-01613E16:Mastodon Gauntlets
-01613E17:Mastodon Leggings
-01616524:Desert Sorceress Hood
-01616525:Desert Sorceress Top
-01616526:Desert Sorceress Gloves
-01616527:Desert Sorceress Skirt
-01618C34:Dragon Acolyte Mask
-01618C35:Dragon Acolyte Robe
-01618C36:Dragon Acolyte Gloves
-01618C37:Dragon Acolyte Boots
-0161901C:Dragon Sage Hood
-0162C4B4:Ruin Helm
-0162C4B5:Ruin Armor
-0162C4B6:Ruin Gauntlets
-0162C4B7:Ruin Leggings
-01638804:Old Knight Helm
-01638805:Old Knight Armor
-01638806:Old Knight Gauntlets
-01638807:Old Knight Leggings
-0163AF14:Drakekeeper Helm
-0163AF15:Drakekeeper Armor
-0163AF16:Drakekeeper Gauntlets
-0163AF17:Drakekeeper Boots
-0163D624:Throne Defender Helm
-0163D625:Throne Defender Armor
-0163D626:Throne Defender Gauntlets
-0163D627:Throne Defender Leggings
-0163FD34:Velstadt's Helm
-0163FD35:Velstadt's Armor
-0163FD36:Velstadt's Gauntlets
-0163FD37:Velstadt's Leggings
-01642444:Throne Watcher Helm
-01642445:Throne Watcher Armor
-01642446:Throne Watcher Gauntlets
-01642447:Throne Watcher Leggings
-017E14E4:Looking Glass Mask
-017E14E5:Looking Glass Armor
-017E14E6:Looking Glass Gauntlets
-017E14E7:Looking Glass Leggings
-017E6305:Agdayne's Black Robe
-017E6306:Agdayne's Cuffs
-017E6307:Agdayne's Kilt
-017ED834:Leydia Black Hood
-017ED835:Leydia Black Robe
-017EFF44:Insolent Helm
-017EFF45:Insolent Armor
-017EFF46:Insolent Gloves
-017EFF47:Insolent Boots
-017F2654:Imperious Helm
-017F2655:Imperious Armor
-017F2656:Imperious Gloves
-017F2657:Imperious Leggings
-017F4D64:Leydia White Hood
-017F4D65:Leydia White Robe
-017F4D66:Leydia Gauntlets
-017F7474:King's Crown
-017F7475:King's Armor
-017F7476:King's Gauntlets
-017F7477:King's Leggings
-018E4184:Dragonrider Helm
-018E4185:Dragonrider Armor
-018E4186:Dragonrider Gauntlets
-018E4187:Dragonrider Leggings
-018F7A04:Executioner Helm
-018F7A05:Executioner Armor
-018F7A06:Executioner Gauntlets
-018F7A07:Executioner Leggings
-0190B284:Penal Mask
-0190B285:Penal Straightjacket
-0190B286:Penal Handcuffs
-0190B287:Penal Skirt
-01948314:Fume Sorcerer Mask
-01948315:Fume Sorcerer Robes
-01948316:Fume Sorcerer Gloves
-01948317:Fume Sorcerer Boots
-0195BB94:Rampart Golem Helm
-0195BB95:Rampart Golem Armor
-0195BB96:Rampart Golem Gauntlets
-0195BB97:Rampart Golem Leggings
-0196A5F4:Sanctum Knight Helm
-0196A5F5:Sanctum Knight Armor
-0196A5F6:Sanctum Knight Gauntlets
-0196A5F7:Sanctum Knight Leggings
-0196CD06:Sanctum Soldier Gauntlet
-01976944:Sanctum Priestess Tiara
-01982C94:Raime's Helm
-01982C95:Raime's Armor
-01982C96:Raime's Gauntlets
-01982C97:Raime's Leggings
-01987AB5:Retainer Robe
-0198EFE4:Alonne's Helm
-0198EFE5:Alonne's Armor
-0198EFE6:Alonne's Gauntlets
-0198EFE7:Alonne's Leggings
-019A2864:Loyce Helm
-019A2865:Loyce Armor
-019A2866:Loyce Gauntlets
-019A2867:Loyce Leggings
-019A4F74:Charred Loyce Helm
-019A4F75:Charred Loyce Armor
-019A4F76:Charred Loyce Gauntlets
-019A4F77:Charred Loyce Leggings
-019A7684:Ivory King Helm
-019A7685:Ivory King Armor
-019A7686:Ivory King Gauntlets
-019A7687:Ivory King Leggings
-019F3175:Llewellyn Armor
-019F3176:Llewellyn Gloves
-019F3177:Llewellyn Shoes
-019FA6A4:Drangleic Helm
-019FA6A5:Drangleic Mail
-019FA6A6:Drangleic Gauntlets
-019FA6A7:Drangleic Leggings
-01A265C4:Creighton's Steel Mask
-01A265C5:Creighton's Chainmail
-01A265C6:Creighton's Chain Gloves
-01A265C7:Creighton's Chain Leggings
-01A28CD4:Benhart's Knight Helm
-01A28CD5:Benhart's Armor
-01A28CD6:Benhart's Gauntlets
-01A28CD7:Benhart's Boots
-01A2B3E4:Standard Helm
-01A2B3E5:Hard Leather Armor
-01A2B3E6:Hard Leather Gauntlets
-01A2B3E7:Hard Leather Boots
-01A3C554:Cale's Helm
-01A3C555:Cale's Leather Armor
-01A3C557:Cale's Shoes
-01A3EC64:Lucatiel's Mask
-01A3EC65:Lucatiel's Vest
-01A3EC66:Lucatiel's Gloves
-01A3EC67:Lucatiel's Trousers
-01A3F04C:Mirrah Hat
-01A41374:Bell Keeper Helmet
-01A41375:Bell Keeper Bellyband
-01A41376:Bell Keeper Cuffs
-01A41377:Bell Keeper Trousers
-01A46194:Mad Warrior Mask
-01A46195:Mad Warrior Armor
-01A46196:Mad Warrior Gauntlets
-01A46197:Mad Warrior Leggings
-01A59A15:Rosabeth's Dress
-01A65D64:Black Hood
-01A65D65:Black Robes
-01A65D66:Black Gloves
-01A65D67:Black Boots
-01A68474:Saint's Hood
-01A68475:Saint's Dress
-01A68476:Saint's Long Gloves
-01A68477:Saint's Trousers
-01A6AB84:Hexer's Hood
-01A6AB85:Hexer's Robes
-01A6AB86:Hexer's Gloves
-01A6AB87:Hexer's Boots
-01A6D294:Chaos Hood
-01A6D295:Chaos Robe
-01A6D296:Chaos Gloves
-01A6D297:Chaos Boots
-01A8A754:Nahr Alma Hood
-01A8A755:Nahr Alma Robes
-01AA7C14:Targray's Helm
-01AA7C15:Targray's Armor
-01AA7C16:Targray's Manifers
-01AA7C17:Targray's Leggings
-01D92CD0:Soul Arrow
-01D953E0:Great Soul Arrow
-01D97AF0:Heavy Soul Arrow
-01D9A200:Great Heavy Soul Arrow
-01D9C910:Homing Soul Arrow
-01D9F020:Heavy Homing Soul Arrow
-01DA1730:Homing Soulmass
-01DA3E40:Homing Crystal Soulmass
-01DA6550:Soul Spear
-01DA8C60:Crystal Soul Spear
-01DAB370:Shockwave
-01DADA80:Soul Spear Barrage
-01DB0190:Soul Shower
-01DB28A0:Soul Greatsword
-01DB4FB0:Soul Vortex
-01DB76C0:Soul Bolt
-01DB9DD0:Soul Geyser
-01DBC4E0:Magic Weapon
-01DBEBF0:Great Magic Weapon
-01DC1300:Crystal Magic Weapon
-01DC3A10:Strong Magic Shield
-01DC6120:Yearn
-01DC8830:Hush
-01DCAF40:Fall Control
-01DCD650:Hidden Weapon
-01DCFD60:Repair
-01DD2470:Cast Light
-01DD4B80:Chameleon
-01DD7290:Unleash Magic
-01DD99A0:Soul Flash
-01DDC0B0:Focus Souls
-01E86F10:Heal
-01E89620:Med Heal
-01E8BD30:Great Heal Excerpt
-01E8E440:Great Heal
-01E90B50:Soothing Sunlight
-01E93260:Replenishment
-01E95970:Resplendent Life
-01E98080:Bountiful Sunlight
-01E9A790:Caressing Prayer
-01E9CEA0:Force
-01E9F5B0:Wrath of the Gods
-01EA1CC0:Emit Force
-01EA43D0:Heavenly Thunder
-01EA6AE0:Lightning Spear
-01EA91F0:Great Lightning Spear
-01EAB900:Sunlight Spear
-01EAE010:Soul Appease
-01EB0720:Blinding Bolt
-01EB2E30:Magic Barrier
-01EB5540:Great Magic Barrier
-01EB7C50:Homeward
-01EBA360:Guidance
-01EBCA70:Sacred Oath
-01EBF180:Unveil
-01EC1890:Perseverance
-01EC3FA0:Sunlight Blade
-01ECDBE0:Denial
-01ED02F0:Splintering Lightning Spear
-01F7B150:Fireball
-01F7D860:Fire Orb
-01F7FF70:Great Fireball
-01F82680:Great Chaos Fireball
-01F84D90:Firestorm
-01F874A0:Fire Tempest
-01F89BB0:Chaos Storm
-01F8C2C0:Combustion
-01F8E9D0:Great Combustion
-01F910E0:Fire Whip
-01F937F0:Poison Mist
-01F95F00:Toxic Mist
-01F98610:Acid Surge
-01F9AD20:Lingering Flame
-01F9D430:Flame Swathe
-01F9FB40:Forbidden Sun
-01FA2250:Flame Weapon
-01FA4960:Flash Sweat
-01FA7070:Iron Flesh
-01FA9780:Warmth
-01FABE90:Immolation
-01FC1E20:Fire Snake
-01FC4530:Dance of Fire
-01FC6C40:Outcry
-0206F390:Dark Orb
-02071AA0:Dark Hail
-020741B0:Dark Fog
-020768C0:Affinity
-02078FD0:Dead Again
-0207B6E0:Dark Weapon
-0207DDF0:Whisper of Despair
-02080500:Repel
-02082C10:Twisted Barricade
-02085320:Numbness
-020B6060:Dark Greatsword
-020B8770:Recollection
-021635D0:Scraps of Life
-02165CE0:Darkstorm
-021683F0:Resonant Soul
-0216AB00:Great Resonant Soul
-0216D210:Climax
-0216F920:Resonant Flesh
-02172030:Resonant Weapon
-02174740:Lifedrain Patch
-02176E50:Profound Still
-021AA2A0:Promised Walk of Peace
-021AC9B0:Dark Dance
-02628110:Life Ring
-02628111:Life Ring+1
-02628112:Life Ring+2
-02628113:Life Ring+3
-0262A820:Chloranthy Ring
-0262A821:Chloranthy Ring+1
-0262A822:Chloranthy Ring+2
-0262CF30:Royal Soldier's Ring
-0262CF31:Royal Soldier's Ring+1
-0262CF32:Royal Soldier's Ring+2
-0262F640:First Dragon Ring
-0262F641:Second Dragon Ring
-0262F642:Third Dragon Ring
-02631D50:Ring of Steel Protection
-02631D51:Ring of Steel Protection+1
-02631D52:Ring of Steel Protection+2
-02631D53:no text
-02634460:Spell Quartz Ring
-02634461:Spell Quartz Ring+1
-02634462:Spell Quartz Ring+2
-02634463:Spell Quartz Ring+3
-02636B70:Flame Quartz Ring
-02636B71:Flame Quartz Ring+1
-02636B72:Flame Quartz Ring+2
-02636B73:Flame Quartz Ring+3
-02639280:Thunder Quartz Ring
-02639281:Thunder Quartz Ring+1
-02639282:Thunder Quartz Ring+2
-02639283:Thunder Quartz Ring+3
-0263B990:Dark Quartz Ring
-0263B991:Dark Quartz Ring+1
-0263B992:Dark Quartz Ring+2
-0263B993:Dark Quartz Ring+3
-0263E0A0:Poisonbite Ring
-0263E0A1:Poisonbite Ring+1
-026407B0:Bloodbite Ring
-026407B1:Bloodbite Ring+1
-02642EC0:Bracing Knuckle Ring
-02642EC1:Bracing Knuckle Ring+1
-02642EC2:Bracing Knuckle Ring+2
-026455D0:Cursebite Ring
-02646958:Ash Knuckle Ring
-02647CE0:Dispelling Ring
-02647CE1:Dispelling Ring+1
-0264A3F0:Ring of Resistance
-0264A3F1:Ring of Resistance+1
-0264CB00:Ring of Blades
-0264CB01:Ring of Blades+1
-0264CB02:Ring of Blades+2
-02658E50:Ring of Knowledge
-0265B560:Ring of Prayer
-0265DC70:Stone Ring
-026651A0:Red Tearstone Ring
-02669FC0:Blue Tearstone Ring
-0266C6D0:Ring of Giants
-0266C6D1:Ring of Giants+1
-0266C6D2:Ring of Giants+2
-0266DA58:Old Leo Ring
-0266EDE0:Ring of Soul Protection
-026714F0:Ring of Life Protection
-02673C00:Lingering Dragoncrest Ring
-02673C01:Lingering Dragoncrest Ring+1
-02673C02:Lingering Dragoncrest Ring+2
-02676310:Clear Bluestone Ring
-02676311:Clear Bluestone Ring+1
-02676312:Clear Bluestone Ring+2
-02678A20:Northern Ritual Band
-02678A21:Northern Ritual Band+1
-02678A22:Northern Ritual Band+2
-0267B130:Southern Ritual Band
-0267B131:Southern Ritual Band+1
-0267B132:Southern Ritual Band+2
-0267D840:Covetous Gold Serpent Ring
-0267D841:Covetous Gold Serpent Ring+1
-0267D842:Covetous Gold Serpent Ring+2
-0267FF50:Covetous Silver Serpent Ring
-0267FF51:Covetous Silver Serpent Ring+1
-0267FF52:Covetous Silver Serpent Ring+2
-02684D70:Ring of the Evil Eye
-02684D71:Ring of the Evil Eye+1
-02684D72:Ring of the Evil Eye+2
-02687480:Ring of Restoration
-02689B90:Ring of Binding
-0268C2A0:Silvercat Ring
-0268E9B0:Redeye Ring
-026910C0:Gower's Ring of Protection
-026937D0:Name-engraved Ring
-02695EE0:Slumbering Dragoncrest Ring
-026985F0:Hawk Ring
-0269AD00:Old Sun Ring
-0269FB20:Illusory Ring of a Conqueror
-026A2230:King's Ring
-026A4940:Ring of the Dead
-026A7050:Ring of Thorns
-026A7051:Ring of Thorns+1
-026A7052:Ring of Thorns+2
-026A9760:Delicate String
-026ABE70:White Ring
-026AE580:Illusory Ring of the Vengeful
-026B0C90:Illusory Ring of the Guilty
-026BA8D0:Ring of Whispers
-026BCFE0:Illusory Ring of the Exalted
-026D0860:Crest of the Rat
-026D2F70:Bell Keeper's Seal
-026D5680:Guardian's Seal
-026D7D90:Crest of Blood
-026DA4A0:Blue Seal
-026DCBB0:Abyss Seal
-026DF2C0:Vanquisher's Seal
-026E19D0:Sun Seal
-026E40E0:Ancient Dragon Seal
-02719C40:Simpleton's Ring
-0271C350:Strength Ring
-0271EA60:Dexterity Ring
-02721170:Ivory Warrior Ring
-02723880:Sorcery Clutch Ring
-02725F90:Lightning Clutch Ring
-027286A0:Fire Clutch Ring
-0272ADB0:Dark Clutch Ring
-0272FBD0:Baneful Bird Ring
-027322E0:Flynn's Ring
-027349F0:Ring of the Embedded
-02737100:Ring of the Living
-02739810:Yorgh's Ring
-0280DE80:Agape Ring
-03041840:Soldier Key
-03043F50:Key to King's Passage
-0304B480:Weapon Smithbox
-0304DB90:Armor Smithbox
-03072580:Bastille Key
-03074C90:Iron Key
-030773A0:Forgotten Key
-03079AB0:Brightstone Key
-0307C1C0:Antiquated Key
-0307E8D0:Fang Key
-03080FE0:House Key
-030836F0:Lenigrast's Key
-03085E00:Smooth &amp; Silky Stone
-03087188:Small Smooth &amp; Silky Stone
-03088510:Rotunda Lockstone
-0308AC20:Giant's Kinship
-0308D330:Ashen Mist Heart
-0308FA40:Soul of a Giant
-03092150:Tseldora Den Key
-03094860:Champion's Tablet
-03096F70:Ladder Miniature
-03099680:Soul Vessel
-0309BD90:Undead Lockaway Key
-030A0BB0:Dull Ember
-030A32C0:Crushed Eye Orb
-030A59D0:Simpleton's Spice
-030A80E0:Skeptic's Spice
-030AA7F0:Aldia Key
-03197500:Dragon Talon
-031AFBA0:Heavy Iron Key
-031C8240:Frozen Flower
-031E08E0:Eternal Sanctum Key
-031F8F80:Tower Key
-03211620:Garrison Ward Key
-03229CC0:no text
-03236010:Dragon Stone
-03242360:no text
-0325AA00:no text
-032730A0:no text
-0328B740:no text
-032A3DE0:Scorching Iron Scepter
-032BC480:Smelter Wedge
-032D4B20:Soul of Nadalia, Bride of Ash
-032ED1C0:no text
-03305860:no text
-0331DF00:Eye of the Priestess
-0393AE10:Lifegem
-0393D520:Radiant Lifegem
-0393FC30:Old Radiant Lifegem
-03940FB8:Elizabeth Mushroom
-039413A0:Dried Root
-03942340:Amber Herb
-03944A50:Twilight Herb
-03947160:Wilted Dusk Herb
-03949870:Poison Moss
-0394E690:Monastery Charm
-03950DA0:Dragon Charm
-03952128:Divine Blessing
-039534B0:Rouge Water
-03955BC0:Crimson Water
-0395E478:Estus Flask
-0395E860:Estus Flask
-0395F800:Small Blue Burr
-03961F10:Small Yellow Burr
-03964620:Small Orange Burr
-03966D30:Dark Troches
-03969440:Common Fruit
-0396BB50:Red Leech Troches
-0396E260:Yellow Sea Troches
-03970970:Triclops Snake Troches
-03971CF8:Old Growth Balm
-039720E0:Vine Balm
-039724C8:Blackweed Balm
-039728B0:Goldenfruit Balm
-03972C98:Brightbug
-03973080:Aromatic Ooze
-03974408:Pungent Ooze
-03975790:Gold Pine Resin
-03977EA0:Charcoal Pine Resin
-0397A5B0:Dark Pine Resin
-0397CCC0:Rotten Pine Resin
-0397F3D0:Bleeding Serum
-039841F0:Green Blossom
-03986900:Rusted Coin
-03989010:Rhoy's Stone
-0398B720:Rhoy's Stone of Knowledge
-0398DE30:Homeward Bone
-0398F1B8:Aged Feather
-03990540:Darksign
-03992C50:Silver Talisman
-03995360:Gold Talisman
-03997A70:Fake Dead Talisman
-0399A180:Illusory Talisman
-0399B8F0:Dragon Torso Stone
-0399B8FA:Dragon Torso Stone
-0399C890:Repair Powder
-0399EFA0:Torch
-039A16B0:Flame Butterfly
-039A64D0:Prism Stone
-039AB2F0:Hello Carving
-039ADA00:Thank You Carving
-039B0110:I'm Sorry Carving
-039B2820:Very Good! Carving
-039B4F30:Rubbish
-039B5318:Petrified Something
-039B89C8:Estus Flask Shard
-039B8DB0:Sublime Bone Dust
-039B9198:Bonfire Ascetic
-039B9D50:Alluring Skull
-039BA138:Lloyd's Talisman
-039BB4C0:Pharros' Lockstone
-039BB8A8:Fragrant Branch of Yore
-039BBC90:Fire Seed
-039BC460:Throwing Knife
-039BEB70:Witching Urn
-039C1280:Lightning Urn
-039C3990:Firebomb
-039C4D18:Black Firebomb
-039C60A0:Hexing Urn
-039C87B0:Poison Throwing Knife
-039C9B38:Dung Pie
-039CAEC0:Lacerating Knife
-039CD5D0:Corrosive Urn
-039CFCE0:Holy Water Urn
-039D1068:Fading Soul
-039D23F0:Soul of a Lost Undead
-039D4B00:Large Soul of a Lost Undead
-039D7210:Soul of a Nameless Soldier
-039D9920:Large Soul of a Nameless Soldier
-039DC030:Soul of a Proud Knight
-039DE740:Large Soul of a Proud Knight
-039E0E50:Soul of a Brave Warrior
-039E3560:Large Soul of a Brave Warrior
-039E5C70:Soul of a Hero
-039E8380:Soul of a Great Hero
-039F1FC0:Wood Arrow
-039F46D0:Iron Arrow
-039F6DE0:Magic Arrow
-039F94F0:Lightning Arrow
-039FBC00:Fire Arrow
-039FE310:Dark Arrow
-03A00A20:Poison Arrow
-03A03130:Lacerating Arrow
-03A05840:Wooden Greatarrow
-03A07F50:Iron Greatarrow
-03A0A660:Magic Greatarrow
-03A0CD70:Lightning Greatarrow
-03A0F480:Fire Greatarrow
-03A11B90:Dark Greatarrow
-03A142A0:Destructive Greatarrow
-03A169B0:Wood Bolt
-03A190C0:Heavy Bolt
-03A1B7D0:Magic Bolt
-03A1DEE0:Lightning Bolt
-03A205F0:Fire Bolt
-03A22D00:Dark Bolt
-03A25410:Titanite Shard
-03A26798:Large Titanite Shard
-03A27B20:Titanite Chunk
-03A2A230:Titanite Slab
-03A2C940:Twinkling Titanite
-03A33E70:Petrified Dragon Bone
-03A3B3A0:Faintstone
-03A3DAB0:Boltstone
-03A401C0:Firedrake Stone
-03A428D0:Darknight Stone
-03A44FE0:Poison Stone
-03A476F0:Bleed Stone
-03A4C510:Raw Stone
-03A4EC20:Magic Stone
-03A51330:Old Mundane Stone
-03A53A40:Palestone
-03B47C80:Black Separation Crystal
-03B4A390:Seed of a Tree of Giants
-03B4F1B0:Petrified Egg
-03C14DC0:"Point" Gesture
-03C151A8:"I won't bite" Gesture
-03C15590:"Proper bow" Gesture
-03C15978:"Bow" Gesture
-03C15D60:"Welcome" Gesture
-03C16148:"Duel bow" Gesture
-03C16530:"Wave" Gesture
-03C16918:"Pumped up" Gesture
-03C16D00:"Joy" Gesture
-03C170E8:"Warcry" Gesture
-03C174D0:"Warmup" Gesture
-03C178B8:"Hurrah!" Gesture
-03C17CA0:"Righty-ho!" Gesture
-03C18088:"No way" Gesture
-03C18470:"This one's me" Gesture
-03C18858:"Have mercy!" Gesture
-03C18C40:"Prostration" Gesture
-03C19028:"Decapitate" Gesture
-03C19410:"Fist pump" Gesture
-03C197F8:"Mock" Gesture
-03C19FC8:"Praise the Sun" Gesture
-03D09000:Soul of the Pursuer
-03D0B710:Soul of the Last Giant
-03D0DE20:Dragonrider Soul
-03D10530:Old Dragonslayer Soul
-03D12C40:Flexile Sentry Soul
-03D15350:Ruin Sentinel Soul
-03D17A60:Soul of the Lost Sinner
-03D1A170:Executioner's Chariot Soul
-03D1C880:Skeleton Lord's Soul
-03D1EF90:Covetous Demon Soul
-03D216A0:Mytha, the Baneful Queen Soul
-03D23DB0:Smelter Demon Soul
-03D264C0:Old Iron King Soul
-03D28BD0:Royal Rat Vanguard Soul
-03D2B2E0:Soul of the Rotten
-03D2D9F0:Scorpioness Najka Soul
-03D30100:Royal Rat Authority Soul
-03D32810:Soul of the Duke's Dear Freja
-03D34F20:Looking Glass Knight Soul
-03D37630:Demon of Song Soul
-03D39D40:Soul of Velstadt
-03D3C450:Soul of the King
-03D3EB60:Guardian Dragon Soul
-03D41270:Ancient Dragon Soul
-03D43980:Giant Lord Soul
-03D46090:Soul of Nashandra
-03D487A0:Throne Defender Soul
-03D4AEB0:Throne Watcher Soul
-03D4D5C0:Darklurker Soul
-03D4FCD0:Belfry Gargoyle Soul
-03D523E0:Old Witch Soul
-03D54AF0:Old King Soul
-03D57200:Old Dead One Soul
-03D59910:Old Paledrake Soul
-03D83120:Soul of Sinh, the Slumbering Dragon
-03D85830:Soul of the Fume Knight
-03D87F40:Soul of Aava, the King's Pet
-03D8A650:Soul of Elana, Squalid Queen
-03D8CD60:Soul of Nadalia, Bride of Ash
-03D8F470:Soul of Alsanna, Silent Oracle
-03D91B80:Soul of Sir Alonne
-03D969A0:Soul of the Ivory King
-03D990B0:Soul of Zallen, the King's Pet
-03D9B7C0:Loyce Soul
-03D9DED0:Soul of Lud, the King's Pet
-352ADAE8:Faraam Helm
-352ADAE9:Faraam Armor
-352ADAEA:Faraam Gauntlets
-352ADAEB:Faraam Boots
-352ADB4C:Chaos Hood
-352ADB4D:Chaos Robes
-352ADB4E:Chaos Gloves
-352ADB4F:Chaos Boots
-352ADBB0:Dragonknight Helm
-352ADBB1:Dragonknight Robes
-352ADBB2:Dragonknight Gloves
-352ADBB3:Dragonknight Boots
-352ADC14:Black Hood
-352ADC15:Black Robes
-352ADC16:Black Gloves
-352ADC17:Black Boots
-352ADC78:Hunter's Hat
-352ADC79:Leather Armor
-352ADC7A:Leather Gloves
-352ADC7B:Leather Boots
-352ADCDC:Knight Helm
-352ADCDD:Knight Armor
-352ADCDE:Knight Gauntlets
-352ADCDF:Knight Leggings
-352ADD40:Rogue Hood
-352ADD41:Rogue Armor
-352ADD42:Rogue Gauntlets
-352ADD43:Rogue Leggings
-352ADDA4:Prisoner's Hood
-352ADDA5:Prisoner's Tatters
-352ADDA6:Prisoner's Gloves
-352ADDA7:Prisoner's Waistcloth
-352ADE08:Prisoner's Hood
-352ADE09:Prisoner's Tatters
-352ADE0A:Prisoner's Gloves
-352ADE0B:Prisoner's Waistcloth
-352ADE6C:Hollow Mage Hood
-352ADE6D:Hollow Mage Robes
-352ADED0:Defender Helm
-352ADED1:Defender Mail
-352ADED2:Defender's Gauntlet
-352ADED3:Defender's Leggings
-352ADF35:Llewellyn Armor
-352ADF36:Llewellyn Gloves
-352ADF37:Llewellyn Shoes
-352ADF98:Despatcher's Hood
-352ADF99:Despatcher's Robes
-35A509D0:Dagger
-35A509D1:Royal Dirk
-35A509D2:Longsword
-35A509D3:Shortsword
-35A509D4:Dragonslayer's Crescent Axe
-35A509D5:Greataxe
-35A509D6:Dragonrider's Halberd
-35A509D7:Witchtree Branch
-35A509D8:Lizard Staff
-35A509D9:Dragonknight's Bell
-35A509DA:Bell of the Idol
-35A509DB:Short Bow
-35A509DC:Light Crossbow
-35A509DD:Target Shield
-35A509DE:Small Leather Shield
-35A509DF:Golden Wing Shield
-35A509E0:Dragonknight's Shield
-35A509E1:Silver Eagle Kite Shield
-35A509E2:Imperial Shield
-35A509E3:Disc Bell
-35A509E4:Pursuer's Greatsword
-35A509E5:Zweihander
-35A509E6:Winged Spear
-35A509E7:Estoc
-35A509E8:Bastard Sword
-35A509E9:Knight's Greatsword
-35A509EA:Inquisitor's Blade
-019B12C4:Forlorn Helm
-019B12C5:Forlorn Armor
-019B12C6:Forlorn Gauntlets
-019B12C7:Forlorn Leggings
-001E78C8:Greatsword of the Forlorn
-002EFF40:Scythe of the Forlorn
-
-*/
+ENTRY(Empty, "Empty", 0)
+ENTRY(Cracked_Red_Eye_Orb, "Cracked Red Eye Orb", 0x03B2F5E0)
+ENTRY(Cracked_Blue_Eye_Orb, "Cracked Blue Eye Orb", 0x03B2CED0)
+ENTRY(Red_Sign_Soapstone, "Red Sign Soapstone", 0x03B2BB48)
+ENTRY(Dried_Fingers, "Dried Fingers", 0x03B20B80)
+ENTRY(Bone_of_Order, "Bone of Order", 0x03B259A0)
+ENTRY(White_Sign_Soapstone, "White Sign Soapstone", 0x03B280B0)
+ENTRY(Small_White_Sign_Soapstone, "Small White Sign Soapstone", 0x03B2A7C0)
+ENTRY(Dragon_Eye, "Dragon Eye", 0x03B31CF0)
+ENTRY(Token_of_Fidelity, "Token of Fidelity", 0x03B39220)
+ENTRY(Token_of_Spite, "Token of Spite", 0x03B3B930)
+ENTRY(Sunlight_Medal, "Sunlight Medal", 0x03B3E040)
+ENTRY(Dragon_Scale, "Dragon Scale", 0x03B40750)
+ENTRY(Rat_Tail, "Rat Tail", 0x03B42E60)
+ENTRY(Awestone, "Awestone", 0x03B45570)
+ENTRY(Human_Effigy, "Human Effigy", 0x0395D4D8)
+ENTRY(Dagger, "Dagger", 0x000F4240)
+ENTRY(Bandits_Knife, "Bandit's Knife", 0x000F6950)
+ENTRY(Mythas_Bent_Blade, "Mytha's Bent Blade", 0x000FDE80)
+ENTRY(Shadow_Dagger, "Shadow Dagger", 0x00100590)
+ENTRY(Thief_Dagger, "Thief Dagger", 0x00102CA0)
+ENTRY(Broken_Thief_Sword, "Broken Thief Sword", 0x001053B0)
+ENTRY(Parrying_Dagger, "Parrying Dagger", 0x0010C8E0)
+ENTRY(Manikin_Knife, "Manikin Knife", 0x0010EFF0)
+ENTRY(Royal_Dirk, "Royal Dirk", 0x00113E10)
+ENTRY(Blue_Dagger, "Blue Dagger", 0x00116520)
+ENTRY(Umbral_Dagger, "Umbral Dagger", 0x00118C30)
+ENTRY(Retainers_Short_Sword, "Retainer's Short Sword", 0x0011B340)
+ENTRY(Broken_Straight_Sword, "Broken Straight Sword", 0x00124F80)
+ENTRY(Shortsword, "Shortsword", 0x00127690)
+ENTRY(Longsword, "Longsword", 0x00129DA0)
+ENTRY(Broadsword, "Broadsword", 0x0012C4B0)
+ENTRY(Foot_Soldier_Sword, "Foot Soldier Sword", 0x0012EBC0)
+ENTRY(Puzzling_Stone_Sword, "Puzzling Stone Sword", 0x001312D0)
+ENTRY(Possessed_Armor_Sword, "Possessed Armor Sword", 0x001339E0)
+ENTRY(Varangian_Sword, "Varangian Sword", 0x001360F0)
+ENTRY(Blue_Flame, "Blue Flame", 0x00138800)
+ENTRY(Fume_Sword, "Fume Sword", 0x0013AF10)
+ENTRY(Heide_Knight_Sword, "Heide Knight Sword", 0x00142440)
+ENTRY(Red_Rust_Sword, "Red Rust Sword", 0x00144B50)
+ENTRY(no_text_10, "no text", 0x00147260)
+ENTRY(Black_Dragon_Sword, "Black Dragon Sword", 0x00149970)
+ENTRY(Sun_Sword, "Sun Sword", 0x0014C080)
+ENTRY(Drakekeepers_Sword, "Drakekeeper's Sword", 0x0014E790)
+ENTRY(Ashen_Warrior_Sword, "Ashen Warrior Sword", 0x00150EA0)
+ENTRY(Ivory_Straight_Sword, "Ivory Straight Sword", 0x001535B0)
+ENTRY(Estoc, "Estoc", 0x00155CC0)
+ENTRY(Mail_Breaker, "Mail Breaker", 0x001583D0)
+ENTRY(Chaos_Rapier, "Chaos Rapier", 0x0015AAE0)
+ENTRY(Spiders_Silk, "Spider's Silk", 0x0015D1F0)
+ENTRY(Espada_Ropera, "Espada Ropera", 0x0015F900)
+ENTRY(Rapier, "Rapier", 0x0016E360)
+ENTRY(Black_Scorpion_Stinger, "Black Scorpion Stinger", 0x00173180)
+ENTRY(Ricards_Rapier, "Ricard's Rapier", 0x00175890)
+ENTRY(Ice_Rapier, "Ice Rapier", 0x00181BE0)
+ENTRY(Falchion, "Falchion", 0x00186A00)
+ENTRY(Shotel, "Shotel", 0x00189110)
+ENTRY(Warped_Sword, "Warped Sword", 0x0018B820)
+ENTRY(Eleum_Loyce, "Eleum Loyce", 0x0018DF30)
+ENTRY(Manikin_Sabre, "Manikin Sabre", 0x00190640)
+ENTRY(Scimitar, "Scimitar", 0x00192D50)
+ENTRY(Red_Rust_Scimitar, "Red Rust Scimitar", 0x00195460)
+ENTRY(Spider_Fang, "Spider Fang", 0x00197B70)
+ENTRY(Melu_Scimitar, "Melu Scimitar", 0x0019A280)
+ENTRY(Monastery_Scimitar, "Monastery Scimitar", 0x0019C990)
+ENTRY(Uchigatana, "Uchigatana", 0x0019F0A0)
+ENTRY(Washing_Pole, "Washing Pole", 0x001A17B0)
+ENTRY(Chaos_Blade, "Chaos Blade", 0x001A3EC0)
+ENTRY(Blacksteel_Katana, "Blacksteel Katana", 0x001A65D0)
+ENTRY(Manslayer, "Manslayer", 0x001A8CE0)
+ENTRY(Darkdrift, "Darkdrift", 0x001ADB00)
+ENTRY(Berserker_Blade, "Berserker Blade", 0x001B0210)
+ENTRY(Bewitched_Alonne_Sword, "Bewitched Alonne Sword", 0x001B5030)
+ENTRY(Bastard_Sword, "Bastard Sword", 0x001B7740)
+ENTRY(Flamberge, "Flamberge", 0x001B9E50)
+ENTRY(Claymore, "Claymore", 0x001BC560)
+ENTRY(Majestic_Greatsword, "Majestic Greatsword", 0x001BEC70)
+ENTRY(Majestic_Greatsword_2, "Majestic Greatsword 2", 0x001BF058)
+ENTRY(Drangleic_Sword, "Drangleic Sword", 0x001C3A90)
+ENTRY(Thorned_Greatsword, "Thorned Greatsword", 0x001C61A0)
+ENTRY(Bluemoon_Greatsword, "Bluemoon Greatsword", 0x001C88B0)
+ENTRY(Moonlight_Greatsword, "Moonlight Greatsword", 0x001C8C98)
+ENTRY(Mastodon_Greatsword, "Mastodon Greatsword", 0x001CAFC0)
+ENTRY(Rulers_Sword, "Ruler's Sword", 0x001CFDE0)
+ENTRY(Mirrah_Greatsword, "Mirrah Greatsword", 0x001D24F0)
+ENTRY(Old_Mirrah_Greatsword, "Old Mirrah Greatsword", 0x001D28D8)
+ENTRY(Black_Dragon_Greatsword, "Black Dragon Greatsword", 0x001D4C00)
+ENTRY(Black_Knight_Greatsword, "Black Knight Greatsword", 0x001D7310)
+ENTRY(Royal_Greatsword, "Royal Greatsword", 0x001D9A20)
+ENTRY(Old_Knight_Greatsword, "Old Knight Greatsword", 0x001DC130)
+ENTRY(Defender_Greatsword, "Defender Greatsword", 0x001DE840)
+ENTRY(Watcher_Greatsword, "Watcher Greatsword", 0x001E0F50)
+ENTRY(Key_to_the_Embedded, "Key to the Embedded", 0x001E3660)
+ENTRY(Drakeblood_Greatsword, "Drakeblood Greatsword", 0x001E5D70)
+ENTRY(Loyce_Greatsword, "Loyce Greatsword", 0x001E70F8)
+ENTRY(Charred_Loyce_Greatsword, "Charred Loyce Greatsword", 0x001E74E0)
+ENTRY(Hand_Axe, "Hand Axe", 0x001E8480)
+ENTRY(Battle_Axe, "Battle Axe", 0x001EAB90)
+ENTRY(Bandit_Axe, "Bandit Axe", 0x001ED2A0)
+ENTRY(Infantry_Axe, "Infantry Axe", 0x001EF9B0)
+ENTRY(Gyrm_Axe, "Gyrm Axe", 0x001F95F0)
+ENTRY(Dragonslayers_Crescent_Axe, "Dragonslayer's Crescent Axe", 0x001FBD00)
+ENTRY(Butchers_Knife, "Butcher's Knife", 0x001FE410)
+ENTRY(Silverblack_Sickle, "Silverblack Sickle", 0x00200B20)
+ENTRY(Crescent_Axe, "Crescent Axe", 0x002191C0)
+ENTRY(Greataxe, "Greataxe", 0x0021B8D0)
+ENTRY(Bandit_Greataxe, "Bandit Greataxe", 0x0021DFE0)
+ENTRY(Lion_Greataxe, "Lion Greataxe", 0x00222E00)
+ENTRY(Giant_Stone_Axe, "Giant Stone Axe", 0x00225510)
+ENTRY(Gyrm_Greataxe, "Gyrm Greataxe", 0x00227C20)
+ENTRY(Black_Dragon_Greataxe, "Black Dragon Greataxe", 0x0022F150)
+ENTRY(Black_Knight_Greataxe, "Black Knight Greataxe", 0x00231860)
+ENTRY(Drakekeepers_Greataxe, "Drakekeeper's Greataxe", 0x00233F70)
+ENTRY(Club, "Club", 0x00249F00)
+ENTRY(Mace, "Mace", 0x0024C610)
+ENTRY(Morning_Star, "Morning Star", 0x0024ED20)
+ENTRY(Reinforced_Club, "Reinforced Club", 0x00251430)
+ENTRY(Craftsmans_Hammer, "Craftsman's Hammer", 0x00253B40)
+ENTRY(Mace_of_the_Insolent, "Mace of the Insolent", 0x0025B070)
+ENTRY(Handmaids_Ladle, "Handmaid's Ladle", 0x002625A0)
+ENTRY(Blacksmiths_Hammer, "Blacksmith's Hammer", 0x002673C0)
+ENTRY(Black_Dragon_Warpick, "Black Dragon Warpick", 0x00269AD0)
+ENTRY(Aldia_Hammer, "Aldia Hammer", 0x0026C1E0)
+ENTRY(Barbed_Club, "Barbed Club", 0x00271000)
+ENTRY(Large_Club, "Large Club", 0x0027AC40)
+ENTRY(Pickaxe, "Pickaxe", 0x0027D350)
+ENTRY(Great_Club, "Great Club", 0x0027FA60)
+ENTRY(Gyrm_Great_Hammer, "Gyrm Great Hammer", 0x00282170)
+ENTRY(Iron_King_Hammer, "Iron King Hammer", 0x002896A0)
+ENTRY(Malformed_Skull, "Malformed Skull", 0x0028BDB0)
+ENTRY(Dragon_Tooth, "Dragon Tooth", 0x0028E4C0)
+ENTRY(Giant_Warrior_Club, "Giant Warrior Club", 0x00290BD0)
+ENTRY(Malformed_Shell, "Malformed Shell", 0x002932E0)
+ENTRY(Demons_Great_Hammer, "Demon's Great Hammer", 0x002959F0)
+ENTRY(Archdrake_Mace, "Archdrake Mace", 0x00298100)
+ENTRY(Old_Knight_Hammer, "Old Knight Hammer", 0x0029A810)
+ENTRY(Drakekeepers_Great_Hammer, "Drakekeeper's Great Hammer", 0x0029CF20)
+ENTRY(Sacred_Chime_Hammer, "Sacred Chime Hammer", 0x0029F630)
+ENTRY(Sanctum_Mace, "Sanctum Mace", 0x002A1D40)
+ENTRY(Spear, "Spear", 0x002AB980)
+ENTRY(Winged_Spear, "Winged Spear", 0x002AE090)
+ENTRY(Pike, "Pike", 0x002B07A0)
+ENTRY(Partizan, "Partizan", 0x002B2EB0)
+ENTRY(Stone_Soldier_Spear, "Stone Soldier Spear", 0x002B55C0)
+ENTRY(Spitfire_Spear, "Spitfire Spear", 0x002B7CD0)
+ENTRY(Yorghs_Spear, "Yorgh's Spear", 0x002B9058)
+ENTRY(Silverblack_Spear, "Silverblack Spear", 0x002BA3E0)
+ENTRY(Heide_Spear, "Heide Spear", 0x002BCAF0)
+ENTRY(Pates_Spear, "Pate's Spear", 0x002BF200)
+ENTRY(Channelers_Trident, "Channeler's Trident", 0x002C1910)
+ENTRY(Gargoyle_Bident, "Gargoyle Bident", 0x002C2C98)
+ENTRY(Dragonslayer_Spear, "Dragonslayer Spear", 0x002C3080)
+ENTRY(Heide_Lance, "Heide Lance", 0x002C4020)
+ENTRY(Heide_Greatlance, "Heide Greatlance", 0x002C8E40)
+ENTRY(Grand_Lance, "Grand Lance", 0x002CB550)
+ENTRY(Chariot_Lance, "Chariot Lance", 0x002CDC60)
+ENTRY(Rampart_Golem_Lance, "Rampart Golem Lance", 0x002D0370)
+ENTRY(Smelter_Hammer, "Smelter Hammer", 0x002D2A80)
+ENTRY(Great_Scythe, "Great Scythe", 0x002DC6C0)
+ENTRY(Great_Machete, "Great Machete", 0x002DEDD0)
+ENTRY(Full_Moon_Sickle, "Full Moon Sickle", 0x002E14E0)
+ENTRY(Crescent_Sickle, "Crescent Sickle", 0x002E6300)
+ENTRY(Scythe_of_Nahr_Alma, "Scythe of Nahr Alma", 0x002E8A10)
+ENTRY(Bone_Scythe, "Bone Scythe", 0x002EB120)
+ENTRY(Scythe_of_Want, "Scythe of Want", 0x002ED830)
+ENTRY(Lucerne, "Lucerne", 0x0030D400)
+ENTRY(Scythe, "Scythe", 0x0030FB10)
+ENTRY(Halberd, "Halberd", 0x00312220)
+ENTRY(Helix_Halberd, "Helix Halberd", 0x00317040)
+ENTRY(Santiers_Spear, "Santier's Spear", 0x00319750)
+ENTRY(Santiers_Spear_2, "Santier's Spear 2", 0x00319B38)
+ENTRY(Mastodon_Halberd, "Mastodon Halberd", 0x0031E570)
+ENTRY(Blue_Knights_Halberd, "Blue Knight's Halberd", 0x00320C80)
+ENTRY(Dragonriders_Halberd, "Dragonrider's Halberd", 0x00323390)
+ENTRY(Black_Knight_Halberd, "Black Knight Halberd", 0x00325AA0)
+ENTRY(Syans_Halberd, "Syan's Halberd", 0x003281B0)
+ENTRY(Roaring_Halberd, "Roaring Halberd", 0x0032A8C0)
+ENTRY(Old_Knight_Halberd, "Old Knight Halberd", 0x0032CFD0)
+ENTRY(Old_Knight_Pike, "Old Knight Pike", 0x0032F6E0)
+ENTRY(Drakekeepers_Warpick, "Drakekeeper's Warpick", 0x00331DF0)
+ENTRY(Wrathful_Axe, "Wrathful Axe", 0x00336C10)
+ENTRY(Claws, "Claws", 0x00340850)
+ENTRY(Malformed_Claws, "Malformed Claws", 0x00342F60)
+ENTRY(Manikin_Claws, "Manikin Claws", 0x00345670)
+ENTRY(Work_Hook, "Work Hook", 0x00347D80)
+ENTRY(Caestus, "Caestus", 0x003567E0)
+ENTRY(Shadow_Claws, "Shadow Claws", 0x00358EF0)
+ENTRY(Bone_Fist, "Bone Fist", 0x0035DD10)
+ENTRY(Whip, "Whip", 0x0036EE80)
+ENTRY(Notched_Whip, "Notched Whip", 0x00371590)
+ENTRY(Bloodied_Whip, "Bloodied Whip", 0x00373CA0)
+ENTRY(Spotted_Whip, "Spotted Whip", 0x003763B0)
+ENTRY(Old_Whip, "Old Whip", 0x0037D8E0)
+ENTRY(Sorcerers_Staff, "Sorcerer's Staff", 0x0039FBC0)
+ENTRY(Staff_of_Amana, "Staff of Amana", 0x003A22D0)
+ENTRY(Witchtree_Branch, "Witchtree Branch", 0x003A49E0)
+ENTRY(Lizard_Staff, "Lizard Staff", 0x003A70F0)
+ENTRY(Olenfords_Staff, "Olenford's Staff", 0x003ABF10)
+ENTRY(Archdrake_Staff, "Archdrake Staff", 0x003AE620)
+ENTRY(Bat_Staff, "Bat Staff", 0x003B0D30)
+ENTRY(Bone_Staff, "Bone Staff", 0x003B3440)
+ENTRY(Staff_of_Wisdom, "Staff of Wisdom", 0x003B5B50)
+ENTRY(Sunset_Staff, "Sunset Staff", 0x003B8260)
+ENTRY(Pilgrims_Spontoon, "Pilgrim's Spontoon", 0x003BA970)
+ENTRY(Azals_Staff, "Azal's Staff", 0x003BF790)
+ENTRY(Retainer_Staff, "Retainer Staff", 0x003C1EA0)
+ENTRY(Clerics_Sacred_Chime, "Cleric's Sacred Chime", 0x003D3010)
+ENTRY(Witchtree_Bellvine, "Witchtree Bellvine", 0x003D5720)
+ENTRY(Priests_Chime, "Priest's Chime", 0x003D7E30)
+ENTRY(Dragon_Chime, "Dragon Chime", 0x003DA540)
+ENTRY(Chime_of_Want, "Chime of Want", 0x003DCC50)
+ENTRY(Archdrake_Chime, "Archdrake Chime", 0x003DF360)
+ENTRY(Idols_Chime, "Idol's Chime", 0x003E4180)
+ENTRY(Caithas_Chime, "Caitha's Chime", 0x003E6890)
+ENTRY(Protective_Chime, "Protective Chime", 0x003E8FA0)
+ENTRY(Disc_Chime, "Disc Chime", 0x003EB6B0)
+ENTRY(Chime_of_Screams, "Chime of Screams", 0x003EDDC0)
+ENTRY(Black_Witchs_Staff, "Black Witch's Staff", 0x003F52F0)
+ENTRY(Short_Bow, "Short Bow", 0x00401640)
+ENTRY(Long_Bow, "Long Bow", 0x00403D50)
+ENTRY(Composite_Bow, "Composite Bow", 0x00406460)
+ENTRY(Sea_Bow, "Sea Bow", 0x00408B70)
+ENTRY(Dragonrider_Bow, "Dragonrider Bow", 0x0040B280)
+ENTRY(Bell_Keeper_Bow, "Bell Keeper Bow", 0x004127B0)
+ENTRY(Bow_of_Want, "Bow of Want", 0x00414EC0)
+ENTRY(Hunters_Blackbow, "Hunter's Blackbow", 0x004175D0)
+ENTRY(Alonne_Greatbow, "Alonne Greatbow", 0x00432380)
+ENTRY(Dragonslayer_Greatbow, "Dragonslayer Greatbow", 0x004371A0)
+ENTRY(Possessed_Armor_Greatbow, "Possessed Armor Greatbow", 0x004398B0)
+ENTRY(Twin_headed_Greatbow, "Twin_headed Greatbow", 0x0043BFC0)
+ENTRY(Light_Crossbow, "Light Crossbow", 0x004630C0)
+ENTRY(Heavy_Crossbow, "Heavy Crossbow", 0x004657D0)
+ENTRY(Shield_Crossbow, "Shield Crossbow", 0x0046A5F0)
+ENTRY(Avelyn, "Avelyn", 0x00471B20)
+ENTRY(Sanctum_Crossbow, "Sanctum Crossbow", 0x00474230)
+ENTRY(Sanctum_Repeating_Crossbow, "Sanctum Repeating Crossbow", 0x00476940)
+ENTRY(Murakumo, "Murakumo", 0x004C4B40)
+ENTRY(Arced_Sword, "Arced Sword", 0x004C7250)
+ENTRY(Curved_Dragon_Greatsword, "Curved Dragon Greatsword", 0x004CE780)
+ENTRY(Curved_Nil_Greatsword, "Curved Nil Greatsword", 0x004D0E90)
+ENTRY(Zweihander, "Zweihander", 0x004F5880)
+ENTRY(Greatsword, "Greatsword", 0x004F7F90)
+ENTRY(Smelter_Sword, "Smelter Sword", 0x004FA6A0)
+ENTRY(Aged_Smelter_Sword, "Aged Smelter Sword", 0x004FBA28)
+ENTRY(Drakewing_Ultra_Greatsword, "Drakewing Ultra Greatsword", 0x004FCDB0)
+ENTRY(Kings_Ultra_Greatsword, "King's Ultra Greatsword", 0x004FF4C0)
+ENTRY(Fume_Ultra_Greatsword, "Fume Ultra Greatsword", 0x00501BD0)
+ENTRY(Ivory_King_Ultra_Greatsword, "Ivory King Ultra Greatsword", 0x00502F58)
+ENTRY(Pursuers_Ultra_Greatsword, "Pursuer's Ultra Greatsword", 0x005069F0)
+ENTRY(Drakekeepers_Ultra_Greatsword, "Drakekeeper's Ultra Greatsword", 0x00507D78)
+ENTRY(Crypt_Blacksword, "Crypt Blacksword", 0x00509100)
+ENTRY(Old_Knight_Ultra_Greatsword, "Old Knight Ultra Greatsword", 0x0050A488)
+ENTRY(Black_Knight_Ultra_Greatsword, "Black Knight Ultra Greatsword", 0x0050B810)
+ENTRY(Lost_Sinners_Sword, "Lost Sinner's Sword", 0x0050CB98)
+ENTRY(Stone_Twinblade, "Stone Twinblade", 0x00510630)
+ENTRY(Dragonrider_Twinblade, "Dragonrider Twinblade", 0x00515450)
+ENTRY(Twinblade, "Twinblade", 0x00517B60)
+ENTRY(Red_Iron_Twinblade, "Red Iron Twinblade", 0x0051A270)
+ENTRY(Curved_Twinblade, "Curved Twinblade", 0x0051C980)
+ENTRY(Sorcerers_Twinblade, "Sorcerer's Twinblade", 0x0051F090)
+ENTRY(Pyromancy_Flame, "Pyromancy Flame", 0x005265C0)
+ENTRY(Dark_Pyromancy_Flame, "Dark Pyromancy Flame", 0x00528CD0)
+ENTRY(Black_Flamestone_Dagger, "Black Flamestone Dagger", 0x0053EC60)
+ENTRY(Yellow_Quartz_Longsword, "Yellow Quartz Longsword", 0x00541370)
+ENTRY(Bound_Hand_Axe, "Bound Hand Axe", 0x00543A80)
+ENTRY(Homunculus_Mace, "Homunculus Mace", 0x00546190)
+ENTRY(Transgressors_Staff, "Transgressor's Staff", 0x005488A0)
+ENTRY(Longsword_2, "Longsword", 0x00557300)
+ENTRY(Murakumo_2, "Murakumo", 0x00559A10)
+ENTRY(Blacksteel_Katana_2, "Blacksteel Katana", 0x0055C120)
+ENTRY(Rapier_2, "Rapier", 0x0055E830)
+ENTRY(Greataxe_2, "Greataxe", 0x00560F40)
+ENTRY(Great_Club_2, "Great Club", 0x00563650)
+ENTRY(Caestus_2, "Caestus", 0x00565D60)
+ENTRY(Binoculars, "Binoculars", 0x005D1420)
+ENTRY(Buckler, "Buckler", 0x00A7D8C0)
+ENTRY(Benharts_Parma, "Benhart's Parma", 0x00A7EC48)
+ENTRY(Small_Leather_Shield, "Small Leather Shield", 0x00A7FFD0)
+ENTRY(Iron_Parma, "Iron Parma", 0x00A826E0)
+ENTRY(Foot_Soldier_Shield, "Foot Soldier Shield", 0x00A84DF0)
+ENTRY(Target_Shield, "Target Shield", 0x00A87500)
+ENTRY(Golden_Falcon_Shield, "Golden Falcon Shield", 0x00A89C10)
+ENTRY(Manikin_Shield, "Manikin Shield", 0x00A8EA30)
+ENTRY(Llewellyn_Shield, "Llewellyn Shield", 0x00A91140)
+ENTRY(Crimson_Parma, "Crimson Parma", 0x00A93C38)
+ENTRY(Clerics_Parma, "Cleric's Parma", 0x00A98670)
+ENTRY(Clerics_Small_Shield, "Cleric's Small Shield", 0x00A9AD80)
+ENTRY(Magic_Shield, "Magic Shield", 0x00A9D490)
+ENTRY(Cursed_Bone_Shield, "Cursed Bone Shield", 0x00A9FBA0)
+ENTRY(Sanctum_Shield, "Sanctum Shield", 0x00AA22B0)
+ENTRY(Varangian_Shield, "Varangian Shield", 0x00AA49C0)
+ENTRY(Watchers_Shield, "Watcher's Shield", 0x00AAAB68)
+ENTRY(Large_Leather_Shield, "Large Leather Shield", 0x00AAE600)
+ENTRY(Blue_Wooden_Shield, "Blue Wooden Shield", 0x00AB0D10)
+ENTRY(Silver_Eagle_Kite_Shield, "Silver Eagle Kite Shield", 0x00AB3420)
+ENTRY(Drangleic_Shield, "Drangleic Shield", 0x00AB5B30)
+ENTRY(Lion_Clan_Shield, "Lion Clan Shield", 0x00AB8240)
+ENTRY(Archdrake_Shield, "Archdrake Shield", 0x00ABA950)
+ENTRY(Kings_Shield, "King's Shield", 0x00ABD060)
+ENTRY(Mirrah_Shield, "Mirrah Shield", 0x00ABF770)
+ENTRY(Old_Knights_Shield, "Old Knight's Shield", 0x00AC1E80)
+ENTRY(Loyce_Shield, "Loyce Shield", 0x00AC4590)
+ENTRY(Charred_Loyce_Shield, "Charred Loyce Shield", 0x00AC5918)
+ENTRY(Spirit_Tree_Shield, "Spirit Tree Shield", 0x00AC6CA0)
+ENTRY(Golden_Wing_Shield, "Golden Wing Shield", 0x00AC93B0)
+ENTRY(Vessel_Shield, "Vessel Shield", 0x00ACBAC0)
+ENTRY(Shield_of_the_Insolent, "Shield of the Insolent", 0x00ACE1D0)
+ENTRY(Silverblack_Shield, "Silverblack Shield", 0x00AD2FF0)
+ENTRY(Stone_Parma, "Stone Parma", 0x00AD5700)
+ENTRY(Grand_Spirit_Tree_Shield, "Grand Spirit Tree Shield", 0x00AD7E10)
+ENTRY(Moon_Butterfly_Shield, "Moon Butterfly Shield", 0x00ADA520)
+ENTRY(Slumbering_Dragon_Shield, "Slumbering Dragon Shield", 0x00ADCC30)
+ENTRY(Chaos_Shield, "Chaos Shield", 0x00ADDFB8)
+ENTRY(Wooden_Shield, "Wooden Shield", 0x00ADF340)
+ENTRY(Hollow_Soldier_Shield, "Hollow Soldier Shield", 0x00AE4160)
+ENTRY(Royal_Kite_Shield, "Royal Kite Shield", 0x00AE6870)
+ENTRY(Red_Rust_Shield, "Red Rust Shield", 0x00AEB690)
+ENTRY(Rampart_Golem_Shield, "Rampart Golem Shield", 0x00AECA18)
+ENTRY(Bell_Keeper_Shield, "Bell Keeper Shield", 0x00AF04B0)
+ENTRY(Defenders_Shield, "Defender's Shield", 0x00AF1838)
+ENTRY(Black_Dragon_Shield, "Black Dragon Shield", 0x00AF2BC0)
+ENTRY(Drakekeepers_Shield, "Drakekeeper's Shield", 0x00AF3F48)
+ENTRY(Porcine_Shield, "Porcine Shield", 0x00AF52D0)
+ENTRY(Bone_Shield, "Bone Shield", 0x00AF6658)
+ENTRY(Twin_Dragon_Greatshield, "Twin Dragon Greatshield", 0x00AF79E0)
+ENTRY(Tower_Shield, "Tower Shield", 0x00AFA0F0)
+ENTRY(Ormas_Greatshield, "Orma's Greatshield", 0x00AFEF10)
+ENTRY(Reeves_Greatshield, "Reeve's Greatshield", 0x00B01620)
+ENTRY(Kings_Mirror, "King's Mirror", 0x00B03D30)
+ENTRY(Dragonrider_Greatshield, "Dragonrider Greatshield", 0x00B06440)
+ENTRY(Mastodon_Greatshield, "Mastodon Greatshield", 0x00B08B50)
+ENTRY(Havels_Greatshield, "Havel's Greatshield", 0x00B0D970)
+ENTRY(Gyrm_Greatshield, "Gyrm Greatshield", 0x00B10080)
+ENTRY(Pursuers_Greatshield, "Pursuer's Greatshield", 0x00B12790)
+ENTRY(Pates_Shield, "Pate's Shield", 0x00B14EA0)
+ENTRY(Old_Knight_Greatshield, "Old Knight Greatshield", 0x00B175B0)
+ENTRY(Drakekeepers_Greatshield, "Drakekeeper's Greatshield", 0x00B19CC0)
+ENTRY(Greatshield_of_Glory, "Greatshield of Glory", 0x00B1C3D0)
+ENTRY(Phoenix_Parma, "Phoenix Parma", 0x00B28720)
+ENTRY(Sunlight_Parma, "Sunlight Parma", 0x00B2AE30)
+ENTRY(Watchdragon_Parma, "Watchdragon Parma", 0x00B2D540)
+ENTRY(Blossom_Kite_Shield, "Blossom Kite Shield", 0x00B2FC50)
+ENTRY(Rebels_Greatshield, "Rebel's Greatshield", 0x00B32360)
+ENTRY(Wicked_Eye_Greatshield, "Wicked Eye Greatshield", 0x00B34A70)
+ENTRY(Black_Flamestone_Parma, "Black Flamestone Parma", 0x00B40DC0)
+ENTRY(Yellow_Quartz_Shield, "Yellow Quartz Shield", 0x00B434D0)
+ENTRY(Bound_Wooden_Shield, "Bound Wooden Shield", 0x00B45BE0)
+ENTRY(Homunculus_Wooden_Shield, "Homunculus Wooden Shield", 0x00B482F0)
+ENTRY(Transgressors_Leather_Shield, "Transgressor's Leather Shield", 0x00B4AA00)
+ENTRY(Pates_Helm, "Pate's Helm", 0x014096B4)
+ENTRY(Pates_Armor, "Pate's Armor", 0x014096B5)
+ENTRY(Pates_Gloves, "Pate's Gloves", 0x014096B6)
+ENTRY(Pates_Trousers, "Pate's Trousers", 0x014096B7)
+ENTRY(Thief_Mask, "Thief Mask", 0x0140BDC4)
+ENTRY(Black_Leather_Armor, "Black Leather Armor", 0x0140BDC5)
+ENTRY(Black_Leather_Gloves, "Black Leather Gloves", 0x0140BDC6)
+ENTRY(Black_Leather_Boots, "Black Leather Boots", 0x0140BDC7)
+ENTRY(Wanderer_Hood, "Wanderer Hood", 0x0140E4D4)
+ENTRY(Wanderer_Coat, "Wanderer Coat", 0x0140E4D5)
+ENTRY(Wanderer_Manchettes, "Wanderer Manchettes", 0x0140E4D6)
+ENTRY(Wanderer_Boots, "Wanderer Boots", 0x0140E4D7)
+ENTRY(Hunters_Hat, "Hunter's Hat", 0x01410BE4)
+ENTRY(Leather_Armor, "Leather Armor", 0x01410BE5)
+ENTRY(Leather_Gloves, "Leather Gloves", 0x01410BE6)
+ENTRY(Leather_Boots, "Leather Boots", 0x01410BE7)
+ENTRY(Hunters_Hat_2, "Hunter's Hat", 0x01410FCC)
+ENTRY(Knight_Helm, "Knight Helm", 0x014132F4)
+ENTRY(Knight_Armor, "Knight Armor", 0x014132F5)
+ENTRY(Knight_Gauntlets, "Knight Gauntlets", 0x014132F6)
+ENTRY(Knight_Leggings, "Knight Leggings", 0x014132F7)
+ENTRY(Elite_Knight_Helm, "Elite Knight Helm", 0x01415A04)
+ENTRY(Elite_Knight_Armor, "Elite Knight Armor", 0x01415A05)
+ENTRY(Elite_Knight_Gloves, "Elite Knight Gloves", 0x01415A06)
+ENTRY(Elite_Knight_Leggings, "Elite Knight Leggings", 0x01415A07)
+ENTRY(Tattered_Cloth_Hood, "Tattered Cloth Hood", 0x01418114)
+ENTRY(Tattered_Cloth_Robe, "Tattered Cloth Robe", 0x01418115)
+ENTRY(Tattered_Cloth_Manchettes, "Tattered Cloth Manchettes", 0x01418116)
+ENTRY(Heavy_Boots, "Heavy Boots", 0x01418117)
+ENTRY(Brigand_Hood, "Brigand Hood", 0x0141A824)
+ENTRY(Brigand_Armor, "Brigand Armor", 0x0141A825)
+ENTRY(Brigand_Gauntlets, "Brigand Gauntlets", 0x0141A826)
+ENTRY(Brigand_Trousers, "Brigand Trousers", 0x0141A827)
+ENTRY(Imported_Hood, "Imported Hood", 0x0141F644)
+ENTRY(Imported_Tunic, "Imported Tunic", 0x0141F645)
+ENTRY(Imported_Manchettes, "Imported Manchettes", 0x0141F646)
+ENTRY(Imported_Trousers, "Imported Trousers", 0x0141F647)
+ENTRY(Traveling_Merchant_Hat, "Traveling Merchant Hat", 0x01429284)
+ENTRY(Traveling_Merchant_Coat, "Traveling Merchant Coat", 0x01429285)
+ENTRY(Traveling_Merchant_Gloves, "Traveling Merchant Gloves", 0x01429286)
+ENTRY(Traveling_Merchant_Boots, "Traveling Merchant Boots", 0x01429287)
+ENTRY(Havels_Helm, "Havel's Helm", 0x0142E0A4)
+ENTRY(Havels_Armor, "Havel's Armor", 0x0142E0A5)
+ENTRY(Havels_Gauntlets, "Havel's Gauntlets", 0x0142E0A6)
+ENTRY(Havels_Leggings, "Havel's Leggings", 0x0142E0A7)
+ENTRY(Jesters_Cap, "Jester's Cap", 0x0143A3F4)
+ENTRY(Jesters_Robes, "Jester's Robes", 0x0143A3F5)
+ENTRY(Jesters_Gloves, "Jester's Gloves", 0x0143A3F6)
+ENTRY(Jesters_Tights, "Jester's Tights", 0x0143A3F7)
+ENTRY(Moon_Hat, "Moon Hat", 0x0143F214)
+ENTRY(Astrologists_Robe, "Astrologist's Robe", 0x0143F215)
+ENTRY(Astrologists_Gauntlets, "Astrologist's Gauntlets", 0x0143F216)
+ENTRY(Astrologists_Bottoms, "Astrologist's Bottoms", 0x0143F217)
+ENTRY(Faraam_Helm, "Faraam Helm", 0x014551A4)
+ENTRY(Faraam_Armor, "Faraam Armor", 0x014551A5)
+ENTRY(Faraam_Gauntlets, "Faraam Gauntlets", 0x014551A6)
+ENTRY(Faraam_Boots, "Faraam Boots", 0x014551A7)
+ENTRY(Black_Dragon_Helm, "Black Dragon Helm", 0x014578B4)
+ENTRY(Black_Dragon_Armor, "Black Dragon Armor", 0x014578B5)
+ENTRY(Black_Dragon_Gauntlets, "Black Dragon Gauntlets", 0x014578B6)
+ENTRY(Black_Dragon_Leggings, "Black Dragon Leggings", 0x014578B7)
+ENTRY(Xanthous_Crown, "Xanthous Crown", 0x01459FC4)
+ENTRY(Xanthous_Overcoat, "Xanthous Overcoat", 0x01459FC5)
+ENTRY(Xanthous_Gloves, "Xanthous Gloves", 0x01459FC6)
+ENTRY(Xanthous_Waistcloth, "Xanthous Waistcloth", 0x01459FC7)
+ENTRY(Mask_of_Judgment, "Mask of Judgment", 0x0145C6D4)
+ENTRY(Robe_of_Judgment, "Robe of Judgment", 0x0145C6D5)
+ENTRY(Manchettes_of_Judgment, "Manchettes of Judgment", 0x0145C6D6)
+ENTRY(Tights_of_Judgment, "Tights of Judgment", 0x0145C6D7)
+ENTRY(Helm_of_Aurous, "Helm of Aurous", 0x0145EDE4)
+ENTRY(Armor_of_Aurous, "Armor of Aurous", 0x0145EDE5)
+ENTRY(Gauntlets_of_Aurous, "Gauntlets of Aurous", 0x0145EDE6)
+ENTRY(Leggings_of_Aurous, "Leggings of Aurous", 0x0145EDE7)
+ENTRY(Helm_of_Aurous_2, "Helm of Aurous", 0x0145F1CC)
+ENTRY(Armor_of_Aurous_2, "Armor of Aurous", 0x0145F1CD)
+ENTRY(Gauntlets_of_Aurous_2, "Gauntlets of Aurous", 0x0145F1CE)
+ENTRY(Leggings_of_Aurous_2, "Leggings of Aurous", 0x0145F1CF)
+ENTRY(Monastery_Headcloth, "Monastery Headcloth", 0x014614F4)
+ENTRY(Monastery_Longshirt, "Monastery Longshirt", 0x014614F5)
+ENTRY(Monastery_Long_Gloves, "Monastery Long Gloves", 0x014614F6)
+ENTRY(Monastery_Skirt, "Monastery Skirt", 0x014614F7)
+ENTRY(Dingy_Hood, "Dingy Hood", 0x01466314)
+ENTRY(Dingy_Robe, "Dingy Robe", 0x01466315)
+ENTRY(Dingy_Cuffs, "Dingy Cuffs", 0x01466316)
+ENTRY(Blood_Stained_Skirt, "Blood_Stained Skirt", 0x01466317)
+ENTRY(Durgos_Hat, "Durgo's Hat", 0x0146FF54)
+ENTRY(Engraved_Gauntlets, "Engraved Gauntlets", 0x01472666)
+ENTRY(Barrel, "Barrel", 0x01474D75)
+ENTRY(Flying_Feline_Boots, "Flying Feline Boots", 0x01477487)
+ENTRY(Moon_Butterfly_Hat, "Moon Butterfly Hat", 0x01479B94)
+ENTRY(Moon_Butterfly_Wings, "Moon Butterfly Wings", 0x01479B95)
+ENTRY(Moon_Butterfly_Cuffs, "Moon Butterfly Cuffs", 0x01479B96)
+ENTRY(Moon_Butterfly_Skirt, "Moon Butterfly Skirt", 0x01479B97)
+ENTRY(Catarina_Helm, "Catarina Helm", 0x0147C2A4)
+ENTRY(Catarina_Armor, "Catarina Armor", 0x0147C2A5)
+ENTRY(Catarina_Gauntlets, "Catarina Gauntlets", 0x0147C2A6)
+ENTRY(Catarina_Leggings, "Catarina Leggings", 0x0147C2A7)
+ENTRY(Alva_Helm, "Alva Helm", 0x0147E9B4)
+ENTRY(Alva_Armor, "Alva Armor", 0x0147E9B5)
+ENTRY(Alva_Gauntlets, "Alva Gauntlets", 0x0147E9B6)
+ENTRY(Alva_Leggings, "Alva Leggings", 0x0147E9B7)
+ENTRY(Black_Witch_Veil, "Black Witch Veil", 0x014810C4)
+ENTRY(Black_Witch_Robe, "Black Witch Robe", 0x014810C5)
+ENTRY(Black_Witch_Gloves, "Black Witch Gloves", 0x014810C6)
+ENTRY(Black_Witch_Trousers, "Black Witch Trousers", 0x014810C7)
+ENTRY(Black_Witch_Hat, "Black Witch Hat", 0x014814AC)
+ENTRY(Black_Witch_Domino_Mask, "Black Witch Domino Mask", 0x01481894)
+ENTRY(Drakeblood_Helm, "Drakeblood Helm", 0x01499764)
+ENTRY(Drakeblood_Armor, "Drakeblood Armor", 0x01499765)
+ENTRY(Drakeblood_Gauntlets, "Drakeblood Gauntlets", 0x01499766)
+ENTRY(Drakeblood_Leggings, "Drakeblood Leggings", 0x01499767)
+ENTRY(Northwarder_Hood, "Northwarder Hood", 0x0149BE74)
+ENTRY(Northwarder_Robe, "Northwarder Robe", 0x0149BE75)
+ENTRY(Northwarder_Manchettes, "Northwarder Manchettes", 0x0149BE76)
+ENTRY(Northwarder_Trousers, "Northwarder Trousers", 0x0149BE77)
+ENTRY(Crown_of_the_Old_Iron_King, "Crown of the Old Iron King", 0x014A0C94)
+ENTRY(Crown_of_the_Ivory_King, "Crown of the Ivory King", 0x014A33A4)
+ENTRY(Crown_of_the_Sunken_King, "Crown of the Sunken King", 0x014A5AB4)
+ENTRY(Old_Bell_Helm, "Old Bell Helm", 0x014A81C4)
+ENTRY(Hollow_Skin, "Hollow Skin", 0x014AA8D4)
+ENTRY(Pharros_Mask, "Pharros Mask", 0x014ACFE4)
+ENTRY(Flower_Skirt, "Flower Skirt", 0x014AF6F7)
+ENTRY(Minotaur_Helm, "Minotaur Helm", 0x014B1E04)
+ENTRY(Symbol_of_Avarice, "Symbol of Avarice", 0x014B4514)
+ENTRY(Hollow_Soldier_Helm, "Hollow Soldier Helm", 0x01500004)
+ENTRY(Hollow_Soldier_Armor, "Hollow Soldier Armor", 0x01500005)
+ENTRY(Hollow_Soldier_Gauntlets, "Hollow Soldier Gauntlets", 0x01500006)
+ENTRY(Hollow_Soldier_Leggings, "Hollow Soldier Leggings", 0x01500007)
+ENTRY(Royal_Soldier_Helm, "Royal Soldier Helm", 0x015003EC)
+ENTRY(Royal_Soldier_Armor, "Royal Soldier Armor", 0x015003ED)
+ENTRY(Royal_Soldier_Gauntlets, "Royal Soldier Gauntlets", 0x015003EE)
+ENTRY(Royal_Soldier_Leggings, "Royal Soldier Leggings", 0x015003EF)
+ENTRY(Hollow_Infantry_Helm, "Hollow Infantry Helm", 0x01502714)
+ENTRY(Hollow_Infantry_Armor, "Hollow Infantry Armor", 0x01502715)
+ENTRY(Hollow_Infantry_Gloves, "Hollow Infantry Gloves", 0x01502716)
+ENTRY(Hollow_Infantry_Boots, "Hollow Infantry Boots", 0x01502717)
+ENTRY(Infantry_Helm, "Infantry Helm", 0x01502AFC)
+ENTRY(Infantry_Armor, "Infantry Armor", 0x01502AFD)
+ENTRY(Infantry_Gloves, "Infantry Gloves", 0x01502AFE)
+ENTRY(Infantry_Boots, "Infantry Boots", 0x01502AFF)
+ENTRY(White_Priest_Headpiece, "White Priest Headpiece", 0x01509C44)
+ENTRY(White_Priest_Robe, "White Priest Robe", 0x01509C45)
+ENTRY(White_Priest_Gloves, "White Priest Gloves", 0x01509C46)
+ENTRY(White_Priest_Skirt, "White Priest Skirt", 0x01509C47)
+ENTRY(Priestess_Headpiece, "Priestess Headpiece", 0x0150A414)
+ENTRY(Priestess_Robe, "Priestess Robe", 0x0150A415)
+ENTRY(Priestess_Gloves, "Priestess Gloves", 0x0150A416)
+ENTRY(Priestess_Skirt, "Priestess Skirt", 0x0150A417)
+ENTRY(Rogue_Hood, "Rogue Hood", 0x0150EA64)
+ENTRY(Rogue_Armor, "Rogue Armor", 0x0150EA65)
+ENTRY(Rogue_Gauntlets, "Rogue Gauntlets", 0x0150EA66)
+ENTRY(Rogue_Leggings, "Rogue Leggings", 0x0150EA67)
+ENTRY(Spiked_Bandit_Helm, "Spiked Bandit Helm", 0x01515F94)
+ENTRY(Bandit_Armor, "Bandit Armor", 0x01515F95)
+ENTRY(Bandit_Gauntlets, "Bandit Gauntlets", 0x01515F96)
+ENTRY(Bandit_Boots, "Bandit Boots", 0x01515F97)
+ENTRY(Varangian_Helm, "Varangian Helm", 0x0151ADB4)
+ENTRY(Varangian_Armor, "Varangian Armor", 0x0151ADB5)
+ENTRY(Varangian_Cuffs, "Varangian Cuffs", 0x0151ADB6)
+ENTRY(Varangian_Leggings, "Varangian Leggings", 0x0151ADB7)
+ENTRY(Black_Hollow_Mage_Hood, "Black Hollow Mage Hood", 0x01527104)
+ENTRY(Black_Hollow_Mage_Robe, "Black Hollow Mage Robe", 0x01527105)
+ENTRY(White_Hollow_Mage_Hood, "White Hollow Mage Hood", 0x015278D4)
+ENTRY(White_Hollow_Mage_Robe, "White Hollow Mage Robe", 0x015278D5)
+ENTRY(Lion_Mage_Robe, "Lion Mage Robe", 0x01529815)
+ENTRY(Lion_Mage_Cuffs, "Lion Mage Cuffs", 0x01529816)
+ENTRY(Lion_Mage_Skirt, "Lion Mage Skirt", 0x01529817)
+ENTRY(Steel_Helm, "Steel Helm", 0x01530D44)
+ENTRY(Steel_Armor, "Steel Armor", 0x01530D45)
+ENTRY(Steel_Gauntlets, "Steel Gauntlets", 0x01530D46)
+ENTRY(Steel_Leggings, "Steel Leggings", 0x01530D47)
+ENTRY(Shadow_Mask, "Shadow Mask", 0x01533454)
+ENTRY(Shadow_Top, "Shadow Top", 0x01533455)
+ENTRY(Shadow_Gauntlets, "Shadow Gauntlets", 0x01533456)
+ENTRY(Shadow_Leggings, "Shadow Leggings", 0x01533457)
+ENTRY(Manikin_Mask, "Manikin Mask", 0x01535B64)
+ENTRY(Manikin_Top, "Manikin Top", 0x01535B65)
+ENTRY(Manikin_Gloves, "Manikin Gloves", 0x01535B66)
+ENTRY(Manikin_Boots, "Manikin Boots", 0x01535B67)
+ENTRY(Prisoners_Hood, "Prisoner's Hood", 0x0153D094)
+ENTRY(Prisoners_Tatters, "Prisoner's Tatters", 0x0153D095)
+ENTRY(Prisoners_Gloves, "Prisoner's Gloves", 0x0153D096)
+ENTRY(Prisoners_Waistcloth, "Prisoner's Waistcloth", 0x0153D097)
+ENTRY(Prisoners_Hood_2, "Prisoner's Hood", 0x0153D47C)
+ENTRY(Prisoners_Tatters_2, "Prisoner's Tatters", 0x0153D47D)
+ENTRY(Archdrake_Helm, "Archdrake Helm", 0x01546CD4)
+ENTRY(Archdrake_Robes, "Archdrake Robes", 0x01546CD5)
+ENTRY(Archdrake_Gloves, "Archdrake Gloves", 0x01546CD6)
+ENTRY(Archdrake_Boots, "Archdrake Boots", 0x01546CD7)
+ENTRY(Gyrm_Helm, "Gyrm Helm", 0x0154E204)
+ENTRY(Gyrm_Armor, "Gyrm Armor", 0x0154E205)
+ENTRY(Gyrm_Gloves, "Gyrm Gloves", 0x0154E206)
+ENTRY(Gyrm_Boots, "Gyrm Boots", 0x0154E207)
+ENTRY(Gyrm_Warrior_Helm, "Gyrm Warrior Helm", 0x01550914)
+ENTRY(Gyrm_Warrior_Armor, "Gyrm Warrior Armor", 0x01550915)
+ENTRY(Gyrm_Warrior_Gloves, "Gyrm Warrior Gloves", 0x01550916)
+ENTRY(Gyrm_Warrior_Boots, "Gyrm Warrior Boots", 0x01550917)
+ENTRY(Gyrm_Warrior_Greathelm, "Gyrm Warrior Greathelm", 0x01550CFC)
+ENTRY(Dark_Mask, "Dark Mask", 0x01553024)
+ENTRY(Dark_Armor, "Dark Armor", 0x01553025)
+ENTRY(Dark_Gauntlets, "Dark Gauntlets", 0x01553026)
+ENTRY(Dark_Leggings, "Dark Leggings", 0x01553027)
+ENTRY(Warlock_Mask, "Warlock Mask", 0x01555734)
+ENTRY(Tseldora_Cap, "Tseldora Cap", 0x0156B6C4)
+ENTRY(Tseldora_Robe, "Tseldora Robe", 0x0156B6C5)
+ENTRY(Tseldora_Manchettes, "Tseldora Manchettes", 0x0156B6C6)
+ENTRY(Tseldora_Trousers, "Tseldora Trousers", 0x0156B6C7)
+ENTRY(Peasant_Hat, "Peasant Hat", 0x015704E4)
+ENTRY(Peasant_Attire, "Peasant Attire", 0x015704E5)
+ENTRY(Peasant_Long_Gloves, "Peasant Long Gloves", 0x015704E6)
+ENTRY(Peasant_Trousers, "Peasant Trousers", 0x015704E7)
+ENTRY(Ironclad_Helm, "Ironclad Helm", 0x01577A14)
+ENTRY(Ironclad_Armor, "Ironclad Armor", 0x01577A15)
+ENTRY(Ironclad_Gauntlets, "Ironclad Gauntlets", 0x01577A16)
+ENTRY(Ironclad_Leggings, "Ironclad Leggings", 0x01577A17)
+ENTRY(Old_Ironclad_Helm, "Old Ironclad Helm", 0x015781E4)
+ENTRY(Old_Ironclad_Armor, "Old Ironclad Armor", 0x015781E5)
+ENTRY(Old_Ironclad_Gauntlets, "Old Ironclad Gauntlets", 0x015781E6)
+ENTRY(Old_Ironclad_Leggings, "Old Ironclad Leggings", 0x015781E7)
+ENTRY(Royal_Swordsman_Helm, "Royal Swordsman Helm", 0x0157A124)
+ENTRY(Royal_Swordsman_Armor, "Royal Swordsman Armor", 0x0157A125)
+ENTRY(Royal_Swordsman_Gloves, "Royal Swordsman Gloves", 0x0157A126)
+ENTRY(Royal_Swordsman_Leggings, "Royal Swordsman Leggings", 0x0157A127)
+ENTRY(Syans_Helm, "Syan's Helm", 0x0157C834)
+ENTRY(Syans_Armor, "Syan's Armor", 0x0157C835)
+ENTRY(Syans_Gauntlets, "Syan's Gauntlets", 0x0157C836)
+ENTRY(Syans_Leggings, "Syan's Leggings", 0x0157C837)
+ENTRY(Bone_Crown, "Bone Crown", 0x0157EF44)
+ENTRY(Bone_King_Robe, "Bone King Robe", 0x0157EF45)
+ENTRY(Bone_King_Cuffs, "Bone King Cuffs", 0x0157EF46)
+ENTRY(Bone_King_Skirt, "Bone King Skirt", 0x0157EF47)
+ENTRY(Heide_Knight_Greathelm, "Heide Knight Greathelm", 0x015F1B34)
+ENTRY(Heide_Knight_Chainmail, "Heide Knight Chainmail", 0x015F1B35)
+ENTRY(Heide_Knight_Gauntlets, "Heide Knight Gauntlets", 0x015F1B36)
+ENTRY(Heide_Knight_Leggings, "Heide Knight Leggings", 0x015F1B37)
+ENTRY(Heide_Knight_Iron_Mask, "Heide Knight Iron Mask", 0x015F1F1C)
+ENTRY(Singers_Dress, "Singer's Dress", 0x015F9065)
+ENTRY(Singers_Dress_2, "Singer's Dress", 0x015F944D)
+ENTRY(Singers_Dress_3, "Singer's Dress", 0x015F9835)
+ENTRY(Smelter_Demon_Helm, "Smelter Demon Helm", 0x015FB774)
+ENTRY(Smelter_Demon_Armor, "Smelter Demon Armor", 0x015FB775)
+ENTRY(Smelter_Demon_Gauntlets, "Smelter Demon Gauntlets", 0x015FB776)
+ENTRY(Smelter_Demon_Leggings, "Smelter Demon Leggings", 0x015FB777)
+ENTRY(Alonne_Captain_Helm, "Alonne Captain Helm", 0x015FDE84)
+ENTRY(Alonne_Captain_Armor, "Alonne Captain Armor", 0x015FDE85)
+ENTRY(Alonne_Knight_Helm, "Alonne Knight Helm", 0x015FE26C)
+ENTRY(Alonne_Knight_Armor, "Alonne Knight Armor", 0x015FE26D)
+ENTRY(Alonne_Knight_Gauntlets, "Alonne Knight Gauntlets", 0x015FE26E)
+ENTRY(Alonne_Knight_Leggings, "Alonne Knight Leggings", 0x015FE26F)
+ENTRY(Vengarls_Helm, "Vengarl's Helm", 0x01600594)
+ENTRY(Vengarls_Armor, "Vengarl's Armor", 0x01600595)
+ENTRY(Vengarls_Gloves, "Vengarl's Gloves", 0x01600596)
+ENTRY(Vengarls_Boots, "Vengarl's Boots", 0x01600597)
+ENTRY(Lion_Warrior_Cape, "Lion Warrior Cape", 0x01602CA5)
+ENTRY(Lion_Warrior_Cuffs, "Lion Warrior Cuffs", 0x01602CA6)
+ENTRY(Lion_Warrior_Skirt, "Lion Warrior Skirt", 0x01602CA7)
+ENTRY(Lion_Warrior_Helm, "Lion Warrior Helm", 0x0160308C)
+ENTRY(Red_Lion_Warrior_Cape, "Red Lion Warrior Cape", 0x0160308D)
+ENTRY(Grave_Warden_Mask, "Grave Warden Mask", 0x0160C8E4)
+ENTRY(Grave_Warden_Top, "Grave Warden Top", 0x0160C8E5)
+ENTRY(Grave_Warden_Cuffs, "Grave Warden Cuffs", 0x0160C8E6)
+ENTRY(Grave_Warden_Bottoms, "Grave Warden Bottoms", 0x0160C8E7)
+ENTRY(Falconer_Helm, "Falconer Helm", 0x0160EFF4)
+ENTRY(Falconer_Armor, "Falconer Armor", 0x0160EFF5)
+ENTRY(Falconer_Gloves, "Falconer Gloves", 0x0160EFF6)
+ENTRY(Falconer_Boots, "Falconer Boots", 0x0160EFF7)
+ENTRY(Rusted_Mastodon_Helm, "Rusted Mastodon Helm", 0x01611704)
+ENTRY(Rusted_Mastodon_Armor, "Rusted Mastodon Armor", 0x01611705)
+ENTRY(Rusted_Mastodon_Gauntlets, "Rusted Mastodon Gauntlets", 0x01611706)
+ENTRY(Rusted_Mastodon_Leggings, "Rusted Mastodon Leggings", 0x01611707)
+ENTRY(Mastodon_Helm, "Mastodon Helm", 0x01613E14)
+ENTRY(Mastodon_Armor, "Mastodon Armor", 0x01613E15)
+ENTRY(Mastodon_Gauntlets, "Mastodon Gauntlets", 0x01613E16)
+ENTRY(Mastodon_Leggings, "Mastodon Leggings", 0x01613E17)
+ENTRY(Desert_Sorceress_Hood, "Desert Sorceress Hood", 0x01616524)
+ENTRY(Desert_Sorceress_Top, "Desert Sorceress Top", 0x01616525)
+ENTRY(Desert_Sorceress_Gloves, "Desert Sorceress Gloves", 0x01616526)
+ENTRY(Desert_Sorceress_Skirt, "Desert Sorceress Skirt", 0x01616527)
+ENTRY(Dragon_Acolyte_Mask, "Dragon Acolyte Mask", 0x01618C34)
+ENTRY(Dragon_Acolyte_Robe, "Dragon Acolyte Robe", 0x01618C35)
+ENTRY(Dragon_Acolyte_Gloves, "Dragon Acolyte Gloves", 0x01618C36)
+ENTRY(Dragon_Acolyte_Boots, "Dragon Acolyte Boots", 0x01618C37)
+ENTRY(Dragon_Sage_Hood, "Dragon Sage Hood", 0x0161901C)
+ENTRY(Ruin_Helm, "Ruin Helm", 0x0162C4B4)
+ENTRY(Ruin_Armor, "Ruin Armor", 0x0162C4B5)
+ENTRY(Ruin_Gauntlets, "Ruin Gauntlets", 0x0162C4B6)
+ENTRY(Ruin_Leggings, "Ruin Leggings", 0x0162C4B7)
+ENTRY(Old_Knight_Helm, "Old Knight Helm", 0x01638804)
+ENTRY(Old_Knight_Armor, "Old Knight Armor", 0x01638805)
+ENTRY(Old_Knight_Gauntlets, "Old Knight Gauntlets", 0x01638806)
+ENTRY(Old_Knight_Leggings, "Old Knight Leggings", 0x01638807)
+ENTRY(Drakekeeper_Helm, "Drakekeeper Helm", 0x0163AF14)
+ENTRY(Drakekeeper_Armor, "Drakekeeper Armor", 0x0163AF15)
+ENTRY(Drakekeeper_Gauntlets, "Drakekeeper Gauntlets", 0x0163AF16)
+ENTRY(Drakekeeper_Boots, "Drakekeeper Boots", 0x0163AF17)
+ENTRY(Throne_Defender_Helm, "Throne Defender Helm", 0x0163D624)
+ENTRY(Throne_Defender_Armor, "Throne Defender Armor", 0x0163D625)
+ENTRY(Throne_Defender_Gauntlets, "Throne Defender Gauntlets", 0x0163D626)
+ENTRY(Throne_Defender_Leggings, "Throne Defender Leggings", 0x0163D627)
+ENTRY(Velstadts_Helm, "Velstadt's Helm", 0x0163FD34)
+ENTRY(Velstadts_Armor, "Velstadt's Armor", 0x0163FD35)
+ENTRY(Velstadts_Gauntlets, "Velstadt's Gauntlets", 0x0163FD36)
+ENTRY(Velstadts_Leggings, "Velstadt's Leggings", 0x0163FD37)
+ENTRY(Throne_Watcher_Helm, "Throne Watcher Helm", 0x01642444)
+ENTRY(Throne_Watcher_Armor, "Throne Watcher Armor", 0x01642445)
+ENTRY(Throne_Watcher_Gauntlets, "Throne Watcher Gauntlets", 0x01642446)
+ENTRY(Throne_Watcher_Leggings, "Throne Watcher Leggings", 0x01642447)
+ENTRY(Looking_Glass_Mask, "Looking Glass Mask", 0x017E14E4)
+ENTRY(Looking_Glass_Armor, "Looking Glass Armor", 0x017E14E5)
+ENTRY(Looking_Glass_Gauntlets, "Looking Glass Gauntlets", 0x017E14E6)
+ENTRY(Looking_Glass_Leggings, "Looking Glass Leggings", 0x017E14E7)
+ENTRY(Agdaynes_Black_Robe, "Agdayne's Black Robe", 0x017E6305)
+ENTRY(Agdaynes_Cuffs, "Agdayne's Cuffs", 0x017E6306)
+ENTRY(Agdaynes_Kilt, "Agdayne's Kilt", 0x017E6307)
+ENTRY(Leydia_Black_Hood, "Leydia Black Hood", 0x017ED834)
+ENTRY(Leydia_Black_Robe, "Leydia Black Robe", 0x017ED835)
+ENTRY(Insolent_Helm, "Insolent Helm", 0x017EFF44)
+ENTRY(Insolent_Armor, "Insolent Armor", 0x017EFF45)
+ENTRY(Insolent_Gloves, "Insolent Gloves", 0x017EFF46)
+ENTRY(Insolent_Boots, "Insolent Boots", 0x017EFF47)
+ENTRY(Imperious_Helm, "Imperious Helm", 0x017F2654)
+ENTRY(Imperious_Armor, "Imperious Armor", 0x017F2655)
+ENTRY(Imperious_Gloves, "Imperious Gloves", 0x017F2656)
+ENTRY(Imperious_Leggings, "Imperious Leggings", 0x017F2657)
+ENTRY(Leydia_White_Hood, "Leydia White Hood", 0x017F4D64)
+ENTRY(Leydia_White_Robe, "Leydia White Robe", 0x017F4D65)
+ENTRY(Leydia_Gauntlets, "Leydia Gauntlets", 0x017F4D66)
+ENTRY(Kings_Crown, "King's Crown", 0x017F7474)
+ENTRY(Kings_Armor, "King's Armor", 0x017F7475)
+ENTRY(Kings_Gauntlets, "King's Gauntlets", 0x017F7476)
+ENTRY(Kings_Leggings, "King's Leggings", 0x017F7477)
+ENTRY(Dragonrider_Helm, "Dragonrider Helm", 0x018E4184)
+ENTRY(Dragonrider_Armor, "Dragonrider Armor", 0x018E4185)
+ENTRY(Dragonrider_Gauntlets, "Dragonrider Gauntlets", 0x018E4186)
+ENTRY(Dragonrider_Leggings, "Dragonrider Leggings", 0x018E4187)
+ENTRY(Executioner_Helm, "Executioner Helm", 0x018F7A04)
+ENTRY(Executioner_Armor, "Executioner Armor", 0x018F7A05)
+ENTRY(Executioner_Gauntlets, "Executioner Gauntlets", 0x018F7A06)
+ENTRY(Executioner_Leggings, "Executioner Leggings", 0x018F7A07)
+ENTRY(Penal_Mask, "Penal Mask", 0x0190B284)
+ENTRY(Penal_Straightjacket, "Penal Straightjacket", 0x0190B285)
+ENTRY(Penal_Handcuffs, "Penal Handcuffs", 0x0190B286)
+ENTRY(Penal_Skirt, "Penal Skirt", 0x0190B287)
+ENTRY(Fume_Sorcerer_Mask, "Fume Sorcerer Mask", 0x01948314)
+ENTRY(Fume_Sorcerer_Robes, "Fume Sorcerer Robes", 0x01948315)
+ENTRY(Fume_Sorcerer_Gloves, "Fume Sorcerer Gloves", 0x01948316)
+ENTRY(Fume_Sorcerer_Boots, "Fume Sorcerer Boots", 0x01948317)
+ENTRY(Rampart_Golem_Helm, "Rampart Golem Helm", 0x0195BB94)
+ENTRY(Rampart_Golem_Armor, "Rampart Golem Armor", 0x0195BB95)
+ENTRY(Rampart_Golem_Gauntlets, "Rampart Golem Gauntlets", 0x0195BB96)
+ENTRY(Rampart_Golem_Leggings, "Rampart Golem Leggings", 0x0195BB97)
+ENTRY(Sanctum_Knight_Helm, "Sanctum Knight Helm", 0x0196A5F4)
+ENTRY(Sanctum_Knight_Armor, "Sanctum Knight Armor", 0x0196A5F5)
+ENTRY(Sanctum_Knight_Gauntlets, "Sanctum Knight Gauntlets", 0x0196A5F6)
+ENTRY(Sanctum_Knight_Leggings, "Sanctum Knight Leggings", 0x0196A5F7)
+ENTRY(Sanctum_Soldier_Gauntlet, "Sanctum Soldier Gauntlet", 0x0196CD06)
+ENTRY(Sanctum_Priestess_Tiara, "Sanctum Priestess Tiara", 0x01976944)
+ENTRY(Raimes_Helm, "Raime's Helm", 0x01982C94)
+ENTRY(Raimes_Armor, "Raime's Armor", 0x01982C95)
+ENTRY(Raimes_Gauntlets, "Raime's Gauntlets", 0x01982C96)
+ENTRY(Raimes_Leggings, "Raime's Leggings", 0x01982C97)
+ENTRY(Retainer_Robe, "Retainer Robe", 0x01987AB5)
+ENTRY(Alonnes_Helm, "Alonne's Helm", 0x0198EFE4)
+ENTRY(Alonnes_Armor, "Alonne's Armor", 0x0198EFE5)
+ENTRY(Alonnes_Gauntlets, "Alonne's Gauntlets", 0x0198EFE6)
+ENTRY(Alonnes_Leggings, "Alonne's Leggings", 0x0198EFE7)
+ENTRY(Loyce_Helm, "Loyce Helm", 0x019A2864)
+ENTRY(Loyce_Armor, "Loyce Armor", 0x019A2865)
+ENTRY(Loyce_Gauntlets, "Loyce Gauntlets", 0x019A2866)
+ENTRY(Loyce_Leggings, "Loyce Leggings", 0x019A2867)
+ENTRY(Charred_Loyce_Helm, "Charred Loyce Helm", 0x019A4F74)
+ENTRY(Charred_Loyce_Armor, "Charred Loyce Armor", 0x019A4F75)
+ENTRY(Charred_Loyce_Gauntlets, "Charred Loyce Gauntlets", 0x019A4F76)
+ENTRY(Charred_Loyce_Leggings, "Charred Loyce Leggings", 0x019A4F77)
+ENTRY(Ivory_King_Helm, "Ivory King Helm", 0x019A7684)
+ENTRY(Ivory_King_Armor, "Ivory King Armor", 0x019A7685)
+ENTRY(Ivory_King_Gauntlets, "Ivory King Gauntlets", 0x019A7686)
+ENTRY(Ivory_King_Leggings, "Ivory King Leggings", 0x019A7687)
+ENTRY(Llewellyn_Armor, "Llewellyn Armor", 0x019F3175)
+ENTRY(Llewellyn_Gloves, "Llewellyn Gloves", 0x019F3176)
+ENTRY(Llewellyn_Shoes, "Llewellyn Shoes", 0x019F3177)
+ENTRY(Drangleic_Helm, "Drangleic Helm", 0x019FA6A4)
+ENTRY(Drangleic_Mail, "Drangleic Mail", 0x019FA6A5)
+ENTRY(Drangleic_Gauntlets, "Drangleic Gauntlets", 0x019FA6A6)
+ENTRY(Drangleic_Leggings, "Drangleic Leggings", 0x019FA6A7)
+ENTRY(Creightons_Steel_Mask, "Creighton's Steel Mask", 0x01A265C4)
+ENTRY(Creightons_Chainmail, "Creighton's Chainmail", 0x01A265C5)
+ENTRY(Creightons_Chain_Gloves, "Creighton's Chain Gloves", 0x01A265C6)
+ENTRY(Creightons_Chain_Leggings, "Creighton's Chain Leggings", 0x01A265C7)
+ENTRY(Benharts_Knight_Helm, "Benhart's Knight Helm", 0x01A28CD4)
+ENTRY(Benharts_Armor, "Benhart's Armor", 0x01A28CD5)
+ENTRY(Benharts_Gauntlets, "Benhart's Gauntlets", 0x01A28CD6)
+ENTRY(Benharts_Boots, "Benhart's Boots", 0x01A28CD7)
+ENTRY(Standard_Helm, "Standard Helm", 0x01A2B3E4)
+ENTRY(Hard_Leather_Armor, "Hard Leather Armor", 0x01A2B3E5)
+ENTRY(Hard_Leather_Gauntlets, "Hard Leather Gauntlets", 0x01A2B3E6)
+ENTRY(Hard_Leather_Boots, "Hard Leather Boots", 0x01A2B3E7)
+ENTRY(Cales_Helm, "Cale's Helm", 0x01A3C554)
+ENTRY(Cales_Leather_Armor, "Cale's Leather Armor", 0x01A3C555)
+ENTRY(Cales_Shoes, "Cale's Shoes", 0x01A3C557)
+ENTRY(Lucatiels_Mask, "Lucatiel's Mask", 0x01A3EC64)
+ENTRY(Lucatiels_Vest, "Lucatiel's Vest", 0x01A3EC65)
+ENTRY(Lucatiels_Gloves, "Lucatiel's Gloves", 0x01A3EC66)
+ENTRY(Lucatiels_Trousers, "Lucatiel's Trousers", 0x01A3EC67)
+ENTRY(Mirrah_Hat, "Mirrah Hat", 0x01A3F04C)
+ENTRY(Bell_Keeper_Helmet, "Bell Keeper Helmet", 0x01A41374)
+ENTRY(Bell_Keeper_Bellyband, "Bell Keeper Bellyband", 0x01A41375)
+ENTRY(Bell_Keeper_Cuffs, "Bell Keeper Cuffs", 0x01A41376)
+ENTRY(Bell_Keeper_Trousers, "Bell Keeper Trousers", 0x01A41377)
+ENTRY(Mad_Warrior_Mask, "Mad Warrior Mask", 0x01A46194)
+ENTRY(Mad_Warrior_Armor, "Mad Warrior Armor", 0x01A46195)
+ENTRY(Mad_Warrior_Gauntlets, "Mad Warrior Gauntlets", 0x01A46196)
+ENTRY(Mad_Warrior_Leggings, "Mad Warrior Leggings", 0x01A46197)
+ENTRY(Rosabeths_Dress, "Rosabeth's Dress", 0x01A59A15)
+ENTRY(Black_Hood, "Black Hood", 0x01A65D64)
+ENTRY(Black_Robes, "Black Robes", 0x01A65D65)
+ENTRY(Black_Gloves, "Black Gloves", 0x01A65D66)
+ENTRY(Black_Boots, "Black Boots", 0x01A65D67)
+ENTRY(Saints_Hood, "Saint's Hood", 0x01A68474)
+ENTRY(Saints_Dress, "Saint's Dress", 0x01A68475)
+ENTRY(Saints_Long_Gloves, "Saint's Long Gloves", 0x01A68476)
+ENTRY(Saints_Trousers, "Saint's Trousers", 0x01A68477)
+ENTRY(Hexers_Hood, "Hexer's Hood", 0x01A6AB84)
+ENTRY(Hexers_Robes, "Hexer's Robes", 0x01A6AB85)
+ENTRY(Hexers_Gloves, "Hexer's Gloves", 0x01A6AB86)
+ENTRY(Hexers_Boots, "Hexer's Boots", 0x01A6AB87)
+ENTRY(Chaos_Hood, "Chaos Hood", 0x01A6D294)
+ENTRY(Chaos_Robe, "Chaos Robe", 0x01A6D295)
+ENTRY(Chaos_Gloves, "Chaos Gloves", 0x01A6D296)
+ENTRY(Chaos_Boots, "Chaos Boots", 0x01A6D297)
+ENTRY(Nahr_Alma_Hood, "Nahr Alma Hood", 0x01A8A754)
+ENTRY(Nahr_Alma_Robes, "Nahr Alma Robes", 0x01A8A755)
+ENTRY(Targrays_Helm, "Targray's Helm", 0x01AA7C14)
+ENTRY(Targrays_Armor, "Targray's Armor", 0x01AA7C15)
+ENTRY(Targrays_Manifers, "Targray's Manifers", 0x01AA7C16)
+ENTRY(Targrays_Leggings, "Targray's Leggings", 0x01AA7C17)
+ENTRY(Soul_Arrow, "Soul Arrow", 0x01D92CD0)
+ENTRY(Great_Soul_Arrow, "Great Soul Arrow", 0x01D953E0)
+ENTRY(Heavy_Soul_Arrow, "Heavy Soul Arrow", 0x01D97AF0)
+ENTRY(Great_Heavy_Soul_Arrow, "Great Heavy Soul Arrow", 0x01D9A200)
+ENTRY(Homing_Soul_Arrow, "Homing Soul Arrow", 0x01D9C910)
+ENTRY(Heavy_Homing_Soul_Arrow, "Heavy Homing Soul Arrow", 0x01D9F020)
+ENTRY(Homing_Soulmass, "Homing Soulmass", 0x01DA1730)
+ENTRY(Homing_Crystal_Soulmass, "Homing Crystal Soulmass", 0x01DA3E40)
+ENTRY(Soul_Spear, "Soul Spear", 0x01DA6550)
+ENTRY(Crystal_Soul_Spear, "Crystal Soul Spear", 0x01DA8C60)
+ENTRY(Shockwave, "Shockwave", 0x01DAB370)
+ENTRY(Soul_Spear_Barrage, "Soul Spear Barrage", 0x01DADA80)
+ENTRY(Soul_Shower, "Soul Shower", 0x01DB0190)
+ENTRY(Soul_Greatsword, "Soul Greatsword", 0x01DB28A0)
+ENTRY(Soul_Vortex, "Soul Vortex", 0x01DB4FB0)
+ENTRY(Soul_Bolt, "Soul Bolt", 0x01DB76C0)
+ENTRY(Soul_Geyser, "Soul Geyser", 0x01DB9DD0)
+ENTRY(Magic_Weapon, "Magic Weapon", 0x01DBC4E0)
+ENTRY(Great_Magic_Weapon, "Great Magic Weapon", 0x01DBEBF0)
+ENTRY(Crystal_Magic_Weapon, "Crystal Magic Weapon", 0x01DC1300)
+ENTRY(Strong_Magic_Shield, "Strong Magic Shield", 0x01DC3A10)
+ENTRY(Yearn, "Yearn", 0x01DC6120)
+ENTRY(Hush, "Hush", 0x01DC8830)
+ENTRY(Fall_Control, "Fall Control", 0x01DCAF40)
+ENTRY(Hidden_Weapon, "Hidden Weapon", 0x01DCD650)
+ENTRY(Repair, "Repair", 0x01DCFD60)
+ENTRY(Cast_Light, "Cast Light", 0x01DD2470)
+ENTRY(Chameleon, "Chameleon", 0x01DD4B80)
+ENTRY(Unleash_Magic, "Unleash Magic", 0x01DD7290)
+ENTRY(Soul_Flash, "Soul Flash", 0x01DD99A0)
+ENTRY(Focus_Souls, "Focus Souls", 0x01DDC0B0)
+ENTRY(Heal, "Heal", 0x01E86F10)
+ENTRY(Med_Heal, "Med Heal", 0x01E89620)
+ENTRY(Great_Heal_Excerpt, "Great Heal Excerpt", 0x01E8BD30)
+ENTRY(Great_Heal, "Great Heal", 0x01E8E440)
+ENTRY(Soothing_Sunlight, "Soothing Sunlight", 0x01E90B50)
+ENTRY(Replenishment, "Replenishment", 0x01E93260)
+ENTRY(Resplendent_Life, "Resplendent Life", 0x01E95970)
+ENTRY(Bountiful_Sunlight, "Bountiful Sunlight", 0x01E98080)
+ENTRY(Caressing_Prayer, "Caressing Prayer", 0x01E9A790)
+ENTRY(Force, "Force", 0x01E9CEA0)
+ENTRY(Wrath_of_the_Gods, "Wrath of the Gods", 0x01E9F5B0)
+ENTRY(Emit_Force, "Emit Force", 0x01EA1CC0)
+ENTRY(Heavenly_Thunder, "Heavenly Thunder", 0x01EA43D0)
+ENTRY(Lightning_Spear, "Lightning Spear", 0x01EA6AE0)
+ENTRY(Great_Lightning_Spear, "Great Lightning Spear", 0x01EA91F0)
+ENTRY(Sunlight_Spear, "Sunlight Spear", 0x01EAB900)
+ENTRY(Soul_Appease, "Soul Appease", 0x01EAE010)
+ENTRY(Blinding_Bolt, "Blinding Bolt", 0x01EB0720)
+ENTRY(Magic_Barrier, "Magic Barrier", 0x01EB2E30)
+ENTRY(Great_Magic_Barrier, "Great Magic Barrier", 0x01EB5540)
+ENTRY(Homeward, "Homeward", 0x01EB7C50)
+ENTRY(Guidance, "Guidance", 0x01EBA360)
+ENTRY(Sacred_Oath, "Sacred Oath", 0x01EBCA70)
+ENTRY(Unveil, "Unveil", 0x01EBF180)
+ENTRY(Perseverance, "Perseverance", 0x01EC1890)
+ENTRY(Sunlight_Blade, "Sunlight Blade", 0x01EC3FA0)
+ENTRY(Denial, "Denial", 0x01ECDBE0)
+ENTRY(Splintering_Lightning_Spear, "Splintering Lightning Spear", 0x01ED02F0)
+ENTRY(Fireball, "Fireball", 0x01F7B150)
+ENTRY(Fire_Orb, "Fire Orb", 0x01F7D860)
+ENTRY(Great_Fireball, "Great Fireball", 0x01F7FF70)
+ENTRY(Great_Chaos_Fireball, "Great Chaos Fireball", 0x01F82680)
+ENTRY(Firestorm, "Firestorm", 0x01F84D90)
+ENTRY(Fire_Tempest, "Fire Tempest", 0x01F874A0)
+ENTRY(Chaos_Storm, "Chaos Storm", 0x01F89BB0)
+ENTRY(Combustion, "Combustion", 0x01F8C2C0)
+ENTRY(Great_Combustion, "Great Combustion", 0x01F8E9D0)
+ENTRY(Fire_Whip, "Fire Whip", 0x01F910E0)
+ENTRY(Poison_Mist, "Poison Mist", 0x01F937F0)
+ENTRY(Toxic_Mist, "Toxic Mist", 0x01F95F00)
+ENTRY(Acid_Surge, "Acid Surge", 0x01F98610)
+ENTRY(Lingering_Flame, "Lingering Flame", 0x01F9AD20)
+ENTRY(Flame_Swathe, "Flame Swathe", 0x01F9D430)
+ENTRY(Forbidden_Sun, "Forbidden Sun", 0x01F9FB40)
+ENTRY(Flame_Weapon, "Flame Weapon", 0x01FA2250)
+ENTRY(Flash_Sweat, "Flash Sweat", 0x01FA4960)
+ENTRY(Iron_Flesh, "Iron Flesh", 0x01FA7070)
+ENTRY(Warmth, "Warmth", 0x01FA9780)
+ENTRY(Immolation, "Immolation", 0x01FABE90)
+ENTRY(Fire_Snake, "Fire Snake", 0x01FC1E20)
+ENTRY(Dance_of_Fire, "Dance of Fire", 0x01FC4530)
+ENTRY(Outcry, "Outcry", 0x01FC6C40)
+ENTRY(Dark_Orb, "Dark Orb", 0x0206F390)
+ENTRY(Dark_Hail, "Dark Hail", 0x02071AA0)
+ENTRY(Dark_Fog, "Dark Fog", 0x020741B0)
+ENTRY(Affinity, "Affinity", 0x020768C0)
+ENTRY(Dead_Again, "Dead Again", 0x02078FD0)
+ENTRY(Dark_Weapon, "Dark Weapon", 0x0207B6E0)
+ENTRY(Whisper_of_Despair, "Whisper of Despair", 0x0207DDF0)
+ENTRY(Repel, "Repel", 0x02080500)
+ENTRY(Twisted_Barricade, "Twisted Barricade", 0x02082C10)
+ENTRY(Numbness, "Numbness", 0x02085320)
+ENTRY(Dark_Greatsword, "Dark Greatsword", 0x020B6060)
+ENTRY(Recollection, "Recollection", 0x020B8770)
+ENTRY(Scraps_of_Life, "Scraps of Life", 0x021635D0)
+ENTRY(Darkstorm, "Darkstorm", 0x02165CE0)
+ENTRY(Resonant_Soul, "Resonant Soul", 0x021683F0)
+ENTRY(Great_Resonant_Soul, "Great Resonant Soul", 0x0216AB00)
+ENTRY(Climax, "Climax", 0x0216D210)
+ENTRY(Resonant_Flesh, "Resonant Flesh", 0x0216F920)
+ENTRY(Resonant_Weapon, "Resonant Weapon", 0x02172030)
+ENTRY(Lifedrain_Patch, "Lifedrain Patch", 0x02174740)
+ENTRY(Profound_Still, "Profound Still", 0x02176E50)
+ENTRY(Promised_Walk_of_Peace, "Promised Walk of Peace", 0x021AA2A0)
+ENTRY(Dark_Dance, "Dark Dance", 0x021AC9B0)
+ENTRY(Life_Ring, "Life Ring", 0x02628110)
+ENTRY(Life_Ring_1, "Life Ring+1", 0x02628111)
+ENTRY(Life_Ring_2, "Life Ring+2", 0x02628112)
+ENTRY(Life_Ring_3, "Life Ring+3", 0x02628113)
+ENTRY(Chloranthy_Ring, "Chloranthy Ring", 0x0262A820)
+ENTRY(Chloranthy_Ring_1, "Chloranthy Ring+1", 0x0262A821)
+ENTRY(Chloranthy_Ring_2, "Chloranthy Ring+2", 0x0262A822)
+ENTRY(Royal_Soldiers_Ring, "Royal Soldier's Ring", 0x0262CF30)
+ENTRY(Royal_Soldiers_Ring_1, "Royal Soldier's Ring+1", 0x0262CF31)
+ENTRY(Royal_Soldiers_Ring_2, "Royal Soldier's Ring+2", 0x0262CF32)
+ENTRY(First_Dragon_Ring, "First Dragon Ring", 0x0262F640)
+ENTRY(Second_Dragon_Ring, "Second Dragon Ring", 0x0262F641)
+ENTRY(Third_Dragon_Ring, "Third Dragon Ring", 0x0262F642)
+ENTRY(Ring_of_Steel_Protection, "Ring of Steel Protection", 0x02631D50)
+ENTRY(Ring_of_Steel_Protection_1, "Ring of Steel Protection+1", 0x02631D51)
+ENTRY(Ring_of_Steel_Protection_2, "Ring of Steel Protection+2", 0x02631D52)
+ENTRY(no_text_2, "no text", 0x02631D53)
+ENTRY(Spell_Quartz_Ring, "Spell Quartz Ring", 0x02634460)
+ENTRY(Spell_Quartz_Ring_1, "Spell Quartz Ring+1", 0x02634461)
+ENTRY(Spell_Quartz_Ring_2, "Spell Quartz Ring+2", 0x02634462)
+ENTRY(Spell_Quartz_Ring_3, "Spell Quartz Ring+3", 0x02634463)
+ENTRY(Flame_Quartz_Ring, "Flame Quartz Ring", 0x02636B70)
+ENTRY(Flame_Quartz_Ring_1, "Flame Quartz Ring+1", 0x02636B71)
+ENTRY(Flame_Quartz_Ring_2, "Flame Quartz Ring+2", 0x02636B72)
+ENTRY(Flame_Quartz_Ring_3, "Flame Quartz Ring+3", 0x02636B73)
+ENTRY(Thunder_Quartz_Ring, "Thunder Quartz Ring", 0x02639280)
+ENTRY(Thunder_Quartz_Ring_1, "Thunder Quartz Ring+1", 0x02639281)
+ENTRY(Thunder_Quartz_Ring_2, "Thunder Quartz Ring+2", 0x02639282)
+ENTRY(Thunder_Quartz_Ring_3, "Thunder Quartz Ring+3", 0x02639283)
+ENTRY(Dark_Quartz_Ring, "Dark Quartz Ring", 0x0263B990)
+ENTRY(Dark_Quartz_Ring_1, "Dark Quartz Ring+1", 0x0263B991)
+ENTRY(Dark_Quartz_Ring_2, "Dark Quartz Ring+2", 0x0263B992)
+ENTRY(Dark_Quartz_Ring_3, "Dark Quartz Ring+3", 0x0263B993)
+ENTRY(Poisonbite_Ring, "Poisonbite Ring", 0x0263E0A0)
+ENTRY(Poisonbite_Ring_1, "Poisonbite Ring+1", 0x0263E0A1)
+ENTRY(Bloodbite_Ring, "Bloodbite Ring", 0x026407B0)
+ENTRY(Bloodbite_Ring_1, "Bloodbite Ring+1", 0x026407B1)
+ENTRY(Bracing_Knuckle_Ring, "Bracing Knuckle Ring", 0x02642EC0)
+ENTRY(Bracing_Knuckle_Ring_1, "Bracing Knuckle Ring+1", 0x02642EC1)
+ENTRY(Bracing_Knuckle_Ring_2, "Bracing Knuckle Ring+2", 0x02642EC2)
+ENTRY(Cursebite_Ring, "Cursebite Ring", 0x026455D0)
+ENTRY(Ash_Knuckle_Ring, "Ash Knuckle Ring", 0x02646958)
+ENTRY(Dispelling_Ring, "Dispelling Ring", 0x02647CE0)
+ENTRY(Dispelling_Ring_1, "Dispelling Ring+1", 0x02647CE1)
+ENTRY(Ring_of_Resistance, "Ring of Resistance", 0x0264A3F0)
+ENTRY(Ring_of_Resistance_1, "Ring of Resistance+1", 0x0264A3F1)
+ENTRY(Ring_of_Blades, "Ring of Blades", 0x0264CB00)
+ENTRY(Ring_of_Blades_1, "Ring of Blades+1", 0x0264CB01)
+ENTRY(Ring_of_Blades_2, "Ring of Blades+2", 0x0264CB02)
+ENTRY(Ring_of_Knowledge, "Ring of Knowledge", 0x02658E50)
+ENTRY(Ring_of_Prayer, "Ring of Prayer", 0x0265B560)
+ENTRY(Stone_Ring, "Stone Ring", 0x0265DC70)
+ENTRY(Red_Tearstone_Ring, "Red Tearstone Ring", 0x026651A0)
+ENTRY(Blue_Tearstone_Ring, "Blue Tearstone Ring", 0x02669FC0)
+ENTRY(Ring_of_Giants, "Ring of Giants", 0x0266C6D0)
+ENTRY(Ring_of_Giants_1, "Ring of Giants+1", 0x0266C6D1)
+ENTRY(Ring_of_Giants_2, "Ring of Giants+2", 0x0266C6D2)
+ENTRY(Old_Leo_Ring, "Old Leo Ring", 0x0266DA58)
+ENTRY(Ring_of_Soul_Protection, "Ring of Soul Protection", 0x0266EDE0)
+ENTRY(Ring_of_Life_Protection, "Ring of Life Protection", 0x026714F0)
+ENTRY(Lingering_Dragoncrest_Ring, "Lingering Dragoncrest Ring", 0x02673C00)
+ENTRY(Lingering_Dragoncrest_Ring_1, "Lingering Dragoncrest Ring+1", 0x02673C01)
+ENTRY(Lingering_Dragoncrest_Ring_2, "Lingering Dragoncrest Ring+2", 0x02673C02)
+ENTRY(Clear_Bluestone_Ring, "Clear Bluestone Ring", 0x02676310)
+ENTRY(Clear_Bluestone_Ring_1, "Clear Bluestone Ring+1", 0x02676311)
+ENTRY(Clear_Bluestone_Ring_2, "Clear Bluestone Ring+2", 0x02676312)
+ENTRY(Northern_Ritual_Band, "Northern Ritual Band", 0x02678A20)
+ENTRY(Northern_Ritual_Band_1, "Northern Ritual Band+1", 0x02678A21)
+ENTRY(Northern_Ritual_Band_2, "Northern Ritual Band+2", 0x02678A22)
+ENTRY(Southern_Ritual_Band, "Southern Ritual Band", 0x0267B130)
+ENTRY(Southern_Ritual_Band_1, "Southern Ritual Band+1", 0x0267B131)
+ENTRY(Southern_Ritual_Band_2, "Southern Ritual Band+2", 0x0267B132)
+ENTRY(Covetous_Gold_Serpent_Ring, "Covetous Gold Serpent Ring", 0x0267D840)
+ENTRY(Covetous_Gold_Serpent_Ring_1, "Covetous Gold Serpent Ring+1", 0x0267D841)
+ENTRY(Covetous_Gold_Serpent_Ring_2, "Covetous Gold Serpent Ring+2", 0x0267D842)
+ENTRY(Covetous_Silver_Serpent_Ring, "Covetous Silver Serpent Ring", 0x0267FF50)
+ENTRY(Covetous_Silver_Serpent_Ring_1, "Covetous Silver Serpent Ring+1", 0x0267FF51)
+ENTRY(Covetous_Silver_Serpent_Ring_2, "Covetous Silver Serpent Ring+2", 0x0267FF52)
+ENTRY(Ring_of_the_Evil_Eye, "Ring of the Evil Eye", 0x02684D70)
+ENTRY(Ring_of_the_Evil_Eye_1, "Ring of the Evil Eye+1", 0x02684D71)
+ENTRY(Ring_of_the_Evil_Eye_2, "Ring of the Evil Eye+2", 0x02684D72)
+ENTRY(Ring_of_Restoration, "Ring of Restoration", 0x02687480)
+ENTRY(Ring_of_Binding, "Ring of Binding", 0x02689B90)
+ENTRY(Silvercat_Ring, "Silvercat Ring", 0x0268C2A0)
+ENTRY(Redeye_Ring, "Redeye Ring", 0x0268E9B0)
+ENTRY(Gowers_Ring_of_Protection, "Gower's Ring of Protection", 0x026910C0)
+ENTRY(Name_engraved_Ring, "Name_engraved Ring", 0x026937D0)
+ENTRY(Slumbering_Dragoncrest_Ring, "Slumbering Dragoncrest Ring", 0x02695EE0)
+ENTRY(Hawk_Ring, "Hawk Ring", 0x026985F0)
+ENTRY(Old_Sun_Ring, "Old Sun Ring", 0x0269AD00)
+ENTRY(Illusory_Ring_of_a_Conqueror, "Illusory Ring of a Conqueror", 0x0269FB20)
+ENTRY(Kings_Ring, "King's Ring", 0x026A2230)
+ENTRY(Ring_of_the_Dead, "Ring of the Dead", 0x026A4940)
+ENTRY(Ring_of_Thorns, "Ring of Thorns", 0x026A7050)
+ENTRY(Ring_of_Thorns_1, "Ring of Thorns+1", 0x026A7051)
+ENTRY(Ring_of_Thorns_2, "Ring of Thorns+2", 0x026A7052)
+ENTRY(Delicate_String, "Delicate String", 0x026A9760)
+ENTRY(White_Ring, "White Ring", 0x026ABE70)
+ENTRY(Illusory_Ring_of_the_Vengeful, "Illusory Ring of the Vengeful", 0x026AE580)
+ENTRY(Illusory_Ring_of_the_Guilty, "Illusory Ring of the Guilty", 0x026B0C90)
+ENTRY(Ring_of_Whispers, "Ring of Whispers", 0x026BA8D0)
+ENTRY(Illusory_Ring_of_the_Exalted, "Illusory Ring of the Exalted", 0x026BCFE0)
+ENTRY(Crest_of_the_Rat, "Crest of the Rat", 0x026D0860)
+ENTRY(Bell_Keepers_Seal, "Bell Keeper's Seal", 0x026D2F70)
+ENTRY(Guardians_Seal, "Guardian's Seal", 0x026D5680)
+ENTRY(Crest_of_Blood, "Crest of Blood", 0x026D7D90)
+ENTRY(Blue_Seal, "Blue Seal", 0x026DA4A0)
+ENTRY(Abyss_Seal, "Abyss Seal", 0x026DCBB0)
+ENTRY(Vanquishers_Seal, "Vanquisher's Seal", 0x026DF2C0)
+ENTRY(Sun_Seal, "Sun Seal", 0x026E19D0)
+ENTRY(Ancient_Dragon_Seal, "Ancient Dragon Seal", 0x026E40E0)
+ENTRY(Simpletons_Ring, "Simpleton's Ring", 0x02719C40)
+ENTRY(Strength_Ring, "Strength Ring", 0x0271C350)
+ENTRY(Dexterity_Ring, "Dexterity Ring", 0x0271EA60)
+ENTRY(Ivory_Warrior_Ring, "Ivory Warrior Ring", 0x02721170)
+ENTRY(Sorcery_Clutch_Ring, "Sorcery Clutch Ring", 0x02723880)
+ENTRY(Lightning_Clutch_Ring, "Lightning Clutch Ring", 0x02725F90)
+ENTRY(Fire_Clutch_Ring, "Fire Clutch Ring", 0x027286A0)
+ENTRY(Dark_Clutch_Ring, "Dark Clutch Ring", 0x0272ADB0)
+ENTRY(Baneful_Bird_Ring, "Baneful Bird Ring", 0x0272FBD0)
+ENTRY(Flynns_Ring, "Flynn's Ring", 0x027322E0)
+ENTRY(Ring_of_the_Embedded, "Ring of the Embedded", 0x027349F0)
+ENTRY(Ring_of_the_Living, "Ring of the Living", 0x02737100)
+ENTRY(Yorghs_Ring, "Yorgh's Ring", 0x02739810)
+ENTRY(Agape_Ring, "Agape Ring", 0x0280DE80)
+ENTRY(Soldier_Key, "Soldier Key", 0x03041840)
+ENTRY(Key_to_Kings_Passage, "Key to King's Passage", 0x03043F50)
+ENTRY(Weapon_Smithbox, "Weapon Smithbox", 0x0304B480)
+ENTRY(Armor_Smithbox, "Armor Smithbox", 0x0304DB90)
+ENTRY(Bastille_Key, "Bastille Key", 0x03072580)
+ENTRY(Iron_Key, "Iron Key", 0x03074C90)
+ENTRY(Forgotten_Key, "Forgotten Key", 0x030773A0)
+ENTRY(Brightstone_Key, "Brightstone Key", 0x03079AB0)
+ENTRY(Antiquated_Key, "Antiquated Key", 0x0307C1C0)
+ENTRY(Fang_Key, "Fang Key", 0x0307E8D0)
+ENTRY(House_Key, "House Key", 0x03080FE0)
+ENTRY(Lenigrasts_Key, "Lenigrast's Key", 0x030836F0)
+ENTRY(Smooth_Silky_Stone, "Smooth Silky Stone", 0x03085E00)
+ENTRY(Small_Smooth_Silky_Stone, "Small Smooth  Silky Stone", 0x03087188)
+ENTRY(Rotunda_Lockstone, "Rotunda Lockstone", 0x03088510)
+ENTRY(Giants_Kinship, "Giant's Kinship", 0x0308AC20)
+ENTRY(Ashen_Mist_Heart, "Ashen Mist Heart", 0x0308D330)
+ENTRY(Soul_of_a_Giant, "Soul of a Giant", 0x0308FA40)
+ENTRY(Tseldora_Den_Key, "Tseldora Den Key", 0x03092150)
+ENTRY(Champions_Tablet, "Champion's Tablet", 0x03094860)
+ENTRY(Ladder_Miniature, "Ladder Miniature", 0x03096F70)
+ENTRY(Soul_Vessel, "Soul Vessel", 0x03099680)
+ENTRY(Undead_Lockaway_Key, "Undead Lockaway Key", 0x0309BD90)
+ENTRY(Dull_Ember, "Dull Ember", 0x030A0BB0)
+ENTRY(Crushed_Eye_Orb, "Crushed Eye Orb", 0x030A32C0)
+ENTRY(Simpletons_Spice, "Simpleton's Spice", 0x030A59D0)
+ENTRY(Skeptics_Spice, "Skeptic's Spice", 0x030A80E0)
+ENTRY(Aldia_Key, "Aldia Key", 0x030AA7F0)
+ENTRY(Dragon_Talon, "Dragon Talon", 0x03197500)
+ENTRY(Heavy_Iron_Key, "Heavy Iron Key", 0x031AFBA0)
+ENTRY(Frozen_Flower, "Frozen Flower", 0x031C8240)
+ENTRY(Eternal_Sanctum_Key, "Eternal Sanctum Key", 0x031E08E0)
+ENTRY(Tower_Key, "Tower Key", 0x031F8F80)
+ENTRY(Garrison_Ward_Key, "Garrison Ward Key", 0x03211620)
+ENTRY(no_text_3, "no text", 0x03229CC0)
+ENTRY(Dragon_Stone, "Dragon Stone", 0x03236010)
+ENTRY(no_text_4, "no text", 0x03242360)
+ENTRY(no_text_5, "no text", 0x0325AA00)
+ENTRY(no_text_6, "no text", 0x032730A0)
+ENTRY(no_text_7, "no text", 0x0328B740)
+ENTRY(Scorching_Iron_Scepter, "Scorching Iron Scepter", 0x032A3DE0)
+ENTRY(Smelter_Wedge, "Smelter Wedge", 0x032BC480)
+ENTRY(Soul_of_Nadalia__Bride_of_Ash, "Soul of Nadalia, Bride of Ash", 0x032D4B20)
+ENTRY(no_text_8, "no text", 0x032ED1C0)
+ENTRY(no_text_9, "no text", 0x03305860)
+ENTRY(Eye_of_the_Priestess, "Eye of the Priestess", 0x0331DF00)
+ENTRY(Lifegem, "Lifegem", 0x0393AE10)
+ENTRY(Radiant_Lifegem, "Radiant Lifegem", 0x0393D520)
+ENTRY(Old_Radiant_Lifegem, "Old Radiant Lifegem", 0x0393FC30)
+ENTRY(Elizabeth_Mushroom, "Elizabeth Mushroom", 0x03940FB8)
+ENTRY(Dried_Root, "Dried Root", 0x039413A0)
+ENTRY(Amber_Herb, "Amber Herb", 0x03942340)
+ENTRY(Twilight_Herb, "Twilight Herb", 0x03944A50)
+ENTRY(Wilted_Dusk_Herb, "Wilted Dusk Herb", 0x03947160)
+ENTRY(Poison_Moss, "Poison Moss", 0x03949870)
+ENTRY(Monastery_Charm, "Monastery Charm", 0x0394E690)
+ENTRY(Dragon_Charm, "Dragon Charm", 0x03950DA0)
+ENTRY(Divine_Blessing, "Divine Blessing", 0x03952128)
+ENTRY(Rouge_Water, "Rouge Water", 0x039534B0)
+ENTRY(Crimson_Water, "Crimson Water", 0x03955BC0)
+ENTRY(Estus_Flask, "Estus Flask", 0x0395E478)
+ENTRY(Estus_Flask_2, "Estus Flask", 0x0395E860)
+ENTRY(Small_Blue_Burr, "Small Blue Burr", 0x0395F800)
+ENTRY(Small_Yellow_Burr, "Small Yellow Burr", 0x03961F10)
+ENTRY(Small_Orange_Burr, "Small Orange Burr", 0x03964620)
+ENTRY(Dark_Troches, "Dark Troches", 0x03966D30)
+ENTRY(Common_Fruit, "Common Fruit", 0x03969440)
+ENTRY(Red_Leech_Troches, "Red Leech Troches", 0x0396BB50)
+ENTRY(Yellow_Sea_Troches, "Yellow Sea Troches", 0x0396E260)
+ENTRY(Triclops_Snake_Troches, "Triclops Snake Troches", 0x03970970)
+ENTRY(Old_Growth_Balm, "Old Growth Balm", 0x03971CF8)
+ENTRY(Vine_Balm, "Vine Balm", 0x039720E0)
+ENTRY(Blackweed_Balm, "Blackweed Balm", 0x039724C8)
+ENTRY(Goldenfruit_Balm, "Goldenfruit Balm", 0x039728B0)
+ENTRY(Brightbug, "Brightbug", 0x03972C98)
+ENTRY(Aromatic_Ooze, "Aromatic Ooze", 0x03973080)
+ENTRY(Pungent_Ooze, "Pungent Ooze", 0x03974408)
+ENTRY(Gold_Pine_Resin, "Gold Pine Resin", 0x03975790)
+ENTRY(Charcoal_Pine_Resin, "Charcoal Pine Resin", 0x03977EA0)
+ENTRY(Dark_Pine_Resin, "Dark Pine Resin", 0x0397A5B0)
+ENTRY(Rotten_Pine_Resin, "Rotten Pine Resin", 0x0397CCC0)
+ENTRY(Bleeding_Serum, "Bleeding Serum", 0x0397F3D0)
+ENTRY(Green_Blossom, "Green Blossom", 0x039841F0)
+ENTRY(Rusted_Coin, "Rusted Coin", 0x03986900)
+ENTRY(Rhoys_Stone, "Rhoy's Stone", 0x03989010)
+ENTRY(Rhoys_Stone_of_Knowledge, "Rhoy's Stone of Knowledge", 0x0398B720)
+ENTRY(Homeward_Bone, "Homeward Bone", 0x0398DE30)
+ENTRY(Aged_Feather, "Aged Feather", 0x0398F1B8)
+ENTRY(Darksign, "Darksign", 0x03990540)
+ENTRY(Silver_Talisman, "Silver Talisman", 0x03992C50)
+ENTRY(Gold_Talisman, "Gold Talisman", 0x03995360)
+ENTRY(Fake_Dead_Talisman, "Fake Dead Talisman", 0x03997A70)
+ENTRY(Illusory_Talisman, "Illusory Talisman", 0x0399A180)
+ENTRY(Dragon_Torso_Stone, "Dragon Torso Stone", 0x0399B8F0)
+ENTRY(Dragon_Torso_Stone_2, "Dragon Torso Stone", 0x0399B8FA)
+ENTRY(Repair_Powder, "Repair Powder", 0x0399C890)
+ENTRY(Torch, "Torch", 0x0399EFA0)
+ENTRY(Flame_Butterfly, "Flame Butterfly", 0x039A16B0)
+ENTRY(Prism_Stone, "Prism Stone", 0x039A64D0)
+ENTRY(Hello_Carving, "Hello Carving", 0x039AB2F0)
+ENTRY(Thank_You_Carving, "Thank You Carving", 0x039ADA00)
+ENTRY(Im_Sorry_Carving, "I'm Sorry Carving", 0x039B0110)
+ENTRY(Very_Good_Carving, "Very Good! Carving", 0x039B2820)
+ENTRY(Rubbish, "Rubbish", 0x039B4F30)
+ENTRY(Petrified_Something, "Petrified Something", 0x039B5318)
+ENTRY(Estus_Flask_Shard, "Estus Flask Shard", 0x039B89C8)
+ENTRY(Sublime_Bone_Dust, "Sublime Bone Dust", 0x039B8DB0)
+ENTRY(Bonfire_Ascetic, "Bonfire Ascetic", 0x039B9198)
+ENTRY(Alluring_Skull, "Alluring Skull", 0x039B9D50)
+ENTRY(Lloyds_Talisman, "Lloyd's Talisman", 0x039BA138)
+ENTRY(Pharros_Lockstone, "Pharros' Lockstone", 0x039BB4C0)
+ENTRY(Fragrant_Branch_of_Yore, "Fragrant Branch of Yore", 0x039BB8A8)
+ENTRY(Fire_Seed, "Fire Seed", 0x039BBC90)
+ENTRY(Throwing_Knife, "Throwing Knife", 0x039BC460)
+ENTRY(Witching_Urn, "Witching Urn", 0x039BEB70)
+ENTRY(Lightning_Urn, "Lightning Urn", 0x039C1280)
+ENTRY(Firebomb, "Firebomb", 0x039C3990)
+ENTRY(Black_Firebomb, "Black Firebomb", 0x039C4D18)
+ENTRY(Hexing_Urn, "Hexing Urn", 0x039C60A0)
+ENTRY(Poison_Throwing_Knife, "Poison Throwing Knife", 0x039C87B0)
+ENTRY(Dung_Pie, "Dung Pie", 0x039C9B38)
+ENTRY(Lacerating_Knife, "Lacerating Knife", 0x039CAEC0)
+ENTRY(Corrosive_Urn, "Corrosive Urn", 0x039CD5D0)
+ENTRY(Holy_Water_Urn, "Holy Water Urn", 0x039CFCE0)
+ENTRY(Fading_Soul, "Fading Soul", 0x039D1068)
+ENTRY(Soul_of_a_Lost_Undead, "Soul of a Lost Undead", 0x039D23F0)
+ENTRY(Large_Soul_of_a_Lost_Undead, "Large Soul of a Lost Undead", 0x039D4B00)
+ENTRY(Soul_of_a_Nameless_Soldier, "Soul of a Nameless Soldier", 0x039D7210)
+ENTRY(Large_Soul_of_a_Nameless_Soldier, "Large Soul of a Nameless Soldier", 0x039D9920)
+ENTRY(Soul_of_a_Proud_Knight, "Soul of a Proud Knight", 0x039DC030)
+ENTRY(Large_Soul_of_a_Proud_Knight, "Large Soul of a Proud Knight", 0x039DE740)
+ENTRY(Soul_of_a_Brave_Warrior, "Soul of a Brave Warrior", 0x039E0E50)
+ENTRY(Large_Soul_of_a_Brave_Warrior, "Large Soul of a Brave Warrior", 0x039E3560)
+ENTRY(Soul_of_a_Hero, "Soul of a Hero", 0x039E5C70)
+ENTRY(Soul_of_a_Great_Hero, "Soul of a Great Hero", 0x039E8380)
+ENTRY(Wood_Arrow, "Wood Arrow", 0x039F1FC0)
+ENTRY(Iron_Arrow, "Iron Arrow", 0x039F46D0)
+ENTRY(Magic_Arrow, "Magic Arrow", 0x039F6DE0)
+ENTRY(Lightning_Arrow, "Lightning Arrow", 0x039F94F0)
+ENTRY(Fire_Arrow, "Fire Arrow", 0x039FBC00)
+ENTRY(Dark_Arrow, "Dark Arrow", 0x039FE310)
+ENTRY(Poison_Arrow, "Poison Arrow", 0x03A00A20)
+ENTRY(Lacerating_Arrow, "Lacerating Arrow", 0x03A03130)
+ENTRY(Wooden_Greatarrow, "Wooden Greatarrow", 0x03A05840)
+ENTRY(Iron_Greatarrow, "Iron Greatarrow", 0x03A07F50)
+ENTRY(Magic_Greatarrow, "Magic Greatarrow", 0x03A0A660)
+ENTRY(Lightning_Greatarrow, "Lightning Greatarrow", 0x03A0CD70)
+ENTRY(Fire_Greatarrow, "Fire Greatarrow", 0x03A0F480)
+ENTRY(Dark_Greatarrow, "Dark Greatarrow", 0x03A11B90)
+ENTRY(Destructive_Greatarrow, "Destructive Greatarrow", 0x03A142A0)
+ENTRY(Wood_Bolt, "Wood Bolt", 0x03A169B0)
+ENTRY(Heavy_Bolt, "Heavy Bolt", 0x03A190C0)
+ENTRY(Magic_Bolt, "Magic Bolt", 0x03A1B7D0)
+ENTRY(Lightning_Bolt, "Lightning Bolt", 0x03A1DEE0)
+ENTRY(Fire_Bolt, "Fire Bolt", 0x03A205F0)
+ENTRY(Dark_Bolt, "Dark Bolt", 0x03A22D00)
+ENTRY(Titanite_Shard, "Titanite Shard", 0x03A25410)
+ENTRY(Large_Titanite_Shard, "Large Titanite Shard", 0x03A26798)
+ENTRY(Titanite_Chunk, "Titanite Chunk", 0x03A27B20)
+ENTRY(Titanite_Slab, "Titanite Slab", 0x03A2A230)
+ENTRY(Twinkling_Titanite, "Twinkling Titanite", 0x03A2C940)
+ENTRY(Petrified_Dragon_Bone, "Petrified Dragon Bone", 0x03A33E70)
+ENTRY(Faintstone, "Faintstone", 0x03A3B3A0)
+ENTRY(Boltstone, "Boltstone", 0x03A3DAB0)
+ENTRY(Firedrake_Stone, "Firedrake Stone", 0x03A401C0)
+ENTRY(Darknight_Stone, "Darknight Stone", 0x03A428D0)
+ENTRY(Poison_Stone, "Poison Stone", 0x03A44FE0)
+ENTRY(Bleed_Stone, "Bleed Stone", 0x03A476F0)
+ENTRY(Raw_Stone, "Raw Stone", 0x03A4C510)
+ENTRY(Magic_Stone, "Magic Stone", 0x03A4EC20)
+ENTRY(Old_Mundane_Stone, "Old Mundane Stone", 0x03A51330)
+ENTRY(Palestone, "Palestone", 0x03A53A40)
+ENTRY(Black_Separation_Crystal, "Black Separation Crystal", 0x03B47C80)
+ENTRY(Seed_of_a_Tree_of_Giants, "Seed of a Tree of Giants", 0x03B4A390)
+ENTRY(Petrified_Egg, "Petrified Egg", 0x03B4F1B0)
+ENTRY(Point_Gesture, "Point Gesture", 0x03C14DC0)
+ENTRY(I_wont_bite_Gesture, "I wont bite Gesture", 0x03C151A8)
+ENTRY(Proper_bow_Gesture, "Proper bow Gesture", 0x03C15590)
+ENTRY(Bow_Gesture, "Bow Gesture", 0x03C15978)
+ENTRY(Welcome_Gesture, "Welcome Gesture", 0x03C15D60)
+ENTRY(Duel_bow_Gesture, "Duel bow Gesture", 0x03C16148)
+ENTRY(Wave_Gesture, "Wave Gesture", 0x03C16530)
+ENTRY(Pumped_up_Gesture, "Pumped up Gesture", 0x03C16918)
+ENTRY(Joy_Gesture, "Joy Gesture", 0x03C16D00)
+ENTRY(Warcry_Gesture, "Warcry Gesture", 0x03C170E8)
+ENTRY(Warmup_Gesture, "Warmup Gesture", 0x03C174D0)
+ENTRY(Hurrah_Gesture, "Hurrah! Gesture", 0x03C178B8)
+ENTRY(Righty_ho_Gesture, "Righty_ho! Gesture", 0x03C17CA0)
+ENTRY(No_way_Gesture, "No way Gesture", 0x03C18088)
+ENTRY(This_ones_me_Gesture, "This one's me Gesture", 0x03C18470)
+ENTRY(Have_mercy_Gesture, "Have mercy! Gesture", 0x03C18858)
+ENTRY(Prostration_Gesture, "Prostration Gesture", 0x03C18C40)
+ENTRY(Decapitate_Gesture, "Decapitate Gesture", 0x03C19028)
+ENTRY(Fist_pump_Gesture, "Fist pump Gesture", 0x03C19410)
+ENTRY(Mock_Gesture, "Mock Gesture", 0x03C197F8)
+ENTRY(Praise_the_Sun_Gesture, "Praise the Sun Gesture", 0x03C19FC8)
+ENTRY(Soul_of_the_Pursuer, "Soul of the Pursuer", 0x03D09000)
+ENTRY(Soul_of_the_Last_Giant, "Soul of the Last Giant", 0x03D0B710)
+ENTRY(Dragonrider_Soul, "Dragonrider Soul", 0x03D0DE20)
+ENTRY(Old_Dragonslayer_Soul, "Old Dragonslayer Soul", 0x03D10530)
+ENTRY(Flexile_Sentry_Soul, "Flexile Sentry Soul", 0x03D12C40)
+ENTRY(Ruin_Sentinel_Soul, "Ruin Sentinel Soul", 0x03D15350)
+ENTRY(Soul_of_the_Lost_Sinner, "Soul of the Lost Sinner", 0x03D17A60)
+ENTRY(Executioners_Chariot_Soul, "Executioner's Chariot Soul", 0x03D1A170)
+ENTRY(Skeleton_Lords_Soul, "Skeleton Lord's Soul", 0x03D1C880)
+ENTRY(Covetous_Demon_Soul, "Covetous Demon Soul", 0x03D1EF90)
+ENTRY(Mytha__the_Baneful_Queen_Soul, "Mytha, the Baneful Queen Soul", 0x03D216A0)
+ENTRY(Smelter_Demon_Soul, "Smelter Demon Soul", 0x03D23DB0)
+ENTRY(Old_Iron_King_Soul, "Old Iron King Soul", 0x03D264C0)
+ENTRY(Royal_Rat_Vanguard_Soul, "Royal Rat Vanguard Soul", 0x03D28BD0)
+ENTRY(Soul_of_the_Rotten, "Soul of the Rotten", 0x03D2B2E0)
+ENTRY(Scorpioness_Najka_Soul, "Scorpioness Najka Soul", 0x03D2D9F0)
+ENTRY(Royal_Rat_Authority_Soul, "Royal Rat Authority Soul", 0x03D30100)
+ENTRY(Soul_of_the_Dukes_Dear_Freja, "Soul of the Duke's Dear Freja", 0x03D32810)
+ENTRY(Looking_Glass_Knight_Soul, "Looking Glass Knight Soul", 0x03D34F20)
+ENTRY(Demon_of_Song_Soul, "Demon of Song Soul", 0x03D37630)
+ENTRY(Soul_of_Velstadt, "Soul of Velstadt", 0x03D39D40)
+ENTRY(Soul_of_the_King, "Soul of the King", 0x03D3C450)
+ENTRY(Guardian_Dragon_Soul, "Guardian Dragon Soul", 0x03D3EB60)
+ENTRY(Ancient_Dragon_Soul, "Ancient Dragon Soul", 0x03D41270)
+ENTRY(Giant_Lord_Soul, "Giant Lord Soul", 0x03D43980)
+ENTRY(Soul_of_Nashandra, "Soul of Nashandra", 0x03D46090)
+ENTRY(Throne_Defender_Soul, "Throne Defender Soul", 0x03D487A0)
+ENTRY(Throne_Watcher_Soul, "Throne Watcher Soul", 0x03D4AEB0)
+ENTRY(Darklurker_Soul, "Darklurker Soul", 0x03D4D5C0)
+ENTRY(Belfry_Gargoyle_Soul, "Belfry Gargoyle Soul", 0x03D4FCD0)
+ENTRY(Old_Witch_Soul, "Old Witch Soul", 0x03D523E0)
+ENTRY(Old_King_Soul, "Old King Soul", 0x03D54AF0)
+ENTRY(Old_Dead_One_Soul, "Old Dead One Soul", 0x03D57200)
+ENTRY(Old_Paledrake_Soul, "Old Paledrake Soul", 0x03D59910)
+ENTRY(Soul_of_Sinh__the_Slumbering_Dragon, "Soul of Sinh, the Slumbering Dragon", 0x03D83120)
+ENTRY(Soul_of_the_Fume_Knight, "Soul of the Fume Knight", 0x03D85830)
+ENTRY(Soul_of_Aava__the_Kings_Pet, "Soul of Aava, the King's Pet", 0x03D87F40)
+ENTRY(Soul_of_Elana__Squalid_Queen, "Soul of Elana, Squalid Queen", 0x03D8A650)
+ENTRY(Soul_of_Nadalia__Bride_of_Ash_2, "Soul of Nadalia, Bride of Ash", 0x03D8CD60)
+ENTRY(Soul_of_Alsanna__Silent_Oracle, "Soul of Alsanna, Silent Oracle", 0x03D8F470)
+ENTRY(Soul_of_Sir_Alonne, "Soul of Sir Alonne", 0x03D91B80)
+ENTRY(Soul_of_the_Ivory_King, "Soul of the Ivory King", 0x03D969A0)
+ENTRY(Soul_of_Zallen__the_Kings_Pet, "Soul of Zallen, the King's Pet", 0x03D990B0)
+ENTRY(Loyce_Soul, "Loyce Soul", 0x03D9B7C0)
+ENTRY(Soul_of_Lud__the_Kings_Pet, "Soul of Lud, the King's Pet", 0x03D9DED0)
+ENTRY(Faraam_Helm_2, "Faraam Helm", 0x352ADAE8)
+ENTRY(Faraam_Armor_2, "Faraam Armor", 0x352ADAE9)
+ENTRY(Faraam_Gauntlets_2, "Faraam Gauntlets", 0x352ADAEA)
+ENTRY(Faraam_Boots_2, "Faraam Boots", 0x352ADAEB)
+ENTRY(Chaos_Hood_2, "Chaos Hood", 0x352ADB4C)
+ENTRY(Chaos_Robes_2, "Chaos Robes", 0x352ADB4D)
+ENTRY(Chaos_Gloves_2, "Chaos Gloves", 0x352ADB4E)
+ENTRY(Chaos_Boots_2, "Chaos Boots", 0x352ADB4F)
+ENTRY(Dragonknight_Helm, "Dragonknight Helm", 0x352ADBB0)
+ENTRY(Dragonknight_Robes, "Dragonknight Robes", 0x352ADBB1)
+ENTRY(Dragonknight_Gloves, "Dragonknight Gloves", 0x352ADBB2)
+ENTRY(Dragonknight_Boots, "Dragonknight Boots", 0x352ADBB3)
+ENTRY(Black_Hood_2, "Black Hood", 0x352ADC14)
+ENTRY(Black_Robes_2, "Black Robes", 0x352ADC15)
+ENTRY(Black_Gloves_2, "Black Gloves", 0x352ADC16)
+ENTRY(Black_Boots_2, "Black Boots", 0x352ADC17)
+ENTRY(Hunters_Hat_3, "Hunter's Hat", 0x352ADC78)
+ENTRY(Leather_Armor_2, "Leather Armor", 0x352ADC79)
+ENTRY(Leather_Gloves_2, "Leather Gloves", 0x352ADC7A)
+ENTRY(Leather_Boots_2, "Leather Boots", 0x352ADC7B)
+ENTRY(Knight_Helm_2, "Knight Helm", 0x352ADCDC)
+ENTRY(Knight_Armor_2, "Knight Armor", 0x352ADCDD)
+ENTRY(Knight_Gauntlets_2, "Knight Gauntlets", 0x352ADCDE)
+ENTRY(Knight_Leggings_2, "Knight Leggings", 0x352ADCDF)
+ENTRY(Rogue_Hood_2, "Rogue Hood", 0x352ADD40)
+ENTRY(Rogue_Armor_2, "Rogue Armor", 0x352ADD41)
+ENTRY(Rogue_Gauntlets_2, "Rogue Gauntlets", 0x352ADD42)
+ENTRY(Rogue_Leggings_2, "Rogue Leggings", 0x352ADD43)
+ENTRY(Prisoners_Hood_3, "Prisoner's Hood", 0x352ADDA4)
+ENTRY(Prisoners_Tatters_3, "Prisoner's Tatters", 0x352ADDA5)
+ENTRY(Prisoners_Gloves_3, "Prisoner's Gloves", 0x352ADDA6)
+ENTRY(Prisoners_Waistcloth_3, "Prisoner's Waistcloth", 0x352ADDA7)
+ENTRY(Prisoners_Hood_4, "Prisoner's Hood", 0x352ADE08)
+ENTRY(Prisoners_Tatters_4, "Prisoner's Tatters", 0x352ADE09)
+ENTRY(Prisoners_Gloves_4, "Prisoner's Gloves", 0x352ADE0A)
+ENTRY(Prisoners_Waistcloth_4, "Prisoner's Waistcloth", 0x352ADE0B)
+ENTRY(Hollow_Mage_Hood, "Hollow Mage Hood", 0x352ADE6C)
+ENTRY(Hollow_Mage_Robes, "Hollow Mage Robes", 0x352ADE6D)
+ENTRY(Defender_Helm, "Defender Helm", 0x352ADED0)
+ENTRY(Defender_Mail, "Defender Mail", 0x352ADED1)
+ENTRY(Defenders_Gauntlet, "Defender's Gauntlet", 0x352ADED2)
+ENTRY(Defenders_Leggings, "Defender's Leggings", 0x352ADED3)
+ENTRY(Llewellyn_Armor_2, "Llewellyn Armor", 0x352ADF35)
+ENTRY(Llewellyn_Gloves_2, "Llewellyn Gloves", 0x352ADF36)
+ENTRY(Llewellyn_Shoes_2, "Llewellyn Shoes", 0x352ADF37)
+ENTRY(Despatchers_Hood, "Despatcher's Hood", 0x352ADF98)
+ENTRY(Despatchers_Robes, "Despatcher's Robes", 0x352ADF99)
+ENTRY(Dagger_2, "Dagger", 0x35A509D0)
+ENTRY(Royal_Dirk_2, "Royal Dirk", 0x35A509D1)
+ENTRY(Longsword_3, "Longsword", 0x35A509D2)
+ENTRY(Shortsword_2, "Shortsword", 0x35A509D3)
+ENTRY(Dragonslayers_Crescent_Axe_2, "Dragonslayer's Crescent Axe", 0x35A509D4)
+ENTRY(Greataxe_3, "Greataxe", 0x35A509D5)
+ENTRY(Dragonriders_Halberd_2, "Dragonrider's Halberd", 0x35A509D6)
+ENTRY(Witchtree_Branch_2, "Witchtree Branch", 0x35A509D7)
+ENTRY(Lizard_Staff_2, "Lizard Staff", 0x35A509D8)
+ENTRY(Dragonknights_Bell, "Dragonknight's Bell", 0x35A509D9)
+ENTRY(Bell_of_the_Idol, "Bell of the Idol", 0x35A509DA)
+ENTRY(Short_Bow_2, "Short Bow", 0x35A509DB)
+ENTRY(Light_Crossbow_2, "Light Crossbow", 0x35A509DC)
+ENTRY(Target_Shield_2, "Target Shield", 0x35A509DD)
+ENTRY(Small_Leather_Shield_2, "Small Leather Shield", 0x35A509DE)
+ENTRY(Golden_Wing_Shield_2, "Golden Wing Shield", 0x35A509DF)
+ENTRY(Dragonknights_Shield, "Dragonknight's Shield", 0x35A509E0)
+ENTRY(Silver_Eagle_Kite_Shield_2, "Silver Eagle Kite Shield", 0x35A509E1)
+ENTRY(Imperial_Shield, "Imperial Shield", 0x35A509E2)
+ENTRY(Disc_Bell, "Disc Bell", 0x35A509E3)
+ENTRY(Pursuers_Greatsword, "Pursuer's Greatsword", 0x35A509E4)
+ENTRY(Zweihander_2, "Zweihander", 0x35A509E5)
+ENTRY(Winged_Spear_2, "Winged Spear", 0x35A509E6)
+ENTRY(Estoc_2, "Estoc", 0x35A509E7)
+ENTRY(Bastard_Sword_2, "Bastard Sword", 0x35A509E8)
+ENTRY(Knights_Greatsword, "Knight's Greatsword", 0x35A509E9)
+ENTRY(Inquisitors_Blade, "Inquisitor's Blade", 0x35A509EA)
+ENTRY(Forlorn_Helm, "Forlorn Helm", 0x019B12C4)
+ENTRY(Forlorn_Armor, "Forlorn Armor", 0x019B12C5)
+ENTRY(Forlorn_Gauntlets, "Forlorn Gauntlets", 0x019B12C6)
+ENTRY(Forlorn_Leggings, "Forlorn Leggings", 0x019B12C7)
+ENTRY(Greatsword_of_the_Forlorn, "Greatsword of the Forlorn", 0x001E78C8)
+ENTRY(Scythe_of_the_Forlorn, "Scythe of the Forlorn", 0x002EFF40)

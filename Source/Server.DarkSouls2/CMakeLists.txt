@@ -30,6 +30,8 @@ SET(SOURCES
     Server/GameService/GameManagers/Logging/DS2_LoggingManager.h
     Server/GameService/GameManagers/Misc/DS2_MiscManager.cpp
     Server/GameService/GameManagers/Misc/DS2_MiscManager.h
+    Server/GameService/GameManagers/Visitor/DS2_VisitorManager.cpp
+    Server/GameService/GameManagers/Visitor/DS2_VisitorManager.h
     
     Server/GameService/Utils/DS2_GameIds.h
     Server/GameService/Utils/DS2_CellAndAreaId.h

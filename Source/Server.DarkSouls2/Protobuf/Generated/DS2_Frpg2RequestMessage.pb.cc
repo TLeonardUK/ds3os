@@ -748,6 +748,19 @@ bool BreakInType_IsValid(int value) {
   }
 }
 
+bool VisitorType_IsValid(int value) {
+  switch(value) {
+    case -1:
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -29837,11 +29850,11 @@ void VisitorData::Swap(VisitorData* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestGetVisitorList::kField1FieldNumber;
-const int RequestGetVisitorList::kField2FieldNumber;
-const int RequestGetVisitorList::kField3FieldNumber;
-const int RequestGetVisitorList::kField4FieldNumber;
-const int RequestGetVisitorList::kField5FieldNumber;
+const int RequestGetVisitorList::kOnlineAreaIdFieldNumber;
+const int RequestGetVisitorList::kCellIdFieldNumber;
+const int RequestGetVisitorList::kMaxTargetsFieldNumber;
+const int RequestGetVisitorList::kMatchingParameterFieldNumber;
+const int RequestGetVisitorList::kTypeFieldNumber;
 const int RequestGetVisitorList::kField6FieldNumber;
 #endif  // !_MSC_VER
 
@@ -29853,10 +29866,10 @@ RequestGetVisitorList::RequestGetVisitorList()
 
 void RequestGetVisitorList::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  field_4_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(
+  matching_parameter_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(
       ::DS2_Frpg2RequestMessage::MatchingParameter::internal_default_instance());
 #else
-  field_4_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(&::DS2_Frpg2RequestMessage::MatchingParameter::default_instance());
+  matching_parameter_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(&::DS2_Frpg2RequestMessage::MatchingParameter::default_instance());
 #endif
 }
 
@@ -29869,11 +29882,11 @@ RequestGetVisitorList::RequestGetVisitorList(const RequestGetVisitorList& from)
 
 void RequestGetVisitorList::SharedCtor() {
   _cached_size_ = 0;
-  field_1_ = GOOGLE_LONGLONG(0);
-  field_2_ = GOOGLE_LONGLONG(0);
-  field_3_ = GOOGLE_LONGLONG(0);
-  field_4_ = NULL;
-  field_5_ = GOOGLE_LONGLONG(0);
+  online_area_id_ = GOOGLE_LONGLONG(0);
+  cell_id_ = GOOGLE_LONGLONG(0);
+  max_targets_ = GOOGLE_LONGLONG(0);
+  matching_parameter_ = NULL;
+  type_ = -1;
   field_6_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -29889,7 +29902,7 @@ void RequestGetVisitorList::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
-    delete field_4_;
+    delete matching_parameter_;
   }
 }
 
@@ -29925,11 +29938,12 @@ void RequestGetVisitorList::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 63) {
-    ZR_(field_1_, field_3_);
-    ZR_(field_5_, field_6_);
-    if (has_field_4()) {
-      if (field_4_ != NULL) field_4_->::DS2_Frpg2RequestMessage::MatchingParameter::Clear();
+    ZR_(online_area_id_, max_targets_);
+    if (has_matching_parameter()) {
+      if (matching_parameter_ != NULL) matching_parameter_->::DS2_Frpg2RequestMessage::MatchingParameter::Clear();
     }
+    type_ = -1;
+    field_6_ = GOOGLE_LONGLONG(0);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -29953,71 +29967,77 @@ bool RequestGetVisitorList::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int64 field_1 = 1;
+      // required int64 online_area_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_1_)));
-          set_has_field_1();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_field_2;
+        if (input->ExpectTag(16)) goto parse_cell_id;
         break;
       }
 
-      // required int64 field_2 = 2;
+      // required int64 cell_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_field_2:
+         parse_cell_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_2_)));
-          set_has_field_2();
+                 input, &cell_id_)));
+          set_has_cell_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_field_3;
+        if (input->ExpectTag(24)) goto parse_max_targets;
         break;
       }
 
-      // required int64 field_3 = 3;
+      // required int64 max_targets = 3;
       case 3: {
         if (tag == 24) {
-         parse_field_3:
+         parse_max_targets:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_3_)));
-          set_has_field_3();
+                 input, &max_targets_)));
+          set_has_max_targets();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_field_4;
+        if (input->ExpectTag(34)) goto parse_matching_parameter;
         break;
       }
 
-      // required .DS2_Frpg2RequestMessage.MatchingParameter field_4 = 4;
+      // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
       case 4: {
         if (tag == 34) {
-         parse_field_4:
+         parse_matching_parameter:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_field_4()));
+               input, mutable_matching_parameter()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_field_5;
+        if (input->ExpectTag(40)) goto parse_type;
         break;
       }
 
-      // required int64 field_5 = 5;
+      // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
       case 5: {
         if (tag == 40) {
-         parse_field_5:
+         parse_type:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_5_)));
-          set_has_field_5();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::VisitorType_IsValid(value)) {
+            set_type(static_cast< ::DS2_Frpg2RequestMessage::VisitorType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -30065,30 +30085,31 @@ failure:
 void RequestGetVisitorList::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetVisitorList)
-  // required int64 field_1 = 1;
-  if (has_field_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->field_1(), output);
+  // required int64 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->online_area_id(), output);
   }
 
-  // required int64 field_2 = 2;
-  if (has_field_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->field_2(), output);
+  // required int64 cell_id = 2;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->cell_id(), output);
   }
 
-  // required int64 field_3 = 3;
-  if (has_field_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->field_3(), output);
+  // required int64 max_targets = 3;
+  if (has_max_targets()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->max_targets(), output);
   }
 
-  // required .DS2_Frpg2RequestMessage.MatchingParameter field_4 = 4;
-  if (has_field_4()) {
+  // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
+  if (has_matching_parameter()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      4, this->field_4(), output);
+      4, this->matching_parameter(), output);
   }
 
-  // required int64 field_5 = 5;
-  if (has_field_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->field_5(), output);
+  // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->type(), output);
   }
 
   // required int64 field_6 = 6;
@@ -30105,39 +30126,38 @@ int RequestGetVisitorList::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int64 field_1 = 1;
-    if (has_field_1()) {
+    // required int64 online_area_id = 1;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_1());
+          this->online_area_id());
     }
 
-    // required int64 field_2 = 2;
-    if (has_field_2()) {
+    // required int64 cell_id = 2;
+    if (has_cell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_2());
+          this->cell_id());
     }
 
-    // required int64 field_3 = 3;
-    if (has_field_3()) {
+    // required int64 max_targets = 3;
+    if (has_max_targets()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_3());
+          this->max_targets());
     }
 
-    // required .DS2_Frpg2RequestMessage.MatchingParameter field_4 = 4;
-    if (has_field_4()) {
+    // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 4;
+    if (has_matching_parameter()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->field_4());
+          this->matching_parameter());
     }
 
-    // required int64 field_5 = 5;
-    if (has_field_5()) {
+    // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
+    if (has_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_5());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
     // required int64 field_6 = 6;
@@ -30164,20 +30184,20 @@ void RequestGetVisitorList::CheckTypeAndMergeFrom(
 void RequestGetVisitorList::MergeFrom(const RequestGetVisitorList& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_field_1()) {
-      set_field_1(from.field_1());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
-    if (from.has_field_2()) {
-      set_field_2(from.field_2());
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
     }
-    if (from.has_field_3()) {
-      set_field_3(from.field_3());
+    if (from.has_max_targets()) {
+      set_max_targets(from.max_targets());
     }
-    if (from.has_field_4()) {
-      mutable_field_4()->::DS2_Frpg2RequestMessage::MatchingParameter::MergeFrom(from.field_4());
+    if (from.has_matching_parameter()) {
+      mutable_matching_parameter()->::DS2_Frpg2RequestMessage::MatchingParameter::MergeFrom(from.matching_parameter());
     }
-    if (from.has_field_5()) {
-      set_field_5(from.field_5());
+    if (from.has_type()) {
+      set_type(from.type());
     }
     if (from.has_field_6()) {
       set_field_6(from.field_6());
@@ -30195,19 +30215,19 @@ void RequestGetVisitorList::CopyFrom(const RequestGetVisitorList& from) {
 bool RequestGetVisitorList::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000003f) != 0x0000003f) return false;
 
-  if (has_field_4()) {
-    if (!this->field_4().IsInitialized()) return false;
+  if (has_matching_parameter()) {
+    if (!this->matching_parameter().IsInitialized()) return false;
   }
   return true;
 }
 
 void RequestGetVisitorList::Swap(RequestGetVisitorList* other) {
   if (other != this) {
-    std::swap(field_1_, other->field_1_);
-    std::swap(field_2_, other->field_2_);
-    std::swap(field_3_, other->field_3_);
-    std::swap(field_4_, other->field_4_);
-    std::swap(field_5_, other->field_5_);
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
+    std::swap(max_targets_, other->max_targets_);
+    std::swap(matching_parameter_, other->matching_parameter_);
+    std::swap(type_, other->type_);
     std::swap(field_6_, other->field_6_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -30223,9 +30243,9 @@ void RequestGetVisitorList::Swap(RequestGetVisitorList* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestGetVisitorListResponse::kField1FieldNumber;
-const int RequestGetVisitorListResponse::kField2FieldNumber;
-const int RequestGetVisitorListResponse::kField3FieldNumber;
+const int RequestGetVisitorListResponse::kOnlineAreaIdFieldNumber;
+const int RequestGetVisitorListResponse::kCellIdFieldNumber;
+const int RequestGetVisitorListResponse::kTargetDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetVisitorListResponse::RequestGetVisitorListResponse()
@@ -30235,12 +30255,6 @@ RequestGetVisitorListResponse::RequestGetVisitorListResponse()
 }
 
 void RequestGetVisitorListResponse::InitAsDefaultInstance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  field_3_ = const_cast< ::DS2_Frpg2RequestMessage::VisitorData*>(
-      ::DS2_Frpg2RequestMessage::VisitorData::internal_default_instance());
-#else
-  field_3_ = const_cast< ::DS2_Frpg2RequestMessage::VisitorData*>(&::DS2_Frpg2RequestMessage::VisitorData::default_instance());
-#endif
 }
 
 RequestGetVisitorListResponse::RequestGetVisitorListResponse(const RequestGetVisitorListResponse& from)
@@ -30252,9 +30266,8 @@ RequestGetVisitorListResponse::RequestGetVisitorListResponse(const RequestGetVis
 
 void RequestGetVisitorListResponse::SharedCtor() {
   _cached_size_ = 0;
-  field_1_ = GOOGLE_LONGLONG(0);
-  field_2_ = GOOGLE_LONGLONG(0);
-  field_3_ = NULL;
+  online_area_id_ = GOOGLE_LONGLONG(0);
+  cell_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -30269,7 +30282,6 @@ void RequestGetVisitorListResponse::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
-    delete field_3_;
   }
 }
 
@@ -30304,16 +30316,12 @@ void RequestGetVisitorListResponse::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 7) {
-    ZR_(field_1_, field_2_);
-    if (has_field_3()) {
-      if (field_3_ != NULL) field_3_->::DS2_Frpg2RequestMessage::VisitorData::Clear();
-    }
-  }
+  ZR_(online_area_id_, cell_id_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
+  target_data_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -30332,44 +30340,45 @@ bool RequestGetVisitorListResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int64 field_1 = 1;
+      // required int64 online_area_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_1_)));
-          set_has_field_1();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_field_2;
+        if (input->ExpectTag(16)) goto parse_cell_id;
         break;
       }
 
-      // required int64 field_2 = 2;
+      // required int64 cell_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_field_2:
+         parse_cell_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_2_)));
-          set_has_field_2();
+                 input, &cell_id_)));
+          set_has_cell_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_field_3;
+        if (input->ExpectTag(26)) goto parse_target_data;
         break;
       }
 
-      // optional .DS2_Frpg2RequestMessage.VisitorData field_3 = 3;
+      // repeated .DS2_Frpg2RequestMessage.VisitorData target_data = 3;
       case 3: {
         if (tag == 26) {
-         parse_field_3:
+         parse_target_data:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_field_3()));
+                input, add_target_data()));
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(26)) goto parse_target_data;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -30399,20 +30408,20 @@ failure:
 void RequestGetVisitorListResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetVisitorListResponse)
-  // required int64 field_1 = 1;
-  if (has_field_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->field_1(), output);
+  // required int64 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->online_area_id(), output);
   }
 
-  // required int64 field_2 = 2;
-  if (has_field_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->field_2(), output);
+  // required int64 cell_id = 2;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->cell_id(), output);
   }
 
-  // optional .DS2_Frpg2RequestMessage.VisitorData field_3 = 3;
-  if (has_field_3()) {
+  // repeated .DS2_Frpg2RequestMessage.VisitorData target_data = 3;
+  for (int i = 0; i < this->target_data_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->field_3(), output);
+      3, this->target_data(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -30424,28 +30433,29 @@ int RequestGetVisitorListResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int64 field_1 = 1;
-    if (has_field_1()) {
+    // required int64 online_area_id = 1;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_1());
+          this->online_area_id());
     }
 
-    // required int64 field_2 = 2;
-    if (has_field_2()) {
+    // required int64 cell_id = 2;
+    if (has_cell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_2());
-    }
-
-    // optional .DS2_Frpg2RequestMessage.VisitorData field_3 = 3;
-    if (has_field_3()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->field_3());
+          this->cell_id());
     }
 
   }
+  // repeated .DS2_Frpg2RequestMessage.VisitorData target_data = 3;
+  total_size += 1 * this->target_data_size();
+  for (int i = 0; i < this->target_data_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->target_data(i));
+  }
+
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -30461,15 +30471,13 @@ void RequestGetVisitorListResponse::CheckTypeAndMergeFrom(
 
 void RequestGetVisitorListResponse::MergeFrom(const RequestGetVisitorListResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
+  target_data_.MergeFrom(from.target_data_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_field_1()) {
-      set_field_1(from.field_1());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
-    if (from.has_field_2()) {
-      set_field_2(from.field_2());
-    }
-    if (from.has_field_3()) {
-      mutable_field_3()->::DS2_Frpg2RequestMessage::VisitorData::MergeFrom(from.field_3());
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -30484,17 +30492,15 @@ void RequestGetVisitorListResponse::CopyFrom(const RequestGetVisitorListResponse
 bool RequestGetVisitorListResponse::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
-  if (has_field_3()) {
-    if (!this->field_3().IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->target_data())) return false;
   return true;
 }
 
 void RequestGetVisitorListResponse::Swap(RequestGetVisitorListResponse* other) {
   if (other != this) {
-    std::swap(field_1_, other->field_1_);
-    std::swap(field_2_, other->field_2_);
-    std::swap(field_3_, other->field_3_);
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
+    target_data_.Swap(&other->target_data_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -30510,9 +30516,9 @@ void RequestGetVisitorListResponse::Swap(RequestGetVisitorListResponse* other) {
 
 #ifndef _MSC_VER
 const int PushRequestRemoveVisitor::kPushMessageIdFieldNumber;
-const int PushRequestRemoveVisitor::kField2FieldNumber;
+const int PushRequestRemoveVisitor::kPlayerIdFieldNumber;
 const int PushRequestRemoveVisitor::kPlayerSteamIdFieldNumber;
-const int PushRequestRemoveVisitor::kField4FieldNumber;
+const int PushRequestRemoveVisitor::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestRemoveVisitor::PushRequestRemoveVisitor()
@@ -30535,9 +30541,9 @@ void PushRequestRemoveVisitor::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 925;
-  field_2_ = GOOGLE_LONGLONG(0);
+  player_id_ = GOOGLE_LONGLONG(0);
   player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  field_4_ = GOOGLE_LONGLONG(0);
+  type_ = -1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -30581,13 +30587,13 @@ PushRequestRemoveVisitor* PushRequestRemoveVisitor::New() const {
 void PushRequestRemoveVisitor::Clear() {
   if (_has_bits_[0 / 32] & 15) {
     push_message_id_ = 925;
-    field_2_ = GOOGLE_LONGLONG(0);
+    player_id_ = GOOGLE_LONGLONG(0);
     if (has_player_steam_id()) {
       if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         player_steam_id_->clear();
       }
     }
-    field_4_ = GOOGLE_LONGLONG(0);
+    type_ = -1;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
@@ -30623,18 +30629,18 @@ bool PushRequestRemoveVisitor::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_field_2;
+        if (input->ExpectTag(16)) goto parse_player_id;
         break;
       }
 
-      // required int64 field_2 = 2;
+      // required int64 player_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_field_2:
+         parse_player_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_2_)));
-          set_has_field_2();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
@@ -30651,18 +30657,24 @@ bool PushRequestRemoveVisitor::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_field_4;
+        if (input->ExpectTag(32)) goto parse_type;
         break;
       }
 
-      // required int64 field_4 = 4;
+      // required .DS2_Frpg2RequestMessage.VisitorType type = 4;
       case 4: {
         if (tag == 32) {
-         parse_field_4:
+         parse_type:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_4_)));
-          set_has_field_4();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::VisitorType_IsValid(value)) {
+            set_type(static_cast< ::DS2_Frpg2RequestMessage::VisitorType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -30701,9 +30713,9 @@ void PushRequestRemoveVisitor::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
-  // required int64 field_2 = 2;
-  if (has_field_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->field_2(), output);
+  // required int64 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->player_id(), output);
   }
 
   // required string player_steam_id = 3;
@@ -30712,9 +30724,10 @@ void PushRequestRemoveVisitor::SerializeWithCachedSizes(
       3, this->player_steam_id(), output);
   }
 
-  // required int64 field_4 = 4;
-  if (has_field_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->field_4(), output);
+  // required .DS2_Frpg2RequestMessage.VisitorType type = 4;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      4, this->type(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -30732,11 +30745,11 @@ int PushRequestRemoveVisitor::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
     }
 
-    // required int64 field_2 = 2;
-    if (has_field_2()) {
+    // required int64 player_id = 2;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_2());
+          this->player_id());
     }
 
     // required string player_steam_id = 3;
@@ -30746,11 +30759,10 @@ int PushRequestRemoveVisitor::ByteSize() const {
           this->player_steam_id());
     }
 
-    // required int64 field_4 = 4;
-    if (has_field_4()) {
+    // required .DS2_Frpg2RequestMessage.VisitorType type = 4;
+    if (has_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_4());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
   }
@@ -30773,14 +30785,14 @@ void PushRequestRemoveVisitor::MergeFrom(const PushRequestRemoveVisitor& from) {
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
-    if (from.has_field_2()) {
-      set_field_2(from.field_2());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
     if (from.has_player_steam_id()) {
       set_player_steam_id(from.player_steam_id());
     }
-    if (from.has_field_4()) {
-      set_field_4(from.field_4());
+    if (from.has_type()) {
+      set_type(from.type());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -30801,9 +30813,9 @@ bool PushRequestRemoveVisitor::IsInitialized() const {
 void PushRequestRemoveVisitor::Swap(PushRequestRemoveVisitor* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
-    std::swap(field_2_, other->field_2_);
+    std::swap(player_id_, other->player_id_);
     std::swap(player_steam_id_, other->player_steam_id_);
-    std::swap(field_4_, other->field_4_);
+    std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -30818,11 +30830,11 @@ void PushRequestRemoveVisitor::Swap(PushRequestRemoveVisitor* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RequestVisit::kField1FieldNumber;
-const int RequestVisit::kField2FieldNumber;
-const int RequestVisit::kField3FieldNumber;
-const int RequestVisit::kField4FieldNumber;
-const int RequestVisit::kField5FieldNumber;
+const int RequestVisit::kOnlineAreaIdFieldNumber;
+const int RequestVisit::kCellIdFieldNumber;
+const int RequestVisit::kTypeFieldNumber;
+const int RequestVisit::kPlayerIdFieldNumber;
+const int RequestVisit::kPlayerStructFieldNumber;
 #endif  // !_MSC_VER
 
 RequestVisit::RequestVisit()
@@ -30844,11 +30856,11 @@ RequestVisit::RequestVisit(const RequestVisit& from)
 void RequestVisit::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  field_1_ = GOOGLE_LONGLONG(0);
-  field_2_ = GOOGLE_LONGLONG(0);
-  field_3_ = GOOGLE_LONGLONG(0);
-  field_4_ = GOOGLE_LONGLONG(0);
-  field_5_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  online_area_id_ = GOOGLE_LONGLONG(0);
+  cell_id_ = GOOGLE_LONGLONG(0);
+  type_ = -1;
+  player_id_ = GOOGLE_LONGLONG(0);
+  player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -30858,8 +30870,8 @@ RequestVisit::~RequestVisit() {
 }
 
 void RequestVisit::SharedDtor() {
-  if (field_5_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete field_5_;
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_struct_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -30901,10 +30913,11 @@ void RequestVisit::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(field_1_, field_4_);
-    if (has_field_5()) {
-      if (field_5_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        field_5_->clear();
+    ZR_(online_area_id_, player_id_);
+    type_ = -1;
+    if (has_player_struct()) {
+      if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_struct_->clear();
       }
     }
   }
@@ -30930,71 +30943,77 @@ bool RequestVisit::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int64 field_1 = 1;
+      // required int64 online_area_id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_1_)));
-          set_has_field_1();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_field_2;
+        if (input->ExpectTag(16)) goto parse_cell_id;
         break;
       }
 
-      // required int64 field_2 = 2;
+      // required int64 cell_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_field_2:
+         parse_cell_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_2_)));
-          set_has_field_2();
+                 input, &cell_id_)));
+          set_has_cell_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_field_3;
+        if (input->ExpectTag(24)) goto parse_type;
         break;
       }
 
-      // required int64 field_3 = 3;
+      // required .DS2_Frpg2RequestMessage.VisitorType type = 3;
       case 3: {
         if (tag == 24) {
-         parse_field_3:
+         parse_type:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_3_)));
-          set_has_field_3();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::VisitorType_IsValid(value)) {
+            set_type(static_cast< ::DS2_Frpg2RequestMessage::VisitorType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_field_4;
+        if (input->ExpectTag(32)) goto parse_player_id;
         break;
       }
 
-      // required int64 field_4 = 4;
+      // required int64 player_id = 4;
       case 4: {
         if (tag == 32) {
-         parse_field_4:
+         parse_player_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_4_)));
-          set_has_field_4();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_field_5;
+        if (input->ExpectTag(42)) goto parse_player_struct;
         break;
       }
 
-      // required bytes field_5 = 5;
+      // required bytes player_struct = 5;
       case 5: {
         if (tag == 42) {
-         parse_field_5:
+         parse_player_struct:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_field_5()));
+                input, this->mutable_player_struct()));
         } else {
           goto handle_unusual;
         }
@@ -31027,30 +31046,31 @@ failure:
 void RequestVisit::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestVisit)
-  // required int64 field_1 = 1;
-  if (has_field_1()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->field_1(), output);
+  // required int64 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->online_area_id(), output);
   }
 
-  // required int64 field_2 = 2;
-  if (has_field_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->field_2(), output);
+  // required int64 cell_id = 2;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->cell_id(), output);
   }
 
-  // required int64 field_3 = 3;
-  if (has_field_3()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->field_3(), output);
+  // required .DS2_Frpg2RequestMessage.VisitorType type = 3;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->type(), output);
   }
 
-  // required int64 field_4 = 4;
-  if (has_field_4()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->field_4(), output);
+  // required int64 player_id = 4;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->player_id(), output);
   }
 
-  // required bytes field_5 = 5;
-  if (has_field_5()) {
+  // required bytes player_struct = 5;
+  if (has_player_struct()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      5, this->field_5(), output);
+      5, this->player_struct(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -31062,39 +31082,38 @@ int RequestVisit::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int64 field_1 = 1;
-    if (has_field_1()) {
+    // required int64 online_area_id = 1;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_1());
+          this->online_area_id());
     }
 
-    // required int64 field_2 = 2;
-    if (has_field_2()) {
+    // required int64 cell_id = 2;
+    if (has_cell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_2());
+          this->cell_id());
     }
 
-    // required int64 field_3 = 3;
-    if (has_field_3()) {
+    // required .DS2_Frpg2RequestMessage.VisitorType type = 3;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+    }
+
+    // required int64 player_id = 4;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_3());
+          this->player_id());
     }
 
-    // required int64 field_4 = 4;
-    if (has_field_4()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_4());
-    }
-
-    // required bytes field_5 = 5;
-    if (has_field_5()) {
+    // required bytes player_struct = 5;
+    if (has_player_struct()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->field_5());
+          this->player_struct());
     }
 
   }
@@ -31114,20 +31133,20 @@ void RequestVisit::CheckTypeAndMergeFrom(
 void RequestVisit::MergeFrom(const RequestVisit& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_field_1()) {
-      set_field_1(from.field_1());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
-    if (from.has_field_2()) {
-      set_field_2(from.field_2());
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
     }
-    if (from.has_field_3()) {
-      set_field_3(from.field_3());
+    if (from.has_type()) {
+      set_type(from.type());
     }
-    if (from.has_field_4()) {
-      set_field_4(from.field_4());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
-    if (from.has_field_5()) {
-      set_field_5(from.field_5());
+    if (from.has_player_struct()) {
+      set_player_struct(from.player_struct());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -31147,11 +31166,11 @@ bool RequestVisit::IsInitialized() const {
 
 void RequestVisit::Swap(RequestVisit* other) {
   if (other != this) {
-    std::swap(field_1_, other->field_1_);
-    std::swap(field_2_, other->field_2_);
-    std::swap(field_3_, other->field_3_);
-    std::swap(field_4_, other->field_4_);
-    std::swap(field_5_, other->field_5_);
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
+    std::swap(type_, other->type_);
+    std::swap(player_id_, other->player_id_);
+    std::swap(player_struct_, other->player_struct_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -31314,6 +31333,11 @@ void RequestVisitResponse::Swap(RequestVisitResponse* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestRejectVisit::kPlayerIdFieldNumber;
+const int RequestRejectVisit::kUnknown2FieldNumber;
+const int RequestRejectVisit::kOnlineAreaIdFieldNumber;
+const int RequestRejectVisit::kCellIdFieldNumber;
+const int RequestRejectVisit::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 RequestRejectVisit::RequestRejectVisit()
@@ -31334,6 +31358,11 @@ RequestRejectVisit::RequestRejectVisit(const RequestRejectVisit& from)
 
 void RequestRejectVisit::SharedCtor() {
   _cached_size_ = 0;
+  player_id_ = GOOGLE_LONGLONG(0);
+  unknown_2_ = GOOGLE_LONGLONG(0);
+  online_area_id_ = GOOGLE_LONGLONG(0);
+  cell_id_ = GOOGLE_LONGLONG(0);
+  type_ = -1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -31372,6 +31401,24 @@ RequestRejectVisit* RequestRejectVisit::New() const {
 }
 
 void RequestRejectVisit::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestRejectVisit*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(player_id_, cell_id_);
+    type_ = -1;
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -31389,14 +31436,99 @@ bool RequestRejectVisit::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 player_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &player_id_)));
+          set_has_player_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_unknown_2;
+        break;
+      }
+
+      // required int64 unknown_2 = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_unknown_2:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &unknown_2_)));
+          set_has_unknown_2();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_online_area_id;
+        break;
+      }
+
+      // required int64 online_area_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_online_area_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &online_area_id_)));
+          set_has_online_area_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_cell_id;
+        break;
+      }
+
+      // required int64 cell_id = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_cell_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &cell_id_)));
+          set_has_cell_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_type;
+        break;
+      }
+
+      // optional .DS2_Frpg2RequestMessage.VisitorType type = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_type:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::VisitorType_IsValid(value)) {
+            set_type(static_cast< ::DS2_Frpg2RequestMessage::VisitorType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestRejectVisit)
@@ -31410,6 +31542,32 @@ failure:
 void RequestRejectVisit::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestRejectVisit)
+  // required int64 player_id = 1;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->player_id(), output);
+  }
+
+  // required int64 unknown_2 = 2;
+  if (has_unknown_2()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->unknown_2(), output);
+  }
+
+  // required int64 online_area_id = 3;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->online_area_id(), output);
+  }
+
+  // required int64 cell_id = 4;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->cell_id(), output);
+  }
+
+  // optional .DS2_Frpg2RequestMessage.VisitorType type = 5;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->type(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestRejectVisit)
@@ -31418,6 +31576,42 @@ void RequestRejectVisit::SerializeWithCachedSizes(
 int RequestRejectVisit::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 player_id = 1;
+    if (has_player_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->player_id());
+    }
+
+    // required int64 unknown_2 = 2;
+    if (has_unknown_2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->unknown_2());
+    }
+
+    // required int64 online_area_id = 3;
+    if (has_online_area_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->online_area_id());
+    }
+
+    // required int64 cell_id = 4;
+    if (has_cell_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->cell_id());
+    }
+
+    // optional .DS2_Frpg2RequestMessage.VisitorType type = 5;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -31433,6 +31627,23 @@ void RequestRejectVisit::CheckTypeAndMergeFrom(
 
 void RequestRejectVisit::MergeFrom(const RequestRejectVisit& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
+    }
+    if (from.has_unknown_2()) {
+      set_unknown_2(from.unknown_2());
+    }
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
+    }
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
+    }
+    if (from.has_type()) {
+      set_type(from.type());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -31443,12 +31654,19 @@ void RequestRejectVisit::CopyFrom(const RequestRejectVisit& from) {
 }
 
 bool RequestRejectVisit::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
 
 void RequestRejectVisit::Swap(RequestRejectVisit* other) {
   if (other != this) {
+    std::swap(player_id_, other->player_id_);
+    std::swap(unknown_2_, other->unknown_2_);
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
+    std::swap(type_, other->type_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -31611,6 +31829,10 @@ void RequestRejectVisitResponse::Swap(RequestRejectVisitResponse* other) {
 
 #ifndef _MSC_VER
 const int PushRequestRejectVisit::kPushMessageIdFieldNumber;
+const int PushRequestRejectVisit::kPlayerIdFieldNumber;
+const int PushRequestRejectVisit::kUnknown3FieldNumber;
+const int PushRequestRejectVisit::kSteamIdFieldNumber;
+const int PushRequestRejectVisit::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestRejectVisit::PushRequestRejectVisit()
@@ -31630,8 +31852,13 @@ PushRequestRejectVisit::PushRequestRejectVisit(const PushRequestRejectVisit& fro
 }
 
 void PushRequestRejectVisit::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 925;
+  player_id_ = GOOGLE_LONGLONG(0);
+  unknown_3_ = GOOGLE_LONGLONG(0);
+  steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  type_ = -1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -31641,6 +31868,9 @@ PushRequestRejectVisit::~PushRequestRejectVisit() {
 }
 
 void PushRequestRejectVisit::SharedDtor() {
+  if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -31670,7 +31900,30 @@ PushRequestRejectVisit* PushRequestRejectVisit::New() const {
 }
 
 void PushRequestRejectVisit::Clear() {
-  push_message_id_ = 925;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<PushRequestRejectVisit*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(player_id_, unknown_3_);
+    push_message_id_ = 925;
+    if (has_steam_id()) {
+      if (steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        steam_id_->clear();
+      }
+    }
+    type_ = -1;
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -31698,6 +31951,70 @@ bool PushRequestRejectVisit::MergePartialFromCodedStream(
                  input, &value)));
           if (::DS2_Frpg2RequestMessage::PushMessageId_IsValid(value)) {
             set_push_message_id(static_cast< ::DS2_Frpg2RequestMessage::PushMessageId >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_player_id;
+        break;
+      }
+
+      // required int64 player_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_player_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &player_id_)));
+          set_has_player_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_unknown_3;
+        break;
+      }
+
+      // required int64 unknown_3 = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_unknown_3:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &unknown_3_)));
+          set_has_unknown_3();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_steam_id;
+        break;
+      }
+
+      // required string steam_id = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_steam_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_steam_id()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_type;
+        break;
+      }
+
+      // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_type:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::VisitorType_IsValid(value)) {
+            set_type(static_cast< ::DS2_Frpg2RequestMessage::VisitorType >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -31740,6 +32057,28 @@ void PushRequestRejectVisit::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
+  // required int64 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->player_id(), output);
+  }
+
+  // required int64 unknown_3 = 3;
+  if (has_unknown_3()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->unknown_3(), output);
+  }
+
+  // required string steam_id = 4;
+  if (has_steam_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->steam_id(), output);
+  }
+
+  // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->type(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.PushRequestRejectVisit)
@@ -31753,6 +32092,33 @@ int PushRequestRejectVisit::ByteSize() const {
     if (has_push_message_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
+    }
+
+    // required int64 player_id = 2;
+    if (has_player_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->player_id());
+    }
+
+    // required int64 unknown_3 = 3;
+    if (has_unknown_3()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->unknown_3());
+    }
+
+    // required string steam_id = 4;
+    if (has_steam_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->steam_id());
+    }
+
+    // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
   }
@@ -31775,6 +32141,18 @@ void PushRequestRejectVisit::MergeFrom(const PushRequestRejectVisit& from) {
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
+    }
+    if (from.has_unknown_3()) {
+      set_unknown_3(from.unknown_3());
+    }
+    if (from.has_steam_id()) {
+      set_steam_id(from.steam_id());
+    }
+    if (from.has_type()) {
+      set_type(from.type());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -31786,7 +32164,7 @@ void PushRequestRejectVisit::CopyFrom(const PushRequestRejectVisit& from) {
 }
 
 bool PushRequestRejectVisit::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -31794,6 +32172,10 @@ bool PushRequestRejectVisit::IsInitialized() const {
 void PushRequestRejectVisit::Swap(PushRequestRejectVisit* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
+    std::swap(player_id_, other->player_id_);
+    std::swap(unknown_3_, other->unknown_3_);
+    std::swap(steam_id_, other->steam_id_);
+    std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -31809,12 +32191,12 @@ void PushRequestRejectVisit::Swap(PushRequestRejectVisit* other) {
 
 #ifndef _MSC_VER
 const int PushRequestVisit::kPushMessageIdFieldNumber;
-const int PushRequestVisit::kField2FieldNumber;
+const int PushRequestVisit::kPlayerIdFieldNumber;
 const int PushRequestVisit::kPlayerSteamIdFieldNumber;
-const int PushRequestVisit::kField4FieldNumber;
-const int PushRequestVisit::kField5FieldNumber;
-const int PushRequestVisit::kField6FieldNumber;
-const int PushRequestVisit::kField7FieldNumber;
+const int PushRequestVisit::kPlayerStructFieldNumber;
+const int PushRequestVisit::kTypeFieldNumber;
+const int PushRequestVisit::kOnlineAreaIdFieldNumber;
+const int PushRequestVisit::kCellIdFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestVisit::PushRequestVisit()
@@ -31837,12 +32219,12 @@ void PushRequestVisit::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 925;
-  field_2_ = GOOGLE_LONGLONG(0);
+  player_id_ = GOOGLE_LONGLONG(0);
   player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  field_4_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  field_5_ = GOOGLE_LONGLONG(0);
-  field_6_ = GOOGLE_LONGLONG(0);
-  field_7_ = GOOGLE_LONGLONG(0);
+  player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  type_ = -1;
+  online_area_id_ = GOOGLE_LONGLONG(0);
+  cell_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -31855,8 +32237,8 @@ void PushRequestVisit::SharedDtor() {
   if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete player_steam_id_;
   }
-  if (field_4_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete field_4_;
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_struct_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -31898,19 +32280,20 @@ void PushRequestVisit::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 127) {
-    ZR_(field_5_, field_7_);
+    ZR_(online_area_id_, cell_id_);
     push_message_id_ = 925;
-    field_2_ = GOOGLE_LONGLONG(0);
+    player_id_ = GOOGLE_LONGLONG(0);
     if (has_player_steam_id()) {
       if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         player_steam_id_->clear();
       }
     }
-    if (has_field_4()) {
-      if (field_4_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        field_4_->clear();
+    if (has_player_struct()) {
+      if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_struct_->clear();
       }
     }
+    type_ = -1;
   }
 
 #undef OFFSET_OF_FIELD_
@@ -31950,18 +32333,18 @@ bool PushRequestVisit::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_field_2;
+        if (input->ExpectTag(16)) goto parse_player_id;
         break;
       }
 
-      // required int64 field_2 = 2;
+      // required int64 player_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_field_2:
+         parse_player_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_2_)));
-          set_has_field_2();
+                 input, &player_id_)));
+          set_has_player_id();
         } else {
           goto handle_unusual;
         }
@@ -31978,61 +32361,67 @@ bool PushRequestVisit::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_field_4;
+        if (input->ExpectTag(34)) goto parse_player_struct;
         break;
       }
 
-      // required bytes field_4 = 4;
+      // required bytes player_struct = 4;
       case 4: {
         if (tag == 34) {
-         parse_field_4:
+         parse_player_struct:
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_field_4()));
+                input, this->mutable_player_struct()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_field_5;
+        if (input->ExpectTag(40)) goto parse_type;
         break;
       }
 
-      // required int64 field_5 = 5;
+      // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
       case 5: {
         if (tag == 40) {
-         parse_field_5:
+         parse_type:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_5_)));
-          set_has_field_5();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::VisitorType_IsValid(value)) {
+            set_type(static_cast< ::DS2_Frpg2RequestMessage::VisitorType >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_field_6;
+        if (input->ExpectTag(48)) goto parse_online_area_id;
         break;
       }
 
-      // required int64 field_6 = 6;
+      // required int64 online_area_id = 6;
       case 6: {
         if (tag == 48) {
-         parse_field_6:
+         parse_online_area_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_6_)));
-          set_has_field_6();
+                 input, &online_area_id_)));
+          set_has_online_area_id();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_field_7;
+        if (input->ExpectTag(56)) goto parse_cell_id;
         break;
       }
 
-      // required int64 field_7 = 7;
+      // required int64 cell_id = 7;
       case 7: {
         if (tag == 56) {
-         parse_field_7:
+         parse_cell_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &field_7_)));
-          set_has_field_7();
+                 input, &cell_id_)));
+          set_has_cell_id();
         } else {
           goto handle_unusual;
         }
@@ -32071,9 +32460,9 @@ void PushRequestVisit::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
-  // required int64 field_2 = 2;
-  if (has_field_2()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->field_2(), output);
+  // required int64 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->player_id(), output);
   }
 
   // required string player_steam_id = 3;
@@ -32082,25 +32471,26 @@ void PushRequestVisit::SerializeWithCachedSizes(
       3, this->player_steam_id(), output);
   }
 
-  // required bytes field_4 = 4;
-  if (has_field_4()) {
+  // required bytes player_struct = 4;
+  if (has_player_struct()) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      4, this->field_4(), output);
+      4, this->player_struct(), output);
   }
 
-  // required int64 field_5 = 5;
-  if (has_field_5()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->field_5(), output);
+  // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->type(), output);
   }
 
-  // required int64 field_6 = 6;
-  if (has_field_6()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(6, this->field_6(), output);
+  // required int64 online_area_id = 6;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(6, this->online_area_id(), output);
   }
 
-  // required int64 field_7 = 7;
-  if (has_field_7()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(7, this->field_7(), output);
+  // required int64 cell_id = 7;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(7, this->cell_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -32118,11 +32508,11 @@ int PushRequestVisit::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
     }
 
-    // required int64 field_2 = 2;
-    if (has_field_2()) {
+    // required int64 player_id = 2;
+    if (has_player_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_2());
+          this->player_id());
     }
 
     // required string player_steam_id = 3;
@@ -32132,32 +32522,31 @@ int PushRequestVisit::ByteSize() const {
           this->player_steam_id());
     }
 
-    // required bytes field_4 = 4;
-    if (has_field_4()) {
+    // required bytes player_struct = 4;
+    if (has_player_struct()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
-          this->field_4());
+          this->player_struct());
     }
 
-    // required int64 field_5 = 5;
-    if (has_field_5()) {
+    // required .DS2_Frpg2RequestMessage.VisitorType type = 5;
+    if (has_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_5());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
-    // required int64 field_6 = 6;
-    if (has_field_6()) {
+    // required int64 online_area_id = 6;
+    if (has_online_area_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_6());
+          this->online_area_id());
     }
 
-    // required int64 field_7 = 7;
-    if (has_field_7()) {
+    // required int64 cell_id = 7;
+    if (has_cell_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->field_7());
+          this->cell_id());
     }
 
   }
@@ -32180,23 +32569,23 @@ void PushRequestVisit::MergeFrom(const PushRequestVisit& from) {
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
-    if (from.has_field_2()) {
-      set_field_2(from.field_2());
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
     }
     if (from.has_player_steam_id()) {
       set_player_steam_id(from.player_steam_id());
     }
-    if (from.has_field_4()) {
-      set_field_4(from.field_4());
+    if (from.has_player_struct()) {
+      set_player_struct(from.player_struct());
     }
-    if (from.has_field_5()) {
-      set_field_5(from.field_5());
+    if (from.has_type()) {
+      set_type(from.type());
     }
-    if (from.has_field_6()) {
-      set_field_6(from.field_6());
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
     }
-    if (from.has_field_7()) {
-      set_field_7(from.field_7());
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -32217,12 +32606,12 @@ bool PushRequestVisit::IsInitialized() const {
 void PushRequestVisit::Swap(PushRequestVisit* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
-    std::swap(field_2_, other->field_2_);
+    std::swap(player_id_, other->player_id_);
     std::swap(player_steam_id_, other->player_steam_id_);
-    std::swap(field_4_, other->field_4_);
-    std::swap(field_5_, other->field_5_);
-    std::swap(field_6_, other->field_6_);
-    std::swap(field_7_, other->field_7_);
+    std::swap(player_struct_, other->player_struct_);
+    std::swap(type_, other->type_);
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(cell_id_, other->cell_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

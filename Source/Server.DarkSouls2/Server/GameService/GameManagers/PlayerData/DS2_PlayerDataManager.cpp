@@ -181,9 +181,21 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
         DS2_OnlineAreaId AreaId = static_cast<DS2_OnlineAreaId>(State.GetPlayerStatus().player_location().online_area_id());
         if (AreaId != State.GetCurrentArea() && AreaId != DS2_OnlineAreaId::None)
         {
-            VerboseS(Client->GetName().c_str(), "User has entered '%s'", GetEnumString(AreaId).c_str());
+            VerboseS(Client->GetName().c_str(), "User has entered '%s' (0x%08x)", GetEnumString(AreaId).c_str(), AreaId);
             State.SetCurrentArea(AreaId);
         }
+
+        if (State.GetPlayerStatus().player_location().has_online_activity_area_id())
+        {
+            int OnlineActivityAreaId = State.GetPlayerStatus().player_location().online_activity_area_id();
+            if (OnlineActivityAreaId != State.GetCurrentOnlineActivityArea())
+            {
+                VerboseS(Client->GetName().c_str(), "User has entered online activity area (0x%08x)", OnlineActivityAreaId);
+                State.SetCurrentOnlineActivityArea(OnlineActivityAreaId);
+            }
+        }
+
+//        LogS(Client->GetName().c_str(), "MapID:0x%08x CellId:0x%08x", State.GetPlayerStatus().player_location().unknown_3(), State.GetPlayerStatus().player_location().cell_id());
     }
 
     // Grab some matchmaking values.
@@ -192,7 +204,8 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
         // Grab invadability state.
         bool NewState = true;
         if (State.GetPlayerStatus().player_status().sitting_at_bonfire() ||
-            State.GetPlayerStatus().player_status().human_effigy_burnt())
+            State.GetPlayerStatus().player_status().human_effigy_burnt() || 
+            State.GetCurrentOnlineActivityArea() == 0)
         {
             NewState = false;
         }
@@ -210,6 +223,41 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
         }
     }
 
+    if (State.GetPlayerStatus().has_item_using_info() && 
+        State.GetPlayerStatus().has_player_status() && 
+        State.GetPlayerStatus().player_status().has_covenant())
+    {
+        // Grab whatever visitor pool they should be in.
+        DS2_Frpg2RequestMessage::VisitorType NewVisitorPool = DS2_Frpg2RequestMessage::VisitorType::VisitorType_None;
+        if (State.GetPlayerStatus().item_using_info().has_guardians_seal() && 
+            State.GetPlayerStatus().item_using_info().guardians_seal() &&
+            State.GetPlayerStatus().player_status().covenant() == (int)DS2_CovenantId::Blue_Sentinels &&
+            State.GetCurrentOnlineActivityArea() != 0)
+        {
+            NewVisitorPool = DS2_Frpg2RequestMessage::VisitorType::VisitorType_BlueSentinels;
+        }
+        if (State.GetPlayerStatus().item_using_info().has_bell_keepers_seal() && 
+            State.GetPlayerStatus().item_using_info().bell_keepers_seal() &&
+            State.GetPlayerStatus().player_status().covenant() == (int)DS2_CovenantId::Bell_Keepers &&
+            // Belfry luna/sol id's
+            (State.GetCurrentOnlineActivityArea() == 0x18e3e || State.GetCurrentOnlineActivityArea() == 0x18d08))
+        {
+            NewVisitorPool = DS2_Frpg2RequestMessage::VisitorType::VisitorType_BellKeepers;
+        }
+        if (State.GetPlayerStatus().player_status().covenant() != (int)DS2_CovenantId::Rat_King_Covenant &&
+            // Doors of pharros area.
+            State.GetCurrentOnlineActivityArea() == 0x193f2)
+        {
+            NewVisitorPool = DS2_Frpg2RequestMessage::VisitorType::VisitorType_Rat;
+        }
+
+        if (NewVisitorPool != State.GetVisitorPool())
+        {
+            LogS(Client->GetName().c_str(), "User changed visitor pool to '%i'", (int)NewVisitorPool);
+            State.SetVisitorPool(NewVisitorPool);
+        }
+    }
+
     DS2_Frpg2RequestMessage::RequestUpdatePlayerStatusResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
     {
@@ -223,39 +271,28 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
 #if 0
 
     static DiffTracker Tracker;
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_2", State.GetPlayerStatus().player_status().unknown_2());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_4", State.GetPlayerStatus().player_status().unknown_4());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_5", State.GetPlayerStatus().player_status().unknown_5());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_6", State.GetPlayerStatus().player_status().unknown_6());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_7", State.GetPlayerStatus().player_status().unknown_7());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.character_id", State.GetPlayerStatus().player_status().character_id());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_11", State.GetPlayerStatus().player_status().unknown_11());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_13", State.GetPlayerStatus().player_status().unknown_13());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_14", State.GetPlayerStatus().player_status().unknown_14());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_16", State.GetPlayerStatus().player_status().unknown_16());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_17", State.GetPlayerStatus().player_status().unknown_17());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_18", State.GetPlayerStatus().player_status().unknown_18());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_20", State.GetPlayerStatus().player_status().unknown_20());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_status.unknown_21", State.GetPlayerStatus().player_status().unknown_21());
     
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.server_side_status.unknown_1", State.GetPlayerStatus().server_side_status().unknown_1());
     
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_location.unknown_2", State.GetPlayerStatus().player_location().unknown_2());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_location.unknown_3", State.GetPlayerStatus().player_location().unknown_3());
+    //Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_location.unknown_3", State.GetPlayerStatus().player_location().unknown_3());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.player_location.unknown_5", State.GetPlayerStatus().player_location().unknown_5());
 
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_1", State.GetPlayerStatus().item_using_info().unknown_1());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_2", State.GetPlayerStatus().item_using_info().unknown_2());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_3", State.GetPlayerStatus().item_using_info().unknown_3());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_4", State.GetPlayerStatus().item_using_info().unknown_4());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_5", State.GetPlayerStatus().item_using_info().unknown_5());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_6", State.GetPlayerStatus().item_using_info().unknown_6());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_7", State.GetPlayerStatus().item_using_info().unknown_7());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.item_using_info.unknown_8", State.GetPlayerStatus().item_using_info().unknown_8());
 
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_1", State.GetPlayerStatus().stats_info().unknown_1());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_2", State.GetPlayerStatus().stats_info().unknown_2());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_3", State.GetPlayerStatus().stats_info().unknown_3());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_5", State.GetPlayerStatus().stats_info().unknown_5());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_10", State.GetPlayerStatus().stats_info().unknown_10());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.stats_info.unknown_12", State.GetPlayerStatus().stats_info().unknown_12());
@@ -268,24 +305,18 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
 
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_4", State.GetPlayerStatus().physical_status().unknown_4());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_5", State.GetPlayerStatus().physical_status().unknown_5());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_6", State.GetPlayerStatus().physical_status().unknown_6());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_7", State.GetPlayerStatus().physical_status().unknown_7());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_8", State.GetPlayerStatus().physical_status().unknown_8());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_9", State.GetPlayerStatus().physical_status().unknown_9());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_10", State.GetPlayerStatus().physical_status().unknown_10());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_11", State.GetPlayerStatus().physical_status().unknown_11());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_12", State.GetPlayerStatus().physical_status().unknown_12());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_13", State.GetPlayerStatus().physical_status().unknown_13());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_14", State.GetPlayerStatus().physical_status().unknown_14());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_15", State.GetPlayerStatus().physical_status().unknown_15());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_16", State.GetPlayerStatus().physical_status().unknown_16());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_17", State.GetPlayerStatus().physical_status().unknown_17());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_18", State.GetPlayerStatus().physical_status().unknown_18());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_19", State.GetPlayerStatus().physical_status().unknown_19());
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_20", State.GetPlayerStatus().physical_status().unknown_20());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_21", State.GetPlayerStatus().physical_status().unknown_21());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_22", State.GetPlayerStatus().physical_status().unknown_22());
-    Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_23", State.GetPlayerStatus().physical_status().unknown_23());
 
 #endif
 

@@ -162,7 +162,7 @@ MessageHandleResult DS3_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
         DS3_OnlineAreaId AreaId = static_cast<DS3_OnlineAreaId>(State.GetPlayerStatus().player_location().online_area_id());
         if (AreaId != State.GetCurrentArea() && AreaId != DS3_OnlineAreaId::None)
         {
-            VerboseS(Client->GetName().c_str(), "User has entered '%s'", GetEnumString(AreaId).c_str());
+            VerboseS(Client->GetName().c_str(), "User has entered '%s' (0x%08x)", GetEnumString(AreaId).c_str(), AreaId);
             State.SetCurrentArea(AreaId);
         }
     }

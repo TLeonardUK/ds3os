@@ -29,7 +29,14 @@ public:
 
     // Current online matching area the player is in.
     DEFINE_FIELD(DS2_OnlineAreaId, CurrentArea, DS2_OnlineAreaId::None)
-
+    
+    // Similar to currentarea but more finely set, will be set to 0 if no online
+    // activity can happen in the area.
+    DEFINE_FIELD(int, CurrentOnlineActivityArea, 0)    
+    
+    // What type of visitor the player can currently be summoned as.
+    DEFINE_FIELD(DS2_Frpg2RequestMessage::VisitorType, VisitorPool, DS2_Frpg2RequestMessage::VisitorType::VisitorType_None)
+    
     // Information the player sends and periodically patches with 
     // RequestUpdatePlayerStatus requests.
     DEFINE_FIELD(DS2_Frpg2PlayerData::AllStatus, PlayerStatus, DS2_Frpg2PlayerData::AllStatus())

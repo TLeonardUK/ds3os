@@ -1494,12 +1494,12 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 cell_id() const;
   inline void set_cell_id(::google::protobuf::uint32 value);
 
-  // optional uint32 unknown_3 = 3;
-  inline bool has_unknown_3() const;
-  inline void clear_unknown_3();
-  static const int kUnknown3FieldNumber = 3;
-  inline ::google::protobuf::uint32 unknown_3() const;
-  inline void set_unknown_3(::google::protobuf::uint32 value);
+  // optional uint32 online_activity_area_id = 3;
+  inline bool has_online_activity_area_id() const;
+  inline void clear_online_activity_area_id();
+  static const int kOnlineActivityAreaIdFieldNumber = 3;
+  inline ::google::protobuf::uint32 online_activity_area_id() const;
+  inline void set_online_activity_area_id(::google::protobuf::uint32 value);
 
   // optional .DS2_Frpg2PlayerData.Vector position = 4;
   inline bool has_position() const;
@@ -1523,8 +1523,8 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
   inline void clear_has_online_area_id();
   inline void set_has_cell_id();
   inline void clear_has_cell_id();
-  inline void set_has_unknown_3();
-  inline void clear_has_unknown_3();
+  inline void set_has_online_activity_area_id();
+  inline void clear_has_online_activity_area_id();
   inline void set_has_position();
   inline void clear_has_position();
   inline void set_has_unknown_5();
@@ -1537,7 +1537,7 @@ class PlayerLocation : public ::google::protobuf::MessageLite {
   ::google::protobuf::uint32 online_area_id_;
   ::google::protobuf::uint32 cell_id_;
   ::DS2_Frpg2PlayerData::Vector* position_;
-  ::google::protobuf::uint32 unknown_3_;
+  ::google::protobuf::uint32 online_activity_area_id_;
   float unknown_5_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2PlayerData_2eproto_impl();
@@ -4697,28 +4697,28 @@ inline void PlayerLocation::set_cell_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.cell_id)
 }
 
-// optional uint32 unknown_3 = 3;
-inline bool PlayerLocation::has_unknown_3() const {
+// optional uint32 online_activity_area_id = 3;
+inline bool PlayerLocation::has_online_activity_area_id() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void PlayerLocation::set_has_unknown_3() {
+inline void PlayerLocation::set_has_online_activity_area_id() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void PlayerLocation::clear_has_unknown_3() {
+inline void PlayerLocation::clear_has_online_activity_area_id() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void PlayerLocation::clear_unknown_3() {
-  unknown_3_ = 0u;
-  clear_has_unknown_3();
+inline void PlayerLocation::clear_online_activity_area_id() {
+  online_activity_area_id_ = 0u;
+  clear_has_online_activity_area_id();
 }
-inline ::google::protobuf::uint32 PlayerLocation::unknown_3() const {
-  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerLocation.unknown_3)
-  return unknown_3_;
+inline ::google::protobuf::uint32 PlayerLocation::online_activity_area_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2PlayerData.PlayerLocation.online_activity_area_id)
+  return online_activity_area_id_;
 }
-inline void PlayerLocation::set_unknown_3(::google::protobuf::uint32 value) {
-  set_has_unknown_3();
-  unknown_3_ = value;
-  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.unknown_3)
+inline void PlayerLocation::set_online_activity_area_id(::google::protobuf::uint32 value) {
+  set_has_online_activity_area_id();
+  online_activity_area_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2PlayerData.PlayerLocation.online_activity_area_id)
 }
 
 // optional .DS2_Frpg2PlayerData.Vector position = 4;
