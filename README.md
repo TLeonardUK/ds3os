@@ -51,7 +51,7 @@ Most of the games core functionality works now, with some degree of variance to 
 | Auto-Summoning (Convenants) | :heavy_check_mark: | :heavy_check_mark: |
 | Mirror Knight | n/a | |
 | Matchmaking | :heavy_check_mark: | |
-| Leaderboards | :heavy_check_mark: |  |
+| Leaderboards | :heavy_check_mark: | :heavy_check_mark: |
 | Bell Ringing | :heavy_check_mark: | n/a |
 | Quick Matches (Arenas) | :heavy_check_mark: |  |
 | Telemetry/Misc | :heavy_check_mark: | :heavy_check_mark:  |
