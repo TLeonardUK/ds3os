@@ -60,6 +60,7 @@ Most of the games core functionality works now, with some degree of variance to 
 | Loader Support | :heavy_check_mark: | :heavy_check_mark: |
 | WebUI For Admin | :heavy_check_mark: | :heavy_check_mark: |
 | Sharding Support | :heavy_check_mark: | :heavy_check_mark: |
+| Discord Activity Feed | :heavy_check_mark: |  |
 
 Future roadmap:
 
