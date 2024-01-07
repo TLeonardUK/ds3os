@@ -132,7 +132,7 @@ bool Server::Init()
 
         Log("Initializing steam game server api.");
 
-        if (!SteamGameServer_Init(0, Config.AuthServerPort - 1, MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE, eServerModeAuthentication, "1.0.0.0"))
+        if (!SteamGameServer_Init(0, Config.LoginServerPort, MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE, eServerModeAuthentication, "1.0.0.0"))
         {
             Error("Failed to initialize steam game server api.");
             return false;

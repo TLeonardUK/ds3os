@@ -116,7 +116,8 @@ foreach(config ${CMAKE_CONFIGURATION_TYPES})
     string(TOUPPER ${config} config_upper)
     
     # Write steam appid file, required for dedicated servers.
-    file(WRITE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config_upper}}/steam_appid.txt" "374320")
+    # Server writes this out automatically now.
+    #file(WRITE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config_upper}}/steam_appid.txt" "374320")
 
     # Copy WebUI resources to output folder
     file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../WebUI" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config_upper}}")
