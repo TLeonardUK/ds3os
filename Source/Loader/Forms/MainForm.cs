@@ -289,8 +289,8 @@ namespace Loader
             ServerConfigList.FromJson(ProgramSettings.Default.server_config_json, out ServerList);
             IgnoreInputChanges = false;
             
-            ProgramSettings.Default.Reset();
 #if false//DEBUG
+            ProgramSettings.Default.Reset();
             ProgramSettings.Default.master_server_url = "http://127.0.0.1:50020";
 #endif
             

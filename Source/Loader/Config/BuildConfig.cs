@@ -62,10 +62,10 @@ namespace Loader
                 } 
             },
             { 
-                ExeUtils.MakeSimpleExeHash("Dark Souls III - 1.15.1.0", 88982096), 
+                ExeUtils.MakeSimpleExeHash("1.15.1.0", 88982096), 
                 new DarkSoulsLoadConfig 
                 { 
-                    VersionName = "1.15.1.0 (Steam)", 
+                    VersionName = "Dark Souls III - 1.15.1.0 (Steam)", 
                     ServerInfoAddress = 0x55A3F15,
                     UseInjector = true,
                     UsesASLR = true,
@@ -74,10 +74,10 @@ namespace Loader
                 } 
             },
             { 
-                ExeUtils.MakeSimpleExeHash("Dark Souls III - 1.15.2.0", 88960032), 
+                ExeUtils.MakeSimpleExeHash("1.15.2.0", 88960032), 
                 new DarkSoulsLoadConfig 
                 { 
-                    VersionName = "1.15.2.0 (Steam)", 
+                    VersionName = "Dark Souls III - 1.15.2.0 (Steam)", 
                     ServerInfoAddress = 0x0,
                     UseInjector = true,
                     UsesASLR = true,
