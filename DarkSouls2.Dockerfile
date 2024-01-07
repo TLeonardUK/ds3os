@@ -22,9 +22,9 @@ RUN mkdir -p /opt/ds3os/Saved \
     && useradd -r -s /bin/bash -u 1000 ds3os \
     && chown ds3os:ds3os /opt/ds3os/Saved \
     && chown ds3os:ds3os /opt/ds3os \    
-    && chmod 755 /opt/ds3os/Saved
-    && chmod 755 /opt/ds3os
-    && apt update 
+    && chmod 755 /opt/ds3os/Saved \
+    && chmod 755 /opt/ds3os \
+    && apt update \
     && apt install -y --reinstall ca-certificates
 
 COPY --from=build /build/bin/x64_release/ /opt/ds3os/
