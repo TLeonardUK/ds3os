@@ -588,6 +588,7 @@ function refreshSettingsTab()
         setMaterialCheckState(document.querySelector("#disable-auto-summon-invasions"), data.disableAutoSummonInvasions);
         setMaterialCheckState(document.querySelector("#disable-weapon-level-matching"), data.disableWeaponLevelMatching);
         setMaterialCheckState(document.querySelector("#disable-soul-level-matching"), data.disableSoulLevelMatching);
+        setMaterialCheckState(document.querySelector("#disable-soul-memory-matching"), data.disableSoulMemoryMatching);
         setMaterialCheckState(document.querySelector("#ignore-invasion-area-filter"), data.ignoreInvasionAreaFilter);
         setMaterialCheckState(document.querySelector("#anti-cheat-enabled"), data.antiCheatEnabled);
     })
@@ -626,6 +627,7 @@ function saveSettings()
             "disableAutoSummonInvasions": document.querySelector("#disable-auto-summon-invasions").checked,
             "disableWeaponLevelMatching": document.querySelector("#disable-weapon-level-matching").checked,
             "disableSoulLevelMatching": document.querySelector("#disable-soul-level-matching").checked,    
+            "disableSoulMemoryMatching": document.querySelector("#disable-soul-memory-matching").checked,    
             "ignoreInvasionAreaFilter": document.querySelector("#ignore-invasion-area-filter").checked,
             "antiCheatEnabled": document.querySelector("#anti-cheat-enabled").checked,
         })

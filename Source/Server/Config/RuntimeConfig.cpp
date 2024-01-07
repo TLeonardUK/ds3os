@@ -182,6 +182,46 @@ bool RuntimeConfigMatchingParameters::CheckMatch(int HostSoulLevel, int HostWeap
     return true;
 }
 
+int RuntimeConfigSoulMemoryMatchingParameters::CalculateTier(int SoulMemory) const
+{
+    int Tier = 0;
+    for (size_t i = 0; i < Tiers.size(); i++)
+    {
+        if (SoulMemory > Tiers[i])
+        {
+            Tier++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return Tier;
+}
+
+bool RuntimeConfigSoulMemoryMatchingParameters::CheckMatch(int HostSoulMemory, int ClientSoulMemory, bool UsingPassword) const
+{
+    int HostSoulTier = CalculateTier(HostSoulMemory);
+    int ClientSoulTier = CalculateTier(ClientSoulMemory);
+
+    int LowerLimit = HostSoulTier;
+    int UpperLimit = HostSoulTier;
+
+    if (UsingPassword)
+    {
+        LowerLimit -= TiersBelowWithPassword;
+        UpperLimit += TiersAboveWithPassword;
+    }
+    else
+    {
+        LowerLimit -= TiersBelow;
+        UpperLimit += TiersAbove;
+    }
+
+    return (ClientSoulTier >= LowerLimit && ClientSoulTier <= UpperLimit);
+}
+
 #define SERIALIZE_VAR(x) SerializeVar(Json, #x, x, Loading);
 #define SERIALIZE_STRUCT_VAR(x) SerializeStructVar(Json, #x, x, Loading);
 
@@ -189,6 +229,18 @@ bool RuntimeConfigAnnouncement::Serialize(nlohmann::json& Json, bool Loading)
 {
     SERIALIZE_VAR(Header);
     SERIALIZE_VAR(Body);
+
+    return true;
+}
+
+bool RuntimeConfigSoulMemoryMatchingParameters::Serialize(nlohmann::json& Json, bool Loading)
+{
+    SERIALIZE_VAR(Tiers);
+    SERIALIZE_VAR(DisableSoulMemoryMatching);
+    SERIALIZE_VAR(TiersBelow);
+    SERIALIZE_VAR(TiersAbove);
+    SERIALIZE_VAR(TiersBelowWithPassword);
+    SERIALIZE_VAR(TiersAboveWithPassword);
 
     return true;
 }
@@ -268,6 +320,18 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_STRUCT_VAR(MoundMakerInvasionMatchingParameters);
     SERIALIZE_STRUCT_VAR(CovenantInvasionMatchingParameters);
     SERIALIZE_STRUCT_VAR(UndeadMatchMatchingParameters);
+
+    SERIALIZE_STRUCT_VAR(DS2_WhiteSoapstoneMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_SmallWhiteSoapstoneMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_RedSoapstoneMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_MirrorKnightMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_DragonEyeMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_RedEyeOrbMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_BlueEyeOrbMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_BellKeeperMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_RatMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_BlueSentinelMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_ArenaMatchingParameters);
 
     SERIALIZE_VAR(AntiCheatEnabled);
     SERIALIZE_VAR(AntiCheatApplyPenalties);

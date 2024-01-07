@@ -115,9 +115,7 @@ bool DS2_MirrorKnightManager::CanMatchWith(const DS2_Frpg2RequestMessage::Matchi
         return false;
     }
 
-    // TODO: Add matching here.
-
-    return true;
+    return Config.DS2_MirrorKnightMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
 }
 
 MessageHandleResult DS2_MirrorKnightManager::Handle_RequestGetMirrorKnightSignList(GameClient* Client, const Frpg2ReliableUdpMessage& Message)

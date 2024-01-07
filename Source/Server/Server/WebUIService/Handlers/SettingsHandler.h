@@ -32,5 +32,6 @@ public:
 protected:
 	bool IsWeaponLevelMatchingDisabled();
 	bool IsSoulLevelMatchingDisabled();
+    bool IsSoulMemoryMatchingDisabled();
 
 };

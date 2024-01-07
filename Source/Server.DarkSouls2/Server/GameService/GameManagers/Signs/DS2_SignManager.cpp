@@ -123,7 +123,25 @@ bool DS2_SignManager::CanMatchWith(const DS2_Frpg2RequestMessage::MatchingParame
         return false;
     }
 
-    // TODO: Add matching here.
+    switch (SignType)
+    {
+    case DS2_Frpg2RequestMessage::SignType_RedSoapstone:
+        {
+            return Config.DS2_RedSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
+        }
+    case DS2_Frpg2RequestMessage::SignType_WhiteSoapstone:
+        {
+            return Config.DS2_SmallWhiteSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
+        }
+    case DS2_Frpg2RequestMessage::SignType_SmallWhiteSoapstone:
+        {
+            return Config.DS2_WhiteSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
+        }
+    case DS2_Frpg2RequestMessage::SignType_Dragon:
+        {
+            return Config.DS2_DragonEyeMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
+        }
+    }
 
     return true;
 }

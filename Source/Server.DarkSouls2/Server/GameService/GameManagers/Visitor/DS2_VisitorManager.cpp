@@ -50,7 +50,8 @@ MessageHandleResult DS2_VisitorManager::OnMessageRecieved(GameClient* Client, co
 bool DS2_VisitorManager::CanMatchWith(const DS2_Frpg2RequestMessage::MatchingParameter& Request, const std::shared_ptr<GameClient>& Match)
 {
     const RuntimeConfig& Config = ServerInstance->GetConfig();
-    bool IsInvasion = (Match->GetPlayerStateType<DS2_PlayerState>().GetVisitorPool() != DS2_Frpg2RequestMessage::VisitorType::VisitorType_BlueSentinels);
+    auto& Player = Match->GetPlayerStateType<DS2_PlayerState>();
+    bool IsInvasion = (Player.GetVisitorPool() != DS2_Frpg2RequestMessage::VisitorType::VisitorType_BlueSentinels);
 
     const RuntimeConfigMatchingParameters* MatchingParams = &Config.CovenantInvasionMatchingParameters;
     if (!IsInvasion)
@@ -65,7 +66,21 @@ bool DS2_VisitorManager::CanMatchWith(const DS2_Frpg2RequestMessage::MatchingPar
         return false;
     }
 
-    // TODO: Add matchmaking
+    switch (Player.GetVisitorPool())
+    {
+        case DS2_Frpg2RequestMessage::VisitorType_BlueSentinels:
+        {
+            return Config.DS2_BlueSentinelMatchingParameters.CheckMatch(Request.soul_memory(), Player.GetSoulMemory(), false);
+        }
+        case DS2_Frpg2RequestMessage::VisitorType_BellKeepers:
+        {
+            return Config.DS2_BellKeeperMatchingParameters.CheckMatch(Request.soul_memory(), Player.GetSoulMemory(), false);
+        }
+        case DS2_Frpg2RequestMessage::VisitorType_Rat:
+        {
+            return Config.DS2_RatMatchingParameters.CheckMatch(Request.soul_memory(), Player.GetSoulMemory(), false);
+        }
+    }
 
     return true;
 }

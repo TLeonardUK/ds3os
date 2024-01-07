@@ -54,6 +54,81 @@ struct RuntimeConfigMatchingParameters
     bool CheckMatch(int HostSoulLevel, int HostWeaponLevel, int ClientSoulLevel, int ClientWeaponLevel, bool HasPassword) const;
 };
 
+// Wraps the parameters used during matching for the various 
+// summoning systems.
+struct RuntimeConfigSoulMemoryMatchingParameters
+{
+    inline static std::vector<int> k_defaultTiers = {
+        9'999,
+        19'999,
+        29'999,
+        39'999,
+        49'999,
+        69'999,
+        89'999,
+        109'999,
+        129'999,
+        149'999,
+        179'999,
+        209'999,
+        239'999,
+        269'999,
+        299'999,
+        349'999,
+        399'999,
+        449'999,
+        499'999,
+        599'999,
+        699'999,
+        799'999,
+        899'999,
+        999'999,
+        1'099'999,
+        1'199'999,
+        1'299'999,
+        1'399'999,
+        1'499'999,
+        1'749'999,
+        1'999'999,
+        2'249'999,
+        2'499'999,
+        2'749'999,
+        2'999'999,
+        4'999'999,
+        6'999'999,
+        8'999'999,
+        11'999'999,
+        14'999'999,
+        19'999'999,
+        29'999'999,
+        44'999'999,
+        999'999'999
+    };
+
+    // End value of each soul memory tier.
+    std::vector<int> Tiers = k_defaultTiers;
+
+    // Flat disables all the soul level matching.
+    bool DisableSoulMemoryMatching = false;
+
+    // How far below the hosts tier the client can be.
+    int TiersBelow = 0;
+
+    // How far above the hosts tier the client can be.
+    int TiersAbove = 0;
+
+    // How far below the hosts tier the client can be when using a password.
+    int TiersBelowWithPassword = 0;
+
+    // How far above the hosts tier the client can be when using a password.
+    int TiersAboveWithPassword = 0;
+
+    bool Serialize(nlohmann::json& Json, bool Loading);
+
+    int CalculateTier(int SoulMemory) const;
+    bool CheckMatch(int HostSoulMemory, int ClientSoulMemory, bool UsingPassword) const;
+};
+
 // Configuration saved and loaded at runtime by the server from a configuration file.
 class RuntimeConfig
 {
@@ -235,6 +310,10 @@ public:
     // How much delay (in seconds) should be placed on RequestUpdatePlayerStatus calls. Clamped to 60->50000
     float PlayerStatusUploadSendDelay = 300.0f;
 
+    // ----------------------------------------------------------------
+    // DS3 matching paramters
+    // ----------------------------------------------------------------
+
     // Parameters used for determining which signs a player can see.
     RuntimeConfigMatchingParameters SummonSignMatchingParameters = {
         0.9f, -10,                                                      // LowerLimit
@@ -300,6 +379,91 @@ public:
         false,                                                          // DisableLevelMatching
         false,                                                          // DisableWeaponLevelMatching
     };    
+
+    // ----------------------------------------------------------------
+    // DS2 matching paramters
+    // ----------------------------------------------------------------
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_WhiteSoapstoneMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        3, 1, 
+        6, 4
+    };
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_SmallWhiteSoapstoneMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        4, 2,
+        7, 5
+    };
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_RedSoapstoneMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        -5, 2,
+        -5, 2
+    };
+
+    // Guessed
+    RuntimeConfigSoulMemoryMatchingParameters DS2_MirrorKnightMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        -5, 2,
+        -5, 2
+    };
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_DragonEyeMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        -5, 5,
+        -5, 5
+    };
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_RedEyeOrbMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        0, 4,
+        0, 4
+    };
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_BlueEyeOrbMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        -3, 3,
+        -3, 3
+    };
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_BellKeeperMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        -1, 3,
+        -1, 3
+    };
+
+    // Guessed
+    RuntimeConfigSoulMemoryMatchingParameters DS2_RatMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        -5, 2,
+        -5, 2
+    };
+
+    // Guessed
+    RuntimeConfigSoulMemoryMatchingParameters DS2_BlueSentinelMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        4, 2,
+        7, 5
+    };
+
+    // Guessed
+    RuntimeConfigSoulMemoryMatchingParameters DS2_ArenaMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        5, 5,
+        5, 5
+    };
 
     // If enabled player behaviour will be scanned for cheating, and appropriate penalties applied.
     bool AntiCheatEnabled = false;

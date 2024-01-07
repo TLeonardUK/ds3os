@@ -76,7 +76,18 @@ bool DS2_BreakInManager::CanMatchWith(const DS2_Frpg2RequestMessage::MatchingPar
         }
     }
 
-    // TODO: Add matchmaking
+    // Add matchmaking
+    switch (Type)
+    {
+        case DS2_Frpg2RequestMessage::BreakInType_RedEyeOrb:
+        {
+            return Config.DS2_RedEyeOrbMatchingParameters.CheckMatch(Player.GetSoulMemory(), Request.soul_memory(), false);
+        }
+        case DS2_Frpg2RequestMessage::BreakInType_BlueEyeOrb:
+        {
+            return Config.DS2_BlueEyeOrbMatchingParameters.CheckMatch(Player.GetSoulMemory(), Request.soul_memory(), false);
+        }
+    }
 
     return true;
 }

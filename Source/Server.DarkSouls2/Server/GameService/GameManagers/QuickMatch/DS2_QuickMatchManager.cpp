@@ -85,6 +85,9 @@ MessageHandleResult DS2_QuickMatchManager::OnMessageRecieved(GameClient* Client,
 
 bool DS2_QuickMatchManager::CanMatchWith(GameClient* Client, const DS2_Frpg2RequestMessage::RequestSearchQuickMatch& Request, const std::shared_ptr<Match>& Match)
 {
+    auto& Player = Client->GetPlayerStateType<DS2_PlayerState>();
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
+
     // Can't match with self.
     if (Client->GetPlayerState().GetPlayerId() == Match->HostPlayerId)
     {
@@ -103,6 +106,9 @@ bool DS2_QuickMatchManager::CanMatchWith(GameClient* Client, const DS2_Frpg2Requ
     {
         return false;
     }
+
+    // Check for matchmaking match.
+    return Config.DS2_ArenaMatchingParameters.CheckMatch(Match->MatchingParams.soul_memory(), Request.matching_parameter().soul_memory(), Request.matching_parameter().name_engraved_ring() > 0);
 
 #if 0
 
