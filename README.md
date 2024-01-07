@@ -49,7 +49,7 @@ Most of the games core functionality works now, with some degree of variance to 
 | Summoning | :heavy_check_mark: | :heavy_check_mark: |
 | Invasions | :heavy_check_mark: | :heavy_check_mark: |
 | Auto-Summoning (Convenants) | :heavy_check_mark: | :heavy_check_mark: |
-| Mirror Knight | n/a | |
+| Mirror Knight | n/a | :heavy_check_mark: |
 | Matchmaking | :heavy_check_mark: | |
 | Leaderboards | :heavy_check_mark: | :heavy_check_mark: |
 | Bell Ringing | :heavy_check_mark: | n/a |
