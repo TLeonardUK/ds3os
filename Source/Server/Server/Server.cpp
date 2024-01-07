@@ -130,7 +130,9 @@ bool Server::Init()
         size_t appid = BuildConfig::GameConfig[(int)ServerGameType].STEAM_APPID;
         WriteTextToFile(appid_path, std::to_string(appid));
 
-        if (!SteamGameServer_Init(0, Config.AuthServerPort - 1, Config.AuthServerPort - 2, eServerModeAuthentication, "1.0.0.0"))
+        Log("Initializing steam game server api.");
+
+        if (!SteamGameServer_Init(0, Config.AuthServerPort - 1, MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE, eServerModeAuthentication, "1.0.0.0"))
         {
             Error("Failed to initialize steam game server api.");
             return false;
