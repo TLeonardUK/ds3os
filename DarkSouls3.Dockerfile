@@ -16,8 +16,6 @@ RUN steamcmd +login anonymous +quit
 
 FROM ubuntu@sha256:4b1d0c4a2d2aaf63b37111f34eb9fa89fa1bf53dd6e4ca954d47caebca4005c2 AS runtime
 
-RUN echo "374320" > /opt/ds3os/steam_appid.txt
-
 RUN mkdir -p /opt/ds3os/Saved \
     && useradd -r -s /bin/bash -u 1000 ds3os \
     && chown ds3os:ds3os /opt/ds3os/Saved \
@@ -26,6 +24,8 @@ RUN mkdir -p /opt/ds3os/Saved \
     && chmod 755 /opt/ds3os \
     && apt update \
     && apt install -y --reinstall ca-certificates
+
+RUN echo "374320" >> /opt/ds3os/steam_appid.txt
 
 COPY --from=build /build/bin/x64_release/ /opt/ds3os/
 COPY --from=steam /root/.local/share/Steam/steamcmd/linux64/steamclient.so /opt/ds3os/steamclient.so
