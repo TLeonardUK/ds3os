@@ -159,7 +159,10 @@ bool Server::Init()
 
     // Patch old server ip.
 #ifdef _DEBUG
-    Config.MasterServerIp = "127.0.0.1";
+    //Config.MasterServerIp = "127.0.0.1";
+    Config.MasterServerIp = "ds3os-master.timleonard.uk";
+    Config.ServerName = "Debugging Server";
+    Config.ServerDescription = "Used for debugging by Infini, don't use.";
 #else
     if (Config.MasterServerIp == "timleonard.uk")
     {
@@ -492,7 +495,8 @@ void Server::Poll()
     // Write last activity time periodically to disk to keep this server instance alive.
     if (GetSeconds() > NextKeepAliveTime)
     {
-        if (!(int)GetService<GameService>()->GetClients().empty())
+        if (!(int)GetService<GameService>()->GetClients().empty() || 
+            !std::filesystem::exists(KeepAliveFilePath))
         {
             const auto TimePoint = std::chrono::system_clock::now();
             const size_t SecondsSinceEpoch = std::chrono::duration_cast<std::chrono::seconds>(TimePoint.time_since_epoch()).count();
