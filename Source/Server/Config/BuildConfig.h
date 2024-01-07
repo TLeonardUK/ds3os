@@ -100,7 +100,7 @@ public:
     constexpr inline static const bool DUMP_FAILED_DISASSEMBLED_PACKETS = false;
 
     // Logs the protobufs sent and recieved.
-    constexpr inline static const bool LOG_PROTOBUF_STREAM = true;    
+    constexpr inline static const bool LOG_PROTOBUF_STREAM = false;    
 
     // Writes out legacy import files when the server starts.
     constexpr inline static const bool SUPPORT_LEGACY_IMPORT_FILES = false;

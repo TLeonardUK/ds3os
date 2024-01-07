@@ -130,11 +130,13 @@ bool Server::Init()
         size_t appid = BuildConfig::GameConfig[(int)ServerGameType].STEAM_APPID;
         WriteTextToFile(appid_path, std::to_string(appid));
 
-        if (!SteamGameServer_Init(0, 50001, 50002, eServerModeAuthentication, "1.0.0.0"))
+        if (!SteamGameServer_Init(0, Config.AuthServerPort - 1, Config.AuthServerPort - 2, eServerModeAuthentication, "1.0.0.0"))
         {
             Error("Failed to initialize steam game server api.");
             return false;
         }
+
+        Log("Initialized steam game server api.");
     }
 
     // Create game interface for this server.
@@ -173,6 +175,7 @@ bool Server::Init()
     // If not the default server we grab a random free port for the game server.
     if (!IsDefaultServer())
     {
+        Log("Selecting floating game ports.");
         Config.GameServerPort = Manager->GetFreeGamePort();
         Config.WebUIServerPort = Manager->GetFreeGamePort();
         Config.AuthServerPort = Manager->GetFreeGamePort();
@@ -182,6 +185,7 @@ bool Server::Init()
     // Create a server id if one isn't specified already.
     if (Config.ServerId.empty())
     {
+        Log("Generating new server id.");
         Config.ServerId = MakeGUID();
         SaveConfig();
     }
