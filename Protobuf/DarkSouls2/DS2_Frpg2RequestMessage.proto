@@ -42,6 +42,7 @@ enum PushMessageId {
 	PushID_PushRequestRejectMirrorKnightSign   = 0x03A6; 
 	PushID_PushRequestRemoveMirrorKnightSign   = 0x03A7; 
 	PushID_PushRequestSummonMirrorKnightSign   = 0x03A5; 
+    PushID_ManagementTextMessage               = 0x0389;
 }
 
 // Special empty response, some requests expect an empty response but
@@ -983,49 +984,74 @@ message RequestRegisterPowerStoneDataResponse {
 // Game Server Messages - Quick Matches (Undead Matches)
 // ------------------------------------------------------------------------------------------------------------
 
+enum QuickMatchGameMode {
+    QuickMatchGameMode_Blue         = 0;
+    QuickMatchGameMode_Brotherhood  = 1;
+}
+
 message PushRequestAllowQuickMatch {
 	required PushMessageId push_message_id = 1;
-	required int64 field_2 = 2; // 287420
-	required int64 field_3 = 3; // 10230000, 10310000
-	required int64 field_4 = 4; // 102350, 103140
-	required bytes field_5 = 5; //
+	required int64 player_id = 2;       // 287420
+	required int64 online_area_id = 3;  // 10230000, 10310000
+	required int64 cell_id = 4;         // 102350, 103140
+	required bytes field_5 = 5;         //
 }
 
 message PushRequestJoinQuickMatch {
 	required PushMessageId push_message_id = 1;
-	required int64 field_2 = 2; // 290333
+	required int64 player_id = 2;           // 290333
 	required string player_steam_id = 3;
-	required int64 field_4 = 4; // 10230000, 10310000
-	required int64 field_5 = 5; // 102350, 103140
-	required int64 field_6 = 6; // 1, 0
+	required int64 online_area_id = 4;      // 10230000, 10310000
+	required int64 cell_id = 5;             // 102350, 103140
+	required QuickMatchGameMode mode = 6;   // 1, 0
 }
 
 message PushRequestRejectQuickMatch {
 	required PushMessageId push_message_id = 1;
-    // TODO
+
+    // Guessing this all base on ghidra, can't get this to occur in game.
+	required int64 player_id = 2;           
+	required string player_steam_id = 3;
+	required int64 online_area_id = 4;      
+	required int64 cell_id = 5;             
+	required QuickMatchGameMode mode = 6;   
+    required int64 unknown_7 = 7;           // Probably reason
 }
 
 message PushRequestRemoveQuickMatch {
 	required PushMessageId push_message_id = 1;
-    // TODO
+	required int64 player_id = 2;       // 287420
+	required int64 online_area_id = 3;  // 10230000, 10310000
+	required int64 cell_id = 4;         // 102350, 103140
+	required string player_steam_id = 5;
+	required QuickMatchGameMode mode = 6;   // 1, 0
 }
 
 message QuickMatchData {
+    required int64 player_id = 1; 
+    required int64 online_area_id = 2;
+    required int64 cell_id = 3;
+    required MatchingParameter matching_parameter = 4;
+    required string player_steam_id = 5;
+    optional QuickMatchGameMode mode = 6;
 }
 
 message RequestJoinQuickMatch {
-    // TODO
+    required int64 online_area_id = 1;
+    required int64 cell_id = 2;
+    required int64 player_id = 3;
+    required QuickMatchGameMode mode = 4; 
 }
 
 message RequestJoinQuickMatchResponse {
-    // TODO
+    // Never recieved.
 }
 
 message RequestRegisterQuickMatch {
-	required int64 field_1 = 1; // 10230000, 10310000
-	required int64 field_2 = 2; // 102350, 103140
-	required MatchingParameter field_3 = 3; // 
-	required int64 field_4 = 4; // 1, 0
+	required int64 online_area_id = 1;                      // 10230000, 10310000
+	required int64 cell_id = 2;                             // 102350, 103140
+	required MatchingParameter matching_parameter = 3;      // 
+	required QuickMatchGameMode mode = 4;                   // 1, 0
 }
 
 message RequestRegisterQuickMatchResponse {
@@ -1033,29 +1059,34 @@ message RequestRegisterQuickMatchResponse {
 }
 
 message RequestRejectQuickMatch {
-    // TODO
+    // Based on ghidra, never triggered normally.
+	required int64 player_id = 1;       
+	required int64 online_area_id = 2;  
+	required int64 cell_id = 3;         
+	required QuickMatchGameMode mode = 4;
+	required int64 unknown_5 = 5;         
 }
 
 message RequestRejectQuickMatchResponse {
-    // TODO
+    // Never recieved.
 }
 
 message RequestSearchQuickMatch {
-	required int64 field_1 = 1; // 10230000, 10310000
-	required int64 field_2 = 2; // 102350, 103140
-	required MatchingParameter field_3 = 3; // 
-	required int64 field_4 = 4; // 10
-	required int64 field_5 = 5; // 1, 0
+	required int64 online_area_id = 1;                      // 10230000, 10310000
+	required int64 cell_id = 2;                             // 102350, 103140
+	required MatchingParameter matching_parameter = 3;      // 
+	required int64 max_results = 4;                         // 10
+	required QuickMatchGameMode mode = 5;                   // 1, 0
 }
 
 message RequestSearchQuickMatchResponse {
-    // Empty?
+    repeated QuickMatchData matches = 1;
 }
 
 message RequestUnregisterQuickMatch {
-	required int64 field_1 = 1; // 10230000, 10310000
-	required int64 field_2 = 2; // 102350, 103140
-	required int64 field_3 = 3; // 1, 0
+	required int64 online_area_id = 1;                      // 10230000, 10310000
+	required int64 cell_id = 2;                             // 102350, 103140
+	required QuickMatchGameMode mode = 3;                   // 1, 0
 }
 
 message RequestUnregisterQuickMatchResponse {
@@ -1063,9 +1094,9 @@ message RequestUnregisterQuickMatchResponse {
 }
 
 message RequestUpdateQuickMatch {
-	required int64 field_1 = 1; // 10230000, 10310000
-	required int64 field_2 = 2; // 102350, 103140
-	required int64 field_3 = 3; // 1, 0
+	required int64 online_area_id = 1;                      // 10230000, 10310000
+	required int64 cell_id = 2;                             // 102350, 103140
+	required QuickMatchGameMode mode = 3;                   // 1, 0
 }
 
 message RequestUpdateQuickMatchResponse {

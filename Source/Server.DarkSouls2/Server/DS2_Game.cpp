@@ -23,7 +23,8 @@
 #include "Server/GameService/GameManagers/Misc/DS2_MiscManager.h"
 #include "Server/GameService/GameManagers/Visitor/DS2_VisitorManager.h"
 #include "Server/GameService/GameManagers/Ranking/DS2_RankingManager.h"
-#include "Server/GameService/GameManagers/MirrorKnight/DS2_MirrorKnightManager.h"0
+#include "Server/GameService/GameManagers/MirrorKnight/DS2_MirrorKnightManager.h"
+#include "Server/GameService/GameManagers/QuickMatch/DS2_QuickMatchManager.h"
 
 bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
@@ -139,6 +140,8 @@ void DS2_Game::RegisterGameManagers(GameService& Service)
     Service.RegisterManager(std::make_shared<DS2_RankingManager>(ServerInstance));
     Service.RegisterManager(std::make_shared<DS2_MirrorKnightManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_SignManager>(ServerInstance, &Service));
+    Service.RegisterManager(std::make_shared<DS2_QuickMatchManager>(ServerInstance, &Service));
+    
 }
 
 std::unique_ptr<PlayerState> DS2_Game::CreatePlayerState()
@@ -148,17 +151,41 @@ std::unique_ptr<PlayerState> DS2_Game::CreatePlayerState()
 
 std::string DS2_Game::GetAreaName(uint32_t AreaId)
 {
-    // TODO
-
-    return "";
+    return GetEnumString<DS2_OnlineAreaId>((DS2_OnlineAreaId)AreaId);
 }
 
 void DS2_Game::GetStatistics(GameService& Service, std::unordered_map<std::string, std::string>& Stats)
 {
-    // TODO
+    std::shared_ptr<DS2_BloodMessageManager> BloodMessages = Service.GetManager<DS2_BloodMessageManager>();
+    std::shared_ptr<DS2_BloodstainManager> Bloodstains = Service.GetManager<DS2_BloodstainManager>();
+    std::shared_ptr<DS2_QuickMatchManager> QuickMatches = Service.GetManager<DS2_QuickMatchManager>();
+    std::shared_ptr<DS2_SignManager> Signs = Service.GetManager<DS2_SignManager>();
+    std::shared_ptr<DS2_GhostManager> Ghosts = Service.GetManager<DS2_GhostManager>();
+
+    Stats["Live Blood Messages"] = std::to_string(BloodMessages->GetLiveCount());
+    Stats["Live Blood Stains"] = std::to_string(Bloodstains->GetLiveCount());
+    Stats["Live Undead Matches"] = std::to_string(QuickMatches->GetLiveCount());
+    Stats["Live Summon Signs"] = std::to_string(Signs->GetLiveCount());
+    Stats["Live Ghosts"] = std::to_string(Ghosts->GetLiveCount());
 }
 
 void DS2_Game::SendManagementMessage(Frpg2ReliableUdpMessageStream& stream, const std::string& TextMessage) 
 {
-    // TODO
+    DS2_Frpg2RequestMessage::ManagementTextMessage Message;
+    Message.set_push_message_id(DS2_Frpg2RequestMessage::PushID_ManagementTextMessage);
+    Message.set_message(TextMessage);
+    Message.set_unknown_4(0);
+    Message.set_unknown_5(0);
+
+    // Date makes no difference, just hard-code for now.
+    DS2_Frpg2PlayerData::DateTime* DateTime = Message.mutable_timestamp();
+    DateTime->set_year(2021);
+    DateTime->set_month(1);
+    DateTime->set_day(1);
+    DateTime->set_hours(0);
+    DateTime->set_minutes(0);
+    DateTime->set_seconds(0);
+    DateTime->set_tzdiff(0);
+
+    stream.Send(&Message);
 }
