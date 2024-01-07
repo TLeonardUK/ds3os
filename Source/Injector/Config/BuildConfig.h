@@ -38,6 +38,6 @@ public:
 #endif
 
     // Writes out all protobufs to a temporary folder
-    inline static const char* TEMP_LOG_FOLDER = "Z:/ds3os/Temp/ProtobufDump";
+    inline static const char* TEMP_LOG_FOLDER = "D:\\Temp\\";
 
 };

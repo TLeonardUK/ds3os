@@ -153,10 +153,19 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: ./Dockerfile
+        file: ./DarkSouls3.Dockerfile
         push: true
         no-cache: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds3os:latest 
+                          
+    - name: Build and push server docker
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DarkSouls2.Dockerfile
+        push: true
+        no-cache: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/ds2os:latest 
                                             
   make-release:
     name: Make Release
