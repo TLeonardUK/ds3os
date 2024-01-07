@@ -288,11 +288,12 @@ enum SignType {
   SignType_WhiteSoapstone = 1,
   SignType_SmallWhiteSoapstone = 3,
   SignType_RedSoapstone = 4,
-  SignType_Dragon = 6
+  SignType_Dragon = 6,
+  SignType_MirrorKnight = 99
 };
 bool SignType_IsValid(int value);
 const SignType SignType_MIN = SignType_WhiteSoapstone;
-const SignType SignType_MAX = SignType_Dragon;
+const SignType SignType_MAX = SignType_MirrorKnight;
 const int SignType_ARRAYSIZE = SignType_MAX + 1;
 
 enum BreakInType {
@@ -10015,16 +10016,53 @@ class PushRequestRejectMirrorKnightSign : public ::google::protobuf::MessageLite
   inline ::DS2_Frpg2RequestMessage::PushMessageId push_message_id() const;
   inline void set_push_message_id(::DS2_Frpg2RequestMessage::PushMessageId value);
 
+  // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 2;
+  inline bool has_sign_info() const;
+  inline void clear_sign_info();
+  static const int kSignInfoFieldNumber = 2;
+  inline const ::DS2_Frpg2RequestMessage::SignInfo& sign_info() const;
+  inline ::DS2_Frpg2RequestMessage::SignInfo* mutable_sign_info();
+  inline ::DS2_Frpg2RequestMessage::SignInfo* release_sign_info();
+  inline void set_allocated_sign_info(::DS2_Frpg2RequestMessage::SignInfo* sign_info);
+
+  // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+  inline bool has_error() const;
+  inline void clear_error();
+  static const int kErrorFieldNumber = 3;
+  inline ::DS2_Frpg2RequestMessage::SummonErrorId error() const;
+  inline void set_error(::DS2_Frpg2RequestMessage::SummonErrorId value);
+
+  // required string player_steam_id = 4;
+  inline bool has_player_steam_id() const;
+  inline void clear_player_steam_id();
+  static const int kPlayerSteamIdFieldNumber = 4;
+  inline const ::std::string& player_steam_id() const;
+  inline void set_player_steam_id(const ::std::string& value);
+  inline void set_player_steam_id(const char* value);
+  inline void set_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_player_steam_id();
+  inline ::std::string* release_player_steam_id();
+  inline void set_allocated_player_steam_id(::std::string* player_steam_id);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign)
  private:
   inline void set_has_push_message_id();
   inline void clear_has_push_message_id();
+  inline void set_has_sign_info();
+  inline void clear_has_sign_info();
+  inline void set_has_error();
+  inline void clear_has_error();
+  inline void set_has_player_steam_id();
+  inline void clear_has_player_steam_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::DS2_Frpg2RequestMessage::SignInfo* sign_info_;
   int push_message_id_;
+  int error_;
+  ::std::string* player_steam_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -10106,15 +10144,50 @@ class PushRequestRemoveMirrorKnightSign : public ::google::protobuf::MessageLite
   inline ::DS2_Frpg2RequestMessage::PushMessageId push_message_id() const;
   inline void set_push_message_id(::DS2_Frpg2RequestMessage::PushMessageId value);
 
+  // required int64 player_id = 2;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  inline ::google::protobuf::int64 player_id() const;
+  inline void set_player_id(::google::protobuf::int64 value);
+
+  // required int64 sign_id = 3;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 3;
+  inline ::google::protobuf::int64 sign_id() const;
+  inline void set_sign_id(::google::protobuf::int64 value);
+
+  // required string player_steam_id = 4;
+  inline bool has_player_steam_id() const;
+  inline void clear_player_steam_id();
+  static const int kPlayerSteamIdFieldNumber = 4;
+  inline const ::std::string& player_steam_id() const;
+  inline void set_player_steam_id(const ::std::string& value);
+  inline void set_player_steam_id(const char* value);
+  inline void set_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_player_steam_id();
+  inline ::std::string* release_player_steam_id();
+  inline void set_allocated_player_steam_id(::std::string* player_steam_id);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign)
  private:
   inline void set_has_push_message_id();
   inline void clear_has_push_message_id();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
+  inline void set_has_player_steam_id();
+  inline void clear_has_player_steam_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::int64 player_id_;
+  ::google::protobuf::int64 sign_id_;
+  ::std::string* player_steam_id_;
   int push_message_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
@@ -10197,15 +10270,65 @@ class PushRequestSummonMirrorKnightSign : public ::google::protobuf::MessageLite
   inline ::DS2_Frpg2RequestMessage::PushMessageId push_message_id() const;
   inline void set_push_message_id(::DS2_Frpg2RequestMessage::PushMessageId value);
 
+  // required int64 player_id = 2;
+  inline bool has_player_id() const;
+  inline void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  inline ::google::protobuf::int64 player_id() const;
+  inline void set_player_id(::google::protobuf::int64 value);
+
+  // required int64 sign_id = 3;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 3;
+  inline ::google::protobuf::int64 sign_id() const;
+  inline void set_sign_id(::google::protobuf::int64 value);
+
+  // required bytes player_struct = 4;
+  inline bool has_player_struct() const;
+  inline void clear_player_struct();
+  static const int kPlayerStructFieldNumber = 4;
+  inline const ::std::string& player_struct() const;
+  inline void set_player_struct(const ::std::string& value);
+  inline void set_player_struct(const char* value);
+  inline void set_player_struct(const void* value, size_t size);
+  inline ::std::string* mutable_player_struct();
+  inline ::std::string* release_player_struct();
+  inline void set_allocated_player_struct(::std::string* player_struct);
+
+  // required string player_steam_id = 5;
+  inline bool has_player_steam_id() const;
+  inline void clear_player_steam_id();
+  static const int kPlayerSteamIdFieldNumber = 5;
+  inline const ::std::string& player_steam_id() const;
+  inline void set_player_steam_id(const ::std::string& value);
+  inline void set_player_steam_id(const char* value);
+  inline void set_player_steam_id(const char* value, size_t size);
+  inline ::std::string* mutable_player_steam_id();
+  inline ::std::string* release_player_steam_id();
+  inline void set_allocated_player_steam_id(::std::string* player_steam_id);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign)
  private:
   inline void set_has_push_message_id();
   inline void clear_has_push_message_id();
+  inline void set_has_player_id();
+  inline void clear_has_player_id();
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
+  inline void set_has_player_struct();
+  inline void clear_has_player_struct();
+  inline void set_has_player_steam_id();
+  inline void clear_has_player_steam_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::int64 player_id_;
+  ::google::protobuf::int64 sign_id_;
+  ::std::string* player_struct_;
+  ::std::string* player_steam_id_;
   int push_message_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
@@ -10281,13 +10404,40 @@ class RequestCreateMirrorKnightSign : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 1;
+  inline bool has_matching_parameter() const;
+  inline void clear_matching_parameter();
+  static const int kMatchingParameterFieldNumber = 1;
+  inline const ::DS2_Frpg2RequestMessage::MatchingParameter& matching_parameter() const;
+  inline ::DS2_Frpg2RequestMessage::MatchingParameter* mutable_matching_parameter();
+  inline ::DS2_Frpg2RequestMessage::MatchingParameter* release_matching_parameter();
+  inline void set_allocated_matching_parameter(::DS2_Frpg2RequestMessage::MatchingParameter* matching_parameter);
+
+  // required bytes data = 2;
+  inline bool has_data() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 2;
+  inline const ::std::string& data() const;
+  inline void set_data(const ::std::string& value);
+  inline void set_data(const char* value);
+  inline void set_data(const void* value, size_t size);
+  inline ::std::string* mutable_data();
+  inline ::std::string* release_data();
+  inline void set_allocated_data(::std::string* data);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign)
  private:
+  inline void set_has_matching_parameter();
+  inline void clear_has_matching_parameter();
+  inline void set_has_data();
+  inline void clear_has_data();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::DS2_Frpg2RequestMessage::MatchingParameter* matching_parameter_;
+  ::std::string* data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -10362,13 +10512,23 @@ class RequestCreateMirrorKnightSignResponse : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
+  // required int64 sign_id = 1;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 1;
+  inline ::google::protobuf::int64 sign_id() const;
+  inline void set_sign_id(::google::protobuf::int64 value);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSignResponse)
  private:
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::int64 sign_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -10443,13 +10603,35 @@ class RequestGetMirrorKnightSignList : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required int64 max_signs = 1;
+  inline bool has_max_signs() const;
+  inline void clear_max_signs();
+  static const int kMaxSignsFieldNumber = 1;
+  inline ::google::protobuf::int64 max_signs() const;
+  inline void set_max_signs(::google::protobuf::int64 value);
+
+  // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 2;
+  inline bool has_matching_parameter() const;
+  inline void clear_matching_parameter();
+  static const int kMatchingParameterFieldNumber = 2;
+  inline const ::DS2_Frpg2RequestMessage::MatchingParameter& matching_parameter() const;
+  inline ::DS2_Frpg2RequestMessage::MatchingParameter* mutable_matching_parameter();
+  inline ::DS2_Frpg2RequestMessage::MatchingParameter* release_matching_parameter();
+  inline void set_allocated_matching_parameter(::DS2_Frpg2RequestMessage::MatchingParameter* matching_parameter);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList)
  private:
+  inline void set_has_max_signs();
+  inline void clear_has_max_signs();
+  inline void set_has_matching_parameter();
+  inline void clear_has_matching_parameter();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::int64 max_signs_;
+  ::DS2_Frpg2RequestMessage::MatchingParameter* matching_parameter_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -10524,6 +10706,18 @@ class RequestGetMirrorKnightSignListResponse : public ::google::protobuf::Messag
 
   // accessors -------------------------------------------------------
 
+  // repeated .DS2_Frpg2RequestMessage.SignData sign_data = 2;
+  inline int sign_data_size() const;
+  inline void clear_sign_data();
+  static const int kSignDataFieldNumber = 2;
+  inline const ::DS2_Frpg2RequestMessage::SignData& sign_data(int index) const;
+  inline ::DS2_Frpg2RequestMessage::SignData* mutable_sign_data(int index);
+  inline ::DS2_Frpg2RequestMessage::SignData* add_sign_data();
+  inline const ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::SignData >&
+      sign_data() const;
+  inline ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::SignData >*
+      mutable_sign_data();
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse)
  private:
 
@@ -10531,6 +10725,7 @@ class RequestGetMirrorKnightSignListResponse : public ::google::protobuf::Messag
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::SignData > sign_data_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -10605,13 +10800,63 @@ class RequestRejectMirrorKnightSign : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required int64 online_area_id = 1;
+  inline bool has_online_area_id() const;
+  inline void clear_online_area_id();
+  static const int kOnlineAreaIdFieldNumber = 1;
+  inline ::google::protobuf::int64 online_area_id() const;
+  inline void set_online_area_id(::google::protobuf::int64 value);
+
+  // required int64 sign_id = 2;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 2;
+  inline ::google::protobuf::int64 sign_id() const;
+  inline void set_sign_id(::google::protobuf::int64 value);
+
+  // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+  inline bool has_error() const;
+  inline void clear_error();
+  static const int kErrorFieldNumber = 3;
+  inline ::DS2_Frpg2RequestMessage::SummonErrorId error() const;
+  inline void set_error(::DS2_Frpg2RequestMessage::SummonErrorId value);
+
+  // required int64 unknown_4 = 4;
+  inline bool has_unknown_4() const;
+  inline void clear_unknown_4();
+  static const int kUnknown4FieldNumber = 4;
+  inline ::google::protobuf::int64 unknown_4() const;
+  inline void set_unknown_4(::google::protobuf::int64 value);
+
+  // required int64 cell_id = 5;
+  inline bool has_cell_id() const;
+  inline void clear_cell_id();
+  static const int kCellIdFieldNumber = 5;
+  inline ::google::protobuf::int64 cell_id() const;
+  inline void set_cell_id(::google::protobuf::int64 value);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign)
  private:
+  inline void set_has_online_area_id();
+  inline void clear_has_online_area_id();
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
+  inline void set_has_error();
+  inline void clear_has_error();
+  inline void set_has_unknown_4();
+  inline void clear_has_unknown_4();
+  inline void set_has_cell_id();
+  inline void clear_has_cell_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::int64 online_area_id_;
+  ::google::protobuf::int64 sign_id_;
+  ::google::protobuf::int64 unknown_4_;
+  ::google::protobuf::int64 cell_id_;
+  int error_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -10767,13 +11012,23 @@ class RequestRemoveMirrorKnightSign : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required int64 sign_id = 1;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 1;
+  inline ::google::protobuf::int64 sign_id() const;
+  inline void set_sign_id(::google::protobuf::int64 value);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestRemoveMirrorKnightSign)
  private:
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::int64 sign_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -10929,13 +11184,40 @@ class RequestSummonMirrorKnightSign : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 1;
+  inline bool has_sign_info() const;
+  inline void clear_sign_info();
+  static const int kSignInfoFieldNumber = 1;
+  inline const ::DS2_Frpg2RequestMessage::SignInfo& sign_info() const;
+  inline ::DS2_Frpg2RequestMessage::SignInfo* mutable_sign_info();
+  inline ::DS2_Frpg2RequestMessage::SignInfo* release_sign_info();
+  inline void set_allocated_sign_info(::DS2_Frpg2RequestMessage::SignInfo* sign_info);
+
+  // required bytes player_struct = 2;
+  inline bool has_player_struct() const;
+  inline void clear_player_struct();
+  static const int kPlayerStructFieldNumber = 2;
+  inline const ::std::string& player_struct() const;
+  inline void set_player_struct(const ::std::string& value);
+  inline void set_player_struct(const char* value);
+  inline void set_player_struct(const void* value, size_t size);
+  inline ::std::string* mutable_player_struct();
+  inline ::std::string* release_player_struct();
+  inline void set_allocated_player_struct(::std::string* player_struct);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign)
  private:
+  inline void set_has_sign_info();
+  inline void clear_has_sign_info();
+  inline void set_has_player_struct();
+  inline void clear_has_player_struct();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::DS2_Frpg2RequestMessage::SignInfo* sign_info_;
+  ::std::string* player_struct_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -11091,13 +11373,23 @@ class RequestUpdateMirrorKnightSign : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required int64 sign_id = 1;
+  inline bool has_sign_id() const;
+  inline void clear_sign_id();
+  static const int kSignIdFieldNumber = 1;
+  inline ::google::protobuf::int64 sign_id() const;
+  inline void set_sign_id(::google::protobuf::int64 value);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.RequestUpdateMirrorKnightSign)
  private:
+  inline void set_has_sign_id();
+  inline void clear_has_sign_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::int64 sign_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -28971,6 +29263,152 @@ inline void PushRequestRejectMirrorKnightSign::set_push_message_id(::DS2_Frpg2Re
   // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.push_message_id)
 }
 
+// required .DS2_Frpg2RequestMessage.SignInfo sign_info = 2;
+inline bool PushRequestRejectMirrorKnightSign::has_sign_info() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushRequestRejectMirrorKnightSign::set_has_sign_info() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushRequestRejectMirrorKnightSign::clear_has_sign_info() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PushRequestRejectMirrorKnightSign::clear_sign_info() {
+  if (sign_info_ != NULL) sign_info_->::DS2_Frpg2RequestMessage::SignInfo::Clear();
+  clear_has_sign_info();
+}
+inline const ::DS2_Frpg2RequestMessage::SignInfo& PushRequestRejectMirrorKnightSign::sign_info() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.sign_info)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return sign_info_ != NULL ? *sign_info_ : *default_instance().sign_info_;
+#else
+  return sign_info_ != NULL ? *sign_info_ : *default_instance_->sign_info_;
+#endif
+}
+inline ::DS2_Frpg2RequestMessage::SignInfo* PushRequestRejectMirrorKnightSign::mutable_sign_info() {
+  set_has_sign_info();
+  if (sign_info_ == NULL) sign_info_ = new ::DS2_Frpg2RequestMessage::SignInfo;
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.sign_info)
+  return sign_info_;
+}
+inline ::DS2_Frpg2RequestMessage::SignInfo* PushRequestRejectMirrorKnightSign::release_sign_info() {
+  clear_has_sign_info();
+  ::DS2_Frpg2RequestMessage::SignInfo* temp = sign_info_;
+  sign_info_ = NULL;
+  return temp;
+}
+inline void PushRequestRejectMirrorKnightSign::set_allocated_sign_info(::DS2_Frpg2RequestMessage::SignInfo* sign_info) {
+  delete sign_info_;
+  sign_info_ = sign_info;
+  if (sign_info) {
+    set_has_sign_info();
+  } else {
+    clear_has_sign_info();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.sign_info)
+}
+
+// required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+inline bool PushRequestRejectMirrorKnightSign::has_error() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PushRequestRejectMirrorKnightSign::set_has_error() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PushRequestRejectMirrorKnightSign::clear_has_error() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PushRequestRejectMirrorKnightSign::clear_error() {
+  error_ = 0;
+  clear_has_error();
+}
+inline ::DS2_Frpg2RequestMessage::SummonErrorId PushRequestRejectMirrorKnightSign::error() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.error)
+  return static_cast< ::DS2_Frpg2RequestMessage::SummonErrorId >(error_);
+}
+inline void PushRequestRejectMirrorKnightSign::set_error(::DS2_Frpg2RequestMessage::SummonErrorId value) {
+  assert(::DS2_Frpg2RequestMessage::SummonErrorId_IsValid(value));
+  set_has_error();
+  error_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.error)
+}
+
+// required string player_steam_id = 4;
+inline bool PushRequestRejectMirrorKnightSign::has_player_steam_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PushRequestRejectMirrorKnightSign::set_has_player_steam_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PushRequestRejectMirrorKnightSign::clear_has_player_steam_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PushRequestRejectMirrorKnightSign::clear_player_steam_id() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_->clear();
+  }
+  clear_has_player_steam_id();
+}
+inline const ::std::string& PushRequestRejectMirrorKnightSign::player_steam_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.player_steam_id)
+  return *player_steam_id_;
+}
+inline void PushRequestRejectMirrorKnightSign::set_player_steam_id(const ::std::string& value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.player_steam_id)
+}
+inline void PushRequestRejectMirrorKnightSign::set_player_steam_id(const char* value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.player_steam_id)
+}
+inline void PushRequestRejectMirrorKnightSign::set_player_steam_id(const char* value, size_t size) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.player_steam_id)
+}
+inline ::std::string* PushRequestRejectMirrorKnightSign::mutable_player_steam_id() {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.player_steam_id)
+  return player_steam_id_;
+}
+inline ::std::string* PushRequestRejectMirrorKnightSign::release_player_steam_id() {
+  clear_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_steam_id_;
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestRejectMirrorKnightSign::set_allocated_player_steam_id(::std::string* player_steam_id) {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
+  if (player_steam_id) {
+    set_has_player_steam_id();
+    player_steam_id_ = player_steam_id;
+  } else {
+    clear_has_player_steam_id();
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign.player_steam_id)
+}
+
 // -------------------------------------------------------------------
 
 // PushRequestRemoveMirrorKnightSign
@@ -28998,6 +29436,130 @@ inline void PushRequestRemoveMirrorKnightSign::set_push_message_id(::DS2_Frpg2Re
   set_has_push_message_id();
   push_message_id_ = value;
   // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.push_message_id)
+}
+
+// required int64 player_id = 2;
+inline bool PushRequestRemoveMirrorKnightSign::has_player_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushRequestRemoveMirrorKnightSign::set_has_player_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushRequestRemoveMirrorKnightSign::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PushRequestRemoveMirrorKnightSign::clear_player_id() {
+  player_id_ = GOOGLE_LONGLONG(0);
+  clear_has_player_id();
+}
+inline ::google::protobuf::int64 PushRequestRemoveMirrorKnightSign::player_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_id)
+  return player_id_;
+}
+inline void PushRequestRemoveMirrorKnightSign::set_player_id(::google::protobuf::int64 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_id)
+}
+
+// required int64 sign_id = 3;
+inline bool PushRequestRemoveMirrorKnightSign::has_sign_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PushRequestRemoveMirrorKnightSign::set_has_sign_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PushRequestRemoveMirrorKnightSign::clear_has_sign_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PushRequestRemoveMirrorKnightSign::clear_sign_id() {
+  sign_id_ = GOOGLE_LONGLONG(0);
+  clear_has_sign_id();
+}
+inline ::google::protobuf::int64 PushRequestRemoveMirrorKnightSign::sign_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.sign_id)
+  return sign_id_;
+}
+inline void PushRequestRemoveMirrorKnightSign::set_sign_id(::google::protobuf::int64 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.sign_id)
+}
+
+// required string player_steam_id = 4;
+inline bool PushRequestRemoveMirrorKnightSign::has_player_steam_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PushRequestRemoveMirrorKnightSign::set_has_player_steam_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PushRequestRemoveMirrorKnightSign::clear_has_player_steam_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PushRequestRemoveMirrorKnightSign::clear_player_steam_id() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_->clear();
+  }
+  clear_has_player_steam_id();
+}
+inline const ::std::string& PushRequestRemoveMirrorKnightSign::player_steam_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_steam_id)
+  return *player_steam_id_;
+}
+inline void PushRequestRemoveMirrorKnightSign::set_player_steam_id(const ::std::string& value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_steam_id)
+}
+inline void PushRequestRemoveMirrorKnightSign::set_player_steam_id(const char* value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_steam_id)
+}
+inline void PushRequestRemoveMirrorKnightSign::set_player_steam_id(const char* value, size_t size) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_steam_id)
+}
+inline ::std::string* PushRequestRemoveMirrorKnightSign::mutable_player_steam_id() {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_steam_id)
+  return player_steam_id_;
+}
+inline ::std::string* PushRequestRemoveMirrorKnightSign::release_player_steam_id() {
+  clear_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_steam_id_;
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestRemoveMirrorKnightSign::set_allocated_player_steam_id(::std::string* player_steam_id) {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
+  if (player_steam_id) {
+    set_has_player_steam_id();
+    player_steam_id_ = player_steam_id;
+  } else {
+    clear_has_player_steam_id();
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign.player_steam_id)
 }
 
 // -------------------------------------------------------------------
@@ -29029,25 +29591,590 @@ inline void PushRequestSummonMirrorKnightSign::set_push_message_id(::DS2_Frpg2Re
   // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.push_message_id)
 }
 
+// required int64 player_id = 2;
+inline bool PushRequestSummonMirrorKnightSign::has_player_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PushRequestSummonMirrorKnightSign::set_has_player_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_has_player_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_player_id() {
+  player_id_ = GOOGLE_LONGLONG(0);
+  clear_has_player_id();
+}
+inline ::google::protobuf::int64 PushRequestSummonMirrorKnightSign::player_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_id)
+  return player_id_;
+}
+inline void PushRequestSummonMirrorKnightSign::set_player_id(::google::protobuf::int64 value) {
+  set_has_player_id();
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_id)
+}
+
+// required int64 sign_id = 3;
+inline bool PushRequestSummonMirrorKnightSign::has_sign_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PushRequestSummonMirrorKnightSign::set_has_sign_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_has_sign_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_sign_id() {
+  sign_id_ = GOOGLE_LONGLONG(0);
+  clear_has_sign_id();
+}
+inline ::google::protobuf::int64 PushRequestSummonMirrorKnightSign::sign_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.sign_id)
+  return sign_id_;
+}
+inline void PushRequestSummonMirrorKnightSign::set_sign_id(::google::protobuf::int64 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.sign_id)
+}
+
+// required bytes player_struct = 4;
+inline bool PushRequestSummonMirrorKnightSign::has_player_struct() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PushRequestSummonMirrorKnightSign::set_has_player_struct() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_has_player_struct() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_player_struct() {
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_->clear();
+  }
+  clear_has_player_struct();
+}
+inline const ::std::string& PushRequestSummonMirrorKnightSign::player_struct() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_struct)
+  return *player_struct_;
+}
+inline void PushRequestSummonMirrorKnightSign::set_player_struct(const ::std::string& value) {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  player_struct_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_struct)
+}
+inline void PushRequestSummonMirrorKnightSign::set_player_struct(const char* value) {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  player_struct_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_struct)
+}
+inline void PushRequestSummonMirrorKnightSign::set_player_struct(const void* value, size_t size) {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  player_struct_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_struct)
+}
+inline ::std::string* PushRequestSummonMirrorKnightSign::mutable_player_struct() {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_struct)
+  return player_struct_;
+}
+inline ::std::string* PushRequestSummonMirrorKnightSign::release_player_struct() {
+  clear_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_struct_;
+    player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestSummonMirrorKnightSign::set_allocated_player_struct(::std::string* player_struct) {
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_struct_;
+  }
+  if (player_struct) {
+    set_has_player_struct();
+    player_struct_ = player_struct;
+  } else {
+    clear_has_player_struct();
+    player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_struct)
+}
+
+// required string player_steam_id = 5;
+inline bool PushRequestSummonMirrorKnightSign::has_player_steam_id() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void PushRequestSummonMirrorKnightSign::set_has_player_steam_id() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_has_player_steam_id() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void PushRequestSummonMirrorKnightSign::clear_player_steam_id() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_->clear();
+  }
+  clear_has_player_steam_id();
+}
+inline const ::std::string& PushRequestSummonMirrorKnightSign::player_steam_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_steam_id)
+  return *player_steam_id_;
+}
+inline void PushRequestSummonMirrorKnightSign::set_player_steam_id(const ::std::string& value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_steam_id)
+}
+inline void PushRequestSummonMirrorKnightSign::set_player_steam_id(const char* value) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_steam_id)
+}
+inline void PushRequestSummonMirrorKnightSign::set_player_steam_id(const char* value, size_t size) {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  player_steam_id_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_steam_id)
+}
+inline ::std::string* PushRequestSummonMirrorKnightSign::mutable_player_steam_id() {
+  set_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_steam_id_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_steam_id)
+  return player_steam_id_;
+}
+inline ::std::string* PushRequestSummonMirrorKnightSign::release_player_steam_id() {
+  clear_has_player_steam_id();
+  if (player_steam_id_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_steam_id_;
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PushRequestSummonMirrorKnightSign::set_allocated_player_steam_id(::std::string* player_steam_id) {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
+  if (player_steam_id) {
+    set_has_player_steam_id();
+    player_steam_id_ = player_steam_id;
+  } else {
+    clear_has_player_steam_id();
+    player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign.player_steam_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestCreateMirrorKnightSign
+
+// required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 1;
+inline bool RequestCreateMirrorKnightSign::has_matching_parameter() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestCreateMirrorKnightSign::set_has_matching_parameter() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestCreateMirrorKnightSign::clear_has_matching_parameter() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestCreateMirrorKnightSign::clear_matching_parameter() {
+  if (matching_parameter_ != NULL) matching_parameter_->::DS2_Frpg2RequestMessage::MatchingParameter::Clear();
+  clear_has_matching_parameter();
+}
+inline const ::DS2_Frpg2RequestMessage::MatchingParameter& RequestCreateMirrorKnightSign::matching_parameter() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.matching_parameter)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance().matching_parameter_;
+#else
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance_->matching_parameter_;
+#endif
+}
+inline ::DS2_Frpg2RequestMessage::MatchingParameter* RequestCreateMirrorKnightSign::mutable_matching_parameter() {
+  set_has_matching_parameter();
+  if (matching_parameter_ == NULL) matching_parameter_ = new ::DS2_Frpg2RequestMessage::MatchingParameter;
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.matching_parameter)
+  return matching_parameter_;
+}
+inline ::DS2_Frpg2RequestMessage::MatchingParameter* RequestCreateMirrorKnightSign::release_matching_parameter() {
+  clear_has_matching_parameter();
+  ::DS2_Frpg2RequestMessage::MatchingParameter* temp = matching_parameter_;
+  matching_parameter_ = NULL;
+  return temp;
+}
+inline void RequestCreateMirrorKnightSign::set_allocated_matching_parameter(::DS2_Frpg2RequestMessage::MatchingParameter* matching_parameter) {
+  delete matching_parameter_;
+  matching_parameter_ = matching_parameter;
+  if (matching_parameter) {
+    set_has_matching_parameter();
+  } else {
+    clear_has_matching_parameter();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.matching_parameter)
+}
+
+// required bytes data = 2;
+inline bool RequestCreateMirrorKnightSign::has_data() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestCreateMirrorKnightSign::set_has_data() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestCreateMirrorKnightSign::clear_has_data() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestCreateMirrorKnightSign::clear_data() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_->clear();
+  }
+  clear_has_data();
+}
+inline const ::std::string& RequestCreateMirrorKnightSign::data() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.data)
+  return *data_;
+}
+inline void RequestCreateMirrorKnightSign::set_data(const ::std::string& value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.data)
+}
+inline void RequestCreateMirrorKnightSign::set_data(const char* value) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.data)
+}
+inline void RequestCreateMirrorKnightSign::set_data(const void* value, size_t size) {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  data_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.data)
+}
+inline ::std::string* RequestCreateMirrorKnightSign::mutable_data() {
+  set_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    data_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.data)
+  return data_;
+}
+inline ::std::string* RequestCreateMirrorKnightSign::release_data() {
+  clear_has_data();
+  if (data_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = data_;
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestCreateMirrorKnightSign::set_allocated_data(::std::string* data) {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
+  if (data) {
+    set_has_data();
+    data_ = data;
+  } else {
+    clear_has_data();
+    data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign.data)
+}
 
 // -------------------------------------------------------------------
 
 // RequestCreateMirrorKnightSignResponse
 
+// required int64 sign_id = 1;
+inline bool RequestCreateMirrorKnightSignResponse::has_sign_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestCreateMirrorKnightSignResponse::set_has_sign_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestCreateMirrorKnightSignResponse::clear_has_sign_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestCreateMirrorKnightSignResponse::clear_sign_id() {
+  sign_id_ = GOOGLE_LONGLONG(0);
+  clear_has_sign_id();
+}
+inline ::google::protobuf::int64 RequestCreateMirrorKnightSignResponse::sign_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSignResponse.sign_id)
+  return sign_id_;
+}
+inline void RequestCreateMirrorKnightSignResponse::set_sign_id(::google::protobuf::int64 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSignResponse.sign_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestGetMirrorKnightSignList
+
+// required int64 max_signs = 1;
+inline bool RequestGetMirrorKnightSignList::has_max_signs() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestGetMirrorKnightSignList::set_has_max_signs() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestGetMirrorKnightSignList::clear_has_max_signs() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestGetMirrorKnightSignList::clear_max_signs() {
+  max_signs_ = GOOGLE_LONGLONG(0);
+  clear_has_max_signs();
+}
+inline ::google::protobuf::int64 RequestGetMirrorKnightSignList::max_signs() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList.max_signs)
+  return max_signs_;
+}
+inline void RequestGetMirrorKnightSignList::set_max_signs(::google::protobuf::int64 value) {
+  set_has_max_signs();
+  max_signs_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList.max_signs)
+}
+
+// required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 2;
+inline bool RequestGetMirrorKnightSignList::has_matching_parameter() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestGetMirrorKnightSignList::set_has_matching_parameter() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestGetMirrorKnightSignList::clear_has_matching_parameter() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestGetMirrorKnightSignList::clear_matching_parameter() {
+  if (matching_parameter_ != NULL) matching_parameter_->::DS2_Frpg2RequestMessage::MatchingParameter::Clear();
+  clear_has_matching_parameter();
+}
+inline const ::DS2_Frpg2RequestMessage::MatchingParameter& RequestGetMirrorKnightSignList::matching_parameter() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList.matching_parameter)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance().matching_parameter_;
+#else
+  return matching_parameter_ != NULL ? *matching_parameter_ : *default_instance_->matching_parameter_;
+#endif
+}
+inline ::DS2_Frpg2RequestMessage::MatchingParameter* RequestGetMirrorKnightSignList::mutable_matching_parameter() {
+  set_has_matching_parameter();
+  if (matching_parameter_ == NULL) matching_parameter_ = new ::DS2_Frpg2RequestMessage::MatchingParameter;
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList.matching_parameter)
+  return matching_parameter_;
+}
+inline ::DS2_Frpg2RequestMessage::MatchingParameter* RequestGetMirrorKnightSignList::release_matching_parameter() {
+  clear_has_matching_parameter();
+  ::DS2_Frpg2RequestMessage::MatchingParameter* temp = matching_parameter_;
+  matching_parameter_ = NULL;
+  return temp;
+}
+inline void RequestGetMirrorKnightSignList::set_allocated_matching_parameter(::DS2_Frpg2RequestMessage::MatchingParameter* matching_parameter) {
+  delete matching_parameter_;
+  matching_parameter_ = matching_parameter;
+  if (matching_parameter) {
+    set_has_matching_parameter();
+  } else {
+    clear_has_matching_parameter();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList.matching_parameter)
+}
 
 // -------------------------------------------------------------------
 
 // RequestGetMirrorKnightSignListResponse
 
+// repeated .DS2_Frpg2RequestMessage.SignData sign_data = 2;
+inline int RequestGetMirrorKnightSignListResponse::sign_data_size() const {
+  return sign_data_.size();
+}
+inline void RequestGetMirrorKnightSignListResponse::clear_sign_data() {
+  sign_data_.Clear();
+}
+inline const ::DS2_Frpg2RequestMessage::SignData& RequestGetMirrorKnightSignListResponse::sign_data(int index) const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse.sign_data)
+  return sign_data_.Get(index);
+}
+inline ::DS2_Frpg2RequestMessage::SignData* RequestGetMirrorKnightSignListResponse::mutable_sign_data(int index) {
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse.sign_data)
+  return sign_data_.Mutable(index);
+}
+inline ::DS2_Frpg2RequestMessage::SignData* RequestGetMirrorKnightSignListResponse::add_sign_data() {
+  // @@protoc_insertion_point(field_add:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse.sign_data)
+  return sign_data_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::SignData >&
+RequestGetMirrorKnightSignListResponse::sign_data() const {
+  // @@protoc_insertion_point(field_list:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse.sign_data)
+  return sign_data_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::DS2_Frpg2RequestMessage::SignData >*
+RequestGetMirrorKnightSignListResponse::mutable_sign_data() {
+  // @@protoc_insertion_point(field_mutable_list:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse.sign_data)
+  return &sign_data_;
+}
+
 // -------------------------------------------------------------------
 
 // RequestRejectMirrorKnightSign
+
+// required int64 online_area_id = 1;
+inline bool RequestRejectMirrorKnightSign::has_online_area_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestRejectMirrorKnightSign::set_has_online_area_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestRejectMirrorKnightSign::clear_has_online_area_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestRejectMirrorKnightSign::clear_online_area_id() {
+  online_area_id_ = GOOGLE_LONGLONG(0);
+  clear_has_online_area_id();
+}
+inline ::google::protobuf::int64 RequestRejectMirrorKnightSign::online_area_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.online_area_id)
+  return online_area_id_;
+}
+inline void RequestRejectMirrorKnightSign::set_online_area_id(::google::protobuf::int64 value) {
+  set_has_online_area_id();
+  online_area_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.online_area_id)
+}
+
+// required int64 sign_id = 2;
+inline bool RequestRejectMirrorKnightSign::has_sign_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestRejectMirrorKnightSign::set_has_sign_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestRejectMirrorKnightSign::clear_has_sign_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestRejectMirrorKnightSign::clear_sign_id() {
+  sign_id_ = GOOGLE_LONGLONG(0);
+  clear_has_sign_id();
+}
+inline ::google::protobuf::int64 RequestRejectMirrorKnightSign::sign_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.sign_id)
+  return sign_id_;
+}
+inline void RequestRejectMirrorKnightSign::set_sign_id(::google::protobuf::int64 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.sign_id)
+}
+
+// required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+inline bool RequestRejectMirrorKnightSign::has_error() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RequestRejectMirrorKnightSign::set_has_error() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RequestRejectMirrorKnightSign::clear_has_error() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RequestRejectMirrorKnightSign::clear_error() {
+  error_ = 0;
+  clear_has_error();
+}
+inline ::DS2_Frpg2RequestMessage::SummonErrorId RequestRejectMirrorKnightSign::error() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.error)
+  return static_cast< ::DS2_Frpg2RequestMessage::SummonErrorId >(error_);
+}
+inline void RequestRejectMirrorKnightSign::set_error(::DS2_Frpg2RequestMessage::SummonErrorId value) {
+  assert(::DS2_Frpg2RequestMessage::SummonErrorId_IsValid(value));
+  set_has_error();
+  error_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.error)
+}
+
+// required int64 unknown_4 = 4;
+inline bool RequestRejectMirrorKnightSign::has_unknown_4() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void RequestRejectMirrorKnightSign::set_has_unknown_4() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void RequestRejectMirrorKnightSign::clear_has_unknown_4() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void RequestRejectMirrorKnightSign::clear_unknown_4() {
+  unknown_4_ = GOOGLE_LONGLONG(0);
+  clear_has_unknown_4();
+}
+inline ::google::protobuf::int64 RequestRejectMirrorKnightSign::unknown_4() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.unknown_4)
+  return unknown_4_;
+}
+inline void RequestRejectMirrorKnightSign::set_unknown_4(::google::protobuf::int64 value) {
+  set_has_unknown_4();
+  unknown_4_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.unknown_4)
+}
+
+// required int64 cell_id = 5;
+inline bool RequestRejectMirrorKnightSign::has_cell_id() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void RequestRejectMirrorKnightSign::set_has_cell_id() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void RequestRejectMirrorKnightSign::clear_has_cell_id() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void RequestRejectMirrorKnightSign::clear_cell_id() {
+  cell_id_ = GOOGLE_LONGLONG(0);
+  clear_has_cell_id();
+}
+inline ::google::protobuf::int64 RequestRejectMirrorKnightSign::cell_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.cell_id)
+  return cell_id_;
+}
+inline void RequestRejectMirrorKnightSign::set_cell_id(::google::protobuf::int64 value) {
+  set_has_cell_id();
+  cell_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign.cell_id)
+}
 
 // -------------------------------------------------------------------
 
@@ -29057,6 +30184,30 @@ inline void PushRequestSummonMirrorKnightSign::set_push_message_id(::DS2_Frpg2Re
 
 // RequestRemoveMirrorKnightSign
 
+// required int64 sign_id = 1;
+inline bool RequestRemoveMirrorKnightSign::has_sign_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestRemoveMirrorKnightSign::set_has_sign_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestRemoveMirrorKnightSign::clear_has_sign_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestRemoveMirrorKnightSign::clear_sign_id() {
+  sign_id_ = GOOGLE_LONGLONG(0);
+  clear_has_sign_id();
+}
+inline ::google::protobuf::int64 RequestRemoveMirrorKnightSign::sign_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestRemoveMirrorKnightSign.sign_id)
+  return sign_id_;
+}
+inline void RequestRemoveMirrorKnightSign::set_sign_id(::google::protobuf::int64 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestRemoveMirrorKnightSign.sign_id)
+}
+
 // -------------------------------------------------------------------
 
 // RequestRemoveMirrorKnightSignResponse
@@ -29065,6 +30216,127 @@ inline void PushRequestSummonMirrorKnightSign::set_push_message_id(::DS2_Frpg2Re
 
 // RequestSummonMirrorKnightSign
 
+// required .DS2_Frpg2RequestMessage.SignInfo sign_info = 1;
+inline bool RequestSummonMirrorKnightSign::has_sign_info() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestSummonMirrorKnightSign::set_has_sign_info() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestSummonMirrorKnightSign::clear_has_sign_info() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestSummonMirrorKnightSign::clear_sign_info() {
+  if (sign_info_ != NULL) sign_info_->::DS2_Frpg2RequestMessage::SignInfo::Clear();
+  clear_has_sign_info();
+}
+inline const ::DS2_Frpg2RequestMessage::SignInfo& RequestSummonMirrorKnightSign::sign_info() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.sign_info)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return sign_info_ != NULL ? *sign_info_ : *default_instance().sign_info_;
+#else
+  return sign_info_ != NULL ? *sign_info_ : *default_instance_->sign_info_;
+#endif
+}
+inline ::DS2_Frpg2RequestMessage::SignInfo* RequestSummonMirrorKnightSign::mutable_sign_info() {
+  set_has_sign_info();
+  if (sign_info_ == NULL) sign_info_ = new ::DS2_Frpg2RequestMessage::SignInfo;
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.sign_info)
+  return sign_info_;
+}
+inline ::DS2_Frpg2RequestMessage::SignInfo* RequestSummonMirrorKnightSign::release_sign_info() {
+  clear_has_sign_info();
+  ::DS2_Frpg2RequestMessage::SignInfo* temp = sign_info_;
+  sign_info_ = NULL;
+  return temp;
+}
+inline void RequestSummonMirrorKnightSign::set_allocated_sign_info(::DS2_Frpg2RequestMessage::SignInfo* sign_info) {
+  delete sign_info_;
+  sign_info_ = sign_info;
+  if (sign_info) {
+    set_has_sign_info();
+  } else {
+    clear_has_sign_info();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.sign_info)
+}
+
+// required bytes player_struct = 2;
+inline bool RequestSummonMirrorKnightSign::has_player_struct() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RequestSummonMirrorKnightSign::set_has_player_struct() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RequestSummonMirrorKnightSign::clear_has_player_struct() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RequestSummonMirrorKnightSign::clear_player_struct() {
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_->clear();
+  }
+  clear_has_player_struct();
+}
+inline const ::std::string& RequestSummonMirrorKnightSign::player_struct() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.player_struct)
+  return *player_struct_;
+}
+inline void RequestSummonMirrorKnightSign::set_player_struct(const ::std::string& value) {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  player_struct_->assign(value);
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.player_struct)
+}
+inline void RequestSummonMirrorKnightSign::set_player_struct(const char* value) {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  player_struct_->assign(value);
+  // @@protoc_insertion_point(field_set_char:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.player_struct)
+}
+inline void RequestSummonMirrorKnightSign::set_player_struct(const void* value, size_t size) {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  player_struct_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.player_struct)
+}
+inline ::std::string* RequestSummonMirrorKnightSign::mutable_player_struct() {
+  set_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    player_struct_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.player_struct)
+  return player_struct_;
+}
+inline ::std::string* RequestSummonMirrorKnightSign::release_player_struct() {
+  clear_has_player_struct();
+  if (player_struct_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = player_struct_;
+    player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void RequestSummonMirrorKnightSign::set_allocated_player_struct(::std::string* player_struct) {
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_struct_;
+  }
+  if (player_struct) {
+    set_has_player_struct();
+    player_struct_ = player_struct;
+  } else {
+    clear_has_player_struct();
+    player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign.player_struct)
+}
+
 // -------------------------------------------------------------------
 
 // RequestSummonMirrorKnightSignResponse
@@ -29072,6 +30344,30 @@ inline void PushRequestSummonMirrorKnightSign::set_push_message_id(::DS2_Frpg2Re
 // -------------------------------------------------------------------
 
 // RequestUpdateMirrorKnightSign
+
+// required int64 sign_id = 1;
+inline bool RequestUpdateMirrorKnightSign::has_sign_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RequestUpdateMirrorKnightSign::set_has_sign_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RequestUpdateMirrorKnightSign::clear_has_sign_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RequestUpdateMirrorKnightSign::clear_sign_id() {
+  sign_id_ = GOOGLE_LONGLONG(0);
+  clear_has_sign_id();
+}
+inline ::google::protobuf::int64 RequestUpdateMirrorKnightSign::sign_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.RequestUpdateMirrorKnightSign.sign_id)
+  return sign_id_;
+}
+inline void RequestUpdateMirrorKnightSign::set_sign_id(::google::protobuf::int64 value) {
+  set_has_sign_id();
+  sign_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestUpdateMirrorKnightSign.sign_id)
+}
 
 // -------------------------------------------------------------------
 

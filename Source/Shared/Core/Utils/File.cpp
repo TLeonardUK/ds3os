@@ -8,6 +8,7 @@
  */
 
 #include "Shared/Core/Utils/File.h"
+#include "Shared/Core/Utils/Logging.h"
 
 #include <fstream>
 #include <sstream>
@@ -17,6 +18,7 @@ bool ReadTextFromFile(const std::filesystem::path& path, std::string& Output)
     std::ifstream file(path.c_str());
     if (!file.is_open())
     {
+        Error("Failed to read from file: %s", path.string().c_str());
         return false;
     }
 
@@ -35,6 +37,7 @@ bool WriteTextToFile(const std::filesystem::path& path, const std::string& Input
     std::ofstream file(path.c_str());
     if (!file.is_open())
     {
+        Error("Failed to write to file: %s", path.string().c_str());
         return false;
     }
 
@@ -50,6 +53,7 @@ bool ReadBytesFromFile(const std::filesystem::path& path, std::vector<uint8_t>& 
     FILE* file = fopen(path.string().c_str(), "rb");
     if (!file)
     {
+        Error("Failed to read from file: %s", path.string().c_str());
         return false;
     }
 
@@ -73,6 +77,7 @@ bool WriteBytesToFile(const std::filesystem::path& path, const std::vector<uint8
     FILE* file = fopen(path.string().c_str(), "wb");
     if (!file)
     {
+        Error("Failed to write to file: %s", path.string().c_str());
         return false;
     }
 

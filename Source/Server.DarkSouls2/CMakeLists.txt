@@ -34,6 +34,8 @@ SET(SOURCES
     Server/GameService/GameManagers/Visitor/DS2_VisitorManager.h
     Server/GameService/GameManagers/Ranking/DS2_RankingManager.cpp
     Server/GameService/GameManagers/Ranking/DS2_RankingManager.h
+    Server/GameService/GameManagers/MirrorKnight/DS2_MirrorKnightManager.cpp
+    Server/GameService/GameManagers/MirrorKnight/DS2_MirrorKnightManager.h
     
     Server/GameService/Utils/DS2_GameIds.h
     Server/GameService/Utils/DS2_CellAndAreaId.h

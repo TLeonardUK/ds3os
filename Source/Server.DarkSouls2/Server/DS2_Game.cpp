@@ -17,12 +17,13 @@
 #include "Server/GameService/GameManagers/Ghosts/DS2_GhostManager.h"
 #include "Server/GameService/GameManagers/BloodMessage/DS2_BloodMessageManager.h"
 #include "Server/GameService/GameManagers/Bloodstain/DS2_BloodstainManager.h"
-#include "Server/GameService/GameManagers/Signs/DS2_SignManager.h"
+#include "Server/GameService/GameManagers/Signs/DS2_SignManager.h"0
 #include "Server/GameService/GameManagers/BreakIn/DS2_BreakInManager.h"
 #include "Server/GameService/GameManagers/Logging/DS2_LoggingManager.h"
 #include "Server/GameService/GameManagers/Misc/DS2_MiscManager.h"
 #include "Server/GameService/GameManagers/Visitor/DS2_VisitorManager.h"
 #include "Server/GameService/GameManagers/Ranking/DS2_RankingManager.h"
+#include "Server/GameService/GameManagers/MirrorKnight/DS2_MirrorKnightManager.h"0
 
 bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
@@ -131,12 +132,13 @@ void DS2_Game::RegisterGameManagers(GameService& Service)
     Service.RegisterManager(std::make_shared<DS2_GhostManager>(ServerInstance));
     Service.RegisterManager(std::make_shared<DS2_BloodMessageManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_BloodstainManager>(ServerInstance));
-    Service.RegisterManager(std::make_shared<DS2_SignManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_BreakInManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_LoggingManager>(ServerInstance));
     Service.RegisterManager(std::make_shared<DS2_MiscManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_VisitorManager>(ServerInstance, &Service));
     Service.RegisterManager(std::make_shared<DS2_RankingManager>(ServerInstance));
+    Service.RegisterManager(std::make_shared<DS2_MirrorKnightManager>(ServerInstance, &Service));
+    Service.RegisterManager(std::make_shared<DS2_SignManager>(ServerInstance, &Service));
 }
 
 std::unique_ptr<PlayerState> DS2_Game::CreatePlayerState()

@@ -732,6 +732,7 @@ bool SignType_IsValid(int value) {
     case 3:
     case 4:
     case 6:
+    case 99:
       return true;
     default:
       return false;
@@ -23017,6 +23018,9 @@ void RequestGetRightMatchingAreaResponse::Swap(RequestGetRightMatchingAreaRespon
 
 #ifndef _MSC_VER
 const int PushRequestRejectMirrorKnightSign::kPushMessageIdFieldNumber;
+const int PushRequestRejectMirrorKnightSign::kSignInfoFieldNumber;
+const int PushRequestRejectMirrorKnightSign::kErrorFieldNumber;
+const int PushRequestRejectMirrorKnightSign::kPlayerSteamIdFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestRejectMirrorKnightSign::PushRequestRejectMirrorKnightSign()
@@ -23026,6 +23030,12 @@ PushRequestRejectMirrorKnightSign::PushRequestRejectMirrorKnightSign()
 }
 
 void PushRequestRejectMirrorKnightSign::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  sign_info_ = const_cast< ::DS2_Frpg2RequestMessage::SignInfo*>(
+      ::DS2_Frpg2RequestMessage::SignInfo::internal_default_instance());
+#else
+  sign_info_ = const_cast< ::DS2_Frpg2RequestMessage::SignInfo*>(&::DS2_Frpg2RequestMessage::SignInfo::default_instance());
+#endif
 }
 
 PushRequestRejectMirrorKnightSign::PushRequestRejectMirrorKnightSign(const PushRequestRejectMirrorKnightSign& from)
@@ -23036,8 +23046,12 @@ PushRequestRejectMirrorKnightSign::PushRequestRejectMirrorKnightSign(const PushR
 }
 
 void PushRequestRejectMirrorKnightSign::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 925;
+  sign_info_ = NULL;
+  error_ = 0;
+  player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -23047,11 +23061,15 @@ PushRequestRejectMirrorKnightSign::~PushRequestRejectMirrorKnightSign() {
 }
 
 void PushRequestRejectMirrorKnightSign::SharedDtor() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
   if (this != default_instance_) {
   #endif
+    delete sign_info_;
   }
 }
 
@@ -23076,7 +23094,18 @@ PushRequestRejectMirrorKnightSign* PushRequestRejectMirrorKnightSign::New() cons
 }
 
 void PushRequestRejectMirrorKnightSign::Clear() {
-  push_message_id_ = 925;
+  if (_has_bits_[0 / 32] & 15) {
+    push_message_id_ = 925;
+    if (has_sign_info()) {
+      if (sign_info_ != NULL) sign_info_->::DS2_Frpg2RequestMessage::SignInfo::Clear();
+    }
+    error_ = 0;
+    if (has_player_steam_id()) {
+      if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_steam_id_->clear();
+      }
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -23108,6 +23137,53 @@ bool PushRequestRejectMirrorKnightSign::MergePartialFromCodedStream(
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
           }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_sign_info;
+        break;
+      }
+
+      // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_sign_info:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_sign_info()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_error;
+        break;
+      }
+
+      // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_error:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::SummonErrorId_IsValid(value)) {
+            set_error(static_cast< ::DS2_Frpg2RequestMessage::SummonErrorId >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_player_steam_id;
+        break;
+      }
+
+      // required string player_steam_id = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_player_steam_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_player_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -23146,6 +23222,24 @@ void PushRequestRejectMirrorKnightSign::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
+  // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 2;
+  if (has_sign_info()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, this->sign_info(), output);
+  }
+
+  // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+  if (has_error()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->error(), output);
+  }
+
+  // required string player_steam_id = 4;
+  if (has_player_steam_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->player_steam_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.PushRequestRejectMirrorKnightSign)
@@ -23159,6 +23253,26 @@ int PushRequestRejectMirrorKnightSign::ByteSize() const {
     if (has_push_message_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
+    }
+
+    // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 2;
+    if (has_sign_info()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->sign_info());
+    }
+
+    // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+    if (has_error()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->error());
+    }
+
+    // required string player_steam_id = 4;
+    if (has_player_steam_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->player_steam_id());
     }
 
   }
@@ -23181,6 +23295,15 @@ void PushRequestRejectMirrorKnightSign::MergeFrom(const PushRequestRejectMirrorK
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
+    if (from.has_sign_info()) {
+      mutable_sign_info()->::DS2_Frpg2RequestMessage::SignInfo::MergeFrom(from.sign_info());
+    }
+    if (from.has_error()) {
+      set_error(from.error());
+    }
+    if (from.has_player_steam_id()) {
+      set_player_steam_id(from.player_steam_id());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -23192,14 +23315,20 @@ void PushRequestRejectMirrorKnightSign::CopyFrom(const PushRequestRejectMirrorKn
 }
 
 bool PushRequestRejectMirrorKnightSign::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
+  if (has_sign_info()) {
+    if (!this->sign_info().IsInitialized()) return false;
+  }
   return true;
 }
 
 void PushRequestRejectMirrorKnightSign::Swap(PushRequestRejectMirrorKnightSign* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
+    std::swap(sign_info_, other->sign_info_);
+    std::swap(error_, other->error_);
+    std::swap(player_steam_id_, other->player_steam_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -23215,6 +23344,9 @@ void PushRequestRejectMirrorKnightSign::Swap(PushRequestRejectMirrorKnightSign* 
 
 #ifndef _MSC_VER
 const int PushRequestRemoveMirrorKnightSign::kPushMessageIdFieldNumber;
+const int PushRequestRemoveMirrorKnightSign::kPlayerIdFieldNumber;
+const int PushRequestRemoveMirrorKnightSign::kSignIdFieldNumber;
+const int PushRequestRemoveMirrorKnightSign::kPlayerSteamIdFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestRemoveMirrorKnightSign::PushRequestRemoveMirrorKnightSign()
@@ -23234,8 +23366,12 @@ PushRequestRemoveMirrorKnightSign::PushRequestRemoveMirrorKnightSign(const PushR
 }
 
 void PushRequestRemoveMirrorKnightSign::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 925;
+  player_id_ = GOOGLE_LONGLONG(0);
+  sign_id_ = GOOGLE_LONGLONG(0);
+  player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -23245,6 +23381,9 @@ PushRequestRemoveMirrorKnightSign::~PushRequestRemoveMirrorKnightSign() {
 }
 
 void PushRequestRemoveMirrorKnightSign::SharedDtor() {
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -23274,7 +23413,29 @@ PushRequestRemoveMirrorKnightSign* PushRequestRemoveMirrorKnightSign::New() cons
 }
 
 void PushRequestRemoveMirrorKnightSign::Clear() {
-  push_message_id_ = 925;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<PushRequestRemoveMirrorKnightSign*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 15) {
+    ZR_(player_id_, sign_id_);
+    push_message_id_ = 925;
+    if (has_player_steam_id()) {
+      if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_steam_id_->clear();
+      }
+    }
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -23306,6 +23467,49 @@ bool PushRequestRemoveMirrorKnightSign::MergePartialFromCodedStream(
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
           }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_player_id;
+        break;
+      }
+
+      // required int64 player_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_player_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &player_id_)));
+          set_has_player_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_sign_id;
+        break;
+      }
+
+      // required int64 sign_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_sign_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_player_steam_id;
+        break;
+      }
+
+      // required string player_steam_id = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_player_steam_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_player_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -23344,6 +23548,22 @@ void PushRequestRemoveMirrorKnightSign::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
+  // required int64 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->player_id(), output);
+  }
+
+  // required int64 sign_id = 3;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->sign_id(), output);
+  }
+
+  // required string player_steam_id = 4;
+  if (has_player_steam_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->player_steam_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.PushRequestRemoveMirrorKnightSign)
@@ -23357,6 +23577,27 @@ int PushRequestRemoveMirrorKnightSign::ByteSize() const {
     if (has_push_message_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
+    }
+
+    // required int64 player_id = 2;
+    if (has_player_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->player_id());
+    }
+
+    // required int64 sign_id = 3;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->sign_id());
+    }
+
+    // required string player_steam_id = 4;
+    if (has_player_steam_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->player_steam_id());
     }
 
   }
@@ -23379,6 +23620,15 @@ void PushRequestRemoveMirrorKnightSign::MergeFrom(const PushRequestRemoveMirrorK
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
+    }
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+    if (from.has_player_steam_id()) {
+      set_player_steam_id(from.player_steam_id());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -23390,7 +23640,7 @@ void PushRequestRemoveMirrorKnightSign::CopyFrom(const PushRequestRemoveMirrorKn
 }
 
 bool PushRequestRemoveMirrorKnightSign::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -23398,6 +23648,9 @@ bool PushRequestRemoveMirrorKnightSign::IsInitialized() const {
 void PushRequestRemoveMirrorKnightSign::Swap(PushRequestRemoveMirrorKnightSign* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
+    std::swap(player_id_, other->player_id_);
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(player_steam_id_, other->player_steam_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -23413,6 +23666,10 @@ void PushRequestRemoveMirrorKnightSign::Swap(PushRequestRemoveMirrorKnightSign* 
 
 #ifndef _MSC_VER
 const int PushRequestSummonMirrorKnightSign::kPushMessageIdFieldNumber;
+const int PushRequestSummonMirrorKnightSign::kPlayerIdFieldNumber;
+const int PushRequestSummonMirrorKnightSign::kSignIdFieldNumber;
+const int PushRequestSummonMirrorKnightSign::kPlayerStructFieldNumber;
+const int PushRequestSummonMirrorKnightSign::kPlayerSteamIdFieldNumber;
 #endif  // !_MSC_VER
 
 PushRequestSummonMirrorKnightSign::PushRequestSummonMirrorKnightSign()
@@ -23432,8 +23689,13 @@ PushRequestSummonMirrorKnightSign::PushRequestSummonMirrorKnightSign(const PushR
 }
 
 void PushRequestSummonMirrorKnightSign::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   push_message_id_ = 925;
+  player_id_ = GOOGLE_LONGLONG(0);
+  sign_id_ = GOOGLE_LONGLONG(0);
+  player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -23443,6 +23705,12 @@ PushRequestSummonMirrorKnightSign::~PushRequestSummonMirrorKnightSign() {
 }
 
 void PushRequestSummonMirrorKnightSign::SharedDtor() {
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_struct_;
+  }
+  if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_steam_id_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -23472,7 +23740,34 @@ PushRequestSummonMirrorKnightSign* PushRequestSummonMirrorKnightSign::New() cons
 }
 
 void PushRequestSummonMirrorKnightSign::Clear() {
-  push_message_id_ = 925;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<PushRequestSummonMirrorKnightSign*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(player_id_, sign_id_);
+    push_message_id_ = 925;
+    if (has_player_struct()) {
+      if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_struct_->clear();
+      }
+    }
+    if (has_player_steam_id()) {
+      if (player_steam_id_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_steam_id_->clear();
+      }
+    }
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -23504,6 +23799,62 @@ bool PushRequestSummonMirrorKnightSign::MergePartialFromCodedStream(
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
           }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_player_id;
+        break;
+      }
+
+      // required int64 player_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_player_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &player_id_)));
+          set_has_player_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_sign_id;
+        break;
+      }
+
+      // required int64 sign_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_sign_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_player_struct;
+        break;
+      }
+
+      // required bytes player_struct = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_player_struct:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_player_struct()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_player_steam_id;
+        break;
+      }
+
+      // required string player_steam_id = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_player_steam_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_player_steam_id()));
         } else {
           goto handle_unusual;
         }
@@ -23542,6 +23893,28 @@ void PushRequestSummonMirrorKnightSign::SerializeWithCachedSizes(
       1, this->push_message_id(), output);
   }
 
+  // required int64 player_id = 2;
+  if (has_player_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->player_id(), output);
+  }
+
+  // required int64 sign_id = 3;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->sign_id(), output);
+  }
+
+  // required bytes player_struct = 4;
+  if (has_player_struct()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      4, this->player_struct(), output);
+  }
+
+  // required string player_steam_id = 5;
+  if (has_player_steam_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      5, this->player_steam_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.PushRequestSummonMirrorKnightSign)
@@ -23555,6 +23928,34 @@ int PushRequestSummonMirrorKnightSign::ByteSize() const {
     if (has_push_message_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->push_message_id());
+    }
+
+    // required int64 player_id = 2;
+    if (has_player_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->player_id());
+    }
+
+    // required int64 sign_id = 3;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->sign_id());
+    }
+
+    // required bytes player_struct = 4;
+    if (has_player_struct()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->player_struct());
+    }
+
+    // required string player_steam_id = 5;
+    if (has_player_steam_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->player_steam_id());
     }
 
   }
@@ -23577,6 +23978,18 @@ void PushRequestSummonMirrorKnightSign::MergeFrom(const PushRequestSummonMirrorK
     if (from.has_push_message_id()) {
       set_push_message_id(from.push_message_id());
     }
+    if (from.has_player_id()) {
+      set_player_id(from.player_id());
+    }
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+    if (from.has_player_struct()) {
+      set_player_struct(from.player_struct());
+    }
+    if (from.has_player_steam_id()) {
+      set_player_steam_id(from.player_steam_id());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -23588,7 +24001,7 @@ void PushRequestSummonMirrorKnightSign::CopyFrom(const PushRequestSummonMirrorKn
 }
 
 bool PushRequestSummonMirrorKnightSign::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -23596,6 +24009,10 @@ bool PushRequestSummonMirrorKnightSign::IsInitialized() const {
 void PushRequestSummonMirrorKnightSign::Swap(PushRequestSummonMirrorKnightSign* other) {
   if (other != this) {
     std::swap(push_message_id_, other->push_message_id_);
+    std::swap(player_id_, other->player_id_);
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(player_struct_, other->player_struct_);
+    std::swap(player_steam_id_, other->player_steam_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -23610,6 +24027,8 @@ void PushRequestSummonMirrorKnightSign::Swap(PushRequestSummonMirrorKnightSign* 
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestCreateMirrorKnightSign::kMatchingParameterFieldNumber;
+const int RequestCreateMirrorKnightSign::kDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestCreateMirrorKnightSign::RequestCreateMirrorKnightSign()
@@ -23619,6 +24038,12 @@ RequestCreateMirrorKnightSign::RequestCreateMirrorKnightSign()
 }
 
 void RequestCreateMirrorKnightSign::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  matching_parameter_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(
+      ::DS2_Frpg2RequestMessage::MatchingParameter::internal_default_instance());
+#else
+  matching_parameter_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(&::DS2_Frpg2RequestMessage::MatchingParameter::default_instance());
+#endif
 }
 
 RequestCreateMirrorKnightSign::RequestCreateMirrorKnightSign(const RequestCreateMirrorKnightSign& from)
@@ -23629,7 +24054,10 @@ RequestCreateMirrorKnightSign::RequestCreateMirrorKnightSign(const RequestCreate
 }
 
 void RequestCreateMirrorKnightSign::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  matching_parameter_ = NULL;
+  data_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -23639,11 +24067,15 @@ RequestCreateMirrorKnightSign::~RequestCreateMirrorKnightSign() {
 }
 
 void RequestCreateMirrorKnightSign::SharedDtor() {
+  if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete data_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
   if (this != default_instance_) {
   #endif
+    delete matching_parameter_;
   }
 }
 
@@ -23668,6 +24100,16 @@ RequestCreateMirrorKnightSign* RequestCreateMirrorKnightSign::New() const {
 }
 
 void RequestCreateMirrorKnightSign::Clear() {
+  if (_has_bits_[0 / 32] & 3) {
+    if (has_matching_parameter()) {
+      if (matching_parameter_ != NULL) matching_parameter_->::DS2_Frpg2RequestMessage::MatchingParameter::Clear();
+    }
+    if (has_data()) {
+      if (data_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        data_->clear();
+      }
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -23685,14 +24127,44 @@ bool RequestCreateMirrorKnightSign::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_matching_parameter()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_data;
+        break;
+      }
+
+      // required bytes data = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_data:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_data()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign)
@@ -23706,6 +24178,18 @@ failure:
 void RequestCreateMirrorKnightSign::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign)
+  // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 1;
+  if (has_matching_parameter()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      1, this->matching_parameter(), output);
+  }
+
+  // required bytes data = 2;
+  if (has_data()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      2, this->data(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSign)
@@ -23714,6 +24198,22 @@ void RequestCreateMirrorKnightSign::SerializeWithCachedSizes(
 int RequestCreateMirrorKnightSign::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 1;
+    if (has_matching_parameter()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->matching_parameter());
+    }
+
+    // required bytes data = 2;
+    if (has_data()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->data());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -23729,6 +24229,14 @@ void RequestCreateMirrorKnightSign::CheckTypeAndMergeFrom(
 
 void RequestCreateMirrorKnightSign::MergeFrom(const RequestCreateMirrorKnightSign& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_matching_parameter()) {
+      mutable_matching_parameter()->::DS2_Frpg2RequestMessage::MatchingParameter::MergeFrom(from.matching_parameter());
+    }
+    if (from.has_data()) {
+      set_data(from.data());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -23739,12 +24247,19 @@ void RequestCreateMirrorKnightSign::CopyFrom(const RequestCreateMirrorKnightSign
 }
 
 bool RequestCreateMirrorKnightSign::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
+  if (has_matching_parameter()) {
+    if (!this->matching_parameter().IsInitialized()) return false;
+  }
   return true;
 }
 
 void RequestCreateMirrorKnightSign::Swap(RequestCreateMirrorKnightSign* other) {
   if (other != this) {
+    std::swap(matching_parameter_, other->matching_parameter_);
+    std::swap(data_, other->data_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -23758,6 +24273,7 @@ void RequestCreateMirrorKnightSign::Swap(RequestCreateMirrorKnightSign* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestCreateMirrorKnightSignResponse::kSignIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestCreateMirrorKnightSignResponse::RequestCreateMirrorKnightSignResponse()
@@ -23778,6 +24294,7 @@ RequestCreateMirrorKnightSignResponse::RequestCreateMirrorKnightSignResponse(con
 
 void RequestCreateMirrorKnightSignResponse::SharedCtor() {
   _cached_size_ = 0;
+  sign_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -23816,6 +24333,7 @@ RequestCreateMirrorKnightSignResponse* RequestCreateMirrorKnightSignResponse::Ne
 }
 
 void RequestCreateMirrorKnightSignResponse::Clear() {
+  sign_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -23833,14 +24351,33 @@ bool RequestCreateMirrorKnightSignResponse::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 sign_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSignResponse)
@@ -23854,6 +24391,11 @@ failure:
 void RequestCreateMirrorKnightSignResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSignResponse)
+  // required int64 sign_id = 1;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->sign_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestCreateMirrorKnightSignResponse)
@@ -23862,6 +24404,15 @@ void RequestCreateMirrorKnightSignResponse::SerializeWithCachedSizes(
 int RequestCreateMirrorKnightSignResponse::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 sign_id = 1;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->sign_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -23877,6 +24428,11 @@ void RequestCreateMirrorKnightSignResponse::CheckTypeAndMergeFrom(
 
 void RequestCreateMirrorKnightSignResponse::MergeFrom(const RequestCreateMirrorKnightSignResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -23887,12 +24443,15 @@ void RequestCreateMirrorKnightSignResponse::CopyFrom(const RequestCreateMirrorKn
 }
 
 bool RequestCreateMirrorKnightSignResponse::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
 void RequestCreateMirrorKnightSignResponse::Swap(RequestCreateMirrorKnightSignResponse* other) {
   if (other != this) {
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -23906,6 +24465,8 @@ void RequestCreateMirrorKnightSignResponse::Swap(RequestCreateMirrorKnightSignRe
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestGetMirrorKnightSignList::kMaxSignsFieldNumber;
+const int RequestGetMirrorKnightSignList::kMatchingParameterFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetMirrorKnightSignList::RequestGetMirrorKnightSignList()
@@ -23915,6 +24476,12 @@ RequestGetMirrorKnightSignList::RequestGetMirrorKnightSignList()
 }
 
 void RequestGetMirrorKnightSignList::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  matching_parameter_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(
+      ::DS2_Frpg2RequestMessage::MatchingParameter::internal_default_instance());
+#else
+  matching_parameter_ = const_cast< ::DS2_Frpg2RequestMessage::MatchingParameter*>(&::DS2_Frpg2RequestMessage::MatchingParameter::default_instance());
+#endif
 }
 
 RequestGetMirrorKnightSignList::RequestGetMirrorKnightSignList(const RequestGetMirrorKnightSignList& from)
@@ -23926,6 +24493,8 @@ RequestGetMirrorKnightSignList::RequestGetMirrorKnightSignList(const RequestGetM
 
 void RequestGetMirrorKnightSignList::SharedCtor() {
   _cached_size_ = 0;
+  max_signs_ = GOOGLE_LONGLONG(0);
+  matching_parameter_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -23940,6 +24509,7 @@ void RequestGetMirrorKnightSignList::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
+    delete matching_parameter_;
   }
 }
 
@@ -23964,6 +24534,12 @@ RequestGetMirrorKnightSignList* RequestGetMirrorKnightSignList::New() const {
 }
 
 void RequestGetMirrorKnightSignList::Clear() {
+  if (_has_bits_[0 / 32] & 3) {
+    max_signs_ = GOOGLE_LONGLONG(0);
+    if (has_matching_parameter()) {
+      if (matching_parameter_ != NULL) matching_parameter_->::DS2_Frpg2RequestMessage::MatchingParameter::Clear();
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -23981,14 +24557,46 @@ bool RequestGetMirrorKnightSignList::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 max_signs = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &max_signs_)));
+          set_has_max_signs();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_matching_parameter;
+        break;
+      }
+
+      // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_matching_parameter:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_matching_parameter()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList)
@@ -24002,6 +24610,17 @@ failure:
 void RequestGetMirrorKnightSignList::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList)
+  // required int64 max_signs = 1;
+  if (has_max_signs()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->max_signs(), output);
+  }
+
+  // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 2;
+  if (has_matching_parameter()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, this->matching_parameter(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignList)
@@ -24010,6 +24629,22 @@ void RequestGetMirrorKnightSignList::SerializeWithCachedSizes(
 int RequestGetMirrorKnightSignList::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 max_signs = 1;
+    if (has_max_signs()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->max_signs());
+    }
+
+    // required .DS2_Frpg2RequestMessage.MatchingParameter matching_parameter = 2;
+    if (has_matching_parameter()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->matching_parameter());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -24025,6 +24660,14 @@ void RequestGetMirrorKnightSignList::CheckTypeAndMergeFrom(
 
 void RequestGetMirrorKnightSignList::MergeFrom(const RequestGetMirrorKnightSignList& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_max_signs()) {
+      set_max_signs(from.max_signs());
+    }
+    if (from.has_matching_parameter()) {
+      mutable_matching_parameter()->::DS2_Frpg2RequestMessage::MatchingParameter::MergeFrom(from.matching_parameter());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -24035,12 +24678,19 @@ void RequestGetMirrorKnightSignList::CopyFrom(const RequestGetMirrorKnightSignLi
 }
 
 bool RequestGetMirrorKnightSignList::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
+  if (has_matching_parameter()) {
+    if (!this->matching_parameter().IsInitialized()) return false;
+  }
   return true;
 }
 
 void RequestGetMirrorKnightSignList::Swap(RequestGetMirrorKnightSignList* other) {
   if (other != this) {
+    std::swap(max_signs_, other->max_signs_);
+    std::swap(matching_parameter_, other->matching_parameter_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -24054,6 +24704,7 @@ void RequestGetMirrorKnightSignList::Swap(RequestGetMirrorKnightSignList* other)
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestGetMirrorKnightSignListResponse::kSignDataFieldNumber;
 #endif  // !_MSC_VER
 
 RequestGetMirrorKnightSignListResponse::RequestGetMirrorKnightSignListResponse()
@@ -24112,6 +24763,7 @@ RequestGetMirrorKnightSignListResponse* RequestGetMirrorKnightSignListResponse::
 }
 
 void RequestGetMirrorKnightSignListResponse::Clear() {
+  sign_data_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -24129,14 +24781,33 @@ bool RequestGetMirrorKnightSignListResponse::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .DS2_Frpg2RequestMessage.SignData sign_data = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_sign_data:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_sign_data()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_sign_data;
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse)
@@ -24150,6 +24821,12 @@ failure:
 void RequestGetMirrorKnightSignListResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse)
+  // repeated .DS2_Frpg2RequestMessage.SignData sign_data = 2;
+  for (int i = 0; i < this->sign_data_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, this->sign_data(i), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestGetMirrorKnightSignListResponse)
@@ -24157,6 +24834,14 @@ void RequestGetMirrorKnightSignListResponse::SerializeWithCachedSizes(
 
 int RequestGetMirrorKnightSignListResponse::ByteSize() const {
   int total_size = 0;
+
+  // repeated .DS2_Frpg2RequestMessage.SignData sign_data = 2;
+  total_size += 1 * this->sign_data_size();
+  for (int i = 0; i < this->sign_data_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->sign_data(i));
+  }
 
   total_size += unknown_fields().size();
 
@@ -24173,6 +24858,7 @@ void RequestGetMirrorKnightSignListResponse::CheckTypeAndMergeFrom(
 
 void RequestGetMirrorKnightSignListResponse::MergeFrom(const RequestGetMirrorKnightSignListResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
+  sign_data_.MergeFrom(from.sign_data_);
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -24184,11 +24870,14 @@ void RequestGetMirrorKnightSignListResponse::CopyFrom(const RequestGetMirrorKnig
 
 bool RequestGetMirrorKnightSignListResponse::IsInitialized() const {
 
+  if (!::google::protobuf::internal::AllAreInitialized(this->sign_data())) return false;
   return true;
 }
 
 void RequestGetMirrorKnightSignListResponse::Swap(RequestGetMirrorKnightSignListResponse* other) {
   if (other != this) {
+    sign_data_.Swap(&other->sign_data_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -24202,6 +24891,11 @@ void RequestGetMirrorKnightSignListResponse::Swap(RequestGetMirrorKnightSignList
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestRejectMirrorKnightSign::kOnlineAreaIdFieldNumber;
+const int RequestRejectMirrorKnightSign::kSignIdFieldNumber;
+const int RequestRejectMirrorKnightSign::kErrorFieldNumber;
+const int RequestRejectMirrorKnightSign::kUnknown4FieldNumber;
+const int RequestRejectMirrorKnightSign::kCellIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestRejectMirrorKnightSign::RequestRejectMirrorKnightSign()
@@ -24222,6 +24916,11 @@ RequestRejectMirrorKnightSign::RequestRejectMirrorKnightSign(const RequestReject
 
 void RequestRejectMirrorKnightSign::SharedCtor() {
   _cached_size_ = 0;
+  online_area_id_ = GOOGLE_LONGLONG(0);
+  sign_id_ = GOOGLE_LONGLONG(0);
+  error_ = 0;
+  unknown_4_ = GOOGLE_LONGLONG(0);
+  cell_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -24260,6 +24959,23 @@ RequestRejectMirrorKnightSign* RequestRejectMirrorKnightSign::New() const {
 }
 
 void RequestRejectMirrorKnightSign::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RequestRejectMirrorKnightSign*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(online_area_id_, error_);
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -24277,14 +24993,99 @@ bool RequestRejectMirrorKnightSign::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 online_area_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &online_area_id_)));
+          set_has_online_area_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_sign_id;
+        break;
+      }
+
+      // required int64 sign_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_sign_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_error;
+        break;
+      }
+
+      // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_error:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DS2_Frpg2RequestMessage::SummonErrorId_IsValid(value)) {
+            set_error(static_cast< ::DS2_Frpg2RequestMessage::SummonErrorId >(value));
+          } else {
+            unknown_fields_stream.WriteVarint32(tag);
+            unknown_fields_stream.WriteVarint32(value);
+          }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_unknown_4;
+        break;
+      }
+
+      // required int64 unknown_4 = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_unknown_4:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &unknown_4_)));
+          set_has_unknown_4();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_cell_id;
+        break;
+      }
+
+      // required int64 cell_id = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_cell_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &cell_id_)));
+          set_has_cell_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign)
@@ -24298,6 +25099,32 @@ failure:
 void RequestRejectMirrorKnightSign::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign)
+  // required int64 online_area_id = 1;
+  if (has_online_area_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->online_area_id(), output);
+  }
+
+  // required int64 sign_id = 2;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->sign_id(), output);
+  }
+
+  // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+  if (has_error()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->error(), output);
+  }
+
+  // required int64 unknown_4 = 4;
+  if (has_unknown_4()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->unknown_4(), output);
+  }
+
+  // required int64 cell_id = 5;
+  if (has_cell_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->cell_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestRejectMirrorKnightSign)
@@ -24306,6 +25133,42 @@ void RequestRejectMirrorKnightSign::SerializeWithCachedSizes(
 int RequestRejectMirrorKnightSign::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 online_area_id = 1;
+    if (has_online_area_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->online_area_id());
+    }
+
+    // required int64 sign_id = 2;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->sign_id());
+    }
+
+    // required .DS2_Frpg2RequestMessage.SummonErrorId error = 3;
+    if (has_error()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->error());
+    }
+
+    // required int64 unknown_4 = 4;
+    if (has_unknown_4()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->unknown_4());
+    }
+
+    // required int64 cell_id = 5;
+    if (has_cell_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->cell_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -24321,6 +25184,23 @@ void RequestRejectMirrorKnightSign::CheckTypeAndMergeFrom(
 
 void RequestRejectMirrorKnightSign::MergeFrom(const RequestRejectMirrorKnightSign& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_online_area_id()) {
+      set_online_area_id(from.online_area_id());
+    }
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+    if (from.has_error()) {
+      set_error(from.error());
+    }
+    if (from.has_unknown_4()) {
+      set_unknown_4(from.unknown_4());
+    }
+    if (from.has_cell_id()) {
+      set_cell_id(from.cell_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -24331,12 +25211,19 @@ void RequestRejectMirrorKnightSign::CopyFrom(const RequestRejectMirrorKnightSign
 }
 
 bool RequestRejectMirrorKnightSign::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
 
 void RequestRejectMirrorKnightSign::Swap(RequestRejectMirrorKnightSign* other) {
   if (other != this) {
+    std::swap(online_area_id_, other->online_area_id_);
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(error_, other->error_);
+    std::swap(unknown_4_, other->unknown_4_);
+    std::swap(cell_id_, other->cell_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -24498,6 +25385,7 @@ void RequestRejectMirrorKnightSignResponse::Swap(RequestRejectMirrorKnightSignRe
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestRemoveMirrorKnightSign::kSignIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestRemoveMirrorKnightSign::RequestRemoveMirrorKnightSign()
@@ -24518,6 +25406,7 @@ RequestRemoveMirrorKnightSign::RequestRemoveMirrorKnightSign(const RequestRemove
 
 void RequestRemoveMirrorKnightSign::SharedCtor() {
   _cached_size_ = 0;
+  sign_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -24556,6 +25445,7 @@ RequestRemoveMirrorKnightSign* RequestRemoveMirrorKnightSign::New() const {
 }
 
 void RequestRemoveMirrorKnightSign::Clear() {
+  sign_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -24573,14 +25463,33 @@ bool RequestRemoveMirrorKnightSign::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 sign_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestRemoveMirrorKnightSign)
@@ -24594,6 +25503,11 @@ failure:
 void RequestRemoveMirrorKnightSign::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestRemoveMirrorKnightSign)
+  // required int64 sign_id = 1;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->sign_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestRemoveMirrorKnightSign)
@@ -24602,6 +25516,15 @@ void RequestRemoveMirrorKnightSign::SerializeWithCachedSizes(
 int RequestRemoveMirrorKnightSign::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 sign_id = 1;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->sign_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -24617,6 +25540,11 @@ void RequestRemoveMirrorKnightSign::CheckTypeAndMergeFrom(
 
 void RequestRemoveMirrorKnightSign::MergeFrom(const RequestRemoveMirrorKnightSign& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -24627,12 +25555,15 @@ void RequestRemoveMirrorKnightSign::CopyFrom(const RequestRemoveMirrorKnightSign
 }
 
 bool RequestRemoveMirrorKnightSign::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
 void RequestRemoveMirrorKnightSign::Swap(RequestRemoveMirrorKnightSign* other) {
   if (other != this) {
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -24794,6 +25725,8 @@ void RequestRemoveMirrorKnightSignResponse::Swap(RequestRemoveMirrorKnightSignRe
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestSummonMirrorKnightSign::kSignInfoFieldNumber;
+const int RequestSummonMirrorKnightSign::kPlayerStructFieldNumber;
 #endif  // !_MSC_VER
 
 RequestSummonMirrorKnightSign::RequestSummonMirrorKnightSign()
@@ -24803,6 +25736,12 @@ RequestSummonMirrorKnightSign::RequestSummonMirrorKnightSign()
 }
 
 void RequestSummonMirrorKnightSign::InitAsDefaultInstance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  sign_info_ = const_cast< ::DS2_Frpg2RequestMessage::SignInfo*>(
+      ::DS2_Frpg2RequestMessage::SignInfo::internal_default_instance());
+#else
+  sign_info_ = const_cast< ::DS2_Frpg2RequestMessage::SignInfo*>(&::DS2_Frpg2RequestMessage::SignInfo::default_instance());
+#endif
 }
 
 RequestSummonMirrorKnightSign::RequestSummonMirrorKnightSign(const RequestSummonMirrorKnightSign& from)
@@ -24813,7 +25752,10 @@ RequestSummonMirrorKnightSign::RequestSummonMirrorKnightSign(const RequestSummon
 }
 
 void RequestSummonMirrorKnightSign::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  sign_info_ = NULL;
+  player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -24823,11 +25765,15 @@ RequestSummonMirrorKnightSign::~RequestSummonMirrorKnightSign() {
 }
 
 void RequestSummonMirrorKnightSign::SharedDtor() {
+  if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete player_struct_;
+  }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
   if (this != default_instance_) {
   #endif
+    delete sign_info_;
   }
 }
 
@@ -24852,6 +25798,16 @@ RequestSummonMirrorKnightSign* RequestSummonMirrorKnightSign::New() const {
 }
 
 void RequestSummonMirrorKnightSign::Clear() {
+  if (_has_bits_[0 / 32] & 3) {
+    if (has_sign_info()) {
+      if (sign_info_ != NULL) sign_info_->::DS2_Frpg2RequestMessage::SignInfo::Clear();
+    }
+    if (has_player_struct()) {
+      if (player_struct_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        player_struct_->clear();
+      }
+    }
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -24869,14 +25825,44 @@ bool RequestSummonMirrorKnightSign::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_sign_info()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_player_struct;
+        break;
+      }
+
+      // required bytes player_struct = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_player_struct:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_player_struct()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign)
@@ -24890,6 +25876,18 @@ failure:
 void RequestSummonMirrorKnightSign::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign)
+  // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 1;
+  if (has_sign_info()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      1, this->sign_info(), output);
+  }
+
+  // required bytes player_struct = 2;
+  if (has_player_struct()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      2, this->player_struct(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestSummonMirrorKnightSign)
@@ -24898,6 +25896,22 @@ void RequestSummonMirrorKnightSign::SerializeWithCachedSizes(
 int RequestSummonMirrorKnightSign::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .DS2_Frpg2RequestMessage.SignInfo sign_info = 1;
+    if (has_sign_info()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->sign_info());
+    }
+
+    // required bytes player_struct = 2;
+    if (has_player_struct()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->player_struct());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -24913,6 +25927,14 @@ void RequestSummonMirrorKnightSign::CheckTypeAndMergeFrom(
 
 void RequestSummonMirrorKnightSign::MergeFrom(const RequestSummonMirrorKnightSign& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_sign_info()) {
+      mutable_sign_info()->::DS2_Frpg2RequestMessage::SignInfo::MergeFrom(from.sign_info());
+    }
+    if (from.has_player_struct()) {
+      set_player_struct(from.player_struct());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -24923,12 +25945,19 @@ void RequestSummonMirrorKnightSign::CopyFrom(const RequestSummonMirrorKnightSign
 }
 
 bool RequestSummonMirrorKnightSign::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
+  if (has_sign_info()) {
+    if (!this->sign_info().IsInitialized()) return false;
+  }
   return true;
 }
 
 void RequestSummonMirrorKnightSign::Swap(RequestSummonMirrorKnightSign* other) {
   if (other != this) {
+    std::swap(sign_info_, other->sign_info_);
+    std::swap(player_struct_, other->player_struct_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -25090,6 +26119,7 @@ void RequestSummonMirrorKnightSignResponse::Swap(RequestSummonMirrorKnightSignRe
 // ===================================================================
 
 #ifndef _MSC_VER
+const int RequestUpdateMirrorKnightSign::kSignIdFieldNumber;
 #endif  // !_MSC_VER
 
 RequestUpdateMirrorKnightSign::RequestUpdateMirrorKnightSign()
@@ -25110,6 +26140,7 @@ RequestUpdateMirrorKnightSign::RequestUpdateMirrorKnightSign(const RequestUpdate
 
 void RequestUpdateMirrorKnightSign::SharedCtor() {
   _cached_size_ = 0;
+  sign_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -25148,6 +26179,7 @@ RequestUpdateMirrorKnightSign* RequestUpdateMirrorKnightSign::New() const {
 }
 
 void RequestUpdateMirrorKnightSign::Clear() {
+  sign_id_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
@@ -25165,14 +26197,33 @@ bool RequestUpdateMirrorKnightSign::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int64 sign_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &sign_id_)));
+          set_has_sign_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(
-        input, tag, &unknown_fields_stream));
   }
 success:
   // @@protoc_insertion_point(parse_success:DS2_Frpg2RequestMessage.RequestUpdateMirrorKnightSign)
@@ -25186,6 +26237,11 @@ failure:
 void RequestUpdateMirrorKnightSign::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DS2_Frpg2RequestMessage.RequestUpdateMirrorKnightSign)
+  // required int64 sign_id = 1;
+  if (has_sign_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->sign_id(), output);
+  }
+
   output->WriteRaw(unknown_fields().data(),
                    unknown_fields().size());
   // @@protoc_insertion_point(serialize_end:DS2_Frpg2RequestMessage.RequestUpdateMirrorKnightSign)
@@ -25194,6 +26250,15 @@ void RequestUpdateMirrorKnightSign::SerializeWithCachedSizes(
 int RequestUpdateMirrorKnightSign::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int64 sign_id = 1;
+    if (has_sign_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->sign_id());
+    }
+
+  }
   total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -25209,6 +26274,11 @@ void RequestUpdateMirrorKnightSign::CheckTypeAndMergeFrom(
 
 void RequestUpdateMirrorKnightSign::MergeFrom(const RequestUpdateMirrorKnightSign& from) {
   GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_sign_id()) {
+      set_sign_id(from.sign_id());
+    }
+  }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
 
@@ -25219,12 +26289,15 @@ void RequestUpdateMirrorKnightSign::CopyFrom(const RequestUpdateMirrorKnightSign
 }
 
 bool RequestUpdateMirrorKnightSign::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
 void RequestUpdateMirrorKnightSign::Swap(RequestUpdateMirrorKnightSign* other) {
   if (other != this) {
+    std::swap(sign_id_, other->sign_id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }

@@ -53,6 +53,7 @@ public:
     std::shared_ptr<Frpg2ReliableUdpMessageStream> MessageStream;
 
     std::vector<std::shared_ptr<SummonSign>> ActiveSummonSigns;
+    std::vector<std::shared_ptr<SummonSign>> ActiveMirrorKnightSummonSigns;    
 
     double ConnectTime = GetSeconds();
 

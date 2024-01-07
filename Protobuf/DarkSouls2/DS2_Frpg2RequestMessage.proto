@@ -576,6 +576,9 @@ enum SignType {
     SignType_SmallWhiteSoapstone = 3;
     SignType_RedSoapstone = 4;
     SignType_Dragon = 6;
+
+    // Using this as a sentinel value, not actually used by game.
+    SignType_MirrorKnight = 99;
 };
 
 message SignData {
@@ -606,65 +609,81 @@ message RequestGetRightMatchingAreaResponse {
 
 message PushRequestRejectMirrorKnightSign {
 	required PushMessageId push_message_id = 1;
-    // TODO
+    // Based on ghidra, investigate further.
+    required SignInfo sign_info = 2;
+    required SummonErrorId error = 3;
+    required string player_steam_id = 4;
 }
 
 message PushRequestRemoveMirrorKnightSign {
-	required PushMessageId push_message_id = 1;
-    // TODO
+    required PushMessageId push_message_id = 1;
+	required int64 player_id = 2; 
+	required int64 sign_id = 3;         
+	required string player_steam_id = 4;
 }
 
 message PushRequestSummonMirrorKnightSign {
 	required PushMessageId push_message_id = 1;
-    // TODO
+	required int64 player_id = 2; 
+	required int64 sign_id = 3;
+	required bytes player_struct = 4;
+	required string player_steam_id = 5;
 }
 
 message RequestCreateMirrorKnightSign {
-    // TODO
+    required MatchingParameter matching_parameter = 1;
+    required bytes data = 2; 
 }
 
 message RequestCreateMirrorKnightSignResponse {
-    // TODO
+    required int64 sign_id = 1;
 }
 
 message RequestGetMirrorKnightSignList {
-    // TODO
+    required int64 max_signs = 1;
+    required MatchingParameter matching_parameter = 2;
 }
 
 message RequestGetMirrorKnightSignListResponse {
-    // TODO
+    repeated SignData sign_data = 2;
 }
 
+// This is never used, the game seems to just use RequestRejectSign instead.
 message RequestRejectMirrorKnightSign {
-    // TODO
+	required int64 online_area_id = 1;  // 10190000
+	required int64 sign_id = 2;         // 1001
+	required SummonErrorId error = 3;   // 2
+	required int64 unknown_4 = 4;       // 2
+	required int64 cell_id = 5;         // 4294966272
 }
 
 message RequestRejectMirrorKnightSignResponse {
-    // TODO
+    // Empty
 }
 
 message RequestRemoveMirrorKnightSign {
-    // TODO
+    required int64 sign_id = 1;
 }
 
 message RequestRemoveMirrorKnightSignResponse {
-    // TODO
+    // Empty
 }
 
 message RequestSummonMirrorKnightSign {
-    // TODO
+    required SignInfo sign_info = 1;
+    required bytes player_struct = 2; 
 }
 
 message RequestSummonMirrorKnightSignResponse {
-    // TODO
+    // Empty
 }
 
 message RequestUpdateMirrorKnightSign {
-    // TODO
+    required int64 sign_id = 1;
 }
 
 message RequestUpdateMirrorKnightSignResponse {
-    // TODO
+    // Empty
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -951,7 +970,7 @@ message RequestGetPowerStoneRankingRecordCountResponse {
 	required uint32 count = 1;
 }
 
-message RequestRegisterPowerStoneData {
+message RequestRegisterPowerStoneData  {
 	required uint32 character_id = 1;
 	required uint32 increment = 2;
 	required bytes data = 3;
