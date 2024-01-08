@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using System.Net.NetworkInformation;
 
 namespace Loader
 {
@@ -47,6 +48,34 @@ namespace Loader
                 else
                 {
                     return HostnameToIPv4(Dns.GetHostName());
+                }
+            }
+            catch (Exception)
+            {
+                // Shitty catch all exception ...
+            }
+            return "";
+        }
+
+        public static string GetMachineIPv4(bool GetPublicAddress, string InterfaceName="")
+        {
+            if (InterfaceName == "" || GetPublicAddress) return GetMachineIPv4(GetPublicAddress);
+            try
+            {
+                NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+                foreach (NetworkInterface networkInterface in interfaces)
+                {
+                    if (networkInterface.Name == InterfaceName)
+                    {
+                        IPInterfaceProperties properties = networkInterface.GetIPProperties();
+                        foreach (UnicastIPAddressInformation address in properties.UnicastAddresses)
+                        {
+                            if (address.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                            {
+                                return address.Address.ToString();
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception)

@@ -23,6 +23,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Net.NetworkInformation;
 
 namespace Loader
 {
@@ -50,15 +51,48 @@ namespace Loader
         
         public static string OfficialServer = NetUtils.HostnameToIPv4("ds3os-server.timleonard.uk");
 
+        private NetworkInterface currentInterface;
+        private NetworkInterface[] interfaces;
+
         public MainForm()
         {
             InitializeComponent();
 
+            LoadNetworkInterfaces();
+
             ImportedServerListView.Items.Clear();
             ImportedServerListView.ListViewItemSorter = new ServerListSorter();
 
-            MachinePrivateIp = NetUtils.GetMachineIPv4(false);
+            MachinePrivateIp = NetUtils.GetMachineIPv4(false, currentInterface.Name);
             MachinePublicIp = NetUtils.GetMachineIPv4(true);
+        }
+
+        public void LoadNetworkInterfaces()
+        {
+            interfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (NetworkInterface ni in interfaces)
+            {
+                comboBoxNetworkInterfaces.Items.Add(ni.Name + " " + ni.Description);
+            }
+
+            // Select the first item by default
+            comboBoxNetworkInterfaces.SelectedIndex = 0;
+        }
+
+        private void comboBoxNetworkInterfaces_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedItem = comboBoxNetworkInterfaces.SelectedItem as string;
+
+            if (!string.IsNullOrEmpty(selectedItem))
+            {
+                currentInterface = interfaces.FirstOrDefault(ni => $"{ni.Name} {ni.Description}" == selectedItem);
+            }
+
+            MachinePrivateIp = NetUtils.GetMachineIPv4(false, currentInterface.Name);
+            MachinePublicIp = NetUtils.GetMachineIPv4(true);
+            privateIpBox.Text = MachinePrivateIp;
+            publicIpBox.Text = MachinePublicIp;
         }
 
         private void SaveConfig()
