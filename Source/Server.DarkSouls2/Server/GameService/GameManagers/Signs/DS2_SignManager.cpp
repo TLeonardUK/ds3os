@@ -518,11 +518,7 @@ MessageHandleResult DS2_SignManager::Handle_RequestGetRightMatchingArea(GameClie
             continue;
         }
 
-        // TODO: We don't have the other clients password stored, so we can't take that into account for this, it
-        // would be good if we could somehow.
-
         // Is the client in range to summon or invade us?
-        // TODO: Add level matching back here.
         if (Config.DS2_MatchingAreaMatchingParameters.CheckMatch(SoulMemory, OtherSoulMemory, false))
         {
             if (auto Iter = PotentialAreas.find(OtherArea); Iter != PotentialAreas.end())
