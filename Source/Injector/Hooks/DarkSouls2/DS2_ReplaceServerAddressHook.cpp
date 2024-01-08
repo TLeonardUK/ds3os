@@ -51,7 +51,18 @@ bool DS2_ReplaceServerAddressHook::PatchHostname(Injector& injector)
                 continue;
             }
 
-            memcpy((char*)key, WideHostname.c_str(), CopyLength);
+            wchar_t* ptr = (wchar_t*)key;
+            for (size_t i = 0; i < WideHostname.size() + 1; i++)
+            {
+                wchar_t chr = WideHostname[i];
+
+                // Flip endian
+                char* source = (char*)&chr;
+                std::swap(source[0], source[1]);
+
+                memcpy(ptr, source, sizeof(wchar_t));
+                ptr++;
+            }
             FoundKey = true;
         }
 
