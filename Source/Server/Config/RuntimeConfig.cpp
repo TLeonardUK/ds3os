@@ -202,6 +202,11 @@ int RuntimeConfigSoulMemoryMatchingParameters::CalculateTier(int SoulMemory) con
 
 bool RuntimeConfigSoulMemoryMatchingParameters::CheckMatch(int HostSoulMemory, int ClientSoulMemory, bool UsingPassword) const
 {
+    if (DisableSoulMemoryMatching)
+    {
+        return true;
+    }
+
     int HostSoulTier = CalculateTier(HostSoulMemory);
     int ClientSoulTier = CalculateTier(ClientSoulMemory);
 
