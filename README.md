@@ -72,6 +72,9 @@ Future roadmap:
 DSOS uses its own save files, as long as you don't copy ds3os saves back to your retail saves you should be fine.
 
 # FAQ
+# How do I switch between hosting Dark Souls 3 and Dark Souls 2?
+After running the server once a file will be created at Saved/default/config.json. You can change the GameType parameter from DarkSouls2 and DarkSouls3 to change what game the server hosts.
+
 ## Why aren't my save files appearing?
 DSOS uses its own saves to avoid any issues with retail game saves. If you want to transfer your retail saves to DSOS, click the settings (cog) icon at the bottom of the loader and press the copy retail saves button.
 
