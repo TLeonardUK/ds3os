@@ -16,22 +16,22 @@ RUN steamcmd +login anonymous +quit
 
 FROM ubuntu@sha256:4b1d0c4a2d2aaf63b37111f34eb9fa89fa1bf53dd6e4ca954d47caebca4005c2 AS runtime
 
-RUN mkdir -p /opt/ds3os/Saved \
-    && useradd -r -s /bin/bash -u 1000 ds3os \
-    && chown ds3os:ds3os /opt/ds3os/Saved \
-    && chown ds3os:ds3os /opt/ds3os \    
-    && chmod 755 /opt/ds3os/Saved \
-    && chmod 755 /opt/ds3os \
+RUN mkdir -p /opt/ds2os/Saved \
+    && useradd -r -s /bin/bash -u 1000 ds2os \
+    && chown ds2os:ds2os /opt/ds2os/Saved \
+    && chown ds2os:ds2os /opt/ds2os \    
+    && chmod 755 /opt/ds2os/Saved \
+    && chmod 755 /opt/ds2os \
     && apt update \
     && apt install -y --reinstall ca-certificates
 
-RUN echo "335300" >> /opt/ds3os/steam_appid.txt
+RUN echo "335300" >> /opt/ds2os/steam_appid.txt
 
-COPY --from=build /build/bin/x64_release/ /opt/ds3os/
-COPY --from=steam /root/.local/share/Steam/steamcmd/linux64/steamclient.so /opt/ds3os/steamclient.so
+COPY --from=build /build/bin/x64_release/ /opt/ds2os/
+COPY --from=steam /root/.local/share/Steam/steamcmd/linux64/steamclient.so /opt/ds2os/steamclient.so
 
-ENV LD_LIBRARY_PATH="/opt/ds3os"
+ENV LD_LIBRARY_PATH="/opt/ds2os"
 
-USER ds3os
-WORKDIR /opt/ds3os
-ENTRYPOINT /opt/ds3os/Server 
+USER ds2os
+WORKDIR /opt/ds2os
+ENTRYPOINT /opt/ds2os/Server 
