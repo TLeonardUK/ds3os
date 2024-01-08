@@ -332,6 +332,7 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_STRUCT_VAR(DS2_RatMatchingParameters);
     SERIALIZE_STRUCT_VAR(DS2_BlueSentinelMatchingParameters);
     SERIALIZE_STRUCT_VAR(DS2_ArenaMatchingParameters);
+    SERIALIZE_STRUCT_VAR(DS2_MatchingAreaMatchingParameters);
 
     SERIALIZE_VAR(AntiCheatEnabled);
     SERIALIZE_VAR(AntiCheatApplyPenalties);

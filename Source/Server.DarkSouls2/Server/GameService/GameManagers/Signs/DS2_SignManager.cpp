@@ -501,10 +501,11 @@ MessageHandleResult DS2_SignManager::Handle_RequestGetRightMatchingArea(GameClie
     std::unordered_map<DS2_OnlineAreaId, int> PotentialAreas;
     int MaxAreaPopulation = 1;
 
+    int SoulMemory = Client->GetPlayerState().GetSoulMemory();
+
     for (std::shared_ptr<GameClient>& OtherClient : GameServiceInstance->GetClients())
     {
-        int OtherSoulLevel = OtherClient->GetPlayerState().GetSoulLevel();
-        int OtherWeaponLevel = OtherClient->GetPlayerState().GetMaxWeaponLevel();
+        int OtherSoulMemory = OtherClient->GetPlayerState().GetSoulMemory();
         DS2_OnlineAreaId OtherArea = OtherClient->GetPlayerStateType<DS2_PlayerState>().GetCurrentArea();
 
         if (OtherArea == DS2_OnlineAreaId::None)
@@ -522,7 +523,7 @@ MessageHandleResult DS2_SignManager::Handle_RequestGetRightMatchingArea(GameClie
 
         // Is the client in range to summon or invade us?
         // TODO: Add level matching back here.
-        if (true)
+        if (Config.DS2_MatchingAreaMatchingParameters.CheckMatch(SoulMemory, OtherSoulMemory, false))
         {
             if (auto Iter = PotentialAreas.find(OtherArea); Iter != PotentialAreas.end())
             {

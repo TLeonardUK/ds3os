@@ -401,23 +401,23 @@ public:
     RuntimeConfigSoulMemoryMatchingParameters DS2_RedSoapstoneMatchingParameters = {
         RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
         false,
-        -5, 2,
-        -5, 2
+        5, 2,
+        5, 2
     };
 
     // Guessed
     RuntimeConfigSoulMemoryMatchingParameters DS2_MirrorKnightMatchingParameters = {
         RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
         false,
-        -5, 2,
-        -5, 2
+        5, 2,
+        5, 2
     };
 
     RuntimeConfigSoulMemoryMatchingParameters DS2_DragonEyeMatchingParameters = {
         RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
         false,
-        -5, 5,
-        -5, 5
+        5, 5,
+        5, 5
     };
 
     RuntimeConfigSoulMemoryMatchingParameters DS2_RedEyeOrbMatchingParameters = {
@@ -430,23 +430,23 @@ public:
     RuntimeConfigSoulMemoryMatchingParameters DS2_BlueEyeOrbMatchingParameters = {
         RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
         false,
-        -3, 3,
-        -3, 3
+        3, 3,
+        3, 3
     };
 
     RuntimeConfigSoulMemoryMatchingParameters DS2_BellKeeperMatchingParameters = {
         RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
         false,
-        -1, 3,
-        -1, 3
+        1, 3,
+        1, 3
     };
 
     // Guessed
     RuntimeConfigSoulMemoryMatchingParameters DS2_RatMatchingParameters = {
         RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
         false,
-        -5, 2,
-        -5, 2
+        5, 2,
+        5, 2
     };
 
     // Guessed
@@ -459,6 +459,13 @@ public:
 
     // Guessed
     RuntimeConfigSoulMemoryMatchingParameters DS2_ArenaMatchingParameters = {
+        RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
+        false,
+        5, 5,
+        5, 5
+    };
+
+    RuntimeConfigSoulMemoryMatchingParameters DS2_MatchingAreaMatchingParameters = {
         RuntimeConfigSoulMemoryMatchingParameters::k_defaultTiers,
         false,
         5, 5,
