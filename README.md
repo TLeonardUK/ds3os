@@ -5,12 +5,10 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
-:bangbang: :bangbang: Dark Souls 2 support is currently experimental, don't expect it to work well for the time being. :bangbang: :bangbang: 
-
 # What is this project?
 An open source implementation of the game servers for dark souls 2 and 3. 
 
-Idealistically made for the purpose of allow better alternatives to playing mods than getting your account banned and using the retail ban server. As well as opening up opportunities to improve player safety and choice, by allowing them to segregate themselves off from the pool of cheaters on retail, without loosing network functionality.
+This project exists to provide an alternative to playing online with mods without the risk of being banned, or just for people who want to play privately and not deal with cheaters/invasions/etc.
 
 If you have any trouble join the discord for tech-support: https://discord.gg/pBmquc9Jkj
 
@@ -37,9 +35,12 @@ Servers can also be password protected if required by setting as password in Sav
 
 # What currently works?
 Most of the games core functionality works now, with some degree of variance to the retail game. We're currently looking to closer match retail server behaviour and make some general improvements to the running of unoffical servers.
+
+:bangbang: Dark Souls 2 support is still experimental and under development, there is a high probability of things not behaving correctly.
+
 | Feature | Dark Souls 3 | Dark Souls 2 |
 | --- | --- | --- |
-| Stable enough for use | :heavy_check_mark: |  |
+| Stable enough for use | :heavy_check_mark: | ❌ |
 | Network transport | :heavy_check_mark: | :heavy_check_mark:  |
 | Announcement messages | :heavy_check_mark:  | :heavy_check_mark:  |
 | Profile management | :heavy_check_mark:  | :heavy_check_mark:  |
