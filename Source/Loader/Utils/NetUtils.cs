@@ -38,6 +38,9 @@ namespace Loader
                 {
                     using (WebClient client = new WebClient())
                     {
+                        WebProxy proxy = new WebProxy();
+                        proxy.Address = null; // Bypass the proxy
+                        client.Proxy = proxy;
                         return client.DownloadString("http://api.ipify.org");
                     }
                 }
