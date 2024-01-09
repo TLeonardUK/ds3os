@@ -40,7 +40,7 @@ Most of the games core functionality works now, with some degree of variance to 
 
 | Feature | Dark Souls 3 | Dark Souls 2 |
 | --- | --- | --- |
-| Stable enough for use | :heavy_check_mark: | ❌ |
+| Stable enough for use | :heavy_check_mark: | Experimental |
 | Network transport | :heavy_check_mark: | :heavy_check_mark:  |
 | Announcement messages | :heavy_check_mark:  | :heavy_check_mark:  |
 | Profile management | :heavy_check_mark:  | :heavy_check_mark:  |
