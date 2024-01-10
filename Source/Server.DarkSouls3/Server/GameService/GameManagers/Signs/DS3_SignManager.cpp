@@ -269,7 +269,7 @@ MessageHandleResult DS3_SignManager::Handle_RequestCreateSign(GameClient* Client
             if (Sign->Type == DS3_Frpg2RequestMessage::SignType_RedSoapstone)
             {
                 ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSignPvP,
-                    StringFormat("Placed a public red summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                    StringFormat("Placed a public red summon sign in '%s'.", GetEnumString((DS3_OnlineAreaId)Sign->OnlineAreaId).c_str()),
                     0,
                     {
                         { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), true },
@@ -280,7 +280,7 @@ MessageHandleResult DS3_SignManager::Handle_RequestCreateSign(GameClient* Client
             else
             {
                 ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, 
-                    StringFormat("Placed a public summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                    StringFormat("Placed a public summon sign in '%s'.", GetEnumString((DS3_OnlineAreaId)Sign->OnlineAreaId).c_str()),
                     0,
                     {
                         { "Soul Level", std::to_string(Client->GetPlayerState().GetSoulLevel()), true },

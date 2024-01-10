@@ -265,9 +265,6 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
         return MessageHandleResult::Error;
     }
 
-    State.SetHasInitialState(true);
-
-
 #if 0
 
     static DiffTracker Tracker;
@@ -319,6 +316,37 @@ MessageHandleResult DS2_PlayerDataManager::Handle_RequestUpdatePlayerStatus(Game
     Tracker.Field(State.GetCharacterName().c_str(), "PlayerStatus.physical_status.unknown_20", State.GetPlayerStatus().physical_status().unknown_20());
 
 #endif
+
+    // Send discord notification when the user lights a bonfire.
+    if (State.GetPlayerStatus().has_stats_info())
+    {
+        std::vector<uint32_t>& litBonfires = State.GetLitBonfires_Mutable();
+
+        for (size_t i = 0; i < State.GetPlayerStatus().stats_info().unlocked_bonfires_size(); i++)
+        {
+            uint32_t bonfireId = State.GetPlayerStatus().stats_info().unlocked_bonfires(i);
+            if (auto Iter = std::find(litBonfires.begin(), litBonfires.end(), bonfireId); Iter == litBonfires.end())
+            {
+                if (State.GetHasInitialState())
+                {
+                    std::string BonfireName = GetEnumString<DS2_BonfireId>((DS2_BonfireId)bonfireId);
+
+                    LogS(Client->GetName().c_str(), "Has lit bonfire %i (%s).", bonfireId, BonfireName.c_str());
+
+                    if (!BonfireName.empty())
+                    {
+                        ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::BonfireLit,
+                            StringFormat("Lit the '%s' bonfire.", BonfireName.c_str())
+                        );
+                    }
+                }
+
+                litBonfires.push_back(bonfireId);
+            }
+        }
+    }
+
+    State.SetHasInitialState(true);
 
     return MessageHandleResult::Handled;
 }

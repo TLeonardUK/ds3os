@@ -206,6 +206,24 @@ MessageHandleResult DS2_QuickMatchManager::Handle_RequestRegisterQuickMatch(Game
         return MessageHandleResult::Error;
     }
 
+    if (ServerInstance->GetConfig().SendDiscordNotice_QuickMatch)
+    {
+        std::string ModeName = "";
+        switch (NewMatch->GameMode)
+        {
+        case DS2_Frpg2RequestMessage::QuickMatchGameMode::QuickMatchGameMode_Blue:          ModeName = "Blue Sentinel";              break;
+        case DS2_Frpg2RequestMessage::QuickMatchGameMode::QuickMatchGameMode_Brotherhood:   ModeName = "Brotherhood of Blood";    break;
+        }
+
+        ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::UndeadMatch,
+            StringFormat("Started a public '%s' undead match.", ModeName.c_str()),
+            0,
+            {
+                { "Soul Memory", std::to_string(Client->GetPlayerState().GetSoulMemory()), true },
+            }
+        );
+    }
+
     return MessageHandleResult::Handled;
 }
 

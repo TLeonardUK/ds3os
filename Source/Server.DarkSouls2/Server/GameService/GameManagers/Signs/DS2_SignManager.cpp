@@ -262,7 +262,7 @@ MessageHandleResult DS2_SignManager::Handle_RequestCreateSign(GameClient* Client
         if (Sign->Type == DS2_Frpg2RequestMessage::SignType_RedSoapstone)
         {
             ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSignPvP,
-                StringFormat("Placed a red summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                StringFormat("Placed a red summon sign in '%s'.", GetEnumString((DS2_OnlineAreaId)Sign->OnlineAreaId).c_str()),
                 0,
                 {
                     { "Soul Memory", std::to_string(Client->GetPlayerState().GetSoulMemory()), true },
@@ -272,7 +272,7 @@ MessageHandleResult DS2_SignManager::Handle_RequestCreateSign(GameClient* Client
         else
         {
             ServerInstance->SendDiscordNotice(Client->shared_from_this(), DiscordNoticeType::SummonSign, 
-                StringFormat("Placed a summon sign in '%s'.", GetEnumString(Sign->OnlineAreaId).c_str()),
+                StringFormat("Placed a summon sign in '%s'.", GetEnumString((DS2_OnlineAreaId)Sign->OnlineAreaId).c_str()),
                 0,
                 {
                     { "Soul Memory", std::to_string(Client->GetPlayerState().GetSoulMemory()), true },
