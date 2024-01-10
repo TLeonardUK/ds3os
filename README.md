@@ -6,7 +6,7 @@
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
 # What is this project?
-An open source implementation of the game servers for dark souls 2 and 3. 
+An open source implementation of the game servers for dark souls 2 (SOTFS) and 3. 
 
 This project exists to provide an alternative to playing online with mods without the risk of being banned, or just for people who want to play privately and not deal with cheaters/invasions/etc.
 
@@ -38,7 +38,7 @@ Most of the games core functionality works now, with some degree of variance to 
 
 :bangbang: Dark Souls 2 support is still experimental and under development, there is a high probability of things not behaving correctly.
 
-| Feature | Dark Souls 3 | Dark Souls 2 |
+| Feature | Dark Souls 3 | Dark Souls 2 SOTFS |
 | --- | --- | --- |
 | Stable enough for use | :heavy_check_mark: | Experimental |
 | Network transport | :heavy_check_mark: | :heavy_check_mark:  |
