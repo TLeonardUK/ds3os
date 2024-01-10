@@ -683,7 +683,7 @@ namespace Loader
                 injectConfig.ServerPublicKey = Config.PublicKey;
                 injectConfig.ServerHostname = ConnectionHostname;
                 injectConfig.ServerPort = Config.Port;
-                injectConfig.ServerGameType = Config.GameType;
+                injectConfig.ServerGameType = LoadConfig.GameType;
                 injectConfig.EnableSeperateSaveFiles = ProgramSettings.Default.use_seperate_saves;
 
                 string json = injectConfig.ToJson();

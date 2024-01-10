@@ -13,6 +13,7 @@ enum class GameType
 {
     Unknown,
 
+    DarkSouls2_Vanilla,
     DarkSouls2,
     DarkSouls3,
 
@@ -21,6 +22,7 @@ enum class GameType
 
 inline const char* GameTypeStrings[(int)GameType::COUNT] = {
     "Unknown",
+    "DarkSouls2_Vanilla"
     "DarkSouls2",
     "DarkSouls3",
 };

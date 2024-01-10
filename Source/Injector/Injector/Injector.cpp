@@ -111,6 +111,7 @@ bool Injector::Init()
             break;
         }
         case GameType::DarkSouls2:
+        case GameType::DarkSouls2_Vanilla:
         {
             ModuleRegion = GetModuleBaseRegion("DarkSoulsII.exe");
             break;
@@ -139,10 +140,11 @@ bool Injector::Init()
             break;
         }
         case GameType::DarkSouls2:
+        case GameType::DarkSouls2_Vanilla:
         {
             if (!BuildConfig::DO_NOT_REDIRECT)
             {
-                Hooks.push_back(std::make_unique<DS2_ReplaceServerAddressHook>());
+                Hooks.push_back(std::make_unique<DS2_ReplaceServerAddressHook>(CurrentGameType));
             }
 
 #ifdef _DEBUG

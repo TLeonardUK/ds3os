@@ -38,6 +38,9 @@ namespace Loader
 
         // Appid of steam version of game. Used to create steam_appid.txt file to prevent steam starting on game launch.
         public int SteamAppId;
+
+        // Game type - DarkSouls2_Vanilla, DarkSouls2, DarkSouls3
+        public string GameType;
     }
 
     // Holds compile time configuration.
@@ -58,7 +61,8 @@ namespace Loader
                     UseInjector = true,
                     UsesASLR = false,
                     Key = new uint[4] { 0x4B694CD6, 0x96ADA235, 0xEC91D9D4, 0x23F562E5 },
-                    SteamAppId = 374320
+                    SteamAppId = 374320,
+                    GameType = "DarkSouls3"
                 } 
             },
             { 
@@ -70,7 +74,8 @@ namespace Loader
                     UseInjector = true,
                     UsesASLR = true,
                     Key = new uint[4] { 0x970F4CFB, 0x1AA625DD, 0x172EBF85, 0x119A5426 },
-                    SteamAppId = 374320
+                    SteamAppId = 374320,
+                    GameType = "DarkSouls3"
                 } 
             },
             { 
@@ -82,7 +87,8 @@ namespace Loader
                     UseInjector = true,
                     UsesASLR = true,
                     Key = new uint[0] { },
-                    SteamAppId = 374320
+                    SteamAppId = 374320,
+                    GameType = "DarkSouls3"
                 } 
             },
             
@@ -93,24 +99,39 @@ namespace Loader
                 ExeUtils.MakeSimpleExeHash("1,0,2,0", 31605096), 
                 new DarkSoulsLoadConfig 
                 { 
-                    VersionName = "Dark Souls II - 1.0.2.0 (Steam)", 
+                    VersionName = "Dark Souls II (SOTFS) - 1.0.2.0 (Steam)", 
                     ServerInfoAddress = 0x0,
                     UseInjector = true,
                     UsesASLR = false,
                     Key = new uint[0] { },
-                    SteamAppId = 335300
+                    SteamAppId = 335300,
+                    GameType = "DarkSouls2"
                 }
             },
             {
                 ExeUtils.MakeSimpleExeHash("1,0,3,0", 28200992), 
                 new DarkSoulsLoadConfig 
                 { 
-                    VersionName = "Dark Souls II - 1.0.3.0 (Steam)", 
+                    VersionName = "Dark Souls II (SOTFS) - 1.0.3.0 (Steam)", 
                     ServerInfoAddress = 0x0,
                     UseInjector = true,
                     UsesASLR = false,
                     Key = new uint[0] { },
-                    SteamAppId = 335300
+                    SteamAppId = 335300,
+                    GameType = "DarkSouls2"
+                } 
+            },
+            {
+                ExeUtils.MakeSimpleExeHash("1,0,12,0", 29588960), 
+                new DarkSoulsLoadConfig 
+                { 
+                    VersionName = "Dark Souls II - 1.0.12.0 (Steam)", 
+                    ServerInfoAddress = 0x0,
+                    UseInjector = true,
+                    UsesASLR = false,
+                    Key = new uint[0] { },
+                    SteamAppId = 236430,
+                    GameType = "DarkSouls2_Vanilla"
                 } 
             },
         };

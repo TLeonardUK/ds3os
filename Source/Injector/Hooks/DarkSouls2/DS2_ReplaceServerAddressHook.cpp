@@ -19,6 +19,11 @@
 // This is all much simpler than DS3, the key isn't encrypted or obfuscated, so we can just
 // straight patch it in memory.
 
+DS2_ReplaceServerAddressHook::DS2_ReplaceServerAddressHook(GameType InType)
+    : Type(InType)
+{
+}
+
 bool DS2_ReplaceServerAddressHook::Install(Injector& injector)
 {   
     return PatchKey(injector) && PatchHostname(injector);
@@ -32,9 +37,16 @@ bool DS2_ReplaceServerAddressHook::PatchHostname(Injector& injector)
 
     while (true)
     {
-        std::vector<intptr_t> address_matches = injector.SearchString({
-            L"frpg2-steam64-ope-login.fromsoftware-game.net"
-        });
+        std::vector<intptr_t> address_matches;
+
+        if (Type == GameType::DarkSouls2)
+        {
+            address_matches = injector.SearchString({ L"frpg2-steam64-ope-login.fromsoftware-game.net" });
+        }
+        else if (Type == GameType::DarkSouls2_Vanilla)
+        {
+            address_matches = injector.SearchString({ L"frpg2-steam-ope.fromsoftware.jp" });
+        }
 
         bool FoundKey = false;
 
@@ -82,16 +94,36 @@ bool DS2_ReplaceServerAddressHook::PatchKey(Injector& injector)
         const RuntimeConfig& Config = Injector::Instance().GetConfig();
         size_t CopyLength = Config.ServerPublicKey.size() + 1;
 
-        std::vector<intptr_t> key_matches = injector.SearchString({
-            "-----BEGIN RSA PUBLIC KEY-----\n"
-            "MIIBCAKCAQEAxSeDuBTm3AytrIOGjDKpwJY+437i1F8leMBASVkknYdzM5HB4z8X\n"
-            "YTXDylr/N6XAhgr/LcFFZ68yQNQ4AquriMONB+TWUiX0xu84ixYH3AqRtIVqLQbQ\n"
-            "xKZsTfyCRC94n9EnvPeS+ueM495YhLIJQBf9T2aCeoHZBFDh2CghJQCdyd4dOT/E\n"
-            "9ZxPImwj1t2fZkkKo4smpGk7GcCask2SGsnk/P2jUJxsOyFlCojaW1IldPxn+lXH\n"
-            "dlgHSLjQvMlWiZ2SmOwvJqPWMv6XyUXYqsOdejRJJQjV7jeDzYG8trX+bSQxnTAw\n"
-            "ENjvjslEcjBmzOCiqFTA/9H1jMjReZpI/wIBAw==\n"
-            "-----END RSA PUBLIC KEY-----\n"
-        });
+        std::vector<intptr_t> key_matches;
+
+
+        if (Type == GameType::DarkSouls2)
+        {
+            key_matches = injector.SearchString({
+                "-----BEGIN RSA PUBLIC KEY-----\n"
+                "MIIBCAKCAQEAxSeDuBTm3AytrIOGjDKpwJY+437i1F8leMBASVkknYdzM5HB4z8X\n"
+                "YTXDylr/N6XAhgr/LcFFZ68yQNQ4AquriMONB+TWUiX0xu84ixYH3AqRtIVqLQbQ\n"
+                "xKZsTfyCRC94n9EnvPeS+ueM495YhLIJQBf9T2aCeoHZBFDh2CghJQCdyd4dOT/E\n"
+                "9ZxPImwj1t2fZkkKo4smpGk7GcCask2SGsnk/P2jUJxsOyFlCojaW1IldPxn+lXH\n"
+                "dlgHSLjQvMlWiZ2SmOwvJqPWMv6XyUXYqsOdejRJJQjV7jeDzYG8trX+bSQxnTAw\n"
+                "ENjvjslEcjBmzOCiqFTA/9H1jMjReZpI/wIBAw==\n"
+                "-----END RSA PUBLIC KEY-----\n"
+            });
+        }
+        else if (Type == GameType::DarkSouls2_Vanilla)
+        {
+            key_matches = injector.SearchString({
+                "-----BEGIN RSA PUBLIC KEY-----\n"
+                "MIIBCAKCAQEAxSeDuBTm3AytrIOGjDKpwJY+437i1F8leMBASVkknYdzM5HB4z8X\n"
+                "YTXDylr/N6XAhgr/LcFFZ68yQNQ4AquriMONB+TWUiX0xu84ixYH3AqRtIVqLQbQ\n"
+                "xKZsTfyCRC94n9EnvPeS+ueM495YhLIJQBf9T2aCeoHZBFDh2CghJQCdyd4dOT/E\n"
+                "9ZxPImwj1t2fZkkKo4smpGk7GcCask2SGsnk/P2jUJxsOyFlCojaW1IldPxn+lXH\n"
+                "dlgHSLjQvMlWiZ2SmOwvJqPWMv6XyUXYqsOdejRJJQjV7jeDzYG8trX+bSQxnTAw\n"
+                "ENjvjslEcjBmzOCiqFTA/9H1jMjReZpI/wIBAw==\n"
+                "-----END RSA PUBLIC KEY-----\n"
+            });
+        }
+
 
         bool FoundKey = false;
 

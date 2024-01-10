@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Injector/Hooks/Hook.h"
+#include "Shared/Game/GameType.h"
 
 // Hooks part of the STL to monitor for the server address and replace it when
 // its found. Adding it to the STL adds some constant overhead but should be reliable
@@ -18,6 +19,8 @@
 class DS2_ReplaceServerAddressHook : public Hook
 {
 public:
+    DS2_ReplaceServerAddressHook(GameType InType);
+ 
     virtual bool Install(Injector& injector) override;
     virtual void Uninstall() override;
     virtual const char* GetName() override;
@@ -25,5 +28,8 @@ public:
 private:
     bool PatchKey(Injector& injector);
     bool PatchHostname(Injector& injector);
+
+private:
+    GameType Type;
 
 };
