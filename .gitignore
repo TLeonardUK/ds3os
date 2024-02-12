@@ -46,6 +46,8 @@
 *.exe
 *.out
 *.app
+!Source/ThirdParty/**.exe
+!Source/ThirdParty/**/*.exe
 !Resources/Prerequisites/*.exe
 !Tools/**.exe
 !Tools/**/*.exe
