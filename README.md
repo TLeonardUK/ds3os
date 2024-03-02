@@ -120,6 +120,8 @@ Once generated the project files are stored in the intermediate folder, at this 
 nix build github:TLeonardUK/ds3os
 # to run it directly
 nix run github:TLeonardUK/ds3os
+# to run master-server
+nix run github:TLonardUK/ds3os#master-server
 ```
 
 The nix version stores the configs in `${XDG_CONFIG_HOME:-$HOME/.config}/ds3os`
