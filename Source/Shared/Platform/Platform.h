@@ -13,6 +13,7 @@
 
 #pragma once
 
+#include <string>
 #include "Shared/Core/Utils/Event.h"
 
 // ========================================================================
