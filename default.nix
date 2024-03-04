@@ -91,6 +91,6 @@ in writeShellApplication {
         ln -sf "${pkg}/share/ds3os/WebUI" .
         ln -sf "${pkg}/bin/Server" .
         ln -sf "$config" Saved
-        exec ./Server
+        exec ./Server "$@"
         '';
 }
