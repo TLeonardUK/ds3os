@@ -11,6 +11,7 @@
 
 #include <string>
 #include <cstdio>
+#include <cstdint>
 
 // Simple wrapper for an IPv4 address.
 

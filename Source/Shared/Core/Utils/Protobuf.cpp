@@ -162,7 +162,7 @@ bool DecodedProtobufRegistry::DecodeField(DecodedProtobufMessage* Message, googl
         }
     }
 
-    return nullptr;
+    return false;
 }
 
 const DecodedProtobufMessage* DecodedProtobufRegistry::Decode(const std::string& messageName, const uint8_t* data, size_t length)

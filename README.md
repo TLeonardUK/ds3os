@@ -113,6 +113,19 @@ We use cmake for generating project files. You can either use the cmake frontend
 
 Once generated the project files are stored in the intermediate folder, at this point you can just open them and build the project.
 
+## Using nix
+
+```sh
+# to build a package
+nix build github:TLeonardUK/ds3os
+# to run it directly
+nix run github:TLeonardUK/ds3os
+# to run master-server
+nix run github:TLonardUK/ds3os#master-server
+```
+
+The nix version stores the configs in `${XDG_CONFIG_HOME:-$HOME/.config}/ds3os`
+
 # Whats in the repository?
 ```
 /

@@ -13,6 +13,7 @@
 
 #include <vector>
 #include <string>
+#include <cstdint>
 
 // See ds3server_packet.bt for commentry on what each of these
 // fields appears to represent.
