@@ -181,4 +181,5 @@ DEFINE_REQUEST_RESPONSE     (0x03F0, RequestGetTotalDeathCount,         RequestG
 // Misc
 // -----------------------------------------------------------------------------------------------
 DEFINE_REQUEST_RESPONSE     (0x0320, RequestSendMessageToPlayers,       RequestSendMessageToPlayers,        RequestSendMessageToPlayersResponse)
+DEFINE_PUSH_MESSAGE         (0x0389, ManagementTextMessage,             ManagementTextMessage)
 
