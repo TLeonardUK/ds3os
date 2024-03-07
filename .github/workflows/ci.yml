@@ -3,6 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   push:
+  pull_request:
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -54,3 +55,21 @@ jobs:
     - name: Build
       working-directory: ${{github.workspace}}/intermediate/make
       run: make
+
+  build-nix-gcc:
+    name: Build nix w/ gcc
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - run: nix build -L .
+
+  build-nix-clang:
+    name: Build nix w/ clang
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - run: nix build -L .#clang

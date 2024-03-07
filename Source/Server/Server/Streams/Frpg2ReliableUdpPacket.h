@@ -13,6 +13,7 @@
 
 #include <vector>
 #include <string>
+#include <cstdint>
 
 // Every packet can perform one of the below operations. This is basically
 // just a crude reimplementation of most of the TCP operations.
