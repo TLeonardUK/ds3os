@@ -68,7 +68,7 @@ public:
     inline static const double SERVER_TIMEOUT = 60.0 * 60.0f;
 
     // How many seconds without messages causes a client to timeout.
-    inline static const double CLIENT_TIMEOUT = 60.0;
+    inline static const double CLIENT_TIMEOUT = 120.0;
 
     // How many seconds without refresh before an authentication ticket expires.
     inline static const double AUTH_TICKET_TIMEOUT = 30.0;
@@ -136,6 +136,6 @@ public:
     // Enables or disables player/global statistics gathering. This adds a good
     // bit of database overhead, so don't use it unless you are actually using
     // the statistics its generating.
-    constexpr inline static const bool DATABASE_STAT_GATHERING_ENABLED = true;
+    constexpr inline static const bool DATABASE_STAT_GATHERING_ENABLED = false;
 
 };
