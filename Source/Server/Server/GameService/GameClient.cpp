@@ -40,14 +40,6 @@ GameClient::GameClient(GameService* OwningService, std::shared_ptr<NetConnection
 
 bool GameClient::Poll()
 {
-    // Has this client timed out?
-    double TimeSinceLastMessage = GetSeconds() - LastMessageRecievedTime;
-    if (TimeSinceLastMessage >= BuildConfig::CLIENT_TIMEOUT)
-    {
-        WarningS(GetName().c_str(), "Client timed out.");
-        return true;
-    }
-
     // If we've got a delayed disconnect pending, check if we should disconnect them now.
     if (DisconnectTime > 0.0 && GetSeconds() > DisconnectTime)
     {
@@ -97,6 +89,14 @@ bool GameClient::Poll()
 
     // Update lat recieved time.
     LastMessageRecievedTime = MessageStream->GetLastActivityTime();
+
+    // Has this client timed out?
+    double TimeSinceLastMessage = GetSeconds() - LastMessageRecievedTime;
+    if (TimeSinceLastMessage >= BuildConfig::CLIENT_TIMEOUT)
+    {
+        WarningS(GetName().c_str(), "Client timed out.");
+        return true;
+    }
 
     // Keep authentication token alive while client is..
     Service->RefreshAuthToken(AuthToken);
