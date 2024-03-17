@@ -27,6 +27,10 @@
 #endif
 
 #include <stdlib.h>
+#include <thread>
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 
 class NetConnectionUDP
     : public NetConnection
@@ -43,7 +47,7 @@ public:
 #endif
 
 public:
-    NetConnectionUDP(SocketType ParentSocket, sockaddr_in DestinationIP, const std::string& InName, const NetIPAddress& InAddress);
+    NetConnectionUDP(NetConnectionUDP* Parent, SocketType ParentSocket, sockaddr_in DestinationIP, const std::string& InName, const NetIPAddress& InAddress);
     NetConnectionUDP(const std::string& InName);
     virtual ~NetConnectionUDP();
 
@@ -77,11 +81,15 @@ protected:
 
     void ProcessPacket(const PendingPacket& Packet);
 
+    void RecieveThreadEntry();
+    void SendThreadEntry();
+
 private:
 
     std::string Name;
     NetIPAddress IPAddress;
 
+    NetConnectionUDP* Parent = nullptr;
     SocketType Socket = INVALID_SOCKET_VALUE;
 
     bool bListening = false;
@@ -89,12 +97,22 @@ private:
 
     sockaddr_in Destination = {};
 
-    std::vector<PendingPacket> PendingPackets;
-
     std::vector<uint8_t> RecieveBuffer;
     std::vector<std::vector<uint8_t>> RecieveQueue;
 
     std::vector<std::shared_ptr<NetConnectionUDP>> NewConnections;
     std::vector<std::weak_ptr<NetConnectionUDP>> ChildConnections;
+
+    std::mutex PendingPacketsMutex;
+    std::queue<std::unique_ptr<PendingPacket>> PendingPackets;
+
+    std::queue<std::unique_ptr<PendingPacket>> SendQueue;
+    std::mutex SendQueueMutex;
+    std::condition_variable SendQueueCvar;
+
+    std::unique_ptr<std::thread> RecieveThread;
+    std::unique_ptr<std::thread> SendThread;
+    bool bShuttingDownThreads = false;
+    bool bErrorOnThreads = false;
 
 };

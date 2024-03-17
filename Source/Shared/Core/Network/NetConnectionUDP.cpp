@@ -35,8 +35,9 @@ NetConnectionUDP::NetConnectionUDP(const std::string& InName)
     RecieveBuffer.resize(64 * 1024);
 }
 
-NetConnectionUDP::NetConnectionUDP(SocketType ParentSocket, sockaddr_in InDestination, const std::string& InName, const NetIPAddress& InAddress)
-    : Destination(InDestination)
+NetConnectionUDP::NetConnectionUDP(NetConnectionUDP* InParent, SocketType ParentSocket, sockaddr_in InDestination, const std::string& InName, const NetIPAddress& InAddress)
+    : Parent(InParent)
+    , Destination(InDestination)
     , Name(InName)
     , bChild(true)
     , Socket(ParentSocket)
@@ -75,29 +76,6 @@ bool NetConnectionUDP::Listen(int Port)
         return false;        
     }
 
-    // Set socket to non-blocking mode.
-#if defined(_WIN32)
-    unsigned long mode = 1;
-    if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
-    {
-        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
-        return false;
-    }
-#else
-    int flags;
-    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
-    {
-        ErrorS(GetName().c_str(), "Failed to get socket flags.");
-        return false;
-    }
-    flags = flags | O_NONBLOCK;
-    if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
-    {
-        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
-        return false;
-    }
-#endif
-
     // Boost buffer sizes 
     int BufferSize = 16 * 1024 * 1024;
     if (setsockopt(Socket, SOL_SOCKET, SO_RCVBUF, (const char*)&BufferSize, sizeof(BufferSize)))
@@ -123,6 +101,15 @@ bool NetConnectionUDP::Listen(int Port)
     }
 
     bListening = true;
+    bShuttingDownThreads = false;
+    bErrorOnThreads = false;
+
+    RecieveThread = std::make_unique<std::thread>([&]() {
+        RecieveThreadEntry();
+    });
+    SendThread = std::make_unique<std::thread>([&]() {
+        SendThreadEntry();
+    });
 
     return true;
 }
@@ -172,29 +159,6 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         return false;
     }
 
-    // Set socket to non-blocking mode.
-#if defined(_WIN32)
-    unsigned long mode = 1;
-    if (int result = ioctlsocket(Socket, FIONBIO, &mode); result != 0)
-    {
-        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
-        return false;
-    }
-#else
-    int flags;
-    if (flags = fcntl(Socket, F_GETFL, 0); flags == -1)
-    {
-        ErrorS(GetName().c_str(), "Failed to get socket flags.");
-        return false;
-    }
-    flags = flags | O_NONBLOCK;
-    if (int result = fcntl(Socket, F_SETFL, flags); result != 0)
-    {
-        ErrorS(GetName().c_str(), "Failed to set socket to non blocking with error 0x%08x", result);
-        return false;
-    }
-#endif
-
     // Boost buffer sizes 
     int BufferSize = 16 * 1024 * 1024;
     if (setsockopt(Socket, SOL_SOCKET, SO_RCVBUF, (const char*)&BufferSize, sizeof(BufferSize)))
@@ -223,6 +187,16 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     Destination.sin_family = AF_INET;
     memset(Destination.sin_zero, 0, sizeof(Destination.sin_zero));
     inet_pton(AF_INET, Hostname.c_str(), &(Destination.sin_addr));
+    
+    bShuttingDownThreads = false;
+    bErrorOnThreads = false;
+
+    RecieveThread = std::make_unique<std::thread>([&]() {
+        RecieveThreadEntry();
+    });
+    SendThread = std::make_unique<std::thread>([&]() {
+        SendThreadEntry();
+    });
 
     return true;
 }
@@ -272,45 +246,24 @@ bool NetConnectionUDP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
 
 bool NetConnectionUDP::Send(const std::vector<uint8_t>& Buffer, int Offset, int Count)
 {
-    int Result = sendto(Socket, (char*)Buffer.data() + Offset, Count, 0, (sockaddr*)&Destination, sizeof(sockaddr_in));
-    if (Result < 0)
+    NetConnectionUDP* EnqueueConnection = this;
+    if (bChild)
     {
-#if defined(_WIN32)
-        int error = WSAGetLastError();
-#else
-        int error = errno;
-#endif
-
-        // Blocking is fine, just return.
-#if defined(_WIN32)
-        if (error == WSAEWOULDBLOCK)
-#else        
-        if (error == EWOULDBLOCK || error == EAGAIN)
-#endif
-        {
-            return false;
-        }
-
-        ErrorS(GetName().c_str(), "Failed to send with error 0x%08x.", error);
-        return false;
-    }
-    else if (Result != Count)
-    {
-        ErrorS(GetName().c_str(), "Failed to send packet in its entirety, wanted to send %i but sent %i. Datagram larger than MTU?", Count, Result);
-        return false;
+        EnqueueConnection = Parent;    
     }
 
-   /* 
-    LogS(GetName().c_str(), ">> %i to %i.%i.%i.%i:%i", Result, 
-        Destination.sin_addr.S_un.S_un_b.s_b1,
-        Destination.sin_addr.S_un.S_un_b.s_b2,
-        Destination.sin_addr.S_un.S_un_b.s_b3,
-        Destination.sin_addr.S_un.S_un_b.s_b4,
-        ntohs(Destination.sin_port));
-    */
+    std::unique_ptr<PendingPacket> Pending = std::make_unique<PendingPacket>();
+    Pending->Data.resize(Count);
+    memcpy(Pending->Data.data(), Buffer.data() + Offset, Count);
+    Pending->SourceAddress = Destination;
+    Pending->ProcessTime = 0.0f;
 
-    Debug::UdpBytesSent.Add(Count);
-
+    {
+        std::unique_lock lock(EnqueueConnection->SendQueueMutex);
+        EnqueueConnection->SendQueue.push(std::move(Pending));
+        EnqueueConnection->SendQueueCvar.notify_all();
+    }
+    
     return true;
 }
 
@@ -323,6 +276,18 @@ bool NetConnectionUDP::Disconnect()
 
     if (!bChild)
     {
+        bShuttingDownThreads = true;
+        if (RecieveThread)
+        {
+            RecieveThread->join();
+            RecieveThread = nullptr;
+        }
+        if (SendThread)
+        {
+            SendThread->join();
+            SendThread = nullptr;
+        }
+
 #ifdef _WIN32
         closesocket(Socket);
 #else
@@ -393,7 +358,7 @@ void NetConnectionUDP::ProcessPacket(const PendingPacket& Packet)
             );
 #endif
 
-            std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(Socket, Packet.SourceAddress, ClientName.data(), NetClientAddress);
+            std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(this, Socket, Packet.SourceAddress, ClientName.data(), NetClientAddress);
             NewConnection->RecieveQueue.push_back(Packet.Data);
             NewConnections.push_back(NewConnection);
             ChildConnections.push_back(NewConnection);
@@ -402,6 +367,136 @@ void NetConnectionUDP::ProcessPacket(const PendingPacket& Packet)
     else
     {
         RecieveQueue.push_back(Packet.Data);
+    }
+}
+
+void NetConnectionUDP::RecieveThreadEntry()
+{
+    while (!bShuttingDownThreads)
+    {
+        // Recieve any pending datagrams and route to the appropriate child recieve queue.
+        socklen_t SourceAddressSize = sizeof(struct sockaddr);
+        sockaddr_in SourceAddress = { 0 };
+
+        int Flags = 0;
+        int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), Flags, (sockaddr*)&SourceAddress, &SourceAddressSize);
+        if (Result < 0)
+        {
+#if defined(_WIN32)
+            int error = WSAGetLastError();
+#else
+            int error = errno;
+#endif
+
+            // Blocking is fine, just return.
+#if defined(_WIN32)
+            if (error == WSAEWOULDBLOCK)
+#else        
+            if (error == EWOULDBLOCK || error == EAGAIN)
+#endif
+            {
+                continue;
+            }
+
+            ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
+            // We ignore the error and keep continuing to try and recieve.
+        }
+        else if (Result > 0)
+        {
+            std::vector<uint8_t> Packet(RecieveBuffer.data(), RecieveBuffer.data() + Result);
+
+            bool bDropPacket = false;
+
+            if constexpr (k_emulate_dropped_backs)
+            {
+                if (FRandRange(0.0f, 1.0f) <= k_drop_packet_probability)
+                {
+                    bDropPacket = true;
+                }
+            }
+
+            if (!bDropPacket)
+            {
+                double Latency = k_latency_minimum + FRandRange(-k_latency_variance, k_latency_variance);
+
+                std::unique_ptr<PendingPacket> Pending = std::make_unique<PendingPacket>();
+                Pending->Data = Packet;
+                Pending->SourceAddress = SourceAddress;
+                Pending->ProcessTime = GetSeconds() + (Latency / 1000.0f);
+
+                std::unique_lock lock(PendingPacketsMutex);
+                PendingPackets.push(std::move(Pending));
+            }
+
+            //Log("<< %zi bytes", (size_t)Result);
+
+            Debug::UdpBytesRecieved.Add(Result);
+        }
+    }
+}
+
+void NetConnectionUDP::SendThreadEntry()
+{
+    while (!bShuttingDownThreads)
+    {
+        std::unique_ptr<PendingPacket> SendPacket;
+
+        // Grab next packet to send.
+        {
+            std::unique_lock lock(SendQueueMutex);
+            while (true)
+            {
+                if (!SendQueue.empty())
+                {
+                    SendPacket = std::move(SendQueue.front());
+                    SendQueue.pop();
+                    break;
+                }
+                else
+                {
+                    SendQueueCvar.wait(lock);
+                }
+            }
+        }
+
+        // Send the packet!
+        while (true)
+        {
+            int Result = sendto(Socket, (char*)SendPacket->Data.data(), SendPacket->Data.size(), 0, (sockaddr*)&SendPacket->SourceAddress, sizeof(sockaddr_in));
+            if (Result < 0)
+            {
+    #if defined(_WIN32)
+                int error = WSAGetLastError();
+    #else
+                int error = errno;
+    #endif
+
+                // Blocking is fine, just return.
+    #if defined(_WIN32)
+                if (error == WSAEWOULDBLOCK)
+    #else        
+                if (error == EWOULDBLOCK || error == EAGAIN)
+    #endif
+                {
+                    continue;
+                }
+
+                ErrorS(GetName().c_str(), "Failed to send with error 0x%08x.", error);
+                bErrorOnThreads = true;
+                return;
+            }
+            else if (Result != SendPacket->Data.size())
+            {
+                ErrorS(GetName().c_str(), "Failed to send packet in its entirety, wanted to send %i but sent %i. Datagram larger than MTU?", SendPacket->Data.size(), Result);
+                bErrorOnThreads = true;
+                return;
+            }
+
+            Debug::UdpBytesSent.Add(SendPacket->Data.size());
+            break;
+        }
+
+        //Log(">> %zi bytes", SendPacket->Data.size());
     }
 }
 
@@ -414,91 +509,46 @@ bool NetConnectionUDP::Pump()
     
     if (!bChild)
     {
-        while (true)
+        if (bErrorOnThreads)
         {
-            // Recieve any pending datagrams and route to the appropriate child recieve queue.
-
-            socklen_t SourceAddressSize = sizeof(struct sockaddr);
-            sockaddr_in SourceAddress = { 0 };
-
-            int Flags = 0;
-#ifdef __unix__
-            Flags |= MSG_DONTWAIT;
-#endif
-
-            int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), Flags, (sockaddr*)&SourceAddress, &SourceAddressSize);
-            if (Result < 0)
-            {
-        #if defined(_WIN32)
-                int error = WSAGetLastError();
-        #else
-                int error = errno;
-        #endif
-
-                // Blocking is fine, just return.
-        #if defined(_WIN32)
-                if (error == WSAEWOULDBLOCK)
-        #else        
-                if (error == EWOULDBLOCK || error == EAGAIN)
-        #endif
-                {
-                    break;
-                }
-
-                ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
-                return false;
-            }
-            else if (Result > 0)
-            {
-                std::vector<uint8_t> Packet(RecieveBuffer.data(), RecieveBuffer.data() + Result);
-
-                bool bDropPacket = false;
-
-                if constexpr (k_emulate_dropped_backs)
-                {
-                    if (FRandRange(0.0f, 1.0f) <= k_drop_packet_probability)
-                    {
-                        bDropPacket = true;
-                    }
-                }
-
-                if (!bDropPacket)
-                {
-                    double Latency = k_latency_minimum + FRandRange(-k_latency_variance, k_latency_variance);
-
-                    PendingPacket Pending;
-                    Pending.Data = Packet;
-                    Pending.SourceAddress = SourceAddress;
-                    Pending.ProcessTime = GetSeconds() + (Latency / 1000.0f);
-
-                    if constexpr (k_emulate_latency)
-                    {
-                        PendingPackets.push_back(Pending);
-                    }
-                    else
-                    {
-                        ProcessPacket(Pending);
-                    }
-                }
-
-                Debug::UdpBytesRecieved.Add(Result);
-
-                //LogS(GetName().c_str(), "<< %i", Result);
-            }
+            return false;
         }
     }
 
     // Recieve pending packets.
-    for (auto iter = PendingPackets.begin(); iter != PendingPackets.end(); /* empty */)
     {
-        if (GetSeconds() > iter->ProcessTime)
+        std::vector<std::unique_ptr<PendingPacket>> PacketsToProcess;
+        
+        // Grab all the packets in the recieve queue that currently need processing.
+        // Keep this code slim so we don't hold the mutex longer than neccessary (as we don't currently do this lock-free)
         {
-            ProcessPacket(*iter);
-            iter = PendingPackets.erase(iter);
+            std::unique_lock lock(PendingPacketsMutex);
+            while (!PendingPackets.empty())
+            {
+                bool Process = true;
+                PendingPacket* NextPacket = PendingPackets.front().get();                
+
+                if constexpr (k_emulate_latency)
+                {
+                    Process = (GetSeconds() >= NextPacket->ProcessTime);
+                }
+
+                if (Process)
+                {
+                    PacketsToProcess.push_back(std::move(PendingPackets.front()));
+                    PendingPackets.pop();
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
-        else
+
+        // Process away.
+        for (auto& packet : PacketsToProcess)
         {
-            iter++;
+            ProcessPacket(*packet);
         }
     }
 

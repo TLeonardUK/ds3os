@@ -23,7 +23,7 @@
 namespace {
     // Maximum backlog of data in a packet streams send queue. Sending
     // packets beyond this will result in disconnect.
-    static inline constexpr size_t k_max_send_buffer_size = 256 * 1024;
+    static inline constexpr size_t k_max_send_buffer_size = 512 * 1024;
 };
 
 
@@ -111,7 +111,7 @@ bool NetConnectionTCP::Listen(int Port)
         return false;
     }
 
-    if (listen(Socket, 64) < 0)
+    if (listen(Socket, 1024) < 0)
     {
         ErrorS(GetName().c_str(), "Failed to listen on socket on port %i.", Port);
         return false;
