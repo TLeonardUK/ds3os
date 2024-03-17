@@ -21,6 +21,7 @@
 #include <memory>
 #include <vector>
 #include <filesystem>
+#include <atomic>
 
 #include <steam/steam_api.h>
 #include <steam/isteamuser.h>
@@ -48,6 +49,8 @@ public:
 
 private:
 
+    void Pump();
+
     enum class ClientState
     {
         LoginServer_Connect,
@@ -60,7 +63,6 @@ private:
         AuthServer_GetServerInfo,
 
         GameServer_Connect,
-#if 0
         GameServer_RequestWaitForUserLogin,
         GameServer_RequestGetAnnounceMessageList,
         GameServer_RequestUpdateLoginPlayerCharacter,
@@ -68,6 +70,7 @@ private:
         GameServer_RequestUpdatePlayerCharacter,
         GameServer_RequestGetRightMatchingArea,
         GameServer_Idle,
+#if 0
         GameServer_GatherStatistics,
 #endif
 
@@ -84,7 +87,6 @@ private:
     void Handle_AuthServer_GetServerInfo();
 
     void Handle_GameServer_Connect();
-#if 0
     void Handle_GameServer_RequestWaitForUserLogin();
     void Handle_GameServer_RequestGetAnnounceMessageList();
     void Handle_GameServer_RequestUpdateLoginPlayerCharacter();
@@ -92,6 +94,7 @@ private:
     void Handle_GameServer_RequestUpdatePlayerCharacter();
     void Handle_GameServer_RequestGetRightMatchingArea();
     void Handle_GameServer_Idle();
+#if 0
     void Handle_GameServer_GatherStatistics();
 #endif
 
@@ -112,6 +115,9 @@ private:
 
 
 private:
+
+    static inline std::atomic<size_t> gClientCount { 0 };
+    bool WasConnected = false;
 
     ClientState State = ClientState::LoginServer_Connect;
 
@@ -166,6 +172,6 @@ private:
     //std::string ServerPublicKey = "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEA1Nuliw8Rvkt40+0OKoW0JpuSIU/ErQwjzRicZV9JDrCikiTIqoAh\nvBj3DcHwGX1d6T5PY27E4SHa24eRxDetMPEYKeclUeJ0jB07lCtH9Y0zMWl1PMfo\nlIgcm5VKfz+Ua+Ny6klgx1y3ODxMS9g0k11t1WsFtccr464lfP4i1Fgz1/C2Jmgu\n7EV+YdIYkOqT+NJtJG5Z75guq/rTQ85/tVuBKa9dvGIaAqG+nTVlJ2+vzKhjPVXJ\n6AwzWdAbG802uzNC9pk+LEQ+YZXCZSHPMNKz6IwXjlagqDxl2w0rg6dEEFxRY0lm\nS0nqh01eO9pYZA2k0TmpeWHhrKJrnvrKFwIDAQAB\n-----END RSA PUBLIC KEY-----\n";
 
     std::string ServerIP = "127.0.0.1";
-    std::string ServerPublicKey = "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAwUq7HWSq4/nYAsZPxp6QT/3noTvB6YnnVo3EgAI6eRhuztMvikZ6\nzMvjirSEeqENlDHWH5jDrTjK/KYvIcqLU+MaSzMTs/oNxjstlAfqDY9fuQqjagHM\nRHubAh4ubKfcsoO8tI1GB9rD9b++aA2AYIKhP1w/N9qZQmBqB2xaAL7//Ok6aoup\nUd2IRo2m6U3QsjKkYqg5PkiDWJnwlUkTKRsRfwcgEtGHI3ee7mRDZIvEdHjFfwGh\nl279Eq9LrTXG5aN0aXmd4DGmPFch4eI51/L6Vki4DXpmpyNfI7EQiunW2ezA9Qe3\nuueV4NlBwSJBx6IcT35m1yjW+OwvjbHq2wIDAQAB\n-----END RSA PUBLIC KEY-----\n";
+    std::string ServerPublicKey = "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAtSGwOqmYyMldifSB99oqPc4jnWbOvtU9441/anExQtajz8AGA+V2\nuq9s6PNGZCkCCFYlxq7iXr+PTrL20irkqyNAX8Fjub+hckwBFtOGWOf2/ENJk9A8\nuyhfpmOVZ9+qB76ZcdwdSVWrCmzlgKjPU2RVz0moE1CHFtBr6gfdG+LlUBUEHr1X\nlnMlhNdRni+9Ju8X3Mt/EEdS++F+1s8/9VVMdf7RCPru09rR2fc9sD72DB7d8WeH\nMJssXGmcb6sZsU0u/3zNS8lGatDLivSwRrxeOUeUCIgu8ZrSTq0fCnHjUZ2WU6im\nDf1boE+E786Rf9cyK6I61zSUDMaqke7f8QIDAQAB\n-----END RSA PUBLIC KEY-----\n";
 
 };
