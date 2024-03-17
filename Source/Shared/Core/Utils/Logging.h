@@ -27,35 +27,38 @@ struct LogMessage
     std::string Message;
 };
 
+// Disbale all but error messages.
+void SetQuietLogging(bool enabled);
+
 // Gets the most recent log messages, so they can be displayed in webui or other places.
 std::list<LogMessage> GetRecentLogs();
 
 // Writes a given entry into the output log.
-void WriteLog(ConsoleColor Color, const char* Source, const char* Level, const char* Format, ...);
+void WriteLog(bool QuietLoggable, ConsoleColor Color, const char* Source, const char* Level, const char* Format, ...);
 
 // Various macros for different log levels.
 #if defined(_DEBUG)
-#define Verbose(Format, ...)                    WriteLog(ConsoleColor::Grey,      "", "Verbose", Format, ##__VA_ARGS__);
+#define Verbose(Format, ...)                    WriteLog(false, ConsoleColor::Grey,      "", "Verbose", Format, ##__VA_ARGS__);
 #else
 #define Verbose(Format, ...)           
 #endif
-#define Log(Format, ...)                        WriteLog(ConsoleColor::Grey,      "", "Log", Format, ##__VA_ARGS__);
-#define Success(Format, ...)                    WriteLog(ConsoleColor::Green,     "", "Success", Format, ##__VA_ARGS__);
-#define Warning(Format, ...)                    WriteLog(ConsoleColor::Yellow,    "", "Warning", Format, ##__VA_ARGS__);
-#define Error(Format, ...)                      WriteLog(ConsoleColor::Red,       "", "Error", Format, ##__VA_ARGS__);
-#define Fatal(Format, ...)                      WriteLog(ConsoleColor::Red,       "", "Fatal", Format, ##__VA_ARGS__); Ensure(false);
+#define Log(Format, ...)                        WriteLog(false, ConsoleColor::Grey,      "", "Log", Format, ##__VA_ARGS__);
+#define Success(Format, ...)                    WriteLog(true, ConsoleColor::Green,     "", "Success", Format, ##__VA_ARGS__);
+#define Warning(Format, ...)                    WriteLog(true, ConsoleColor::Yellow,    "", "Warning", Format, ##__VA_ARGS__);
+#define Error(Format, ...)                      WriteLog(true, ConsoleColor::Red,       "", "Error", Format, ##__VA_ARGS__);
+#define Fatal(Format, ...)                      WriteLog(true, ConsoleColor::Red,       "", "Fatal", Format, ##__VA_ARGS__); Ensure(false);
 
 // Same as the ones above but allows you to define the values of the "Source" column.
 #if defined(_DEBUG)
-#define VerboseS(Source, Format, ...)           WriteLog(ConsoleColor::Grey,      Source, "Verbose", Format, ##__VA_ARGS__);
+#define VerboseS(Source, Format, ...)           WriteLog(false, ConsoleColor::Grey,      Source, "Verbose", Format, ##__VA_ARGS__);
 #else
 #define VerboseS(Source, Format, ...)           
 #endif
-#define LogS(Source, Format, ...)               WriteLog(ConsoleColor::Grey,      Source, "Log", Format, ##__VA_ARGS__);
-#define SuccessS(Source, Format, ...)           WriteLog(ConsoleColor::Green,     Source, "Success", Format, ##__VA_ARGS__);
-#define WarningS(Source, Format, ...)           WriteLog(ConsoleColor::Yellow,    Source, "Warning", Format, ##__VA_ARGS__);
-#define ErrorS(Source, Format, ...)             WriteLog(ConsoleColor::Red,       Source, "Error", Format, ##__VA_ARGS__);
-#define FatalS(Source, Format, ...)             WriteLog(ConsoleColor::Red,       Source, "Fatal", Format, ##__VA_ARGS__); Ensure(false);
+#define LogS(Source, Format, ...)               WriteLog(false, ConsoleColor::Grey,      Source, "Log", Format, ##__VA_ARGS__);
+#define SuccessS(Source, Format, ...)           WriteLog(true,  ConsoleColor::Green,     Source, "Success", Format, ##__VA_ARGS__);
+#define WarningS(Source, Format, ...)           WriteLog(true, ConsoleColor::Yellow,    Source, "Warning", Format, ##__VA_ARGS__);
+#define ErrorS(Source, Format, ...)             WriteLog(true, ConsoleColor::Red,       Source, "Error", Format, ##__VA_ARGS__);
+#define FatalS(Source, Format, ...)             WriteLog(true, ConsoleColor::Red,       Source, "Fatal", Format, ##__VA_ARGS__); Ensure(false);
 
 #ifdef _WIN32
 #define Breakpoint() __debugbreak()

@@ -51,6 +51,8 @@ protected:
 
     bool InErrorState = false;
 
+    bool IsClient = false;
+
 private:
     
     double LastActivityTime;

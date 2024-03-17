@@ -115,6 +115,12 @@ bool Server::Init()
         }
     }
 
+    // Disable all but error messages if configured.
+    if (Config.QuietLogging)
+    {
+        SetQuietLogging(true);
+    }
+
     // Determine game type.
     if (!ParseGameType(Config.GameType.c_str(), ServerGameType))
     {
@@ -298,7 +304,7 @@ bool Server::Init()
         }
     }
     
-#define WriteState(State, bEnabled) WriteLog(bEnabled ? ConsoleColor::Green : ConsoleColor::Red, "", "Log", "%-25s: %s", State, bEnabled ? "Enabled" : "Disabled");
+#define WriteState(State, bEnabled) WriteLog(false, bEnabled ? ConsoleColor::Green : ConsoleColor::Red, "", "Log", "%-25s: %s", State, bEnabled ? "Enabled" : "Disabled");
     WriteState("Blood Messages", !Config.DisableBloodMessages);
     WriteState("Blood Stains", !Config.DisableBloodStains);
     WriteState("Blood Ghosts", !Config.DisableGhosts);

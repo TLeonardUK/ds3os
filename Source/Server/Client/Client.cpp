@@ -444,6 +444,9 @@ void Client::Handle_AuthServer_GetServerInfo()
     GameServerIP = GameInfo.game_server_ip;
     GameServerPort = GameInfo.game_port;
 
+    AuthServerConnection->Disconnect();
+    AuthServerConnection = nullptr;
+
     ChangeState(ClientState::GameServer_Connect);
 
     //LogS(GetName().c_str(), "Recieved game server info: %s:%i (auth token: 0x%016llx)", GameInfo.game_server_ip, GameInfo.game_port, GameInfo.auth_token);
@@ -684,8 +687,7 @@ void Client::Handle_GameServer_Idle()
                     Params->set_weapon_level(1);
                     Params->set_unknown_id_15("");
 
-                    //DS3_Frpg2RequestMessage::RequestGetSignListResponse Response;
-                    //SendAndAwaitWaitForReply(&Request, &Response);
+                    GameServerMessageStream->Send(&Request, nullptr);
 
                     break;
                 }
@@ -701,8 +703,7 @@ void Client::Handle_GameServer_Idle()
                     Domain->set_max_type_1(20);
                     Domain->set_max_type_2(20);
 
-                    //DS3_Frpg2RequestMessage::RequestGetBloodMessageListResponse Response;
-                    //SendAndAwaitWaitForReply(&Request, &Response);
+                    GameServerMessageStream->Send(&Request, nullptr);
 
                     break;
                 }
@@ -714,8 +715,7 @@ void Client::Handle_GameServer_Idle()
                     Request.set_online_area_id(1000);
                     Request.set_data(ghost_data.data(), ghost_data.size());
 
-                    //DS3_Frpg2RequestMessage::RequestCreateGhostDataResponse Response;
-                    //SendAndAwaitWaitForReply(&Request, &Response);
+                    GameServerMessageStream->Send(&Request, nullptr);
 
                     break;
                 }
@@ -728,10 +728,9 @@ void Client::Handle_GameServer_Idle()
 
                     DS3_Frpg2RequestMessage::DomainLimitData* Domain = Request.add_search_areas();
                     Domain->set_online_area_id(30004);
-                    Domain->set_max_items(32);
-
-                    //DS3_Frpg2RequestMessage::RequestGetBloodstainListResponse Response;
-                    //SendAndAwaitWaitForReply(&Request, &Response);
+                    Domain->set_max_items(32); 
+                    
+                    GameServerMessageStream->Send(&Request, nullptr);
 
                     break;
                 }
@@ -744,8 +743,7 @@ void Client::Handle_GameServer_Idle()
                     Request.set_ghost_data(ghost_data.data(), ghost_data.size());
                     Request.set_data(ghost_data.data(), ghost_data.size());
 
-                    //DS3_Frpg2RequestMessage::EmptyResponse Response;
-                    //SendAndAwaitWaitForReply(&Request, &Response);
+                    GameServerMessageStream->Send(&Request, nullptr);
 
                     break;
                 }
@@ -774,8 +772,7 @@ void Client::Handle_GameServer_Idle()
                     Params->set_weapon_level(1);
                     Params->set_unknown_id_15("");
 
-                    //DS3_Frpg2RequestMessage::RequestCreateSignResponse Response;
-                    //SendAndAwaitWaitForReply(&Request, &Response);
+                    GameServerMessageStream->Send(&Request, nullptr);
 
                     break;
                 }

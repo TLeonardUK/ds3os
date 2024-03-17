@@ -56,6 +56,9 @@ public:
     // Diassembles a messages into a human-readable string.
     std::string Disassemble(const Frpg2ReliableUdpPacket& Packet);
 
+    // Sends a heartbeat to the remote server.
+    void Heartbeat();
+
 protected:
 
     bool DecodeReliablePacket(const Frpg2UdpPacket& Packet, Frpg2ReliableUdpPacket& Message);
@@ -106,6 +109,8 @@ protected:
     double LastPacketRecievedTime = 0.0;
     double LastAckSendTime = 0.0;
 
+    double LastHeartbeatTime = 0.0f;
+
     std::string SteamId = "";
 
     // Ack sequences that we have sent replies with DAT_ACK, used to determine
@@ -153,15 +158,15 @@ protected:
     const int MAX_PACKETS_IN_FLIGHT = 32;
 
     // We reeeeeeeaaaallly want this to be exponential backoff, but this works for now.
-    const float RETRANSMIT_INTERVAL = 0.5f;             // 500ms
+    const float RETRANSMIT_INTERVAL = 1.0f;             // 1000 ms
 
-    const float RETRANSMIT_CYCLE_INTERVAL = 0.2f;       // 200ms
+    const float RETRANSMIT_CYCLE_INTERVAL = 0.2f;       // 200 ms
 
 #ifdef _DEBUG
     // Makes debugging easier.
     const uint32_t RETRANSMIT_MAX_ATTEMPTS = std::numeric_limits<uint32_t>::max();        
 #else
-    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 32;
+    const uint32_t RETRANSMIT_MAX_ATTEMPTS = 160;       // 160 * 0.2 = Will give up after trying to retransmiting for 30 seconds 
 #endif
 
     const float RESEND_SYN_INTERVAL = 0.5f;
@@ -169,7 +174,7 @@ protected:
     const double MIN_TIME_BETWEEN_RESEND_ACK = 0.15;
 
     // How many seconds to wait for a graceful disconnection.
-    const double CONNECTION_CLOSE_TIMEOUT = 3.0;
+    const double CONNECTION_CLOSE_TIMEOUT = 5.0;
 
     // How many values ACK increases before it rolls over.
     const uint32_t MAX_ACK_VALUE = 4096;

@@ -274,6 +274,8 @@ bool RuntimeConfig::Serialize(nlohmann::json& Json, bool Loading)
     SERIALIZE_VAR(ServerPrivateHostname);
     SERIALIZE_VAR(GameType);
 
+    SERIALIZE_VAR(QuietLogging);
+
     SERIALIZE_VAR(MasterServerIp);
     SERIALIZE_VAR(MasterServerPort);
     SERIALIZE_VAR(Advertise);

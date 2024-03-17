@@ -162,6 +162,9 @@ public:
     // Port the master server lists for connections at MasterServerIp;
     int MasterServerPort = 50020;
 
+    // If true this reduces the amount of logging output to the bare minimum, only showing warnings/errors.
+    bool QuietLogging = false;
+
     // If true register the server of the master servers list so others can see
     // and join it.
     bool Advertise = true;

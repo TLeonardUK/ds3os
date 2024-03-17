@@ -28,6 +28,7 @@ Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConn
     : Connection(InConnection)
     , CwcKey(InCwcKey)
     , AuthToken(InAuthToken)
+    , IsClient(AsClient)
 {
     if (AsClient)
     {

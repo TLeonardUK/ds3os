@@ -19,7 +19,13 @@ namespace
 {
     std::mutex RecentMessageMutex;
     std::list<LogMessage> RecentMessages;
+    bool QuietLoggingEnabled = false;
 };
+
+void SetQuietLogging(bool enabled)
+{
+    QuietLoggingEnabled = enabled;
+}
 
 std::list<LogMessage> GetRecentLogs()
 {
@@ -73,8 +79,13 @@ void WriteLogStatic(ConsoleColor Color, const char* Source, const char* Level, c
     }
 }
 
-void WriteLog(ConsoleColor Color, const char* Source, const char* Level, const char* Format, ...)
+void WriteLog(bool QuietLoggable, ConsoleColor Color, const char* Source, const char* Level, const char* Format, ...)
 {
+    if (QuietLoggingEnabled && !QuietLoggable)
+    {
+        return;
+    }
+
     char buffer[256];
     char* buffer_to_use = buffer;
 

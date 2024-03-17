@@ -446,7 +446,10 @@ void Frpg2ReliableUdpPacketStream::Handle_HBT(const Frpg2ReliableUdpPacket& Pack
         SequenceIndexAcked = std::max(SequenceIndexAcked, InRemoteAck);
     }
 
-    Send_HBT();
+    if (!IsClient)
+    {
+        Send_HBT();
+    }
 }
 
 void Frpg2ReliableUdpPacketStream::Handle_FIN(const Frpg2ReliableUdpPacket& Packet)
@@ -775,6 +778,11 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
     }
 }
 
+void Frpg2ReliableUdpPacketStream::Heartbeat()
+{
+    Send_HBT();
+}
+
 bool Frpg2ReliableUdpPacketStream::Pump()
 {
     // Mark as connection closed after we have sent everything in the queue.
@@ -794,6 +802,17 @@ bool Frpg2ReliableUdpPacketStream::Pump()
     if (Frpg2UdpPacketStream::Pump())
     {
         return true;
+    }
+
+    // If connected, and outgoing, send a heartbeat now and again.
+    if (State == Frpg2ReliableUdpStreamState::Established && IsClient)
+    {
+        double Elapsed = GetSeconds() - LastHeartbeatTime;
+        if (Elapsed > 5.0f)
+        {
+            Heartbeat();
+            LastHeartbeatTime = GetSeconds();
+        }
     }
 
     // If connecting periodically resend the syn until we get a response. This helps punch a
