@@ -393,7 +393,7 @@ void NetConnectionUDP::RecieveThreadEntry()
 
         // Wait until a message is available, or wakeup after a timeout to check shutdown state 
         // (this is kinda garbage, we should look at a better way to handle this).
-        if (select(1, &SocketSet, nullptr, nullptr, &Timeout) == 0)
+        if (select(Socket + 1, &SocketSet, nullptr, nullptr, &Timeout) == 0)
         {
             continue;
         }
