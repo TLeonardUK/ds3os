@@ -47,4 +47,6 @@ private:
 
     OnlineAreaPool<DS2_CellAndAreaId, Bloodstain> LiveCache;
 
+    uint32_t NextMemoryCacheStainId = std::numeric_limits<uint32_t>::max();
+
 };

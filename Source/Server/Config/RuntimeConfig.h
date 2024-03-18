@@ -221,7 +221,7 @@ public:
     };
 
     // How often (in seconds) between each database trim.
-    double DatabaseTrimInterval = 60 * 60;
+    double DatabaseTrimInterval = 60 * 60 * 8;
 
     // Maximum number of blood messages to store per area in the cache.
     // If greater than this value are added, the oldest will be removed.
@@ -246,6 +246,10 @@ public:
 
     // Maximum number of bloodstains to store in database. More than this will be trimmed.
     int BloodstainMaxDatabaseEntries = 1000;
+
+    // If set to true bloodstain will only be stored in the memory-cache, and not persistently
+    // on disk. 
+    bool BloodstainMemoryCacheOnly = true;
 
     // Maximum number of ghoststo store per area in the cache.
     // If greater than this value are added, the oldest will be removed.

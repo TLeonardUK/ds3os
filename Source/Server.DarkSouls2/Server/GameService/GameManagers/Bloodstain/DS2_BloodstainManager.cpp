@@ -89,6 +89,7 @@ MessageHandleResult DS2_BloodstainManager::OnMessageRecieved(GameClient* Client,
 
 MessageHandleResult DS2_BloodstainManager::Handle_RequestCreateBloodstain(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
@@ -99,7 +100,31 @@ MessageHandleResult DS2_BloodstainManager::Handle_RequestCreateBloodstain(GameCl
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
     GhostData.assign(Request->ghost_data().data(), Request->ghost_data().data() + Request->ghost_data().size());
 
-    if (std::shared_ptr<Bloodstain> ActiveStain = Database.CreateBloodstain((uint32_t)Request->online_area_id(), (uint64_t)Request->cell_id(), Player.GetPlayerId(), Player.GetSteamId(), Data, GhostData))
+    std::shared_ptr<Bloodstain> ActiveStain = nullptr;
+    if (Config.BloodstainMemoryCacheOnly)
+    {
+        ActiveStain = std::make_shared<Bloodstain>();
+        ActiveStain->BloodstainId = (uint32_t)NextMemoryCacheStainId--;
+        ActiveStain->OnlineAreaId = (uint32_t)Request->online_area_id();
+        ActiveStain->CellId = (uint64_t)Request->cell_id();
+        ActiveStain->PlayerId = Player.GetPlayerId();
+        ActiveStain->PlayerSteamId = Player.GetSteamId();
+        ActiveStain->Data = Data;
+        ActiveStain->GhostData = GhostData;
+    }
+    else
+    {
+        ActiveStain = Database.CreateBloodstain(
+            (uint32_t)Request->online_area_id(),
+            0,
+            Player.GetPlayerId(),
+            Player.GetSteamId(),
+            Data,
+            GhostData
+        );
+    }
+
+    if (ActiveStain)
     {
         LiveCache.Add({ ActiveStain->CellId, (DS2_OnlineAreaId)ActiveStain->OnlineAreaId }, ActiveStain->BloodstainId, ActiveStain);
     }
