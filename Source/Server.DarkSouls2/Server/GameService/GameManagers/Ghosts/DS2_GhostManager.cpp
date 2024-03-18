@@ -81,6 +81,7 @@ MessageHandleResult DS2_GhostManager::OnMessageRecieved(GameClient* Client, cons
 
 MessageHandleResult DS2_GhostManager::Handle_RequestCreateGhostData(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
+    const RuntimeConfig& Config = ServerInstance->GetConfig();
     ServerDatabase& Database = ServerInstance->GetDatabase();
     PlayerState& Player = Client->GetPlayerState();
 
@@ -89,7 +90,28 @@ MessageHandleResult DS2_GhostManager::Handle_RequestCreateGhostData(GameClient* 
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
 
-    if (std::shared_ptr<Ghost> ActiveGhost = Database.CreateGhost((uint32_t)Request->online_area_id(), (uint64_t)Request->cell_id(), Player.GetPlayerId(), Player.GetSteamId(), Data))
+    std::shared_ptr<Ghost> ActiveGhost = nullptr;
+    if (Config.GhostMemoryCacheOnly)
+    {
+        ActiveGhost = std::make_shared<Ghost>();
+        ActiveGhost->GhostId = (uint32_t)NextMemoryCacheGhostId--;
+        ActiveGhost->OnlineAreaId = (uint32_t)Request->online_area_id();
+        ActiveGhost->CellId = (uint64_t)Request->cell_id();
+        ActiveGhost->PlayerId = Player.GetPlayerId();
+        ActiveGhost->PlayerSteamId = Player.GetSteamId();
+        ActiveGhost->Data = Data;
+    }
+    else
+    {
+        ActiveGhost = Database.CreateGhost(
+            (uint32_t)Request->online_area_id(),
+            (uint64_t)Request->cell_id(), 
+            Player.GetPlayerId(), 
+            Player.GetSteamId(), 
+            Data);
+    }
+
+    if (ActiveGhost)
     {
         LiveCache.Add(ActiveGhost->CellId, ActiveGhost->GhostId, ActiveGhost);
     }

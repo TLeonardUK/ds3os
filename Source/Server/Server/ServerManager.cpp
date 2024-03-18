@@ -131,7 +131,7 @@ void ServerManager::RunUntilQuit()
                 PlayerCount += Server->GetService<GameService>()->GetClients().size();
             }
 
-            WriteLog(true, ConsoleColor::Grey, "", "Log", "%zi players | %zi servers | %.2f ms update | connections auth %.2f login %.2f game %.2f p/s | tcp in %.2f out %.2f kb/s | udp in %.2f out %.2f kb/s ",
+            WriteLog(true, ConsoleColor::Grey, "", "Log", "%zi players | %zi servers | %.2f ms update | connections auth %.2f login %.2f game %.2f p/s | tcp in %.2f out %.2f kb/s | udp in %.2f out %.2f kb/s | database queries %.2f p/s ",
                 PlayerCount,
                 ServerInstances.size(),
                 Debug::AllServerUpdateTime.GetAverage(),
@@ -141,7 +141,8 @@ void ServerManager::RunUntilQuit()
                 (Debug::TcpBytesRecieved.GetAverageRate()) / 1024.0f,
                 (Debug::TcpBytesSent.GetAverageRate()) / 1024.0f,
                 (Debug::UdpBytesRecieved.GetAverageRate()) / 1024.0f,
-                (Debug::UdpBytesSent.GetAverageRate()) / 1024.0f
+                (Debug::UdpBytesSent.GetAverageRate()) / 1024.0f,
+                Debug::DatabaseQueries.GetAverageRate()
             );
 
             LastStatsPrint = GetSeconds();

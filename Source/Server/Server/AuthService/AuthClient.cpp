@@ -244,7 +244,13 @@ bool AuthClient::Poll()
 
                 if constexpr (BuildConfig::AUTH_ENABLED)
                 {
+                    double Start = GetHighResolutionSeconds();
+
                     int AuthResult = SteamGameServer()->BeginAuthSession(Ticket.data(), (int)Ticket.size(), SteamIdStruct);
+                    SteamGameServer()->EndAuthSession(SteamIdStruct);
+
+                    double Elapsed = GetHighResolutionSeconds() - Start;
+
                     if (AuthResult != k_EBeginAuthSessionResultOK)
                     {
                         WarningS(GetName().c_str(), "Disconnecting client as steam ticket authentication failed with error %i.", AuthResult);
@@ -252,9 +258,8 @@ bool AuthClient::Poll()
                     }
                     else
                     {
-                        VerboseS(GetName().c_str(), "Client steam ticket authenticated successfully.");
+                        LogS(GetName().c_str(), "Client steam ticket authenticated successfully in %.2f seconds.");
                     }
-                    SteamGameServer()->EndAuthSession(SteamIdStruct);
                 }
 
                 // If user IP is on a private network, we can assume they are on our LAN

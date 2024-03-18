@@ -46,4 +46,6 @@ private:
 
     OnlineAreaPool<uint64_t, Ghost> LiveCache;
 
+    uint32_t NextMemoryCacheGhostId = std::numeric_limits<uint32_t>::max();
+
 };

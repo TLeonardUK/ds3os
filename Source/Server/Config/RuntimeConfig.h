@@ -259,6 +259,10 @@ public:
     // re-enter their messages.
     int GhostPrimeCountPerArea = 50;
 
+    // If set to true ghosts will only be stored in the memory-cache, and not persistently
+    // on disk. This can reduce database size and query costs as they can be quite spammily created.
+    bool GhostMemoryCacheOnly = true;
+
     // This should be for all intents and purposes infinite. But you can limit
     // it if you so wish. Bare in mind that players may see signs that no longer
     // exist on the server.
@@ -305,7 +309,7 @@ public:
 
     // How frequently (in seconds) the clients should send PlayerStatus updates. Increase this to 
     // reduce network bandwidth. Client clamps this to a minimum of 5.
-    float PlayerStatusUploadInterval = 5.0f;
+    float PlayerStatusUploadInterval = 15.0f;
 
     // How much delay (in seconds) should be placed on RequestUpdatePlayerCharacter calls. Clamped to 60->50000
     float PlayerCharacterUpdateSendDelay = 600.0f;

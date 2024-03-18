@@ -16,6 +16,8 @@ TIMER(LoginService_PollTime, "Login Service (Poll Time)")
 TIMER(DatabaseQueryTime, "Database Query Time")
 TIMER(AntiCheatTime, "Anti-Cheat Time")
 
+COUNTER(DatabaseQueries, "Database Queries")
+
 COUNTER(AuthConnections, "Auth Connections")
 COUNTER(LoginConnections, "Login Connections")
 COUNTER(GameConnections, "Game Connections")
@@ -28,5 +30,3 @@ COUNTER(UdpBytesSent, "UDP Bytes Sent")
 COUNTER(RequestsRecieved, "Requests Recieved")
 COUNTER(ResponsesSent, "Responses Sent")
 COUNTER(PushMessagesSent, "Push Messages Sent")
-
-COUNTER(DatabaseQueries, "Database Queries")
