@@ -74,7 +74,8 @@ public:
     inline static const double AUTH_TICKET_TIMEOUT = 30.0;
 
     // Maximum length of a packet in an Frpg2PacketStream.
-    inline static const int MAX_PACKET_LENGTH = 8192;
+    inline static const int MAX_PACKET_LENGTH = 64 * 1024;
+
     // If true clients are disconnected if we are unable to handle the message they send.
     // Be careful with this, if we don't reply to some messages the client will deadlock.
 #if true// defined(_DEBUG)
@@ -122,7 +123,7 @@ public:
     inline static const double SPIKE_LENGTH_MAX = 1000.0 * 20.0;
 
     // When running as a client emulator this is how many clients to spawn.
-    inline static const size_t CLIENT_EMULATOR_COUNT = 128;
+    inline static const size_t CLIENT_EMULATOR_COUNT = 2000;
 
     constexpr inline static const bool AUTH_ENABLED = true;
 
