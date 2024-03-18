@@ -18,7 +18,7 @@
 class DebugTimer 
 {
 public:
-    DebugTimer(const std::string& name, double RollingWindow = 60.0);
+    DebugTimer(const std::string& name, double RollingWindow = 10.0);
     ~DebugTimer();
 
     std::string GetName();

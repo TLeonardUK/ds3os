@@ -276,7 +276,12 @@ bool NetConnectionUDP::Disconnect()
 
     if (!bChild)
     {
-        bShuttingDownThreads = true;
+        {
+            std::unique_lock lock(SendQueueMutex);
+            bShuttingDownThreads = true;
+            SendQueueCvar.notify_all();
+        }
+
         if (RecieveThread)
         {
             RecieveThread->join();
@@ -378,6 +383,22 @@ void NetConnectionUDP::RecieveThreadEntry()
         socklen_t SourceAddressSize = sizeof(struct sockaddr);
         sockaddr_in SourceAddress = { 0 };
 
+        timeval Timeout;
+        Timeout.tv_sec = 0;
+        Timeout.tv_usec = 1000 * 10;
+
+        fd_set SocketSet;
+        FD_ZERO(&SocketSet);
+        FD_SET(Socket, &SocketSet);
+
+        // Wait until a message is available, or wakeup after a timeout to check shutdown state 
+        // (this is kinda garbage, we should look at a better way to handle this).
+        if (select(1, &SocketSet, nullptr, nullptr, &Timeout) == 0)
+        {
+            continue;
+        }
+
+        // Recieve the next message on the socket.
         int Flags = 0;
         int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), Flags, (sockaddr*)&SourceAddress, &SourceAddressSize);
         if (Result < 0)
@@ -446,6 +467,11 @@ void NetConnectionUDP::SendThreadEntry()
             std::unique_lock lock(SendQueueMutex);
             while (true)
             {
+                if (bShuttingDownThreads)
+                {
+                    return;
+                }
+
                 if (!SendQueue.empty())
                 {
                     SendPacket = std::move(SendQueue.front());

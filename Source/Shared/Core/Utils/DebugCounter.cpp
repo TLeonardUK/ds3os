@@ -9,10 +9,8 @@
 
 #include "Shared/Core/Utils/DebugCounter.h"
 
-DebugCounter::DebugCounter(const std::string& InName, double InRateWindow, double InRollingWindow)
+DebugCounter::DebugCounter(const std::string& InName)
     : Name(InName)
-    , RollingWindow(InRollingWindow)
-    , RateWindow(InRateWindow)
 {
     Registry.push_back(this);
 }
@@ -37,25 +35,7 @@ std::string DebugCounter::GetName()
 
 double DebugCounter::GetAverageRate()
 {
-    std::scoped_lock lock(DataMutex);
-
-    if (Samples.empty())
-    {
-        return 0.0;
-    }
-
-    double Total = 0.0f;
-
-    for (Sample& Sample : Samples)
-    {
-        Total += Sample.Value;
-    }
-
-    double CurrentTime = GetHighResolutionSeconds();
-    double ElapsedTime = CurrentTime - Samples.front().Time;
-    double Multiplier = RateWindow / ElapsedTime;
-
-    return Total * Multiplier;
+    return Average;
 }
 
 double DebugCounter::GetTotalLifetime()
@@ -65,29 +45,29 @@ double DebugCounter::GetTotalLifetime()
 
 void DebugCounter::Add(double Value)
 {
-    std::scoped_lock lock(DataMutex);
-
-    double CurrentTime = GetHighResolutionSeconds();
-
-    Sample NewSample;
-    NewSample.Time = CurrentTime;
-    NewSample.Value = Value;
-    Samples.push_back(NewSample);
-
-    // Trim old samples from list.
-    double OldestTime = CurrentTime - RollingWindow;
-    while (!Samples.empty())
-    {
-        Sample& FirstSample = Samples.front();
-        if (FirstSample.Time < OldestTime)
-        {
-            Samples.erase(Samples.begin());
-        }
-        else
-        {
-            break;
-        }
-    }
-
+    AverageSum += Value;
     LifetimeTotal += Value;
+}
+
+void DebugCounter::Poll()
+{
+    double CurrentTime = GetHighResolutionSeconds();
+    double Elapsed = CurrentTime - AverageTimer;
+    if (Elapsed > 1.0f)
+    {
+        float Scale = 1.0f / Elapsed;
+        float Sample = AverageSum * Scale;
+
+        Average = (Average * 0.9f) + (Sample * 0.1f);
+        AverageSum = 0.0;
+        AverageTimer = CurrentTime;
+    }
+}
+
+void DebugCounter::PollAll()
+{
+    for (DebugCounter* instance : Registry)
+    {
+        instance->Poll();
+    }
 }

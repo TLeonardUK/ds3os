@@ -7,6 +7,7 @@
  * If not, see <https://opensource.org/licenses/MIT>.
  */
  
+TIMER(AllServerUpdateTime, "All Server Update Time")
 TIMER(UpdateTime, "Update Time")
 TIMER(WebUIService_PollTime, "Web UI Service (Poll Time)")
 TIMER(GameService_PollTime, "Game Service (Poll Time)")

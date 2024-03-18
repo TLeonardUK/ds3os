@@ -18,7 +18,7 @@
 class DebugCounter
 {
 public:
-    DebugCounter(const std::string& name, double RateWindow = 60 * 60, double RollingWindow = 60 * 5);
+    DebugCounter(const std::string& name);
     ~DebugCounter();
 
     std::string GetName();
@@ -27,25 +27,20 @@ public:
 
     void Add(double Value);
 
+    void Poll();
+
     static std::vector<DebugCounter*> GetCounters();
+    static void PollAll();
 
 private:
     inline static std::vector<DebugCounter*> Registry;    
 
-    std::mutex DataMutex;
-
-    struct Sample
-    {
-        double Time;
-        double Value;
-    };
-
-    std::list<Sample> Samples;
-
-    double LifetimeTotal = 0.0;
-    double RateWindow = 0.0;
-    double RollingWindow = 0.0;
-
     std::string Name;
+
+    double LifetimeTotal = 0.0f;
+
+    double Average = 0.0;
+    double AverageTimer = 0.0;
+    double AverageSum = 0.0;
 
 };

@@ -64,4 +64,6 @@ private:
     std::mutex CallbackMutex;
     std::vector<std::function<void()>> Callbacks;
 
+    double LastStatsPrint = GetSeconds();
+
 };

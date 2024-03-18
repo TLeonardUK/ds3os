@@ -14,6 +14,9 @@
 #include "Shared/Core/Utils/File.h"
 #include "Shared/Core/Utils/Strings.h"
 #include "Shared/Core/Utils/Random.h"
+#include "Shared/Core/Utils/DebugCounter.h"
+#include "Shared/Core/Utils/DebugObjects.h"
+#include "Shared/Core/Utils/DebugTimer.h"
 
 #include <thread>
 #include <chrono>
@@ -93,9 +96,12 @@ void ServerManager::RunUntilQuit()
     {
         std::scoped_lock lock(m_mutex);
 
-        for (auto& Server : ServerInstances)
         {
-            Server->Poll();
+            DebugTimerScope Scope(Debug::AllServerUpdateTime);
+            for (auto& Server : ServerInstances)
+            {
+                Server->Poll();
+            }
         }
 
         if (GetSeconds() > NextServerPruneTime)
@@ -115,7 +121,35 @@ void ServerManager::RunUntilQuit()
             Callbacks.clear();
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        // Emit some statistics periodically.
+        double Elapsed = GetSeconds() - LastStatsPrint;
+        if (Elapsed > 30.0f)
+        {
+            size_t PlayerCount = 0;
+            for (auto& Server : ServerInstances)
+            {
+                PlayerCount += Server->GetService<GameService>()->GetClients().size();
+            }
+
+            WriteLog(true, ConsoleColor::Grey, "", "Log", "%zi players | %zi servers | %.2f ms update | connections auth %.2f login %.2f game %.2f p/s | tcp in %.2f out %.2f kb/s | udp in %.2f out %.2f kb/s ",
+                PlayerCount,
+                ServerInstances.size(),
+                Debug::AllServerUpdateTime.GetAverage(),
+                Debug::AuthConnections.GetAverageRate(),
+                Debug::LoginConnections.GetAverageRate(),
+                Debug::GameConnections.GetAverageRate(),
+                (Debug::TcpBytesRecieved.GetAverageRate()) / 1024.0f,
+                (Debug::TcpBytesSent.GetAverageRate()) / 1024.0f,
+                (Debug::UdpBytesRecieved.GetAverageRate()) / 1024.0f,
+                (Debug::UdpBytesSent.GetAverageRate()) / 1024.0f
+            );
+
+            LastStatsPrint = GetSeconds();
+        }
+
+        DebugCounter::PollAll();
+
+        std::this_thread::sleep_for(std::chrono::microseconds(100));
     }
 }
 
