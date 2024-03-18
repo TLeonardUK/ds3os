@@ -134,7 +134,7 @@ void ServerManager::RunUntilQuit()
             WriteLog(true, ConsoleColor::Grey, "", "Log", "%zi players | %zi servers | %.2f ms update | connections auth %.2f login %.2f game %.2f p/s | tcp in %.2f out %.2f kb/s | udp in %.2f out %.2f kb/s | database queries %.2f p/s ",
                 PlayerCount,
                 ServerInstances.size(),
-                Debug::AllServerUpdateTime.GetAverage(),
+                Debug::AllServerUpdateTime.GetAverage() * 1000.0f,
                 Debug::AuthConnections.GetAverageRate(),
                 Debug::LoginConnections.GetAverageRate(),
                 Debug::GameConnections.GetAverageRate(),
@@ -149,6 +149,7 @@ void ServerManager::RunUntilQuit()
         }
 
         DebugCounter::PollAll();
+        DebugTimer::PollAll();
 
         std::this_thread::sleep_for(std::chrono::microseconds(100));
     }

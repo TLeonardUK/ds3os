@@ -18,7 +18,7 @@
 class DebugTimer 
 {
 public:
-    DebugTimer(const std::string& name, double RollingWindow = 10.0);
+    DebugTimer(const std::string& name, double RollingWindow = 5.0);
     ~DebugTimer();
 
     std::string GetName();
@@ -26,7 +26,10 @@ public:
     double GetPeak();
     double GetCurrent();
 
+    void Poll();
+
     static std::vector<DebugTimer*> GetTimers();
+    static void PollAll();
 
 protected:
     friend struct DebugTimerScope;
@@ -36,18 +39,17 @@ protected:
 private:    
     inline static std::vector<DebugTimer*> Registry;
 
-    std::mutex DataMutex;
-
-    struct Sample
-    {
-        double Time;
-        double Value;
-    };
-
-    std::list<Sample> Samples;
-
     double RollingWindow;
     std::string Name;
+
+    double Current = 0.0;
+    double Peak = 0.0;
+    double PeakTracker = 0.0;
+
+    double Average = 0.0;
+    double AverageTimer = 0.0;
+    double AverageSum = 0.0;
+    double AverageSamples = 0.0;
 
 };
 

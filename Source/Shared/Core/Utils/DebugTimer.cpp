@@ -9,6 +9,8 @@
 
 #include "Shared/Core/Utils/DebugTimer.h"
 
+#pragma optimize("", off)
+
 DebugTimer::DebugTimer(const std::string& InName, double InRollingWindow)
     : Name(InName)
     , RollingWindow(InRollingWindow)
@@ -31,50 +33,17 @@ std::string DebugTimer::GetName()
 
 double DebugTimer::GetAverage()
 {
-    std::scoped_lock lock(DataMutex);
-
-    if (Samples.empty())
-    {
-        return 0.0;
-    }
-
-    double Average = 0.0f;
-
-    for (Sample& Sample : Samples)
-    {
-        Average += Sample.Value;
-    }
-
-    return Average / Samples.size();
+    return Average;
 }
 
 double DebugTimer::GetPeak()
 {
-    std::scoped_lock lock(DataMutex);
-
-    double Peak = 0.0f;
-
-    for (Sample& Sample : Samples)
-    {
-        if (Sample.Value > Peak)
-        {
-            Peak = Sample.Value;
-        }
-    }
-
     return Peak;
 }
 
 double DebugTimer::GetCurrent()
 {
-    std::scoped_lock lock(DataMutex);
-
-    if (Samples.empty())
-    {
-        return 0.0;
-    }
-
-    return Samples.back().Value;
+    return Current;
 }
 
 std::vector<DebugTimer*> DebugTimer::GetTimers()
@@ -84,27 +53,37 @@ std::vector<DebugTimer*> DebugTimer::GetTimers()
 
 void DebugTimer::AddSample(double Interval)
 {
-    std::scoped_lock lock(DataMutex);
-
-    double CurrentTime = GetHighResolutionSeconds();
-
-    Sample NewSample;
-    NewSample.Time = CurrentTime;
-    NewSample.Value = Interval;
-    Samples.push_back(NewSample);
-
-    // Trim old samples from list.
-    double OldestTime = CurrentTime - RollingWindow;
-    while (!Samples.empty())
+    AverageSum += Interval;
+    AverageSamples += 1.0;
+    if (Interval > PeakTracker)
     {
-        Sample& FirstSample = Samples.front();
-        if (FirstSample.Time < OldestTime)
-        {
-            Samples.erase(Samples.begin());
-        }
-        else
-        {
-            break;
-        }
+        PeakTracker = Interval;
+    }
+}
+
+void DebugTimer::Poll()
+{
+    double CurrentTime = GetHighResolutionSeconds();
+    double Elapsed = CurrentTime - AverageTimer;
+    if (Elapsed > RollingWindow)
+    {
+        float Scale = RollingWindow / Elapsed;
+        float Sample = (AverageSum / AverageSamples) * Scale;
+
+        Current = Sample;
+        Peak = PeakTracker;
+        Average = (Average * 0.9f) + (Sample * 0.1f);
+        AverageSum = 0.0;
+        AverageSamples = 0.0;
+        PeakTracker = 0.0;
+        AverageTimer = CurrentTime;
+    }
+}
+
+void DebugTimer::PollAll()
+{
+    for (DebugTimer* instance : Registry)
+    {
+        instance->Poll();
     }
 }
