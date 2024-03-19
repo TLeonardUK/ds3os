@@ -26,6 +26,11 @@ var GCensors = [
 
 ];
 
+// List of public hostnames that are allowed to mark their servers as supporting sharding.
+var ShardingAllowList = [
+    "172.105.11.166"
+];
+
 var GOldestSupportedVersion = 2;
 
 function IsFiltered(Name)
@@ -75,6 +80,20 @@ function IsServerCensored(ServerInfo)
             IsCensored(ServerInfo['Hostname']);
 }
 
+function IsServerAllowedToShard(ServerInfo)
+{
+    var NameLower = ServerInfo['Hostname'].toLowerCase();
+    for (var i = 0; i < ShardingAllowList.length; i++)
+    {
+        if (NameLower == ShardingAllowList[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function RemoveServer(Id)
 {
     for (var i = 0; i < GActiveServers.length; i++)
@@ -110,7 +129,13 @@ function AddServer(Id, IpAddress, hostname, private_hostname, description, name,
         "UpdatedTime": Date.now(),
         "Version": version,
         "Censored": false
-     };
+    };
+
+    if (!IsServerAllowedToShard(ServerObj) && allow_sharding)
+    {
+        console.log(`Dropped server, marked to allow sharding but not whitelsited: id=${Id} ip=${IpAddress} port=${port} type=${game_type} name=${name}`);
+        return;
+    }
 
     if (IsServerFilter(ServerObj))
     {
