@@ -200,8 +200,7 @@ MessageHandleResult DS2_BloodMessageManager::Handle_RequestCreateBloodMessage(Ga
     }
     else
     {
-        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to create blood message.");
-        return MessageHandleResult::Error;
+        WarningS(Client->GetName().c_str(), "Failed to create blood message.");
     }
 
     std::string TypeStatisticKey = StringFormat("BloodMessage/TotalCreated");
@@ -365,8 +364,7 @@ MessageHandleResult DS2_BloodMessageManager::Handle_RequestEvaluateBloodMessage(
     // If we can't find it, just return 0 evaluation, this shouldn't happen in practice.
     else
     {
-        WarningS(Client->GetName().c_str(), "Disconnecting client as attempted to evaluate unknown unknown message id '%u'.", Request->message_id());
-        return MessageHandleResult::Error;
+        WarningS(Client->GetName().c_str(), "Client as attempted to evaluate unknown unknown message id '%u'.", Request->message_id());
     }
 
     if (ActiveMessage != nullptr)

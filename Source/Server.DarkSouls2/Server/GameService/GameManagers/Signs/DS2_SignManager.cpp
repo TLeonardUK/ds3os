@@ -300,15 +300,14 @@ MessageHandleResult DS2_SignManager::Handle_RequestRemoveSign(GameClient* Client
     if (auto Iter = std::find(Client->ActiveSummonSigns.begin(), Client->ActiveSummonSigns.end(), Sign); Iter != Client->ActiveSummonSigns.end())
     {
         Client->ActiveSummonSigns.erase(Iter);
+
+        // Tell anyone who is aware of this sign that its been removed.
+        RemoveSignAndNotifyAware(Sign);
     }
     else
     {
-        WarningS(Client->GetName().c_str(), "Disconnecting client as attempted to remove summon sign that didn't belong to them, %i.", Request->sign_id());
-        return MessageHandleResult::Error;
+        WarningS(Client->GetName().c_str(), "Client attempted to remove summon sign that didn't belong to them, %i.", Request->sign_id());
     }
-
-    // Tell anyone who is aware of this sign that its been removed.
-    RemoveSignAndNotifyAware(Sign);
 
     // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
     // doesn't work without it though.

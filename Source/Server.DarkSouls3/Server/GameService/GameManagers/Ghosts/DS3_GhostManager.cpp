@@ -118,8 +118,7 @@ MessageHandleResult DS3_GhostManager::Handle_RequestCreateGhostData(GameClient* 
     }
     else
     {
-        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to create ghost.");
-        return MessageHandleResult::Error;
+        WarningS(Client->GetName().c_str(), "Failed to create ghost.");
     }
 
     std::string TypeStatisticKey = StringFormat("Ghosts/TotalGhostsCreated");

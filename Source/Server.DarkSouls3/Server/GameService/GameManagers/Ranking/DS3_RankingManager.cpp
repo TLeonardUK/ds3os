@@ -60,7 +60,6 @@ MessageHandleResult DS3_RankingManager::Handle_RequestRegisterRankingData(GameCl
     if (!Database.RegisterScore(Request->board_id(), Player.GetPlayerId(), Request->character_id(), Request->score(), Data))
     {
         WarningS(Client->GetName().c_str(), "Failed to register score in database.");
-        return MessageHandleResult::Error;
     }
 
     std::string TypeStatisticKey = StringFormat("Ranking/TotalRegistrations");

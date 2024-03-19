@@ -168,11 +168,11 @@ bool Server::Init()
     }
 
     // Patch old server ip.
-#ifdef _DEBUG
+#if 1//def _DEBUG
     //Config.MasterServerIp = "127.0.0.1";
     Config.MasterServerIp = "ds3os-master.timleonard.uk";
-    Config.ServerName = "Debugging Server";
-    Config.ServerDescription = "Used for debugging by Infini, don't use.";
+    //Config.ServerName = "Debugging Server";
+    //Config.ServerDescription = "Used for debugging by Infini, don't use.";
 #else
     if (Config.MasterServerIp == "timleonard.uk")
     {
@@ -304,6 +304,7 @@ bool Server::Init()
         }
     }
     
+#if 0
 #define WriteState(State, bEnabled) WriteLog(false, bEnabled ? ConsoleColor::Green : ConsoleColor::Red, "", "Log", "%-25s: %s", State, bEnabled ? "Enabled" : "Disabled");
     WriteState("Blood Messages", !Config.DisableBloodMessages);
     WriteState("Blood Stains", !Config.DisableBloodStains);
@@ -313,6 +314,7 @@ bool Server::Init()
     WriteState("Coop (Auto Summon)", !Config.DisableCoopAutoSummon);
     WriteState("Coop", !Config.DisableCoop);
 #undef WriteState
+#endif
 
     return true;
 }

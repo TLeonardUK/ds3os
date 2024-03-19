@@ -67,7 +67,6 @@ MessageHandleResult DS2_RankingManager::Handle_RequestRegisterPowerStoneData(Gam
     if (!Database.RegisterScore(0, Player.GetPlayerId(), Request->character_id(), score, Data))
     {
         WarningS(Client->GetName().c_str(), "Failed to register score in database.");
-        return MessageHandleResult::Error;
     }
 
     std::string TypeStatisticKey = StringFormat("Ranking/TotalRegistrations");

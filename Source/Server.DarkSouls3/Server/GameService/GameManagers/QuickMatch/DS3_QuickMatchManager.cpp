@@ -499,67 +499,68 @@ MessageHandleResult DS3_QuickMatchManager::Handle_RequestSendQuickMatchResult(Ga
     std::shared_ptr<Character> Character = Database.FindCharacter(State.GetPlayerId(), State.GetCharacterId());
     if (!Character)
     {
-        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to find current character during QuickMatchResult.");
-        return MessageHandleResult::Error;
+        WarningS(Client->GetName().c_str(), "Failed to find current character during QuickMatchResult.");
     }
+    else
+    {
+        // Increase and return rank.
+        bool IsDuel = (Request->mode() == DS3_Frpg2RequestMessage::QuickMatchGameMode::Duel);
 
-    // Increase and return rank.
-    bool IsDuel = (Request->mode() == DS3_Frpg2RequestMessage::QuickMatchGameMode::Duel);
+        uint32_t OriginalRank = IsDuel ? Character->QuickMatchDuelRank : Character->QuickMatchBrawlRank;
+        uint32_t OriginalXP = IsDuel ? Character->QuickMatchDuelXp : Character->QuickMatchBrawlXp;
 
-    uint32_t OriginalRank = IsDuel ? Character->QuickMatchDuelRank : Character->QuickMatchBrawlRank;
-    uint32_t OriginalXP = IsDuel ? Character->QuickMatchDuelXp : Character->QuickMatchBrawlXp;
-
-    uint32_t& Rank = IsDuel ? Character->QuickMatchDuelRank : Character->QuickMatchBrawlRank;
-    uint32_t& XP = IsDuel ? Character->QuickMatchDuelXp : Character->QuickMatchBrawlXp;
+        uint32_t& Rank = IsDuel ? Character->QuickMatchDuelRank : Character->QuickMatchBrawlRank;
+        uint32_t& XP = IsDuel ? Character->QuickMatchDuelXp : Character->QuickMatchBrawlXp;
     
-    switch (Request->result())
-    {
-        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Win:
+        switch (Request->result())
         {
-            XP += Config.QuickMatchWinXp;
-            break;
+            case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Win:
+            {
+                XP += Config.QuickMatchWinXp;
+                break;
+            }
+            case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Draw:
+            {
+                XP += Config.QuickMatchDrawXp;
+                break;
+            }
+            case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Lose:
+            {
+                XP += Config.QuickMatchLoseXp;
+                break;
+            }
+            case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Disconnect:
+            {
+                // No XP gained.
+                break;
+            }
         }
-        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Draw:
-        {
-            XP += Config.QuickMatchDrawXp;
-            break;
-        }
-        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Lose:
-        {
-            XP += Config.QuickMatchLoseXp;
-            break;
-        }
-        case DS3_Frpg2RequestMessage::QuickMatchResult::QuickMatchResult_Disconnect:
-        {
-            // No XP gained.
-            break;
-        }
-    }
 
-    while (Rank < Config.QuickMatchRankXp.size() - 1)
-    {
-        uint32_t NextRankXP = Config.QuickMatchRankXp[Rank + 1];
-        if (XP > NextRankXP)
+        while (Rank < Config.QuickMatchRankXp.size() - 1)
         {
-            Rank++;
-            XP -= NextRankXP;
+            uint32_t NextRankXP = Config.QuickMatchRankXp[Rank + 1];
+            if (XP > NextRankXP)
+            {
+                Rank++;
+                XP -= NextRankXP;
+            }
+            else
+            {
+                break;
+            }
         }
-        else
+
+        Response.mutable_new_local_rank()->set_rank(Rank);
+        Response.mutable_new_local_rank()->set_xp(XP);
+
+        LogS(Client->GetName().c_str(), "Player finished undead match, ranked up to: rank=%i xp=%i (from rank=%i xp=%i)", Rank, XP, OriginalRank, OriginalXP);
+
+        // Update character state.
+        if (!Database.UpdateCharacterQuickMatchRank(State.GetPlayerId(), State.GetCharacterId(), Character->QuickMatchDuelRank, Character->QuickMatchDuelXp, Character->QuickMatchBrawlRank, Character->QuickMatchBrawlXp))
         {
-            break;
+            WarningS(Client->GetName().c_str(), "Disconnecting client as failed to update their quick match result.");
+            return MessageHandleResult::Error;
         }
-    }
-
-    Response.mutable_new_local_rank()->set_rank(Rank);
-    Response.mutable_new_local_rank()->set_xp(XP);
-
-    LogS(Client->GetName().c_str(), "Player finished undead match, ranked up to: rank=%i xp=%i (from rank=%i xp=%i)", Rank, XP, OriginalRank, OriginalXP);
-
-    // Update character state.
-    if (!Database.UpdateCharacterQuickMatchRank(State.GetPlayerId(), State.GetCharacterId(), Character->QuickMatchDuelRank, Character->QuickMatchDuelXp, Character->QuickMatchBrawlRank, Character->QuickMatchBrawlXp))
-    {
-        WarningS(Client->GetName().c_str(), "Disconnecting client as failed to update their quick match result.");
-        return MessageHandleResult::Error;
     }
 
     std::string TypeStatisticKey = StringFormat("QuickMatch/TotalMatches");
