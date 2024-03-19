@@ -168,7 +168,7 @@ bool Server::Init()
     }
 
     // Patch old server ip.
-#if 1//def _DEBUG
+#ifdef _DEBUG
     //Config.MasterServerIp = "127.0.0.1";
     Config.MasterServerIp = "ds3os-master.timleonard.uk";
     //Config.ServerName = "Debugging Server";
