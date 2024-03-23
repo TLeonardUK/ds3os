@@ -237,6 +237,20 @@ MessageHandleResult DS3_SignManager::Handle_RequestCreateSign(GameClient* Client
 
     DS3_Frpg2RequestMessage::RequestCreateSign* Request = (DS3_Frpg2RequestMessage::RequestCreateSign*)Message.Protobuf.get();
 
+    // There is no NRSSR struct in the sign metadata, but we still make sure the size-delimited entry list is valid.
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
+        if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "RequestCreateSign message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            // Simply ignore the request. Perhaps sending a response with an invalid sign id or disconnecting the client would be better?
+            return MessageHandleResult::Handled;
+        }
+    }
+
     std::shared_ptr<SummonSign> Sign = std::make_shared<SummonSign>();
     Sign->SignId = NextSignId++;
     Sign->OnlineAreaId = (uint32_t)Request->online_area_id();
@@ -356,6 +370,19 @@ MessageHandleResult DS3_SignManager::Handle_RequestSummonSign(GameClient* Client
     DS3_Frpg2RequestMessage::RequestSummonSign* Request = (DS3_Frpg2RequestMessage::RequestSummonSign*)Message.Protobuf.get();
 
     bool bSuccess = true;
+
+    // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
+        if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "RequestSummonSign message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            bSuccess = false;
+        }
+    }
 
     // First check the sign still exists, if it doesn't, send a reject message as its probably already used.
     std::shared_ptr<SummonSign> Sign = LiveCache.Find((DS3_OnlineAreaId)Request->online_area_id(), Request->sign_info().sign_id());

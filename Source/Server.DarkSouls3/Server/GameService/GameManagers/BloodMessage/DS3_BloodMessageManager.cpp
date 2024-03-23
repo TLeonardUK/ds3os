@@ -170,6 +170,20 @@ MessageHandleResult DS3_BloodMessageManager::Handle_RequestReCreateBloodMessageL
         std::vector<uint8_t> MessageData;
         MessageData.assign(MessageInfo.message_data().data(), MessageInfo.message_data().data() + MessageInfo.message_data().size());
 
+        // There is no NRSSR struct in blood messsage data, but we still make sure the size-delimited entry list is valid.
+        if (BuildConfig::NRSSR_SANITY_CHECKS)
+        {
+            auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(MessageData.data(), MessageData.size());
+            if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+            {
+                WarningS(Client->GetName().c_str(), "Blood message data recieved from client is invalid (error code %i).",
+                    static_cast<uint32_t>(ValidationResult));
+
+                // Simply ignore the request. Perhaps sending a response with an invalid sign id or disconnecting the client would be better?
+                return MessageHandleResult::Handled;
+            }
+        }
+
         // Create the message in the database.
         std::shared_ptr<BloodMessage> BloodMessage = Database.CreateBloodMessage((uint32_t)MessageInfo.online_area_id(), 0, Player.GetPlayerId(), Player.GetSteamId(), Request->character_id(), MessageData);
         if (!BloodMessage)
@@ -254,6 +268,20 @@ MessageHandleResult DS3_BloodMessageManager::Handle_RequestCreateBloodMessage(Ga
 
     std::vector<uint8_t> MessageData;
     MessageData.assign(Request->message_data().data(), Request->message_data().data() + Request->message_data().size());
+
+    // There is no NRSSR struct in blood messsage data, but we still make sure the size-delimited entry list is valid.
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(MessageData.data(), MessageData.size());
+        if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "Blood message data recieved from client is invalid (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            // Simply ignore the request. Perhaps sending a response with an invalid sign id or disconnecting the client would be better?
+            return MessageHandleResult::Handled;
+        }
+    }
 
     DS3_BloodMessageData data;
     if (DS3_BloodMessageData::Parse(MessageData, data))

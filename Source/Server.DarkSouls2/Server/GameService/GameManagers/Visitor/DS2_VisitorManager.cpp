@@ -19,6 +19,7 @@
 #include "Server/Server.h"
 
 #include "Config/BuildConfig.h"
+#include "Server/GameService/Utils/DS2_NRSSRSanitizer.h"
 
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"
@@ -134,6 +135,19 @@ MessageHandleResult DS2_VisitorManager::Handle_RequestVisit(GameClient* Client, 
     DS2_Frpg2RequestMessage::RequestVisit* Request = (DS2_Frpg2RequestMessage::RequestVisit*)Message.Protobuf.get();
 
     bool bSuccess = true;
+    
+    // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS2_NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
+        if (ValidationResult != DS2_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "RequestVisit message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            bSuccess = false;
+        }
+    }
 
     // Check client still exists.
     std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->player_id());

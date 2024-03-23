@@ -41,6 +41,7 @@ SET(SOURCES
     
     Server/GameService/Utils/DS2_GameIds.h
     Server/GameService/Utils/DS2_CellAndAreaId.h
+    Server/GameService/Utils/DS2_NRSSRSanitizer.h
 
     Server/GameService/Utils/Ids/BonfireId.inc
     Server/GameService/Utils/Ids/CharacterTypeId.inc

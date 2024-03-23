@@ -21,6 +21,7 @@
 #include "Server/Server.h"
 
 #include "Config/BuildConfig.h"
+#include "Server/GameService/Utils/DS2_NRSSRSanitizer.h"
 
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/File.h"
@@ -168,6 +169,20 @@ MessageHandleResult DS2_MirrorKnightManager::Handle_RequestCreateMirrorKnightSig
 
     DS2_Frpg2RequestMessage::RequestCreateMirrorKnightSign* Request = (DS2_Frpg2RequestMessage::RequestCreateMirrorKnightSign*)Message.Protobuf.get();
 
+    // There is no NRSSR struct in the sign metadata, but we still make sure the size-delimited entry list is valid.
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS2_NRSSRSanitizer::ValidateEntryList(Request->data().data(), Request->data().size());
+        if (ValidationResult != DS2_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "RequestCreateMirrorKnightSign message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            // Simply ignore the request. Perhaps sending a response with an invalid sign id or disconnecting the client would be better?
+            return MessageHandleResult::Handled;
+        }
+    }
+
     std::shared_ptr<SummonSign> Sign = std::make_shared<SummonSign>();
     Sign->SignId = NextSignId++;
     Sign->PlayerId = Player.GetPlayerId();
@@ -250,6 +265,20 @@ MessageHandleResult DS2_MirrorKnightManager::Handle_RequestSummonMirrorKnightSig
     DS2_Frpg2RequestMessage::RequestSummonMirrorKnightSign* Request = (DS2_Frpg2RequestMessage::RequestSummonMirrorKnightSign*)Message.Protobuf.get();
 
     bool bSuccess = true;
+
+    // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS2_NRSSRSanitizer::ValidateEntryList(Request->player_struct().data(), Request->player_struct().size());
+        if (ValidationResult != DS2_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "RequestSummonSign message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            bSuccess = false;
+        }
+    }
+
     DS2_Frpg2RequestMessage::SummonErrorId SummonError = DS2_Frpg2RequestMessage::SummonErrorId_NoLongerBeSummonable;
 
     // First check the sign still exists, if it doesn't, send a reject message as its probably already used.

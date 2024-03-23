@@ -48,7 +48,7 @@ public:
 
         // Dark Souls 2
         {
-            17039618,
+            17039619, // We can support one version lower, but we have that disabled as we don't have RCE mitigation implemented for it.
             17039619,
             335300
         },
@@ -87,6 +87,7 @@ public:
     // CVE-2022-24125 (RequestSendMessageToPlayers abuse) serverside fixes.
     // These should only be disabled on a debug build for testing purposes.
     constexpr inline static const bool SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS = true;
+    constexpr inline static const bool NRSSR_SANITY_CHECKS = true;
 
     // Dumps a diasssembly of each message to the output.
     constexpr inline static const bool DISASSEMBLE_RECIEVED_MESSAGES = false;

@@ -395,6 +395,19 @@ MessageHandleResult DS3_QuickMatchManager::Handle_RequestAcceptQuickMatch(GameCl
 
     bool ShouldProcessRequest = true;
 
+    // Make sure the NRSSR data contained within this message is valid (if the CVE-2022-24126 fix is enabled)
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(Request->data().data(), Request->data().size());
+        if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "RequestAcceptQuickMatch message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            ShouldProcessRequest = false;
+        }
+    }
+
     std::shared_ptr<GameClient> TargetClient = GameServiceInstance->FindClientByPlayerId(Request->join_player_id());
     if (ShouldProcessRequest && TargetClient != nullptr)
     {    

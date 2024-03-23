@@ -18,6 +18,7 @@
 #include "Server/Server.h"
 
 #include "Config/BuildConfig.h"
+#include "Server/GameService/Utils/DS2_NRSSRSanitizer.h"
 
 #include "Shared/Core/Utils/Logging.h"
 #include "Shared/Core/Utils/Strings.h"
@@ -89,6 +90,19 @@ MessageHandleResult DS2_GhostManager::Handle_RequestCreateGhostData(GameClient* 
 
     std::vector<uint8_t> Data;
     Data.assign(Request->data().data(), Request->data().data() + Request->data().size());
+
+    // There is no NRSSR struct in ghost data, but we still make sure the size-delimited entry list is valid.
+    if (BuildConfig::NRSSR_SANITY_CHECKS)
+    {
+        auto ValidationResult = DS2_NRSSRSanitizer::ValidateEntryList(Data.data(), Data.size());
+        if (ValidationResult != DS2_NRSSRSanitizer::ValidationResult::Valid)
+        {
+            WarningS(Client->GetName().c_str(), "Ghost data recieved from client is invalid (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
+            return MessageHandleResult::Handled;
+        }
+    }
 
     std::shared_ptr<Ghost> ActiveGhost = nullptr;
     if (Config.GhostMemoryCacheOnly)

@@ -31,6 +31,8 @@
 #include <byteswap.h>
 #endif
 
+#include "Server.DarkSouls3/Protobuf/DS3_Protobufs.h"
+
  // Static class that holds methods intended to validate the structure
  // of the size-delimited entry lists and serialized NRSessionSearchResult 
  // data for security purposes, namely patching out-of-bounds read crashes 
@@ -86,7 +88,11 @@ public:
 		// The amount of data left in the NRSSR struct after the name string is abnormal.
 		NRSSR_RemainingDataSize_Mismatch,
 		// NRSSR session size field does not match with the expected value.
-		NRSSR_SessionSize_Abnormal
+		NRSSR_SessionSize_Abnormal,
+        // Push message being validated is unknown.
+        NRSSR_PushMessage_UnknownType,
+        // Unable to parse push messages.
+        NRSSR_PushMessage_ParseFailure,
 	};
 
 	// Verify if length-delimited entry list data used to store session join information is valid.
@@ -234,4 +240,89 @@ public:
 			return ValidationResult::NRSSR_SessionSize_Abnormal;
 		}
 	}
+
+    static ValidationResult ValidatePushMessages(const std::string& Data)
+    {
+        DS3_Frpg2RequestMessage::PushRequestHeader Header;
+        if (!Header.ParseFromString(Data))
+        {
+            return ValidationResult::NRSSR_PushMessage_UnknownType;
+        }
+
+        switch (Header.push_message_id())
+        {
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestAllowBreakInTarget:
+            {
+                DS3_Frpg2RequestMessage::PushRequestAllowBreakInTarget Msg;
+                if (!Msg.ParseFromString(Data))
+                {
+                    return ValidationResult::NRSSR_PushMessage_ParseFailure;
+                }
+
+                auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(Msg.player_struct().data(), Msg.player_struct().size());
+                if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+                {
+                    return ValidationResult;
+                }
+
+                break;
+            }
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestVisit:
+            {
+                DS3_Frpg2RequestMessage::PushRequestVisit Msg;
+                if (!Msg.ParseFromString(Data))
+                {
+                    return ValidationResult::NRSSR_PushMessage_ParseFailure;
+                }
+
+                auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(Msg.data().data(), Msg.data().size());
+                if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+                {
+                    return ValidationResult;
+                }
+
+                break;
+            }
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestAcceptQuickMatch:
+            {
+                DS3_Frpg2RequestMessage::AcceptQuickMatchMessage Msg;
+                if (!Msg.ParseFromString(Data))
+                {
+                    return ValidationResult::NRSSR_PushMessage_ParseFailure;
+                }
+
+                auto ValidationResult = DS3_NRSSRSanitizer::ValidateEntryList(Msg.metadata().data(), Msg.metadata().size());
+                if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
+                {
+                    return ValidationResult;
+                }
+
+                break;
+            }
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveSign:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestSummonSign:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectSign:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestJoinQuickMatch:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectQuickMatch:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PlayerInfoUploadConfigPushMessage:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestEvaluateBloodMessage:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestBreakInTarget:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectBreakInTarget:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectVisit:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveVisitor:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestNotifyRingBell:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_RegulationFileUpdatePushMessage:
+        case DS3_Frpg2RequestMessage::PushMessageId::PushID_ManagementTextMessage:
+            {   
+                // These messages don't look to have anything that needs validating in them.
+                break;
+            }
+        default:
+            {
+                return ValidationResult::NRSSR_PushMessage_UnknownType;
+            }
+        }        
+
+        return ValidationResult::Valid;
+    }
 };

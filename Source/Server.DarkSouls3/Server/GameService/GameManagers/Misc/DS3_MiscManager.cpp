@@ -139,19 +139,21 @@ MessageHandleResult DS3_MiscManager::Handle_RequestSendMessageToPlayers(GameClie
     bool ShouldProcessRequest = true;
     if constexpr (BuildConfig::SEND_MESSAGE_TO_PLAYERS_SANITY_CHECKS)
     {
-        // The request should contain a PushRequestBreakInTarget message
-        DS3_Frpg2RequestMessage::PushRequestAllowBreakInTarget EmbdeddedMsg;
-
-        // The request should specify exactly one player
-        if (Request->player_ids_size() > 1)
+        // Limit player ids this can be sent to - for arenas we can send this to more than one player.
+        if (Request->player_ids_size() > 6)
         {
-            WarningS(Client->GetName().c_str(), "Client attempted to send message to more than one (%i) client. This is not normal behaviour.", Request->player_ids_size());
+            WarningS(Client->GetName().c_str(), "Client attempted to send message to too many (%i) clients. This is not normal behaviour.", Request->player_ids_size());
             ShouldProcessRequest = false;
         }
-        // The request should only ever contain a PushRequestAllowBreakInTarget message
-        if (!EmbdeddedMsg.ParseFromString(Request->message()) || EmbdeddedMsg.push_message_id() != DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestAllowBreakInTarget)
+
+        // Validate PushRequestAllowBreakInTarget. The game also uses this function for other message types (during areans for example), we should
+        // track down and add validation to those messages as well.
+        auto ValidationResult = DS3_NRSSRSanitizer::ValidatePushMessages(Request->message());
+        if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
         {
-            WarningS(Client->GetName().c_str(), "RequestSendMessageToPlayers embedded message provided by client is not a valid PushRequestAllowBreakInTarget message.");
+            WarningS(Client->GetName().c_str(), "PushRequestAllowBreakInTarget message recieved from client contains ill formated binary data (error code %i).",
+                static_cast<uint32_t>(ValidationResult));
+
             ShouldProcessRequest = false;
         }
     }
