@@ -89,6 +89,8 @@ namespace Loader
             // -------------------------------------------------------------------------------------------
             // Dark Souls II
             // -------------------------------------------------------------------------------------------
+            /*
+            // Don't support the old version of ds2 as we don't have any RCE mitigations for it at the moment.
             { 
                 ExeUtils.MakeSimpleExeHash("1,0,2,0", 31605096), 
                 new DarkSoulsLoadConfig 
@@ -101,6 +103,7 @@ namespace Loader
                     SteamAppId = 335300
                 }
             },
+            */
             {
                 ExeUtils.MakeSimpleExeHash("1,0,3,0", 28200992), 
                 new DarkSoulsLoadConfig 
