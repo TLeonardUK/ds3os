@@ -271,7 +271,7 @@ MessageHandleResult DS2_BloodstainManager::Handle_RequestGetDeadingGhost(GameCli
     // Doesn't exist, no go.
     else
     {
-        WarningS(Client->GetName().c_str(), "Failed to retrieve bloodstain '%i'", Request->bloodstain_id());
+        WarningS(Client->GetName().c_str(), "Failed to retrieve bloodstain '%u'", Request->bloodstain_id());
     }
 
     DS2_Frpg2RequestMessage::RequestGetDeadingGhostResponse Response;

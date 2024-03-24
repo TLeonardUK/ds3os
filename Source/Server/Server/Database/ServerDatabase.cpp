@@ -190,7 +190,7 @@ bool ServerDatabase::RunStatement(const std::string& sql, const std::vector<Data
     sqlite3_stmt* statement = nullptr;
     if (int result = sqlite3_prepare_v2(db_handle, sql.c_str(), (int)sql.length(), &statement, nullptr); result != SQLITE_OK)
     {
-        Error("sqlite3_prepare_v2 failed with error: %s", sqlite3_errstr(result));
+        Error("sqlite3_prepare_v2 (%s) failed with error: %s", sql.c_str(), sqlite3_errstr(result));
         return false;
     }
     for (int i = 0; i < Values.size(); i++)

@@ -56,9 +56,29 @@ public:
 
 } gWin32CtrlSignalHandler;
 
+LONG WINAPI ExceptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
+{
+    Log("================== Crash Log ==================");
+
+    std::unique_ptr<Callstack> Stack = CaptureCallstack(1);
+    for (auto& Frame : Stack->Frames)
+    {
+        Log("0x%016p %-30s %s@%zi", 
+            Frame.Address, 
+            Frame.Function.empty() ? "<unknown>" : Frame.Function.c_str(), 
+            Frame.Filename.empty() ? "<unknown>" : Frame.Filename.c_str(),
+            Frame.Line
+        );
+    }
+
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+
 bool PlatformInit()
 {
     LoadSymbols();
+
+    SetUnhandledExceptionFilter(ExceptionHandler);
 
     WSADATA wsaData;
     if (int Result = WSAStartup(MAKEWORD(2, 2), &wsaData); Result != 0) 
