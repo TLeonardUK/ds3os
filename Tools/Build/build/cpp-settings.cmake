@@ -27,7 +27,11 @@ elseif (UNIX)
     
     # Use permissive flags, GCC/clang are stricter that MSVC.
     # We should go in and fix up the problematic areas and remove this later.
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive -g")
+
+    # Use dynamic linker flag so we can lookup symbols at runtime.
+    # Also enforce symbolic information in all builds.
+    set(LINK_OPTIONS ${LINK_OPTIONS} -rdynamic -g)
     
 endif()
 

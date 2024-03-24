@@ -63,7 +63,7 @@ LONG WINAPI ExceptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
     std::unique_ptr<Callstack> Stack = CaptureCallstack(1);
     for (auto& Frame : Stack->Frames)
     {
-        Log("0x%016p %-30s %s@%zi", 
+        Log("0x%016zx %-50s %s@%zi", 
             Frame.Address, 
             Frame.Function.empty() ? "<unknown>" : Frame.Function.c_str(), 
             Frame.Filename.empty() ? "<unknown>" : Frame.Filename.c_str(),
