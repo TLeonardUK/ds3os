@@ -1,13 +1,15 @@
 // lang.js
+// By GoBlock2021
 
 function saveLanguage(lang) {
 	localStorage.setItem('userLang', lang);
+	loadLanguage(lang);
 }
 
 
 function loadLanguage(lang) {
 	// 定义默认语言
-	const defaultLang = 'en';
+	const defaultLang = 'en-US';
 
 	// 尝试加载指定语言的JSON文件
 	fetch(`./locales/${lang}.json`)
@@ -36,13 +38,13 @@ function updatePageText(data) {
 	document.querySelectorAll('[data-i18n]').forEach(element => {
 		const key = element.getAttribute('data-i18n');
 		// 确保key存在于data中，否则使用元素的原始文本内容
-		element.textContent = data[key] || element.textContent;
+		element.innerHTML = data[key] || element.textContent;
 	});
 }
 
 function init(){
 	var browserLang = navigator.language || navigator.userLanguage;
-	var userLang = localStorage.getItem('userLang'); // 假设用户语言存储在localStorage
+	var userLang = localStorage.getItem('userLang');
 	if (userLang == null) {
 		userLang = browserLang
 		saveLanguage(browserLang)
@@ -53,3 +55,22 @@ function init(){
 window.addEventListener('DOMContentLoaded', (event) => {
 	init();
 });
+
+function generateJson() {
+
+	// 这个函数可以用来生成一个JS模板用作本地化，如果需要，请直接在浏览器控制台执行
+	// This function can be used to generate a JS template for localization.
+	// Please execute it directly in the browser console if needed.
+
+	let elementsInfo = [];
+	// 遍历所有具有data-i18n属性的元素
+	document.querySelectorAll('[data-i18n]').forEach(element => {
+		const key = element.getAttribute('data-i18n');
+		// 将key和innerHTML添加到数组中
+		elementsInfo.push(`"${key}": "${element.innerHTML}"`);
+	});
+	// 将数组连接成一个单一的字符串，每个元素之间用换行符分隔
+	let resultText = "{\n" + elementsInfo.join(',\n') + "\n}";
+	// 返回或打印整个文本
+	console.log(resultText);
+}
