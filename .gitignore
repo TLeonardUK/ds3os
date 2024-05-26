@@ -74,3 +74,5 @@ Tools/Deploy/
 
 # for nix build .
 result
+/Source/Loader/Forms/MainForm.zh.resx
+/.idea/.idea.ds3os.dir/.idea
