@@ -29,59 +29,45 @@ namespace Loader.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.passwordTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.submitButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PasswordDialog));
+            passwordTextBox = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            submitButton = new System.Windows.Forms.Button();
+            SuspendLayout();
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(12, 60);
-            this.passwordTextBox.MaxLength = 128;
-            this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.Size = new System.Drawing.Size(398, 23);
-            this.passwordTextBox.TabIndex = 0;
+            resources.ApplyResources(passwordTextBox, "passwordTextBox");
+            passwordTextBox.Name = "passwordTextBox";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(313, 30);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "The server you are trying to launch is password protected. \r\nPlease enter the pas" +
-    "sword to launch the server.";
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(271, 99);
-            this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(139, 28);
-            this.submitButton.TabIndex = 3;
-            this.submitButton.Text = "Submit";
-            this.submitButton.UseVisualStyleBackColor = true;
-            this.submitButton.Click += new System.EventHandler(this.OnSubmit);
+            resources.ApplyResources(submitButton, "submitButton");
+            submitButton.Name = "submitButton";
+            submitButton.UseVisualStyleBackColor = true;
+            submitButton.Click += OnSubmit;
             // 
             // PasswordDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(422, 144);
-            this.Controls.Add(this.submitButton);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.passwordTextBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "PasswordDialog";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Enter Password";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            resources.ApplyResources(this, "$this");
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(submitButton);
+            Controls.Add(label2);
+            Controls.Add(passwordTextBox);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "PasswordDialog";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            FormClosing += OnFormClosing;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
