@@ -7,7 +7,7 @@ namespace Loader.Forms
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        private System.ComponentModel.ComponentResourceManager resources;
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -29,7 +29,7 @@ namespace Loader.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateServerDialog));
+            resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateServerDialog));
             usernameTextBox = new System.Windows.Forms.TextBox();
             label2 = new System.Windows.Forms.Label();
             submitButton = new System.Windows.Forms.Button();

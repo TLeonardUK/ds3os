@@ -15,7 +15,7 @@ namespace Loader
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        private System.ComponentModel.ComponentResourceManager resources;
         /// <summary>
         ///  Clean up any resources being used.
         /// </summary>
@@ -38,7 +38,7 @@ namespace Loader
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             ImportButton = new System.Windows.Forms.Button();
             serverListImageList = new System.Windows.Forms.ImageList(components);
             LaunchButton = new System.Windows.Forms.Button();
