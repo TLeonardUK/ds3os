@@ -178,7 +178,7 @@ public:
     // the main ds3os servers.
     bool SupportSharding = false;
 
-    // If set the user will need to enter a password to recieve the keys to enter the 
+    // If set the user will need to enter a password to receive the keys to enter the 
     // server when its advertised.
     std::string Password = "";
 
@@ -506,7 +506,7 @@ public:
     std::string WarningAnnouncementMessage = "Your account has been flagged for unfair play. Further unfair behaviour will lead to disconnection or bans.";
 
 
-    // If set the player will recieve ingame management messages periodically when they mean the threshold.
+    // If set the player will receive ingame management messages periodically when they mean the threshold.
     bool AntiCheatSendWarningMessageInGame = true;
 
     // How often the user will see a message if AntiCheatSendWarningMessageInGame is enabled.
@@ -541,7 +541,7 @@ public:
     // How much gets added to the players penalty score when the delta between their stats on one update and another is impossible (eg. going from level 1 to 100).
     float AntiCheatScore_ImpossibleStatDelta = 20;
 
-    // How much gets added to the players penalty score when they recieve and impossible number of items in one go (eg. 100x titanite slabs).
+    // How much gets added to the players penalty score when they receive and impossible number of items in one go (eg. 100x titanite slabs).
     float AntiCheatScore_ImpossibleGetItemQuantity = 20;
 
     // How much gets added to the players penalty score when their level is impossible with the play time they have.

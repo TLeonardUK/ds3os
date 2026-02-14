@@ -42,7 +42,7 @@ enum class Frpg2ReliableUdpOpCode : uint8_t
     // ??? - Seemingly unused.
     PT_DAT_FRAG     = 0x08,
 
-    // Acknowledges the highest packet in the sequence that has been recieved.
+    // Acknowledges the highest packet in the sequence that has been received.
     ACK             = 0x31,
 
     // Acknowledgement of SYN packet along with remote machines
@@ -68,7 +68,7 @@ std::string ToString(Frpg2ReliableUdpOpCode OpCode);
 enum class Frpg2ReliableUdpStreamState
 {
     Listening,
-    SynRecieved,
+    SynReceived,
     Established,
     Closing,
     Closed,

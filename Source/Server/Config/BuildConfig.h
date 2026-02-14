@@ -101,7 +101,7 @@ public:
     // Writes messages that fail to deserialize to the local directory.
     constexpr inline static const bool DUMP_FAILED_DISASSEMBLED_PACKETS = false;
 
-    // Logs the protobufs sent and recieved.
+    // Logs the protobufs sent and received.
     constexpr inline static const bool LOG_PROTOBUF_STREAM = false;    
 
     // Writes out legacy import files when the server starts.

@@ -76,7 +76,7 @@ void DS3_SignManager::Poll()
 {
 }
 
-MessageHandleResult DS3_SignManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS3_SignManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::RequestGetSignList))
     {
@@ -331,7 +331,7 @@ MessageHandleResult DS3_SignManager::Handle_RequestRemoveSign(GameClient* Client
         WarningS(Client->GetName().c_str(), "Client attempted to remove summon sign that didn't belong to them, %i.", Request->sign_id());        
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestRemoveSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -350,7 +350,7 @@ MessageHandleResult DS3_SignManager::Handle_RequestUpdateSign(GameClient* Client
     // I think the game uses this as something of a hearbeat to keep the sign active in the pool.
     // We keep all players signs active until they are removed, so we don't need to handle this.
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestUpdateSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -424,7 +424,7 @@ MessageHandleResult DS3_SignManager::Handle_RequestSummonSign(GameClient* Client
         }
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestSummonSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -497,7 +497,7 @@ MessageHandleResult DS3_SignManager::Handle_RequestRejectSign(GameClient* Client
         Sign->BeingSummonedByPlayerId = 0;
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestRejectSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

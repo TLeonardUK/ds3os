@@ -45,9 +45,9 @@ public:
     // Called when we have a lost a player previously registered with OnGainPlayer.
     virtual void OnLostPlayer(GameClient* Client) { };
 
-    // Called when a game client recieves a message.
+    // Called when a game client receives a message.
     // Returns true if an error occured and the client should be disconnected.
-    virtual MessageHandleResult OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message) { return MessageHandleResult::Unhandled; }
+    virtual MessageHandleResult OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message) { return MessageHandleResult::Unhandled; }
 
     // Returns a general descriptive name of the manager for logging.
     virtual std::string GetName() = 0;

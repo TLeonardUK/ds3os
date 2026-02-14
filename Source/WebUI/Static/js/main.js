@@ -130,6 +130,7 @@ function checkAuthState()
 function authenticate(username, password)
 {
     var dialog = document.querySelector("#auth-dialog");   
+    var gameTypeSpan = document.querySelector('#game-type');
 
     fetch("/auth", 
     {
@@ -155,6 +156,7 @@ function authenticate(username, password)
         storeAuthToken(data["token"]);
 
         console.log('Request succeeded with JSON response', data);
+        gameTypeSpan.innerHTML = `&nbsp; Server Type: ${data["gameType"]}`;
         startDataRefresh();   
     })
     .catch(function (error) 
@@ -591,6 +593,7 @@ function refreshSettingsTab()
         setMaterialCheckState(document.querySelector("#disable-soul-memory-matching"), data.disableSoulMemoryMatching);
         setMaterialCheckState(document.querySelector("#ignore-invasion-area-filter"), data.ignoreInvasionAreaFilter);
         setMaterialCheckState(document.querySelector("#anti-cheat-enabled"), data.antiCheatEnabled);
+        setAnnouncements(document.querySelector("#announcements"),data.announcements);
     })
     .catch(function (error) 
     {
@@ -630,6 +633,7 @@ function saveSettings()
             "disableSoulMemoryMatching": document.querySelector("#disable-soul-memory-matching").checked,    
             "ignoreInvasionAreaFilter": document.querySelector("#ignore-invasion-area-filter").checked,
             "antiCheatEnabled": document.querySelector("#anti-cheat-enabled").checked,
+            "announcements": getAnnouncements(document.querySelector("#announcements")),
         })
     })
     .catch(function (error) 
@@ -639,6 +643,96 @@ function saveSettings()
     });
 }
 
+function deleteThisAnnouncementBlock(button)
+{
+    var parentElement = button.parentNode;
+    parentElement.parentNode.removeChild(parentElement); 
+}
+
+function createNewAnnouncementBlock(where)
+{
+    var element = document.querySelector("#announcements");
+    var index = element.children.length;
+
+    const classes = ['mdl-textfield','mdl-js-textfield','mdl-textfield--floating-label','fullWidth'];
+
+    var nab = document.createElement('div');
+    nab.classList.add('fullWidth');
+    nab.id = `announcement-${index}`;
+
+    var addBefore = document.createElement('button');
+    addBefore.textContent = String.fromCodePoint(0x2795);
+    addBefore.onclick = function(){createNewAnnouncementBlock(nab)};
+    addBefore.title = "Add an announcement block before this one";
+    nab.appendChild(addBefore);
+
+    var announcementHeader = document.createElement('div');
+    announcementHeader.classList.add.apply(announcementHeader.classList, classes);
+    announcementHeader.innerHTML = `
+    <input class="mdl-textfield__input" type="text" id="announcement-${index}-header">
+    <label class="mdl-textfield__label" for="announcement-${index}-header">Announcement Header</label>
+    `;
+    nab.appendChild(announcementHeader);
+
+    var announcementBody = document.createElement('div');
+    announcementBody.classList.add.apply(announcementBody.classList, classes);
+    announcementBody.innerHTML = `
+    <textarea  class="mdl-textfield__input" rows="5" cols="80" id="announcement-${index}-body"></textarea>
+    <label class="mdl-textfield__label" for="announcement-${index}-body">Announcement Body</label>
+    `;
+    nab.appendChild(announcementBody);
+
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = String.fromCodePoint(0x1F5D1);
+    deleteButton.onclick = function() { nab.parentElement.removeChild(nab); };
+    deleteButton.title = "Delete this announcement block";
+    nab.appendChild(deleteButton);
+
+    nab.appendChild(document.createElement('hr'));
+
+    if(where == null)
+    {
+        element.appendChild(nab)
+    }
+    else
+    {
+        element.insertBefore(nab,where);
+    }
+
+    componentHandler.upgradeElement(announcementHeader);
+    componentHandler.upgradeElement(announcementBody);
+}
+
+function setAnnouncements(element,announcements)
+{
+    element.innerHTML = '';
+    for(var i= 0; i < announcements.length; i++)
+    {
+        createNewAnnouncementBlock(null);
+        announcement = announcements[i];
+        announcementHeader = document.querySelector(`#announcement-${i}-header`);
+        announcementHeader.value = announcement.header;
+        announcementHeader.parentElement.classList.add('is-dirty');
+        announcementBody = document.querySelector(`#announcement-${i}-body`);
+        announcementBody.value = announcement.body;
+        announcementBody.parentElement.classList.add('is-dirty');
+    }
+
+}
+
+function getAnnouncements(element)
+{
+    announcementList = []
+    var children = element.children;
+    for(var i = 0; i < children.length; i++)
+    {
+        var child = children[i];
+        announcementHeader = document.querySelector(`#${child.id}-header`);
+        announcementBody = document.querySelector(`#${child.id}-body`);
+        announcementList.push({header: announcementHeader.value, body: announcementBody.value});
+    }
+    return announcementList;
+}
 function setMaterialCheckState(element, state)
 {
     if (element.checked != state)

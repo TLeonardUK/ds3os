@@ -17,7 +17,7 @@
 
 #include "Protobuf/SharedProtobufs.h"
 
-// ID's of messages we can recieve. Individual game interfaces may have additional values.
+// ID's of messages we can receive. Individual game interfaces may have additional values.
 enum class Frpg2ReliableUdpMessageType : int
 {
     Reply = 0x0,

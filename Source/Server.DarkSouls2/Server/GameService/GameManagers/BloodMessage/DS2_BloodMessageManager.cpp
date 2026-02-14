@@ -74,7 +74,7 @@ void DS2_BloodMessageManager::TrimDatabase()
     Database.TrimBloodMessages(MaxEntries);
 }
 
-MessageHandleResult DS2_BloodMessageManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_BloodMessageManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestReentryBloodMessage))
     {
@@ -249,7 +249,7 @@ MessageHandleResult DS2_BloodMessageManager::Handle_RequestRemoveBloodMessage(Ga
         WarningS(Client->GetName().c_str(), "Failed to remove blood message.");
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestRemoveBloodMessageResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -422,7 +422,7 @@ MessageHandleResult DS2_BloodMessageManager::Handle_RequestEvaluateBloodMessage(
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
     Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestEvaluateBloodMessageResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

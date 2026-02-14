@@ -55,8 +55,8 @@ public:
 
     virtual bool Connect(std::string Hostname, int Port, bool ForceLastIpEntry) override;
 
-    virtual bool Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved) override;
-    virtual bool Recieve(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved) override;
+    virtual bool Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived) override;
+    virtual bool Receive(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived) override;
     virtual bool Send(const std::vector<uint8_t>& Buffer, int Offset, int Count) override;
 
     virtual bool Disconnect() override;

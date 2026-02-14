@@ -32,7 +32,7 @@ AuthService::~AuthService()
 
 bool AuthService::Init()
 {
-    Connection = std::make_shared<NetConnectionTCP>("Auth Service");
+    Connection = std::make_shared<NetConnectionTCP>("AuthService");
     int Port = ServerInstance->GetConfig().AuthServerPort;
     if (!Connection->Listen(Port))
     {

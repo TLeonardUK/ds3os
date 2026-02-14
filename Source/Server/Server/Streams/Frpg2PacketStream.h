@@ -23,7 +23,7 @@ public:
     Frpg2PacketStream(std::shared_ptr<NetConnection> Connection);
     virtual ~Frpg2PacketStream() {};
 
-    // Sends and recieves packets in this stream. If this function
+    // Sends and receives packets in this stream. If this function
     // returns true the stream is considered to be in an error state
     // and the client this stream goes to should be disconnected.
     virtual bool Pump();
@@ -32,8 +32,8 @@ public:
     // is likely saturated or the packet is invalid.
     virtual bool Send(const Frpg2Packet& Packet);
 
-    // Returns true if a packet was recieved and stores packet in OutputPacket.
-    virtual bool Recieve(Frpg2Packet* OutputPacket);
+    // Returns true if a packet was received and stores packet in OutputPacket.
+    virtual bool Receive(Frpg2Packet* OutputPacket);
 
     // Allows enabling or disabling of this streams attempts to retrieve packets
     // from the network connection. Can be used when you temporarily need to communicate
@@ -54,10 +54,10 @@ protected:
 
 private:
 
-    std::vector<Frpg2Packet> RecieveQueue;
+    std::vector<Frpg2Packet> ReceiveQueue;
 
     std::vector<uint8_t> PacketBuffer;
-    uint16_t PacketBytesRecieved = 0;
+    uint16_t PacketBytesReceived = 0;
     bool RecievingPacketHeader = false;
 
     uint16_t PacketsSent = 0;

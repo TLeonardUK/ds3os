@@ -93,7 +93,7 @@ protected:
 private:
     Server* ServerInstance;
 
-    std::shared_ptr<NetConnectionUDP> Connection;
+    std::shared_ptr<NetConnection> Connection;
 
     std::vector<std::shared_ptr<GameClient>> Clients;
     std::vector<std::shared_ptr<GameClient>> DisconnectingClients;

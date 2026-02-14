@@ -49,7 +49,7 @@ private:
 
 private:
 
-    bool QuitRecieved = false;
+    bool QuitReceived = false;
 
     double NextServerPruneTime = 0.0f;
 

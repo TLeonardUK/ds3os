@@ -48,8 +48,8 @@ public:
     virtual bool Pump() = 0;
 
     // Replace with std::span's when they are available.
-    virtual bool Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved) = 0;
-    virtual bool Recieve(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved) = 0; 
+    virtual bool Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived) = 0;
+    virtual bool Receive(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived) = 0; 
     virtual bool Send(const std::vector<uint8_t>& Buffer, int Offset, int Count) = 0;
 
     virtual bool Disconnect() = 0;

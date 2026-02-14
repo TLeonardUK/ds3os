@@ -299,6 +299,12 @@ public:
 
                 break;
             }
+		case DS3_Frpg2RequestMessage::PushMessageId::PushID_ManagementTextMessage:
+			{
+				//We should never get this message type from an inbound connection
+				//TODO: flag whomever did this
+				return ValidationResult::NRSSR_PushMessage_ParseFailure;
+			}
         case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveSign:
         case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestSummonSign:
         case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectSign:
@@ -312,7 +318,6 @@ public:
         case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveVisitor:
         case DS3_Frpg2RequestMessage::PushMessageId::PushID_PushRequestNotifyRingBell:
         case DS3_Frpg2RequestMessage::PushMessageId::PushID_RegulationFileUpdatePushMessage:
-        case DS3_Frpg2RequestMessage::PushMessageId::PushID_ManagementTextMessage:
             {   
                 // These messages don't look to have anything that needs validating in them.
                 break;

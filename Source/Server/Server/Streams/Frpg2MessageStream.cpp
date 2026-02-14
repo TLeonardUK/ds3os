@@ -101,10 +101,10 @@ bool Frpg2MessageStream::Send(google::protobuf::MessageLite* Message, Frpg2Messa
     return true;
 }
 
-bool Frpg2MessageStream::Recieve(Frpg2Message* Message)
+bool Frpg2MessageStream::Receive(Frpg2Message* Message)
 {
     Frpg2Packet Packet;
-    if (!Frpg2PacketStream::Recieve(&Packet))
+    if (!Frpg2PacketStream::Receive(&Packet))
     {
         return false;
     }

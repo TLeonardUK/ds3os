@@ -38,8 +38,8 @@ public:
     // because of the stupid difference between ACK and DAT_ACK.
     void HandledPacket(uint32_t AckSequence);
 
-    // Returns true if a packet was recieved and stores packet in OutputPacket.
-    virtual bool Recieve(Frpg2ReliableUdpPacket* Packet);
+    // Returns true if a packet was received and stores packet in OutputPacket.
+    virtual bool Receive(Frpg2ReliableUdpPacket* Packet);
 
     // Overridden so we can do package retransmission/general management.
     virtual bool Pump() override;
@@ -106,7 +106,7 @@ protected:
 
     Frpg2ReliableUdpStreamState State = Frpg2ReliableUdpStreamState::Listening;
 
-    double LastPacketRecievedTime = 0.0;
+    double LastPacketReceivedTime = 0.0;
     double LastAckSendTime = 0.0;
 
     double LastHeartbeatTime = 0.0f;
@@ -138,12 +138,12 @@ protected:
     // TODO: All these should be shared pointers or something, we do way
     //       too much data shuffling with raw packets.
 
-    // Packets that have been recieved and are awaiting processing. They will
+    // Packets that have been received and are awaiting processing. They will
     // stay in this queue until they are the next in the remote sequence index.
-    std::vector<Frpg2ReliableUdpPacket> PendingRecieveQueue;
+    std::vector<Frpg2ReliableUdpPacket> PendingReceiveQueue;
 
-    // Ordered packets read for whoever calls Recieve() to handle.
-    std::vector<Frpg2ReliableUdpPacket> RecieveQueue;
+    // Ordered packets read for whoever calls Receive() to handle.
+    std::vector<Frpg2ReliableUdpPacket> ReceiveQueue;
 
     // Packets that are queued to send, will be sent when transmission is permitted.
     std::vector<Frpg2ReliableUdpPacket> SendQueue;

@@ -59,8 +59,11 @@ bool AuthHandler::handlePost(CivetServer* Server, struct mg_connection* Connecti
         !CorrectUsername.empty() &&
         !CorrectPassword.empty())
     {
+        RuntimeConfig& Config = Service->GetServer()->GetMutableConfig();
+
         nlohmann::json json;
         json["token"] = Service->AddAuthToken();
+        json["gameType"] = Config.GameType;
 
         LogS("WebUI", "User has logged in to webui.");
 

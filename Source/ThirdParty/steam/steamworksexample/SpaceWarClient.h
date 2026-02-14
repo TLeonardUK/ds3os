@@ -232,7 +232,7 @@ private:
 	// Receive a response from the server for a connection attempt
 	void OnReceiveServerAuthenticationResponse( bool bSuccess, uint32 uPlayerPosition );
 
-	// Recieved a response that the server is full
+	// Received a response that the server is full
 	void OnReceiveServerFullResponse();
 
 	// Receive a state update from the server

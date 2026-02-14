@@ -19,7 +19,7 @@ import "DS3_Frpg2PlayerData.proto";
 // Not sure why they do it in this manner when they already have a perfectly good
 // message-id system build into their transport layer. But whatever.
 //
-// The message-id thats recieved on the reliable udp message layer is always 0x0320, and the first
+// The message-id thats received on the reliable udp message layer is always 0x0320, and the first
 // field is read to disambiguate the actual message.
 enum PushMessageId {
     PushID_PushRequestRemoveSign               = 0x033D;

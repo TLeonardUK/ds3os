@@ -26,6 +26,8 @@
 #include "Server/GameService/GameManagers/MirrorKnight/DS2_MirrorKnightManager.h"
 #include "Server/GameService/GameManagers/QuickMatch/DS2_QuickMatchManager.h"
 
+#include <regex> //needed to sanity check management messages
+
 bool DS2_Game::Protobuf_To_ReliableUdpMessageType(google::protobuf::MessageLite* Message, Frpg2ReliableUdpMessageType& Output)
 {
 #define DEFINE_REQUEST_RESPONSE(OpCode, Type, ProtobufClass, ResponseProtobufClass) \
@@ -171,10 +173,22 @@ void DS2_Game::GetStatistics(GameService& Service, std::unordered_map<std::strin
 
 void DS2_Game::SendManagementMessage(Frpg2ReliableUdpMessageStream& stream, const std::string& TextMessage) 
 {
+    std::string SanitizedMessage = TextMessage;
+    try{
+        //hashes are tags for special messages we need to ensure only specific sequences are allowed else we remove them
+        std::regex LoneHashPattern("(?:^|[^#])((?:##)*#)(?![abcfimr#])");
+        if(std::regex_search(SanitizedMessage, LoneHashPattern)){
+            SanitizedMessage = std::regex_replace(SanitizedMessage, LoneHashPattern, "");
+        }
+    } catch (const std::regex_error& e) {
+        Log("Regex error while sanitizing management message: %s", e.what());
+        return;
+    }
+    
     DS2_Frpg2RequestMessage::ManagementTextMessage Message;
     Message.set_push_message_id(DS2_Frpg2RequestMessage::PushID_ManagementTextMessage);
-    Message.set_message(TextMessage);
-    Message.set_unknown_4(0);
+    Message.set_message(SanitizedMessage);
+    Message.set_unknown_4(1);//0: JP 1: EN //TODO: Determine language from stream
     Message.set_unknown_5(0);
 
     // Date makes no difference, just hard-code for now.

@@ -55,7 +55,7 @@ void NetHttpRequest::SetBody(const std::string& InBody)
     Body.assign((uint8_t*)InBody.data(), (uint8_t*)InBody.data() + InBody.size());
 }
 
-size_t NetHttpRequest::RecieveBodyFunction(void* ptr, size_t size, size_t nmemb, NetHttpResponse* Response)
+size_t NetHttpRequest::ReceiveBodyFunction(void* ptr, size_t size, size_t nmemb, NetHttpResponse* Response)
 {
     size_t Offset = Response->Body.size();
     Response->Body.resize(Response->Body.size() + nmemb);
@@ -76,7 +76,7 @@ bool NetHttpRequest::StartRequest()
     Headers = curl_slist_append(Headers, "charset: utf-8");
 
     curl_easy_setopt(Handle, CURLOPT_URL, Url.c_str());
-    curl_easy_setopt(Handle, CURLOPT_WRITEFUNCTION, RecieveBodyFunction);
+    curl_easy_setopt(Handle, CURLOPT_WRITEFUNCTION, ReceiveBodyFunction);
     curl_easy_setopt(Handle, CURLOPT_WRITEDATA, Response.get());
     curl_easy_setopt(Handle, CURLOPT_HTTPHEADER, Headers);
     curl_easy_setopt(Handle, CURLOPT_SSL_VERIFYPEER, false);

@@ -24,7 +24,7 @@ DS3_MarkManager::DS3_MarkManager(Server* InServerInstance)
 {
 }
 
-MessageHandleResult DS3_MarkManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS3_MarkManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::RequestCreateMark))
     {

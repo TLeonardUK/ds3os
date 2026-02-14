@@ -36,7 +36,7 @@ AuthClient::AuthClient(AuthService* OwningService, std::shared_ptr<NetConnection
     : Service(OwningService)
     , Connection(InConnection)
 {
-    LastMessageRecievedTime = GetSeconds();
+    LastMessageReceivedTime = GetSeconds();
 
     MessageStream = std::make_shared<Frpg2MessageStream>(InConnection, InServerRSAKey);
 }
@@ -46,7 +46,7 @@ bool AuthClient::Poll()
     GameTypeConfig& GameConfig = BuildConfig::GameConfig[(int)Service->GetServer()->GetGameType()];
 
     // Has this client timed out?
-    double TimeSinceLastMessage = GetSeconds() - LastMessageRecievedTime;
+    double TimeSinceLastMessage = GetSeconds() - LastMessageReceivedTime;
     if (TimeSinceLastMessage >= BuildConfig::CLIENT_TIMEOUT)
     {
         WarningS(GetName().c_str(), "Client timed out.");
@@ -78,11 +78,11 @@ bool AuthClient::Poll()
     case AuthClientState::WaitingForHandshakeRequest:
         {
             Frpg2Message Message;
-            if (MessageStream->Recieve(&Message))
+            if (MessageStream->Receive(&Message))
             {
                 if (Message.Header.msg_type != Frpg2MessageType::RequestHandshake)
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type (%i) while expected RequestHandshake.", Message.Header.msg_type);
+                    WarningS(GetName().c_str(), "Disconnecting client as received unexpected packet type (%i) while expected RequestHandshake.", Message.Header.msg_type);
                     return true;
                 }
 
@@ -90,7 +90,7 @@ bool AuthClient::Poll()
                 Shared_Frpg2RequestMessage::RequestHandshake Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting RequestHandshake.");
+                    WarningS(GetName().c_str(), "Disconnecting client as received unexpected message, expecting RequestHandshake.");
                     return true;
                 }
 
@@ -119,7 +119,7 @@ bool AuthClient::Poll()
                 // Enable new aes-cwc-128 cipher.
                 MessageStream->SetCipher(std::make_shared<CWCCipher>(CwcKey), std::make_shared<CWCCipher>(CwcKey)); 
 
-                LastMessageRecievedTime = GetSeconds();
+                LastMessageReceivedTime = GetSeconds();
                 State = AuthClientState::WaitingForServiceStatusRequest;
             }
 
@@ -130,18 +130,18 @@ bool AuthClient::Poll()
     case AuthClientState::WaitingForServiceStatusRequest:
         {
             Frpg2Message Message;
-            if (MessageStream->Recieve(&Message))
+            if (MessageStream->Receive(&Message))
             {
                 if (Message.Header.msg_type != Frpg2MessageType::GetServiceStatus)
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected GetServiceStatus.");
+                    WarningS(GetName().c_str(), "Disconnecting client as received unexpected packet type while expected GetServiceStatus.");
                     return true;
                 }
 
                 Shared_Frpg2RequestMessage::GetServiceStatus Request;
                 if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected message, expecting GetServiceStatus.");
+                    WarningS(GetName().c_str(), "Disconnecting client as received unexpected message, expecting GetServiceStatus.");
                     return true;
                 }
 
@@ -168,7 +168,7 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                LastMessageRecievedTime = GetSeconds();
+                LastMessageReceivedTime = GetSeconds();
                 State = AuthClientState::WaitingForKeyData;
             }
 
@@ -180,11 +180,11 @@ bool AuthClient::Poll()
     case AuthClientState::WaitingForKeyData:
         {
             Frpg2Message Message;
-            if (MessageStream->Recieve(&Message))
+            if (MessageStream->Receive(&Message))
             {
                 if (Message.Header.msg_type != Frpg2MessageType::KeyMaterial)
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected key material.");
+                    WarningS(GetName().c_str(), "Disconnecting client as received unexpected packet type while expected key material.");
                     return true;
                 }
                 if (Message.Payload.size() != 8)
@@ -208,7 +208,7 @@ bool AuthClient::Poll()
                     return true;
                 }
 
-                LastMessageRecievedTime = GetSeconds();
+                LastMessageReceivedTime = GetSeconds();
                 State = AuthClientState::WaitingForSteamTicket;
             }
             break;
@@ -218,7 +218,7 @@ bool AuthClient::Poll()
     case AuthClientState::WaitingForSteamTicket:
         {
             Frpg2Message Message;
-            if (MessageStream->Recieve(&Message))
+            if (MessageStream->Receive(&Message))
             {
                 const RuntimeConfig& RuntimeConfig = Service->GetServer()->GetConfig();
                 std::string ServerIP = Service->GetServer()->GetPublicIP().ToString();
@@ -226,11 +226,11 @@ bool AuthClient::Poll()
                 // Format Note:
                 // The message payload is stored as:
                 //      Bytes 0-15: GameCwcKey Calculated Above
-                //      Bytes 16- : SteamTicket as recieved from GetAuthSessionTicket
+                //      Bytes 16- : SteamTicket as received from GetAuthSessionTicket
 
                 if (Message.Header.msg_type != Frpg2MessageType::SteamTicket)
                 {
-                    WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expected steam ticket.");
+                    WarningS(GetName().c_str(), "Disconnecting client as received unexpected packet type while expected steam ticket.");
                     return true;
                 }
 
@@ -292,7 +292,7 @@ bool AuthClient::Poll()
                 std::shared_ptr<GameService> GameServiceInstance = Service->GetServer()->GetService<GameService>();
                 GameServiceInstance->CreateAuthToken(GameInfo.auth_token, GameCwcKey);
 
-                LastMessageRecievedTime = GetSeconds();
+                LastMessageReceivedTime = GetSeconds();
 
                 VerboseS(GetName().c_str(), "Authentication complete.");
                 State = AuthClientState::Complete;

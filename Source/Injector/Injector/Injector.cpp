@@ -51,6 +51,9 @@ Injector& Injector::Instance()
 Injector::Injector()
 {
     s_instance = this;
+
+    Hooks.push_back(std::make_unique<ReplaceServerAddressHook>());
+    Hooks.push_back(std::make_unique<ChangeSaveGameFilenameHook>());    
 }
 
 Injector::~Injector()
@@ -210,7 +213,7 @@ void Injector::RunUntilQuit()
 
     // We should really do this event driven ...
     // This suffices for now.
-    while (!QuitRecieved)
+    while (!QuitReceived)
     {
         // TODO: Do any polling we need to do here ...
 

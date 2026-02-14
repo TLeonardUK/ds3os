@@ -59,8 +59,8 @@ public:
 
     virtual bool Connect(std::string Hostname, int Port, bool ForceLastIpEntry) override;
 
-    virtual bool Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved) override;
-    virtual bool Recieve(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved) override;
+    virtual bool Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived) override;
+    virtual bool Receive(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived) override;
     virtual bool Send(const std::vector<uint8_t>& Buffer, int Offset, int Count) override;
 
     virtual bool Disconnect() override;
@@ -81,7 +81,7 @@ protected:
 
     void ProcessPacket(const PendingPacket& Packet);
 
-    void RecieveThreadEntry();
+    void ReceiveThreadEntry();
     void SendThreadEntry();
 
 private:
@@ -97,8 +97,8 @@ private:
 
     sockaddr_in Destination = {};
 
-    std::vector<uint8_t> RecieveBuffer;
-    std::vector<std::vector<uint8_t>> RecieveQueue;
+    std::vector<uint8_t> ReceiveBuffer;
+    std::vector<std::vector<uint8_t>> ReceiveQueue;
 
     std::vector<std::shared_ptr<NetConnectionUDP>> NewConnections;
     std::vector<std::weak_ptr<NetConnectionUDP>> ChildConnections;
@@ -110,7 +110,7 @@ private:
     std::mutex SendQueueMutex;
     std::condition_variable SendQueueCvar;
 
-    std::unique_ptr<std::thread> RecieveThread;
+    std::unique_ptr<std::thread> ReceiveThread;
     std::unique_ptr<std::thread> SendThread;
     bool bShuttingDownThreads = false;
     bool bErrorOnThreads = false;

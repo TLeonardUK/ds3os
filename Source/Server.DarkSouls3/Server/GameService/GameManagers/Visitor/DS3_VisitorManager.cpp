@@ -30,7 +30,7 @@ DS3_VisitorManager::DS3_VisitorManager(Server* InServerInstance, GameService* In
 {
 }
 
-MessageHandleResult DS3_VisitorManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS3_VisitorManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::RequestGetVisitorList))
     {
@@ -180,7 +180,7 @@ MessageHandleResult DS3_VisitorManager::Handle_RequestVisit(GameClient* Client, 
         }
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -258,7 +258,7 @@ MessageHandleResult DS3_VisitorManager::Handle_RequestRejectVisit(GameClient* Cl
     }
 
 #ifdef _DEBUG
-    LogS(Client->GetName().c_str(), "Recieved rejection of visit requested by player: %s", InitiatorClient->GetName().c_str());
+    LogS(Client->GetName().c_str(), "Received rejection of visit requested by player: %s", InitiatorClient->GetName().c_str());
     Log("player_id: %i", Request->player_id());
     Log("map_id: %i", Request->map_id());
     Log("online_area_id: %i", Request->online_area_id());
@@ -282,7 +282,7 @@ MessageHandleResult DS3_VisitorManager::Handle_RequestRejectVisit(GameClient* Cl
         WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectBreakInTarget to invader client %s.", InitiatorClient->GetName().c_str());
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestRejectVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

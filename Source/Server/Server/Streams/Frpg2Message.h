@@ -13,7 +13,7 @@
 
 #include <vector>
 
- // All the id's of message type we can recieve.
+ // All the id's of message type we can receive.
 enum class Frpg2MessageType
 {
     Reply = 0x0,

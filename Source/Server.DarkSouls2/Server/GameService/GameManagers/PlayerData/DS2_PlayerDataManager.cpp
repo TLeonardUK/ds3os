@@ -29,7 +29,7 @@ DS2_PlayerDataManager::DS2_PlayerDataManager(Server* InServerInstance)
 {
 }
 
-MessageHandleResult DS2_PlayerDataManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_PlayerDataManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestUpdateLoginPlayerCharacter))
     {

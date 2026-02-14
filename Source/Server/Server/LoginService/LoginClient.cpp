@@ -28,7 +28,7 @@ LoginClient::LoginClient(LoginService* OwningService, std::shared_ptr<NetConnect
     : Service(OwningService)
     , Connection(InConnection)
 {
-    LastMessageRecievedTime = GetSeconds();
+    LastMessageReceivedTime = GetSeconds();
 
     MessageStream = std::make_shared<Frpg2MessageStream>(InConnection, InServerRSAKey);
 }
@@ -36,7 +36,7 @@ LoginClient::LoginClient(LoginService* OwningService, std::shared_ptr<NetConnect
 bool LoginClient::Poll()
 {
     // Has this client timed out?
-    double TimeSinceLastMessage = GetSeconds() - LastMessageRecievedTime;
+    double TimeSinceLastMessage = GetSeconds() - LastMessageReceivedTime;
     if (TimeSinceLastMessage >= BuildConfig::CLIENT_TIMEOUT)
     {
         WarningS(GetName().c_str(), "Client timed out.");
@@ -63,11 +63,11 @@ bool LoginClient::Poll()
     }
 
     Frpg2Message Message;
-    while (MessageStream->Recieve(&Message))
+    while (MessageStream->Receive(&Message))
     {
         if (Message.Header.msg_type != Frpg2MessageType::RequestQueryLoginServerInfo)
         {
-            WarningS(GetName().c_str(), "Disconnecting client as recieved unexpected packet type while expecting.");
+            WarningS(GetName().c_str(), "Disconnecting client as received unexpected packet type while expecting.");
             return true;
         }
 
@@ -76,7 +76,7 @@ bool LoginClient::Poll()
         Shared_Frpg2RequestMessage::RequestQueryLoginServerInfo Request;
         if (!Request.ParseFromArray(Message.Payload.data(), (int)Message.Payload.size()))
         {
-            WarningS(GetName().c_str(), "Disconnecting client as recieved message that could not be parsed into expected format.");
+            WarningS(GetName().c_str(), "Disconnecting client as received message that could not be parsed into expected format.");
             return true;
         }
 
@@ -101,7 +101,7 @@ bool LoginClient::Poll()
             return true;
         }
 
-        LastMessageRecievedTime = GetSeconds();
+        LastMessageReceivedTime = GetSeconds();
     }
 
     return false;

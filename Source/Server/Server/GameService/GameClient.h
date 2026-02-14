@@ -75,7 +75,7 @@ private:
 
     bool IsDisconnecting = false;
 
-    double LastMessageRecievedTime = 0.0;
+    double LastMessageReceivedTime = 0.0;
 
     std::unique_ptr<PlayerState> State;
 

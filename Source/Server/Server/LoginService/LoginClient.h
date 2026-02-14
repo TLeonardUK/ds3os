@@ -36,6 +36,6 @@ private:
     std::shared_ptr<NetConnection> Connection;
     std::shared_ptr<Frpg2MessageStream> MessageStream;
 
-    double LastMessageRecievedTime = 0.0;
+    double LastMessageReceivedTime = 0.0;
 
 };

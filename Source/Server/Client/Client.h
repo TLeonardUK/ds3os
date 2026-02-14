@@ -121,7 +121,7 @@ private:
 
     ClientState State = ClientState::LoginServer_Connect;
 
-    bool QuitRecieved = false;
+    bool QuitReceived = false;
 
     PlatformEvents::CtrlSignalEvent::DelegatePtr CtrlSignalHandle = nullptr;
 

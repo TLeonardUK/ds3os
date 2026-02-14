@@ -25,7 +25,7 @@ DS3_RankingManager::DS3_RankingManager(Server* InServerInstance)
 {
 }
 
-MessageHandleResult DS3_RankingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS3_RankingManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::RequestRegisterRankingData))
     {
