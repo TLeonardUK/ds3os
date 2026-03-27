@@ -25,7 +25,7 @@ namespace Loader.Forms
         private void OnSubmit(object sender, EventArgs e)
         {
             submitButton.Enabled = false;
-            submitButton.Text = "Retrieving Keys ...";
+            submitButton.Text = resources.GetString("retrieving_keys");
 
             string Password = passwordTextBox.Text;
 
@@ -42,7 +42,7 @@ namespace Loader.Forms
         {
             if (string.IsNullOrEmpty(Key))
             {
-                MessageBox.Show("Failed to retrieve the servers cryptographic keys.\n\nThe password you supplied is likely incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("failed_to_retrieve_keys"), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             Config.PublicKey = Key;
             GetPublicKeyTask = null;

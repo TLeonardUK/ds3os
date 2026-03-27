@@ -31,7 +31,7 @@ namespace Loader.Forms
         private void OnSubmit(object sender, EventArgs e)
         {
             submitButton.Enabled = false;
-            submitButton.Text = "Creating Server ...";
+            submitButton.Text = resources.GetString("creating_server");
 
             usernameTextBox.Enabled = false;
             passwordTextBox.Enabled = false;
@@ -48,7 +48,7 @@ namespace Loader.Forms
 
             if (ShardServer == null)
             {
-                MessageBox.Show("No servers are online that support sharding for this game type. Please try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("no_server_online"), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 DialogResult = DialogResult.Cancel;
                 Close();
@@ -86,7 +86,7 @@ namespace Loader.Forms
                 string.IsNullOrEmpty(Result.webPassword) ||
                 string.IsNullOrEmpty(Result.webUrl))
             {
-                MessageBox.Show("Failed to create server, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("Failed to create server, try again later."), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {

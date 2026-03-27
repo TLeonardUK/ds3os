@@ -5,6 +5,12 @@
 ![GitHub downloads](https://img.shields.io/github/downloads/TLeonardUK/ds3os/total)
 [![Discord](https://img.shields.io/discord/937318023495303188?label=Discord)](https://discord.gg/pBmquc9Jkj)
 
+<div align="center">
+
+English | [简体中文](./README_zhCN.md)
+
+</div>
+
 # What is this project?
 An open source implementation of the game servers for dark souls 2 (SOTFS) and 3. 
 

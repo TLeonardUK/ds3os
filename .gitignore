@@ -59,6 +59,7 @@ Debug/
 intermediate/
 Research/
 vcpkg_installed/
+.idea/
 .vs/
 Temp/
 RawCaptures/

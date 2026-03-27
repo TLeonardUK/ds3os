@@ -93,20 +93,20 @@ namespace Loader
             if (!File.Exists(ExeLocationTextBox.Text))
             {
                 ExeLocationTextBox.BackColor = System.Drawing.Color.Pink;
-                BuildInfoLabel.Text = ExeLocationTextBox.Text.Length > 0 ? "Executable does not exist" : "";
+                BuildInfoLabel.Text = ExeLocationTextBox.Text.Length > 0 ? resources.GetString("executable_does_not_exist") : "";
                 BuildInfoLabel.ForeColor = System.Drawing.Color.Red;
                 LaunchEnabled = false;
             }
             else if (!BuildConfig.ExeLoadConfiguration.TryGetValue(ExeUtils.GetExeSimpleHash(ExeLocationTextBox.Text), out LoadConfig))
             {
                 ExeLocationTextBox.BackColor = System.Drawing.Color.Pink;
-                BuildInfoLabel.Text = "Executable not a recognised version";
+                BuildInfoLabel.Text = resources.GetString("executable_not_a_recognised_version");
                 BuildInfoLabel.ForeColor = System.Drawing.Color.Red;
                 LaunchEnabled = false;
             }
             else
             {
-                BuildInfoLabel.Text = "Recognised as " + LoadConfig.VersionName;
+                BuildInfoLabel.Text = resources.GetString("recognised_as") + LoadConfig.VersionName;
                 BuildInfoLabel.ForeColor = System.Drawing.Color.Black;
 
                 ExeLocationTextBox.BackColor = System.Drawing.SystemColors.Control;
@@ -127,18 +127,18 @@ namespace Loader
             if (!SteamUtils.IsSteamRunningAndLoggedIn())
             {
                 LaunchEnabled = false;
-                LaunchButton.Text = "Not Logged Into Steam";
+                LaunchButton.Text = resources.GetString("not_logged_into_steam");
             } 
 #if RELEASE
             else if (RunningProcessHandle != IntPtr.Zero)
             {
                 LaunchEnabled = false;
-                LaunchButton.Text = "Running ...";
+                LaunchButton.Text = resources.GetString("running");
             }
 #endif
             else
             {
-                LaunchButton.Text = "Launch Game";
+                LaunchButton.Text = resources.GetString("launch_game");
             }
 
             LaunchButton.Enabled = LaunchEnabled;
@@ -325,13 +325,13 @@ namespace Loader
                     case GameType.DarkSouls3:
                     {
                         Dialog.Filter = "Dark Souls III|DarkSoulsIII.exe|All Files|*.*";
-                        Dialog.Title = "Select DS3 Executable Location";
-                        break;
+                        Dialog.Title = resources.GetString("select_ds3_exe");
+                            break;
                     }
                     case GameType.DarkSouls2:
                     {
                         Dialog.Filter = "Dark Souls II|DarkSoulsII.exe|All Files|*.*";
-                        Dialog.Title = "Select DS2 Executable Location";
+                        Dialog.Title = resources.GetString("select_ds2_exe");
                         break;
                     }
                 }
@@ -563,7 +563,7 @@ namespace Loader
 
                     if (string.IsNullOrEmpty(Config.PublicKey))
                     {
-                        MessageBox.Show("Failed to retrieve the servers cryptographic keys.\n\nThe master server may be down or the server may be missconfigured.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(resources.GetString("failed_to_retrieve_keys"), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -606,7 +606,7 @@ namespace Loader
         {
             if (Config.PublicKey == null || Config.PublicKey.Length == 0)
             {
-                MessageBox.Show("Unable to launch server, no public key is available.\n\nYou shouldn't see this error unless someone has miss-configured the server configuration.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("no_public_key_available"), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -623,7 +623,7 @@ namespace Loader
             DarkSoulsLoadConfig LoadConfig;
             if (!BuildConfig.ExeLoadConfiguration.TryGetValue(ExeUtils.GetExeSimpleHash(ExeLocationTextBox.Text), out LoadConfig))
             {
-                MessageBox.Show("Failed to determine exe version, unable to patch.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("failed_to_determine_exe_version"), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -651,7 +651,7 @@ namespace Loader
 
             if (!Result)
             {
-                MessageBox.Show("Failed to launch data souls 3 executable.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resources.GetString("failed_to_run_ds3_exe"), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -667,7 +667,7 @@ namespace Loader
                     DirectoryPath = System.IO.Path.GetDirectoryName(DirectoryPath);
                     if (DirectoryPath == null)
                     {
-                        MessageBox.Show("Failed to find Injector.dll, please reinstall: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(resources.GetString("error_injector") + Marshal.GetLastWin32Error(), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
@@ -693,14 +693,14 @@ namespace Loader
                 IntPtr ModulePtr = WinAPI.GetModuleHandle("kernel32.dll");
                 if (ModulePtr == IntPtr.Zero)
                 {
-                    MessageBox.Show("Failed to get kernel32.dll module handle: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to get kernel32.dll module handle: GetLastError=" + Marshal.GetLastWin32Error(), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 IntPtr LoadLibraryPtr = WinAPI.GetProcAddress(ModulePtr, "LoadLibraryW");
                 if (LoadLibraryPtr == IntPtr.Zero)
                 {
-                    MessageBox.Show("Failed to get LoadLibraryA procedure address: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to get LoadLibraryA procedure address: GetLastError=" + Marshal.GetLastWin32Error(), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -715,7 +715,7 @@ namespace Loader
                 }
                 if (PathAddress == IntPtr.Zero)
                 {
-                    MessageBox.Show("Failed to allocation memory in process: GetLastError=" + Marshal.GetLastWin32Error(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
+                    MessageBox.Show("Failed to allocation memory in process: GetLastError=" + Marshal.GetLastWin32Error(), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);                    
                     return;
                 }
                 
@@ -723,14 +723,14 @@ namespace Loader
                 bool WriteSuccessful = WinAPI.WriteProcessMemory(ProcessInfo.hProcess, PathAddress, InjectorPathBuffer, (uint)InjectorPathBuffer.Length, out BytesWritten);
                 if (!WriteSuccessful || BytesWritten != InjectorPathBuffer.Length)
                 {
-                    MessageBox.Show("Failed to write full patch to memory: GetLastError=" + Marshal.GetLastWin32Error(), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Failed to write full patch to memory: GetLastError=" + Marshal.GetLastWin32Error(), resources.GetString("Warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 IntPtr ThreadHandle = WinAPI.CreateRemoteThread(ProcessInfo.hProcess, IntPtr.Zero, 0, LoadLibraryPtr, PathAddress, 0, IntPtr.Zero);
                 if (ThreadHandle == IntPtr.Zero)
                 {
-                    MessageBox.Show("Failed to spawn remote thread: GetLastError=" + Marshal.GetLastWin32Error(), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Failed to spawn remote thread: GetLastError=" + Marshal.GetLastWin32Error(), resources.GetString("Warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -741,7 +741,7 @@ namespace Loader
                 byte[] DataBlock = PatchingUtils.MakeEncryptedServerInfo(ConnectionHostname, Config.PublicKey, LoadConfig.Key);
                 if (DataBlock == null)
                 {
-                    MessageBox.Show("Failed to encode server info patch. Potentially server information is too long to fit into the space available.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(resources.GetString("Failed to encode server info patch. Potentially server information is too long to fit into the space available."), resources.GetString("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -762,7 +762,7 @@ namespace Loader
                     {
                         if (i == 31)
                         {
-                            MessageBox.Show("Failed to write full patch to memory. Game may or may not work.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show(resources.GetString("Failed to write full patch to memory. Game may or may not work."), resources.GetString("Warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
@@ -924,13 +924,13 @@ namespace Loader
                 case GameType.DarkSouls3:
                 {
                     ExeLocationTextBox.Text = ProgramSettings.Default.ds3_exe_location;
-                    ExePathLabel.Text = "DarkSoulsIII.exe Location";
+                    ExePathLabel.Text = resources.GetString("ds3_location");
                     break;
                 }
                 case GameType.DarkSouls2:
                 {
                     ExeLocationTextBox.Text = ProgramSettings.Default.ds2_exe_location;
-                    ExePathLabel.Text = "DarkSoulsII.exe Location";
+                    ExePathLabel.Text = resources.GetString("ds2_location");
                     break;
                 }
             }
