@@ -85,7 +85,7 @@ namespace Loader
             }
             catch (Exception Ex)
             {
-                Debug.WriteLine("Recieved exception when trying to get servers: {0}", Ex.Message);
+                Debug.WriteLine("Received exception when trying to get servers: {0}", Ex.Message);
             }
 
             return Result;

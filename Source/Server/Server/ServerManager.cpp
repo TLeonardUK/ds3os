@@ -26,8 +26,8 @@ ServerManager::ServerManager()
 {
     // Register for Ctrl+C notifications, its the only way the server shuts down right now.
     CtrlSignalHandle = PlatformEvents::OnCtrlSignal.Register([=]() {
-        Warning("Quit signal recieved, starting shutdown.");        
-        QuitRecieved = true;
+        Warning("Quit signal received, starting shutdown.");        
+        QuitReceived = true;
     });
 }
 
@@ -92,7 +92,7 @@ void ServerManager::RunUntilQuit()
 
     // We should really do this event driven ...
     // This suffices for now.
-    while (!QuitRecieved)
+    while (!QuitReceived)
     {
         std::scoped_lock lock(m_mutex);
 
@@ -138,9 +138,9 @@ void ServerManager::RunUntilQuit()
                 Debug::AuthConnections.GetAverageRate(),
                 Debug::LoginConnections.GetAverageRate(),
                 Debug::GameConnections.GetAverageRate(),
-                (Debug::TcpBytesRecieved.GetAverageRate()) / 1024.0f,
+                (Debug::TcpBytesReceived.GetAverageRate()) / 1024.0f,
                 (Debug::TcpBytesSent.GetAverageRate()) / 1024.0f,
-                (Debug::UdpBytesRecieved.GetAverageRate()) / 1024.0f,
+                (Debug::UdpBytesReceived.GetAverageRate()) / 1024.0f,
                 (Debug::UdpBytesSent.GetAverageRate()) / 1024.0f,
                 Debug::DatabaseQueries.GetAverageRate()
             );

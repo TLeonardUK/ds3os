@@ -41,42 +41,42 @@ Frpg2UdpPacketStream::Frpg2UdpPacketStream(std::shared_ptr<NetConnection> InConn
         DecryptionCipher = std::make_shared<CWCClientUDPCipher>(InCwcKey, AuthToken);
     }
 
-    RecieveBuffer.resize(64 * 1024);
+    ReceiveBuffer.resize(64 * 1024);
 
     LastActivityTime = GetSeconds();
 }
 
 bool Frpg2UdpPacketStream::Pump()
 {
-    // If we have got into an error state (due to failed send/recieves) then 
+    // If we have got into an error state (due to failed send/receives) then 
     // we can bail now.
     if (InErrorState)
     {
         return true;
     }
 
-    // Recieve any pending packets.
+    // Receive any pending packets.
     while (true)
     {
-        int BytesRecieved = 0;
-        RecieveBuffer.resize(RecieveBuffer.capacity());
-        if (!Connection->Recieve(RecieveBuffer, 0, (int)RecieveBuffer.size(), BytesRecieved))
+        int BytesReceived = 0;
+        ReceiveBuffer.resize(ReceiveBuffer.capacity());
+        if (!Connection->Receive(ReceiveBuffer, 0, (int)ReceiveBuffer.size(), BytesReceived))
         {
-            WarningS(Connection->GetName().c_str(), "Failed to recieve on connection.");
+            WarningS(Connection->GetName().c_str(), "Failed to receive on connection.");
             InErrorState = true;
             return true;
         }
 
-        if (BytesRecieved > 0)
+        if (BytesReceived > 0)
         {
             LastActivityTime = GetSeconds();
 
-            RecieveBuffer.resize(BytesRecieved);
+            ReceiveBuffer.resize(BytesReceived);
 
             Frpg2UdpPacket Packet;
-            if (!BytesToPacket(RecieveBuffer, Packet))
+            if (!BytesToPacket(ReceiveBuffer, Packet))
             {
-                WarningS(Connection->GetName().c_str(), "Failed to parse recieved packet.");
+                WarningS(Connection->GetName().c_str(), "Failed to parse received packet.");
                 InErrorState = true;
                 return true;
             }
@@ -99,7 +99,7 @@ bool Frpg2UdpPacketStream::Pump()
                 WriteBytesToFile("Z:\\ds3os\\Research\\Packet Traces\\game_login_compare\\from-game.dat", Packet.Payload);
             }*/
 
-            RecieveQueue.push_back(Packet);
+            ReceiveQueue.push_back(Packet);
         }
         else
         {
@@ -153,15 +153,15 @@ bool Frpg2UdpPacketStream::Send(const Frpg2UdpPacket& Packet)
     return true;
 }
 
-bool Frpg2UdpPacketStream::Recieve(Frpg2UdpPacket* OutputPacket)
+bool Frpg2UdpPacketStream::Receive(Frpg2UdpPacket* OutputPacket)
 {
-    if (RecieveQueue.size() == 0)
+    if (ReceiveQueue.size() == 0)
     {
         return false;
     }
 
-    *OutputPacket = RecieveQueue[0];
-    RecieveQueue.erase(RecieveQueue.begin());
+    *OutputPacket = ReceiveQueue[0];
+    ReceiveQueue.erase(ReceiveQueue.begin());
 
     return true;
 }

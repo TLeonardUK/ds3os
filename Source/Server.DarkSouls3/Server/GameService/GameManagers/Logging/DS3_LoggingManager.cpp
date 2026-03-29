@@ -28,7 +28,7 @@ DS3_LoggingManager::DS3_LoggingManager(Server* InServerInstance)
 {
 }
 
-MessageHandleResult DS3_LoggingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS3_LoggingManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::RequestNotifyProtoBufLog))
     {
@@ -244,14 +244,14 @@ void DS3_LoggingManager::Handle_GetItemLog(GameClient* Client, DS3_Frpg2RequestM
     {
         const DS3_FpdLogMessage::GetItemLog_Get_item_info_list& Item = Log.get_item_info_list(i);
 
-        std::string StatisticKey = StringFormat("Item/TotalRecieved/Id=%u", Item.item_id());
+        std::string StatisticKey = StringFormat("Item/TotalReceived/Id=%u", Item.item_id());
         Database.AddGlobalStatistic(StatisticKey, Item.count());
         Database.AddPlayerStatistic(StatisticKey, Player.GetPlayerId(), Item.count());
 
         TotalCount += Item.count();
     }
 
-    std::string TotalStatisticKey = StringFormat("Item/TotalRecieved");
+    std::string TotalStatisticKey = StringFormat("Item/TotalReceived");
     Database.AddGlobalStatistic(TotalStatisticKey, TotalCount);
     Database.AddPlayerStatistic(TotalStatisticKey, Player.GetPlayerId(), TotalCount);
 }
@@ -385,7 +385,7 @@ void DS3_LoggingManager::Handle_VisitResultLog(GameClient* Client, DS3_Frpg2Requ
     }
 
 #ifdef _DEBUG
-    LogS(Client->GetName().c_str(), "Recieved VisitResultLog from: %s", Client->GetName().c_str());
+    LogS(Client->GetName().c_str(), "Received VisitResultLog from: %s", Client->GetName().c_str());
     Log("map_id: %i", Log.map_id());
     Log("location: %.2f, %.2f, %.2f", Log.location().x(), Log.location().y(), Log.location().z());
     Log("online_area_id_source: %i", Log.online_area_id_source());

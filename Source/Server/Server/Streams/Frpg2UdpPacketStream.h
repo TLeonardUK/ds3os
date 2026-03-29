@@ -26,13 +26,13 @@ public:
     // is likely saturated or the packet is invalid.
     bool Send(const Frpg2UdpPacket& Packet);
 
-    // Returns true if a packet was recieved and stores packet in OutputPacket.
-    bool Recieve(Frpg2UdpPacket* Packet);
+    // Returns true if a packet was received and stores packet in OutputPacket.
+    bool Receive(Frpg2UdpPacket* Packet);
 
-    // Gets the last timestamp where we recieved packets from the remote system, can be used for timeouts etc.
+    // Gets the last timestamp where we received packets from the remote system, can be used for timeouts etc.
     double GetLastActivityTime() { return LastActivityTime; }
 
-    // Sends and recieves packets in this stream. If this function
+    // Sends and receives packets in this stream. If this function
     // returns true the stream is considered to be in an error state
     // and the client this stream goes to should be disconnected.
     virtual bool Pump();
@@ -57,9 +57,9 @@ private:
     
     double LastActivityTime;
 
-    std::vector<Frpg2UdpPacket> RecieveQueue;
+    std::vector<Frpg2UdpPacket> ReceiveQueue;
 
-    std::vector<uint8_t> RecieveBuffer;
+    std::vector<uint8_t> ReceiveBuffer;
 
     std::shared_ptr<Cipher> EncryptionCipher;
     std::shared_ptr<Cipher> DecryptionCipher;

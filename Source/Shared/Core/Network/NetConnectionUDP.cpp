@@ -32,7 +32,7 @@ namespace {
 NetConnectionUDP::NetConnectionUDP(const std::string& InName)
     : Name(InName)
 {
-    RecieveBuffer.resize(64 * 1024);
+    ReceiveBuffer.resize(64 * 1024);
 }
 
 NetConnectionUDP::NetConnectionUDP(NetConnectionUDP* InParent, SocketType ParentSocket, sockaddr_in InDestination, const std::string& InName, const NetIPAddress& InAddress)
@@ -104,8 +104,8 @@ bool NetConnectionUDP::Listen(int Port)
     bShuttingDownThreads = false;
     bErrorOnThreads = false;
 
-    RecieveThread = std::make_unique<std::thread>([&]() {
-        RecieveThreadEntry();
+    ReceiveThread = std::make_unique<std::thread>([&]() {
+        ReceiveThreadEntry();
     });
     SendThread = std::make_unique<std::thread>([&]() {
         SendThreadEntry();
@@ -191,8 +191,8 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     bShuttingDownThreads = false;
     bErrorOnThreads = false;
 
-    RecieveThread = std::make_unique<std::thread>([&]() {
-        RecieveThreadEntry();
+    ReceiveThread = std::make_unique<std::thread>([&]() {
+        ReceiveThreadEntry();
     });
     SendThread = std::make_unique<std::thread>([&]() {
         SendThreadEntry();
@@ -201,15 +201,15 @@ bool NetConnectionUDP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     return true;
 }
 
-bool NetConnectionUDP::Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved)
+bool NetConnectionUDP::Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived)
 {
-    if (RecieveQueue.size() == 0)
+    if (ReceiveQueue.size() == 0)
     {
-        BytesRecieved = 0;
+        BytesReceived = 0;
         return true;
     }
 
-    std::vector<uint8_t>& NextPacket = RecieveQueue[0];
+    std::vector<uint8_t>& NextPacket = ReceiveQueue[0];
     if (Count > NextPacket.size())
     {
         ErrorS(GetName().c_str(), "Unable to peek udp packet. Peek size is larger than datagram size.");
@@ -217,29 +217,29 @@ bool NetConnectionUDP::Peek(std::vector<uint8_t>& Buffer, int Offset, int Count,
     }
 
     memcpy(Buffer.data() + Offset, NextPacket.data(), Count);
-    BytesRecieved = Count;
+    BytesReceived = Count;
 
     return true;
 }
 
-bool NetConnectionUDP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved)
+bool NetConnectionUDP::Receive(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived)
 {
-    if (RecieveQueue.size() == 0)
+    if (ReceiveQueue.size() == 0)
     {
-        BytesRecieved = 0;
+        BytesReceived = 0;
         return true;
     }
 
-    std::vector<uint8_t> NextPacket = RecieveQueue[0];
+    std::vector<uint8_t> NextPacket = ReceiveQueue[0];
     if (NextPacket.size() > Count)
     {
-        ErrorS(GetName().c_str(), "Unable to recieve next udp packet, packet is larger than buffer. Packets must be recieved in their entirety.");
+        ErrorS(GetName().c_str(), "Unable to receive next udp packet, packet is larger than buffer. Packets must be received in their entirety.");
         return false;
     }
-    RecieveQueue.erase(RecieveQueue.begin());
+    ReceiveQueue.erase(ReceiveQueue.begin());
 
     memcpy(Buffer.data() + Offset, NextPacket.data(), NextPacket.size());
-    BytesRecieved = (int)NextPacket.size();
+    BytesReceived = (int)NextPacket.size();
 
     return true;
 }
@@ -282,10 +282,10 @@ bool NetConnectionUDP::Disconnect()
             SendQueueCvar.notify_all();
         }
 
-        if (RecieveThread)
+        if (ReceiveThread)
         {
-            RecieveThread->join();
-            RecieveThread = nullptr;
+            ReceiveThread->join();
+            ReceiveThread = nullptr;
         }
         if (SendThread)
         {
@@ -333,7 +333,7 @@ void NetConnectionUDP::ProcessPacket(const PendingPacket& Packet)
                 if (Connection->Destination.sin_addr.s_addr == Packet.SourceAddress.sin_addr.s_addr &&
                     Connection->Destination.sin_port == Packet.SourceAddress.sin_port)
                 {
-                    Connection->RecieveQueue.push_back(Packet.Data);
+                    Connection->ReceiveQueue.push_back(Packet.Data);
                     bRoutedPacket = true;
                     break;
                 }
@@ -364,22 +364,22 @@ void NetConnectionUDP::ProcessPacket(const PendingPacket& Packet)
 #endif
 
             std::shared_ptr<NetConnectionUDP> NewConnection = std::make_shared<NetConnectionUDP>(this, Socket, Packet.SourceAddress, ClientName.data(), NetClientAddress);
-            NewConnection->RecieveQueue.push_back(Packet.Data);
+            NewConnection->ReceiveQueue.push_back(Packet.Data);
             NewConnections.push_back(NewConnection);
             ChildConnections.push_back(NewConnection);
         }
     }
     else
     {
-        RecieveQueue.push_back(Packet.Data);
+        ReceiveQueue.push_back(Packet.Data);
     }
 }
 
-void NetConnectionUDP::RecieveThreadEntry()
+void NetConnectionUDP::ReceiveThreadEntry()
 {
     while (!bShuttingDownThreads)
     {
-        // Recieve any pending datagrams and route to the appropriate child recieve queue.
+        // Receive any pending datagrams and route to the appropriate child receive queue.
         socklen_t SourceAddressSize = sizeof(struct sockaddr);
         sockaddr_in SourceAddress = { 0 };
 
@@ -398,9 +398,9 @@ void NetConnectionUDP::RecieveThreadEntry()
             continue;
         }
 
-        // Recieve the next message on the socket.
+        // Receive the next message on the socket.
         int Flags = 0;
-        int Result = recvfrom(Socket, (char*)RecieveBuffer.data(), (int)RecieveBuffer.size(), Flags, (sockaddr*)&SourceAddress, &SourceAddressSize);
+        int Result = recvfrom(Socket, (char*)ReceiveBuffer.data(), (int)ReceiveBuffer.size(), Flags, (sockaddr*)&SourceAddress, &SourceAddressSize);
         if (Result < 0)
         {
 #if defined(_WIN32)
@@ -419,12 +419,12 @@ void NetConnectionUDP::RecieveThreadEntry()
                 continue;
             }
 
-            ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
-            // We ignore the error and keep continuing to try and recieve.
+            ErrorS(GetName().c_str(), "Failed to receive with error 0x%08x.", error);
+            // We ignore the error and keep continuing to try and receive.
         }
         else if (Result > 0)
         {
-            std::vector<uint8_t> Packet(RecieveBuffer.data(), RecieveBuffer.data() + Result);
+            std::vector<uint8_t> Packet(ReceiveBuffer.data(), ReceiveBuffer.data() + Result);
 
             bool bDropPacket = false;
 
@@ -451,7 +451,7 @@ void NetConnectionUDP::RecieveThreadEntry()
 
             //Log("<< %zi bytes", (size_t)Result);
 
-            Debug::UdpBytesRecieved.Add(Result);
+            Debug::UdpBytesReceived.Add(Result);
         }
     }
 }
@@ -541,11 +541,11 @@ bool NetConnectionUDP::Pump()
         }
     }
 
-    // Recieve pending packets.
+    // Receive pending packets.
     {
         std::vector<std::unique_ptr<PendingPacket>> PacketsToProcess;
         
-        // Grab all the packets in the recieve queue that currently need processing.
+        // Grab all the packets in the receive queue that currently need processing.
         // Keep this code slim so we don't hold the mutex longer than neccessary (as we don't currently do this lock-free)
         {
             std::unique_lock lock(PendingPacketsMutex);

@@ -66,7 +66,7 @@ void DS3_GhostManager::TrimDatabase()
     Database.TrimGhosts(MaxEntries);
 }
 
-MessageHandleResult DS3_GhostManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS3_GhostManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::RequestCreateGhostData))
     {
@@ -138,7 +138,7 @@ MessageHandleResult DS3_GhostManager::Handle_RequestCreateGhostData(GameClient* 
     Database.AddGlobalStatistic(TypeStatisticKey, 1);
     Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestCreateGhostDataResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

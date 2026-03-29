@@ -64,7 +64,7 @@ protected:
     void PollRequest();
     bool FinishRequest();
 
-    static size_t RecieveBodyFunction(void* ptr, size_t size, size_t nmemb, NetHttpResponse* Response);
+    static size_t ReceiveBodyFunction(void* ptr, size_t size, size_t nmemb, NetHttpResponse* Response);
 
 private:
     std::vector<uint8_t> Body;

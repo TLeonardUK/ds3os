@@ -31,8 +31,8 @@ public:
     // If we have a protobuf thats already serialized we can send it via this. Code assumes it should be sent with Push message type.
     virtual bool SendRawProtobuf(const std::vector<uint8_t>& Data, const Frpg2ReliableUdpMessage* ResponseTo = nullptr);
 
-    // Returns true if a packet was recieved and stores packet in OutputPacket.
-    virtual bool Recieve(Frpg2ReliableUdpMessage* Message);
+    // Returns true if a packet was received and stores packet in OutputPacket.
+    virtual bool Receive(Frpg2ReliableUdpMessage* Message);
 
     // This is kinda gross, we shouldn't expose this we should wrap it in a nice interface.
     // This returns the ack sequence number of the last sent message. Higher level code

@@ -25,7 +25,7 @@ DS2_RankingManager::DS2_RankingManager(Server* InServerInstance)
 {
 }
 
-MessageHandleResult DS2_RankingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_RankingManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestRegisterPowerStoneData))
     {

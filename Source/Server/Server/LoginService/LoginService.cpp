@@ -32,7 +32,7 @@ LoginService::~LoginService()
 
 bool LoginService::Init()
 {
-    Connection = std::make_shared<NetConnectionTCP>("Login Service");
+    Connection = std::make_shared<NetConnectionTCP>("LoginService");
     int Port = ServerInstance->GetConfig().LoginServerPort;
     if (!Connection->Listen(Port))
     {

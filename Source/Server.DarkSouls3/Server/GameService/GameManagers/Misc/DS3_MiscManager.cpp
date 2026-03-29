@@ -34,7 +34,7 @@ DS3_MiscManager::DS3_MiscManager(Server* InServerInstance, GameService* InGameSe
 {
 }
 
-MessageHandleResult DS3_MiscManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS3_MiscManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS3_Frpg2ReliableUdpMessageType::RequestNotifyRingBell))
     {
@@ -75,7 +75,7 @@ MessageHandleResult DS3_MiscManager::Handle_RequestNotifyRingBell(GameClient* Cl
 
     DS3_Frpg2RequestMessage::RequestNotifyRingBell* Request = (DS3_Frpg2RequestMessage::RequestNotifyRingBell*)Message.Protobuf.get();
     
-    // List of locations the user should be in to recieve a push notification about the bell.
+    // List of locations the user should be in to receive a push notification about the bell.
     std::unordered_set<DS3_OnlineAreaId> NotifyLocations = {
         DS3_OnlineAreaId::Archdragon_Peak_Start,
         DS3_OnlineAreaId::Archdragon_Peak,
@@ -151,8 +151,14 @@ MessageHandleResult DS3_MiscManager::Handle_RequestSendMessageToPlayers(GameClie
         auto ValidationResult = DS3_NRSSRSanitizer::ValidatePushMessages(Request->message());
         if (ValidationResult != DS3_NRSSRSanitizer::ValidationResult::Valid)
         {
-            WarningS(Client->GetName().c_str(), "PushRequestAllowBreakInTarget message recieved from client contains ill formated binary data (error code %i).",
-                static_cast<uint32_t>(ValidationResult));
+            unsigned int messageId = 0;
+            DS3_Frpg2RequestMessage::PushRequestHeader Header;
+            if (Header.ParseFromString(Request->message()))
+            {
+                messageId = Header.push_message_id();
+            }
+            WarningS(Client->GetName().c_str(), "Message of ID %i recieved from client contains ill formated binary data (error code %i).",
+                messageId, static_cast<uint32_t>(ValidationResult));
 
             ShouldProcessRequest = false;
         }
@@ -179,7 +185,7 @@ MessageHandleResult DS3_MiscManager::Handle_RequestSendMessageToPlayers(GameClie
         }
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS3_Frpg2RequestMessage::RequestSendMessageToPlayersResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

@@ -53,7 +53,7 @@ void DS2_QuickMatchManager::Poll()
 {
 }
 
-MessageHandleResult DS2_QuickMatchManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_QuickMatchManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestSearchQuickMatch))
     {

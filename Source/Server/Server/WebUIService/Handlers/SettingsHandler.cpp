@@ -57,6 +57,15 @@ bool SettingsHandler::handleGet(CivetServer* Server, struct mg_connection* Conne
     json["ignoreInvasionAreaFilter"] = Config.IgnoreInvasionAreaFilter;
     json["antiCheatEnabled"] = Config.AntiCheatEnabled;
     
+    nlohmann::json announcementsJson;
+    for (const auto& Announcement : Config.Announcements) {
+        nlohmann::json jsonObj;
+        jsonObj["header"] = Announcement.Header;
+        jsonObj["body"] = Announcement.Body;
+        announcementsJson.push_back(jsonObj);
+    }
+    json["announcements"] = announcementsJson;
+    
     RespondJson(Connection, json);
 
     return true;
@@ -183,6 +192,23 @@ bool SettingsHandler::handlePost(CivetServer* Server, struct mg_connection* Conn
             Config.DS2_RatMatchingParameters.DisableSoulMemoryMatching = json["disableSoulMemoryMatching"];
             Config.DS2_BlueSentinelMatchingParameters.DisableSoulMemoryMatching = json["disableSoulMemoryMatching"];
             Config.DS2_ArenaMatchingParameters.DisableSoulMemoryMatching = json["disableSoulMemoryMatching"];
+        }
+    }
+	if (json.contains("announcements"))
+    {
+        if (json["announcements"].is_array())
+        {
+            Config.Announcements.clear();
+            for (const auto& announcement : json["announcements"])
+            {
+                Config.Announcements.push_back(
+                    {
+                        std::string(announcement.contains("header") ? announcement["header"] : ""),
+                        std::string(announcement.contains("body") ? announcement["body"] : "")
+                    }
+                );
+            }
+																											 
         }
     }
 

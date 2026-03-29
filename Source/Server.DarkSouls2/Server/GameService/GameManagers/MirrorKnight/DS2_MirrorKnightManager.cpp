@@ -76,7 +76,7 @@ void DS2_MirrorKnightManager::Poll()
 {
 }
 
-MessageHandleResult DS2_MirrorKnightManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_MirrorKnightManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestGetMirrorKnightSignList))
     {
@@ -226,7 +226,7 @@ MessageHandleResult DS2_MirrorKnightManager::Handle_RequestRemoveMirrorKnightSig
     // Tell anyone who is aware of this sign that its been removed.
     RemoveSignAndNotifyAware(Sign);
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestRemoveMirrorKnightSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -245,7 +245,7 @@ MessageHandleResult DS2_MirrorKnightManager::Handle_RequestUpdateMirrorKnightSig
     // I think the game uses this as something of a hearbeat to keep the sign active in the pool.
     // We keep all players signs active until they are removed, so we don't need to handle this.
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestUpdateMirrorKnightSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -327,7 +327,7 @@ MessageHandleResult DS2_MirrorKnightManager::Handle_RequestSummonMirrorKnightSig
         }
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestSummonMirrorKnightSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -410,7 +410,7 @@ MessageHandleResult DS2_MirrorKnightManager::Handle_RequestRejectMirrorKnightSig
         Sign->BeingSummonedByPlayerId = 0;
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestRejectMirrorKnightSignResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

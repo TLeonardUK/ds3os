@@ -25,8 +25,8 @@ public:
     // is likely saturated or the packet is invalid.
     virtual bool Send(const Frpg2ReliableUdpFragment& Fragment);
 
-    // Returns true if a packet was recieved and stores packet in OutputPacket.
-    virtual bool Recieve(Frpg2ReliableUdpFragment* Fragment);
+    // Returns true if a packet was received and stores packet in OutputPacket.
+    virtual bool Receive(Frpg2ReliableUdpFragment* Fragment);
 
     // Overridden so we can do package retransmission/general management.
     virtual bool Pump() override;
@@ -36,7 +36,7 @@ public:
 
 protected:
 
-    virtual bool RecieveInternal(Frpg2ReliableUdpFragment* Fragment);
+    virtual bool ReceiveInternal(Frpg2ReliableUdpFragment* Fragment);
 
     bool DecodeFragment(const Frpg2ReliableUdpPacket& Packet, Frpg2ReliableUdpFragment& Fragment);
     bool EncodeFragment(const Frpg2ReliableUdpFragment& Fragment, Frpg2ReliableUdpPacket& Packet);
@@ -46,9 +46,9 @@ protected:
 private:
 
     std::vector<Frpg2ReliableUdpFragment> Fragments;
-    uint32_t RecievedFragmentLength = 0;
+    uint32_t ReceivedFragmentLength = 0;
 
-    std::vector<Frpg2ReliableUdpFragment> RecieveQueue;
+    std::vector<Frpg2ReliableUdpFragment> ReceiveQueue;
     
     uint32_t SentFragmentCounter = 0;
 

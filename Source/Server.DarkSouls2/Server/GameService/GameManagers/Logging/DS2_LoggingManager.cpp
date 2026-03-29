@@ -28,7 +28,7 @@ DS2_LoggingManager::DS2_LoggingManager(Server* InServerInstance)
 {
 }
 
-MessageHandleResult DS2_LoggingManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_LoggingManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestNotifyBuyItem))
     {

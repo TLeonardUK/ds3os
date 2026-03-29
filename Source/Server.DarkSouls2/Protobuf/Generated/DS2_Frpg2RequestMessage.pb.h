@@ -18566,13 +18566,23 @@ class PushRequestHeader : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
+  // required .DS2_Frpg2RequestMessage.PushMessageId push_message_id = 1;
+  inline bool has_push_message_id() const;
+  inline void clear_push_message_id();
+  static const int kPushMessageIdFieldNumber = 1;
+  inline ::DS2_Frpg2RequestMessage::PushMessageId push_message_id() const;
+  inline void set_push_message_id(::DS2_Frpg2RequestMessage::PushMessageId value);
+
   // @@protoc_insertion_point(class_scope:DS2_Frpg2RequestMessage.PushRequestHeader)
  private:
+  inline void set_has_push_message_id();
+  inline void clear_has_push_message_id();
 
   ::std::string _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  int push_message_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_DS2_5fFrpg2RequestMessage_2eproto_impl();
   #else
@@ -35816,6 +35826,31 @@ inline void RequestGetTotalDeathCountResponse::set_total_death_count(::google::p
 // -------------------------------------------------------------------
 
 // PushRequestHeader
+
+// required .DS2_Frpg2RequestMessage.PushMessageId push_message_id = 1;
+inline bool PushRequestHeader::has_push_message_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PushRequestHeader::set_has_push_message_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PushRequestHeader::clear_has_push_message_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PushRequestHeader::clear_push_message_id() {
+  push_message_id_ = 925;
+  clear_has_push_message_id();
+}
+inline ::DS2_Frpg2RequestMessage::PushMessageId PushRequestHeader::push_message_id() const {
+  // @@protoc_insertion_point(field_get:DS2_Frpg2RequestMessage.PushRequestHeader.push_message_id)
+  return static_cast< ::DS2_Frpg2RequestMessage::PushMessageId >(push_message_id_);
+}
+inline void PushRequestHeader::set_push_message_id(::DS2_Frpg2RequestMessage::PushMessageId value) {
+  assert(::DS2_Frpg2RequestMessage::PushMessageId_IsValid(value));
+  set_has_push_message_id();
+  push_message_id_ = value;
+  // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.PushRequestHeader.push_message_id)
+}
 
 // -------------------------------------------------------------------
 

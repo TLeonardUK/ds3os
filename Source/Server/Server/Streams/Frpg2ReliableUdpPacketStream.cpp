@@ -97,12 +97,12 @@ bool Frpg2ReliableUdpPacketStream::Send(const Frpg2ReliableUdpPacket& Input)
     return true;
 }
 
-bool Frpg2ReliableUdpPacketStream::Recieve(Frpg2ReliableUdpPacket* Output)
+bool Frpg2ReliableUdpPacketStream::Receive(Frpg2ReliableUdpPacket* Output)
 {
-    if (RecieveQueue.size() > 0)
+    if (ReceiveQueue.size() > 0)
     {
-        *Output = RecieveQueue[0];
-        RecieveQueue.erase(RecieveQueue.begin());
+        *Output = ReceiveQueue[0];
+        ReceiveQueue.erase(ReceiveQueue.begin());
 
         return true;
     }
@@ -168,11 +168,11 @@ bool Frpg2ReliableUdpPacketStream::EncodeReliablePacket(const Frpg2ReliableUdpPa
 
 void Frpg2ReliableUdpPacketStream::HandleIncoming()
 {
-    // Accept any packets currently being recieved.
+    // Accept any packets currently being received.
     while (true)
     {
         Frpg2UdpPacket Packet;
-        if (!Frpg2UdpPacketStream::Recieve(&Packet))
+        if (!Frpg2UdpPacketStream::Receive(&Packet))
         {
             break;
         }
@@ -221,9 +221,9 @@ void Frpg2ReliableUdpPacketStream::HandleIncoming()
 void Frpg2ReliableUdpPacketStream::ConsumeIncomingPackets()
 {
     // Process as many packets as we can off the pending queue.
-    while (PendingRecieveQueue.size() > 0)
+    while (PendingReceiveQueue.size() > 0)
     {
-        Frpg2ReliableUdpPacket& Next = PendingRecieveQueue[0];
+        Frpg2ReliableUdpPacket& Next = PendingReceiveQueue[0];
 
         uint32_t Local, Remote;
         Next.Header.GetAckCounters(Local, Remote);
@@ -232,7 +232,7 @@ void Frpg2ReliableUdpPacketStream::ConsumeIncomingPackets()
         {
             ProcessPacket(Next);
 
-            PendingRecieveQueue.erase(PendingRecieveQueue.begin());
+            PendingReceiveQueue.erase(PendingReceiveQueue.begin());
 
             RemoteSequenceIndex = (RemoteSequenceIndex + 1) % MAX_ACK_VALUE;
         }
@@ -272,7 +272,7 @@ bool Frpg2ReliableUdpPacketStream::IsOpcodeSequenced(Frpg2ReliableUdpOpCode Opco
 
 void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPacket& Packet)
 {
-    LastPacketRecievedTime = GetSeconds();
+    LastPacketReceivedTime = GetSeconds();
 
     uint32_t LocalAck, RemoteAck;
     Packet.Header.GetAckCounters(LocalAck, RemoteAck);
@@ -292,11 +292,11 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
 
         if (State != Frpg2ReliableUdpStreamState::Established)
         {
-            WarningS(Connection->GetName().c_str(), "Recieved sequenced packet (type %i) before connection is established, this is not allowed, dropping packet.", Packet.Header.opcode);
+            WarningS(Connection->GetName().c_str(), "Received sequenced packet (type %i) before connection is established, this is not allowed, dropping packet.", Packet.Header.opcode);
             IsInCorrectSequence = true;
         }
 
-        // TODO: Fix this so we can queue up out of order packets and handle them when recieved. We had this before but causes issues
+        // TODO: Fix this so we can queue up out of order packets and handle them when received. We had this before but causes issues
         //       when ack values overflow.
         if (LocalAck != GetNextRemoteSequenceIndex())
         {
@@ -304,7 +304,7 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
             IsInCorrectSequence = true;
         }
 
-        if (GetPacketIndexByLocalSequence(PendingRecieveQueue, LocalAck) >= 0)
+        if (GetPacketIndexByLocalSequence(PendingReceiveQueue, LocalAck) >= 0)
         {
             VerboseS(Connection->GetName().c_str(), "Ignoring incoming packet, duplicate that we already have.");
             IsInCorrectSequence = true;
@@ -322,7 +322,7 @@ void Frpg2ReliableUdpPacketStream::HandleIncomingPacket(const Frpg2ReliableUdpPa
         }
         else if (!IsInCorrectSequence)
         {
-            PendingRecieveQueue.push_back(Packet);
+            PendingReceiveQueue.push_back(Packet);
         }
     }
     else
@@ -390,7 +390,7 @@ void Frpg2ReliableUdpPacketStream::ProcessPacket(const Frpg2ReliableUdpPacket & 
         }
     default:
         {
-            ErrorS(Connection->GetName().c_str(), "Recieved unknown reliable udp opcode 0x%2x.", Packet.Header.opcode);
+            ErrorS(Connection->GetName().c_str(), "Received unknown reliable udp opcode 0x%2x.", Packet.Header.opcode);
             Ensure(false);
             break;
         }
@@ -399,7 +399,7 @@ void Frpg2ReliableUdpPacketStream::ProcessPacket(const Frpg2ReliableUdpPacket & 
 
 void Frpg2ReliableUdpPacketStream::Handle_SYN(const Frpg2ReliableUdpPacket& Packet)
 {
-    State = Frpg2ReliableUdpStreamState::SynRecieved;
+    State = Frpg2ReliableUdpStreamState::SynReceived;
 
     uint32_t InLocalAck, InRemoteAck;
     Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
@@ -413,7 +413,7 @@ void Frpg2ReliableUdpPacketStream::Handle_SYN(const Frpg2ReliableUdpPacket& Pack
 
 void Frpg2ReliableUdpPacketStream::Handle_SYN_ACK(const Frpg2ReliableUdpPacket& Packet)
 {
-    State = Frpg2ReliableUdpStreamState::SynRecieved;
+    State = Frpg2ReliableUdpStreamState::SynReceived;
 
     uint32_t InLocalAck, InRemoteAck;
     Packet.Header.GetAckCounters(InLocalAck, InRemoteAck);
@@ -477,7 +477,7 @@ void Frpg2ReliableUdpPacketStream::Handle_RST(const Frpg2ReliableUdpPacket& Pack
 
 void Frpg2ReliableUdpPacketStream::Handle_ACK(const Frpg2ReliableUdpPacket& Packet)
 {
-    if (State == Frpg2ReliableUdpStreamState::SynRecieved)
+    if (State == Frpg2ReliableUdpStreamState::SynReceived)
     {
         State = Frpg2ReliableUdpStreamState::Established;
     }
@@ -499,10 +499,10 @@ void Frpg2ReliableUdpPacketStream::Handle_ACK(const Frpg2ReliableUdpPacket& Pack
 }
 void Frpg2ReliableUdpPacketStream::Handle_RACK(const Frpg2ReliableUdpPacket& Packet)
 {
-    // I'm like 95% sure that RACK is "Reject ACK", its telling us the ACK recieved was invalid I think?
+    // I'm like 95% sure that RACK is "Reject ACK", its telling us the ACK received was invalid I think?
     // I think we can just ignore this ...
 
-    VerboseS(Connection->GetName().c_str(), "Recieved RACK - Ignoring ...");
+    VerboseS(Connection->GetName().c_str(), "Received RACK - Ignoring ...");
 }
 
 void Frpg2ReliableUdpPacketStream::Handle_DAT(const Frpg2ReliableUdpPacket& Packet)
@@ -512,7 +512,7 @@ void Frpg2ReliableUdpPacketStream::Handle_DAT(const Frpg2ReliableUdpPacket& Pack
 
     ExpectedDatAckResponses.insert(InLocalAck);
 
-    RecieveQueue.push_back(Packet);
+    ReceiveQueue.push_back(Packet);
 
     Send_ACK(InLocalAck);
 }
@@ -537,7 +537,7 @@ void Frpg2ReliableUdpPacketStream::Handle_DAT_ACK(const Frpg2ReliableUdpPacket& 
     // Send an ACK for this DAT_ACK.
     Send_ACK(InLocalAck);
 
-    RecieveQueue.push_back(Packet);
+    ReceiveQueue.push_back(Packet);
 }
 
 void Frpg2ReliableUdpPacketStream::Send_SYN()
@@ -674,8 +674,8 @@ void Frpg2ReliableUdpPacketStream::Reset()
     RemoteSequenceIndex = 0;
     RemoteSequenceIndexAcked = 0;
 
-    PendingRecieveQueue.clear();
-    RecieveQueue.clear();    
+    PendingReceiveQueue.clear();
+    ReceiveQueue.clear();    
     SendQueue.clear();
     RetransmitBuffer.clear();
 }
@@ -734,7 +734,7 @@ void Frpg2ReliableUdpPacketStream::HandleOutgoing()
     else
     {
         double ElapsedTime = (CurrentTime - RetransmissionTimer);
-        double ElapsedLastPacketTime = (CurrentTime - LastPacketRecievedTime);
+        double ElapsedLastPacketTime = (CurrentTime - LastPacketReceivedTime);
 
         if (RetransmittingIndex > MAX_ACK_VALUE_TOP_QUART && SequenceIndexAcked < MAX_ACK_VALUE_BOTTOM_QUART ||
             SequenceIndexAcked >= RetransmittingIndex)

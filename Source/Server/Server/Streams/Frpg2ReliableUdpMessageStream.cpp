@@ -155,10 +155,10 @@ bool Frpg2ReliableUdpMessageStream::SendRawProtobuf(const std::vector<uint8_t>& 
     return true;
 }
 
-bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
+bool Frpg2ReliableUdpMessageStream::Receive(Frpg2ReliableUdpMessage* Message)
 {
     Frpg2ReliableUdpFragment Packet;
-    if (!Frpg2ReliableUdpFragmentStream::Recieve(&Packet))
+    if (!Frpg2ReliableUdpFragmentStream::Receive(&Packet))
     {
         return false;
     }
@@ -170,7 +170,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         return false;
     }
 
-    Debug::RequestsRecieved.Add(1);
+    Debug::RequestsReceived.Add(1);
 
     // Disassemble if required.
     if constexpr (BuildConfig::DISASSEMBLE_RECIEVED_MESSAGES)
@@ -197,7 +197,7 @@ bool Frpg2ReliableUdpMessageStream::Recieve(Frpg2ReliableUdpMessage* Message)
         }
         else
         {
-            WarningS(Connection->GetName().c_str(), "Recieved unexpected response for message, dropping: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
+            WarningS(Connection->GetName().c_str(), "Received unexpected response for message, dropping: type=0x%08x index=0x%08x", MessageType, Message->Header.msg_index);
             InErrorState = true;
             return false;
         }

@@ -51,7 +51,7 @@ protected:
 private:
     Server* ServerInstance;
 
-    std::shared_ptr<NetConnectionTCP> Connection;
+    std::shared_ptr<NetConnection> Connection;
 
     std::vector<std::shared_ptr<LoginClient>> Clients;
 

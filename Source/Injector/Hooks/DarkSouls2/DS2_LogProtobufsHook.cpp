@@ -75,7 +75,7 @@ namespace
             ClassName = ClassName.substr(pos + 1);
         }
 
-        // Log that this protobuf was recieved.
+        // Log that this protobuf was received.
         Log("<< %s", RttiName.c_str());
 
         // Store protobuf on disk if needed.

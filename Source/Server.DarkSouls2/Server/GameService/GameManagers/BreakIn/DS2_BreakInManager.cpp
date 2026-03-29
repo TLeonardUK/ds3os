@@ -33,7 +33,7 @@ void DS2_BreakInManager::OnLostPlayer(GameClient* Client)
 {
 }
 
-MessageHandleResult DS2_BreakInManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_BreakInManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestGetBreakInTargetList))
     {
@@ -195,7 +195,7 @@ MessageHandleResult DS2_BreakInManager::Handle_RequestBreakInTarget(GameClient* 
         Database.AddPlayerStatistic(TypeStatisticKey, Player.GetPlayerId(), 1);
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestBreakInTargetResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -256,7 +256,7 @@ MessageHandleResult DS2_BreakInManager::Handle_RequestRejectBreakInTarget(GameCl
         WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectBreakInTarget to invader client %s.", InvaderClient->GetName().c_str());
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestRejectBreakInTargetResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

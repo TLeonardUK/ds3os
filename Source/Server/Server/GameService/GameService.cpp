@@ -182,11 +182,11 @@ void GameService::Poll()
 void GameService::HandleClientConnection(std::shared_ptr<NetConnection> ClientConnection)
 {
     uint64_t AuthToken;
-    int BytesRecieved = 0;
+    int BytesReceived = 0;
 
     std::vector<uint8_t> Buffer;
     Buffer.resize(sizeof(uint64_t));
-    if (!ClientConnection->Peek(Buffer, 0, sizeof(AuthToken), BytesRecieved) || BytesRecieved != sizeof(AuthToken))
+    if (!ClientConnection->Peek(Buffer, 0, sizeof(AuthToken), BytesReceived) || BytesReceived != sizeof(AuthToken))
     {
         LogS(ClientConnection->GetName().c_str(), "Failed to peek authentication token, or not enough data available. Ignoring connection.");
         return;

@@ -102,22 +102,22 @@ bool Frpg2ReliableUdpFragmentStream::Send(const Frpg2ReliableUdpFragment& Fragme
     return true;
 }
 
-bool Frpg2ReliableUdpFragmentStream::Recieve(Frpg2ReliableUdpFragment* Fragment)
+bool Frpg2ReliableUdpFragmentStream::Receive(Frpg2ReliableUdpFragment* Fragment)
 {
-    if (RecieveQueue.size() > 0)
+    if (ReceiveQueue.size() > 0)
     {
-        *Fragment = RecieveQueue[0];
-        RecieveQueue.erase(RecieveQueue.begin());
+        *Fragment = ReceiveQueue[0];
+        ReceiveQueue.erase(ReceiveQueue.begin());
         return true;
     }
 
     return false;
 }
 
-bool Frpg2ReliableUdpFragmentStream::RecieveInternal(Frpg2ReliableUdpFragment* Fragment)
+bool Frpg2ReliableUdpFragmentStream::ReceiveInternal(Frpg2ReliableUdpFragment* Fragment)
 {
     Frpg2ReliableUdpPacket Packet;
-    if (!Frpg2ReliableUdpPacketStream::Recieve(&Packet))
+    if (!Frpg2ReliableUdpPacketStream::Receive(&Packet))
     {
         return false;
     }
@@ -205,8 +205,8 @@ void Frpg2ReliableUdpFragmentStream::Reset()
     Frpg2ReliableUdpPacketStream::Reset();
 
     Fragments.clear();
-    RecieveQueue.clear();
-    RecievedFragmentLength = 0;
+    ReceiveQueue.clear();
+    ReceivedFragmentLength = 0;
 }
 
 bool Frpg2ReliableUdpFragmentStream::Pump()
@@ -220,10 +220,10 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
     //       If this is the case we need to check the packet_counter when defragmenting packets and keep them together.
 
     Frpg2ReliableUdpFragment Fragment;
-    while (RecieveInternal(&Fragment))
+    while (ReceiveInternal(&Fragment))
     {
-        RecievedFragmentLength += Fragment.Header.fragment_length;
-        if (RecievedFragmentLength >= Fragment.Header.total_payload_length)
+        ReceivedFragmentLength += Fragment.Header.fragment_length;
+        if (ReceivedFragmentLength >= Fragment.Header.total_payload_length)
         {
             // Compact all payloads together into one combined packet.
             if (Fragments.size() > 0)
@@ -267,10 +267,10 @@ bool Frpg2ReliableUdpFragmentStream::Pump()
                 Fragment.Disassembly.append(Disassemble(Fragment));
             }
 
-            RecieveQueue.push_back(Fragment);
+            ReceiveQueue.push_back(Fragment);
 
             Fragments.clear();
-            RecievedFragmentLength = 0;
+            ReceivedFragmentLength = 0;
         }
         else
         {

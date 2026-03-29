@@ -29,7 +29,7 @@ DS2_BootManager::DS2_BootManager(Server* InServerInstance)
 {
 }
 
-MessageHandleResult DS2_BootManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_BootManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestWaitForUserLogin))
     {

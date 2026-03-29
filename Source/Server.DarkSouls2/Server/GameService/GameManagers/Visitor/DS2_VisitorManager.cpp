@@ -30,7 +30,7 @@ DS2_VisitorManager::DS2_VisitorManager(Server* InServerInstance, GameService* In
 {
 }
 
-MessageHandleResult DS2_VisitorManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_VisitorManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestGetVisitorList))
     {
@@ -176,7 +176,7 @@ MessageHandleResult DS2_VisitorManager::Handle_RequestVisit(GameClient* Client, 
         }
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))
@@ -269,7 +269,7 @@ MessageHandleResult DS2_VisitorManager::Handle_RequestRejectVisit(GameClient* Cl
         WarningS(Client->GetName().c_str(), "Failed to send PushRequestRejectBreakInTarget to invader client %s.", InitiatorClient->GetName().c_str());
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestRejectVisitResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

@@ -8,7 +8,7 @@
  */
 
 // Macro fun!
-// This defines the different types of messages that can be sent/recieved from the dark souls server.
+// This defines the different types of messages that can be sent/received from the dark souls server.
 //
 // There are 2 macros you can use, one for messages that expect a reply, and one for one way messages.
 // 

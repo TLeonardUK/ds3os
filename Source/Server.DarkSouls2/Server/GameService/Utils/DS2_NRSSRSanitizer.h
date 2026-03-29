@@ -31,6 +31,8 @@
 #include <byteswap.h>
 #endif
 
+#include "Server.DarkSouls2/Protobuf/DS2_Protobufs.h"
+
  // Static class that holds methods intended to validate the structure
  // of the size-delimited entry lists and serialized NRSessionSearchResult 
  // data for security purposes, namely patching out-of-bounds read crashes 
@@ -105,8 +107,74 @@ public:
 
     static ValidationResult ValidatePushMessages(const std::string& Data)
     {
-        // Format is different in DS2. 
+		// Format is different in DS2. 
         // If we want to enable support for older versions, we should decipher it.
+		
+
+		//TODO: make this better
+		DS2_Frpg2RequestMessage::PushRequestHeader Header;
+		if(!Header.ParseFromString(Data)){
+			return ValidationResult::NRSSR_PropertyMetadata_InvalidType;
+		}
+		switch (Header.push_message_id())
+		{
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestAllowBreakInTarget:
+				{
+					DS2_Frpg2RequestMessage::PushRequestAllowBreakInTarget Msg;
+					if (!Msg.ParseFromString(Data))
+					{
+						return ValidationResult::NRSSR_PropertyMetadata_InvalidType;
+					}
+
+					auto ValidationResult = DS2_NRSSRSanitizer::ValidateEntryList(Msg.player_struct().data(), Msg.player_struct().size());
+					if (ValidationResult != ValidationResult::Valid)
+					{
+						return ValidationResult;
+					}
+					break;
+				}
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestVisit:
+				{
+					//TODO: Add Validation
+					return ValidationResult::Valid;
+				}
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestAllowQuickMatch:
+				{
+					//TODO: Add Validation
+					return ValidationResult::Valid;
+				}
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_ManagementTextMessage:
+				{
+					//We should never get this message type from an inbound connection
+					//TODO: flag whomever did this
+					return ValidationResult::NRSSR_PropertyMetadata_InvalidType;
+				}
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveSign:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestSummonSign:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectSign:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestJoinQuickMatch:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveQuickMatch: 
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectQuickMatch:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PlayerInfoUploadConfigPushMessage:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestEvaluateBloodMessage:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestBreakInTarget:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectBreakInTarget:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectVisit:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveVisitor:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestNotifyRingBell:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_RegulationFileUpdatePushMessage:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRejectMirrorKnightSign:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestRemoveMirrorKnightSign:
+			case DS2_Frpg2RequestMessage::PushMessageId::PushID_PushRequestSummonMirrorKnightSign:
+				{
+					// These messages don't look to have anything that needs validating in them.
+					break;
+				}
+			default:
+				{
+					return ValidationResult::NRSSR_PropertyMetadata_InvalidType;	
+				}
+		}
         return ValidationResult::Valid;
     }
 };

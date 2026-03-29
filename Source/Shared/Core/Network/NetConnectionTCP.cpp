@@ -239,7 +239,7 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
         int error = errno;
 #endif
 
-        ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
+        ErrorS(GetName().c_str(), "Failed to receive with error 0x%08x.", error);
         return false;
     }
 
@@ -277,21 +277,21 @@ bool NetConnectionTCP::Connect(std::string Hostname, int Port, bool ForceLastIpE
     return true;
 }
 
-bool NetConnectionTCP::Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved)
+bool NetConnectionTCP::Peek(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived)
 {
     // TODO: We don't currently use this for anything, so not implementing yet.
     Ensure(false);
     return false;
 }
 
-bool NetConnectionTCP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesRecieved)
+bool NetConnectionTCP::Receive(std::vector<uint8_t>& Buffer, int Offset, int Count, int& BytesReceived)
 {
     if (Socket == INVALID_SOCKET_VALUE)
     {
         return false;
     }
 
-    BytesRecieved = 0;
+    BytesReceived = 0;
 
     int Result = recv(Socket, reinterpret_cast<char*>(Buffer.data() + Offset), Count, 0);
     if (Result < 0)
@@ -312,7 +312,7 @@ bool NetConnectionTCP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
             return true;
         }
 
-        ErrorS(GetName().c_str(), "Failed to recieve with error 0x%08x.", error);
+        ErrorS(GetName().c_str(), "Failed to receive with error 0x%08x.", error);
         return false;
     }
     else if (Result == 0)
@@ -320,9 +320,9 @@ bool NetConnectionTCP::Recieve(std::vector<uint8_t>& Buffer, int Offset, int Cou
         HasDisconnected = true;
     }
 
-    Debug::TcpBytesRecieved.Add(Result);
+    Debug::TcpBytesReceived.Add(Result);
 
-    BytesRecieved = Result;
+    BytesReceived = Result;
     return true;
 }
 

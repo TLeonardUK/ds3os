@@ -24,58 +24,58 @@
 Frpg2PacketStream::Frpg2PacketStream(std::shared_ptr<NetConnection> InConnection)
     : Connection(InConnection)
 {
-    // Initial recieve state is the size of the header.
-    PacketBytesRecieved = 0;
+    // Initial receive state is the size of the header.
+    PacketBytesReceived = 0;
     RecievingPacketHeader = true;
     PacketBuffer.resize(sizeof(uint16_t));
 }
 
 bool Frpg2PacketStream::Pump()
 {
-    // If we have got into an error state (due to failed send/recieves) then 
+    // If we have got into an error state (due to failed send/receives) then 
     // we can bail now.
     if (InErrorState)
     {
         return true;
     }
 
-    // Recieve any pending packets.
+    // Receive any pending packets.
     if (IsRecieving)
     {
         while (true)
         {
-            if (PacketBytesRecieved < PacketBuffer.size())
+            if (PacketBytesReceived < PacketBuffer.size())
             {
-                int BytesRecieved = 0;
-                if (!Connection->Recieve(PacketBuffer, PacketBytesRecieved, (int)PacketBuffer.size() - PacketBytesRecieved, BytesRecieved))
+                int BytesReceived = 0;
+                if (!Connection->Receive(PacketBuffer, PacketBytesReceived, (int)PacketBuffer.size() - PacketBytesReceived, BytesReceived))
                 {
-                    WarningS(Connection->GetName().c_str(), "Failed to recieve on connection.");
+                    WarningS(Connection->GetName().c_str(), "Failed to receive on connection.");
                     InErrorState = true;
                     return true;
                 }
 
-                if (BytesRecieved == 0)
+                if (BytesReceived == 0)
                 {
                     break;
                 }
 
-                PacketBytesRecieved += BytesRecieved;
+                PacketBytesReceived += BytesReceived;
             }
 
-            if (PacketBytesRecieved >= PacketBuffer.size())
+            if (PacketBytesReceived >= PacketBuffer.size())
             {
                 if (RecievingPacketHeader)
                 {
                     uint16_t PacketLength = BigEndianToHostOrder(*reinterpret_cast<uint16_t*>(PacketBuffer.data()));
                     if (PacketLength == 0)
                     {
-                        WarningS(Connection->GetName().c_str(), "Recieved packet length of 0, this is invalid.");
+                        WarningS(Connection->GetName().c_str(), "Received packet length of 0, this is invalid.");
                         InErrorState = true;
                         return true;
                     }
                     if (PacketLength > BuildConfig::MAX_PACKET_LENGTH)
                     {
-                        WarningS(Connection->GetName().c_str(), "Recieved packet length of %i, this is greater than the max packet length.", PacketLength);
+                        WarningS(Connection->GetName().c_str(), "Received packet length of %i, this is greater than the max packet length.", PacketLength);
                         InErrorState = true;
                         return true;
                     }
@@ -87,7 +87,7 @@ bool Frpg2PacketStream::Pump()
                     Frpg2Packet Packet;
                     if (!BytesToPacket(PacketBuffer, Packet))
                     {
-                        WarningS(Connection->GetName().c_str(), "Failed to parse recieved packet.");
+                        WarningS(Connection->GetName().c_str(), "Failed to parse received packet.");
                         InErrorState = true;
                         return true;
                     }
@@ -98,12 +98,12 @@ bool Frpg2PacketStream::Pump()
                         Packet.Disassembly = Disassemble(Packet);
                     }
 
-                    RecieveQueue.push_back(Packet);
+                    ReceiveQueue.push_back(Packet);
 
                     PacketBuffer.resize(sizeof(uint16_t));
                 }
 
-                PacketBytesRecieved = 0;
+                PacketBytesReceived = 0;
                 RecievingPacketHeader = !RecievingPacketHeader;
             }
         }
@@ -191,15 +191,15 @@ bool Frpg2PacketStream::Send(const Frpg2Packet& Packet)
     return true;
 }
 
-bool Frpg2PacketStream::Recieve(Frpg2Packet* OutputPacket)
+bool Frpg2PacketStream::Receive(Frpg2Packet* OutputPacket)
 {
-    if (RecieveQueue.size() == 0)
+    if (ReceiveQueue.size() == 0)
     {
         return false;
     }
 
-    *OutputPacket = RecieveQueue[0];
-    RecieveQueue.erase(RecieveQueue.begin());
+    *OutputPacket = ReceiveQueue[0];
+    ReceiveQueue.erase(ReceiveQueue.begin());
 
     return true;
 }

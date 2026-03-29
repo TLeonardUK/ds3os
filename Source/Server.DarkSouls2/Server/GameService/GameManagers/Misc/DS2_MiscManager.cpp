@@ -34,7 +34,7 @@ DS2_MiscManager::DS2_MiscManager(Server* InServerInstance, GameService* InGameSe
 {
 }
 
-MessageHandleResult DS2_MiscManager::OnMessageRecieved(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
+MessageHandleResult DS2_MiscManager::OnMessageReceived(GameClient* Client, const Frpg2ReliableUdpMessage& Message)
 {
     if (Message.Header.IsType(DS2_Frpg2ReliableUdpMessageType::RequestSendMessageToPlayers))
     {
@@ -84,8 +84,13 @@ MessageHandleResult DS2_MiscManager::Handle_RequestSendMessageToPlayers(GameClie
             auto ValidationResult = DS2_NRSSRSanitizer::ValidatePushMessages(Request->message());
             if (ValidationResult != DS2_NRSSRSanitizer::ValidationResult::Valid)
             {
-                WarningS(Client->GetName().c_str(), "PushRequestAllowBreakInTarget message recieved from client contains ill formated binary data (error code %i).",
-                    static_cast<uint32_t>(ValidationResult));
+                unsigned int messageId = 0;
+                DS2_Frpg2RequestMessage::PushRequestHeader Header;
+                if(Header.ParseFromString(Request->message())){
+                    messageId = Header.push_message_id();
+                }
+                WarningS(Client->GetName().c_str(), "Message of type %u received from client contains ill formated binary data (error code %i).",
+                    messageId, static_cast<uint32_t>(ValidationResult));
 
                 ShouldProcessRequest = false;            
             }
@@ -113,7 +118,7 @@ MessageHandleResult DS2_MiscManager::Handle_RequestSendMessageToPlayers(GameClie
         }
     }
 
-    // Empty response, not sure what purpose this serves really other than saying message-recieved. Client
+    // Empty response, not sure what purpose this serves really other than saying message-received. Client
     // doesn't work without it though.
     DS2_Frpg2RequestMessage::RequestSendMessageToPlayersResponse Response;
     if (!Client->MessageStream->Send(&Response, &Message))

@@ -19,7 +19,7 @@ import "DS2_Frpg2PlayerData.proto";
 // Not sure why they do it in this manner when they already have a perfectly good
 // message-id system build into their transport layer. But whatever.
 //
-// The message-id thats recieved on the reliable udp message layer is always 0x0320, and the first
+// The message-id thats received on the reliable udp message layer is always 0x0320, and the first
 // field is read to disambiguate the actual message.
 enum PushMessageId {
 	PushID_PushRequestRemoveSign               = 0x039D; 
@@ -134,7 +134,7 @@ message RequestUpdatePlayerStatus {
 }
 
 message RequestUpdatePlayerStatusResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestUpdatePlayerCharacter {
@@ -143,7 +143,7 @@ message RequestUpdatePlayerCharacter {
 }
 
 message RequestUpdatePlayerCharacterResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestGetPlayerCharacter {
@@ -324,7 +324,7 @@ message RequestNotifyBuyItem {
 }
 
 message RequestNotifyBuyItemResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyDeath {
@@ -339,7 +339,7 @@ message RequestNotifyDeath {
 }
 
 message RequestNotifyDeathResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyDisconnectSession {
@@ -347,7 +347,7 @@ message RequestNotifyDisconnectSession {
 }
 
 message RequestNotifyDisconnectSessionResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyJoinGuestPlayer {
@@ -363,7 +363,7 @@ message RequestNotifyJoinGuestPlayer {
 }
 
 message RequestNotifyJoinGuestPlayerResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyJoinSession {
@@ -374,7 +374,7 @@ message RequestNotifyJoinSession {
 }
 
 message RequestNotifyJoinSessionResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyKillEnemy {
@@ -385,7 +385,7 @@ message RequestNotifyKillEnemy {
 }
 
 message RequestNotifyKillEnemyResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyKillPlayer {
@@ -397,7 +397,7 @@ message RequestNotifyKillPlayer {
 }
 
 message RequestNotifyKillPlayerResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyLeaveGuestPlayer {
@@ -408,7 +408,7 @@ message RequestNotifyLeaveGuestPlayer {
 }
 
 message RequestNotifyLeaveGuestPlayerResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyLeaveSession {
@@ -419,7 +419,7 @@ message RequestNotifyLeaveSession {
 }
 
 message RequestNotifyLeaveSessionResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyMirrorKnight {
@@ -427,7 +427,7 @@ message RequestNotifyMirrorKnight {
 }
 
 message RequestNotifyMirrorKnightResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestNotifyOfflineDeathCount {
@@ -435,7 +435,7 @@ message RequestNotifyOfflineDeathCount {
 }
 
 message RequestNotifyOfflineDeathCountResponse {
-    // Never recieved.
+    // Never received.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -482,7 +482,7 @@ message RequestSummonSign {
 }
 
 message RequestSummonSignResponse {
-    // Never recieved
+    // Never received
 }
 
 message PushRequestRejectSign {
@@ -537,7 +537,7 @@ message RequestRejectSign {
 }
 
 message RequestRejectSignResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestRemoveSign {
@@ -547,7 +547,7 @@ message RequestRemoveSign {
 }
 
 message RequestRemoveSignResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestUpdateSign {
@@ -557,7 +557,7 @@ message RequestUpdateSign {
 }
 
 message RequestUpdateSignResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message SignCellInfo {
@@ -737,7 +737,7 @@ message RequestBreakInTarget {
 }
 
 message RequestBreakInTargetResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestGetBreakInTargetList {
@@ -763,7 +763,7 @@ message RequestRejectBreakInTarget {
 }
 
 message RequestRejectBreakInTargetResponse {
-    // Never recieved.
+    // Never received.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -794,7 +794,7 @@ message RequestCreateGhostData {
 }
 
 message RequestCreateGhostDataResponse {
-    // Never recieved.
+    // Never received.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -846,7 +846,7 @@ message RequestVisit {
 }
 
 message RequestVisitResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestRejectVisit {
@@ -858,7 +858,7 @@ message RequestRejectVisit {
 }
 
 message RequestRejectVisitResponse {
-    // Not recieved.
+    // Not received.
 }
 
 message PushRequestRejectVisit {
@@ -1044,7 +1044,7 @@ message RequestJoinQuickMatch {
 }
 
 message RequestJoinQuickMatchResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestRegisterQuickMatch {
@@ -1055,7 +1055,7 @@ message RequestRegisterQuickMatch {
 }
 
 message RequestRegisterQuickMatchResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestRejectQuickMatch {
@@ -1068,7 +1068,7 @@ message RequestRejectQuickMatch {
 }
 
 message RequestRejectQuickMatchResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestSearchQuickMatch {
@@ -1090,7 +1090,7 @@ message RequestUnregisterQuickMatch {
 }
 
 message RequestUnregisterQuickMatchResponse {
-    // Never recieved.
+    // Never received.
 }
 
 message RequestUpdateQuickMatch {
@@ -1100,7 +1100,7 @@ message RequestUpdateQuickMatch {
 }
 
 message RequestUpdateQuickMatchResponse {
-    // Never recieved.
+    // Never received.
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -1119,6 +1119,7 @@ message RequestGetTotalDeathCountResponse {
 // ------------------------------------------------------------------------------------------------------------
 
 message PushRequestHeader {
+	required PushMessageId push_message_id = 1;
 }
 
 // ------------------------------------------------------------------------------------------------------------
