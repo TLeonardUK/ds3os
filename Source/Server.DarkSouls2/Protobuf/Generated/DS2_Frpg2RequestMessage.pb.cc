@@ -28056,7 +28056,7 @@ bool RequestBreakInTarget::MergePartialFromCodedStream(
         break;
       }
 
-      // required .DS2_Frpg2RequestMessage.BreakInType type = 4;
+      // optional .DS2_Frpg2RequestMessage.BreakInType type = 4;
       case 4: {
         if (tag == 32) {
          parse_type:
@@ -28117,7 +28117,7 @@ void RequestBreakInTarget::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->player_id(), output);
   }
 
-  // required .DS2_Frpg2RequestMessage.BreakInType type = 4;
+  // optional .DS2_Frpg2RequestMessage.BreakInType type = 4;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       4, this->type(), output);
@@ -28153,7 +28153,7 @@ int RequestBreakInTarget::ByteSize() const {
           this->player_id());
     }
 
-    // required .DS2_Frpg2RequestMessage.BreakInType type = 4;
+    // optional .DS2_Frpg2RequestMessage.BreakInType type = 4;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
@@ -28199,7 +28199,7 @@ void RequestBreakInTarget::CopyFrom(const RequestBreakInTarget& from) {
 }
 
 bool RequestBreakInTarget::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
@@ -28543,7 +28543,7 @@ bool RequestGetBreakInTargetList::MergePartialFromCodedStream(
         break;
       }
 
-      // required .DS2_Frpg2RequestMessage.BreakInType type = 5;
+      // optional .DS2_Frpg2RequestMessage.BreakInType type = 5;
       case 5: {
         if (tag == 40) {
          parse_type:
@@ -28610,7 +28610,7 @@ void RequestGetBreakInTargetList::SerializeWithCachedSizes(
       4, this->matching_parameter(), output);
   }
 
-  // required .DS2_Frpg2RequestMessage.BreakInType type = 5;
+  // optional .DS2_Frpg2RequestMessage.BreakInType type = 5;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       5, this->type(), output);
@@ -28653,7 +28653,7 @@ int RequestGetBreakInTargetList::ByteSize() const {
           this->matching_parameter());
     }
 
-    // required .DS2_Frpg2RequestMessage.BreakInType type = 5;
+    // optional .DS2_Frpg2RequestMessage.BreakInType type = 5;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
@@ -28702,7 +28702,7 @@ void RequestGetBreakInTargetList::CopyFrom(const RequestGetBreakInTargetList& fr
 }
 
 bool RequestGetBreakInTargetList::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   if (has_matching_parameter()) {
     if (!this->matching_parameter().IsInitialized()) return false;

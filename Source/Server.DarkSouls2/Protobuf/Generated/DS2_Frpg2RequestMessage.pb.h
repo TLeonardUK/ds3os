@@ -12171,7 +12171,7 @@ class RequestBreakInTarget : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::uint32 player_id() const;
   inline void set_player_id(::google::protobuf::uint32 value);
 
-  // required .DS2_Frpg2RequestMessage.BreakInType type = 4;
+  // optional .DS2_Frpg2RequestMessage.BreakInType type = 4;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 4;
@@ -12382,7 +12382,7 @@ class RequestGetBreakInTargetList : public ::google::protobuf::MessageLite {
   inline ::DS2_Frpg2RequestMessage::MatchingParameter* release_matching_parameter();
   inline void set_allocated_matching_parameter(::DS2_Frpg2RequestMessage::MatchingParameter* matching_parameter);
 
-  // required .DS2_Frpg2RequestMessage.BreakInType type = 5;
+  // optional .DS2_Frpg2RequestMessage.BreakInType type = 5;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 5;
@@ -31389,7 +31389,7 @@ inline void RequestBreakInTarget::set_player_id(::google::protobuf::uint32 value
   // @@protoc_insertion_point(field_set:DS2_Frpg2RequestMessage.RequestBreakInTarget.player_id)
 }
 
-// required .DS2_Frpg2RequestMessage.BreakInType type = 4;
+// optional .DS2_Frpg2RequestMessage.BreakInType type = 4;
 inline bool RequestBreakInTarget::has_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -31539,7 +31539,7 @@ inline void RequestGetBreakInTargetList::set_allocated_matching_parameter(::DS2_
   // @@protoc_insertion_point(field_set_allocated:DS2_Frpg2RequestMessage.RequestGetBreakInTargetList.matching_parameter)
 }
 
-// required .DS2_Frpg2RequestMessage.BreakInType type = 5;
+// optional .DS2_Frpg2RequestMessage.BreakInType type = 5;
 inline bool RequestGetBreakInTargetList::has_type() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
