@@ -286,14 +286,16 @@ const SummonErrorId SummonErrorId_MAX = SummonErrorId_SignHasDisappeared;
 const int SummonErrorId_ARRAYSIZE = SummonErrorId_MAX + 1;
 
 enum SignType {
+  SignType_WhiteSoapstoneSunlight = 0,
   SignType_WhiteSoapstone = 1,
+  SignType_SmallWhiteSoapstoneSunlight = 2,
   SignType_SmallWhiteSoapstone = 3,
   SignType_RedSoapstone = 4,
   SignType_Dragon = 6,
   SignType_MirrorKnight = 99
 };
 bool SignType_IsValid(int value);
-const SignType SignType_MIN = SignType_WhiteSoapstone;
+const SignType SignType_MIN = SignType_WhiteSoapstoneSunlight;
 const SignType SignType_MAX = SignType_MirrorKnight;
 const int SignType_ARRAYSIZE = SignType_MAX + 1;
 
@@ -29385,7 +29387,7 @@ inline void SignData::clear_has_sign_type() {
   _has_bits_[0] &= ~0x00000040u;
 }
 inline void SignData::clear_sign_type() {
-  sign_type_ = 1;
+  sign_type_ = 0;
   clear_has_sign_type();
 }
 inline ::DS2_Frpg2RequestMessage::SignType SignData::sign_type() const {
