@@ -118,7 +118,13 @@ bool DS2_SignManager::CanMatchWith(const DS2_Frpg2RequestMessage::MatchingParame
     const RuntimeConfig& Config = ServerInstance->GetConfig();
 
     // Sign globally disabled?
-    bool IsDisabled = (SignType != DS2_Frpg2RequestMessage::SignType_SmallWhiteSoapstone && SignType != DS2_Frpg2RequestMessage::SignType_WhiteSoapstone) ? Config.DisableInvasions : Config.DisableCoop;
+    bool IsDisabled = (
+                SignType != DS2_Frpg2RequestMessage::SignType_SmallWhiteSoapstoneSunlight
+             && SignType != DS2_Frpg2RequestMessage::SignType_SmallWhiteSoapstone
+             && SignType != DS2_Frpg2RequestMessage::SignType_WhiteSoapstoneSunlight
+             && SignType != DS2_Frpg2RequestMessage::SignType_WhiteSoapstone
+         ) ? Config.DisableInvasions : Config.DisableCoop;
+
     if (IsDisabled)
     {
         return false;
@@ -130,13 +136,15 @@ bool DS2_SignManager::CanMatchWith(const DS2_Frpg2RequestMessage::MatchingParame
         {
             return Config.DS2_RedSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
         }
+    case DS2_Frpg2RequestMessage::SignType_WhiteSoapstoneSunlight:
     case DS2_Frpg2RequestMessage::SignType_WhiteSoapstone:
         {
-            return Config.DS2_SmallWhiteSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
+            return Config.DS2_WhiteSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
         }
+    case DS2_Frpg2RequestMessage::SignType_SmallWhiteSoapstoneSunlight:
     case DS2_Frpg2RequestMessage::SignType_SmallWhiteSoapstone:
         {
-            return Config.DS2_WhiteSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
+            return Config.DS2_SmallWhiteSoapstoneMatchingParameters.CheckMatch(Host.soul_memory(), Match.soul_memory(), Host.name_engraved_ring() > 0);
         }
     case DS2_Frpg2RequestMessage::SignType_Dragon:
         {

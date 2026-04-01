@@ -573,7 +573,9 @@ message SignInfo {
 
 enum SignType {
     // TODO: Probably a mirror knight sign type as well in here.
+    SignType_WhiteSoapstoneSunlight = 0;
     SignType_WhiteSoapstone = 1;
+    SignType_SmallWhiteSoapstoneSunlight = 2;
     SignType_SmallWhiteSoapstone = 3;
     SignType_RedSoapstone = 4;
     SignType_Dragon = 6;

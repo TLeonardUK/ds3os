@@ -729,7 +729,9 @@ bool SummonErrorId_IsValid(int value) {
 
 bool SignType_IsValid(int value) {
   switch(value) {
+    case 0:
     case 1:
+    case 2:
     case 3:
     case 4:
     case 6:
@@ -22006,7 +22008,7 @@ void SignData::SharedCtor() {
   player_struct_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   player_steam_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   cell_id_ = GOOGLE_LONGLONG(0);
-  sign_type_ = 1;
+  sign_type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -22053,7 +22055,18 @@ SignData* SignData::New() const {
 }
 
 void SignData::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<SignData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
   if (_has_bits_[0 / 32] & 127) {
+    ZR_(cell_id_, sign_type_);
     if (has_sign_info()) {
       if (sign_info_ != NULL) sign_info_->::DS2_Frpg2RequestMessage::SignInfo::Clear();
     }
@@ -22071,9 +22084,11 @@ void SignData::Clear() {
         player_steam_id_->clear();
       }
     }
-    cell_id_ = GOOGLE_LONGLONG(0);
-    sign_type_ = 1;
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->clear();
 }
