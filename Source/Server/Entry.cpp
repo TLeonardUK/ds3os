@@ -72,10 +72,14 @@ int main(int argc, char* argv[])
     std::string mode_arg = argc > 1 ? argv[1] : "";
     start_as_client_emulator = (mode_arg == "-client_emulator");
 
+    // only do this on Windows, on Linux its very common to not have writable
+    // access to wherever the binary is installed
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     // Switch working directory to the same directory the
     // exe is inside of. Prevents wierdness when we start from visual studio etc.
     std::filesystem::path exe_directory = std::filesystem::path(argv[0]).parent_path();
     std::filesystem::current_path(exe_directory);
+    #endif
 
     Log(R"--(    ____             __      _____             __    )--");
     Log(R"--(   / __ \____ ______/ /__   / ___/____  __  __/ /____)--");
